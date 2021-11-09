@@ -1,1 +1,1 @@
-masuk
+@extends('portal.layout.master')

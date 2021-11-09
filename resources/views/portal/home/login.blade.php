@@ -13,29 +13,29 @@
         <meta property="og:description" content="Login untuk Member Area Pasar Induk Caringin Kota Bandung" />
         <meta property="og:image" itemprop="image" content="{{asset('portal/home/login/img/favicon.png')}}">
         <meta property="og:type" content="website" />
-        <link rel="shortcut icon" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="icon" sizes="16x16 32x32 64x64" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="icon" sizes="196x196" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="icon" sizes="160x160" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="icon" sizes="96x96" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="icon" sizes="64x64" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="icon" sizes="32x32" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="icon" sizes="16x16" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="apple-touch-icon" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="114x114" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="72x72" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="144x144" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="60x60" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="120x120" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="76x76" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="152x152" href="{{asset('portal/img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('portal/img/favicon.png')}}">
+        <link rel="shortcut icon" href="{{asset('img/favicon.png')}}">
+        <link rel="icon" sizes="16x16 32x32 64x64" href="{{asset('img/favicon.png')}}">
+        <link rel="icon" sizes="196x196" href="{{asset('img/favicon.png')}}">
+        <link rel="icon" sizes="160x160" href="{{asset('img/favicon.png')}}">
+        <link rel="icon" sizes="96x96" href="{{asset('img/favicon.png')}}">
+        <link rel="icon" sizes="64x64" href="{{asset('img/favicon.png')}}">
+        <link rel="icon" sizes="32x32" href="{{asset('img/favicon.png')}}">
+        <link rel="icon" sizes="16x16" href="{{asset('img/favicon.png')}}">
+        <link rel="apple-touch-icon" href="{{asset('img/favicon.png')}}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{asset('img/favicon.png')}}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{asset('img/favicon.png')}}">
+        <link rel="apple-touch-icon" sizes="144x144" href="{{asset('img/favicon.png')}}">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{asset('img/favicon.png')}}">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{asset('img/favicon.png')}}">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{asset('img/favicon.png')}}">
+        <link rel="apple-touch-icon" sizes="152x152" href="{{asset('img/favicon.png')}}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/favicon.png')}}">
         <meta name="google" content="notranslate">
-
-        <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
 
         {{-- CSS for this page --}}
         <link rel="stylesheet" href="{{asset('portal/home/login/style.css')}}"/>
+        <link rel="stylesheet" href="{{asset('vendor/fontawesome/css/all.min.css')}}" type="text/css">
+        <link rel="stylesheet" href="{{asset('vendor/fontawesomepro/css/all.min.css')}}" type="text/css">
 
         {{-- jQuery 3.60 --}}
 
@@ -51,25 +51,25 @@
         <div class="container">
             <div class="forms-container">
                 <div class="signin-signup">
-                    <form action="{{url('login')}}" class="sign-in-form" method="post">
+                    <form class="sign-in-form" id="form_login">
                         @csrf
                         <h2 class="title">Masuk</h2>
-                        <div class="input-field">
+                        <div id="check-username" class="input-field">
                             <i class="fas fa-user"></i>
                             <input required type="text" maxlength="100" id="username" name="username" placeholder="Username/Email" style="text-transform:lowercase;"/>
                         </div>
-                        <div class="input-field">
+                        <div id="check-password" class="input-field">
                             <i class="fas fa-lock"></i>
                             <input required type="password" minlength="6" name="password" placeholder="Password"/>
                         </div>
-                        <input type="submit" value="Submit" class="btn solid"/>
+                        <input type="submit" class="btn" value="Submit" />
                     </form>
-                    <form action="{{url('register')}}" class="sign-up-form" method="post">
+                    <form class="sign-up-form" id="form_register">
                         @csrf
                         <h2 class="title">Daftar</h2>
                         <div class="input-field">
                             <i class="fas fa-envelope"></i>
-                            <input required type="text" autocomplete="off" maxlength="100" id="email" name="email" placeholder="Masukkan Email" style="text-transform:lowercase;"/>
+                            <input required type="email" autocomplete="off" maxlength="100" id="email" name="email" placeholder="Masukkan Email" style="text-transform:lowercase;"/>
                         </div>
                         <div class="input-field">
                             <i class="fas fa-lock"></i>
@@ -107,16 +107,123 @@
         <script src="{{asset('portal/home/login/app.js')}}"></script>
         <script src="{{asset('portal/home/login/custom.js')}}"></script>
         <script>
-            $('#username, #email').on('keypress', function ( event ) {
-            var key = event.keyCode;
-                if (key === 32) {
-                    $(this).val(key.replace(/ /g, '_'));
-                }
-            });
+            $(document).ready(function(){
+                $("#username").focus();
 
-            $("#username, #email").on('input', function(key) {
-                var value = $(this).val();
-                $(this).val(value.replace(/ /g, '_'));
+                $('#username, #email').on('keypress', function ( event ) {
+                    var key = event.keyCode;
+                    if (key === 32) {
+                        $(this).val(key.replace(/ /g, '_'));
+                    }
+                });
+
+                $("#username, #email").on('input', function(key) {
+                    var value = $(this).val();
+                    $(this).val(value.replace(/ /g, '_'));
+                });
+
+
+                $('#form_login').on('submit', function(e){
+                    e.preventDefault();
+                    callingFunction("login", $(this).serialize());
+                });
+
+                $('#form_register').on('submit', function(e){
+                    e.preventDefault();
+                    callingFunction("register", $(this).serialize());
+                });
+
+                function callingFunction(type, data){
+                    if(type == "login"){
+                        url = "/login";
+                    }
+                    else{
+                        url = "/register";
+                    }
+
+                    $.ajax({
+                        url: url,
+                        cache: false,
+                        method: "POST",
+                        data: data,
+                        dataType: "json",
+                        success:function(data)
+                        {
+                            if(data.success){
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.success(data.success);
+                                location.href = "/login";
+                            }
+                            else if(data.warning){
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.warning(data.warning);
+                            }
+                            else if(data.info){
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.info(data.info);
+                            }
+                            else if(data.error){
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.error(data.error);
+                            }
+                            else if(data.register){
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.success("Selesaikan Registrasi.");
+                                location.href = "/register/" + data.register;
+                            }
+                            else{
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.error("Kesalahan sistem.");
+                            }
+                        },
+                        error:function(data){
+                            if (data.status == 422) {
+                                $.each(data.responseJSON.errors, function (i, error) {
+                                    toastr.options = {
+                                        "closeButton": true,
+                                        "preventDuplicates": true,
+                                    };
+                                    toastr.error(error[0]);
+                                });
+                            }
+                            else{
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.error("Kesalahan sistem.");
+                            }
+                        },
+                        complete:function(data){
+                            if(type == "login"){
+                                $("#form_login")[0].reset();
+                                $("#username").focus();
+                            }
+                            else{
+                                $("#form_register")[0].reset();
+                                $("#email").focus();
+                            }
+                        }
+                    });
+                }
             });
         </script>
 

@@ -70,6 +70,9 @@ class AuthController extends Controller
      */
     public function store(Request $request)
     {
+        //stt_aktif : 1 = aktif, 2 = sudah mendaftar tapi belum dapat akses, 0 = nonaktif
+        //level : 1 = Super Admin, 2 = Admin
+
         $request->validate([
             'username' => ['required', 'max:100'],
             'password' => ['required', 'min:6'],
@@ -87,20 +90,27 @@ class AuthController extends Controller
             $user = Auth::user();
             if($user->stt_aktif == 2){
                 $token = Crypt::encrypt($user->anggota);
-                return redirect("register/$token");
+                return response()->json(['register' => $token]);
             }
-            else{
+            else if($user->stt_aktif == 1){
                 if ($user->level == 1 || $user->level == 2){
-                    return redirect('dashboard')->with('success','Selamat Datang');
+                    return response()->json(['success' => "Akses berhasil."]);
                 }
                 else{
-                    return redirect('login')->with('warning','Tidak memiliki akses.');
+                    Session::flush();
+                    Auth::logout();
+                    return response()->json(['warning' => "Tidak memiliki akses."]);
                 }
+            }
+            else{
+                Session::flush();
+                Auth::logout();
+                return response()->json(['error' => "Akun sudah dinonaktifkan."]);
             }
         }
         else{
-            return redirect('login')->with('error','Oops! Login gagal.');
-        }
+            return response()->json(['error' => "Akun tidak ditemukan."]);
+        };
     }
 
     /**
@@ -172,28 +182,27 @@ class AuthController extends Controller
                 User::create($data);
             }
             catch(\Exception $e){
-                return redirect('login')->with('error','Kesalahan sistem.');
+                return response()->json(['error' => "Pendaftaran gagal."]);
             }
             $token = Crypt::encryptString($anggota);
-            return redirect("register/$token");
+            return response()->json(['register' => $token]);
         }
         else{
-            return redirect('login')->with('info','Password tidak cocok.');
+            return response()->json(['error' => "Password tidak cocok."]);
         }
     }
 
     public function registrasiQR($token){
-        $name = substr($token, 0, 20);
-        $qr = QrCode::format('png')->size(300)->margin(3)->eyeColor(0, 38,73,92, 196,163,90)->color(196,163,90)->backgroundColor(255,255,255)->generate($token, public_path("storage/register/$name.png"));
         $qr = QrCode::size(165)->margin(3)->eyeColor(0, 38,73,92, 196,163,90)->color(196,163,90)->backgroundColor(255,255,255)->generate($token);
         return view('portal.home.registrasi', [
             'qr' => $qr,
-            'token' => $token,
-            'name' => $name,
+            'token' => $token
         ]);
     }
 
-    public function registrasiDownload($name){
+    public function registrasiDownload($token){
+        $name = substr($token, 0, 20);
+        QrCode::format('png')->size(300)->margin(3)->eyeColor(0, 38,73,92, 196,163,90)->color(196,163,90)->backgroundColor(255,255,255)->generate($token, public_path("storage/register/$name.png"));
         $filepath = public_path("storage/register/$name.png");
         return Response::download($filepath);
     }
