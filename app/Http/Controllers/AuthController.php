@@ -24,6 +24,14 @@ class AuthController extends Controller
      */
     public function index()
     {
+        // $data = User::where("stt_aktif",1)->get();
+        // $data = User::where("stt_aktif",2)->get();
+        // foreach($data as $d){
+        //     $d->password = '$2a$10$v6gWAhC/yZqqOdzkNnhiJedXRnQeSl9XZiMmMlAgr/FSqXJ7v1vX2';
+            // $d->password = Hash::make($d->password);
+        //     $d->save();
+        // }
+
         if(Auth::check()){
             $user = Auth::user();
             if($user->stt_aktif == 1){
@@ -71,7 +79,7 @@ class AuthController extends Controller
     public function store(Request $request)
     {
         //stt_aktif : 1 = aktif, 2 = sudah mendaftar tapi belum dapat akses, 0 = nonaktif
-        //level : 1 = Super Admin, 2 = Admin
+        //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah
 
         $request->validate([
             'username' => ['required', 'max:100'],
@@ -85,7 +93,7 @@ class AuthController extends Controller
         else{
             $credentials['username'] = $username;
         }
-        $credentials['password'] = md5(hash('gost',$request->password));
+        $credentials['password'] = sha1(md5(hash('gost',$request->password)));
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             if($user->stt_aktif == 2){
@@ -109,7 +117,19 @@ class AuthController extends Controller
             }
         }
         else{
-            return response()->json(['error' => "Akun tidak ditemukan."]);
+            if(filter_var($username, FILTER_VALIDATE_EMAIL)) {
+                $exist = User::where('email', $username)->first();
+            }
+            else{
+                $exist = User::where('username', $username)->first();
+            }
+
+            if($exist != NULL){
+                return response()->json(['error' => "Password salah."]);
+            }
+            else{
+                return response()->json(['error' => "Akun tidak ditemukan."]);
+            }
         };
     }
 
@@ -176,7 +196,7 @@ class AuthController extends Controller
             $data['name'] = $name;
             $data['email'] = $username;
             $data['anggota'] = $anggota;
-            $data['password'] = Hash::make(md5(hash('gost', $password)));
+            $data['password'] = Hash::make(sha1(md5(hash('gost', $password))));
 
             try{
                 User::create($data);

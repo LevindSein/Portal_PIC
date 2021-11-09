@@ -45,7 +45,7 @@
         <link rel="stylesheet" type="text/css" href="{{asset('portal/home/login/toastr.min.css')}}">
         <script src="{{asset('portal/home/login/toastr.min.js')}}"></script>
 
-        <title>Member Area | Pasar Induk Caringin Kota Bandung</title>
+        <title>Home | Portal PIC</title>
     </head>
     <body>
         <div class="container">
