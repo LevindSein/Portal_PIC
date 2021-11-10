@@ -32,7 +32,9 @@ Route::middleware('checkauth')->group(function(){
     Route::middleware('oneauth')->group(function(){
         Route::get('dashboard', [DashboardController::class, 'index']);
 
-        Route::get('user/admin', [UserController::class, 'admin']);
+        Route::post('user/restore/{id}', [UserController::class, 'restore']);
+        Route::get('user/penghapusan/{params}', [UserController::class, 'penghapusan']);
+        Route::get('user/level/{params}', [UserController::class, 'level']);
         Route::resource('user', UserController::class);
     });
 

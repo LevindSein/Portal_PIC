@@ -35,6 +35,8 @@
     <meta name="google" content="notranslate">
     <meta name="robots" content="noindex, nofollow" />
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/favicon.png')}}">
     <title>@yield('content-title') | Portal PIC</title>
@@ -172,7 +174,7 @@
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
                                     src="{{Auth::user()->foto}}" alt="user" class="rounded-circle" width="31"></a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated fadeIn">
@@ -421,6 +423,8 @@
             <!-- ============================================================== -->
             <div class="container-fluid">
                 @yield('content-body')
+
+                @yield('content-modal')
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid -->
@@ -481,6 +485,11 @@
             }, 10);
             setTimeout(() => {
                 clearInterval(adjust);
+            }, 1000);
+        });
+        $(document).on('shown.bs.tooltip', function (e) {
+            setTimeout(function () {
+                $(e.target).tooltip('hide');
             }, 1000);
         });
     </script>
