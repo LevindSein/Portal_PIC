@@ -24,19 +24,11 @@ class AuthController extends Controller
      */
     public function index()
     {
-        // $data = User::where("stt_aktif",1)->get();
-        // $data = User::where("stt_aktif",2)->get();
-        // foreach($data as $d){
-        //     $d->password = '$2a$10$v6gWAhC/yZqqOdzkNnhiJedXRnQeSl9XZiMmMlAgr/FSqXJ7v1vX2';
-            // $d->password = Hash::make($d->password);
-        //     $d->save();
-        // }
-
         if(Auth::check()){
             $user = Auth::user();
             if($user->stt_aktif == 1){
                 if($user->level == 1 || $user->level == 2){
-                    return redirect('dashboard')->with('success','Selamat datang kembali.');
+                    return redirect('dashboard')->with('success','Selamat datang.');
                 }
                 else{
                     return "level >2";

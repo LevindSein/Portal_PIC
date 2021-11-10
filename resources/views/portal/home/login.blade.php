@@ -42,8 +42,8 @@
         <script src="{{asset('portal/home/login/jquery.min.js')}}"></script>
 
         {{-- Toastr --}}
-        <link rel="stylesheet" type="text/css" href="{{asset('portal/home/login/toastr.min.css')}}">
-        <script src="{{asset('portal/home/login/toastr.min.js')}}"></script>
+        <link rel="stylesheet" type="text/css" href="{{asset('vendor/toastr/toastr.min.css')}}">
+        <script src="{{asset('vendor/toastr/toastr.min.js')}}"></script>
 
         <title>Home | Portal PIC</title>
     </head>
@@ -105,7 +105,7 @@
         </div>
 
         <script src="{{asset('portal/home/login/app.js')}}"></script>
-        <script src="{{asset('portal/home/login/custom.js')}}"></script>
+        <script src="{{asset('custom.js')}}"></script>
         <script>
             $(document).ready(function(){
                 $("#username").focus();

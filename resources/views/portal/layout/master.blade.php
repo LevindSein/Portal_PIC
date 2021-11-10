@@ -42,27 +42,25 @@
     <script src="{{asset('template/assets/libs/jquery/dist/jquery.min.js')}}"></script>
 
     <!-- Custom CSS -->
-    <link href="{{asset('template/dist/css/style.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('template/dist/css/style.min.css')}}">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('vendor/fontawesome/css/all.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('vendor/fontawesomepro/css/all.min.css')}}" type="text/css">
 
+    {{-- Datatable --}}
+    <link rel="stylesheet" href="{{asset('vendor/datatables.net-bs4/css/dataTables.bootstrap4.css')}}">
+
     {{-- Toastr --}}
-    <link rel="stylesheet" type="text/css" href="{{asset('home/login/toastr.min.css')}}">
-    <script src="{{asset('home/login/toastr.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('vendor/toastr/toastr.min.css')}}">
+    <script src="{{asset('vendor/toastr/toastr.min.js')}}"></script>
 </head>
 
 <body>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
-    </div>
+    <div class="se-pre-con"></div>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
@@ -89,10 +87,10 @@
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        {{-- <span class="logo-text">
+                        {{-- <span class="logo-text"> --}}
                             <!-- dark Logo text -->
-                            <img src="{{asset("img/logo.png")}}" width="90" height="20" class="dark-logo" />
-                        </span> --}}
+                            {{-- <img src="{{asset("img/logo.png")}}" width="90" height="20" class="dark-logo" /> --}}
+                        {{-- </span> --}}
                     </a>
                     <!-- ============================================================== -->
                     <!-- End Logo -->
@@ -115,8 +113,7 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav float-left mr-auto">
                         <li class="nav-item d-none d-md-block">
-                            <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
-                                data-sidebartype="mini-sidebar">
+                            <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"data-sidebartype="mini-sidebar">
                                 <i class="mdi mdi-menu font-24"></i>
                             </a>
                         </li>
@@ -267,10 +264,23 @@
                                 <li class="sidebar-item">
                                     <a href="index.html" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Tempat Usaha</span>
+                                        <span class="hide-menu">Tempat&nbsp;Usaha</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="index.html" class="sidebar-link">
+                                        <i class="mdi mdi-adjust"></i>
+                                        <span class="hide-menu">Pembongkaran</span>
                                     </a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
+                                aria-expanded="false">
+                                <i class="fad fa-file-invoice"></i>
+                                <span class="hide-menu">Kelola&nbsp;Tagihan</span>
+                            </a>
                         </li>
                         <li class="sidebar-item">
                             <a
@@ -284,19 +294,19 @@
                                 <li class="sidebar-item">
                                     <a href="index.html" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Laporan Pemakaian</span>
+                                        <span class="hide-menu">Laporan&nbsp;Pemakaian</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a href="index.html" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Laporan Pendapatan</span>
+                                        <span class="hide-menu">Laporan&nbsp;Pendapatan</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a href="index.html" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Laporan Tunggakan</span>
+                                        <span class="hide-menu">Laporan&nbsp;Tunggakan</span>
                                     </a>
                                 </li>
                             </ul>
@@ -305,7 +315,7 @@
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
                                 <i class="fad fa-clipboard-list"></i>
-                                <span class="hide-menu">Data Usaha</span>
+                                <span class="hide-menu">Data&nbsp;Usaha</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -326,13 +336,13 @@
                                 <li class="sidebar-item">
                                     <a href="index.html" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Alat Meter</span>
+                                        <span class="hide-menu">Alat&nbsp;Meter</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a href="index.html" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Hari Libur</span>
+                                        <span class="hide-menu">Hari&nbsp;Libur</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
@@ -344,7 +354,7 @@
                             </ul>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('rumusan')}}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('user')}}"
                                 aria-expanded="false">
                                 <i class="fas fa-user"></i>
                                 <span class="hide-menu">User</span>
@@ -354,13 +364,13 @@
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
                                 <i class="fad fa-clock"></i>
-                                <span class="hide-menu">Riwayat Login</span>
+                                <span class="hide-menu">Riwayat&nbsp;Login</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
-                                <i class="fas fa-file-invoice"></i>
+                                <i class="fas fa-wrench"></i>
                                 <span class="hide-menu">Changelog</span>
                             </a>
                         </li>
@@ -368,7 +378,7 @@
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
                                 <i class="fad fa-box-open"></i>
-                                <span class="hide-menu">Kotak Saran</span>
+                                <span class="hide-menu">Kotak&nbsp;Saran</span>
                             </a>
                         </li>
                         @endif
@@ -393,6 +403,13 @@
                 <div class="row">
                     <div class="col-5 align-self-center">
                         <h4 class="page-title">@yield('content-title')</h4>
+                    </div>
+                    <div class="col-7 align-self-center">
+                        <div class="d-flex no-block justify-content-end align-items-center">
+                            <div>
+                                @yield('content-button')
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -429,6 +446,8 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+    <script src="{{asset('template/assets/libs/jquery/dist/jquery.min.js')}}"></script>
+
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{{asset('template/assets/libs/popper.js/dist/umd/popper.min.js')}}"></script>
     <script src="{{asset('template/assets/libs/bootstrap/dist/js/bootstrap.min.js')}}"></script>
@@ -444,9 +463,27 @@
     <!--Menu sidebar -->
     <script src="{{asset('template/dist/js/sidebarmenu.js')}}"></script>
     <!--Custom JavaScript -->
-    <script src="{{asset('template/dist/js/custom.js')}}"></script>
+    <script src="{{asset('template/dist/js/custom.min.js')}}"></script>
 
     <script src="{{asset('custom.js')}}"></script>
+
+    <script src="{{asset('vendor/DataTables/datatables.min.js')}}"></script>
+    <script src="{{asset('vendor/datatables.net-bs4/js/dataTables.bootstrap4.js')}}"></script>
+
+    <script>
+        $(window).on('load', function() {
+            $(".se-pre-con").fadeIn("slow").fadeOut("slow");
+        });
+
+        $(".sidebartoggler").click(function(){
+            var adjust = setInterval(() => {
+                var adjust = $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+            }, 10);
+            setTimeout(() => {
+                clearInterval(adjust);
+            }, 1000);
+        });
+    </script>
 
     @include('message.toastr')
 
