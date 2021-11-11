@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -22,10 +23,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah
+        //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah, 4 = Kasir, 5 = Keuangan, 6 = Manajer
         if(request()->ajax())
         {
-            $data = User::where([['level','3'],['stt_aktif','!=','0']])->select('id','username','name','stt_aktif');
+            $data = User::where([['level','2'],['stt_aktif','!=','0']])->select('id','username','name','stt_aktif');
             return DataTables::of($data)
                 ->addColumn('action', function($data){
                     $button = '<a type="button" data-toggle="tooltip" data-original-title="Reset Password" name="reset" id="'.Crypt::encryptString($data->id).'" nama="'.$data->name.'" class="reset"><i class="fas fa-key" style="color:#fd7e14;"></i></a>';
@@ -54,7 +55,7 @@ class UserController extends Controller
 
     public function level($level)
     {
-        //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah
+        //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah, 4 = Kasir, 5 = Keuangan, 6 = Manajer
         if(request()->ajax())
         {
             $data = User::where([['level',$level],['stt_aktif','!=','0']])->select('id','username','name','stt_aktif');
@@ -85,7 +86,7 @@ class UserController extends Controller
 
     public function penghapusan($level)
     {
-        //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah
+        //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah, 4 = Kasir, 5 = Keuangan, 6 = Manajer
         if(request()->ajax())
         {
             $data = User::where([['level', $level],['stt_aktif','0']])->select('id','username','name','stt_aktif');
@@ -125,7 +126,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(request()->ajax()){
+            return response()->json(['success' => 'Data berhasil disimpan.']);
+        }
+        else{
+            return response()->json(['error' => '404 Not Found']);
+        }
     }
 
     /**
@@ -263,6 +269,28 @@ class UserController extends Controller
         }
         else{
             return response()->json(['error' => '404 Not Found.']);
+        }
+    }
+
+    public function reset($id)
+    {
+        if(request()->ajax()){
+            $id = Crypt::decryptString($id);
+            try{
+                $user = User::findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['exception' => $e]);
+            }
+            $pass = str_shuffle('00112233445566778899');
+            $pass = substr($pass,0,7);
+
+            $user->password = Hash::make(sha1(md5(hash('gost', $pass))));
+            $user->save();
+
+            return response()->json(['success' => 'Reset password berhasil.', 'pass' => $pass]);
+        }
+        else{
+            return response()->json(['error' => '404 Not Found']);
         }
     }
 }

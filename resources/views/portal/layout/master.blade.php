@@ -236,7 +236,7 @@
                         </li>
                         @if(Auth::user()->level != 3)
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('dashboard')}}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('dashboard*')) ? 'active' : '' }}" href="{{url('dashboard')}}"
                                 aria-expanded="false">
                                 <i class="mdi mdi-view-dashboard"></i>
                                 <span class="hide-menu">Dashboard</span>
@@ -356,7 +356,7 @@
                             </ul>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('user')}}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('user*')) ? 'active' : '' }}" href="{{url('user')}}"
                                 aria-expanded="false">
                                 <i class="fas fa-user"></i>
                                 <span class="hide-menu">User</span>
