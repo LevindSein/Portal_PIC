@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\User;
 
 use Image;
+use Carbon\Carbon;
 
 class ProfilController extends Controller
 {
@@ -120,6 +121,8 @@ class ProfilController extends Controller
         }
 
         if($request->hasFile('fotoInput')){
+            cache()->flush();
+
             $image = $request->file('fotoInput');
 
             $image = Image::make($image)->resize(500,500)->encode('png', 75);

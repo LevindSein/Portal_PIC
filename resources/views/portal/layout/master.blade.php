@@ -176,12 +176,12 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                    src="{{Auth::user()->foto}}" alt="user" class="rounded-circle" width="31"></a>
+                                    src="{{Auth::user()->foto}}?{{$rand}}" alt="user" class="rounded-circle" width="31"></a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated fadeIn">
                                 <span class="with-arrow">
                                     <span class="bg-primary"></span></span>
                                 <div class="d-flex no-block align-items-center p-15 bg-primary text-white mb-2">
-                                    <div class=""><img src="{{Auth::user()->foto}}" alt="user" class="img-circle"
+                                    <div class=""><img src="{{Auth::user()->foto}}?{{$rand}}" alt="user" class="img-circle"
                                             width="60"></div>
                                     <div class="ml-2">
                                         <h4 class="mb-0">{{Auth::user()->name}}</h4>
@@ -190,13 +190,13 @@
                                     </div>
                                 </div>
                                 <a class="dropdown-item" href="{{url('profil')}}">
-                                    <i class="ti-user mr-1 ml-1"></i>
+                                    <i class="fas fa-user mr-1 ml-1"></i>
                                     Profil
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="javascript:void(0)" oncontextmenu="return false;"
                                     onclick="location.href = '/logout' ">
-                                    <i class="fa fa-power-off mr-1 ml-1"></i>
+                                    <i class="fas fa-power-off mr-1 ml-1"></i>
                                     Logout
                                 </a>
                             </div>
@@ -502,11 +502,11 @@
     <script src="{{asset('vendor/datatables.net-bs4/js/dataTables.bootstrap4.js')}}"></script>
 
     <script>
-        $(document).ready(function(){
-            $(window).on('load', function() {
-                $(".se-pre-con").fadeIn("slow").fadeOut("slow");
-            });
+        $(window).on('load', function() {
+            $(".se-pre-con").fadeIn("slow").fadeOut("slow");
+        });
 
+        $(document).ready(function(){
             $(".sidebartoggler").click(function(){
                 var adjust = setInterval(() => {
                     var adjust = $($.fn.dataTable.tables(true)).DataTable().columns.adjust();

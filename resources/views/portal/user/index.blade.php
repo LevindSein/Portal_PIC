@@ -13,8 +13,8 @@ User
         Menu
     </button>
     <div class="dropdown-menu animated fadeIn">
-        <a class="dropdown-item tambah" href="javascript:void(0)"><i class="fas fa-plus"></i>&nbsp;Tambah User</a>
-        <a class="dropdown-item penghapusan" href="javascript:void(0)"><i class="fas fa-trash"></i>&nbsp;Data Penghapusan</a>
+        <a class="dropdown-item tambah" href="javascript:void(0)"><i class="fas fa-plus mr-1 ml-1"></i>&nbsp;Tambah User</a>
+        <a class="dropdown-item penghapusan" href="javascript:void(0)"><i class="fas fa-trash mr-1 ml-1"></i>&nbsp;Data Penghapusan</a>
     </div>
 </div>
 @endsection

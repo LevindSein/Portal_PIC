@@ -13,7 +13,7 @@ Profil
                 <div class="mt-4 text-center">
                     <div class="image-hover-text-container" id="changePhoto">
                         <div class="image-hover-image">
-                            <img src="{{Auth::user()->foto}}" class="rounded-circle" width="150" />
+                            <img src="{{Auth::user()->foto}}?{{$rand}}" class="rounded-circle" width="150" />
                         </div>
                         <div class="image-hover-text">
                             <div class="image-hover-text-bubble">
