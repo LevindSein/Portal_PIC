@@ -430,6 +430,28 @@
                 @yield('content-body')
 
                 @yield('content-modal')
+
+                <div id="confirmModal" class="modal fade" role="dialog" tabIndex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title titles">{title}</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body bodies">{body}</div>
+                            <form id="confirmForm">
+                                <div class="modal-footer">
+                                    <input type="hidden" id="confirmValue" value="">
+                                    <button type="submit" name="ok_button" id="ok_button" class="btn">{Button}</button>
+                                    <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid -->
@@ -493,11 +515,17 @@
                     clearInterval(adjust);
                 }, 1000);
             });
+
             $(document).on('shown.bs.tooltip', function (e) {
                 setTimeout(function () {
                     $(e.target).tooltip('hide');
                 }, 1000);
             });
+            setInterval(function(){
+                setTimeout(function(){
+                    $(".tooltip").tooltip("hide");
+                }, 1000);
+            }, 10000);
 
             setInterval(() => {
                 var email = localStorage.getItem("email");
@@ -505,7 +533,7 @@
                     localStorage.setItem("email", null);
                     location.reload();
                 }
-            }, 10000);
+            }, 5000);
 
             $("#emailResend").click( function(e){
                 e.preventDefault();
@@ -514,7 +542,7 @@
                     type: "GET",
                     cache:false,
                     beforeSend:function(){
-                        $("#emailResend").text('mengirim email verifikasi . . .').removeAttr("href");
+                        $("#emailResend").text('mengirim email verifikasi . . . ').removeAttr("href");
                     },
                     success:function(data)
                     {

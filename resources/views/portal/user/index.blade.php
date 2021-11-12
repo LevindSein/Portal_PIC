@@ -56,27 +56,6 @@ User
 @endsection
 
 @section('content-modal')
-<div id="confirmModal" class="modal fade" role="dialog" tabIndex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title titles">{title}</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body bodies">{body}</div>
-            <form id="confirmForm">
-                <div class="modal-footer">
-                    <input type="hidden" id="confirmValue" value="">
-                    <button type="submit" name="ok_button" id="ok_button" class="btn">{Button}</button>
-                    <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <div id="resetModal" class="modal fade" role="dialog" tabIndex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

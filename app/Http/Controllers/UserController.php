@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-
 use DataTables;
 use Carbon\Carbon;
 

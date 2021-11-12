@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 use App\Models\User;
 
 use Image;
@@ -41,73 +43,101 @@ class ProfilController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'fotoInput' => 'nullable|image|mimes:jpeg,png,jpg',
-            'username' => 'required|max:50|alpha_dash',
-            'name' => 'required|max:50|regex:/^[\pL\s\-]+$/u',
-            'email' => 'required|max:100|email',
-            'phone' => 'nullable|numeric|digits_between:10,15',
-            'alamat' => 'required|max:255',
-            'password' => 'required|min:6|alpha_dash',
-            'passwordBaru' => 'nullable|min:6|alpha_dash',
-            'konfirmasiPasswordBaru' => 'nullable|min:6|alpha_dash',
-        ]);
+        if(request()->ajax()){
+            $request->validate([
+                'username' => 'required|max:50|alpha_dash',
+                'email' => 'required|max:100|email',
+                'name' => 'required|max:50|regex:/^[\pL\s\-]+$/u',
+                'ktp' => 'required|numeric|digits_between:16,16',
+                'npwp' => 'nullable|numeric|digits_between:15,15',
+                'phone' => 'nullable|numeric|digits_between:12,15',
+                'alamat' => 'required|max:255',
+                'password' => 'required|min:6|alpha_dash',
+                'passwordBaru' => 'nullable|min:6|alpha_dash',
+                'konfirmasiPasswordBaru' => 'nullable|min:6|alpha_dash',
+            ]);
 
-        $username = strtolower($request->username);
-        $name = $request->name;
-        $email = strtolower($request->email);
-        $phone = $request->phone;
-        if(substr($phone,0,1) == "0"){
-            return redirect('profil')->with('warning', 'Nomor diawali 62 atau kode negara.');
-        }
-        $alamat = $request->alamat;
-        $password = $request->password;
-        $passwordBaru = $request->passwordBaru;
-        $konfirmasiPasswordBaru = $request->konfirmasiPasswordBaru;
+            $username = strtolower($request->username);
+            $name = $request->name;
+            $email = strtolower($request->email);
+            $phone = $request->phone;
+            if(substr($phone,0,1) == "0"){
+                return response()->json(['error' => "Nomor Whatsapp"]);
+            }
+            $ktp = $request->ktp;
+            $npwp = $request->npwp;
+            $alamat = $request->alamat;
+            $password = $request->password;
+            $passwordBaru = $request->passwordBaru;
+            $konfirmasiPasswordBaru = $request->konfirmasiPasswordBaru;
 
-        try{
-            $user = User::find(Auth::user()->id);
-            $user->username= $username;
-            $user->name= $name;
-            $user->email= $email;
-            $user->phone= $phone;
-            $user->alamat = $alamat;
-
-            if($request->hasFile('fotoInput')){
-                $image = $request->file('fotoInput');
-
-                $image = Image::make($image)->resize(500,500)->encode('png', 75);
-
-                $image_name = Auth::user()->id;
-                $image_full_name = "users/" . $image_name . '.png';
-                $location = storage_path('app/public/' . $image_full_name);
-                $image->save($location);
-
-                $data = $image_full_name;
-                $user->foto = "storage/" . $data;
+            try{
+                $user = User::findOrFail(Auth::user()->id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['exception' => $e]);
             }
 
-            if (Hash::check(md5($password), $user->password)) {
+            $user->username = $username;
+            $user->name = $name;
+            $user->email = $email;
+            $user->phone = $phone;
+            $user->ktp = $ktp;
+            $user->npwp = $npwp;
+            $user->alamat = $alamat;
+
+            if (Hash::check(sha1(md5(hash('gost',$password))), $user->password)) {
                 if($passwordBaru != NULL && $passwordBaru === $konfirmasiPasswordBaru){
-                    $user->password = Hash::make(md5($passwordBaru));
+                    $user->password = Hash::make(sha1(md5(hash('gost',$passwordBaru))));
                     $user->save();
                 }
                 else if($passwordBaru != $konfirmasiPasswordBaru){
-                    return redirect('profil')->with('error','Konfirmasi Password baru tidak cocok.');
+                    return response()->json(['error' => 'Password baru tidak cocok.']);
                 }
                 else{
                     $user->save();
                 }
             }
             else{
-                return redirect('profil')->with('error','Password saat ini salah.');
+                return response()->json(['error' => 'Password saat ini salah.']);
             }
+
+            return response()->json(['success' => 'Data berhasil disimpan.']);
         }
-        catch(\Exception $e){
-            return redirect('profil')->with('error','Update profil gagal.');
+        else{
+            return response()->json(['error' => '404 Not Found.']);
+        }
+    }
+
+    public function fotoProfil(Request $request){
+        $request->validate([
+            'fotoInput' => 'nullable|image|mimes:jpeg,png,jpg'
+        ]);
+
+        try{
+            $user = User::find(Auth::user()->id);
+        }catch(ModelNotFoundException $e){
+            return redirect('profil')->with('error', 'Profil tidak ditemukan.');
         }
 
-        return redirect('profil')->with('success','Update profil berhasil.');
+        if($request->hasFile('fotoInput')){
+            $image = $request->file('fotoInput');
+
+            $image = Image::make($image)->resize(500,500)->encode('png', 75);
+
+            $image_name = Auth::user()->id;
+            $image_full_name = "users/" . $image_name . '.png';
+            $location = storage_path('app/public/' . $image_full_name);
+            $image->save($location);
+
+            $data = $image_full_name;
+            $user->foto = "storage/" . $data;
+            $user->save();
+
+            return redirect('profil')->with('success', 'Foto profil diganti.');
+        }
+        else{
+            return redirect('profil')->with('error', 'File tidak terdeteksi.');
+        }
     }
 
     /**

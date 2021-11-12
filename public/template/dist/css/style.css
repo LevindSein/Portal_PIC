@@ -20985,22 +20985,49 @@ File: scss
     text-transform: none;
 }
 
-#phone:valid {
-    color: green;
-}
+.image-hover-text-container
+{
+    position: relative;
+    display: inline-block;
 
-#phone:invalid {
-    color: red;
+    width: auto;
+    height: auto;
+    transition: all 0.2s linear;
 }
-
-.se-pre-con {
-    position: fixed;
-    left: 0;
+.image-hover-image
+{
+    display: block;
+}
+.image-hover-text
+{
+    position: absolute;
     top: 0;
     width: 100%;
     height: 100%;
-    z-index: 9999;
-    background: url(../../../img/pulse.gif) center no-repeat #fff
+    margin: 0 auto;
+    opacity: 0;
+    cursor: default;
+    transition: opacity 0.2s linear;
+}
+.image-hover-text:hover
+{
+    opacity: 1;
+}
+.image-hover-text-bubble
+{
+    position: relative;
+    box-sizing: border-box;
+    top: 0; left: 0; right: 100%;
+    height: 150px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.596);
+    border-radius: 50%;
+    margin: 0 auto;
+    padding: 25% 8px 5px 8px;
+    overflow: hidden;
+    font-size: 17px;
+    text-align: center;
+    word-wrap: break-word;
 }
 
 ::-webkit-scrollbar
@@ -21015,4 +21042,14 @@ File: scss
 {
     background-color: #cacaca;
     border-radius: 5px;
+}
+
+.se-pre-con {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../../../img/pulse.gif) center no-repeat #fff
 }

@@ -10,7 +10,17 @@ Profil
     <div class="col-lg-4 col-xlg-3 col-md-5">
         <div class="card">
             <div class="card-body">
-                <div class="mt-4 text-center"> <img src="{{Auth::user()->foto}}" class="rounded-circle" width="150" />
+                <div class="mt-4 text-center">
+                    <div class="image-hover-text-container" id="changePhoto">
+                        <div class="image-hover-image">
+                            <img src="{{Auth::user()->foto}}" class="rounded-circle" width="150" />
+                        </div>
+                        <div class="image-hover-text">
+                            <div class="image-hover-text-bubble">
+                                <span style="font-size:12px;">Click to Change</span>
+                            </div>
+                        </div>
+                    </div>
                     <h4 class="card-title mt-2">{{Auth::user()->name}}</h4>
                     <div class="row text-center justify-content-md-center">
                     </div>
@@ -18,8 +28,12 @@ Profil
             </div>
             <hr>
             <div class="card-body">
+                <small class="text-muted pt-4 db">No.Anggota</small>
+                <h6>{{Auth::user()->anggota}}</h6>
+                @if(Auth::user()->phone)
                 <small class="text-muted">Email</small>
                 <h6>{{Auth::user()->email}}</h6>
+                @endif
                 @if(Auth::user()->phone)
                 <small class="text-muted pt-4 db">Whatsapp</small>
                 <h6>+{{Auth::user()->phone}}</h6>
@@ -42,33 +56,32 @@ Profil
                         class="nav-link active"
                         id="pills-timeline-tab"
                         data-toggle="pill"
-                        href="#current-month"
+                        href="#settings"
                         role="tab"
                         aria-controls="pills-timeline"
-                        aria-selected="true">Pengaturan
+                        aria-selected="true">Personal Data
                     </a>
                 </li>
+                {{-- @if(Auth::user()->level == 3)
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        id="pills-timeline-tab"
+                        data-toggle="pill"
+                        href="#riwayat"
+                        role="tab"
+                        aria-controls="pills-timeline"
+                        aria-selected="true">Riwayat Pembayaran
+                    </a>
+                </li>
+                @endif --}}
             </ul>
             <!-- Tabs -->
             <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="current-month" role="tabpanel" aria-labelledby="pills-timeline-tab">
+                <div class="tab-pane fade show active" id="settings" role="tabpanel" aria-labelledby="pills-timeline-tab">
                     <div class="card-body">
-                        <form id="profilForm" class="form-horizontal form-material" enctype="multipart/form-data">
+                        <form id="profilForm" class="form-horizontal form-material">
                             @csrf
-                            <div class="form-group">
-                                <label class="col-md-12">Ganti Foto</label>
-                                <div class="col-md-12">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Foto Profil</span>
-                                        </div>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="fotoInput" id="fotoInput" accept=".png, .jpg, .jpeg">
-                                            <label class="custom-file-label" for="fotoInput">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label class="col-md-12">Username (untuk Login) <span style="color: red">*</span></label>
                                 <div class="col-md-12">
@@ -90,7 +103,19 @@ Profil
                             <div class="form-group">
                                 <label class="col-md-12">Whatsapp (62xx)</label>
                                 <div class="col-md-12">
-                                    <input type="tel" name="phone" id ="phone" autocomplete="off" pattern="[\d]{10-15}" minlength="10" maxlength="15" placeholder="62xx" value="{{Auth::user()->phone}}" class="form-control form-control-line">
+                                    <input type="tel" name="phone" id ="phone" autocomplete="off" minlength="12" maxlength="15" placeholder="62xx" value="{{Auth::user()->phone}}" class="form-control form-control-line">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">KTP <span style="color: red">*</span></label>
+                                <div class="col-md-12">
+                                    <input type="tel" id="ktp" name="ktp" required autocomplete="off" minlength="16" maxlength="16" placeholder="16 digit nomor KTP" value="{{Auth::user()->ktp}}" class="form-control form-control-line">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-12">NPWP</label>
+                                <div class="col-md-12">
+                                    <input type="tel" id="npwp" name="npwp" autocomplete="off" minlength="15" maxlength="15" placeholder="15 digit nomor NPWP" value="{{Auth::user()->npwp}}" class="form-control form-control-line">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -100,7 +125,7 @@ Profil
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Password <span style="color: red">*</span></label>
+                                <label class="col-md-12">Password saat ini <span style="color: red">*</span></label>
                                 <div class="col-md-12">
                                     <input type="password" name="password" required autocomplete="off" minlength="6" placeholder="Ketikkan password saat ini" class="form-control form-control-line">
                                 </div>
@@ -114,17 +139,27 @@ Profil
                             <div class="form-group">
                                 <label class="col-md-12">Konfirmasi Password Baru</label>
                                 <div class="col-md-12">
-                                    <input type="password" name="konfirmasiPasswordBaru" minlength="6" autocomplete="off" placeholder="Konfirmasi password baru" class="form-control form-control-line">
+                                    <input type="password" name="konfirmasiPasswordBaru" minlength="6" autocomplete="off" placeholder="Ulangi password baru" class="form-control form-control-line">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-success btn-rounded">Update</button>
+                                    <p>(<span style="color: red">*</span>) wajib diisi.</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button type="submit" id="save_btn" class="btn btn-success btn-rounded">Simpan</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
+                {{-- <div class="tab-pane fade show active" id="riwayat" role="tabpanel" aria-labelledby="pills-timeline-tab">
+                    <div class="card-body">
+                        Under Constructions
+                    </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -132,35 +167,130 @@ Profil
 </div>
 @endsection
 
+@section('content-modal')
+<div id="photoModal" class="modal fade" role="dialog" tabIndex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <form action="{{url('profil/foto')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group mb-3">
+                                <div class="custom-file text-left">
+                                    <input type="file" class="custom-file-input" name="fotoInput" id="fotoInput" accept=".png, .jpg, .jpeg">
+                                    <label class="custom-file-label" for="fotoInput">Choose file .jpg, .jpeg, .png</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-rounded btn-info">Upload</button>
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
 @section('content-js')
 <script>
-    const fileBlocks = document.querySelectorAll('.custom-file');
-    [...fileBlocks].forEach(function (block) {
-        block.querySelector('input[type="file"]').onchange = function () {
-            const filename = this.files[0].name;
-            block.querySelector('.custom-file-label').textContent = filename.slice(0, 30);
-        }
-    })
-</script>
+    $(document).ready(function(){
+        const fileBlocks = document.querySelectorAll('.custom-file');
+        [...fileBlocks].forEach(function (block) {
+            block.querySelector('input[type="file"]').onchange = function () {
+                const filename = this.files[0].name;
+                block.querySelector('.custom-file-label').textContent = filename.slice(0, 30);
+            }
+        });
 
-<script>
-    $('[type=tel]').on('change', function(e) {
-        $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
-    });
+        $("#changePhoto").click(function(){
+            $("#photoModal").modal("show");
+        });
 
-    $('[type=tel]').on('keypress', function(e) {
-        keys = ['0','1','2','3','4','5','6','7','8','9']
-        return keys.indexOf(e.key) > -1
-    });
+        $('[type=tel]').on('change', function(e) {
+            $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
+        });
 
-    $("#username, #email").on('input', function(key) {
-        var value = $(this).val();
-        $(this).val(value.replace(/ /g, '_'));
+        $('[type=tel]').on('keypress', function(e) {
+            keys = ['0','1','2','3','4','5','6','7','8','9']
+            return keys.indexOf(e.key) > -1
+        });
+
+        $("#username, #email").on('input', function(key) {
+            var value = $(this).val();
+            $(this).val(value.replace(/ /g, '_'));
+        });
+        $("#phone").on("input", function() {
+            if (/^0/.test(this.value)) {
+                this.value = this.value.replace(/^0/, "")
+            }
+        });
+
+        $("#profilForm").submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "/profil",
+                type: "POST",
+                cache: false,
+                data: $(this).serialize(),
+                beforeSend:function(){
+                    $('#save_btn').text("Menyimpan").prop("disabled",true);
+                },
+                success:function(data)
+                {
+                    if(data.success){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.success(data.success);
+                        setTimeout(() => {
+                            location.reload();
+                        }, 300);
+                    }
+                    else if(data.exception){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error("Data gagal diproses.");
+                        console.log(data.exception);
+                    }
+                    else{
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                    }
+                },
+                error:function(data){
+                    if (data.status == 422) {
+                        $.each(data.responseJSON.errors, function (i, error) {
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.error(error[0]);
+                        });
+                    }
+                    else{
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error("Kesalahan Sistem.");
+                    }
+                    console.log(data);
+                },
+                complete:function(data){
+                    $('#save_btn').text("Simpan").prop("disabled",false);
+                }
+            });
+        });
     });
-    $("#phone").on("input", function() {
-        if (/^0/.test(this.value)) {
-            this.value = this.value.replace(/^0/, "")
-        }
-    })
 </script>
 @endsection

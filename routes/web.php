@@ -42,6 +42,7 @@ Route::middleware('checkauth')->group(function(){
 
     Route::get('email/verify/resend', [EmailController::class, 'resend']);
 
+    Route::post('profil/foto', [ProfilController::class, 'fotoProfil']);
     Route::resource('profil', ProfilController::class);
 });
 
