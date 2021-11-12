@@ -196,7 +196,7 @@ class AuthController extends Controller
             catch(\Exception $e){
                 return response()->json(['error' => "Pendaftaran gagal."]);
             }
-            $token = Crypt::encryptString($anggota);
+            $token = Crypt::encrypt($anggota);
             return response()->json(['register' => $token]);
         }
         else{

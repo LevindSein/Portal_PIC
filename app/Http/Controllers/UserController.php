@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 
 use DataTables;
 use Carbon\Carbon;
 
 use App\Models\User;
-use Illuminate\Support\Arr;
+
+use App\Mail\UserEmail;
 
 class UserController extends Controller
 {
@@ -29,13 +34,13 @@ class UserController extends Controller
             $data = User::where([['level','2'],['stt_aktif','!=','0']])->select('id','username','name','stt_aktif');
             return DataTables::of($data)
                 ->addColumn('action', function($data){
-                    $button = '<a type="button" data-toggle="tooltip" data-original-title="Reset Password" name="reset" id="'.Crypt::encryptString($data->id).'" nama="'.$data->name.'" class="reset"><i class="fas fa-key" style="color:#fd7e14;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" data-original-title="Edit" name="edit" id="'.Crypt::encryptString($data->id).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" data-original-title="Hapus" name="delete" id="'.Crypt::encryptString($data->id).'" nama="'.$data->name.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                    $button = '<a type="button" data-toggle="tooltip" data-original-title="Reset Password" name="reset" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="reset"><i class="fas fa-key" style="color:#fd7e14;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" data-original-title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" data-original-title="Hapus" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
                     return $button;
                 })
                 ->addColumn('show', function($data){
-                    $button = '<button title="Show Details" name="show" id="'.Crypt::encryptString($data->id).'" nama="'.$data->name.'" class="details btn btn-sm btn-info">Show</button>';
+                    $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details btn btn-sm btn-info">Show</button>';
                     return $button;
                 })
                 ->editColumn('stt_aktif', function($data){
@@ -61,13 +66,13 @@ class UserController extends Controller
             $data = User::where([['level',$level],['stt_aktif','!=','0']])->select('id','username','name','stt_aktif');
             return DataTables::of($data)
                 ->addColumn('action', function($data){
-                    $button = '<a type="button" data-toggle="tooltip" title="Reset Password" name="reset" id="'.Crypt::encryptString($data->id).'" nama="'.$data->name.'" class="reset"><i class="fas fa-key" style="color:#fd7e14;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encryptString($data->id).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Hapus" name="delete" id="'.Crypt::encryptString($data->id).'" nama="'.$data->name.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                    $button = '<a type="button" data-toggle="tooltip" title="Reset Password" name="reset" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="reset"><i class="fas fa-key" style="color:#fd7e14;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Hapus" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
                     return $button;
                 })
                 ->addColumn('show', function($data){
-                    $button = '<button title="Show Details" name="show" id="'.Crypt::encryptString($data->id).'" nama="'.$data->name.'" class="details btn btn-sm btn-info">Show</button>';
+                    $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details btn btn-sm btn-info">Show</button>';
                     return $button;
                 })
                 ->editColumn('stt_aktif', function($data){
@@ -92,11 +97,11 @@ class UserController extends Controller
             $data = User::where([['level', $level],['stt_aktif','0']])->select('id','username','name','stt_aktif');
             return DataTables::of($data)
                 ->addColumn('action', function($data){
-                    $button = '<a type="button" data-toggle="tooltip" title="Restore" name="restore" id="'.Crypt::encryptString($data->id).'" nama="'.$data->name.'" class="restore"><i class="fas fa-undo" style="color:#4e73df;"></i></a>';
+                    $button = '<a type="button" data-toggle="tooltip" title="Restore" name="restore" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="restore"><i class="fas fa-undo" style="color:#4e73df;"></i></a>';
                     return $button;
                 })
                 ->addColumn('show', function($data){
-                    $button = '<button title="Show Details" name="show" id="'.Crypt::encryptString($data->id).'" nama="'.$data->name.'" class="details btn btn-sm btn-info">Show</button>';
+                    $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details btn btn-sm btn-info">Show</button>';
                     return $button;
                 })
                 ->editColumn('stt_aktif', function($data){
@@ -127,7 +132,31 @@ class UserController extends Controller
     public function store(Request $request)
     {
         if(request()->ajax()){
-            return response()->json(['success' => 'Data berhasil disimpan.']);
+            if($request->checkEmail == 'checked'){
+                try{
+                    $data = [
+                        'sender' => "Admin dari PIC",
+                        'header' => "Silakan Verifikasi Email Anda",
+                        'subject' => "Resend Email Verfication",
+                        'name' => $name,
+                        'type' => "verifikasi",
+                        'button' => "Verifikasi",
+                        'url' => url('email/verify/'.$level.'/'.Crypt::encrypt($anggota)),
+                        'regards' => "Selamat Berniaga (PIC BDG Team)",
+                    ];
+                    Mail::to($email)->send(new UserEmail($data));
+
+                    $status = 'terkirim';
+                }
+                catch(\Exception $e){
+                    $status = $e;
+                }
+            }
+            else{
+                $status = 'unchecked';
+            }
+
+            return response()->json(['success' => 'Data berhasil disimpan.', 'status' => $status]);
         }
         else{
             return response()->json(['error' => '404 Not Found']);
@@ -177,7 +206,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         if(request()->ajax()){
-            $id = Crypt::decryptString($id);
+            $id = Crypt::decrypt($id);
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
@@ -226,7 +255,7 @@ class UserController extends Controller
     public function restore($id)
     {
         if(request()->ajax()){
-            $id = Crypt::decryptString($id);
+            $id = Crypt::decrypt($id);
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
@@ -275,7 +304,7 @@ class UserController extends Controller
     public function reset($id)
     {
         if(request()->ajax()){
-            $id = Crypt::decryptString($id);
+            $id = Crypt::decrypt($id);
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){

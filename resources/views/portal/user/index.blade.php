@@ -150,17 +150,10 @@ User
                         <label>Alamat</label>
                         <textarea class="form-control" rows="5" placeholder="Jl.Ciracas Gg.Jembar No.107, Kota Bandung, Jawa Barat 40614"></textarea>
                     </div>
-                    {{-- <h4 class="card-title">Default Generator</h4>
-                    <div class="form-group row">
-                        <label class="control-label text-right col-md-3">Username:</label>
-                        <div class="col-md-9">
-                            <p class="form-control-static username"> {username} </p>
-                        </div>
-                        <label class="control-label text-right col-md-3">Password:</label>
-                        <div class="col-md-9">
-                            <p class="form-control-static">123456</p>
-                        </div>
-                    </div> --}}
+                    <div class="custom-control custom-checkbox mr-sm-2 mb-3">
+                        <input type="checkbox" class="custom-control-input" id="checkEmail" name="checkEmail" value="checked" checked>
+                        <label class="custom-control-label" for="checkEmail">Kirim Email Verifikasi</label>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" id="save_btn" class="btn btn-success">Simpan</button>
@@ -323,6 +316,27 @@ User
                         else if(value == 'tambah'){
                             var selectedLevel = $('#level').val();
                             $("#kategori").val(selectedLevel).change();
+                            if(data.status == 'terkirim'){
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.success("Email verifikasi terkirim.");
+                            }
+                            else if (data.status == 'unchecked'){
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.info("Tanpa kirim email verifikasi.");
+                            }
+                            else{
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.error("Email verifikasi gagal terkirim.");
+                            }
                         }
                     }
                     else if(data.exception){
@@ -348,8 +362,9 @@ User
                         "preventDuplicates": true,
                     };
                     toastr.error("Kesalahan Sistem.");
+                    console.log(data);
                 },
-                complete:function(){
+                complete:function(data){
                     if(value == 'tambah'){
                         $('#tambahModal').modal('hide');
                         $('#save_btn').text(ok_btn_completed).prop("disabled",false);

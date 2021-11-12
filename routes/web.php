@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,5 +40,9 @@ Route::middleware('checkauth')->group(function(){
         Route::resource('user', UserController::class);
     });
 
+    Route::get('email/verify/resend', [EmailController::class, 'resend']);
+
     Route::resource('profil', ProfilController::class);
 });
+
+Route::get('email/verify/resend/{level}/{aktif}/{anggota}', [EmailController::class, 'verifyResend']);

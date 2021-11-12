@@ -398,6 +398,11 @@
         <!-- Page wrapper -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
+            @if(Auth::user()->email_verified_at == NULL)
+            <div class="alert alert-warning alert-block text-center" id="warning-alert">
+                <strong>Email Anda belum diverifikasi!</strong> Silakan verifikasi email anda, <a href="javascript:void(0)" id="emailResend">disini</a>.
+            </div>
+            @endif
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -475,22 +480,93 @@
     <script src="{{asset('vendor/datatables.net-bs4/js/dataTables.bootstrap4.js')}}"></script>
 
     <script>
-        $(window).on('load', function() {
-            $(".se-pre-con").fadeIn("slow").fadeOut("slow");
-        });
+        $(document).ready(function(){
+            $(window).on('load', function() {
+                $(".se-pre-con").fadeIn("slow").fadeOut("slow");
+            });
 
-        $(".sidebartoggler").click(function(){
-            var adjust = setInterval(() => {
-                var adjust = $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
-            }, 10);
-            setTimeout(() => {
-                clearInterval(adjust);
-            }, 1000);
-        });
-        $(document).on('shown.bs.tooltip', function (e) {
-            setTimeout(function () {
-                $(e.target).tooltip('hide');
-            }, 1000);
+            $(".sidebartoggler").click(function(){
+                var adjust = setInterval(() => {
+                    var adjust = $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+                }, 10);
+                setTimeout(() => {
+                    clearInterval(adjust);
+                }, 1000);
+            });
+            $(document).on('shown.bs.tooltip', function (e) {
+                setTimeout(function () {
+                    $(e.target).tooltip('hide');
+                }, 1000);
+            });
+
+            setInterval(() => {
+                var email = localStorage.getItem("email");
+                if(email == 'terverifikasi'){
+                    localStorage.setItem("email", null);
+                    location.reload();
+                }
+            }, 10000);
+
+            $("#emailResend").click( function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: "/email/verify/resend/",
+                    type: "GET",
+                    cache:false,
+                    beforeSend:function(){
+                        $("#emailResend").text('mengirim email verifikasi . . .').removeAttr("href");
+                    },
+                    success:function(data)
+                    {
+                        if(data.success){
+                            if(data.status == 'terkirim'){
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.success(data.success);
+                            }
+                            else{
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.error("Email verifikasi gagal terkirim.");
+                                console.log(data.status);
+                            }
+                        }
+                        else if(data.exception){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.error("Data gagal diproses.");
+                            console.log(data.exception);
+                        }
+                        else{
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.error(data.error);
+                            setTimeout(function() {
+                                location.href = "/profil";
+                            }, 1000);
+                        }
+                    },
+                    error:function(data){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error("Kesalahan Sistem.");
+                        console.log(data);
+                    },
+                    complete:function(data){
+                        $("#emailResend").text('disini').attr("href", "javascript:void(0)");
+                    }
+                });
+            });
         });
     </script>
 
