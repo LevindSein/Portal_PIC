@@ -19,6 +19,7 @@ class UserEmail extends Mailable
     public function __construct($data)
     {
         $this->subject = $data['subject'];
+        $this->sender = $data['sender'];
         $this->data = $data;
     }
 
@@ -30,9 +31,9 @@ class UserEmail extends Mailable
     public function build()
     {
         return $this
-            ->from($address = 'noreply@picbdg.com', $name = '[PENTING] noreply PICBDG')
+            ->from($address = 'noreply@picbdg.com', $name = $this->sender)
             ->subject($this->subject)
-            ->view('email.resend')
+            ->view('email.user')
             ->with($this->data);
     }
 }

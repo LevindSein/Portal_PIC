@@ -547,21 +547,11 @@
                     success:function(data)
                     {
                         if(data.success){
-                            if(data.status == 'terkirim'){
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.success(data.success);
-                            }
-                            else{
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.error("Email verifikasi gagal terkirim.");
-                                console.log(data.status);
-                            }
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.success(data.success);
                         }
                         else if(data.exception){
                             toastr.options = {

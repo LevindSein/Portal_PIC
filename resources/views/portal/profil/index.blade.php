@@ -83,31 +83,34 @@ Profil
                         <form id="profilForm" class="form-horizontal form-material">
                             @csrf
                             <div class="form-group">
-                                <label class="col-md-12">Username (untuk Login) <span style="color: red">*</span></label>
+                                <label class="col-md-12">Username (untuk Login) <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
                                     <input type="text" id="username" name="username" required autocomplete="off" maxlength="50" placeholder="Username" value="{{Auth::user()->username}}" class="form-control form-control-line" style="text-transform:lowercase;">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Nama Lengkap <span style="color: red">*</span></label>
+                                <label class="col-md-12">Nama Lengkap <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
-                                    <input type="text" name="name" required autocomplete="off" maxlength="50" placeholder="Nama Lengkap" value="{{Auth::user()->name}}" class="form-control form-control-line">
+                                    <input type="text" name="name" required autocomplete="off" maxlength="100" placeholder="Alm. H. John Doe, S.pd., MT" value="{{Auth::user()->name}}" class="form-control form-control-line">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Email <span style="color: red">*</span></label>
+                                <label class="col-md-12">Email <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
-                                    <input type="email" id="email" name="email" maxlength="100" required autocomplete="off" placeholder="something@email.com" value="{{Auth::user()->email}}" class="form-control form-control-line" style="text-transform:lowercase;">
+                                    <input type="email" id="email" name="email" maxlength="200" required autocomplete="off" placeholder="something@email.com" value="{{Auth::user()->email}}" class="form-control form-control-line" style="text-transform:lowercase;">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Whatsapp (62xx)</label>
-                                <div class="col-md-12">
-                                    <input type="tel" name="phone" id ="phone" autocomplete="off" minlength="12" maxlength="15" placeholder="62xx" value="{{Auth::user()->phone}}" class="form-control form-control-line">
+                                <label class="col-md-12">Whatsapp</label>
+                                <div class="col-md-12 input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">+62</span>
+                                    </div>
+                                    <input type="tel" name="phone" id ="phone" autocomplete="off" minlength="10" maxlength="12" placeholder="878123xxxxx" value="{{Auth::user()->phone}}" class="form-control form-control-line">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">KTP <span style="color: red">*</span></label>
+                                <label class="col-md-12">KTP <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
                                     <input type="tel" id="ktp" name="ktp" required autocomplete="off" minlength="16" maxlength="16" placeholder="16 digit nomor KTP" value="{{Auth::user()->ktp}}" class="form-control form-control-line">
                                 </div>
@@ -119,13 +122,13 @@ Profil
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Alamat <span style="color: red">*</span></label>
+                                <label class="col-md-12">Alamat <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
-                                    <textarea rows="5" name="alamat" required autocomplete="off"placeholder="Ketikkan Alamat disini" maxlength="255" class="form-control form-control-line">{{Auth::user()->alamat}}</textarea>
+                                    <textarea rows="5" id="alamat" name="alamat" required autocomplete="off" placeholder="Ketikkan Alamat disini" maxlength="255" class="form-control form-control-line">{{Auth::user()->alamat}}</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Password saat ini <span style="color: red">*</span></label>
+                                <label class="col-md-12">Password saat ini <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
                                     <input type="password" name="password" required autocomplete="off" minlength="6" placeholder="Ketikkan password saat ini" class="form-control form-control-line">
                                 </div>
@@ -144,7 +147,7 @@ Profil
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <p>(<span style="color: red">*</span>) wajib diisi.</p>
+                                    <p>(<span class="text-danger">*</span>) wajib diisi.</p>
                                 </div>
                             </div>
                             <div class="form-group">

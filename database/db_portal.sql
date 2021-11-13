@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2021 at 07:14 AM
+-- Generation Time: Nov 13, 2021 at 11:22 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -109,7 +109,7 @@ CREATE TABLE `users` (
   `npwp` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `alamat` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `otoritas` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `stt_aktif` tinyint(1) NOT NULL DEFAULT 2,
+  `stt_aktif` tinyint(1) DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `nonaktif` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,

@@ -192,6 +192,7 @@
                                     "preventDuplicates": true,
                                 };
                                 toastr.error("Kesalahan sistem.");
+                                console.log(data);
                             }
                         },
                         error:function(data){

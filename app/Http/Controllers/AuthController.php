@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
 
 use App\Models\User;
+use App\Models\Identity;
 
 use Response;
 
@@ -44,7 +45,7 @@ class AuthController extends Controller
                 return redirect("register/$token");
             }
             else{
-                return redirect('login');
+                return redirect('login')->with('warning', 'Silakan Login terlebih dahulu.');
             }
         }
         else{
@@ -74,8 +75,8 @@ class AuthController extends Controller
         //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah
 
         $request->validate([
-            'username' => ['required', 'max:100'],
-            'password' => ['required', 'min:6'],
+            'username' => 'required|max:100',
+            'password' => 'required|min:6',
         ]);
 
         $username = strtolower($request->username);
@@ -99,7 +100,7 @@ class AuthController extends Controller
                 else{
                     Session::flush();
                     Auth::logout();
-                    return response()->json(['warning' => "Tidak memiliki akses."]);
+                    return response()->json(['error' => "Tidak memiliki akses."]);
                 }
             }
             else{
@@ -172,29 +173,30 @@ class AuthController extends Controller
 
     public function register(Request $request){
         $request->validate([
-            'email' => ['required', 'max:100', 'email', 'unique:App\Models\User,email'],
-            'password' => ['required', 'min:6'],
-            'ulangiPassword' => ['required', 'min:6'],
+            'email' => 'required|max:200|email|unique:App\Models\User,email',
+            'password' => 'required|min:6',
+            'ulangiPassword' => 'required|min:6',
         ]);
 
-        $username = strtolower($request->email);
+        $email = strtolower($request->email);
         $password = $request->password;
         $confirm = $request->ulangiPassword;
 
         if($password == $confirm){
-            $name = $this->name();
-            $anggota = $this->anggota();
-            $data['username'] = $name;
-            $data['name'] = $name;
-            $data['email'] = $username;
+            $username = Identity::make('username');
+            $anggota = Identity::make('anggota');
+            $data['username'] = $username;
+            $data['name'] = $username;
+            $data['email'] = $email;
             $data['anggota'] = $anggota;
+            $data['stt_aktif'] = 2;
             $data['password'] = Hash::make(sha1(md5(hash('gost', $password))));
 
             try{
                 User::create($data);
             }
             catch(\Exception $e){
-                return response()->json(['error' => "Pendaftaran gagal."]);
+                return response()->json(['exception' => $e]);
             }
             $token = Crypt::encrypt($anggota);
             return response()->json(['register' => $token]);
@@ -223,23 +225,5 @@ class AuthController extends Controller
         Session::flush();
         Auth::logout();
         return Redirect('login');
-    }
-
-    public function name(){
-        $name = str_shuffle('abcdefghjkmnopqrstuvwxyz123456789');
-        $name = substr($name,0,7);
-        if(User::where('username', $name)->first() != NULL){
-            $this->name();
-        }
-        return $name;
-    }
-
-    public function anggota(){
-        $name = str_shuffle('1234567890');
-        $name = 'BP3C'.substr($name,0,8);
-        if(User::where('anggota', $name)->first() != NULL){
-            $this->anggota();
-        }
-        return $name;
     }
 }

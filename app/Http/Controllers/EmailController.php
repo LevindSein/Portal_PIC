@@ -29,7 +29,7 @@ class EmailController extends Controller
                     $data = [
                         'sender' => "Admin dari PIC",
                         'header' => "Silakan Verifikasi Email Anda",
-                        'subject' => "Resend Email Verfication",
+                        'subject' => "Resend Email Verification",
                         'name' => $user->name,
                         'type' => "verifikasi",
                         'button' => "Verifikasi",
@@ -37,15 +37,13 @@ class EmailController extends Controller
                         'regards' => "Selamat Berniaga (PIC BDG Team)",
                     ];
                     Mail::to($user->email)->send(new ResendEmail($data));
-
-                    $status = 'terkirim';
                 }
                 catch(\Exception $e){
-                    $status = $e;
+                    return response()->json(['exception' => $e]);
                 }
             }
 
-            return response()->json(['success' => "Silakan perikasa email anda.", 'status' => $status]);
+            return response()->json(['success' => "Silakan perikasa email anda."]);
         }
         else{
             return response()->json(['error' => '404 Not Found']);
@@ -61,6 +59,24 @@ class EmailController extends Controller
 
         $user = User::where("anggota", $anggota)->first();
         if($user->level == $level && $user->stt_aktif == $aktif){
+            $user->email_verified_at = Carbon::now()->toDateTimeString();
+            $user->save();
+        }
+        else{
+            abort(404);
+        }
+        return view('email.verified');
+    }
+
+    public function verify($level, $anggota){
+        try {
+            $anggota = Crypt::decrypt($anggota);
+        } catch (Illuminate\Contracts\Encryption\DecryptException $e) {
+            abort(500);
+        }
+
+        $user = User::where("anggota", $anggota)->first();
+        if($user->level == $level){
             $user->email_verified_at = Carbon::now()->toDateTimeString();
             $user->save();
         }

@@ -27,12 +27,15 @@ User
                 <form>
                     <div class="form-group col-md-2 col-sm-2" style="padding: 0;">
                         <label for="kategori">Pilih Kategori</label>
-                        <select class="form-control" id="kategori">
+                        <select class="form-control" id="kategori" name="kategori">
+                            @if(Auth::user()->level == 1)
+                            <option value="1">Super Admin</option>
                             <option value="2">Admin</option>
-                            <option value="3">Nasabah</option>
                             <option value="4">Kasir</option>
                             <option value="5">Keuangan</option>
                             <option value="6">Manajer</option>
+                            @endif
+                            <option value="3">Nasabah</option>
                         </select>
                     </div>
                 </form>
@@ -92,45 +95,51 @@ User
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Pilih Role <span class="text-danger">*</span></label>
-                        <select class="form-control" id="level">
+                        <select class="form-control" id="level" name="level">
+                            @if(Auth::user()->level == 1)
+                            <option value="1">Super Admin</option>
                             <option value="2">Admin</option>
-                            <option value="3">Nasabah</option>
                             <option value="4">Kasir</option>
                             <option value="5">Keuangan</option>
                             <option value="6">Manajer</option>
+                            @endif
+                            <option value="3">Nasabah</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Nama <span class="text-danger">*</span></label>
-                        <input type="text" required autocomplete="off" name="name" class="form-control" placeholder="H. John Doe">
+                        <label>Nama Lengkap <span class="text-danger">*</span></label>
+                        <input type="text" name="name" required autocomplete="off" maxlength="100" placeholder="Alm. H. John Doe, S.pd., MT" class="form-control form-control-line">
                     </div>
                     <div class="form-group">
                         <label>Email <span class="text-danger">*</span></label>
-                        <input type="email" required autocomplete="off" name="email" class="form-control" placeholder="example@email.com">
+                        <input type="email" id="email" name="email" maxlength="200" required autocomplete="off" placeholder="something@email.com" class="form-control form-control-line" style="text-transform:lowercase;">
                     </div>
                     <div class="form-group">
-                        <label>Phone</label>
+                        <label>Whatsapp</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">+62</span>
                             </div>
-                            <input type="text" autocomplete="off" name="phone" class="form-control" placeholder="878xxxxxxxx" aria-label="phone" aria-describedby="basic-addon1">
+                            <input type="tel" name="phone" id ="phone" autocomplete="off" minlength="10" maxlength="12" placeholder="878123xxxxx" class="form-control form-control-line">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>KTP</label>
-                        <input type="text" autocomplete="off" name="ktp" class="form-control" placeholder="378405xxxxxxxxxx">
+                        <input type="tel" id="ktp" name="ktp" autocomplete="off" minlength="16" maxlength="16" placeholder="16 digit nomor KTP" class="form-control form-control-line">
                     </div>
                     <div class="form-group">
                         <label>NPWP</label>
-                        <input type="text" autocomplete="off" name="npwp" class="form-control" placeholder="08178xxxxxxxxxx">
+                        <input type="tel" id="npwp" name="npwp" autocomplete="off" minlength="15" maxlength="15" placeholder="15 digit nomor NPWP" class="form-control form-control-line">
                     </div>
                     <div class="form-group">
                         <label>Alamat</label>
-                        <textarea class="form-control" rows="5" placeholder="Jl.Ciracas Gg.Jembar No.107, Kota Bandung, Jawa Barat 40614"></textarea>
+                        <textarea rows="5" id="alamat" name="alamat" autocomplete="off" placeholder="Ketikkan Alamat disini" maxlength="255" class="form-control form-control-line">{{Auth::user()->alamat}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <p>(<span class="text-danger">*</span>) wajib diisi.</p>
                     </div>
                     <div class="custom-control custom-checkbox mr-sm-2 mb-3">
-                        <input type="checkbox" class="custom-control-input" id="checkEmail" name="checkEmail" value="checked" checked>
+                        <input type="checkbox" class="custom-control-input" id="checkEmail" name="checkEmail" value="checked" onclick="return false">
                         <label class="custom-control-label" for="checkEmail">Kirim Email Verifikasi</label>
                     </div>
                 </div>
@@ -147,6 +156,25 @@ User
 @section('content-js')
 <script>
     $(document).ready(function(){
+        $('[type=tel]').on('change', function(e) {
+            $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
+        });
+
+        $('[type=tel]').on('keypress', function(e) {
+            keys = ['0','1','2','3','4','5','6','7','8','9']
+            return keys.indexOf(e.key) > -1
+        });
+
+        $("#username, #email").on('input', function(key) {
+            var value = $(this).val();
+            $(this).val(value.replace(/ /g, '_'));
+        });
+        $("#phone").on("input", function() {
+            if (/^0/.test(this.value)) {
+                this.value = this.value.replace(/^0/, "")
+            }
+        });
+
         var params = getUrlParameter('data');
         if(params == "penghapusan"){
             penghapusan();
@@ -184,6 +212,8 @@ User
         });
 
         $(".tambah").click( function(){
+            $("#email,#ktp,#npwp").val('');
+            $('#checkEmail').prop("checked", true);
             $('#tambahModal').modal('show');
         });
 
@@ -212,6 +242,16 @@ User
             $('#confirmModal').modal('show');
         });
 
+        $(document).on('click', '.deletePermanently', function(){
+            id = $(this).attr('id');
+            nama = $(this).attr('nama');
+            $('.titles').text('Hapus permanen data ' + nama + ' ?');
+            $('.bodies').text('Pilih "Permanen" di bawah ini jika anda yakin untuk menghapus data user secara permanen.');
+            $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Permanen');
+            $('#confirmValue').val('deletePermanently');
+            $('#confirmModal').modal('show');
+        });
+
         $(document).on('click', '.restore', function(){
             id = $(this).attr('id');
             nama = $(this).attr('nama');
@@ -235,6 +275,13 @@ User
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Hapus";
+                ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+            }
+            else if(value == 'deletePermanently'){
+                url = "/user/permanen/" + id;
+                type = "DELETE";
+                ok_btn_before = "Menghapus...";
+                ok_btn_completed = "Permanen";
                 ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
             }
             else if(value == 'restore'){
@@ -295,27 +342,9 @@ User
                         else if(value == 'tambah'){
                             var selectedLevel = $('#level').val();
                             $("#kategori").val(selectedLevel).change();
-                            if(data.status == 'terkirim'){
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.success("Email verifikasi terkirim.");
-                            }
-                            else if (data.status == 'unchecked'){
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.info("Tanpa kirim email verifikasi.");
-                            }
-                            else{
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.error("Email verifikasi gagal terkirim.");
-                            }
+                            $(".page-title").text("User");
+                            window.history.replaceState(null, null, "?data=user");
+                            dtable = dtableInit("/user/level/" + selectedLevel);
                         }
                     }
                     else if(data.exception){
@@ -336,11 +365,22 @@ User
                     dtableReload();
                 },
                 error:function(data){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
-                    toastr.error("Kesalahan Sistem.");
+                    if (data.status == 422) {
+                        $.each(data.responseJSON.errors, function (i, error) {
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.error(error[0]);
+                        });
+                    }
+                    else{
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error("Kesalahan Sistem.");
+                    }
                     console.log(data);
                 },
                 complete:function(data){
@@ -425,7 +465,7 @@ User
             $("#kategori").prop('selectedIndex',0)
             $(".page-title").text("Data Penghapusan");
             window.history.replaceState(null, null, "?data=penghapusan");
-            dtable = dtableInit("/user/penghapusan/2");
+            dtable = dtableInit("/user/penghapusan/1");
         }
 
         function home(){

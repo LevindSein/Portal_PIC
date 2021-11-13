@@ -33,6 +33,7 @@ Route::middleware('checkauth')->group(function(){
     Route::middleware('oneauth')->group(function(){
         Route::get('dashboard', [DashboardController::class, 'index']);
 
+        Route::delete('user/permanen/{id}', [UserController::class, 'permanen']);
         Route::post('user/reset/{id}', [UserController::class, 'reset']);
         Route::post('user/restore/{id}', [UserController::class, 'restore']);
         Route::get('user/penghapusan/{params}', [UserController::class, 'penghapusan']);
@@ -46,4 +47,5 @@ Route::middleware('checkauth')->group(function(){
     Route::resource('profil', ProfilController::class);
 });
 
+Route::get('email/verify/{level}/{anggota}', [EmailController::class, 'verify']);
 Route::get('email/verify/resend/{level}/{aktif}/{anggota}', [EmailController::class, 'verifyResend']);
