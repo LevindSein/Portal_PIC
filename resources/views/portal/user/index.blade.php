@@ -39,6 +39,7 @@ User
                         </select>
                     </div>
                 </form>
+                <p id="warning-penghapusan" class="text-danger">*) Data Penghapusan akan terhapus secara permanen oleh sistem saat 30 hari sejak akun yang terkait dihapus.</p>
                 <div class="table-responsive">
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
@@ -352,7 +353,7 @@ User
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error("Data gagal diproses.");
+                        toastr.error("Data gagal diproses. Periksa jaringan anda.");
                         console.log(data.exception);
                     }
                     else{
@@ -466,6 +467,7 @@ User
             $(".page-title").text("Data Penghapusan");
             window.history.replaceState(null, null, "?data=penghapusan");
             dtable = dtableInit("/user/penghapusan/1");
+            $('#warning-penghapusan').show();
         }
 
         function home(){
@@ -473,6 +475,7 @@ User
             $(".page-title").text("User");
             window.history.replaceState(null, null, "?data=user");
             dtable = dtableInit("/user");
+            $('#warning-penghapusan').hide();
         }
     });
 </script>

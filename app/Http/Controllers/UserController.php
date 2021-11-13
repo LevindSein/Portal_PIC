@@ -18,6 +18,7 @@ use App\Models\User;
 use App\Models\Identity;
 
 use App\Mail\UserEmail;
+use App\Mail\DeleteEmail;
 
 class UserController extends Controller
 {
@@ -312,15 +313,26 @@ class UserController extends Controller
             );
             $nonaktif = json_encode($json);
 
-            $user->phone = NULL;
-            $user->email = NULL;
-            $user->email_verified_at = NULL;
-            $user->ktp = NULL;
-            $user->npwp = NULL;
-            $user->alamat = NULL;
-            $user->otoritas = NULL;
             $user->stt_aktif = 0;
             $user->nonaktif = $nonaktif;
+
+            if($user->email != NULL){
+                try{
+                    $data = [
+                        'sender' => Auth::user()->name." dari PIC",
+                        'header' => "Harap hubungi Bagian Pelayanan Pedagang apabila ingin Re-Aktivasi",
+                        'subject' => "Akun telah dinonaktifkan",
+                        'name' => $user->name,
+                        'type' => "nonaktivasi",
+                        'regards' => "Sampai Jumpa Kembali (PIC BDG Team)",
+                    ];
+                    Mail::to($user->email)->send(new DeleteEmail($data));
+                }
+                catch(\Exception $e){
+                    return response()->json(['exception' => $e]);
+                }
+            }
+
             $user->save();
 
             return response()->json(['success' => 'Data berhasil dihapus.']);
@@ -369,12 +381,10 @@ class UserController extends Controller
                 'nama' => $user->name,
                 'phone' => $user->phone,
                 'email' => $user->email,
-                'email_verified_at' => $user->email_verified_at,
                 'anggota' => $user->anggota,
                 'ktp' => $user->ktp,
                 'npwp' => $user->npwp,
                 'alamat' => $user->alamat,
-                'otoritas' => $user->otoritas,
             ];
 
             $json[] = array(
@@ -386,6 +396,14 @@ class UserController extends Controller
                 'data' => $person,
             );
             $nonaktif = json_encode($json);
+
+            $user->phone = NULL;
+            $user->email = NULL;
+            $user->email_verified_at = NULL;
+            $user->ktp = NULL;
+            $user->npwp = NULL;
+            $user->alamat = NULL;
+            $user->otoritas = NULL;
 
             $user->stt_aktif = NULL;
             $user->nonaktif = $nonaktif;

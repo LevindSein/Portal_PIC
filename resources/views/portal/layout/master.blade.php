@@ -558,7 +558,7 @@
                                 "closeButton": true,
                                 "preventDuplicates": true,
                             };
-                            toastr.error("Data gagal diproses.");
+                            toastr.error("Data gagal diproses. Periksa jaringan anda.");
                             console.log(data.exception);
                         }
                         else{
