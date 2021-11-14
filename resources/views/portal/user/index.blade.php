@@ -82,16 +82,16 @@ User
     </div>
 </div>
 
-<div id="tambahModal" class="modal fade" role="dialog" tabIndex="-1">
+<div id="userModal" class="modal fade" role="dialog" tabIndex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah User</h5>
+                <h5 class="modal-title titles">{Title}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form id="tambahForm">
+            <form id="userForm">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -109,7 +109,7 @@ User
                     </div>
                     <div class="form-group">
                         <label>Nama Lengkap <span class="text-danger">*</span></label>
-                        <input type="text" name="name" required autocomplete="off" maxlength="100" placeholder="Alm. H. John Doe, S.pd., MT" class="form-control form-control-line">
+                        <input type="text" id="name" name="name" required autocomplete="off" maxlength="100" placeholder="Alm. H. John Doe, S.pd., MT" class="form-control form-control-line">
                     </div>
                     <div class="form-group">
                         <label>Email <span class="text-danger">*</span></label>
@@ -121,7 +121,7 @@ User
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">+62</span>
                             </div>
-                            <input type="tel" name="phone" id ="phone" autocomplete="off" minlength="10" maxlength="12" placeholder="878123xxxxx" class="form-control form-control-line">
+                            <input type="tel" name="phone" id="phone" autocomplete="off" minlength="10" maxlength="12" placeholder="878123xxxxx" class="form-control form-control-line">
                         </div>
                     </div>
                     <div class="form-group">
@@ -139,12 +139,13 @@ User
                     <div class="form-group">
                         <p>(<span class="text-danger">*</span>) wajib diisi.</p>
                     </div>
-                    <div class="custom-control custom-checkbox mr-sm-2 mb-3">
+                    <div class="custom-control custom-checkbox mr-sm-2 mb-3" id="divCheckEmail">
                         <input type="checkbox" class="custom-control-input" id="checkEmail" name="checkEmail" value="checked" onclick="return false">
                         <label class="custom-control-label" for="checkEmail">Kirim Email Verifikasi</label>
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <input type="hidden" id="userFormValue"/>
                     <button type="submit" id="save_btn" class="btn btn-success">Simpan</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
                 </div>
@@ -212,17 +213,90 @@ User
             penghapusan();
         });
 
-        $(".tambah").click( function(){
-            $("#email,#ktp,#npwp").val('');
-            $('#checkEmail').prop("checked", true);
-            $('#tambahModal').modal('show');
-        });
-
         setInterval(function(){
             dtableReload();
         }, 5000);
 
         var id;
+        $(".tambah").click( function(){
+            $("#userForm")[0].reset();
+            $('.titles').text('Tambah User');
+            $('#divCheckEmail').show();
+            $('#checkEmail').prop("checked", true);
+            $("#userFormValue").val('tambah');
+            $('#userModal').modal('show');
+        });
+
+        $(document).on('click', '.edit', function(){
+            id = $(this).attr('id');
+            nama = $(this).attr('nama');
+            $("#userForm")[0].reset();
+            $('.titles').text('Edit data ' + nama);
+            $('#divCheckEmail').hide();
+            $('#checkEmail').prop("checked", false);
+            $("#userFormValue").val('update');
+
+            $.ajax({
+                url: "/user/" + id + "/edit",
+                type: "GET",
+                cache:false,
+                success:function(data){
+                    if(data.success){
+                        $("#name").val(data.user.name);
+                        $("#email").val(data.user.email);
+                        $("#phone").val(data.user.phone);
+                        $("#ktp").val(data.user.ktp);
+                        $("#npwp").val(data.user.npwp);
+                        $("#alamat").val(data.user.alamat);
+                        $("#level").val(data.user.level).change();
+                    }
+                    else if(data.exception){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error("Data gagal diproses. Periksa jaringan anda.");
+                        console.log(data.exception);
+                    }
+                    else{
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                    }
+                },
+                error:function(data){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("Gagal mengambil data.");
+                    console.log(data);
+                },
+                complete:function(){
+                    $('#userModal').modal('show');
+                }
+            });
+        });
+
+        $('#userForm').submit(function(e){
+            e.preventDefault();
+            value = $("#userFormValue").val();
+            if(value == 'tambah'){
+                url = "/user";
+                type = "POST";
+            }
+            else if(value == 'update'){
+                url = "/user/" + id;
+                type = "PUT";
+            }
+            dataset = $(this).serialize();
+            ok_btn_before = "Menyimpan...";
+            ok_btn_completed = "Simpan";
+            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        });
+
         $(document).on('click', '.reset', function(){
             id = $(this).attr('id');
             nama = $(this).attr('nama');
@@ -301,18 +375,6 @@ User
             }
         });
 
-        $('#tambahForm').submit(function(e){
-            e.preventDefault();
-            url = "/user";
-            type = "POST";
-            value = "tambah";
-            dataset = $(this).serialize();
-            ok_btn_before = "Menyimpan...";
-            ok_btn_completed = "Simpan";
-            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-        });
-
-
         function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
             $.ajax({
                 url: url,
@@ -320,7 +382,7 @@ User
                 cache:false,
                 data: dataset,
                 beforeSend:function(){
-                    if(value == 'tambah'){
+                    if(value == 'tambah' || value == 'update'){
                         $('#save_btn').text(ok_btn_before).prop("disabled",true);
                     }
                     else{
@@ -385,8 +447,8 @@ User
                     console.log(data);
                 },
                 complete:function(data){
-                    if(value == 'tambah'){
-                        $('#tambahModal').modal('hide');
+                    if(value == 'tambah' || value == 'update'){
+                        $('#userModal').modal('hide');
                         $('#save_btn').text(ok_btn_completed).prop("disabled",false);
                     }
                     else{
