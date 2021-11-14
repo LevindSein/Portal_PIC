@@ -24,7 +24,7 @@
                             <td>
                                 <p>Yth. Sdr/i {{$name}}</p>
                                 <p>Terimakasih telah menjadi bagian dari kami.</p>
-                                <p>Berikut adalah pesan untuk {{$type}} akun anda di <a href="https://portal.picbdg.com">Member Area</a> Pasar Induk Caringin Kota Bandung.</p>
+                                <p>Berikut adalah pesan untuk {{$type}} akun anda di <a href="{{url('/')}}">Member Area</a> Pasar Induk Caringin Kota Bandung.</p>
                                 <b>- {{$regards}}</b>
                                 <p>Apabila Anda ingin melakukan Re-Aktivasi, silakan datang ke Bagian Pelayanan Pedagang di Kantor Pasar Induk Caringin Kota Bandung :</p>
                                 <p>

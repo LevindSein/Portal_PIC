@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\User;
-
-use App\Mail\ResendEmail;
 
 use Carbon\Carbon;
 
@@ -26,7 +24,7 @@ class EmailController extends Controller
             }
             else{
                 try{
-                    $data = [
+                    $details = [
                         'sender' => "Admin dari PIC",
                         'header' => "Silakan Verifikasi Email Anda",
                         'subject' => "Resend Email Verification",
@@ -36,7 +34,7 @@ class EmailController extends Controller
                         'url' => url('email/verify/resend/'.$user->level.'/'.$user->stt_aktif.'/'.Crypt::encrypt($user->anggota)),
                         'regards' => "Selamat Berniaga (PIC BDG Team)",
                     ];
-                    Mail::to($user->email)->send(new ResendEmail($data));
+                    Mail::to($user->email)->send(new \App\Mail\ResendEmail($details));
                 }
                 catch(\Exception $e){
                     return response()->json(['exception' => $e]);

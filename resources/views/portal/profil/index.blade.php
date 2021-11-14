@@ -259,7 +259,7 @@ Profil
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error("Data gagal diproses. Periksa jaringan anda.");
+                        toastr.error("Data gagal diproses.");
                         console.log(data.exception);
                     }
                     else{

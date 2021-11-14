@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class DeleteEmail extends Mailable
+class TestEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,9 +16,9 @@ class DeleteEmail extends Mailable
      *
      * @return void
      */
-    public function __construct($details)
+    public function __construct()
     {
-        $this->details = $details;
+        //
     }
 
     /**
@@ -29,9 +29,7 @@ class DeleteEmail extends Mailable
     public function build()
     {
         return $this
-            ->from($address = 'noreply@picbdg.com', $name = $this->details['sender'])
-            ->subject($this->details['subject'])
-            ->view('email.delete')
-            ->with($this->details);
+        ->from($address = 'noreply@picbdg.com', $name = "Fahniiii")
+        ->view('email.test');
     }
 }

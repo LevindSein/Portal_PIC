@@ -17,9 +17,6 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Identity;
 
-use App\Mail\UserEmail;
-use App\Mail\DeleteEmail;
-
 class UserController extends Controller
 {
     /**
@@ -186,25 +183,29 @@ class UserController extends Controller
             $data['password'] = Hash::make(sha1(md5(hash('gost', $password))));
 
             try{
+                // $details = [
+                //     'sender' => Auth::user()->name." dari PIC",
+                //     'header' => "Harap Setting Profil & Password Anda setelah verifikasi",
+                //     'subject' => "Email Verification",
+                //     'name' => $name,
+                //     'type' => "verifikasi",
+                //     'username' => $username,
+                //     'password' => $password,
+                //     'button' => "Verifikasi",
+                //     'url' => url('email/verify/'.$level.'/'.Crypt::encrypt($anggota)),
+                //     'regards' => "Selamat Berniaga (PIC BDG Team)",
+                //     'email' => $email,
+                // ];
+                dispatch(new \App\Jobs\UserEmailJob());
+
+                // \Mail::to($email)->send(new \App\Mail\UserEmail($details));
+            }
+            catch(\Exception $e){
+                return response()->json(['exception' => $e]);
+            }
+
+            try{
                 User::create($data);
-                try{
-                    $data = [
-                        'sender' => Auth::user()->name." dari PIC",
-                        'header' => "Harap Setting Profil & Password Anda setelah verifikasi",
-                        'subject' => "Email Verification",
-                        'name' => $name,
-                        'type' => "verifikasi",
-                        'username' => $username,
-                        'password' => $password,
-                        'button' => "Verifikasi",
-                        'url' => url('email/verify/'.$level.'/'.Crypt::encrypt($anggota)),
-                        'regards' => "Selamat Berniaga (PIC BDG Team)",
-                    ];
-                    Mail::to($email)->send(new UserEmail($data));
-                }
-                catch(\Exception $e){
-                    return response()->json(['exception' => $e]);
-                }
             }
             catch(\Exception $e){
                 return response()->json(['exception' => $e]);
@@ -296,7 +297,11 @@ class UserController extends Controller
             }
             $user->level = $level;
             $user->phone = $request->phone;
-            $user->email = $request->email;
+            $email = $request->email;
+            if($user->email != $email){
+                $user->email_verified_at = NULL;
+            }
+            $user->email = $email;
             $user->ktp = $request->ktp;
             $user->npwp = $request->npwp;
             $user->alamat = $request->alamat;
@@ -381,7 +386,7 @@ class UserController extends Controller
 
             if($user->email != NULL){
                 try{
-                    $data = [
+                    $details = [
                         'sender' => Auth::user()->name." dari PIC",
                         'header' => "Harap hubungi Bagian Pelayanan Pedagang apabila ingin Re-Aktivasi",
                         'subject' => "Akun telah dinonaktifkan",
@@ -389,7 +394,7 @@ class UserController extends Controller
                         'type' => "nonaktivasi",
                         'regards' => "Sampai Jumpa Kembali (PIC BDG Team)",
                     ];
-                    Mail::to($user->email)->send(new DeleteEmail($data));
+                    Mail::to($user->email)->send(new \App\Mail\DeleteEmail($details));
                 }
                 catch(\Exception $e){
                     return response()->json(['exception' => $e]);
@@ -552,7 +557,11 @@ class UserController extends Controller
             $nonaktif = json_encode($json);
 
             $user->nonaktif = $nonaktif;
-            $user->save();
+            try{
+                $user->save();
+            } catch (\Exception $e){
+                return response()->json(['exception' => $e]);
+            }
 
             return response()->json(['success' => 'Data berhasil dipulihkan.']);
         }

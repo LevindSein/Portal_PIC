@@ -80,6 +80,9 @@ class ProfilController extends Controller
 
             $user->username = $username;
             $user->name = $name;
+            if($user->email != $email){
+                $user->email_verified_at = NULL;
+            }
             $user->email = $email;
             $user->phone = $phone;
             $user->ktp = $ktp;

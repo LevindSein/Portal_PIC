@@ -24,7 +24,7 @@
                             <td>
                                 <p>Yth. Sdr/i {{$name}}</p>
                                 <p>Terimakasih telah menjadi bagian dari kami.</p>
-                                <p>Berikut adalah pesan untuk {{$type}} akun anda di <a href="https://portal.picbdg.com">Member Area</a> Pasar Induk Caringin Kota Bandung.</p>
+                                <p>Berikut adalah pesan untuk {{$type}} akun anda di <a href="{{url('/')}}">Member Area</a> Pasar Induk Caringin Kota Bandung.</p>
                                 <p>Silakan klik tombol di bawah ini :</p>
                                 <div style="text-align: center;">
                                     <a href="{{$url}}" style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #4fc3f7; border-radius: 60px; text-decoration:none;">{{$button}}</a>

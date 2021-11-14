@@ -16,11 +16,9 @@ class UserEmail extends Mailable
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($details)
     {
-        $this->subject = $data['subject'];
-        $this->sender = $data['sender'];
-        $this->data = $data;
+        $this->details = $details;
     }
 
     /**
@@ -31,9 +29,9 @@ class UserEmail extends Mailable
     public function build()
     {
         return $this
-            ->from($address = 'noreply@picbdg.com', $name = $this->sender)
-            ->subject($this->subject)
+            ->from($address = 'noreply@picbdg.com', $name = $this->details['sender'])
+            ->subject($this->details['subject'])
             ->view('email.user')
-            ->with($this->data);
+            ->with($this->details);
     }
 }
