@@ -11,7 +11,9 @@ use Illuminate\Queue\SerializesModels;
 
 use Illuminate\Support\Facades\Mail;
 
-use App\Mail\TestEmail;
+use App\Mail\UserEmail;
+use App\Mail\DeleteEmail;
+use App\Mail\ResendEmail;
 
 class UserEmailJob implements ShouldQueue
 {
@@ -22,9 +24,11 @@ class UserEmailJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    protected $details;
+
+    public function __construct($details)
     {
-        //
+        $this->details = $details;
     }
 
     /**
@@ -34,8 +38,15 @@ class UserEmailJob implements ShouldQueue
      */
     public function handle()
     {
-        // \Mail::to($this->details['email'])->send(new \App\Mail\UserEmail($this->details));
-        $email = new TestEmail;
-        Mail::to('fahniamsyari1999@gmail.com')->send($email);
+        $value = $this->details['value'];
+        if($value == 'store'){
+            Mail::to($this->details['email'])->send(new UserEmail($this->details));
+        }
+        else if($value == 'destroy'){
+            Mail::to($this->details['email'])->send(new DeleteEmail($this->details));
+        }
+        else if($value == 'resend'){
+            Mail::to($this->details['email'])->send(new ResendEmail($this->details));
+        }
     }
 }

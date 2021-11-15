@@ -50,4 +50,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function level($data){
+        if($data == 1){
+            return 'Super Admin';
+        }
+        else if($data == 2){
+            return 'Admin';
+        }
+        else if($data == 3){
+            return 'Nasabah';
+        }
+        else if($data == 4){
+            return 'Kasir';
+        }
+        else if($data == 5){
+            return 'Keuangan';
+        }
+        else if($data == 6){
+            return 'Manajer';
+        }
+        else{
+            return '';
+        }
+    }
 }

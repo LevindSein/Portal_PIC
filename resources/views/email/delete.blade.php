@@ -24,13 +24,13 @@
                             <td>
                                 <p>Yth. Sdr/i {{$name}}</p>
                                 <p>Terimakasih telah menjadi bagian dari kami.</p>
-                                <p>Berikut adalah pesan untuk {{$type}} akun anda di <a href="{{url('/')}}">Member Area</a> Pasar Induk Caringin Kota Bandung.</p>
+                                <p>Berikut adalah pesan untuk <b>{{$type}}</b> akun anda di <a href="{{url('/')}}">Member Area</a> Pasar Induk Caringin Kota Bandung sebagai <b>{{$role}}</b>.</p>
                                 <b>- {{$regards}}</b>
-                                <p>Apabila Anda ingin melakukan Re-Aktivasi, silakan datang ke Bagian Pelayanan Pedagang di Kantor Pasar Induk Caringin Kota Bandung :</p>
+                                <p>Apabila Anda ingin melakukan re-aktivasi, silakan datang ke Bagian Pelayanan Pedagang di Kantor Pasar Induk Caringin Kota Bandung, <b>sebelum tanggal {{$limit}}</b></p>
                                 <p>
                                     <a href="https://goo.gl/maps/VHCMLQ9r44dByrmp8">Pasar Induk Caringin, Ruko blok A No.22-25, Babakan Ciparay, Kec. Babakan Ciparay, Kota Bandung, Jawa Barat 40212</a>
                                 </p>
-                                <p style="font-size: 10px">Pesan ini dikirim oleh bot sistem. Anda tidak perlu membalasnya.</p>
+                                <p style="font-size: 10px">Pesan ini dikirim oleh sistem. Anda tidak perlu membalasnya.</p>
                             </td>
                         </tr>
                     </tbody>

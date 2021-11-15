@@ -561,6 +561,13 @@
                             toastr.error("Data gagal diproses.");
                             console.log(data.exception);
                         }
+                        else if(data.warning){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.warning(data.warning);
+                        }
                         else{
                             toastr.options = {
                                 "closeButton": true,

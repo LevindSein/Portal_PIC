@@ -20,7 +20,7 @@ class EmailController extends Controller
             $id = $user->id;
             $emailExist = User::find($id)->email;
             if($emailExist == NULL){
-                return response()->json(['error' => "Email belum tersedia."]);
+                return response()->json(['warning' => "Email belum tersedia."]);
             }
             else{
                 try{
@@ -29,12 +29,15 @@ class EmailController extends Controller
                         'header' => "Silakan Verifikasi Email Anda",
                         'subject' => "Resend Email Verification",
                         'name' => $user->name,
+                        'email' => $user->email,
                         'type' => "verifikasi",
                         'button' => "Verifikasi",
                         'url' => url('email/verify/resend/'.$user->level.'/'.$user->stt_aktif.'/'.Crypt::encrypt($user->anggota)),
                         'regards' => "Selamat Berniaga (PIC BDG Team)",
+                        'timestamp' => Carbon::now()->toDateTimeString(),
+                        'value' => 'resend',
                     ];
-                    Mail::to($user->email)->send(new \App\Mail\ResendEmail($details));
+                    dispatch(new \App\Jobs\UserEmailJob($details));
                 }
                 catch(\Exception $e){
                     return response()->json(['exception' => $e]);

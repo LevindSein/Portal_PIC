@@ -183,22 +183,23 @@ class UserController extends Controller
             $data['password'] = Hash::make(sha1(md5(hash('gost', $password))));
 
             try{
-                // $details = [
-                //     'sender' => Auth::user()->name." dari PIC",
-                //     'header' => "Harap Setting Profil & Password Anda setelah verifikasi",
-                //     'subject' => "Email Verification",
-                //     'name' => $name,
-                //     'type' => "verifikasi",
-                //     'username' => $username,
-                //     'password' => $password,
-                //     'button' => "Verifikasi",
-                //     'url' => url('email/verify/'.$level.'/'.Crypt::encrypt($anggota)),
-                //     'regards' => "Selamat Berniaga (PIC BDG Team)",
-                //     'email' => $email,
-                // ];
-                dispatch(new \App\Jobs\UserEmailJob());
-
-                // \Mail::to($email)->send(new \App\Mail\UserEmail($details));
+                $details = [
+                    'sender' => Auth::user()->name." dari PIC",
+                    'header' => "Harap Setting Profil & Password Anda setelah verifikasi",
+                    'subject' => "Email Verification",
+                    'name' => $name,
+                    'role' => User::level($level),
+                    'type' => "verifikasi",
+                    'username' => $username,
+                    'password' => $password,
+                    'button' => "Verifikasi",
+                    'url' => url('email/verify/'.$level.'/'.Crypt::encrypt($anggota)),
+                    'regards' => "Selamat Berniaga (PIC BDG Team)",
+                    'email' => $email,
+                    'timestamp' => Carbon::now()->toDateTimeString(),
+                    'value' => 'store',
+                ];
+                dispatch(new \App\Jobs\UserEmailJob($details));
             }
             catch(\Exception $e){
                 return response()->json(['exception' => $e]);
@@ -371,12 +372,13 @@ class UserController extends Controller
                 'otoritas' => $user->otoritas,
             ];
 
+            $timestamp = Carbon::now()->toDateTimeString();
             $json[] = array(
                 'id' => $id,
                 'status' => 'nonaktif',
                 'stt_aktif' => $user->stt_aktif,
                 'anggota' => Auth::user()->anggota,
-                'timestamp' => Carbon::now()->toDateTimeString(),
+                'timestamp' => $timestamp,
                 'data' => $person,
             );
             $nonaktif = json_encode($json);
@@ -388,13 +390,18 @@ class UserController extends Controller
                 try{
                     $details = [
                         'sender' => Auth::user()->name." dari PIC",
-                        'header' => "Harap hubungi Bagian Pelayanan Pedagang apabila ingin Re-Aktivasi",
+                        'header' => "Harap hubungi Bagian Pelayanan Pedagang apabila ingin re-aktivasi",
                         'subject' => "Akun telah dinonaktifkan",
                         'name' => $user->name,
+                        'role' => User::level($user->level),
                         'type' => "nonaktivasi",
                         'regards' => "Sampai Jumpa Kembali (PIC BDG Team)",
+                        'timestamp' => Carbon::now()->toDateTimeString(),
+                        'limit' => Carbon::now()->addDays(30)->toDateTimeString(),
+                        'email' => $user->email,
+                        'value' => 'destroy',
                     ];
-                    Mail::to($user->email)->send(new \App\Mail\DeleteEmail($details));
+                    dispatch(new \App\Jobs\UserEmailJob($details));
                 }
                 catch(\Exception $e){
                     return response()->json(['exception' => $e]);

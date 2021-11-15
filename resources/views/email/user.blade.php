@@ -24,7 +24,7 @@
                             <td>
                                 <p>Yth. Sdr/i {{$name}}</p>
                                 <p>Terimakasih telah menjadi bagian dari kami.</p>
-                                <p>Berikut adalah pesan untuk {{$type}} akun anda di <a href="{{url('/')}}">Member Area</a> Pasar Induk Caringin Kota Bandung.</p>
+                                <p>Berikut adalah pesan untuk <b>{{$type}}</b> akun anda <a href="{{url('/')}}">Member Area</a> Pasar Induk Caringin Kota Bandung sebagai <b>{{$role}}</b>.</p>
                                 <p>Silakan klik tombol di bawah ini :</p>
                                 <div style="text-align: center;">
                                     <p>username : <b>{{$username}}</b></p>
@@ -33,7 +33,7 @@
                                 </div>
                                 <b>- {{$regards}}</b>
                                 <p>Jika tombol di atas tidak berfungsi, silakan kunjungi {{$url}}</p>
-                                <p style="font-size: 10px">Pesan ini dikirim oleh bot sistem. Anda tidak perlu membalasnya.</p>
+                                <p style="font-size: 10px">Pesan ini dikirim oleh sistem. Anda tidak perlu membalasnya.</p>
                             </td>
                         </tr>
                     </tbody>
