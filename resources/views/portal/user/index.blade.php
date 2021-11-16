@@ -136,6 +136,177 @@ User
                         <label>Alamat</label>
                         <textarea rows="5" id="alamat" name="alamat" autocomplete="off" placeholder="Ketikkan Alamat disini" maxlength="255" class="form-control form-control-line">{{Auth::user()->alamat}}</textarea>
                     </div>
+                    <div class="form-group" id="otoritasDiv">
+                        <label>Otoritas <span class="text-danger">*</span></label>
+                        <select class="select2 form-control" multiple="multiple" style="height: 36px;width: 100%;" id="blok" name="blok[]"></select>
+                        <div class="text-center form-group">
+                            <strong>Pilih Pengelolaan :</strong>
+                        </div>
+                        <div class="form-group col-lg-12 justify-content-between" style="display: flex;flex-wrap: wrap;">
+                            <div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="kelola[]"
+                                        id="registrasi"
+                                        value="registrasi">
+                                    <label class="form-control-label" for="registrasi">
+                                        Layn.Registrasi
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="kelola[]"
+                                        id="pedagang"
+                                        value="pedagang">
+                                    <label class="form-control-label" for="pedagang">
+                                        Layn.Pedagang
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="kelola[]"
+                                        id="tempatusaha"
+                                        value="tempatusaha">
+                                    <label class="form-control-label" for="tempatusaha">
+                                        Layn.Tempat Usaha
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="kelola[]"
+                                        id="pembongkaran"
+                                        value="pembongkaran">
+                                    <label class="form-control-label" for="pembongkaran">
+                                        Layn.Pembongkaran
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="kelola[]"
+                                        id="tagihan"
+                                        value="tagihan">
+                                    <label class="form-control-label" for="tagihan">
+                                        Kelola Tagihan
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="kelola[]"
+                                        id="simulasi"
+                                        value="simulasi">
+                                    <label class="form-control-label" for="simulasi">
+                                        Simulasi Tagihan
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="kelola[]"
+                                        id="pemakaian"
+                                        value="pemakaian">
+                                    <label class="form-control-label" for="pemakaian">
+                                        Lap.Pemakaian
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="kelola[]"
+                                        id="pendapatan"
+                                        value="pendapatan">
+                                    <label class="form-control-label" for="pendapatan">
+                                        Lap.Pendapatan
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="kelola[]"
+                                        id="tunggakan"
+                                        value="tunggakan">
+                                    <label class="form-control-label" for="tunggakan">
+                                        Lap.Tunggakan
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="kelola[]"
+                                        id="datausaha"
+                                        value="datausaha">
+                                    <label class="form-control-label" for="datausaha">
+                                        Data Usaha
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="kelola[]"
+                                        id="alatmeter"
+                                        value="alatmeter">
+                                    <label class="form-control-label" for="alatmeter">
+                                        Alat Meter
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="kelola[]"
+                                        id="tarif"
+                                        value="tarif">
+                                    <label class="form-control-label" for="tarif">
+                                        Tarif
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="kelola[]"
+                                        id="harilibur"
+                                        value="harilibur">
+                                    <label class="form-control-label" for="harilibur">
+                                        Hari Libur
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <p>(<span class="text-danger">*</span>) wajib diisi.</p>
                     </div>
@@ -158,6 +329,41 @@ User
 @section('content-js')
 <script>
     $(document).ready(function(){
+        $("#level").on('change', function(){
+                var level = $("#level").val();
+                if(level == '2'){
+                    $("#otoritasDiv").show();
+                    select2custom("#blok", "/cari/blok", "-- Pilih Kelompok --");
+                    $("#blok").prop("required",true);
+                }
+                else{
+                    $("#otoritasDiv").hide();
+                    $("#blok").prop("required",false);
+                }
+        });
+
+        function select2custom(select2id, url, placeholder){
+            $(select2id).select2({
+                placeholder: placeholder,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    processResults: function (data) {
+                        return {
+                            results:  $.map(data, function (d) {
+                                return {
+                                    id: d.id,
+                                    text: d.nama
+                                }
+                            })
+                        };
+                    },
+                }
+            });
+        }
+
         $('[type=tel]').on('change', function(e) {
             $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
         });
@@ -220,6 +426,7 @@ User
         var id;
         $(".tambah").click( function(){
             $("#userForm")[0].reset();
+            $("#otoritasDiv").hide();
             $('.titles').text('Tambah User');
             $('#divCheckEmail').show();
             $('#checkEmail').prop("checked", true);
@@ -249,6 +456,18 @@ User
                         $("#npwp").val(data.user.npwp);
                         $("#alamat").val(data.user.alamat);
                         $("#level").val(data.user.level).change();
+
+                        if(data.user.level == 2){
+                            var json = JSON.parse(data.user.otoritas);
+
+                            for (var k in json.otoritas) {
+                                if (json.otoritas.hasOwnProperty(k)) {
+                                    if(json.otoritas[k] == false){
+                                        $("#" + k).prop("checked",false);
+                                    }
+                                }
+                            }
+                        }
                     }
                     else if(data.exception){
                         toastr.options = {
@@ -402,7 +621,7 @@ User
                             $('#password_baru').html(data.pass);
                             $('#resetModal').modal('show');
                         }
-                        else if(value == 'tambah'){
+                        else if(value == 'tambah' || value == 'update'){
                             var selectedLevel = $('#level').val();
                             $("#kategori").val(selectedLevel).change();
                             $(".page-title").text("User");

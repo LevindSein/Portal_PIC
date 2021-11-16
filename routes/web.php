@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +50,5 @@ Route::middleware('checkauth')->group(function(){
 
 Route::get('email/verify/{level}/{anggota}', [EmailController::class, 'verify']);
 Route::get('email/verify/resend/{level}/{aktif}/{anggota}', [EmailController::class, 'verifyResend']);
+
+Route::get('cari/blok',[SearchController::class, 'blok']);

@@ -28,6 +28,7 @@ class User extends Authenticatable
         'ktp',
         'npwp',
         'alamat',
+        'otoritas',
         'stt_aktif',
         'password',
     ];

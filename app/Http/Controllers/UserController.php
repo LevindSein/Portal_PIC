@@ -16,6 +16,7 @@ use Carbon\Carbon;
 
 use App\Models\User;
 use App\Models\Identity;
+use App\Models\Blok;
 
 class UserController extends Controller
 {
@@ -170,6 +171,9 @@ class UserController extends Controller
                 return response()->json(['error' => 'Something wrong.']);
             }
             $data['level'] = $level;
+            if($level == 2){
+                $data['otoritas'] = $this->checkOtoritas($request);
+            }
             $data['phone'] = $request->phone;
             $email = $request->email;
             $data['email'] = $email;
@@ -297,6 +301,12 @@ class UserController extends Controller
                 return response()->json(['error' => 'Something wrong.']);
             }
             $user->level = $level;
+            if($level == 2){
+                $user->otoritas = $this->checkOtoritas($request);
+            }
+            else{
+                $user->otoritas = NULL;
+            }
             $user->phone = $request->phone;
             $email = $request->email;
             if($user->email != $email){
@@ -313,6 +323,61 @@ class UserController extends Controller
         else{
             return response()->json(['error' => '404 Not Found']);
         }
+    }
+
+    public function checkOtoritas($request){
+        $request->validate([
+            'blok' => 'required',
+        ]);
+
+        $pilihanKelola = array(
+            'registrasi',
+            'pedagang',
+            'tempatusaha',
+            'pembongkaran',
+            'tagihan',
+            'simulasi',
+            'pemakaian',
+            'pendapatan',
+            'tunggakan',
+            'datausaha',
+            'alatmeter',
+            'tarif',
+            'harilibur',
+        );
+
+        $kelola = NULL;
+
+        for($i=0; $i<count($pilihanKelola); $i++){
+            if($request->kelola != NULL){
+                if(in_array($pilihanKelola[$i],$request->kelola)){
+                    $kelola[$pilihanKelola[$i]] = true;
+                }
+                else{
+                    $kelola[$pilihanKelola[$i]] = false;
+                }
+            }
+        }
+
+        if($kelola == NULL)
+            $otoritas = [];
+        else{
+            $otoritas = $kelola;
+        }
+
+        $blok = $request->blok;
+        $temp = [];
+        for($i = 0; $i < count($blok); $i++){
+            $temp[$i] = Blok::find($blok[$i])->nama;
+        }
+        $blok = $temp;
+
+        $otoritas = [
+            'blok' => $temp,
+            'otoritas' => $otoritas,
+        ];
+
+        return json_encode($otoritas);
     }
 
     /**

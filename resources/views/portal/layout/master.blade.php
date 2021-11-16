@@ -43,6 +43,9 @@
 
     <script src="{{asset('template/assets/libs/jquery/dist/jquery.min.js')}}"></script>
 
+    {{-- Select2 --}}
+    <link rel="stylesheet" type="text/css" href="{{asset('vendor/select2/dist/css/select2.min.css')}}">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{asset('template/dist/css/style.min.css')}}">
 
@@ -290,25 +293,25 @@
                                 href="javascript:void(0)"
                                 aria-expanded="false">
                                 <i class="fad fa-book"></i>
-                                <span class="hide-menu">Pembukuan</span>
+                                <span class="hide-menu">Laporan</span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
                                     <a href="index.html" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Laporan&nbsp;Pemakaian</span>
+                                        <span class="hide-menu">Pemakaian</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a href="index.html" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Laporan&nbsp;Pendapatan</span>
+                                        <span class="hide-menu">Pendapatan</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a href="index.html" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Laporan&nbsp;Tunggakan</span>
+                                        <span class="hide-menu">Tunggakan</span>
                                     </a>
                                 </li>
                             </ul>
@@ -347,12 +350,6 @@
                                         <span class="hide-menu">Hari&nbsp;Libur</span>
                                     </a>
                                 </li>
-                                <li class="sidebar-item">
-                                    <a href="index.html" class="sidebar-link">
-                                        <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Simulasi</span>
-                                    </a>
-                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-item">
@@ -372,7 +369,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
-                                <i class="fas fa-wrench"></i>
+                                <i class="fas fa-clipboard-check"></i>
                                 <span class="hide-menu">Changelog</span>
                             </a>
                         </li>
@@ -500,6 +497,8 @@
 
     <script src="{{asset('vendor/DataTables/datatables.min.js')}}"></script>
     <script src="{{asset('vendor/datatables.net-bs4/js/dataTables.bootstrap4.js')}}"></script>
+
+    <script src="{{asset('vendor/select2/dist/js/select2.min.js')}}"></script>
 
     <script>
         $(window).on('load', function() {
