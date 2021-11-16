@@ -13,7 +13,7 @@ Profil
                 <div class="mt-4 text-center">
                     <div class="image-hover-text-container" id="changePhoto">
                         <div class="image-hover-image">
-                            <img src="{{Auth::user()->foto}}?{{$rand}}" class="rounded-circle" width="150" />
+                            <img src="{{asset(Auth::user()->foto)}}?{{$rand}}" class="rounded-circle" width="150" />
                         </div>
                         <div class="image-hover-text">
                             <div class="image-hover-text-bubble">
@@ -31,12 +31,12 @@ Profil
                 <small class="text-muted pt-4 db">No.Anggota</small>
                 <h6>{{Auth::user()->anggota}}</h6>
                 @if(Auth::user()->phone)
-                <small class="text-muted">Email</small>
+                <small class="text-muted pt-4 db">Email</small>
                 <h6>{{Auth::user()->email}}</h6>
                 @endif
                 @if(Auth::user()->phone)
                 <small class="text-muted pt-4 db">Whatsapp</small>
-                <h6>+{{Auth::user()->phone}}</h6>
+                <h6>+62{{Auth::user()->phone}}</h6>
                 @endif
                 @if(Auth::user()->alamat)
                 <small class="text-muted pt-4 db">Alamat</small>

@@ -179,12 +179,12 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                    src="{{Auth::user()->foto}}?{{$rand}}" alt="user" class="rounded-circle" width="31"></a>
+                                    src="{{asset(Auth::user()->foto)}}?{{$rand}}" alt="user" class="rounded-circle" width="31"></a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated fadeIn">
                                 <span class="with-arrow">
                                     <span class="bg-primary"></span></span>
                                 <div class="d-flex no-block align-items-center p-15 bg-primary text-white mb-2">
-                                    <div class=""><img src="{{Auth::user()->foto}}?{{$rand}}" alt="user" class="img-circle"
+                                    <div class=""><img src="{{asset(Auth::user()->foto)}}?{{$rand}}" alt="user" class="img-circle"
                                             width="60"></div>
                                     <div class="ml-2">
                                         <h4 class="mb-0">{{Auth::user()->name}}</h4>

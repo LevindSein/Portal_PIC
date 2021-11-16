@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -231,7 +230,24 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        if(request()->ajax()){
+            try {
+                $id = Crypt::decrypt($id);
+            } catch (Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['exception' => $e]);
+            }
+
+            try{
+                $user = User::findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['exception' => $e]);
+            }
+
+            return response()->json(['success' => 'Berhasil mengambil data.', 'user' => $user]);
+        }
+        else{
+            return response()->json(['error' => '404 Not Found']);
+        }
     }
 
     /**

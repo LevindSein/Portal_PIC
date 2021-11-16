@@ -82,6 +82,62 @@ User
     </div>
 </div>
 
+<div id="showModal" class="modal fade" role="dialog" tabIndex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title titles">{Title}</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-lg-4 col-xlg-3 col-md-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mt-4 text-center">
+                                    <img id="showFoto" class="rounded-circle" width="150" />
+                                    <h4 class="card-title mt-2" id="showNama"></h4>
+                                    <div class="row text-center justify-content-md-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <!-- Column -->
+                    <div class="col-lg-8 col-xlg-9 col-md-7">
+                        <div class="card">
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="settings" role="tabpanel" aria-labelledby="pills-timeline-tab">
+                                    <div class="card-body">
+                                        <small class="text-muted pt-4 db">Username</small>
+                                        <h6 id="showUsername"></h6>
+                                        <small class="text-muted pt-4 db">No.Anggota</small>
+                                        <h6 id="showAnggota"></h6>
+                                        <small class="text-muted pt-4 db">Email</small>
+                                        <h6 id="showEmail"></h6>
+                                        <small class="text-muted pt-4 db">Whatsapp</small>
+                                        <h6 id="showPhone"></h6>
+                                        <small class="text-muted pt-4 db">Alamat</small>
+                                        <h6 id="showAlamat"></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="userModal" class="modal fade" role="dialog" tabIndex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -567,6 +623,62 @@ User
             $('#ok_button').addClass('btn-info').removeClass('btn-danger').text('Restore');
             $('#confirmValue').val('restore');
             $('#confirmModal').modal('show');
+        });
+
+        $(document).on('click', '.details', function(){
+            id = $(this).attr('id');
+            nama = $(this).attr('nama');
+            $('.titles').text('Informasi ' + nama);
+            $.ajax({
+                url: "/user/" + id,
+                type: "GET",
+                cache:false,
+                success:function(data){
+                    if(data.success){
+                        $("#showFoto").attr('src', '/' + data.user.foto);
+                        $("#showUsername").text(data.user.username);
+                        $("#showNama").text(data.user.name);
+                        $("#showAnggota").text(data.user.anggota);
+
+                        if(data.user.email)
+                            $("#showEmail").html("<a target='_blank' href='mailto:" + data.user.email + "'>" + data.user.email + " <i class='fas fa-external-link'></i></a>");
+                        else
+                            $("#showEmail").html("&mdash;");
+                        if(data.user.phone)
+                            $("#showPhone").html("<a target='_blank' href='https://wa.me/62" + data.user.phone + "'>+62" + data.user.phone + " <i class='fas fa-external-link'></i></a>");
+                        else
+                            $("#showPhone").html("&mdash;");
+
+                        $("#showAlamat").text(data.user.alamat);
+                    }
+                    else if(data.exception){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error("Data gagal diproses.");
+                        console.log(data.exception);
+                    }
+                    else{
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                    }
+                },
+                error:function(data){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("Gagal mengambil data.");
+                    console.log(data);
+                },
+                complete:function(){
+                    $('#showModal').modal('show');
+                }
+            });
         });
 
         $('#confirmForm').submit(function(e){
