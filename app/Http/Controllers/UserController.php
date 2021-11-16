@@ -368,7 +368,7 @@ class UserController extends Controller
         $blok = $request->blok;
         $temp = [];
         for($i = 0; $i < count($blok); $i++){
-            $temp[$i] = Blok::find($blok[$i])->nama;
+            $temp[$i] = $blok[$i];
         }
         $blok = $temp;
 

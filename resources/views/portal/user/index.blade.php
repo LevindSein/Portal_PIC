@@ -354,7 +354,7 @@ User
                         return {
                             results:  $.map(data, function (d) {
                                 return {
-                                    id: d.id,
+                                    id: d.nama,
                                     text: d.nama
                                 }
                             })
@@ -432,6 +432,8 @@ User
             $('#checkEmail').prop("checked", true);
             $("#userFormValue").val('tambah');
             $('#userModal').modal('show');
+
+            $("#blok").prop("required",false);
         });
 
         $(document).on('click', '.edit', function(){
@@ -442,6 +444,8 @@ User
             $('#divCheckEmail').hide();
             $('#checkEmail').prop("checked", false);
             $("#userFormValue").val('update');
+
+            $("#blok").prop("required",false);
 
             $.ajax({
                 url: "/user/" + id + "/edit",
@@ -467,6 +471,15 @@ User
                                     }
                                 }
                             }
+
+                            var s1 = $("#blok").select2();
+                            var value = json.blok;
+                            value.forEach(function(e){
+                                if(!s1.find('option:contains(' + e + ')').length)
+                                    s1.append($('<option>').text(e));
+                            });
+                            s1.val(value).trigger("change");
+                            select2custom("#blok", "/cari/blok", "-- Pilih Kelompok --");
                         }
                     }
                     else if(data.exception){
