@@ -360,7 +360,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('riwayat-login*')) ? 'active' : '' }}" href="{{url('riwayat-login')}}"
                                 aria-expanded="false">
                                 <i class="fad fa-clock"></i>
                                 <span class="hide-menu">Riwayat&nbsp;Login</span>

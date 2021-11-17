@@ -20,7 +20,9 @@ class CheckAuth
     {
         if(Auth::check()){
             if(Auth::user()->stt_aktif == 0){
+                $temp = Session::get("_token");
                 Session::flush();
+                Session::put('_token', $temp);
                 Auth::logout();
                 return Redirect('login')->with('error','Akun sudah dinonaktifkan.');
             }

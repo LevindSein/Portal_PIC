@@ -32,6 +32,8 @@
         <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/favicon.png')}}">
         <meta name="google" content="notranslate">
 
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
         {{-- CSS for this page --}}
         <link rel="stylesheet" href="{{asset('portal/home/login/style.css')}}"/>
         <link rel="stylesheet" href="{{asset('vendor/fontawesome/css/all.min.css')}}" type="text/css">
@@ -52,7 +54,6 @@
             <div class="forms-container">
                 <div class="signin-signup">
                     <form class="sign-in-form" id="form_login">
-                        @csrf
                         <h2 class="title">Masuk</h2>
                         <div id="check-username" class="input-field">
                             <i class="fas fa-user"></i>
@@ -65,7 +66,6 @@
                         <input type="submit" class="btn" value="Submit" />
                     </form>
                     <form class="sign-up-form" id="form_register">
-                        @csrf
                         <h2 class="title">Daftar</h2>
                         <div class="input-field">
                             <i class="fas fa-envelope"></i>
@@ -141,6 +141,12 @@
                         url = "/register";
                     }
 
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
                     $.ajax({
                         url: url,
                         cache: false,
@@ -211,6 +217,7 @@
                                     "preventDuplicates": true,
                                 };
                                 toastr.error("Kesalahan sistem.");
+                                console.log(data);
                             }
                         },
                         complete:function(data){

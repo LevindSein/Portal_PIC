@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\File;
 
 use App\Models\User;
 use App\Models\Identity;
-
-use Response;
+use App\Models\LoginData;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -28,6 +27,7 @@ class AuthController extends Controller
         if(Auth::check()){
             $user = Auth::user();
             if($user->stt_aktif == 1){
+                LoginData::success();
                 if($user->level == 1 || $user->level == 2){
                     return redirect('dashboard')->with('success','Selamat datang.');
                 }
@@ -36,11 +36,14 @@ class AuthController extends Controller
                 }
             }
             else if($user->stt_aktif == 0){
+                $temp = Session::get("_token");
                 Session::flush();
+                Session::put('_token', $temp);
                 Auth::logout();
                 return Redirect('login')->with('error','Akun sudah dinonaktifkan.');
             }
             else if($user->stt_aktif == 2){
+                LoginData::success();
                 $token = Crypt::encrypt($user->anggota);
                 return redirect("register/$token");
             }
@@ -90,6 +93,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             if($user->stt_aktif == 2){
+                LoginData::success();
                 $token = Crypt::encrypt($user->anggota);
                 return response()->json(['register' => $token]);
             }
@@ -98,13 +102,19 @@ class AuthController extends Controller
                     return response()->json(['success' => "Akses berhasil."]);
                 }
                 else{
+                    LoginData::error();
+                    $temp = Session::get("_token");
                     Session::flush();
+                    Session::put('_token', $temp);
                     Auth::logout();
                     return response()->json(['error' => "Tidak memiliki akses."]);
                 }
             }
             else{
+                LoginData::error();
+                $temp = Session::get("_token");
                 Session::flush();
+                Session::put('_token', $temp);
                 Auth::logout();
                 return response()->json(['error' => "Akun sudah dinonaktifkan."]);
             }
@@ -121,6 +131,7 @@ class AuthController extends Controller
                 return response()->json(['error' => "Password salah."]);
             }
             else{
+                LoginData::anonym();
                 return response()->json(['error' => "Akun tidak ditemukan."]);
             }
         };
@@ -218,11 +229,13 @@ class AuthController extends Controller
         $name = substr($token, 0, 20);
         QrCode::format('png')->size(300)->margin(3)->eyeColor(0, 38,73,92, 196,163,90)->color(196,163,90)->backgroundColor(255,255,255)->generate($token, public_path("storage/register/$name.png"));
         $filepath = public_path("storage/register/$name.png");
-        return Response::download($filepath);
+        return \Response::download($filepath);
     }
 
     public function logout(){
+        $temp = Session::get("_token");
         Session::flush();
+        Session::put('_token', $temp);
         Auth::logout();
         return Redirect('login');
     }

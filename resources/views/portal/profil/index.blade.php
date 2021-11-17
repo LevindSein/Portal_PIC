@@ -81,7 +81,6 @@ Profil
                 <div class="tab-pane fade show active" id="settings" role="tabpanel" aria-labelledby="pills-timeline-tab">
                     <div class="card-body">
                         <form id="profilForm" class="form-horizontal form-material">
-                            @csrf
                             <div class="form-group">
                                 <label class="col-md-12">Username (untuk Login) <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
@@ -234,6 +233,13 @@ Profil
 
         $("#profilForm").submit(function(e){
             e.preventDefault();
+
+            $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
             $.ajax({
                 url: "/profil",
                 type: "POST",

@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\RiwayatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,10 @@ Route::get('logout', [AuthController::class, 'logout']);
 Route::post('register', [AuthController::class, 'register']);
 Route::resource('login', AuthController::class);
 
+//Login Authenticated
 Route::middleware('checkauth')->group(function(){
+
+    //Access for Level 1 & 2
     Route::middleware('oneauth')->group(function(){
         Route::get('dashboard', [DashboardController::class, 'index']);
 
@@ -40,6 +44,8 @@ Route::middleware('checkauth')->group(function(){
         Route::get('user/penghapusan/{params}', [UserController::class, 'penghapusan']);
         Route::get('user/level/{params}', [UserController::class, 'level']);
         Route::resource('user', UserController::class);
+
+        Route::resource('riwayat-login', RiwayatController::class);
     });
 
     Route::get('email/verify/resend', [EmailController::class, 'resend']);

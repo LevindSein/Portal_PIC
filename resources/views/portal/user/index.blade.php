@@ -24,21 +24,19 @@ User
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form>
-                    <div class="form-group col-md-2 col-sm-2" style="padding: 0;">
-                        <label for="kategori">Pilih Kategori</label>
-                        <select class="form-control" id="kategori" name="kategori">
-                            @if(Auth::user()->level == 1)
-                            <option value="1">Super Admin</option>
-                            <option value="2">Admin</option>
-                            <option value="4">Kasir</option>
-                            <option value="5">Keuangan</option>
-                            <option value="6">Manajer</option>
-                            @endif
-                            <option value="3">Nasabah</option>
-                        </select>
-                    </div>
-                </form>
+                <div class="form-group col-md-2 col-sm-2" style="padding: 0;">
+                    <label for="kategori">Pilih Kategori</label>
+                    <select class="form-control" id="kategori" name="kategori">
+                        @if(Auth::user()->level == 1)
+                        <option value="1">Super Admin</option>
+                        <option value="2">Admin</option>
+                        <option value="4">Kasir</option>
+                        <option value="5">Keuangan</option>
+                        <option value="6">Manajer</option>
+                        @endif
+                        <option value="3">Nasabah</option>
+                    </select>
+                </div>
                 <p id="warning-penghapusan" class="text-danger">*) Data Penghapusan akan terhapus secara permanen oleh sistem saat 30 hari sejak akun yang terkait dihapus.</p>
                 <div class="table-responsive">
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
@@ -113,6 +111,8 @@ User
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="settings" role="tabpanel" aria-labelledby="pills-timeline-tab">
                                     <div class="card-body">
+                                        <h3 id="showLevel"></h3>
+                                        <h5 id="showSttAktif"></h5>
                                         <small class="text-muted pt-4 db">Username</small>
                                         <h6 id="showUsername"></h6>
                                         <small class="text-muted pt-4 db">No.Anggota</small>
@@ -148,7 +148,6 @@ User
                 </button>
             </div>
             <form id="userForm">
-                @csrf
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Pilih Role <span class="text-danger">*</span></label>
@@ -385,40 +384,40 @@ User
 @section('content-js')
 <script>
     $(document).ready(function(){
-        $("#level").on('change', function(){
-                var level = $("#level").val();
-                if(level == '2'){
-                    $("#otoritasDiv").show();
-                    select2custom("#blok", "/cari/blok", "-- Pilih Kelompok --");
-                    $("#blok").prop("required",true);
-                }
-                else{
-                    $("#otoritasDiv").hide();
-                    $("#blok").prop("required",false);
-                }
+        var id;
+        var params = getUrlParameter('data');
+
+        if(params == "penghapusan"){
+            penghapusan();
+        }
+        else{
+            home();
+        }
+
+        $(".home").click(function(){
+            home();
         });
 
-        function select2custom(select2id, url, placeholder){
-            $(select2id).select2({
-                placeholder: placeholder,
-                ajax: {
-                    url: url,
-                    dataType: 'json',
-                    delay: 250,
-                    cache: true,
-                    processResults: function (data) {
-                        return {
-                            results:  $.map(data, function (d) {
-                                return {
-                                    id: d.nama,
-                                    text: d.nama
-                                }
-                            })
-                        };
-                    },
-                }
-            });
-        }
+        $(".penghapusan").click(function(){
+            penghapusan();
+        });
+
+        setInterval(function(){
+            dtableReload();
+        }, 5000);
+
+        $("#level").on('change', function(){
+            var level = $("#level").val();
+            if(level == '2'){
+                $("#otoritasDiv").show();
+                select2custom("#blok", "/cari/blok", "-- Pilih Kelompok --");
+                $("#blok").prop("required",true);
+            }
+            else{
+                $("#otoritasDiv").hide();
+                $("#blok").prop("required",false);
+            }
+        });
 
         $('[type=tel]').on('change', function(e) {
             $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
@@ -438,14 +437,6 @@ User
                 this.value = this.value.replace(/^0/, "")
             }
         });
-
-        var params = getUrlParameter('data');
-        if(params == "penghapusan"){
-            penghapusan();
-        }
-        else{
-            home();
-        }
 
         $("#btn_copy").click( function(){;
             navigator.clipboard.writeText($("#password_baru").text());
@@ -467,19 +458,6 @@ User
             }
         });
 
-        $(".home").click(function(){
-            home();
-        });
-
-        $(".penghapusan").click(function(){
-            penghapusan();
-        });
-
-        setInterval(function(){
-            dtableReload();
-        }, 5000);
-
-        var id;
         $(".tambah").click( function(){
             $("#userForm")[0].reset();
             $("#otoritasDiv").hide();
@@ -568,23 +546,6 @@ User
             });
         });
 
-        $('#userForm').submit(function(e){
-            e.preventDefault();
-            value = $("#userFormValue").val();
-            if(value == 'tambah'){
-                url = "/user";
-                type = "POST";
-            }
-            else if(value == 'update'){
-                url = "/user/" + id;
-                type = "PUT";
-            }
-            dataset = $(this).serialize();
-            ok_btn_before = "Menyimpan...";
-            ok_btn_completed = "Simpan";
-            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-        });
-
         $(document).on('click', '.reset', function(){
             id = $(this).attr('id');
             nama = $(this).attr('nama');
@@ -629,13 +590,18 @@ User
             id = $(this).attr('id');
             nama = $(this).attr('nama');
             $('.titles').text('Informasi ' + nama);
+
+            var rand = shuffle('1234567890');
+
             $.ajax({
                 url: "/user/" + id,
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
-                        $("#showFoto").attr('src', '/' + data.user.foto);
+                        $("#showFoto").attr('src', '/' + data.user.foto + '?' + rand);
+                        $("#showLevel").text(data.user.level);
+                        $("#showSttAktif").html(data.user.stt_aktif);
                         $("#showUsername").text(data.user.username);
                         $("#showNama").text(data.user.name);
                         $("#showAnggota").text(data.user.anggota);
@@ -681,6 +647,23 @@ User
             });
         });
 
+        $('#userForm').submit(function(e){
+            e.preventDefault();
+            value = $("#userFormValue").val();
+            if(value == 'tambah'){
+                url = "/user";
+                type = "POST";
+            }
+            else if(value == 'update'){
+                url = "/user/" + id;
+                type = "PUT";
+            }
+            dataset = $(this).serialize();
+            ok_btn_before = "Menyimpan...";
+            ok_btn_completed = "Simpan";
+            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        });
+
         $('#confirmForm').submit(function(e){
             e.preventDefault();
             var token = $("meta[name='csrf-token']").attr("content");
@@ -720,6 +703,11 @@ User
         });
 
         function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
+            $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $.ajax({
                 url: url,
                 type: type,
@@ -867,6 +855,39 @@ User
             }
             return false;
         };
+
+        function shuffle(string) {
+            var parts = string.split('');
+            for (var i = parts.length; i > 0;) {
+                var random = parseInt(Math.random() * i);
+                var temp = parts[--i];
+                parts[i] = parts[random];
+                parts[random] = temp;
+            }
+            return parts.join('');
+        }
+
+        function select2custom(select2id, url, placeholder){
+            $(select2id).select2({
+                placeholder: placeholder,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    processResults: function (data) {
+                        return {
+                            results:  $.map(data, function (d) {
+                                return {
+                                    id: d.nama,
+                                    text: d.nama
+                                }
+                            })
+                        };
+                    },
+                }
+            });
+        }
 
         function penghapusan(){
             $("#kategori").prop('selectedIndex',0)

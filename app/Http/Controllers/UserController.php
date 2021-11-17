@@ -243,6 +243,9 @@ class UserController extends Controller
                 return response()->json(['exception' => $e]);
             }
 
+            $user['level'] = User::level($user->level);
+            $user['stt_aktif'] = User::sttAktif($user->stt_aktif);
+
             return response()->json(['success' => 'Berhasil mengambil data.', 'user' => $user]);
         }
         else{

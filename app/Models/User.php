@@ -72,7 +72,22 @@ class User extends Authenticatable
             return 'Manajer';
         }
         else{
-            return '';
+            return $data;
+        }
+    }
+
+    public static function sttAktif($data){
+        if($data === 0){
+            return '<span class="text-danger">Nonaktif</span>';
+        }
+        else if($data == 1){
+            return '<span class="text-success">Aktif</span>';
+        }
+        else if($data == 2){
+            return '<span class="text-info">Proses Pendaftaran</span>';
+        }
+        else{
+            return $data;
         }
     }
 }
