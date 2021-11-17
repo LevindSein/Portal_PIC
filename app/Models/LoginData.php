@@ -48,13 +48,13 @@ class LoginData extends Model
         self::create($data);
     }
 
-    public static function anonym(){
+    public static function anonym($request){
         $ip = \Request::ip();
 
         $agent = new Agent();
 
         $data['username'] = $ip;
-        $data['nama'] = $ip;
+        $data['nama'] = $request->username;
         $data['status'] = 0;
         $data['platform'] = $agent->platform()." ".$agent->version($agent->platform())." ".$agent->browser()." ".$agent->version($agent->browser());
 

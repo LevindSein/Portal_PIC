@@ -500,6 +500,8 @@
 
     <script src="{{asset('vendor/select2/dist/js/select2.min.js')}}"></script>
 
+    <script src="{{asset('vendor/block-ui/jquery.blockUI.js')}}"></script>
+
     <script>
         $(window).on('load', function() {
             $(".se-pre-con").fadeIn("slow").fadeOut("slow");
@@ -541,7 +543,7 @@
                     type: "GET",
                     cache:false,
                     beforeSend:function(){
-                        $("#emailResend").text('mengirim email verifikasi . . . ').removeAttr("href");
+                        $("#emailResend").text('mengirim email verifikasi . . ').removeAttr("href");
                     },
                     success:function(data)
                     {
@@ -566,6 +568,9 @@
                                 "preventDuplicates": true,
                             };
                             toastr.warning(data.warning);
+                            setTimeout(function() {
+                                location.href = "/profil";
+                            }, 1000);
                         }
                         else{
                             toastr.options = {
@@ -573,9 +578,7 @@
                                 "preventDuplicates": true,
                             };
                             toastr.error(data.error);
-                            setTimeout(function() {
-                                location.href = "/profil";
-                            }, 1000);
+                            console.log(data);
                         }
                     },
                     error:function(data){

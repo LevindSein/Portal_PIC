@@ -55,6 +55,10 @@ Route::middleware('checkauth')->group(function(){
     Route::resource('profil', ProfilController::class);
 });
 
+Route::get('email/forgot-password', [EmailController::class, 'forgot']);
+Route::post('email/forgot-password/{data}', [EmailController::class, 'forgotStore']);
+Route::get('email/forgot-password/{level}/{anggota}', [EmailController::class, 'forgotVerify']);
+
 Route::get('email/verify/{level}/{anggota}', [EmailController::class, 'verify']);
 Route::get('email/verify/resend/{level}/{aktif}/{anggota}', [EmailController::class, 'verifyResend']);
 

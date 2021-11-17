@@ -108,7 +108,7 @@ class ProfilController extends Controller
             return response()->json(['success' => 'Data berhasil disimpan.']);
         }
         else{
-            return response()->json(['error' => '404 Not Found.']);
+            abort(404);
         }
     }
 

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\File;
 
 use App\Models\User;
 use App\Models\Identity;
@@ -76,30 +75,39 @@ class AuthController extends Controller
     {
         //stt_aktif : 1 = aktif, 2 = sudah mendaftar tapi belum dapat akses, 0 = nonaktif
         //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah
+        if($request->ajax()){
+            $request->validate([
+                'username' => 'required|max:100',
+                'password' => 'required|min:6',
+            ]);
 
-        $request->validate([
-            'username' => 'required|max:100',
-            'password' => 'required|min:6',
-        ]);
-
-        $username = strtolower($request->username);
-        if(filter_var($username, FILTER_VALIDATE_EMAIL)) {
-            $credentials['email'] = $username;
-        }
-        else{
-            $credentials['username'] = $username;
-        }
-        $credentials['password'] = sha1(md5(hash('gost',$request->password)));
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            if($user->stt_aktif == 2){
-                LoginData::success();
-                $token = Crypt::encrypt($user->anggota);
-                return response()->json(['register' => $token]);
+            $username = strtolower($request->username);
+            if(filter_var($username, FILTER_VALIDATE_EMAIL)) {
+                $credentials['email'] = $username;
             }
-            else if($user->stt_aktif == 1){
-                if ($user->level == 1 || $user->level == 2){
-                    return response()->json(['success' => "Akses berhasil."]);
+            else{
+                $credentials['username'] = $username;
+            }
+            $credentials['password'] = sha1(md5(hash('gost',$request->password)));
+            if (Auth::attempt($credentials)) {
+                $user = Auth::user();
+                if($user->stt_aktif == 2){
+                    LoginData::success();
+                    $token = Crypt::encrypt($user->anggota);
+                    return response()->json(['register' => $token]);
+                }
+                else if($user->stt_aktif == 1){
+                    if ($user->level == 1 || $user->level == 2){
+                        return response()->json(['success' => "Akses berhasil."]);
+                    }
+                    else{
+                        LoginData::error();
+                        $temp = Session::get("_token");
+                        Session::flush();
+                        Session::put('_token', $temp);
+                        Auth::logout();
+                        return response()->json(['error' => "Tidak memiliki akses."]);
+                    }
                 }
                 else{
                     LoginData::error();
@@ -107,34 +115,29 @@ class AuthController extends Controller
                     Session::flush();
                     Session::put('_token', $temp);
                     Auth::logout();
-                    return response()->json(['error' => "Tidak memiliki akses."]);
+                    return response()->json(['error' => "Akun sudah dinonaktifkan."]);
                 }
             }
             else{
-                LoginData::error();
-                $temp = Session::get("_token");
-                Session::flush();
-                Session::put('_token', $temp);
-                Auth::logout();
-                return response()->json(['error' => "Akun sudah dinonaktifkan."]);
-            }
+                if(filter_var($username, FILTER_VALIDATE_EMAIL)) {
+                    $exist = User::where('email', $username)->first();
+                }
+                else{
+                    $exist = User::where('username', $username)->first();
+                }
+
+                if($exist != NULL){
+                    return response()->json(['error' => "Password salah."]);
+                }
+                else{
+                    LoginData::anonym($request);
+                    return response()->json(['error' => "Akun tidak ditemukan."]);
+                }
+            };
         }
         else{
-            if(filter_var($username, FILTER_VALIDATE_EMAIL)) {
-                $exist = User::where('email', $username)->first();
-            }
-            else{
-                $exist = User::where('username', $username)->first();
-            }
-
-            if($exist != NULL){
-                return response()->json(['error' => "Password salah."]);
-            }
-            else{
-                LoginData::anonym();
-                return response()->json(['error' => "Akun tidak ditemukan."]);
-            }
-        };
+            abort(404);
+        }
     }
 
     /**

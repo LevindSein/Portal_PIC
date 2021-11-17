@@ -40,7 +40,6 @@
         <link rel="stylesheet" href="{{asset('vendor/fontawesomepro/css/all.min.css')}}" type="text/css">
 
         {{-- jQuery 3.60 --}}
-
         <script src="{{asset('portal/home/login/jquery.min.js')}}"></script>
 
         {{-- Toastr --}}
@@ -64,6 +63,9 @@
                             <input required type="password" minlength="6" name="password" placeholder="Password"/>
                         </div>
                         <input type="submit" class="btn" value="Submit" />
+                        <div>
+                            <a href="{{url('email/forgot-password')}}" style="font-size: 12px;">Lupa Password?</a>
+                        </div>
                     </form>
                     <form class="sign-up-form" id="form_register">
                         <h2 class="title">Daftar</h2>
@@ -197,7 +199,7 @@
                                     "closeButton": true,
                                     "preventDuplicates": true,
                                 };
-                                toastr.error("Kesalahan sistem.");
+                                toastr.error(data);
                                 console.log(data);
                             }
                         },

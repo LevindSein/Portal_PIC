@@ -32,7 +32,8 @@
                                     <a href="{{$url}}" style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #4fc3f7; border-radius: 60px; text-decoration:none;">{{$button}}</a>
                                 </div>
                                 <b>- {{$regards}}</b>
-                                <p>Jika tombol di atas tidak berfungsi, silakan kunjungi {{$url}}</p>
+                                <p>Jika tombol di atas tidak berfungsi, silakan kunjungi</p>
+                                <p style="font-size: 12px">{{$url}}</p>
                                 <p style="font-size: 10px">Pesan ini dikirim oleh sistem. Anda tidak perlu membalasnya.</p>
                             </td>
                         </tr>

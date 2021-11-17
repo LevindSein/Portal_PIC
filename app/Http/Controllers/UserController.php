@@ -15,7 +15,6 @@ use Carbon\Carbon;
 
 use App\Models\User;
 use App\Models\Identity;
-use App\Models\Blok;
 
 class UserController extends Controller
 {
@@ -196,7 +195,7 @@ class UserController extends Controller
                     'username' => $username,
                     'password' => $password,
                     'button' => "Verifikasi",
-                    'url' => url('email/verify/'.$level.'/'.Crypt::encrypt($anggota)),
+                    'url' => url('email/verify/'.$level.'/'.Crypt::encrypt($anggota . "+" . Carbon::now()->addDays(2)->toDateTimeString())),
                     'regards' => "Selamat Berniaga (PIC BDG Team)",
                     'email' => $email,
                     'timestamp' => Carbon::now()->toDateTimeString(),
@@ -218,7 +217,7 @@ class UserController extends Controller
             return response()->json(['success' => 'Data berhasil disimpan.']);
         }
         else{
-            return response()->json(['error' => '404 Not Found']);
+            abort(404);
         }
     }
 
@@ -233,8 +232,8 @@ class UserController extends Controller
         if(request()->ajax()){
             try {
                 $id = Crypt::decrypt($id);
-            } catch (Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['exception' => $e]);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => 'Data tidak valid.']);
             }
 
             try{
@@ -249,7 +248,7 @@ class UserController extends Controller
             return response()->json(['success' => 'Berhasil mengambil data.', 'user' => $user]);
         }
         else{
-            return response()->json(['error' => '404 Not Found']);
+            abort(404);
         }
     }
 
@@ -264,8 +263,8 @@ class UserController extends Controller
         if(request()->ajax()){
             try {
                 $id = Crypt::decrypt($id);
-            } catch (Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['exception' => $e]);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => 'Data tidak valid.']);
             }
 
             try{
@@ -277,7 +276,7 @@ class UserController extends Controller
             return response()->json(['success' => 'Berhasil mengambil data.', 'user' => $user]);
         }
         else{
-            return response()->json(['error' => "404 Not Found"]);
+            abort(404);
         }
     }
 
@@ -294,8 +293,8 @@ class UserController extends Controller
             //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah, 4 = Kasir, 5 = Keuangan, 6 = Manajer
             try {
                 $id = Crypt::decrypt($id);
-            } catch (Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['exception' => $e]);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => 'Data tidak valid.']);
             }
 
             $request->validate([
@@ -340,7 +339,7 @@ class UserController extends Controller
             return response()->json(['success' => 'Data berhasil disimpan.']);
         }
         else{
-            return response()->json(['error' => '404 Not Found']);
+            abort(404);
         }
     }
 
@@ -410,8 +409,8 @@ class UserController extends Controller
         if(request()->ajax()){
             try {
                 $id = Crypt::decrypt($id);
-            } catch (Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['exception' => $e]);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => 'Data tidak valid.']);
             }
 
             try{
@@ -497,7 +496,7 @@ class UserController extends Controller
             return response()->json(['success' => 'Data berhasil dihapus.']);
         }
         else{
-            return response()->json(['error' => '404 Not Found.']);
+            abort(404);
         }
     }
 
@@ -506,8 +505,8 @@ class UserController extends Controller
         if(request()->ajax()){
             try {
                 $id = Crypt::decrypt($id);
-            } catch (Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['exception' => $e]);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => 'Data tidak valid.']);
             }
 
             try{
@@ -575,7 +574,7 @@ class UserController extends Controller
             return response()->json(['success' => 'Data berhasil dihapus.']);
         }
         else{
-            return response()->json(['error' => '404 Not Found.']);
+            abort(404);
         }
     }
 
@@ -584,8 +583,8 @@ class UserController extends Controller
         if(request()->ajax()){
             try {
                 $id = Crypt::decrypt($id);
-            } catch (Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['exception' => $e]);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => 'Data tidak valid.']);
             }
 
             try{
@@ -657,7 +656,7 @@ class UserController extends Controller
             return response()->json(['success' => 'Data berhasil dipulihkan.']);
         }
         else{
-            return response()->json(['error' => '404 Not Found.']);
+            abort(404);
         }
     }
 
@@ -666,8 +665,8 @@ class UserController extends Controller
         if(request()->ajax()){
             try {
                 $id = Crypt::decrypt($id);
-            } catch (Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['exception' => $e]);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => 'Data tidak valid.']);
             }
 
             try{
@@ -684,7 +683,7 @@ class UserController extends Controller
             return response()->json(['success' => 'Reset password berhasil.', 'pass' => $pass]);
         }
         else{
-            return response()->json(['error' => '404 Not Found']);
+            abort(404);
         }
     }
 }

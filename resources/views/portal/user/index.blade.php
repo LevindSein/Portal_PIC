@@ -714,12 +714,20 @@ User
                 cache:false,
                 data: dataset,
                 beforeSend:function(){
-                    if(value == 'tambah' || value == 'update'){
-                        $('#save_btn').text(ok_btn_before).prop("disabled",true);
-                    }
-                    else{
-                        $('#ok_button').text(ok_btn_before).prop("disabled",true);
-                    }
+                    $.blockUI({
+                        message: '<i class="fas fa-spin fa-sync text-white"></i>',
+                        baseZ: 9999,
+                        overlayCSS: {
+                            backgroundColor: '#000',
+                            opacity: 0.5,
+                            cursor: 'wait'
+                        },
+                        css: {
+                            border: 0,
+                            padding: 0,
+                            backgroundColor: 'transparent'
+                        }
+                    });
                 },
                 success:function(data)
                 {
@@ -756,6 +764,7 @@ User
                             "preventDuplicates": true,
                         };
                         toastr.error(data.error);
+                        console.log(data);
                     }
                     dtableReload();
                 },
@@ -781,12 +790,11 @@ User
                 complete:function(data){
                     if(value == 'tambah' || value == 'update'){
                         $('#userModal').modal('hide');
-                        $('#save_btn').text(ok_btn_completed).prop("disabled",false);
                     }
                     else{
                         $('#confirmModal').modal('hide');
-                        $('#ok_button').text(ok_btn_completed).prop("disabled",false);
                     }
+                    $.unblockUI();
                 }
             });
         }

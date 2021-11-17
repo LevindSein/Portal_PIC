@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="keyword"
+        content="Pasar Bandung, Pasar Tradisional, Pasar Induk, Caringin, Pasar Induk Caringin Kota Bandung" />
+    <meta name="author" content="Pasar Induk Caringin Kota Bandung" />
+    <meta name="description" content="Login untuk Member Area Pasar Induk Caringin Kota Bandung" />
+    <meta property="og:site_name" content="Pasar Induk Caringin Kota Bandung">
+    <meta property="og:title" content="Pasar Induk Caringin Kota Bandung" />
+    <meta property="og:description" content="Login untuk Member Area Pasar Induk Caringin Kota Bandung" />
+    <meta property="og:image" itemprop="image" content="{{asset('portal/home/login/img/favicon.png')}}">
+    <meta property="og:type" content="website" />
+    <link rel="shortcut icon" href="{{asset('img/favicon.png')}}">
+    <link rel="icon" sizes="16x16 32x32 64x64" href="{{asset('img/favicon.png')}}">
+    <link rel="icon" sizes="196x196" href="{{asset('img/favicon.png')}}">
+    <link rel="icon" sizes="160x160" href="{{asset('img/favicon.png')}}">
+    <link rel="icon" sizes="96x96" href="{{asset('img/favicon.png')}}">
+    <link rel="icon" sizes="64x64" href="{{asset('img/favicon.png')}}">
+    <link rel="icon" sizes="32x32" href="{{asset('img/favicon.png')}}">
+    <link rel="icon" sizes="16x16" href="{{asset('img/favicon.png')}}">
+    <link rel="apple-touch-icon" href="{{asset('img/favicon.png')}}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{asset('img/favicon.png')}}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{asset('img/favicon.png')}}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{asset('img/favicon.png')}}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{asset('img/favicon.png')}}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{asset('img/favicon.png')}}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{asset('img/favicon.png')}}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{asset('img/favicon.png')}}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/favicon.png')}}">
+    <meta name="google" content="notranslate">
+    <meta name="robots" content="noindex, nofollow" />
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/favicon.png')}}">
+    <title>Pulihkan Akun | Portal PIC</title>
+
+    <script src="{{asset('template/assets/libs/jquery/dist/jquery.min.js')}}"></script>
+
+    {{-- Select2 --}}
+    <link rel="stylesheet" type="text/css" href="{{asset('vendor/select2/dist/css/select2.min.css')}}">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{asset('template/dist/css/style.min.css')}}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{asset('vendor/fontawesome/css/all.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{asset('vendor/fontawesomepro/css/all.min.css')}}" type="text/css">
+
+    {{-- Datatable --}}
+    <link rel="stylesheet" href="{{asset('vendor/datatables.net-bs4/css/dataTables.bootstrap4.css')}}">
+
+    {{-- Toastr --}}
+    <link rel="stylesheet" type="text/css" href="{{asset('vendor/toastr/toastr.min.css')}}">
+    <script src="{{asset('vendor/toastr/toastr.min.js')}}"></script>
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <div class="se-pre-con"></div>
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style='background:url("{{asset('img/auth-bg.jpg')}}") no-repeat center center;'>
+            <div class="auth-box">
+                <div>
+                    <div class="logo">
+                        <span class="db">
+                            <img src="{{asset('img/favicon.png')}}" width="50" alt="logo BP3C" />
+                        </span>
+                        <h5 class="font-medium mb-3">Pulihkan Akun Anda</h5>
+                    </div>
+                    <!-- Form -->
+                    <div class="row">
+                        <div class="col-12">
+                            <form class="form-horizontal mt-3" id="resetForm">
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <input class="form-control form-control-lg" required type="password" minlength="6" id="password" name="password" placeholder="Ketikkan Password Baru" style="text-transform:lowercase;"/>
+                                    </div>
+                                </div>
+                                <div class="form-group text-center">
+                                    <div class="col-xs-12 pb-3">
+                                        <input type="hidden" id="password_hidden" name="password_hidden" value="{{$anggota}}" />
+                                        <button class="btn btn-block btn-info btn-rounded" type="submit">Submit</button>
+                                    </div>
+                                    <a href="{{url('logout')}}" class="u-btn u-button-style u-none u-text-custom-color-2 u-text-hover-custom-color-1 u-btn-3">
+                                        <i class="fas fa-chevron-left"></i>&nbsp;Kembali
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{asset('template/assets/libs/jquery/dist/jquery.min.js')}}"></script>
+
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{{asset('template/assets/libs/popper.js/dist/umd/popper.min.js')}}"></script>
+    <script src="{{asset('template/assets/libs/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <!-- apps -->
+    <script src="{{asset('template/dist/js/app.min.js')}}"></script>
+    <script src="{{asset('template/dist/js/app.init.js')}}"></script>
+    <script src="{{asset('template/dist/js/app-style-switcher.js')}}"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="{{asset('template/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>
+    <script src="{{asset('template/assets/extra-libs/sparkline/sparkline.js')}}"></script>
+    <!--Wave Effects -->
+    <script src="{{asset('template/dist/js/waves.js')}}"></script>
+    <!--Menu sidebar -->
+    <script src="{{asset('template/dist/js/sidebarmenu.js')}}"></script>
+    <!--Custom JavaScript -->
+    <script src="{{asset('template/dist/js/custom.min.js')}}"></script>
+
+    <script src="{{asset('custom.js')}}"></script>
+
+    <script src="{{asset('vendor/DataTables/datatables.min.js')}}"></script>
+    <script src="{{asset('vendor/datatables.net-bs4/js/dataTables.bootstrap4.js')}}"></script>
+
+    <script src="{{asset('vendor/select2/dist/js/select2.min.js')}}"></script>
+
+    <script src="{{asset('vendor/block-ui/jquery.blockUI.js')}}"></script>
+
+    <script>
+        $(window).on('load', function() {
+            $(".se-pre-con").fadeIn("slow").fadeOut("slow");
+        });
+
+        $(document).ready(function(){
+            $("#password").focus();
+
+            $('#resetForm').on('submit', function(e){
+                e.preventDefault();
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: "/email/forgot-password/password",
+                    cache: false,
+                    method: "POST",
+                    data: $(this).serialize(),
+                    dataType: "json",
+                    beforeSend:function(){
+                        $.blockUI({
+                            message: '<i class="fas fa-spin fa-sync text-white"></i>',
+                            baseZ: 9999,
+                            overlayCSS: {
+                                backgroundColor: '#000',
+                                opacity: 0.5,
+                                cursor: 'wait'
+                            },
+                            css: {
+                                border: 0,
+                                padding: 0,
+                                backgroundColor: 'transparent'
+                            }
+                        });
+                    },
+                    success:function(data)
+                    {
+                        if(data.success){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.success(data.success);
+                            setTimeout(() => {
+                                location.href = "/login";
+                            }, 2000);
+                        }
+                        else if(data.warning){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.warning(data.warning);
+                        }
+                        else if(data.info){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.info(data.info);
+                        }
+                        else if(data.error){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.error(data.error);
+                        }
+                        else{
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.error(data.error);
+                            console.log(data);
+                        }
+                    },
+                    error:function(data){
+                        if (data.status == 422) {
+                            $.each(data.responseJSON.errors, function (i, error) {
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.error(error[0]);
+                            });
+                        }
+                        else{
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.error("Kesalahan sistem.");
+                            console.log(data);
+                        }
+                    },
+                    complete:function(data){
+                        $.unblockUI();
+                        $("#resetForm")[0].reset();
+                        $("#email").focus();
+                    }
+                });
+            });
+        });
+    </script>
+
+    @include('message.toastr')
+</body>
+
+</html>

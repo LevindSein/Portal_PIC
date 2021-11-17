@@ -135,7 +135,7 @@ Profil
                             <div class="form-group">
                                 <label class="col-md-12">Password Baru</label>
                                 <div class="col-md-12">
-                                    <input type="password" name="passwordBaru" minlength="6" autocomplete="off" placeholder="Ketikkan jika ingin mengubah password lama" class="form-control form-control-line">
+                                    <input type="password" name="passwordBaru" minlength="6" autocomplete="off" placeholder="Ketikkan jika ingin ubah password" class="form-control form-control-line">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -246,7 +246,20 @@ Profil
                 cache: false,
                 data: $(this).serialize(),
                 beforeSend:function(){
-                    $('#save_btn').text("Menyimpan").prop("disabled",true);
+                    $.blockUI({
+                        message: '<i class="fas fa-spin fa-sync text-white"></i>',
+                        baseZ: 9999,
+                        overlayCSS: {
+                            backgroundColor: '#000',
+                            opacity: 0.5,
+                            cursor: 'wait'
+                        },
+                        css: {
+                            border: 0,
+                            padding: 0,
+                            backgroundColor: 'transparent'
+                        }
+                    });
                 },
                 success:function(data)
                 {
@@ -274,6 +287,7 @@ Profil
                             "preventDuplicates": true,
                         };
                         toastr.error(data.error);
+                        console.log(data);
                     }
                 },
                 error:function(data){
@@ -296,7 +310,7 @@ Profil
                     console.log(data);
                 },
                 complete:function(data){
-                    $('#save_btn').text("Simpan").prop("disabled",false);
+                    $.unblockUI();
                 }
             });
         });

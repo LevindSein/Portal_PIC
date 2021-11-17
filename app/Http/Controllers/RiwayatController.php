@@ -83,7 +83,7 @@ class RiwayatController extends Controller
         if(request()->ajax()){
             try {
                 $id = Crypt::decrypt($id);
-            } catch (Illuminate\Contracts\Encryption\DecryptException $e) {
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
                 return response()->json(['exception' => $e]);
             }
 
@@ -107,7 +107,7 @@ class RiwayatController extends Controller
             return response()->json(['success' => 'Berhasil mengambil data.', 'user' => $data]);
         }
         else{
-            return response()->json(['error' => '404 Not Found']);
+            abort(404);
         }
     }
 

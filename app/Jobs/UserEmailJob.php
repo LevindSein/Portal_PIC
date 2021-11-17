@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Mail;
 
 use App\Mail\UserEmail;
 use App\Mail\DeleteEmail;
-use App\Mail\ResendEmail;
 
 class UserEmailJob implements ShouldQueue
 {
@@ -44,9 +43,6 @@ class UserEmailJob implements ShouldQueue
         }
         else if($value == 'destroy'){
             Mail::to($this->details['email'])->send(new DeleteEmail($this->details));
-        }
-        else if($value == 'resend'){
-            Mail::to($this->details['email'])->send(new ResendEmail($this->details));
         }
     }
 }
