@@ -451,10 +451,10 @@ User
 
         $('#kategori').on('change', function() {
             if(getUrlParameter('data') == 'penghapusan'){
-                dtable = dtableInit("/user/penghapusan/" + this.value);
+                dtable = dtableInit("/production/user/penghapusan/" + this.value);
             }
             else{
-                dtable = dtableInit("/user/level/" + this.value);
+                dtable = dtableInit("/production/user/level/" + this.value);
             }
         });
 
@@ -482,7 +482,7 @@ User
             $("#blok").prop("required",false);
 
             $.ajax({
-                url: "/user/" + id + "/edit",
+                url: "/production/user/" + id + "/edit",
                 type: "GET",
                 cache:false,
                 success:function(data){
@@ -594,7 +594,7 @@ User
             var rand = shuffle('1234567890');
 
             $.ajax({
-                url: "/user/" + id,
+                url: "/production/user/" + id,
                 type: "GET",
                 cache:false,
                 success:function(data){
@@ -651,11 +651,11 @@ User
             e.preventDefault();
             value = $("#userFormValue").val();
             if(value == 'tambah'){
-                url = "/user";
+                url = "/production/user";
                 type = "POST";
             }
             else if(value == 'update'){
-                url = "/user/" + id;
+                url = "/production/user/" + id;
                 type = "PUT";
             }
             dataset = $(this).serialize();
@@ -673,28 +673,28 @@ User
                 '_token' : token,
             }
             if(value == 'delete'){
-                url = "/user/" + id;
+                url = "/production/user/" + id;
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Hapus";
                 ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
             }
             else if(value == 'deletePermanently'){
-                url = "/user/permanen/" + id;
+                url = "/production/user/permanen/" + id;
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Permanen";
                 ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
             }
             else if(value == 'restore'){
-                url = "/user/restore/" + id;
+                url = "/production/user/restore/" + id;
                 type = "POST";
                 ok_btn_before = "Memulihkan...";
                 ok_btn_completed = "Restore";
                 ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
             }
             else if(value == 'reset'){
-                url = "/user/reset/" + id;
+                url = "/production/user/reset/" + id;
                 type = "POST";
                 ok_btn_before = "Resetting...";
                 ok_btn_completed = "Reset";
@@ -739,7 +739,7 @@ User
                             $("#kategori").val(selectedLevel).change();
                             $(".page-title").text("User");
                             window.history.replaceState(null, null, "?data=user");
-                            dtable = dtableInit("/user/level/" + selectedLevel);
+                            dtable = dtableInit("/production/user/level/" + selectedLevel);
                         }
                     }
                     else if(data.exception){
@@ -893,7 +893,7 @@ User
             $("#kategori").prop('selectedIndex',0)
             $(".page-title").text("Data Penghapusan");
             window.history.replaceState(null, null, "?data=penghapusan");
-            dtable = dtableInit("/user/penghapusan/1");
+            dtable = dtableInit("/production/user/penghapusan/1");
             $('#warning-penghapusan').show();
         }
 
@@ -901,7 +901,7 @@ User
             $("#kategori").prop('selectedIndex',0)
             $(".page-title").text("User");
             window.history.replaceState(null, null, "?data=user");
-            dtable = dtableInit("/user");
+            dtable = dtableInit("/production/user");
             $('#warning-penghapusan').hide();
         }
     });

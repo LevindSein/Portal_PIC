@@ -29,7 +29,7 @@ class AuthController extends Controller
             if($user->stt_aktif == 1){
                 LoginData::success();
                 if($user->level == 1 || $user->level == 2){
-                    return redirect('dashboard')->with('success','Selamat datang.');
+                    return redirect('production/dashboard')->with('success','Selamat datang.');
                 }
                 else{
                     return "level >2";

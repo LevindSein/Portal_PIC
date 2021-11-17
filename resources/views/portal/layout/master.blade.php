@@ -239,7 +239,7 @@
                         </li>
                         @if(Auth::user()->level != 3)
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('dashboard*')) ? 'active' : '' }}" href="{{url('dashboard')}}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/dashboard*')) ? 'active' : '' }}" href="{{url('production/dashboard')}}"
                                 aria-expanded="false">
                                 <i class="mdi mdi-view-dashboard"></i>
                                 <span class="hide-menu">Dashboard</span>
@@ -353,14 +353,14 @@
                             </ul>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('user*')) ? 'active' : '' }}" href="{{url('user')}}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/user*')) ? 'active' : '' }}" href="{{url('production/user')}}"
                                 aria-expanded="false">
                                 <i class="fas fa-user"></i>
                                 <span class="hide-menu">User</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('riwayat-login*')) ? 'active' : '' }}" href="{{url('riwayat-login')}}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/riwayat-login*')) ? 'active' : '' }}" href="{{url('production/riwayat-login')}}"
                                 aria-expanded="false">
                                 <i class="fad fa-clock"></i>
                                 <span class="hide-menu">Riwayat&nbsp;Login</span>

@@ -33,19 +33,20 @@ Route::resource('login', AuthController::class);
 
 //Login Authenticated
 Route::middleware('checkauth')->group(function(){
-
     //Access for Level 1 & 2
     Route::middleware('oneauth')->group(function(){
-        Route::get('dashboard', [DashboardController::class, 'index']);
+        Route::prefix('production')->group(function(){
+            Route::get('dashboard', [DashboardController::class, 'index']);
 
-        Route::delete('user/permanen/{id}', [UserController::class, 'permanen']);
-        Route::post('user/reset/{id}', [UserController::class, 'reset']);
-        Route::post('user/restore/{id}', [UserController::class, 'restore']);
-        Route::get('user/penghapusan/{params}', [UserController::class, 'penghapusan']);
-        Route::get('user/level/{params}', [UserController::class, 'level']);
-        Route::resource('user', UserController::class);
+            Route::delete('user/permanen/{id}', [UserController::class, 'permanen']);
+            Route::post('user/reset/{id}', [UserController::class, 'reset']);
+            Route::post('user/restore/{id}', [UserController::class, 'restore']);
+            Route::get('user/penghapusan/{params}', [UserController::class, 'penghapusan']);
+            Route::get('user/level/{params}', [UserController::class, 'level']);
+            Route::resource('user', UserController::class);
 
-        Route::resource('riwayat-login', RiwayatController::class);
+            Route::resource('riwayat-login', RiwayatController::class);
+        });
     });
 
     Route::get('email/verify/resend', [EmailController::class, 'resend']);

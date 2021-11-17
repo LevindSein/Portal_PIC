@@ -75,7 +75,7 @@ Riwayat Login
                 }
             },
             "serverSide": true,
-            "ajax": "/riwayat-login",
+            "ajax": "/production/riwayat-login",
             "columns": [
                 { data: 'username', name: 'username', class : 'text-center' },
                 { data: 'nama', name: 'nama', class : 'text-center' },
@@ -116,7 +116,7 @@ Riwayat Login
             $('.titles').text('Informasi ' + nama);
 
             $.ajax({
-                url: "/riwayat-login/" + id,
+                url: "/production/riwayat-login/" + id,
                 type: "GET",
                 cache:false,
                 success:function(data){
