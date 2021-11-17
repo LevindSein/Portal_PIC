@@ -5,7 +5,7 @@
                 <tbody>
                     <tr>
                         <td style="vertical-align: top; padding-bottom:30px; margin:auto; width:50%; text-align:center; align-items: center;">
-                            <img src="{{asset('storage/logo.png')}}" alt="PIC BDG" style="border: none;" />
+                            <img src="{{$message->embed(asset('storage/logo.png'))}}" alt="PIC BDG" style="border: none;" />
                         </td>
                     </tr>
                 </tbody>
@@ -32,7 +32,7 @@
                                 <b>- {{$regards}}</b>
                                 <p>Jika tombol di atas tidak berfungsi, silakan kunjungi</p>
                                 <p style="font-size: 12px">{{$url}}</p>
-                                <p style="font-size: 10px">Pesan ini dikirim oleh bot sistem. Anda tidak perlu membalasnya.</p>
+                                <p style="font-size: 10px">Pesan ini dikirim oleh sistem. Anda tidak perlu membalasnya.</p>
                             </td>
                         </tr>
                     </tbody>

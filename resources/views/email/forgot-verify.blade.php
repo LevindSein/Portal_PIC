@@ -32,7 +32,7 @@
                                 <b>- {{$regards}}</b>
                                 <p>Jika tombol di atas tidak berfungsi, silakan kunjungi</p>
                                 <p style="font-size: 12px">{{$url}}</p>
-                                <p style="font-size: 10px">Pesan ini dikirim oleh bot sistem. Anda tidak perlu membalasnya.</p>
+                                <p style="font-size: 10px">Pesan ini dikirim oleh sistem. Anda tidak perlu membalasnya.</p>
                             </td>
                         </tr>
                     </tbody>
