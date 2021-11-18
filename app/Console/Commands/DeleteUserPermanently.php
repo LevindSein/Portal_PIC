@@ -7,14 +7,14 @@ use Carbon\Carbon;
 
 use App\Models\User;
 
-class UserDeletePermanently extends Command
+class DeleteUserPermanently extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'cron:userdelete';
+    protected $signature = 'cron:deleteuserpermanently';
 
     /**
      * The console command description.
@@ -42,7 +42,8 @@ class UserDeletePermanently extends Command
     {
         $user = User::where([['stt_aktif',0],['nonaktif','!=',NULL]])->get();
 
-        $interval = '';
+        $deleted = 0;
+        $undeleted = 0;
         foreach($user as $d){
             $json = json_decode($d->nonaktif);
             $history = count($json);
@@ -95,13 +96,13 @@ class UserDeletePermanently extends Command
                 $d->stt_aktif = NULL;
                 $d->nonaktif = $nonaktif;
                 $d->save();
-                $interval = "delete permanently success";
+                $deleted++ ;
             }
             else{
-                $interval = "delete permanently < 24 Hours";
+                $undeleted++;
             }
         }
 
-        \Log::info($interval);
+        return \Log::info("DeleteUserPermanently success : " . $deleted . " Deleted & " . $undeleted . " < 24 hours");
     }
 }

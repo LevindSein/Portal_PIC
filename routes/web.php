@@ -9,6 +9,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\LayananController;
+use App\Http\Controllers\ScanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,10 +40,15 @@ Route::middleware('checkauth')->group(function(){
         Route::prefix('production')->group(function(){
             Route::get('dashboard', [DashboardController::class, 'index']);
 
+            Route::get('layanan/registrasi', [LayananController::class, 'index']);
+
+            Route::get('user/kode/aktivasi', [UserController::class, 'aktivasi']);
+            Route::get('user/aktivasi/verify', [UserController::class, 'aktivasiVerify']);
             Route::delete('user/permanen/{id}', [UserController::class, 'permanen']);
             Route::post('user/reset/{id}', [UserController::class, 'reset']);
             Route::post('user/restore/{id}', [UserController::class, 'restore']);
             Route::get('user/penghapusan/{params}', [UserController::class, 'penghapusan']);
+            Route::get('user/registrasi/{params}', [UserController::class, 'registrasi']);
             Route::get('user/level/{params}', [UserController::class, 'level']);
             Route::resource('user', UserController::class);
 
@@ -63,3 +70,5 @@ Route::get('email/verify/{level}/{anggota}', [EmailController::class, 'verify'])
 Route::get('email/verify/resend/{level}/{aktif}/{anggota}', [EmailController::class, 'verifyResend']);
 
 Route::get('cari/blok',[SearchController::class, 'blok']);
+
+Route::get('scanning/qr',[ScanController::class, 'register']);

@@ -15,6 +15,7 @@ use Carbon\Carbon;
 
 use App\Models\User;
 use App\Models\Identity;
+use App\Models\KodeAktivasi;
 
 class UserController extends Controller
 {
@@ -72,7 +73,7 @@ class UserController extends Controller
             if(Auth::user()->level > 1){
                 $level = 3;
             }
-            $data = User::where([['level',$level],['stt_aktif','!=','0']])->select('id','username','name','stt_aktif');
+            $data = User::where([['level',$level],['stt_aktif','1']])->select('id','username','name','stt_aktif');
             return DataTables::of($data)
                 ->addColumn('action', function($data){
                     $button = '';
@@ -113,7 +114,7 @@ class UserController extends Controller
             return DataTables::of($data)
                 ->addColumn('action', function($data){
                     $button = '<a type="button" data-toggle="tooltip" title="Restore" name="restore" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="restore"><i class="fas fa-undo" style="color:#4e73df;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanently" name="deletePermanently" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="deletePermanently"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Hapus Permanen" name="Hapus Permanen" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="deletePermanently"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
                     return $button;
                 })
                 ->addColumn('show', function($data){
@@ -122,6 +123,34 @@ class UserController extends Controller
                 })
                 ->editColumn('stt_aktif', function($data){
                     $button = '<span style="color:#e74a3b;">Nonaktif</span>';
+                    return $button;
+                })
+                ->rawColumns(['action','show','stt_aktif'])
+                ->make(true);
+        }
+    }
+
+    public function registrasi($level)
+    {
+        //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah, 4 = Kasir, 5 = Keuangan, 6 = Manajer
+        if(request()->ajax())
+        {
+            if(Auth::user()->level > 1){
+                $level = 3;
+            }
+            $data = User::where([['level', $level],['stt_aktif','2']])->select('id','username','name','stt_aktif');
+            return DataTables::of($data)
+                ->addColumn('action', function($data){
+                    $button = '<a type="button" data-toggle="tooltip" title="Aktivasi" name="aktivasi" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="aktivasiUser"><i class="fas fa-shield-check" style="color:#36bea6;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Hapus Permanen" name="hapusPermanen" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="deletePermanently"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
+                    return $button;
+                })
+                ->addColumn('show', function($data){
+                    $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details btn btn-sm btn-info">Show</button>';
+                    return $button;
+                })
+                ->editColumn('stt_aktif', function($data){
+                    $button = '<span style="color:#2962FF;">Terdaftar</span>';
                     return $button;
                 })
                 ->rawColumns(['action','show','stt_aktif'])
@@ -519,6 +548,12 @@ class UserController extends Controller
                 return response()->json(['error' => 'Tidak dapat menghapus akun yang digunakan.']);
             }
 
+            //Menghapus secara permanen apabila statusnya masih mendaftar
+            if($user->stt_aktif == 2){
+                $user->delete();
+                return response()->json(['success' => 'Data berhasil dihapus.']);
+            }
+
             if($user->nonaktif != NULL){
                 $json = json_decode($user->nonaktif, true);
 
@@ -684,6 +719,66 @@ class UserController extends Controller
         }
         else{
             abort(404);
+        }
+    }
+
+    public function aktivasi(){
+        if(request()->ajax()){
+            $now = Carbon::now()->toDateTimeString();
+            $kode = KodeAktivasi::where([
+                ['user_id', Auth::user()->id],
+                ['submit', 0],
+                ['available', '>', $now],
+            ])->first();
+
+            if($kode != NULL){
+                $data = $kode;
+            }
+            else{
+                $data['kode'] = rand(111111,999999);
+                $data['available'] = Carbon::now()->addMinutes(5)->toDateTimeString();
+                $data['user_id'] = Auth::user()->id;
+                $data['submit'] = 0;
+                try{
+                    KodeAktivasi::create($data);
+                } catch(\Exception $e){
+                    return response()->json(['error' => 'Gagal mengambil kode aktivasi.']);
+                }
+            }
+
+            return response()->json(['success' => 'Kode aktivasi didapatkan', 'result' => $data]);
+        }
+        else{
+            abort(404);
+        }
+    }
+
+    public function aktivasiVerify(){
+        if(request()->ajax()){
+            $now = Carbon::now()->toDateTimeString();
+            $id = Auth::user()->id;
+
+            $kode = KodeAktivasi::where([
+                ['user_id', $id],
+                ['submit', 1],
+                ['available', '>', $now],
+            ])->first();
+
+            if($kode != NULL){
+                $data = User::where('kode_aktivasi', $kode->kode)->first();
+
+                $data = Crypt::encrypt($data->id);
+
+                return response()->json([
+                    'success' => "Selesaikan Pendaftaran kode : $kode->kode .",
+                    'result' => $data
+                ]);
+            }
+            else{
+                return response()->json([
+                    'error' => "Kode aktivasi tidak terdeteksi"
+                ]);
+            }
         }
     }
 }

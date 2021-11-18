@@ -14,6 +14,8 @@ use App\Models\LoginData;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
+use Carbon\Carbon;
+
 class AuthController extends Controller
 {
     /**
@@ -43,7 +45,7 @@ class AuthController extends Controller
             }
             else if($user->stt_aktif == 2){
                 LoginData::success();
-                $token = Crypt::encrypt($user->anggota);
+                $token = Crypt::encrypt($user->anggota . '+' . $user->available);
                 return redirect("register/$token");
             }
             else{
@@ -93,7 +95,7 @@ class AuthController extends Controller
                 $user = Auth::user();
                 if($user->stt_aktif == 2){
                     LoginData::success();
-                    $token = Crypt::encrypt($user->anggota);
+                    $token = Crypt::encrypt($user->anggota . '+' . $user->available);
                     return response()->json(['register' => $token]);
                 }
                 else if($user->stt_aktif == 1){
@@ -187,44 +189,49 @@ class AuthController extends Controller
 
     public function register(Request $request){
         $request->validate([
+            'name' => 'required|max:100|regex:/^[\pL\s\-]+$/u',
             'email' => 'required|max:200|email|unique:App\Models\User,email',
             'password' => 'required|min:6',
-            'ulangiPassword' => 'required|min:6',
         ]);
 
+        $nama = $request->name;
         $email = strtolower($request->email);
         $password = $request->password;
-        $confirm = $request->ulangiPassword;
 
-        if($password == $confirm){
-            $username = Identity::make('username');
-            $anggota = Identity::make('anggota');
-            $data['username'] = $username;
-            $data['name'] = $username;
-            $data['email'] = $email;
-            $data['anggota'] = $anggota;
-            $data['stt_aktif'] = 2;
-            $data['password'] = Hash::make(sha1(md5(hash('gost', $password))));
+        $username = Identity::make('username');
+        $anggota = 'BP3C'.Identity::make('anggota');
+        $data['username'] = $username;
+        $data['name'] = $nama;
+        $data['email'] = $email;
+        $data['anggota'] = $anggota;
+        $data['stt_aktif'] = 2;
+        $data['password'] = Hash::make(sha1(md5(hash('gost', $password))));
+        $available = Carbon::now()->addDays(2)->toDateTimeString();
+        $data['available'] = $available;
 
-            try{
-                User::create($data);
-            }
-            catch(\Exception $e){
-                return response()->json(['exception' => $e]);
-            }
-            $token = Crypt::encrypt($anggota);
-            return response()->json(['register' => $token]);
+        try{
+            User::create($data);
         }
-        else{
-            return response()->json(['error' => "Password tidak cocok."]);
+        catch(\Exception $e){
+            return response()->json(['exception' => $e]);
         }
+        $token = Crypt::encrypt($anggota . '+' . $available);
+        return response()->json(['register' => $token]);
     }
 
     public function registrasiQR($token){
         $qr = QrCode::size(165)->margin(3)->eyeColor(0, 38,73,92, 196,163,90)->color(196,163,90)->backgroundColor(255,255,255)->generate($token);
+        try {
+            $decrypted = Crypt::decrypt($token);
+            $explode = explode('+', $decrypted);
+            $available = $explode[1];
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            abort(404);
+        };
         return view('portal.home.registrasi', [
             'qr' => $qr,
-            'token' => $token
+            'token' => $token,
+            'available' => $available,
         ]);
     }
 

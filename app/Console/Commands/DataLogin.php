@@ -42,5 +42,6 @@ class DataLogin extends Command
         if(LoginData::count() > 7000){
             LoginData::orderBy('id','asc')->limit(3000)->delete();
         }
+        return \Log::info('DataLogin success.');
     }
 }

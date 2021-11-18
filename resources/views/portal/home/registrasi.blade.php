@@ -55,7 +55,7 @@
                     </div>
                     <a href='{{url("register/download/$token")}}' id="btn_download" class="u-border-none u-btn u-btn-round u-button-style u-custom-color-2 u-hover-custom-color-1 u-radius-50 u-btn-1">Download</a>
                     <p class="u-align-center u-text u-text-2">
-                        <b>Download</b> dan <b>Tunjukkan</b>&nbsp;<br>QR Code Pendaftaran pada Divisi Layanan Pedagang<br>Pasar Induk Caringin Kota Bandung.<br>Siapkan <b>KTP</b> &amp; <b>NPWP</b> (Jika ada)
+                        <b>Download</b> dan <b>Tunjukkan</b>&nbsp;<br>QR Code Pendaftaran pada Divisi Layanan Pedagang<br>Pasar Induk Caringin Kota Bandung, sebelum tanggal <b>{{$available}}</b>.<br>Siapkan <b>KTP</b> &amp; <b>NPWP</b> (Jika ada)
                     </p>
                     <p class="u-align-center u-text u-text-3">Alamat Kantor :</p>
                     <p class="u-align-center u-text u-text-4">

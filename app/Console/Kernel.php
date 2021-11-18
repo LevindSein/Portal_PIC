@@ -25,7 +25,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('cron:queue')->everyMinute()->withoutOverlapping();
-        $schedule->command('cron:userdelete')->everyFiveMinutes()->withoutOverlapping();
+        $schedule->command('cron:deleteuserpermanently')->everyFiveMinutes();
+        $schedule->command('cron:deleteuserregister')->everyFiveMinutes();
+        $schedule->command('cron:deletekodeaktivasi')->everyMinute();
         $schedule->command('cron:logindata')->dailyAt('05:00');
         $schedule->command('cron:backup')->dailyAt('03:00');
     }

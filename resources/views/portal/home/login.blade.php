@@ -60,7 +60,8 @@
                         </div>
                         <div id="check-password" class="input-field">
                             <i class="fas fa-lock"></i>
-                            <input required type="password" minlength="6" name="password" placeholder="Password"/>
+                            <input required type="password" minlength="6" id="pass-log" name="password" placeholder="Password"/>
+                            <i class="fas fa-eye" id="pass-log-show"></i>
                         </div>
                         <input type="submit" class="btn" value="Submit" />
                         <div>
@@ -70,16 +71,17 @@
                     <form class="sign-up-form" id="form_register">
                         <h2 class="title">Daftar</h2>
                         <div class="input-field">
+                            <i class="fas fa-user"></i>
+                            <input required type="text" autocomplete="off" maxlength="100" id="name" name="name" placeholder="Ketikkan Nama"/>
+                        </div>
+                        <div class="input-field">
                             <i class="fas fa-envelope"></i>
-                            <input required type="email" autocomplete="off" maxlength="100" id="email" name="email" placeholder="Masukkan Email" style="text-transform:lowercase;"/>
+                            <input required type="email" autocomplete="off" maxlength="200" id="email" name="email" placeholder="Ketikkan Email" style="text-transform:lowercase;"/>
                         </div>
                         <div class="input-field">
                             <i class="fas fa-lock"></i>
-                            <input required type="password" minlength="6" name="password" placeholder="Ketikkan Password"/>
-                        </div>
-                        <div class="input-field">
-                            <i class="fas fa-lock"></i>
-                            <input required type="password" minlength="6" name="ulangiPassword" placeholder="Ulangi Password"/>
+                            <input required type="password" minlength="6" id="pass-reg" name="password" placeholder="Ketikkan Password"/>
+                            <i class="fas fa-eye" id="pass-reg-show"></i>
                         </div>
                         <input type="submit" class="btn" value="Submit"/>
                     </form>
@@ -111,6 +113,26 @@
         <script>
             $(document).ready(function(){
                 $("#username").focus();
+
+                $('#pass-reg-show').click(function(){
+                    if($('#pass-reg').attr('type') == 'password'){
+                        $('#pass-reg').prop('type', 'text');
+                        $('#pass-reg-show').removeClass('fa-eye').addClass('fa-eye-slash');
+                    }else{
+                        $('#pass-reg').prop('type', 'password');
+                        $('#pass-reg-show').addClass('fa-eye').removeClass('fa-eye-slash');
+                    }
+                });
+
+                $('#pass-log-show').click(function(){
+                    if($('#pass-log').attr('type') == 'password'){
+                        $('#pass-log').prop('type', 'text');
+                        $('#pass-log-show').removeClass('fa-eye').addClass('fa-eye-slash');
+                    }else{
+                        $('#pass-log').prop('type', 'password');
+                        $('#pass-log-show').addClass('fa-eye').removeClass('fa-eye-slash');
+                    }
+                });
 
                 $('#username, #email').on('keypress', function ( event ) {
                     var key = event.keyCode;
@@ -229,7 +251,7 @@
                             }
                             else{
                                 $("#form_register")[0].reset();
-                                $("#email").focus();
+                                $("#name").focus();
                             }
                         }
                     });

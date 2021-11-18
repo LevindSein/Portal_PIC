@@ -13,8 +13,23 @@ User
         Menu
     </button>
     <div class="dropdown-menu animated fadeIn">
-        <a class="dropdown-item tambah" href="javascript:void(0)"><i class="fas fa-plus mr-1 ml-1"></i>&nbsp;Tambah User</a>
-        <a class="dropdown-item penghapusan" href="javascript:void(0)"><i class="fas fa-trash mr-1 ml-1"></i>&nbsp;Data Penghapusan</a>
+        <a class="dropdown-item tambah" href="javascript:void(0)">
+            <i class="fas fa-fw fa-plus mr-1 ml-1"></i>
+            <span>Tambah User</span>
+        </a>
+        <a class="dropdown-item penghapusan" href="javascript:void(0)">
+            <i class="fas fa-fw fa-trash mr-1 ml-1"></i>
+            <span>Data Penghapusan</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item registrasi" href="javascript:void(0)">
+            <i class="fas fa-fw fa-user-plus mr-1 ml-1"></i>
+            <span>Data Registrasi</span>
+        </a>
+        <a class="dropdown-item aktivasi" href="javascript:void(0)">
+            <i class="fas fa-fw fa-brackets mr-1 ml-1"></i>
+            <span>Aktivasi Pendaftaran</span>
+        </a>
     </div>
 </div>
 @endsection
@@ -75,6 +90,39 @@ User
             <div class="modal-footer">
             	<button type="button" id="btn_copy" class="btn btn-success">Click for Copy!</button>
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="aktivasiModal" class="modal fade" role="dialog" tabIndex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kode Aktivasi</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <p class="text-danger">Harap <b>Jangan di Tutup</b> sebelum QR Code terotentikasi. Apabila tertutup, lakukan <b>Aktivasi Pendaftaran</b> kembali.</p>
+                </div>
+                <div>
+                    <p>1. Buka Aplikasi <b>ScanQR BP3C</b>.</p>
+                    <p>2. Masukkan <b>Kode Aktivasi</b> dibawah.</p>
+                    <p>3. Kode Aktivasi valid selama <b>5 menit.</b></p>
+                    <p>4. Lakukan <b>scanning</b> pada QR Code Customer.</p>
+                    <p>5. Jika status pada aplikasi ScanQR BP3C <b>berhasil</b>.</p>
+                    <p>6. Lakukan proses selanjutnya di aplikasi Portal PIC</p>
+                </div>
+                <div class="text-center">
+                    <p>Kode Aktivasi :</p>
+                    <h1><b><span id="kode_aktivasi"></span></b></h1>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal" id="tutup-aktivasi">Tutup</button>
             </div>
         </div>
     </div>
@@ -390,16 +438,108 @@ User
         if(params == "penghapusan"){
             penghapusan();
         }
+        else if(params == "registrasi"){
+            registrasi();
+        }
         else{
             home();
         }
+
+        $(".penghapusan").click(function(){
+            penghapusan();
+        });
+
+        $(".registrasi").click(function(){
+            registrasi();
+        });
 
         $(".home").click(function(){
             home();
         });
 
-        $(".penghapusan").click(function(){
-            penghapusan();
+        var intervalAktivasi;
+        $(".aktivasi").click(function(){
+            $.ajax({
+                url: "/production/user/kode/aktivasi",
+                type: "GET",
+                cache:false,
+                success:function(data){
+                    if(data.success){
+                        $("#kode_aktivasi").text(data.result.kode);
+                    }
+                    else if(data.exception){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error("Data gagal diproses.");
+                        console.log(data.exception);
+                    }
+                    else{
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                    }
+                },
+                error:function(data){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("Gagal mengambil data.");
+                    console.log(data);
+                },
+                complete:function(){
+                    intervalAktivasi = setInterval(() => {
+                        $.ajax({
+                            url: "/production/user/aktivasi/verify",
+                            type: "GET",
+                            cache:false,
+                            success:function(data){
+                                if(data.success){
+                                    toastr.options = {
+                                        "closeButton": true,
+                                        "preventDuplicates": true,
+                                    };
+                                    toastr.success(data.success);
+                                    $.blockUI({
+                                        message: '<i class="fas fa-spin fa-sync text-white"></i>',
+                                        baseZ: 9999,
+                                        overlayCSS: {
+                                            backgroundColor: '#000',
+                                            opacity: 0.5,
+                                            cursor: 'wait'
+                                        },
+                                        css: {
+                                            border: 0,
+                                            padding: 0,
+                                            backgroundColor: 'transparent'
+                                        }
+                                    });
+
+                                    setTimeout(() => {
+                                        $.unblockUI();
+                                        location.href = '/production/layanan/registrasi?data=' + data.result;
+                                    }, 2000);
+                                }
+                                else{
+                                    console.log(data.error);
+                                }
+                            },
+                            error:function(data){
+                                console.log(data);
+                            }
+                        });
+                    }, 1000);
+                    $('#aktivasiModal').modal('show');
+                },
+            });
+        });
+
+        $("#tutup-aktivasi").click(function(){
+            clearInterval(intervalAktivasi);
         });
 
         setInterval(function(){
@@ -452,6 +592,9 @@ User
         $('#kategori').on('change', function() {
             if(getUrlParameter('data') == 'penghapusan'){
                 dtable = dtableInit("/production/user/penghapusan/" + this.value);
+            }
+            else if(getUrlParameter('data') == 'registrasi'){
+                dtable = dtableInit("/production/user/registrasi/" + this.value);
             }
             else{
                 dtable = dtableInit("/production/user/level/" + this.value);
@@ -566,6 +709,11 @@ User
             $('#confirmModal').modal('show');
         });
 
+        $(document).on('click', '.aktivasiUser', function(){
+            id = $(this).attr('id');
+            location.href = '/production/layanan/registrasi?data=' + id;
+        });
+
         $(document).on('click', '.deletePermanently', function(){
             id = $(this).attr('id');
             nama = $(this).attr('nama');
@@ -610,12 +758,16 @@ User
                             $("#showEmail").html("<a target='_blank' href='mailto:" + data.user.email + "'>" + data.user.email + " <i class='fas fa-external-link'></i></a>");
                         else
                             $("#showEmail").html("&mdash;");
+
                         if(data.user.phone)
                             $("#showPhone").html("<a target='_blank' href='https://wa.me/62" + data.user.phone + "'>+62" + data.user.phone + " <i class='fas fa-external-link'></i></a>");
                         else
                             $("#showPhone").html("&mdash;");
 
-                        $("#showAlamat").text(data.user.alamat);
+                        if(data.user.alamat)
+                            $("#showAlamat").html(data.user.alamat);
+                        else
+                            $("#showAlamat").html("&mdash;");
                     }
                     else if(data.exception){
                         toastr.options = {
@@ -903,6 +1055,14 @@ User
             window.history.replaceState(null, null, "?data=penghapusan");
             dtable = dtableInit("/production/user/penghapusan/1");
             $('#warning-penghapusan').show();
+        }
+
+        function registrasi(){
+            $("#kategori").prop('selectedIndex',0)
+            $(".page-title").text("Data Registrasi");
+            window.history.replaceState(null, null, "?data=registrasi");
+            dtable = dtableInit("/production/user/registrasi/1");
+            $('#warning-penghapusan').hide();
         }
 
         function home(){

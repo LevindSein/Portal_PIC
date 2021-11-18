@@ -31,6 +31,8 @@ class User extends Authenticatable
         'otoritas',
         'stt_aktif',
         'password',
+        'kode_aktivasi',
+        'available',
     ];
 
     /**

@@ -255,25 +255,13 @@
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
-                                    <a href="index.html" class="sidebar-link">
+                                    <a href="{{url('#')}}" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
                                         <span class="hide-menu">Registrasi</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="index.html" class="sidebar-link">
-                                        <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Pedagang</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="index.html" class="sidebar-link">
-                                        <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Tempat&nbsp;Usaha</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="index.html" class="sidebar-link">
+                                    <a href="{{url('#')}}" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
                                         <span class="hide-menu">Pembongkaran</span>
                                     </a>
@@ -297,19 +285,19 @@
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
-                                    <a href="index.html" class="sidebar-link">
+                                    <a href="{{url('#')}}" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
                                         <span class="hide-menu">Pemakaian</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="index.html" class="sidebar-link">
+                                    <a href="{{url('#')}}" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
                                         <span class="hide-menu">Pendapatan</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="index.html" class="sidebar-link">
+                                    <a href="{{url('#')}}" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
                                         <span class="hide-menu">Tunggakan</span>
                                     </a>
@@ -333,19 +321,19 @@
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
-                                    <a href="index.html" class="sidebar-link">
+                                    <a href="{{url('#')}}" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
                                         <span class="hide-menu">Tarif</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="index.html" class="sidebar-link">
+                                    <a href="{{url('#')}}" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
                                         <span class="hide-menu">Alat&nbsp;Meter</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="index.html" class="sidebar-link">
+                                    <a href="{{url('#')}}" class="sidebar-link">
                                         <i class="mdi mdi-adjust"></i>
                                         <span class="hide-menu">Hari&nbsp;Libur</span>
                                     </a>
@@ -360,6 +348,13 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
+                                aria-expanded="false">
+                                <i class="fas fa-building"></i>
+                                <span class="hide-menu">Tempat&nbsp;Usaha</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/riwayat-login*')) ? 'active' : '' }}" href="{{url('production/riwayat-login')}}"
                                 aria-expanded="false">
                                 <i class="fad fa-clock"></i>
@@ -369,7 +364,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
-                                <i class="fas fa-clipboard-check"></i>
+                                <i class="fas fa-info"></i>
                                 <span class="hide-menu">Changelog</span>
                             </a>
                         </li>

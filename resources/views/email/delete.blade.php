@@ -5,7 +5,7 @@
                 <tbody>
                     <tr>
                         <td style="vertical-align: top; padding-bottom:30px; margin:auto; width:50%; text-align:center; align-items: center;">
-                            <img src="{{asset('storage/logo.png')}}" alt="PIC BDG" style="border: none;" />
+                            <img src="{{$message->embed(asset('storage/logo.png'))}}" alt="PIC BDG" style="border: none;" />
                         </td>
                     </tr>
                 </tbody>

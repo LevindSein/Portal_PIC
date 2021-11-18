@@ -3,23 +3,25 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+
+use App\Models\User;
 use Carbon\Carbon;
 
-class DatabaseBackUp extends Command
+class DeleteUserRegister extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'cron:backup';
+    protected $signature = 'cron:deleteuserregister';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Backup Database into server';
+    protected $description = 'Delete User Registered Nonactivate';
 
     /**
      * Create a new command instance.
@@ -38,14 +40,18 @@ class DatabaseBackUp extends Command
      */
     public function handle()
     {
-        $filename = "backup-" . Carbon::now()->format('Y-m-d') . ".gz";
-        $command = "mysqldump --user=" .env('DB_USERNAME')." --password=" .env('DB_PASSWORD')." --host=" . env('DB_HOST')." " .env('DB_DATABASE')." | gzip > ".storage_path()."/app/backup/".$filename;
+        $user = User::where('stt_aktif',2)->get();
 
-        $returnVar = NULL;
-        $output  = NULL;
+        $now = Carbon::now()->toDateTimeString();
 
-        exec($command, $output, $returnVar);
+        $deleted = 0;
+        foreach($user as $d){
+            if($now > $d->available){
+                $d->delete();
+                $deleted++;
+            }
+        }
 
-        \Log::info('DatabaseBackUp success');
+        return \Log::info('DeleteUserRegister success : ' . $deleted . ' Deleted');
     }
 }
