@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Models\User;
 use App\Models\Identity;
 use App\Models\LoginData;
+use App\Models\Visitor;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -25,6 +26,7 @@ class AuthController extends Controller
      */
     public function index()
     {
+        Visitor::visitOnDay();
         if(Auth::check()){
             $user = Auth::user();
             if($user->stt_aktif == 1){

@@ -31,6 +31,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('cron:deletefileqr')->dailyAt('02:00');
         $schedule->command('cron:logindata')->dailyAt('05:00');
         $schedule->command('cron:backup')->dailyAt('03:00');
+        $schedule->command('cron:visitorcommand')->daily();
     }
 
     /**
