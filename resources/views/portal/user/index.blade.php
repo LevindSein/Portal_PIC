@@ -24,10 +24,10 @@ User
         <div class="dropdown-divider"></div>
         <a class="dropdown-item registrasi" href="javascript:void(0)">
             <i class="fas fa-fw fa-user-plus mr-1 ml-1"></i>
-            <span>Data Registrasi</span>
+            <span>Data Pendaftar</span>
         </a>
         <a class="dropdown-item aktivasi" href="javascript:void(0)">
-            <i class="fas fa-fw fa-brackets mr-1 ml-1"></i>
+            <i class="fas fa-fw fa-qrcode mr-1 ml-1"></i>
             <span>Aktivasi Pendaftaran</span>
         </a>
     </div>
@@ -108,17 +108,18 @@ User
                 <div class="text-center">
                     <p class="text-danger">Harap <b>Jangan di Tutup</b> sebelum QR Code terotentikasi. Apabila tertutup, lakukan <b>Aktivasi Pendaftaran</b> kembali.</p>
                 </div>
-                <div>
-                    <p>1. Buka Aplikasi <b>ScanQR BP3C</b>.</p>
-                    <p>2. Masukkan <b>Kode Aktivasi</b> dibawah.</p>
-                    <p>3. Kode Aktivasi valid selama <b>5 menit.</b></p>
-                    <p>4. Lakukan <b>scanning</b> pada QR Code Customer.</p>
-                    <p>5. Jika status pada aplikasi ScanQR BP3C <b>berhasil</b>.</p>
-                    <p>6. Lakukan proses selanjutnya di aplikasi Portal PIC</p>
-                </div>
                 <div class="text-center">
                     <p>Kode Aktivasi :</p>
                     <h1><b><span id="kode_aktivasi"></span></b></h1>
+                </div>
+                <div>
+                    <p>1. Buka aplikasi <b>QR Code Scanner</b> yang anda miliki.</p>
+                    <p>2. Lakukan <b>scanning</b> pada QR Code yang dimiliki Customer.</p>
+                    <p>3. Kunjungi <b>situs</b> yang terbaca oleh QR Code Scanner.</p>
+                    <p>4. Masukkan <b>Kode Aktivasi</b> di atas.</p>
+                    <p>5. Kode Aktivasi <b>valid</b> selama <b>15 menit & 1x Pakai.</b></p>
+                    <p>6. Jika sukses, terdapat status <b>kode aktivasi terkirim</b>
+                    <p>7. Selesaikan registrasi di aplikasi Portal PIC</p>
                 </div>
             </div>
             <div class="modal-footer">
@@ -1059,7 +1060,7 @@ User
 
         function registrasi(){
             $("#kategori").prop('selectedIndex',0)
-            $(".page-title").text("Data Registrasi");
+            $(".page-title").text("Data Pendaftar");
             window.history.replaceState(null, null, "?data=registrasi");
             dtable = dtableInit("/production/user/registrasi/1");
             $('#warning-penghapusan').hide();

@@ -43,12 +43,16 @@ class DeleteKodeAktivasi extends Command
     {
         $deleted = 0;
         $now = Carbon::now()->toDateTimeString();
-
         $kode = KodeAktivasi::where('available', '<', $now)->get();
 
         foreach ($kode as $d) {
-            $d->delete();
-            $deleted++;
+            $awal = new Carbon($d->available);
+            $interval = $awal->diffInSeconds($now);
+
+            if($interval > 900){
+                $d->delete();
+                $deleted++;
+            }
         }
         return \Log::info("DeleteKodeAktivasi success : " . $deleted . " deleted");
     }

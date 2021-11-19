@@ -723,11 +723,12 @@ class UserController extends Controller
     }
 
     public function aktivasi(){
+        //submit 0 = belum untuk aktivasi, 1 = sudah di submit belum di aktivasi, 2 = akun teraktivasi dan kode di hapus;
         if(request()->ajax()){
             $now = Carbon::now()->toDateTimeString();
             $kode = KodeAktivasi::where([
                 ['user_id', Auth::user()->id],
-                ['submit', 0],
+                ['submit','<', 2],
                 ['available', '>', $now],
             ])->first();
 
@@ -736,7 +737,7 @@ class UserController extends Controller
             }
             else{
                 $data['kode'] = rand(111111,999999);
-                $data['available'] = Carbon::now()->addMinutes(5)->toDateTimeString();
+                $data['available'] = Carbon::now()->addMinutes(15)->toDateTimeString();
                 $data['user_id'] = Auth::user()->id;
                 $data['submit'] = 0;
                 try{
@@ -754,6 +755,7 @@ class UserController extends Controller
     }
 
     public function aktivasiVerify(){
+        //submit 0 = belum untuk aktivasi, 1 = sudah di submit belum di aktivasi, 2 = akun teraktivasi dan kode di hapus;
         if(request()->ajax()){
             $now = Carbon::now()->toDateTimeString();
             $id = Auth::user()->id;

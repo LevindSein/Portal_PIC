@@ -220,14 +220,17 @@ class AuthController extends Controller
     }
 
     public function registrasiQR($token){
-        $qr = QrCode::size(165)->margin(3)->eyeColor(0, 38,73,92, 196,163,90)->color(196,163,90)->backgroundColor(255,255,255)->generate($token);
+        $qr = url("/")."/scan/qr/pendaftaran/".$token;
+        $qr = QrCode::size(165)->margin(3)->eyeColor(0, 38,73,92, 196,163,90)->color(196,163,90)->backgroundColor(255,255,255)->generate($qr);
         try {
             $decrypted = Crypt::decrypt($token);
-            $explode = explode('+', $decrypted);
-            $available = $explode[1];
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
             abort(404);
         };
+
+        $explode = explode('+', $decrypted);
+        $available = $explode[1];
+
         return view('portal.home.registrasi', [
             'qr' => $qr,
             'token' => $token,
@@ -237,6 +240,7 @@ class AuthController extends Controller
 
     public function registrasiDownload($token){
         $name = substr($token, 0, 20);
+        $token = url("/")."/scan/qr/pendaftaran/".$token;
         QrCode::format('png')->size(300)->margin(3)->eyeColor(0, 38,73,92, 196,163,90)->color(196,163,90)->backgroundColor(255,255,255)->generate($token, public_path("storage/register/$name.png"));
         $filepath = public_path("storage/register/$name.png");
         return \Response::download($filepath);

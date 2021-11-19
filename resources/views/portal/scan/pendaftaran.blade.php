@@ -39,7 +39,7 @@
 
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/favicon.png')}}">
-    <title>Pulihkan Akun | Portal PIC</title>
+    <title>Aktivasi Akun | Portal PIC</title>
 
     <script src="{{asset('template/assets/libs/jquery/dist/jquery.min.js')}}"></script>
 
@@ -59,6 +59,15 @@
     {{-- Toastr --}}
     <link rel="stylesheet" type="text/css" href="{{asset('vendor/toastr/toastr.min.css')}}">
     <script src="{{asset('vendor/toastr/toastr.min.js')}}"></script>
+
+    {{-- Sweet Alert --}}
+    <link rel="stylesheet" href="{{asset('vendor/sweetalert2/dist/sweetalert2.min.css')}}">
+
+    <style>
+        input {
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -80,25 +89,24 @@
                         <span class="db">
                             <img src="{{asset('img/favicon.png')}}" width="50" alt="logo BP3C" />
                         </span>
-                        <h5 class="font-medium mb-3">Pulihkan Akun Anda</h5>
+                        <h5 class="font-medium mb-3">Masukkan Kode Aktivasi untuk :</h5>
+                        <h5 class="font-medium mb-3"><b>Sdr/i. {{$nama}}</b></h5>
+                        <h5 class="font-medium mb-3"><b>{{$anggota}}</b></h5>
                     </div>
                     <!-- Form -->
                     <div class="row">
                         <div class="col-12">
-                            <form class="form-horizontal mt-3" id="resetForm">
+                            <form class="form-horizontal mt-3" id="aktivasiForm">
                                 <div class="form-group row">
                                     <div class="col-12">
-                                        <input class="form-control form-control-lg" required type="password" minlength="6" id="password" name="password" placeholder="Ketikkan Password Baru"/>
+                                        <input class="form-control form-control-lg" required type="text" autocomplete="off" minlength="6" maxlength="6" id="aktivasi" name="aktivasi" placeholder="Masukkan Kode Aktivasi"/>
                                     </div>
                                 </div>
                                 <div class="form-group text-center">
                                     <div class="col-xs-12 pb-3">
-                                        <input type="hidden" id="password_hidden" name="password_hidden" value="{{$anggota}}" />
+                                        <input type="hidden" id="data_hidden" name="data_hidden" value="{{$data}}" />
                                         <button class="btn btn-block btn-info btn-rounded" type="submit">Submit</button>
                                     </div>
-                                    <a href="{{url('logout')}}" class="u-btn u-button-style u-none u-text-custom-color-2 u-text-hover-custom-color-1 u-btn-3">
-                                        <i class="fas fa-chevron-left"></i>&nbsp;Kembali
-                                    </a>
                                 </div>
                             </form>
                         </div>
@@ -135,15 +143,17 @@
 
     <script src="{{asset('vendor/block-ui/jquery.blockUI.js')}}"></script>
 
+    <script src="{{asset('vendor/sweetalert2/dist/sweetalert2.min.js')}}"></script>
+
     <script>
         $(window).on('load', function() {
             $(".se-pre-con").fadeIn("slow").fadeOut("slow");
         });
 
         $(document).ready(function(){
-            $("#password").focus();
+            $("#aktivasi").focus();
 
-            $('#resetForm').on('submit', function(e){
+            $('#aktivasiForm').on('submit', function(e){
                 e.preventDefault();
 
                 $.ajaxSetup({
@@ -153,7 +163,7 @@
                 });
 
                 $.ajax({
-                    url: "/email/forgot-password/password",
+                    url: "/scanning/qr/pendaftaran",
                     cache: false,
                     method: "POST",
                     data: $(this).serialize(),
@@ -177,14 +187,16 @@
                     success:function(data)
                     {
                         if(data.success){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.success(data.success);
-                            setTimeout(() => {
-                                location.href = "/login";
-                            }, 2000);
+                            swal({
+                                title: 'Success',
+                                text: data.success,
+                                type: 'success',
+                                timer: 2000,
+                                showCancelButton: false,
+                                showConfirmButton: false
+                            }).then(function() {
+                                window.close();
+                            });
                         }
                         else if(data.warning){
                             toastr.options = {
@@ -237,8 +249,6 @@
                     },
                     complete:function(data){
                         $.unblockUI();
-                        $("#resetForm")[0].reset();
-                        $("#email").focus();
                     }
                 });
             });

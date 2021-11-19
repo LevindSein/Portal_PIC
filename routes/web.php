@@ -71,4 +71,5 @@ Route::get('email/verify/resend/{level}/{aktif}/{anggota}', [EmailController::cl
 
 Route::get('cari/blok',[SearchController::class, 'blok']);
 
-Route::get('scanning/qr',[ScanController::class, 'register']);
+Route::get('scan/qr/{type}/{data}',[ScanController::class, 'scanQR']);
+Route::post('scanning/qr/pendaftaran',[ScanController::class, 'scanningQRPendaftaran']);
