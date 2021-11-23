@@ -2,38 +2,7 @@
 <html dir="ltr" lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="keyword"
-        content="Pasar Bandung, Pasar Tradisional, Pasar Induk, Caringin, Pasar Induk Caringin Kota Bandung" />
-    <meta name="author" content="Pasar Induk Caringin Kota Bandung" />
-    <meta name="description" content="Login untuk Member Area Pasar Induk Caringin Kota Bandung" />
-    <meta property="og:site_name" content="Pasar Induk Caringin Kota Bandung">
-    <meta property="og:title" content="Pasar Induk Caringin Kota Bandung" />
-    <meta property="og:description" content="Login untuk Member Area Pasar Induk Caringin Kota Bandung" />
-    <meta property="og:image" itemprop="image" content="{{asset('portal/home/login/img/favicon.png')}}">
-    <meta property="og:type" content="website" />
-    <link rel="shortcut icon" href="{{asset('img/favicon.png')}}">
-    <link rel="icon" sizes="16x16 32x32 64x64" href="{{asset('img/favicon.png')}}">
-    <link rel="icon" sizes="196x196" href="{{asset('img/favicon.png')}}">
-    <link rel="icon" sizes="160x160" href="{{asset('img/favicon.png')}}">
-    <link rel="icon" sizes="96x96" href="{{asset('img/favicon.png')}}">
-    <link rel="icon" sizes="64x64" href="{{asset('img/favicon.png')}}">
-    <link rel="icon" sizes="32x32" href="{{asset('img/favicon.png')}}">
-    <link rel="icon" sizes="16x16" href="{{asset('img/favicon.png')}}">
-    <link rel="apple-touch-icon" href="{{asset('img/favicon.png')}}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{asset('img/favicon.png')}}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{asset('img/favicon.png')}}">
-    <link rel="apple-touch-icon" sizes="144x144" href="{{asset('img/favicon.png')}}">
-    <link rel="apple-touch-icon" sizes="60x60" href="{{asset('img/favicon.png')}}">
-    <link rel="apple-touch-icon" sizes="120x120" href="{{asset('img/favicon.png')}}">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{asset('img/favicon.png')}}">
-    <link rel="apple-touch-icon" sizes="152x152" href="{{asset('img/favicon.png')}}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/favicon.png')}}">
-    <meta name="google" content="notranslate">
-    <meta name="robots" content="noindex, nofollow" />
+    @include('portal.home.header')
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -179,12 +148,12 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                    src="{{asset(Auth::user()->foto)}}?{{$rand}}" alt="user" class="rounded-circle" width="31"></a>
+                                    src="{{asset(Auth::user()->photo)}}?{{$rand}}" alt="user" class="rounded-circle" width="31"></a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated fadeIn">
                                 <span class="with-arrow">
                                     <span class="bg-primary"></span></span>
                                 <div class="d-flex no-block align-items-center p-15 bg-primary text-white mb-2">
-                                    <div class=""><img src="{{asset(Auth::user()->foto)}}?{{$rand}}" alt="user" class="img-circle"
+                                    <div class=""><img src="{{asset(Auth::user()->photo)}}?{{$rand}}" alt="user" class="img-circle"
                                             width="60"></div>
                                     <div class="ml-2">
                                         <h4 class="mb-0">{{Auth::user()->name}}</h4>
@@ -192,7 +161,7 @@
                                         <p class=" mb-0">{{Auth::user()->telephone}}</p>
                                     </div>
                                 </div>
-                                <a class="dropdown-item" href="{{url('profil')}}">
+                                <a class="dropdown-item" href="{{url('profile')}}">
                                     <i class="fas fa-user mr-1 ml-1"></i>
                                     Profil
                                 </a>
@@ -341,7 +310,7 @@
                             </ul>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/user*')) ? 'active' : '' }}" href="{{url('production/user')}}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/users*')) ? 'active' : '' }}" href="{{url('production/users')}}"
                                 aria-expanded="false">
                                 <i class="fas fa-user"></i>
                                 <span class="hide-menu">User</span>
@@ -355,14 +324,14 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/riwayat-login*')) ? 'active' : '' }}" href="{{url('production/riwayat-login')}}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/histories*')) ? 'active' : '' }}" href="{{url('production/histories')}}"
                                 aria-expanded="false">
                                 <i class="fad fa-clock"></i>
                                 <span class="hide-menu">Riwayat&nbsp;Login</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/changelogs*')) ? 'active' : '' }}" href="{{url('production/changelogs')}}"
                                 aria-expanded="false">
                                 <i class="fas fa-info"></i>
                                 <span class="hide-menu">Changelog</span>
@@ -390,7 +359,7 @@
         <!-- Page wrapper -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-            @if(Auth::user()->email_verified_at == NULL)
+            @if(is_null(Auth::user()->email_verified_at))
             <div class="alert alert-warning alert-block text-center" id="warning-alert">
                 <strong>Email Anda belum diverifikasi!</strong> Silakan verifikasi email anda, <a href="javascript:void(0)" id="emailResend">disini</a>.
             </div>
@@ -548,14 +517,11 @@
                                 "preventDuplicates": true,
                             };
                             toastr.success(data.success);
-                        }
-                        else if(data.exception){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error("Data gagal diproses.");
-                            console.log(data.exception);
+                            if(data.description){
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 300);
+                            }
                         }
                         else if(data.warning){
                             toastr.options = {
@@ -563,16 +529,38 @@
                                 "preventDuplicates": true,
                             };
                             toastr.warning(data.warning);
-                            setTimeout(function() {
-                                location.href = "/profil";
-                            }, 1000);
+                            if(data.description){
+                                setTimeout(function() {
+                                    location.href = "/profile";
+                                }, 1000);
+                            }
+                        }
+                        else if(data.info){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.info(data.info);
+                            if(data.description){
+
+                            }
+                        }
+                        else if(data.error){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.error(data.error);
+                            if(data.description){
+                                console.log(data.description);
+                            }
                         }
                         else{
                             toastr.options = {
                                 "closeButton": true,
                                 "preventDuplicates": true,
                             };
-                            toastr.error(data.error);
+                            toastr.error(data);
                             console.log(data);
                         }
                     },
@@ -581,7 +569,7 @@
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error("Kesalahan Sistem.");
+                        toastr.error("System error.");
                         console.log(data);
                     },
                     complete:function(data){

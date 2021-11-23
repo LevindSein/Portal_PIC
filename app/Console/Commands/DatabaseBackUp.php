@@ -12,7 +12,7 @@ class DatabaseBackUp extends Command
      *
      * @var string
      */
-    protected $signature = 'cron:backup';
+    protected $signature = 'database:backup';
 
     /**
      * The console command description.

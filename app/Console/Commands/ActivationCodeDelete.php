@@ -4,25 +4,25 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-use App\Models\KodeAktivasi;
+use App\Models\ActivationCode;
 
 use Carbon\Carbon;
 
-class DeleteKodeAktivasi extends Command
+class ActivationCodeDelete extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'cron:deletekodeaktivasi';
+    protected $signature = 'activationcode:delete';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Delete Kode Aktivasi Unsubmitted';
+    protected $description = 'Delete unsubmitted Activation Code';
 
     /**
      * Create a new command instance.
@@ -43,17 +43,18 @@ class DeleteKodeAktivasi extends Command
     {
         $deleted = 0;
         $now = Carbon::now()->toDateTimeString();
-        $kode = KodeAktivasi::where('available', '<', $now)->get();
+        $code = ActivationCode::where('available', '<', $now)->get();
 
-        foreach ($kode as $d) {
-            $awal = new Carbon($d->available);
-            $interval = $awal->diffInSeconds($now);
+        foreach ($code as $d) {
+            $from = new Carbon($d->available);
+            $interval = $from->diffInSeconds($now);
 
             if($interval > 900){
                 $d->delete();
                 $deleted++;
             }
         }
-        return \Log::info("DeleteKodeAktivasi success : " . $deleted . " deleted");
+
+        \Log::info("ActivationCodeDelete success : " . $deleted . " deleted");
     }
 }

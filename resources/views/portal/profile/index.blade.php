@@ -11,9 +11,9 @@ Profil
         <div class="card">
             <div class="card-body">
                 <div class="mt-4 text-center">
-                    <div class="image-hover-text-container" id="changePhoto">
+                    <div class="image-hover-text-container" id="changePicture">
                         <div class="image-hover-image">
-                            <img src="{{asset(Auth::user()->foto)}}?{{$rand}}" class="rounded-circle" width="150" />
+                            <img src="{{asset(Auth::user()->photo)}}?{{$rand}}" class="rounded-circle" width="150" />
                         </div>
                         <div class="image-hover-text">
                             <div class="image-hover-text-bubble">
@@ -29,8 +29,8 @@ Profil
             <hr>
             <div class="card-body">
                 <small class="text-muted pt-4 db">No.Anggota</small>
-                <h6>{{Auth::user()->anggota}}</h6>
-                @if(Auth::user()->phone)
+                <h6>{{Auth::user()->member}}</h6>
+                @if(Auth::user()->email)
                 <small class="text-muted pt-4 db">Email</small>
                 <h6>{{Auth::user()->email}}</h6>
                 @endif
@@ -38,9 +38,9 @@ Profil
                 <small class="text-muted pt-4 db">Whatsapp</small>
                 <h6>+62{{Auth::user()->phone}}</h6>
                 @endif
-                @if(Auth::user()->alamat)
+                @if(Auth::user()->address)
                 <small class="text-muted pt-4 db">Alamat</small>
-                <h6>{{Auth::user()->alamat}}</h6>
+                <h6>{{Auth::user()->address}}</h6>
                 @endif
             </div>
         </div>
@@ -59,7 +59,7 @@ Profil
                         href="#settings"
                         role="tab"
                         aria-controls="pills-timeline"
-                        aria-selected="true">Personal Data
+                        aria-selected="true">Data Diri
                     </a>
                 </li>
                 {{-- @if(Auth::user()->level == 3)
@@ -80,7 +80,7 @@ Profil
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="settings" role="tabpanel" aria-labelledby="pills-timeline-tab">
                     <div class="card-body">
-                        <form id="profilForm" class="form-horizontal form-material">
+                        <form id="profileForm" class="form-horizontal form-material">
                             <div class="form-group">
                                 <label class="col-md-12">Username (untuk Login) <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
@@ -123,25 +123,25 @@ Profil
                             <div class="form-group">
                                 <label class="col-md-12">Alamat <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
-                                    <textarea rows="5" id="alamat" name="alamat" required autocomplete="off" placeholder="Ketikkan Alamat disini" maxlength="255" class="form-control form-control-line">{{Auth::user()->alamat}}</textarea>
+                                    <textarea rows="5" id="address" name="address" required autocomplete="off" placeholder="Ketikkan Alamat disini" maxlength="255" class="form-control form-control-line">{{Auth::user()->address}}</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Password saat ini <span class="text-danger">*</span></label>
-                                <div class="col-md-12">
-                                    <input type="password" name="password" required autocomplete="off" minlength="6" placeholder="Ketikkan password saat ini" class="form-control form-control-line">
+                                <div class="col-md-12 input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-eye" id="passwordShow"></i></span>
+                                    </div>
+                                    <input type="password" id="password" name="password" required autocomplete="off" minlength="6" placeholder="Ketikkan password saat ini" class="form-control form-control-line">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-12">Password Baru</label>
-                                <div class="col-md-12">
-                                    <input type="password" name="passwordBaru" minlength="6" autocomplete="off" placeholder="Ketikkan jika ingin ubah password" class="form-control form-control-line">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-12">Konfirmasi Password Baru</label>
-                                <div class="col-md-12">
-                                    <input type="password" name="konfirmasiPasswordBaru" minlength="6" autocomplete="off" placeholder="Ulangi password baru" class="form-control form-control-line">
+                                <div class="col-md-12 input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-eye" id="passwordNewShow"></i></span>
+                                    </div>
+                                    <input type="password" id="passwordNew" name="passwordNew" minlength="6" autocomplete="off" placeholder="Ketikkan jika ubah password" class="form-control form-control-line">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -170,24 +170,24 @@ Profil
 @endsection
 
 @section('content-modal')
-<div id="photoModal" class="modal fade" role="dialog" tabIndex="-1">
+<div id="pictureModal" class="modal fade" role="dialog" tabIndex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <form action="{{url('profil/foto')}}" method="post" enctype="multipart/form-data">
+                <form action="{{url('profile/picture')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <div class="col-md-12">
                             <div class="input-group mb-3">
                                 <div class="custom-file text-left">
-                                    <input type="file" class="custom-file-input" name="fotoInput" id="fotoInput" accept=".png, .jpg, .jpeg">
-                                    <label class="custom-file-label" for="fotoInput">Choose file .jpg, .jpeg, .png</label>
+                                    <input type="file" class="custom-file-input" id="pictureInput" name="pictureInput" accept=".png, .jpg, .jpeg">
+                                    <label class="custom-file-label" for="pictureInput">Pilih Berkas .jpg, .jpeg, .png</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-rounded btn-info">Upload</button>
+                        <button type="submit" class="btn btn-rounded btn-info">Unggah</button>
                         <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
                     </div>
                 </form>
@@ -208,8 +208,28 @@ Profil
             }
         });
 
-        $("#changePhoto").click(function(){
-            $("#photoModal").modal("show");
+        $("#passwordNewShow").click(function(){
+            if($('#passwordNew').attr('type') == 'password'){
+                $('#passwordNew').prop('type', 'text');
+                $('#passwordNewShow').removeClass('fa-eye').addClass('fa-eye-slash');
+            }else{
+                $('#passwordNew').prop('type', 'password');
+                $('#passwordNewShow').addClass('fa-eye').removeClass('fa-eye-slash');
+            }
+        });
+
+        $("#passwordShow").click(function(){
+            if($('#password').attr('type') == 'password'){
+                $('#password').prop('type', 'text');
+                $('#passwordShow').removeClass('fa-eye').addClass('fa-eye-slash');
+            }else{
+                $('#password').prop('type', 'password');
+                $('#passwordShow').addClass('fa-eye').removeClass('fa-eye-slash');
+            }
+        });
+
+        $("#changePicture").click(function(){
+            $("#pictureModal").modal("show");
         });
 
         $('[type=tel]').on('change', function(e) {
@@ -231,7 +251,7 @@ Profil
             }
         });
 
-        $("#profilForm").submit(function(e){
+        $("#profileForm").submit(function(e){
             e.preventDefault();
 
             $.ajaxSetup({
@@ -241,7 +261,7 @@ Profil
             });
 
             $.ajax({
-                url: "/profil",
+                url: "/profile",
                 type: "POST",
                 cache: false,
                 data: $(this).serialize(),
@@ -269,24 +289,48 @@ Profil
                             "preventDuplicates": true,
                         };
                         toastr.success(data.success);
-                        setTimeout(() => {
-                            location.reload();
-                        }, 300);
+                        if(data.description){
+                            setTimeout(() => {
+                                location.reload();
+                            }, 300);
+                        }
                     }
-                    else if(data.exception){
+                    else if(data.warning){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error("Data gagal diproses.");
-                        console.log(data.exception);
+                        toastr.warning(data.warning);
+                        if(data.description){
+
+                        }
+                    }
+                    else if(data.info){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.info(data.info);
+                        if(data.description){
+
+                        }
+                    }
+                    else if(data.error){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                        if(data.description){
+                            console.log(data.description);
+                        }
                     }
                     else{
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error(data.error);
+                        toastr.error(data);
                         console.log(data);
                     }
                 },
@@ -305,7 +349,7 @@ Profil
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error("Kesalahan Sistem.");
+                        toastr.error("System error.");
                     }
                     console.log(data);
                 },

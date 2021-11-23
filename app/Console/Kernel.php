@@ -24,14 +24,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('cron:queue')->everyMinute()->withoutOverlapping();
-        $schedule->command('cron:deleteuserpermanently')->everyFiveMinutes();
-        $schedule->command('cron:deleteuserregister')->everyFiveMinutes();
-        $schedule->command('cron:deletekodeaktivasi')->twiceDaily(1, 13);
-        $schedule->command('cron:deletefileqr')->dailyAt('02:00');
-        $schedule->command('cron:logindata')->dailyAt('05:00');
-        $schedule->command('cron:backup')->dailyAt('03:00');
-        $schedule->command('cron:visitorcommand')->daily();
+        $schedule->command('queue:run')->everyMinute()->withoutOverlapping();
+        $schedule->command('visitor:run')->daily();
+        $schedule->command('activationcode:delete')->twiceDaily(1, 13);
+        $schedule->command('fileqr:delete')->dailyAt('02:00');
+        $schedule->command('database:backup')->dailyAt('03:00');
+        $schedule->command('user:delete')->dailyAt('04:00');
+        $schedule->command('datalogin:delete')->dailyAt('05:00');
     }
 
     /**

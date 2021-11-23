@@ -17,7 +17,7 @@ class OneAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if((Auth::user()->level == 1 || Auth::user()->level == 2) && Auth::user()->stt_aktif == 1){
+        if((Auth::user()->level == 1 || Auth::user()->level == 2) && Auth::user()->active == 1){
             return $next($request);
         }
         else{

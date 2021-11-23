@@ -5,15 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class KodeAktivasi extends Model
+class ChangeLog extends Model
 {
     use HasFactory;
 
-    protected $table = 'kode_aktivasi';
+    protected $table = 'change_log';
     protected $fillable = [
-        'kode',
-        'available',
-        'user_id',
-        'submit',
+        'data',
     ];
 }

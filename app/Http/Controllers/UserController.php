@@ -396,7 +396,7 @@ class UserController extends Controller
         $kelola = NULL;
 
         for($i=0; $i<count($pilihanKelola); $i++){
-            if($request->kelola != NULL){
+            if(!is_null($request->kelola)){
                 if(in_array($pilihanKelola[$i],$request->kelola)){
                     $kelola[$pilihanKelola[$i]] = true;
                 }
@@ -406,7 +406,7 @@ class UserController extends Controller
             }
         }
 
-        if($kelola == NULL)
+        if(is_null($kelola))
             $otoritas = [];
         else{
             $otoritas = $kelola;
@@ -452,7 +452,7 @@ class UserController extends Controller
                 return response()->json(['error' => 'Tidak dapat menghapus akun yang digunakan.']);
             }
 
-            if($user->nonaktif != NULL){
+            if(!is_null($user->nonaktif)){
                 $json = json_decode($user->nonaktif, true);
 
                 $history = count($json);
@@ -498,7 +498,7 @@ class UserController extends Controller
             $user->stt_aktif = 0;
             $user->nonaktif = $nonaktif;
 
-            if($user->email != NULL){
+            if(!is_null($user->email)){
                 try{
                     $details = [
                         'sender' => Auth::user()->name." dari PIC",
@@ -554,7 +554,7 @@ class UserController extends Controller
                 return response()->json(['success' => 'Data berhasil dihapus.']);
             }
 
-            if($user->nonaktif != NULL){
+            if(!is_null($user->nonaktif)){
                 $json = json_decode($user->nonaktif, true);
 
                 $history = count($json);
@@ -628,7 +628,7 @@ class UserController extends Controller
                 return response()->json(['exception' => $e]);
             }
 
-            if($user->nonaktif != NULL){
+            if(!is_null($user->nonaktif)){
                 $json = json_decode($user->nonaktif, true);
 
                 $history = count($json);
@@ -732,7 +732,7 @@ class UserController extends Controller
                 ['available', '>', $now],
             ])->first();
 
-            if($kode != NULL){
+            if(!is_null($kode)){
                 $data = $kode;
             }
             else{
@@ -766,7 +766,7 @@ class UserController extends Controller
                 ['available', '>', $now],
             ])->first();
 
-            if($kode != NULL){
+            if(!is_null($kode)){
                 $data = User::where('kode_aktivasi', $kode->kode)->first();
 
                 $data = Crypt::encrypt($data->id);

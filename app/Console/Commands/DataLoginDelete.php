@@ -4,23 +4,23 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-use App\Models\LoginData;
+use App\Models\DataLogin;
 
-class DataLogin extends Command
+class DataLoginDelete extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'cron:logindata';
+    protected $signature = 'datalogin:delete';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Clear 3000 login data if > 7000';
+    protected $description = 'Delete login data if > 5000';
 
     /**
      * Create a new command instance.
@@ -39,9 +39,11 @@ class DataLogin extends Command
      */
     public function handle()
     {
-        if(LoginData::count() > 7000){
-            LoginData::orderBy('id','asc')->limit(3000)->delete();
+        if(DataLogin::count() > 5000){
+            $delete = DataLogin::count() - 5000;
+            DataLogin::orderBy('id','asc')->limit($delete)->delete();
         }
-        return \Log::info('DataLogin success.');
+
+        \Log::info('DataLoginDelete success.');
     }
 }

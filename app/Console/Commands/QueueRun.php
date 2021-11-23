@@ -4,14 +4,14 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class QueueCommand extends Command
+class QueueRun extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'cron:queue';
+    protected $signature = 'queue:run';
 
     /**
      * The console command description.

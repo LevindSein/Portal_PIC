@@ -8,16 +8,16 @@ use Illuminate\Support\Facades\Auth;
 
 use Jenssegers\Agent\Agent;
 
-class LoginData extends Model
+class DataLogin extends Model
 {
     use HasFactory;
 
-    protected $table = 'login_data';
+    protected $table = 'data_login';
     protected $fillable = [
         'username',
-        'nama',
+        'name',
         'level',
-        'stt_aktif',
+        'active',
         'platform',
         'status'
     ];
@@ -26,9 +26,9 @@ class LoginData extends Model
         $agent = new Agent();
 
         $data['username'] = Auth::user()->username;
-        $data['nama'] = Auth::user()->name;
+        $data['name'] = Auth::user()->name;
         $data['level'] = Auth::user()->level;
-        $data['stt_aktif'] = Auth::user()->stt_aktif;
+        $data['active'] = Auth::user()->active;
         $data['status'] = 1;
         $data['platform'] = $agent->platform()." ".$agent->version($agent->platform())." ".$agent->browser()." ".$agent->version($agent->browser());
 
@@ -39,9 +39,9 @@ class LoginData extends Model
         $agent = new Agent();
 
         $data['username'] = Auth::user()->username;
-        $data['nama'] = Auth::user()->name;
+        $data['name'] = Auth::user()->name;
         $data['level'] = Auth::user()->level;
-        $data['stt_aktif'] = Auth::user()->stt_aktif;
+        $data['active'] = Auth::user()->active;
         $data['status'] = 0;
         $data['platform'] = $agent->platform()." ".$agent->version($agent->platform())." ".$agent->browser()." ".$agent->version($agent->browser());
 
@@ -54,7 +54,7 @@ class LoginData extends Model
         $agent = new Agent();
 
         $data['username'] = $ip;
-        $data['nama'] = $request->username;
+        $data['name'] = $request->username;
         $data['status'] = 0;
         $data['platform'] = $agent->platform()." ".$agent->version($agent->platform())." ".$agent->browser()." ".$agent->version($agent->browser());
 

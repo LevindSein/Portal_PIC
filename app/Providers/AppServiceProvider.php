@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Jenssegers\Agent\Agent;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,5 +30,8 @@ class AppServiceProvider extends ServiceProvider
         $rand = substr($rand, 0, 5);
 
         View::share('rand', $rand);
+
+        $agent = new Agent();
+        View::share('agent', $agent);
     }
 }

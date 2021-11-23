@@ -12,9 +12,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\User;
 
 use Image;
-use Carbon\Carbon;
 
-class ProfilController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +22,7 @@ class ProfilController extends Controller
      */
     public function index()
     {
-        return view('portal.profil.index');
+        return view('portal.profile.index');
     }
 
     /**
@@ -52,10 +51,9 @@ class ProfilController extends Controller
                 'ktp' => 'required|numeric|digits_between:16,16|unique:App\Models\User,ktp,'.Auth::user()->id,
                 'npwp' => 'nullable|numeric|digits_between:15,15|unique:App\Models\User,npwp,'.Auth::user()->id,
                 'phone' => 'nullable|numeric|digits_between:10,12|unique:App\Models\User,phone,'.Auth::user()->id,
-                'alamat' => 'required|max:255',
+                'address' => 'required|max:255',
                 'password' => 'required|min:6|alpha_dash',
-                'passwordBaru' => 'nullable|min:6|alpha_dash',
-                'konfirmasiPasswordBaru' => 'nullable|min:6|alpha_dash',
+                'passwordNew' => 'nullable|min:6|alpha_dash',
             ]);
 
             $username = strtolower($request->username);
@@ -63,19 +61,18 @@ class ProfilController extends Controller
             $email = strtolower($request->email);
             $phone = $request->phone;
             if(substr($phone,0,1) == "0"){
-                return response()->json(['error' => "Nomor Whatsapp"]);
+                return response()->json(['warning' => "Whatsapp number incorrect."]);
             }
             $ktp = $request->ktp;
             $npwp = $request->npwp;
-            $alamat = $request->alamat;
+            $address = $request->address;
             $password = $request->password;
-            $passwordBaru = $request->passwordBaru;
-            $konfirmasiPasswordBaru = $request->konfirmasiPasswordBaru;
+            $passwordNew = $request->passwordNew;
 
             try{
                 $user = User::findOrFail(Auth::user()->id);
             }catch(ModelNotFoundException $e){
-                return response()->json(['exception' => $e]);
+                return response()->json(['error' => "User not found."]);
             }
 
             $user->username = $username;
@@ -87,46 +84,43 @@ class ProfilController extends Controller
             $user->phone = $phone;
             $user->ktp = $ktp;
             $user->npwp = $npwp;
-            $user->alamat = $alamat;
+            $user->address = $address;
 
             if (Hash::check(sha1(md5(hash('gost',$password))), $user->password)) {
-                if($passwordBaru != NULL && $passwordBaru === $konfirmasiPasswordBaru){
-                    $user->password = Hash::make(sha1(md5(hash('gost',$passwordBaru))));
+                if(!is_null($passwordNew)){
+                    $user->password = Hash::make(sha1(md5(hash('gost',$passwordNew))));
                     $user->save();
-                }
-                else if($passwordBaru != $konfirmasiPasswordBaru){
-                    return response()->json(['error' => 'Password baru tidak cocok.']);
                 }
                 else{
                     $user->save();
                 }
             }
             else{
-                return response()->json(['error' => 'Password saat ini salah.']);
+                return response()->json(['error' => 'Password incorrect.']);
             }
 
-            return response()->json(['success' => 'Data berhasil disimpan.']);
+            return response()->json(['success' => 'Data saved.', 'description' => 'success']);
         }
         else{
             abort(404);
         }
     }
 
-    public function fotoProfil(Request $request){
+    public function picture(Request $request){
         $request->validate([
-            'fotoInput' => 'nullable|image|mimes:jpeg,png,jpg'
+            'pictureInput' => 'nullable|image|mimes:jpeg,png,jpg'
         ]);
 
         try{
             $user = User::find(Auth::user()->id);
         }catch(ModelNotFoundException $e){
-            return redirect('profil')->with('error', 'Profil tidak ditemukan.');
+            return redirect('profile')->with('error', "User not found.");
         }
 
-        if($request->hasFile('fotoInput')){
+        if($request->hasFile('pictureInput')){
             cache()->flush();
 
-            $image = $request->file('fotoInput');
+            $image = $request->file('pictureInput');
 
             $image = Image::make($image)->resize(500,500)->encode('png', 75);
 
@@ -136,13 +130,13 @@ class ProfilController extends Controller
             $image->save($location);
 
             $data = $image_full_name;
-            $user->foto = "storage/" . $data;
+            $user->photo = "storage/" . $data;
             $user->save();
 
-            return redirect('profil')->with('success', 'Foto profil diganti.');
+            return redirect('profile')->with('success', 'Profile picture changed.');
         }
         else{
-            return redirect('profil')->with('error', 'File tidak terdeteksi.');
+            return redirect('profile')->with('error', 'File not detected.');
         }
     }
 

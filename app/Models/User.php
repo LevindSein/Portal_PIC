@@ -19,19 +19,21 @@ class User extends Authenticatable
      */
     protected $table = 'users';
     protected $fillable = [
+        'photo',
         'username',
         'name',
         'level',
         'phone',
         'email',
-        'anggota',
+        'member',
         'ktp',
         'npwp',
-        'alamat',
-        'otoritas',
-        'stt_aktif',
+        'address',
+        'authority',
+        'active',
         'password',
-        'kode_aktivasi',
+        'nonactive',
+        'activation_code',
         'available',
     ];
 
@@ -78,7 +80,7 @@ class User extends Authenticatable
         }
     }
 
-    public static function sttAktif($data){
+    public static function active($data){
         if($data === 0){
             return '<span class="text-danger">Nonaktif</span>';
         }

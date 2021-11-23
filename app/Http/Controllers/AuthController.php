@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Crypt;
 
 use App\Models\User;
 use App\Models\Identity;
-use App\Models\LoginData;
+use App\Models\DataLogin;
 use App\Models\Visitor;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -29,29 +29,30 @@ class AuthController extends Controller
         Visitor::visitOnDay();
         if(Auth::check()){
             $user = Auth::user();
-            if($user->stt_aktif == 1){
-                LoginData::success();
+            if($user->active == 1){
+                DataLogin::success();
                 if($user->level == 1 || $user->level == 2){
-                    return redirect('production/dashboard')->with('success','Selamat datang.');
+                    $name = Auth::user()->name;
+                    return redirect('production/dashboard')->with('success',"Welcome $name.");
                 }
                 else{
                     return "level >2";
                 }
             }
-            else if($user->stt_aktif == 0){
+            else if($user->active == 0){
                 $temp = Session::get("_token");
                 Session::flush();
                 Session::put('_token', $temp);
                 Auth::logout();
-                return Redirect('login')->with('error','Akun sudah dinonaktifkan.');
+                return Redirect('login')->with('error','Account has been disabled.');
             }
-            else if($user->stt_aktif == 2){
-                LoginData::success();
-                $token = Crypt::encrypt($user->anggota . '+' . $user->available);
+            else if($user->active == 2){
+                DataLogin::success();
+                $token = Crypt::encrypt($user->member . '+' . $user->available);
                 return redirect("register/$token");
             }
             else{
-                return redirect('login')->with('warning', 'Silakan Login terlebih dahulu.');
+                return redirect('login')->with('warning', 'Please login.');
             }
         }
         else{
@@ -77,7 +78,7 @@ class AuthController extends Controller
      */
     public function store(Request $request)
     {
-        //stt_aktif : 1 = aktif, 2 = sudah mendaftar tapi belum dapat akses, 0 = nonaktif
+        //active : 1 = aktif, 2 = sudah mendaftar tapi belum dapat akses, 0 = nonaktif
         //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah
         if($request->ajax()){
             $request->validate([
@@ -95,31 +96,31 @@ class AuthController extends Controller
             $credentials['password'] = sha1(md5(hash('gost',$request->password)));
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
-                if($user->stt_aktif == 2){
-                    LoginData::success();
-                    $token = Crypt::encrypt($user->anggota . '+' . $user->available);
+                if($user->active == 2){
+                    DataLogin::success();
+                    $token = Crypt::encrypt($user->member . '+' . $user->available);
                     return response()->json(['register' => $token]);
                 }
-                else if($user->stt_aktif == 1){
+                else if($user->active == 1){
                     if ($user->level == 1 || $user->level == 2){
-                        return response()->json(['success' => "Akses berhasil."]);
+                        return response()->json(['success' => "Access successfully."]);
                     }
                     else{
-                        LoginData::error();
+                        DataLogin::error();
                         $temp = Session::get("_token");
                         Session::flush();
                         Session::put('_token', $temp);
                         Auth::logout();
-                        return response()->json(['error' => "Tidak memiliki akses."]);
+                        return response()->json(['error' => "Access denied."]);
                     }
                 }
                 else{
-                    LoginData::error();
+                    DataLogin::error();
                     $temp = Session::get("_token");
                     Session::flush();
                     Session::put('_token', $temp);
                     Auth::logout();
-                    return response()->json(['error' => "Akun sudah dinonaktifkan."]);
+                    return response()->json(['info' => "Account has been disabled."]);
                 }
             }
             else{
@@ -130,12 +131,12 @@ class AuthController extends Controller
                     $exist = User::where('username', $username)->first();
                 }
 
-                if($exist != NULL){
-                    return response()->json(['error' => "Password salah."]);
+                if(!is_null($exist)){
+                    return response()->json(['error' => "Password incorrect."]);
                 }
                 else{
-                    LoginData::anonym($request);
-                    return response()->json(['error' => "Akun tidak ditemukan."]);
+                    DataLogin::anonym($request);
+                    return response()->json(['error' => "Account not found."]);
                 }
             };
         }
@@ -189,7 +190,15 @@ class AuthController extends Controller
         //
     }
 
-    public function register(Request $request){
+    public function register(){
+        return view('portal.scan.register',[
+            'nama' => session('nama'),
+            'member' => session('member'),
+            'data' => session('data'),
+        ]);
+    }
+
+    public function registerStore(Request $request){
         $request->validate([
             'name' => 'required|max:100|regex:/^[\pL\s\-]+$/u',
             'email' => 'required|max:200|email|unique:App\Models\User,email',
@@ -201,12 +210,12 @@ class AuthController extends Controller
         $password = $request->password;
 
         $username = Identity::make('username');
-        $anggota = 'BP3C'.Identity::make('anggota');
+        $member = 'BP3C'.Identity::make('member');
         $data['username'] = $username;
         $data['name'] = $nama;
         $data['email'] = $email;
-        $data['anggota'] = $anggota;
-        $data['stt_aktif'] = 2;
+        $data['member'] = $member;
+        $data['active'] = 2;
         $data['password'] = Hash::make(sha1(md5(hash('gost', $password))));
         $available = Carbon::now()->addDays(2)->toDateTimeString();
         $data['available'] = $available;
@@ -215,14 +224,14 @@ class AuthController extends Controller
             User::create($data);
         }
         catch(\Exception $e){
-            return response()->json(['exception' => $e]);
+            return response()->json(['error' => "System error.", 'description' => $e]);
         }
-        $token = Crypt::encrypt($anggota . '+' . $available);
+        $token = Crypt::encrypt($member . '+' . $available);
         return response()->json(['register' => $token]);
     }
 
-    public function registrasiQR($token){
-        $qr = url("/")."/scan/qr/pendaftaran/".$token;
+    public function registerQr($token){
+        $qr = url("/")."/scan/qr/register/".$token;
         $qr = QrCode::size(165)->margin(3)->eyeColor(0, 38,73,92, 196,163,90)->color(196,163,90)->backgroundColor(255,255,255)->generate($qr);
         try {
             $decrypted = Crypt::decrypt($token);
@@ -233,16 +242,16 @@ class AuthController extends Controller
         $explode = explode('+', $decrypted);
         $available = $explode[1];
 
-        return view('portal.home.registrasi', [
+        return view('portal.home.register', [
             'qr' => $qr,
             'token' => $token,
             'available' => $available,
         ]);
     }
 
-    public function registrasiDownload($token){
+    public function registerQrDownload($token){
         $name = substr($token, 0, 20);
-        $token = url("/")."/scan/qr/pendaftaran/".$token;
+        $token = url("/")."/scan/qr/register/".$token;
         QrCode::format('png')->size(300)->margin(3)->eyeColor(0, 38,73,92, 196,163,90)->color(196,163,90)->backgroundColor(255,255,255)->generate($token, public_path("storage/register/$name.png"));
         $filepath = public_path("storage/register/$name.png");
         return \Response::download($filepath);

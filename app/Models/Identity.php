@@ -17,7 +17,7 @@ class Identity extends Model
             $data = str_shuffle($data);
             $data = substr($data, 0, 8);
         }
-        else if($type == 'anggota'){
+        else if($type == 'member'){
             $data = "11223344556677889900";
             $data = str_shuffle($data);
             $data = substr($data, 0, 8);

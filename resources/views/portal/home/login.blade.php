@@ -1,36 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="keyword" content="Pasar Bandung, Pasar Tradisional, Pasar Induk, Caringin, Pasar Induk Caringin Kota Bandung"/>
-        <meta name="author" content="Pasar Induk Caringin Kota Bandung"/>
-        <meta name="description"content="Login untuk Member Area Pasar Induk Caringin Kota Bandung" />
-        <meta property="og:site_name" content="Pasar Induk Caringin Kota Bandung">
-        <meta property="og:title" content="Pasar Induk Caringin Kota Bandung" />
-        <meta property="og:description" content="Login untuk Member Area Pasar Induk Caringin Kota Bandung" />
-        <meta property="og:image" itemprop="image" content="{{asset('portal/home/login/img/favicon.png')}}">
-        <meta property="og:type" content="website" />
-        <link rel="shortcut icon" href="{{asset('img/favicon.png')}}">
-        <link rel="icon" sizes="16x16 32x32 64x64" href="{{asset('img/favicon.png')}}">
-        <link rel="icon" sizes="196x196" href="{{asset('img/favicon.png')}}">
-        <link rel="icon" sizes="160x160" href="{{asset('img/favicon.png')}}">
-        <link rel="icon" sizes="96x96" href="{{asset('img/favicon.png')}}">
-        <link rel="icon" sizes="64x64" href="{{asset('img/favicon.png')}}">
-        <link rel="icon" sizes="32x32" href="{{asset('img/favicon.png')}}">
-        <link rel="icon" sizes="16x16" href="{{asset('img/favicon.png')}}">
-        <link rel="apple-touch-icon" href="{{asset('img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="114x114" href="{{asset('img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="72x72" href="{{asset('img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="144x144" href="{{asset('img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="60x60" href="{{asset('img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="120x120" href="{{asset('img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="76x76" href="{{asset('img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="152x152" href="{{asset('img/favicon.png')}}">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/favicon.png')}}">
-        <meta name="google" content="notranslate">
+        @include('portal.home.header')
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -52,7 +23,7 @@
         <div class="container">
             <div class="forms-container">
                 <div class="signin-signup">
-                    <form class="sign-in-form" id="form_login">
+                    <form class="sign-in-form" id="loginForm">
                         <h2 class="title">Masuk</h2>
                         <div id="check-username" class="input-field">
                             <i class="fas fa-user"></i>
@@ -60,15 +31,15 @@
                         </div>
                         <div id="check-password" class="input-field">
                             <i class="fas fa-lock"></i>
-                            <input required type="password" minlength="6" id="pass-log" name="password" placeholder="Password"/>
-                            <i class="fas fa-eye" id="pass-log-show"></i>
+                            <input required type="password" minlength="6" id="passwordLog" name="password" placeholder="Password"/>
+                            <i class="fas fa-eye" id="passwordLogShow"></i>
                         </div>
                         <input type="submit" class="btn" value="Submit" />
                         <div>
-                            <a href="{{url('email/forgot-password')}}" style="font-size: 12px;">Lupa Password?</a>
+                            <a href="{{url('email/forgot')}}" style="font-size: 12px;">Lupa Password?</a>
                         </div>
                     </form>
-                    <form class="sign-up-form" id="form_register">
+                    <form class="sign-up-form" id="registerForm">
                         <h2 class="title">Daftar</h2>
                         <div class="input-field">
                             <i class="fas fa-user"></i>
@@ -80,8 +51,8 @@
                         </div>
                         <div class="input-field">
                             <i class="fas fa-lock"></i>
-                            <input required type="password" minlength="6" id="pass-reg" name="password" placeholder="Ketikkan Password"/>
-                            <i class="fas fa-eye" id="pass-reg-show"></i>
+                            <input required type="password" minlength="6" id="passwordReg" name="password" placeholder="Ketikkan Password"/>
+                            <i class="fas fa-eye" id="passwordRegShow"></i>
                         </div>
                         <input type="submit" class="btn" value="Submit"/>
                     </form>
@@ -114,23 +85,23 @@
             $(document).ready(function(){
                 $("#username").focus();
 
-                $('#pass-reg-show').click(function(){
-                    if($('#pass-reg').attr('type') == 'password'){
-                        $('#pass-reg').prop('type', 'text');
-                        $('#pass-reg-show').removeClass('fa-eye').addClass('fa-eye-slash');
+                $('#passwordRegShow').click(function(){
+                    if($('#passwordReg').attr('type') == 'password'){
+                        $('#passwordReg').prop('type', 'text');
+                        $('#passwordRegShow').removeClass('fa-eye').addClass('fa-eye-slash');
                     }else{
-                        $('#pass-reg').prop('type', 'password');
-                        $('#pass-reg-show').addClass('fa-eye').removeClass('fa-eye-slash');
+                        $('#passwordReg').prop('type', 'password');
+                        $('#passwordRegShow').addClass('fa-eye').removeClass('fa-eye-slash');
                     }
                 });
 
-                $('#pass-log-show').click(function(){
-                    if($('#pass-log').attr('type') == 'password'){
-                        $('#pass-log').prop('type', 'text');
-                        $('#pass-log-show').removeClass('fa-eye').addClass('fa-eye-slash');
+                $('#passwordLogShow').click(function(){
+                    if($('#passwordLog').attr('type') == 'password'){
+                        $('#passwordLog').prop('type', 'text');
+                        $('#passwordLogShow').removeClass('fa-eye').addClass('fa-eye-slash');
                     }else{
-                        $('#pass-log').prop('type', 'password');
-                        $('#pass-log-show').addClass('fa-eye').removeClass('fa-eye-slash');
+                        $('#passwordLog').prop('type', 'password');
+                        $('#passwordLogShow').addClass('fa-eye').removeClass('fa-eye-slash');
                     }
                 });
 
@@ -147,12 +118,12 @@
                 });
 
 
-                $('#form_login').on('submit', function(e){
+                $('#loginForm').on('submit', function(e){
                     e.preventDefault();
                     callingFunction("login", $(this).serialize());
                 });
 
-                $('#form_register').on('submit', function(e){
+                $('#registerForm').on('submit', function(e){
                     e.preventDefault();
                     callingFunction("register", $(this).serialize());
                 });
@@ -207,13 +178,16 @@
                                     "preventDuplicates": true,
                                 };
                                 toastr.error(data.error);
+                                if(data.description){
+                                    console.log(data.description);
+                                }
                             }
                             else if(data.register){
                                 toastr.options = {
                                     "closeButton": true,
                                     "preventDuplicates": true,
                                 };
-                                toastr.success("Selesaikan Registrasi.");
+                                toastr.success("Please complete registration.");
                                 location.href = "/register/" + data.register;
                             }
                             else{
@@ -240,17 +214,17 @@
                                     "closeButton": true,
                                     "preventDuplicates": true,
                                 };
-                                toastr.error("Kesalahan sistem.");
+                                toastr.error("System error.");
                                 console.log(data);
                             }
                         },
                         complete:function(data){
                             if(type == "login"){
-                                $("#form_login")[0].reset();
+                                $("#loginForm")[0].reset();
                                 $("#username").focus();
                             }
                             else{
-                                $("#form_register")[0].reset();
+                                $("#registerForm")[0].reset();
                                 $("#name").focus();
                             }
                         }

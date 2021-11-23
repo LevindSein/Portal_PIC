@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
 use App\Models\User;
-use App\Models\KodeAktivasi;
+use App\Models\ActivationCode;
 
 use Carbon\Carbon;
 
@@ -20,22 +20,22 @@ class ScanController extends Controller
         }
 
         $explode = explode('+', $decrypted);
-        $anggota = $explode[0];
+        $member = $explode[0];
         $available = $explode[1];
 
         $now = Carbon::now()->toDateTimeString();
 
         if($now > $available){
-            abort(404);
+            return redirect('expired')->with('error', 'Data register expired.');
         }
         else{
-            $user = User::where('anggota', $anggota)->first();
-            if($user != NULL){
-                if($type == 'pendaftaran'){
+            $user = User::where('member', $member)->first();
+            if(!is_null($user)){
+                if($type == 'register'){
                     $nama = $user->name;
-                    return view('portal.scan.pendaftaran',[
+                    return redirect('register')->with([
                         'nama' => $nama,
-                        'anggota' => $anggota,
+                        'member' => $member,
                         'data' => $data,
                     ]);
                 }
@@ -49,39 +49,39 @@ class ScanController extends Controller
         }
     }
 
-    public function scanningQRPendaftaran(Request $request){
+    public function scanQrRegister(Request $request){
         $data = $request->data_hidden;
-        $aktivasi = $request->aktivasi;
+        $activation = $request->activation;
         try {
             $decrypted = Crypt::decrypt($data);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            return response()->json(['error' => 'Data tidak valid.']);
+            return response()->json(['error' => 'Data invalid.']);
         }
 
         $explode = explode("+", $decrypted);
-        $anggota = $explode[0];
+        $member = $explode[0];
         $available = $explode[1];
         $now = Carbon::now()->toDateTimeString();
 
-        if($now > $available){
-            return response()->json(['error' => "Data expired $available."]);
-        }
-        else{
-            $kode = KodeAktivasi::where([['kode', $aktivasi],['submit',0]])->first();
-            if($kode != NULL){
-                $user = User::where('anggota',$anggota)->first();
-                if($user != NULL){
-                    $user->kode_aktivasi = $aktivasi;
+        if($now < $available){
+            $code = ActivationCode::where([['code', $activation],['submit',0]])->first();
+            if(!is_null($code) && $now < $code->available){
+                $user = User::where('member',$member)->first();
+                if(!is_null($user)){
+                    $user->activation_code = $activation;
                     $user->save();
                 }
-                $kode->submit = 1;
-                $kode->save();
+                $code->submit = 1;
+                $code->save();
             }
             else{
-                return response()->json(['error' => 'Kode aktivasi tidak valid.']);
+                return response()->json(['error' => 'Activation code invalid.']);
             }
 
-            return response()->json(['success' => 'Kode aktivasi terkirim.']);
+            return response()->json(['success' => "Activation code sent."]);
+        }
+        else{
+            return response()->json(['error' => "Data register expired at $available."]);
         }
     }
 }

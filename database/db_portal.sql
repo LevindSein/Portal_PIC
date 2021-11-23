@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2021 at 06:40 PM
+-- Generation Time: Nov 23, 2021 at 08:50 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -24,56 +24,49 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `blok`
+-- Table structure for table `activation_code`
 --
 
-CREATE TABLE `blok` (
-  `id` int(11) NOT NULL,
-  `nama` varchar(10) DEFAULT NULL,
-  `keterangan` longtext DEFAULT NULL,
+CREATE TABLE `activation_code` (
+  `id` bigint(20) NOT NULL,
+  `code` varchar(6) NOT NULL,
+  `available` timestamp NULL DEFAULT NULL,
+  `submit` tinyint(1) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `blok`
+-- Table structure for table `change_log`
 --
 
-INSERT INTO `blok` (`id`, `nama`, `keterangan`, `updated_at`, `created_at`) VALUES
-(1, 'A-1', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 'A-2', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 'B-1', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(4, 'B-2', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(5, 'B-3', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(6, 'B-4', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(7, 'C-1', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(8, 'D-1', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(10, 'E-0', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(11, 'E-1', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(12, 'E-2', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(13, 'E-3', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(14, 'E-4', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(15, 'E-5', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(16, 'E-6', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(17, 'E-7', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(18, 'E-8', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(19, 'E-9', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(20, 'E10', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(22, 'F-0', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(23, 'F-1', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(24, 'FIB', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(25, 'H-1', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(26, 'H-2', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(27, 'K5', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(28, 'L-0', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(29, 'M-1', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(30, 'MCK', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(31, 'P-O', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(32, 'POM', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(33, 'WC', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(35, 'TLK', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
-(36, 'GARDU', NULL, '2020-12-23 18:01:06', '2020-12-23 18:01:06'),
-(37, 'M-2', NULL, '2021-04-22 06:15:43', '2021-04-22 06:15:43');
+CREATE TABLE `change_log` (
+  `id` bigint(20) NOT NULL,
+  `data` longtext DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `data_login`
+--
+
+CREATE TABLE `data_login` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `level` tinyint(1) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
+  `platform` longtext DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -94,6 +87,20 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `groups`
+--
+
+CREATE TABLE `groups` (
+  `id` int(11) NOT NULL,
+  `name` varchar(10) DEFAULT NULL,
+  `description` longtext DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `jobs`
 --
 
@@ -106,31 +113,6 @@ CREATE TABLE `jobs` (
   `available_at` int(10) UNSIGNED NOT NULL,
   `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `login_data`
---
-
-CREATE TABLE `login_data` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  `nama` varchar(255) DEFAULT NULL,
-  `level` tinyint(1) DEFAULT NULL,
-  `stt_aktif` tinyint(1) DEFAULT NULL,
-  `platform` longtext DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `login_data`
---
-
-INSERT INTO `login_data` (`id`, `username`, `nama`, `level`, `stt_aktif`, `platform`, `status`, `updated_at`, `created_at`) VALUES
-(1, 'super_admin', 'Fahni Amsyari', 1, 1, 'Windows 10.0 Chrome 95.0.4638.69', 1, '2021-11-17 17:36:31', '2021-11-17 17:36:31');
 
 -- --------------------------------------------------------
 
@@ -193,23 +175,24 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `foto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'storage/users/user.jpg',
+  `photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'storage/users/user.jpg',
   `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level` tinyint(1) NOT NULL DEFAULT 3,
   `phone` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `anggota` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `member` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ktp` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `npwp` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `alamat` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `otoritas` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `stt_aktif` tinyint(1) DEFAULT NULL,
+  `address` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `authority` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nonaktif` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `kode_aktivasi` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nonactive` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `activation_code` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `available` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -218,17 +201,45 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `foto`, `username`, `name`, `level`, `phone`, `email`, `email_verified_at`, `anggota`, `ktp`, `npwp`, `alamat`, `otoritas`, `stt_aktif`, `password`, `remember_token`, `nonaktif`, `kode_aktivasi`, `created_at`, `updated_at`) VALUES
-(1, 'storage/users/1.png', 'super_admin', 'Fahni Amsyari', 1, '895337845511', 'levindsein@gmail.com', NULL, 'BP3C11111111', '3215130101990003', NULL, 'Perum Villa Permata Cikampek Blok EG 2 no.27', NULL, 1, '$2y$10$IXdR6okRwL0spFxa.nidZ.znCidchYpvA2a1b60Q1I0kq.xUGUhhe', NULL, NULL, NULL, '2021-11-09 16:22:51', '2021-11-17 16:55:00');
+INSERT INTO `users` (`id`, `photo`, `username`, `name`, `level`, `phone`, `email`, `email_verified_at`, `member`, `ktp`, `npwp`, `address`, `authority`, `active`, `password`, `remember_token`, `nonactive`, `activation_code`, `available`, `created_at`, `updated_at`) VALUES
+(1, 'storage/users/1.png', 'super_admin', 'MASTER', 1, '87838840774', 'levindsein@gmail.com', '2021-11-23 19:16:45', 'BP3C11111111', '3215130101990004', '123456789012345', 'Perum Villa Permata Cikampek', NULL, 1, '$2y$10$ZDkdEmhO4pf3p0xblMcQXuw48ARaLqrItapurREEPD3WcIwzcJYsO', NULL, NULL, NULL, NULL, '2021-11-09 16:22:51', '2021-11-23 19:26:06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `visitors`
+--
+
+CREATE TABLE `visitors` (
+  `id` bigint(20) NOT NULL,
+  `visit_per_day` int(11) DEFAULT NULL,
+  `day_count` int(11) DEFAULT NULL,
+  `visit_on_day` int(11) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `blok`
+-- Indexes for table `activation_code`
 --
-ALTER TABLE `blok`
+ALTER TABLE `activation_code`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `kode` (`code`);
+
+--
+-- Indexes for table `change_log`
+--
+ALTER TABLE `change_log`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `data_login`
+--
+ALTER TABLE `data_login`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -239,17 +250,17 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
+-- Indexes for table `groups`
+--
+ALTER TABLE `groups`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `jobs`
 --
 ALTER TABLE `jobs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `jobs_queue_index` (`queue`);
-
---
--- Indexes for table `login_data`
---
-ALTER TABLE `login_data`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `migrations`
@@ -282,14 +293,32 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `phone` (`phone`);
 
 --
+-- Indexes for table `visitors`
+--
+ALTER TABLE `visitors`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `blok`
+-- AUTO_INCREMENT for table `activation_code`
 --
-ALTER TABLE `blok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+ALTER TABLE `activation_code`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `change_log`
+--
+ALTER TABLE `change_log`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `data_login`
+--
+ALTER TABLE `data_login`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -298,16 +327,16 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `groups`
+--
+ALTER TABLE `groups`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `login_data`
---
-ALTER TABLE `login_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -325,7 +354,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `visitors`
+--
+ALTER TABLE `visitors`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

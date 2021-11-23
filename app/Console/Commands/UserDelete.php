@@ -7,21 +7,21 @@ use Carbon\Carbon;
 
 use App\Models\User;
 
-class DeleteUserPermanently extends Command
+class UserDelete extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'cron:deleteuserpermanently';
+    protected $signature = 'user:delete';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Delete Permanently Data Penghapusan User.';
+    protected $description = 'Delete Data User unregistered and permanently.';
 
     /**
      * Create a new command instance.
@@ -40,17 +40,18 @@ class DeleteUserPermanently extends Command
      */
     public function handle()
     {
-        $user = User::where([['stt_aktif',0],['nonaktif','!=',NULL]])->get();
+        //permanently
+        $user = User::where([['active',0],['nonactive','!=',NULL]])->get();
 
         $deleted = 0;
         $undeleted = 0;
         foreach($user as $d){
-            $json = json_decode($d->nonaktif);
+            $json = json_decode($d->nonactive);
             $history = count($json);
-            $awal = new Carbon($json[$history - 1] -> timestamp);
-            $akhir = Carbon::now()->toDateTimeString();
+            $from = new Carbon($json[$history - 1] -> timestamp);
+            $end = Carbon::now()->toDateTimeString();
 
-            $interval = $awal->diffInSeconds($akhir);
+            $interval = $from->diffInSeconds($end);
 
             if($interval > 86340){
                 if($history > 5){
@@ -65,36 +66,36 @@ class DeleteUserPermanently extends Command
                 $id = ++$last_item_id;
 
                 $person = [
-                    'foto' => $d->foto,
-                    'nama' => $d->name,
+                    'photo' => $d->photo,
+                    'name' => $d->name,
                     'phone' => $d->phone,
                     'email' => $d->email,
-                    'anggota' => $d->anggota,
+                    'member' => $d->member,
                     'ktp' => $d->ktp,
                     'npwp' => $d->npwp,
-                    'alamat' => $d->alamat,
+                    'address' => $d->address,
                 ];
 
                 $json[] = array(
                     'id' => $id,
                     'status' => 'delete permanently',
-                    'stt_aktif' => $d->stt_aktif,
-                    'anggota' => 'by Sistem',
+                    'active' => $d->active,
+                    'member' => 'by Sistem',
                     'timestamp' => Carbon::now()->toDateTimeString(),
                     'data' => $person,
                 );
-                $nonaktif = json_encode($json);
+                $nonactive = json_encode($json);
 
                 $d->phone = NULL;
                 $d->email = NULL;
                 $d->email_verified_at = NULL;
                 $d->ktp = NULL;
                 $d->npwp = NULL;
-                $d->alamat = NULL;
-                $d->otoritas = NULL;
+                $d->address = NULL;
+                $d->authority = NULL;
 
-                $d->stt_aktif = NULL;
-                $d->nonaktif = $nonaktif;
+                $d->active = NULL;
+                $d->nonactive = $nonactive;
                 $d->save();
                 $deleted++ ;
             }
@@ -103,6 +104,21 @@ class DeleteUserPermanently extends Command
             }
         }
 
-        return \Log::info("DeleteUserPermanently success : " . $deleted . " Deleted & " . $undeleted . " < 24 hours");
+        \Log::info("UserDelete success. permanent: " . $deleted . " Deleted & " . $undeleted . " < 24 hours");
+
+        //unregistered
+        $user = User::where('active',2)->get();
+
+        $now = Carbon::now()->toDateTimeString();
+
+        $deleted = 0;
+        foreach($user as $d){
+            if($now > $d->available){
+                $d->delete();
+                $deleted++;
+            }
+        }
+
+        \Log::info("UserDelete success. unregistered: " . $deleted . " Deleted");
     }
 }

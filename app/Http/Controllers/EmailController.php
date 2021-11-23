@@ -19,8 +19,8 @@ class EmailController extends Controller
             $user = Auth::user();
             $id = $user->id;
             $emailExist = User::find($id)->email;
-            if($emailExist == NULL){
-                return response()->json(['warning' => "Email belum tersedia."]);
+            if(is_null($emailExist)){
+                return response()->json(['warning' => "Please fill your email.", 'description' => 'warning']);
             }
             else{
                 try{
@@ -32,7 +32,7 @@ class EmailController extends Controller
                         'email' => $user->email,
                         'type' => "verifikasi",
                         'button' => "Verifikasi",
-                        'url' => url('email/verify/resend/'.$user->level.'/'.$user->stt_aktif.'/'.Crypt::encrypt($user->anggota . "+" . Carbon::now()->addDays(2)->toDateTimeString())),
+                        'url' => url('email/verify/resend/'.$user->level.'/'.$user->active.'/'.Crypt::encrypt($user->member . "+" . Carbon::now()->addDays(2)->toDateTimeString())),
                         'regards' => "Selamat Berniaga (PIC BDG Team)",
                         'timestamp' => Carbon::now()->toDateTimeString(),
                         'value' => 'resend',
@@ -40,26 +40,25 @@ class EmailController extends Controller
                     dispatch(new \App\Jobs\VerifyEmailJob($details));
                 }
                 catch(\Exception $e){
-                    return response()->json(['exception' => $e]);
+                    return response()->json(['error' => 'Email failed to send.', 'description' => $e]);
                 }
+                return response()->json(['success' => "Please check your email."]);
             }
-
-            return response()->json(['success' => "Silakan perikasa email anda."]);
         }
         else{
             abort(404);
         }
     }
 
-    public function verifyResend($level, $aktif, $anggota){
+    public function verifyResend($level, $aktif, $member){
         try {
-            $anggota = Crypt::decrypt($anggota);
+            $decrypted = Crypt::decrypt($member);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
             abort(404);
         }
 
-        $explode = explode("+",$anggota);
-        $anggota = $explode[0];
+        $explode = explode("+",$decrypted);
+        $member = $explode[0];
         $expired = $explode[1];
 
         $now = Carbon::now()->toDateTimeString();
@@ -68,17 +67,17 @@ class EmailController extends Controller
             abort(404);
         }
         else{
-            $user = User::where('anggota', $anggota)->first();
+            $user = User::where('member', $member)->first();
 
-            if($user != NULL){
-                if($user->level == $level && $user->stt_aktif == $aktif){
+            if(!is_null($user)){
+                if($user->level == $level && $user->active == $aktif){
                     $user->email_verified_at = Carbon::now()->toDateTimeString();
                     $user->save();
                 }
                 else{
                     abort(404);
                 }
-                return view('email.verified');
+                return redirect('email/verified');
             }
             else{
                 abort(404);
@@ -86,15 +85,15 @@ class EmailController extends Controller
         }
     }
 
-    public function verify($level, $anggota){
+    public function verify($level, $member){
         try {
-            $anggota = Crypt::decrypt($anggota);
+            $decrypted = Crypt::decrypt($member);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
             abort(404);
         }
 
-        $explode = explode("+",$anggota);
-        $anggota = $explode[0];
+        $explode = explode("+",$decrypted);
+        $member = $explode[0];
         $expired = $explode[1];
 
         $now = Carbon::now()->toDateTimeString();
@@ -103,9 +102,9 @@ class EmailController extends Controller
             abort(404);
         }
         else{
-            $user = User::where("anggota", $anggota)->first();
+            $user = User::where("member", $member)->first();
 
-            if($user != NULL){
+            if(!is_null($user)){
                 if($user->level == $level){
                     $user->email_verified_at = Carbon::now()->toDateTimeString();
                     $user->save();
@@ -136,17 +135,17 @@ class EmailController extends Controller
 
                 $user = User::where('email', $email)->first();
 
-                if($user != NULL){
+                if(!is_null($user)){
                     try{
                         $details = [
                             'sender' => "Admin dari PIC",
-                            'header' => "Recover Password",
-                            'subject' => "Recover Password",
+                            'header' => "Reset Password",
+                            'subject' => "Reset Password",
                             'name' => $user->name,
                             'role' => User::level($user->level),
-                            'type' => "pemulihan",
-                            'button' => "Pulihkan",
-                            'url' => url('email/forgot-password/'.$user->level.'/'.Crypt::encrypt($user->anggota . "+" . Carbon::now()->addDays(2)->toDateTimeString())),
+                            'type' => "reset password",
+                            'button' => "Reset",
+                            'url' => url('email/forgot/'.$user->level.'/'.Crypt::encrypt($user->member . "+" . Carbon::now()->addDays(2)->toDateTimeString())),
                             'regards' => "Selamat Berniaga (PIC BDG Team)",
                             'email' => $email,
                             'timestamp' => Carbon::now()->toDateTimeString(),
@@ -155,12 +154,12 @@ class EmailController extends Controller
                         dispatch(new \App\Jobs\VerifyEmailJob($details));
                     }
                     catch(\Exception $e){
-                        return response()->json(['exception' => $e]);
+                        return response()->json(['error' => "Email failed to send", 'description' => $e]);
                     }
-                    return response()->json(['success' => 'Silakan periksa email Anda.']);
+                    return response()->json(['success' => 'Please check your email.']);
                 }
                 else{
-                    return response()->json(['error' => "Akun tidak ditemukan."]);
+                    return response()->json(['error' => "Account not found."]);
                 }
             }
             else{
@@ -172,13 +171,13 @@ class EmailController extends Controller
                 $hidden = $request->password_hidden;
 
                 try {
-                    $data = Crypt::decrypt($hidden);
+                    $decrypted = Crypt::decrypt($hidden);
                 } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                    return response()->json(['error' => 'Data tidak valid.']);
+                    return response()->json(['error' => 'Data invalid.', 'description' => $e]);
                 }
 
-                $explode = explode("+",$data);
-                $anggota = $explode[0];
+                $explode = explode("+",$decrypted);
+                $member = $explode[0];
                 $expired = $explode[1];
 
                 $now = Carbon::now()->toDateTimeString();
@@ -187,18 +186,18 @@ class EmailController extends Controller
                     return response()->json(['error' => 'Data expired.']);
                 }
                 else{
-                    $user = User::where('anggota', $anggota)->first();
+                    $user = User::where('member', $member)->first();
 
-                    if($user != NULL){
+                    if(!is_null($user)){
                         $user->password = Hash::make(sha1(md5(hash('gost', $password))));
                         $user->save();
                     }
                     else{
-                        return response()->json(['error' => 'Akun tidak ditemukan.']);
+                        return response()->json(['error' => 'Account not found.']);
                     }
                 }
 
-                return response()->json(['success' => 'Akun berhasil dipulihkan.']);
+                return response()->json(['success' => 'Password has been changed.', 'description' => 'success']);
             }
         }
         else{
@@ -206,9 +205,9 @@ class EmailController extends Controller
         }
     }
 
-    public function forgotVerify($level, $anggota){
-        return view('email.forgot-recover',[
-            'anggota' => $anggota
+    public function forgotVerify($level, $member){
+        return redirect('email/forgot/reset')->with([
+            'member' => $member
         ]);
     }
 }

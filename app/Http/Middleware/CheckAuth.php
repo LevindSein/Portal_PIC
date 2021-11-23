@@ -19,17 +19,17 @@ class CheckAuth
     public function handle(Request $request, Closure $next)
     {
         if(Auth::check()){
-            if(Auth::user()->stt_aktif == 0){
+            if(Auth::user()->active == 0){
                 $temp = Session::get("_token");
                 Session::flush();
                 Session::put('_token', $temp);
                 Auth::logout();
-                return Redirect('login')->with('error','Akun sudah dinonaktifkan.');
+                return Redirect('login')->with('error','Account has been disabled.');
             }
             return $next($request);
         }
         else{
-            return redirect('login')->with('warning', 'Silakan Login terlebih dahulu.');
+            return redirect('login')->with('warning', 'Please login.');
         }
     }
 }

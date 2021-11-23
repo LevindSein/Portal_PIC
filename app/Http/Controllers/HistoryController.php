@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
-use App\Models\LoginData;
+use App\Models\DataLogin;
 use App\Models\User;
 
 use Carbon\Carbon;
 
 use DataTables;
 
-class RiwayatController extends Controller
+class HistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class RiwayatController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = LoginData::select('id','username','nama','level','stt_aktif','platform','status','updated_at','created_at');
+            $data = DataLogin::select('id','username','name','level','active','platform','status','updated_at','created_at');
             return DataTables::of($data)
             ->editColumn('created_at', function ($data) {
                 return [
@@ -42,13 +42,13 @@ class RiwayatController extends Controller
                 }
             })
             ->addColumn('show', function($data){
-                $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->nama.'" class="details btn btn-sm btn-info">Show</button>';
+                $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details btn btn-sm btn-info">Show</button>';
                 return $button;
             })
             ->rawColumns(['show','status'])
             ->make(true);
         }
-        return view('portal.riwayat.index');
+        return view('portal.history.index');
     }
 
     /**
@@ -84,17 +84,17 @@ class RiwayatController extends Controller
             try {
                 $id = Crypt::decrypt($id);
             } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['exception' => $e]);
+                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
             }
 
             try{
-                $data = LoginData::findOrFail($id);
+                $data = DataLogin::findOrFail($id);
             }catch(ModelNotFoundException $e){
-                return response()->json(['exception' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             $data['level'] = User::level($data->level);
-            $data['stt_aktif'] = User::sttAktif($data->stt_aktif);
+            $data['active'] = User::active($data->active);
             $data['time'] = Carbon::parse($data->created_at)->toDateTimeString();
 
             if($data->status == 0){
@@ -104,7 +104,7 @@ class RiwayatController extends Controller
                 $data['status'] = '<span class="text-success">Accessed</span>';
             }
 
-            return response()->json(['success' => 'Berhasil mengambil data.', 'user' => $data]);
+            return response()->json(['success' => 'Fetching data success.', 'user' => $data]);
         }
         else{
             abort(404);

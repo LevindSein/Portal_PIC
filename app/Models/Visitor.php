@@ -9,7 +9,7 @@ class Visitor extends Model
 {
     use HasFactory;
 
-    protected $table = 'visitor';
+    protected $table = 'visitors';
     protected $fillable = [
         'visit_per_day',
         'day_count',
@@ -18,7 +18,12 @@ class Visitor extends Model
 
     public static function visitOnDay(){
         $data = self::first();
-        $data->visit_on_day++;
-        $data->save();
+        if(is_null($data)){
+            \Artisan::call('visitor:run');
+        }
+        else{
+            $data->visit_on_day++;
+            $data->save();
+        }
     }
 }

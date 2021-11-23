@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 
 use App\Models\Visitor;
 
-class VisitorCommand extends Command
+class VisitorRun extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'cron:visitorcommand';
+    protected $signature = 'visitor:run';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Counting how much visitor';
 
     /**
      * Create a new command instance.
@@ -56,6 +56,6 @@ class VisitorCommand extends Command
             $data->save();
         }
 
-        \Log::info("VisitorCommand success");
+        \Log::info("VisitorRun success");
     }
 }

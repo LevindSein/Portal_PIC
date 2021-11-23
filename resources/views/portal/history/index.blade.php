@@ -17,7 +17,7 @@ Riwayat Login
                         <thead>
                             <tr>
                                 <th>Username</th>
-                                <th>Nama</th>
+                                <th>Name</th>
                                 <th>Role</th>
                                 <th>Status</th>
                                 <th>Time</th>
@@ -53,7 +53,7 @@ Riwayat Login
                 <h6 id="showStatus"></h6>
                 <small class="text-muted pt-4 db">Platform</small>
                 <h6 id="showPlatform"></h6>
-                <small class="text-muted pt-4 db">Time</small>
+                <small class="text-muted pt-4 db">Waktu Akses</small>
                 <h6 id="showTime"></h6>
             </div>
             <div class="modal-footer">
@@ -75,10 +75,10 @@ Riwayat Login
                 }
             },
             "serverSide": true,
-            "ajax": "/production/riwayat-login",
+            "ajax": "/production/histories",
             "columns": [
                 { data: 'username', name: 'username', class : 'text-center' },
-                { data: 'nama', name: 'nama', class : 'text-center' },
+                { data: 'name', name: 'name', class : 'text-center' },
                 { data: 'level', name: 'level', class : 'text-center' },
                 { data: 'status', name: 'status', class : 'text-center' },
                 { data: { '_': 'created_at.display', 'sort': 'created_at.timestamp' }, name: 'created_at', class : 'text-center'  },
@@ -116,33 +116,56 @@ Riwayat Login
             $('.titles').text('Informasi ' + nama);
 
             $.ajax({
-                url: "/production/riwayat-login/" + id,
+                url: "/production/histories/" + id,
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
                         $("#showLevel").text(data.user.level);
-                        $("#showSttAktif").html(data.user.stt_aktif);
+                        $("#showSttAktif").html(data.user.active);
                         $("#showUsername").text(data.user.username);
-                        $("#showNama").text(data.user.nama);
+                        $("#showNama").text(data.user.name);
                         $("#showStatus").html(data.user.status);
                         $("#showPlatform").text(data.user.platform);
-                        $("#showTime").text(data.user.time);
+                        $("#showTime").text(data.user.time + " WIB");
                     }
-                    else if(data.exception){
+                    else if(data.warning){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error("Data gagal diproses.");
-                        console.log(data.exception);
+                        toastr.warning(data.warning);
+                        if(data.description){
+
+                        }
+                    }
+                    else if(data.info){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.info(data.info);
+                        if(data.description){
+
+                        }
+                    }
+                    else if(data.error){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                        if(data.description){
+                            console.log(data.description);
+                        }
                     }
                     else{
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error(data.error);
+                        toastr.error(data);
+                        console.log(data);
                     }
                 },
                 error:function(data){
@@ -150,7 +173,7 @@ Riwayat Login
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error("Gagal mengambil data.");
+                    toastr.error("Failed to retrieve data.");
                     console.log(data);
                 },
                 complete:function(){
