@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Blok;
+use App\Models\Group;
 
 class SearchController extends Controller
 {
-    public function blok(Request $request){
-        $blok = [];
+    public function init(Request $request){
+        $data = [];
         if($request->ajax()) {
             $key = $request->q;
-            $blok = Blok::select('id', 'nama')->where('nama', 'LIKE', '%'.$key.'%')->orderBy('nama','asc')->limit(50)->get();
+            $data = Group::select('id', 'name')->where('name', 'LIKE', '%'.$key.'%')->orderBy('name','asc')->limit(50)->get();
         }
-        return response()->json($blok);
+        return response()->json($data);
     }
 }

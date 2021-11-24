@@ -44,15 +44,15 @@ Route::middleware('checkauth')->group(function(){
 
             Route::get('service/register', [ServiceController::class, 'index']);
 
-            Route::get('user/code/activate', [UserController::class, 'activate']);
-            Route::get('user/activate/verify', [UserController::class, 'activateVerify']);
-            Route::delete('user/permanent/{id}', [UserController::class, 'permanent']);
-            Route::post('user/reset/{id}', [UserController::class, 'reset']);
-            Route::post('user/restore/{id}', [UserController::class, 'restore']);
-            Route::get('user/deleted/{params}', [UserController::class, 'deleted']);
-            Route::get('user/registered/{params}', [UserController::class, 'registered']);
-            Route::get('user/level/{params}', [UserController::class, 'level']);
-            Route::resource('user', UserController::class);
+            Route::get('users/code/activate', [UserController::class, 'activate']);
+            Route::get('users/activate/verify', [UserController::class, 'activateVerify']);
+            Route::delete('users/permanent/{id}', [UserController::class, 'permanent']);
+            Route::post('users/reset/{id}', [UserController::class, 'reset']);
+            Route::post('users/restore/{id}', [UserController::class, 'restore']);
+            Route::get('users/deleted/{params}', [UserController::class, 'deleted']);
+            Route::get('users/registered/{params}', [UserController::class, 'registered']);
+            Route::get('users/level/{params}', [UserController::class, 'level']);
+            Route::resource('users', UserController::class);
 
             Route::resource('histories', HistoryController::class);
         });
@@ -85,7 +85,7 @@ Route::get('email/verified', function(){
     return view('email.verified');
 });
 
-Route::get('cari/groups',[SearchController::class, 'group']);
+Route::get('search/groups',[SearchController::class, 'init']);
 
 Route::get('scan/qr/{type}/{data}',[ScanController::class, 'scanQr']);
 Route::post('scan/qr/register',[ScanController::class, 'scanQrRegister']);

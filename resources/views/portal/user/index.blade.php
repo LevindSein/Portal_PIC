@@ -13,20 +13,20 @@ User
         Menu
     </button>
     <div class="dropdown-menu animated fadeIn">
-        <a class="dropdown-item tambah" href="javascript:void(0)">
+        <a class="dropdown-item add" href="javascript:void(0)">
             <i class="fas fa-fw fa-plus mr-1 ml-1"></i>
             <span>Tambah User</span>
         </a>
-        <a class="dropdown-item penghapusan" href="javascript:void(0)">
+        <a class="dropdown-item deleted" href="javascript:void(0)">
             <i class="fas fa-fw fa-trash mr-1 ml-1"></i>
             <span>Data Penghapusan</span>
         </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item registrasi" href="javascript:void(0)">
+        <a class="dropdown-item registered" href="javascript:void(0)">
             <i class="fas fa-fw fa-user-plus mr-1 ml-1"></i>
             <span>Data Pendaftar</span>
         </a>
-        <a class="dropdown-item aktivasi" href="javascript:void(0)">
+        <a class="dropdown-item activation" href="javascript:void(0)">
             <i class="fas fa-fw fa-qrcode mr-1 ml-1"></i>
             <span>Aktivasi Pendaftaran</span>
         </a>
@@ -41,7 +41,7 @@ User
             <div class="card-body">
                 <div class="form-group col-md-2 col-sm-2" style="padding: 0;">
                     <label for="kategori">Pilih Kategori</label>
-                    <select class="form-control" id="kategori" name="kategori">
+                    <select class="form-control" id="category" name="category">
                         @if(Auth::user()->level == 1)
                         <option value="1">Super Admin</option>
                         <option value="2">Admin</option>
@@ -52,13 +52,13 @@ User
                         <option value="3">Nasabah</option>
                     </select>
                 </div>
-                <p id="warning-penghapusan" class="text-danger">*) Data Penghapusan akan terhapus secara permanen oleh sistem saat 30 hari sejak akun yang terkait dihapus.</p>
+                <p id="warning-deleted" class="text-danger">*) Data Penghapusan akan terhapus secara permanen oleh sistem saat 30 hari sejak akun yang terkait dihapus.</p>
                 <div class="table-responsive">
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Username</th>
-                                <th>Nama</th>
+                                <th>Name</th>
                                 <th>Status</th>
                                 <th>Action</th>
                                 <th>Details</th>
@@ -84,7 +84,7 @@ User
             </div>
             <div class="modal-body">
                 <div class="text-center">
-                    <h1><b><span id="password_baru"></span></b></h1>
+                    <h1><b><span id="newPassword"></span></b></h1>
                 </div>
             </div>
             <div class="modal-footer">
@@ -95,12 +95,12 @@ User
     </div>
 </div>
 
-<div id="aktivasiModal" class="modal fade" role="dialog" tabIndex="-1">
+<div id="activationModal" class="modal fade" role="dialog" tabIndex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Kode Aktivasi</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <button class="close activationClose" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -110,7 +110,7 @@ User
                 </div>
                 <div class="text-center">
                     <p>Kode Aktivasi :</p>
-                    <h1><b><span id="kode_aktivasi"></span></b></h1>
+                    <h1><b><span id="activation_code"></span></b></h1>
                 </div>
                 <div>
                     <p>1. Buka aplikasi <b>QR Code Scanner</b> yang anda miliki.</p>
@@ -123,7 +123,7 @@ User
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal" id="tutup-aktivasi">Tutup</button>
+                <button type="button" class="btn btn-light activationClose" data-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
@@ -145,8 +145,8 @@ User
                         <div class="card">
                             <div class="card-body">
                                 <div class="mt-4 text-center">
-                                    <img id="showFoto" class="rounded-circle" width="150" />
-                                    <h4 class="card-title mt-2" id="showNama"></h4>
+                                    <img id="showPicture" class="rounded-circle" width="150" />
+                                    <h4 class="card-title mt-2" id="showName"></h4>
                                     <div class="row text-center justify-content-md-center">
                                     </div>
                                 </div>
@@ -161,17 +161,17 @@ User
                                 <div class="tab-pane fade show active" id="settings" role="tabpanel" aria-labelledby="pills-timeline-tab">
                                     <div class="card-body">
                                         <h3 id="showLevel"></h3>
-                                        <h5 id="showSttAktif"></h5>
+                                        <h5 id="showActive"></h5>
                                         <small class="text-muted pt-4 db">Username</small>
                                         <h6 id="showUsername"></h6>
                                         <small class="text-muted pt-4 db">No.Anggota</small>
-                                        <h6 id="showAnggota"></h6>
+                                        <h6 id="showMember"></h6>
                                         <small class="text-muted pt-4 db">Email</small>
                                         <h6 id="showEmail"></h6>
                                         <small class="text-muted pt-4 db">Whatsapp</small>
                                         <h6 id="showPhone"></h6>
                                         <small class="text-muted pt-4 db">Alamat</small>
-                                        <h6 id="showAlamat"></h6>
+                                        <h6 id="showAddress"></h6>
                                     </div>
                                 </div>
                             </div>
@@ -238,11 +238,11 @@ User
                     </div>
                     <div class="form-group">
                         <label>Alamat</label>
-                        <textarea rows="5" id="alamat" name="alamat" autocomplete="off" placeholder="Ketikkan Alamat disini" maxlength="255" class="form-control form-control-line">{{Auth::user()->alamat}}</textarea>
+                        <textarea rows="5" id="address" name="address" autocomplete="off" placeholder="Ketikkan Alamat disini" maxlength="255" class="form-control form-control-line"></textarea>
                     </div>
-                    <div class="form-group" id="otoritasDiv">
+                    <div class="form-group" id="authorityDiv">
                         <label>Otoritas <span class="text-danger">*</span></label>
-                        <select class="select2 form-control" multiple="multiple" style="height: 36px;width: 100%;" id="blok" name="blok[]"></select>
+                        <select class="select2 form-control" multiple="multiple" style="height: 36px;width: 100%;" id="group" name="group[]"></select>
                         <div class="text-center form-group">
                             <strong>Pilih Pengelolaan :</strong>
                         </div>
@@ -436,22 +436,22 @@ User
         var id;
         var params = getUrlParameter('data');
 
-        if(params == "penghapusan"){
-            penghapusan();
+        if(params == "deleted"){
+            deleted();
         }
-        else if(params == "registrasi"){
-            registrasi();
+        else if(params == "registered"){
+            registered();
         }
         else{
             home();
         }
 
-        $(".penghapusan").click(function(){
-            penghapusan();
+        $(".deleted").click(function(){
+            deleted();
         });
 
-        $(".registrasi").click(function(){
-            registrasi();
+        $(".registered").click(function(){
+            registered();
         });
 
         $(".home").click(function(){
@@ -459,29 +459,52 @@ User
         });
 
         var intervalAktivasi;
-        $(".aktivasi").click(function(){
+        $(".activation").click(function(){
             $.ajax({
-                url: "/production/user/kode/aktivasi",
+                url: "/production/users/code/activate",
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
-                        $("#kode_aktivasi").text(data.result.kode);
+                        $("#activation_code").text(data.result.code);
                     }
-                    else if(data.exception){
+                    else if(data.warning){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error("Data gagal diproses.");
-                        console.log(data.exception);
+                        toastr.warning(data.warning);
+                        if(data.description){
+
+                        }
+                    }
+                    else if(data.info){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.info(data.info);
+                        if(data.description){
+
+                        }
+                    }
+                    else if(data.error){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                        if(data.description){
+                            console.log(data.description);
+                        }
                     }
                     else{
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error(data.error);
+                        toastr.error(data);
+                        console.log(data);
                     }
                 },
                 error:function(data){
@@ -489,13 +512,13 @@ User
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error("Gagal mengambil data.");
+                    toastr.error("Fetching data failed.");
                     console.log(data);
                 },
                 complete:function(){
                     intervalAktivasi = setInterval(() => {
                         $.ajax({
-                            url: "/production/user/aktivasi/verify",
+                            url: "/production/users/activate/verify",
                             type: "GET",
                             cache:false,
                             success:function(data){
@@ -522,7 +545,7 @@ User
 
                                     setTimeout(() => {
                                         $.unblockUI();
-                                        location.href = '/production/layanan/registrasi?data=' + data.result;
+                                        location.href = '/production/service/register?data=' + data.result;
                                     }, 2000);
                                 }
                                 else{
@@ -534,12 +557,12 @@ User
                             }
                         });
                     }, 1000);
-                    $('#aktivasiModal').modal('show');
+                    $('#activationModal').modal('show');
                 },
             });
         });
 
-        $("#tutup-aktivasi").click(function(){
+        $(".activationClose").click(function(){
             clearInterval(intervalAktivasi);
         });
 
@@ -550,13 +573,13 @@ User
         $("#level").on('change', function(){
             var level = $("#level").val();
             if(level == '2'){
-                $("#otoritasDiv").show();
-                select2custom("#blok", "/cari/blok", "-- Pilih Kelompok --");
-                $("#blok").prop("required",true);
+                $("#authorityDiv").show();
+                select2custom("#group", "/search/groups", "-- Pilih Kelompok --");
+                $("#group").prop("required",true);
             }
             else{
-                $("#otoritasDiv").hide();
-                $("#blok").prop("required",false);
+                $("#authorityDiv").hide();
+                $("#group").prop("required",false);
             }
         });
 
@@ -580,7 +603,7 @@ User
         });
 
         $("#btn_copy").click( function(){;
-            navigator.clipboard.writeText($("#password_baru").text());
+            navigator.clipboard.writeText($("#newPassword").text());
             $('#resetModal').modal('hide');
 
             toastr.options = {
@@ -590,28 +613,28 @@ User
             toastr.success("Password copied.");
         });
 
-        $('#kategori').on('change', function() {
-            if(getUrlParameter('data') == 'penghapusan'){
-                dtable = dtableInit("/production/user/penghapusan/" + this.value);
+        $('#category').on('change', function() {
+            if(getUrlParameter('data') == 'deleted'){
+                dtable = dtableInit("/production/users/deleted/" + this.value);
             }
-            else if(getUrlParameter('data') == 'registrasi'){
-                dtable = dtableInit("/production/user/registrasi/" + this.value);
+            else if(getUrlParameter('data') == 'registered'){
+                dtable = dtableInit("/production/users/registered/" + this.value);
             }
             else{
-                dtable = dtableInit("/production/user/level/" + this.value);
+                dtable = dtableInit("/production/users/level/" + this.value);
             }
         });
 
-        $(".tambah").click( function(){
+        $(".add").click( function(){
             $("#userForm")[0].reset();
-            $("#otoritasDiv").hide();
+            $("#authorityDiv").hide();
             $('.titles').text('Tambah User');
             $('#divCheckEmail').show();
             $('#checkEmail').prop("checked", true);
-            $("#userFormValue").val('tambah');
+            $("#userFormValue").val('add');
             $('#userModal').modal('show');
 
-            $("#blok").prop("required",false);
+            $("#group").prop("required",false);
         });
 
         $(document).on('click', '.edit', function(){
@@ -623,10 +646,10 @@ User
             $('#checkEmail').prop("checked", false);
             $("#userFormValue").val('update');
 
-            $("#blok").prop("required",false);
+            $("#group").prop("required",false);
 
             $.ajax({
-                url: "/production/user/" + id + "/edit",
+                url: "/production/users/" + id + "/edit",
                 type: "GET",
                 cache:false,
                 success:function(data){
@@ -636,37 +659,29 @@ User
                         $("#phone").val(data.user.phone);
                         $("#ktp").val(data.user.ktp);
                         $("#npwp").val(data.user.npwp);
-                        $("#alamat").val(data.user.alamat);
+                        $("#address").val(data.user.address);
                         $("#level").val(data.user.level).change();
 
                         if(data.user.level == 2){
-                            var json = JSON.parse(data.user.otoritas);
+                            var json = JSON.parse(data.user.authority);
 
-                            for (var k in json.otoritas) {
-                                if (json.otoritas.hasOwnProperty(k)) {
-                                    if(json.otoritas[k] == false){
+                            for (var k in json.authority) {
+                                if (json.authority.hasOwnProperty(k)) {
+                                    if(json.authority[k] == false){
                                         $("#" + k).prop("checked",false);
                                     }
                                 }
                             }
 
-                            var s1 = $("#blok").select2();
-                            var value = json.blok;
+                            var s1 = $("#group").select2();
+                            var value = json.group;
                             value.forEach(function(e){
                                 if(!s1.find('option:contains(' + e + ')').length)
                                     s1.append($('<option>').text(e));
                             });
                             s1.val(value).trigger("change");
-                            select2custom("#blok", "/cari/blok", "-- Pilih Kelompok --");
+                            select2custom("#group", "/search/groups", "-- Pilih Kelompok --");
                         }
-                    }
-                    else if(data.exception){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error("Data gagal diproses.");
-                        console.log(data.exception);
                     }
                     else{
                         toastr.options = {
@@ -681,7 +696,7 @@ User
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error("Gagal mengambil data.");
+                    toastr.error("Fetching data failed.");
                     console.log(data);
                 },
                 complete:function(){
@@ -710,9 +725,9 @@ User
             $('#confirmModal').modal('show');
         });
 
-        $(document).on('click', '.aktivasiUser', function(){
+        $(document).on('click', '.activateUser', function(){
             id = $(this).attr('id');
-            location.href = '/production/layanan/registrasi?data=' + id;
+            location.href = '/production/service/register?data=' + id;
         });
 
         $(document).on('click', '.deletePermanently', function(){
@@ -743,17 +758,17 @@ User
             var rand = shuffle('1234567890');
 
             $.ajax({
-                url: "/production/user/" + id,
+                url: "/production/users/" + id,
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
-                        $("#showFoto").attr('src', '/' + data.user.foto + '?' + rand);
+                        $("#showPicture").attr('src', '/' + data.user.photo + '?' + rand);
                         $("#showLevel").text(data.user.level);
-                        $("#showSttAktif").html(data.user.stt_aktif);
+                        $("#showActive").html(data.user.active);
                         $("#showUsername").text(data.user.username);
-                        $("#showNama").text(data.user.name);
-                        $("#showAnggota").text(data.user.anggota);
+                        $("#showName").text(data.user.name);
+                        $("#showMember").text(data.user.member);
 
                         if(data.user.email)
                             $("#showEmail").html("<a target='_blank' href='mailto:" + data.user.email + "'>" + data.user.email + " <i class='fas fa-external-link'></i></a>");
@@ -765,10 +780,10 @@ User
                         else
                             $("#showPhone").html("&mdash;");
 
-                        if(data.user.alamat)
-                            $("#showAlamat").html(data.user.alamat);
+                        if(data.user.address)
+                            $("#showAddress").html(data.user.address);
                         else
-                            $("#showAlamat").html("&mdash;");
+                            $("#showAddress").html("&mdash;");
                     }
                     else if(data.exception){
                         toastr.options = {
@@ -791,7 +806,7 @@ User
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error("Gagal mengambil data.");
+                    toastr.error("Fetching data failed.");
                     console.log(data);
                 },
                 complete:function(){
@@ -803,12 +818,12 @@ User
         $('#userForm').submit(function(e){
             e.preventDefault();
             value = $("#userFormValue").val();
-            if(value == 'tambah'){
-                url = "/production/user";
+            if(value == 'add'){
+                url = "/production/users";
                 type = "POST";
             }
             else if(value == 'update'){
-                url = "/production/user/" + id;
+                url = "/production/users/" + id;
                 type = "PUT";
             }
             dataset = $(this).serialize();
@@ -826,28 +841,28 @@ User
                 '_token' : token,
             }
             if(value == 'delete'){
-                url = "/production/user/" + id;
+                url = "/production/users/" + id;
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Hapus";
                 ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
             }
             else if(value == 'deletePermanently'){
-                url = "/production/user/permanen/" + id;
+                url = "/production/users/permanent/" + id;
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Permanen";
                 ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
             }
             else if(value == 'restore'){
-                url = "/production/user/restore/" + id;
+                url = "/production/users/restore/" + id;
                 type = "POST";
                 ok_btn_before = "Memulihkan...";
                 ok_btn_completed = "Restore";
                 ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
             }
             else if(value == 'reset'){
-                url = "/production/user/reset/" + id;
+                url = "/production/users/reset/" + id;
                 type = "POST";
                 ok_btn_before = "Resetting...";
                 ok_btn_completed = "Reset";
@@ -892,31 +907,54 @@ User
                         toastr.success(data.success);
 
                         if(value == 'reset'){
-                            $('#password_baru').html(data.pass);
+                            $('#newPassword').html(data.pass);
                             $('#resetModal').modal('show');
                         }
-                        else if(value == 'tambah' || value == 'update'){
+                        else if(value == 'add' || value == 'update'){
                             var selectedLevel = $('#level').val();
-                            $("#kategori").val(selectedLevel).change();
+                            $("#category").val(selectedLevel).change();
                             $(".page-title").text("User");
                             window.history.replaceState(null, null, "?data=user");
-                            dtable = dtableInit("/production/user/level/" + selectedLevel);
+                            dtable = dtableInit("/production/users/level/" + selectedLevel);
+                            $('#warning-deleted').hide();
                         }
                     }
-                    else if(data.exception){
+                    else if(data.warning){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error("Data gagal diproses.");
-                        console.log(data.exception);
+                        toastr.warning(data.warning);
+                        if(data.description){
+
+                        }
+                    }
+                    else if(data.info){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.info(data.info);
+                        if(data.description){
+
+                        }
+                    }
+                    else if(data.error){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                        if(data.description){
+                            console.log(data.description);
+                        }
                     }
                     else{
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error(data.error);
+                        toastr.error(data);
                         console.log(data);
                     }
                     dtableReload();
@@ -941,7 +979,7 @@ User
                     console.log(data);
                 },
                 complete:function(data){
-                    if(value == 'tambah' || value == 'update'){
+                    if(value == 'add' || value == 'update'){
                         $('#userModal').modal('hide');
                     }
                     else{
@@ -966,7 +1004,7 @@ User
                 "columns": [
                     { data: 'username', name: 'username', class : 'text-center' },
                     { data: 'name', name: 'name', class : 'text-center' },
-                    { data: 'stt_aktif', name: 'stt_aktif', class : 'text-center' },
+                    { data: 'active', name: 'active', class : 'text-center' },
                     { data: 'action', name: 'action', class : 'text-center' },
                     { data: 'show', name: 'show', class : 'text-center' },
                 ],
@@ -1040,8 +1078,8 @@ User
                         return {
                             results:  $.map(data, function (d) {
                                 return {
-                                    id: d.nama,
-                                    text: d.nama
+                                    id: d.name,
+                                    text: d.name
                                 }
                             })
                         };
@@ -1050,28 +1088,28 @@ User
             });
         }
 
-        function penghapusan(){
-            $("#kategori").prop('selectedIndex',0)
+        function deleted(){
+            $("#category").prop('selectedIndex',0)
             $(".page-title").text("Data Penghapusan");
-            window.history.replaceState(null, null, "?data=penghapusan");
-            dtable = dtableInit("/production/user/penghapusan/1");
-            $('#warning-penghapusan').show();
+            window.history.replaceState(null, null, "?data=deleted");
+            dtable = dtableInit("/production/users/deleted/1");
+            $('#warning-deleted').show();
         }
 
-        function registrasi(){
-            $("#kategori").prop('selectedIndex',0)
+        function registered(){
+            $("#category").prop('selectedIndex',0)
             $(".page-title").text("Data Pendaftar");
-            window.history.replaceState(null, null, "?data=registrasi");
-            dtable = dtableInit("/production/user/registrasi/1");
-            $('#warning-penghapusan').hide();
+            window.history.replaceState(null, null, "?data=registered");
+            dtable = dtableInit("/production/users/registered/1");
+            $('#warning-deleted').hide();
         }
 
         function home(){
-            $("#kategori").prop('selectedIndex',0)
+            $("#category").prop('selectedIndex',0)
             $(".page-title").text("User");
             window.history.replaceState(null, null, "?data=user");
-            dtable = dtableInit("/production/user");
-            $('#warning-penghapusan').hide();
+            dtable = dtableInit("/production/users");
+            $('#warning-deleted').hide();
         }
     });
 </script>

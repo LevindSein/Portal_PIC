@@ -112,7 +112,7 @@ class EmailController extends Controller
                 else{
                     abort(404);
                 }
-                return view('email.verified');
+                return redirect('email/verified');
             }
             else{
                 abort(404);

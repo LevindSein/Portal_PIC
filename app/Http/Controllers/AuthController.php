@@ -224,7 +224,7 @@ class AuthController extends Controller
             User::create($data);
         }
         catch(\Exception $e){
-            return response()->json(['error' => "System error.", 'description' => $e]);
+            return response()->json(['error' => "Data failed to create.", 'description' => $e]);
         }
         $token = Crypt::encrypt($member . '+' . $available);
         return response()->json(['register' => $token]);

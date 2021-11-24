@@ -44,11 +44,11 @@ Riwayat Login
             </div>
             <div class="modal-body">
                 <h3 id="showLevel"></h3>
-                <h5 id="showSttAktif"></h5>
+                <h5 id="showActive"></h5>
                 <small class="text-muted pt-4 db">Username</small>
                 <h6 id="showUsername"></h6>
                 <small class="text-muted pt-4 db">Nama</small>
-                <h6 id="showNama"></h6>
+                <h6 id="showName"></h6>
                 <small class="text-muted pt-4 db">Status</small>
                 <h6 id="showStatus"></h6>
                 <small class="text-muted pt-4 db">Platform</small>
@@ -122,9 +122,9 @@ Riwayat Login
                 success:function(data){
                     if(data.success){
                         $("#showLevel").text(data.user.level);
-                        $("#showSttAktif").html(data.user.active);
+                        $("#showActive").html(data.user.active);
                         $("#showUsername").text(data.user.username);
-                        $("#showNama").text(data.user.name);
+                        $("#showName").text(data.user.name);
                         $("#showStatus").html(data.user.status);
                         $("#showPlatform").text(data.user.platform);
                         $("#showTime").text(data.user.time + " WIB");

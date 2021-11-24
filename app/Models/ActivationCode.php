@@ -13,6 +13,7 @@ class ActivationCode extends Model
     protected $fillable = [
         'code',
         'available',
+        'user_id',
         'submit',
     ];
 }
