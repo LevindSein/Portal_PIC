@@ -90,7 +90,7 @@ Profil
                             <div class="form-group">
                                 <label class="col-md-12">Nama Lengkap <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
-                                    <input type="text" name="name" required autocomplete="off" maxlength="100" placeholder="Alm. H. John Doe, S.pd., MT" value="{{Auth::user()->name}}" class="form-control form-control-line">
+                                    <input type="text" id="name" name="name" required autocomplete="off" maxlength="100" placeholder="Alm. H. John Doe, S.pd., MT" value="{{Auth::user()->name}}" class="form-control form-control-line">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -233,22 +233,30 @@ Profil
         });
 
         $('[type=tel]').on('change', function(e) {
-            $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
+            $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''));
         });
 
         $('[type=tel]').on('keypress', function(e) {
-            keys = ['0','1','2','3','4','5','6','7','8','9']
-            return keys.indexOf(e.key) > -1
+            keys = ['0','1','2','3','4','5','6','7','8','9'];
+            return keys.indexOf(e.key) > -1;
         });
 
-        $("#username, #email").on('input', function(key) {
-            var value = $(this).val();
-            $(this).val(value.replace(/ /g, '_'));
+        $("#username").on("input", function(){
+            this.value = this.value.replace(/[^0-9a-zA-Z/\w_]+$/g, '');
+            this.value = this.value.replace(/\s/g, '_');
+        });
+        $("#email").on('input', function() {
+            this.value = this.value.replace(/\s/g, '');
         });
         $("#phone").on("input", function() {
             if (/^0/.test(this.value)) {
-                this.value = this.value.replace(/^0/, "")
+                this.value = this.value.replace(/^0/, "");
             }
+        });
+
+        $("#name").on("input", function(){
+            this.value = this.value.replace(/[^0-9a-zA-Z/\s.,]+$/g, '');
+            this.value = this.value.replace(/\s\s+/g, ' ');
         });
 
         $("#profileForm").submit(function(e){

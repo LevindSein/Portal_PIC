@@ -200,7 +200,7 @@ class AuthController extends Controller
 
     public function registerStore(Request $request){
         $request->validate([
-            'name' => 'required|max:100|regex:/^[\pL\s\-]+$/u',
+            'name' => 'required|max:100',
             'email' => 'required|max:200|email|unique:App\Models\User,email',
             'password' => 'required|min:6',
         ]);

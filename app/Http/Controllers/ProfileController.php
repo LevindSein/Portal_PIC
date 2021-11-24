@@ -47,7 +47,7 @@ class ProfileController extends Controller
             $request->validate([
                 'username' => 'required|max:50|alpha_dash|unique:App\Models\User,username,'.Auth::user()->id,
                 'email' => 'required|max:200|email|unique:App\Models\User,email,'.Auth::user()->id,
-                'name' => 'required|max:100|regex:/^[\pL\s\-]+$/u',
+                'name' => 'required|max:100',
                 'ktp' => 'required|numeric|digits_between:16,16|unique:App\Models\User,ktp,'.Auth::user()->id,
                 'npwp' => 'nullable|numeric|digits_between:15,15|unique:App\Models\User,npwp,'.Auth::user()->id,
                 'phone' => 'nullable|numeric|digits_between:10,12|unique:App\Models\User,phone,'.Auth::user()->id,

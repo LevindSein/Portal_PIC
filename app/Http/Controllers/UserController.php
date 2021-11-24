@@ -181,12 +181,11 @@ class UserController extends Controller
             $request->validate([
                 'level' => 'required|numeric',
                 'email' => 'required|max:200|email|unique:App\Models\User,email',
-                'name' => 'required|max:100|regex:/^[\pL\s\-]+$/u',
+                'name' => 'required|max:100',
                 'ktp' => 'nullable|numeric|digits_between:16,16|unique:App\Models\User,ktp',
                 'npwp' => 'nullable|numeric|digits_between:15,15|unique:App\Models\User,npwp',
                 'phone' => 'nullable|numeric|digits_between:10,12|unique:App\Models\User,phone',
-                'address' => 'nullable|max:255',
-                'checkEmail' => 'required',
+                'address' => 'nullable|max:255'
             ]);
 
             $username = Identity::make('username');
@@ -213,27 +212,29 @@ class UserController extends Controller
             $password = Identity::make('password');
             $data['password'] = Hash::make(sha1(md5(hash('gost', $password))));
 
-            try{
-                $details = [
-                    'sender' => Auth::user()->name." dari PIC",
-                    'header' => "Harap Setting Profil & Password Anda setelah verifikasi",
-                    'subject' => "Email Verification",
-                    'name' => $name,
-                    'role' => User::level($level),
-                    'type' => "verifikasi",
-                    'username' => $username,
-                    'password' => $password,
-                    'button' => "Verifikasi",
-                    'url' => url('email/verify/'.$level.'/'.Crypt::encrypt($member . "+" . Carbon::now()->addDays(2)->toDateTimeString())),
-                    'regards' => "Selamat Berniaga (PIC BDG Team)",
-                    'email' => $email,
-                    'timestamp' => Carbon::now()->toDateTimeString(),
-                    'value' => 'store',
-                ];
-                dispatch(new \App\Jobs\UserEmailJob($details));
-            }
-            catch(\Exception $e){
-                return response()->json(['error' => 'Email failed to send.', 'description' => $e]);
+            if(isset($request->checkEmail)){
+                try{
+                    $details = [
+                        'sender' => Auth::user()->name." dari PIC",
+                        'header' => "Harap Setting Profil & Password Anda setelah verifikasi",
+                        'subject' => "Email Verification",
+                        'name' => $name,
+                        'role' => User::level($level),
+                        'type' => "verifikasi",
+                        'username' => $username,
+                        'password' => $password,
+                        'button' => "Verifikasi",
+                        'url' => url('email/verify/'.$level.'/'.Crypt::encrypt($member . "+" . Carbon::now()->addDays(2)->toDateTimeString())),
+                        'regards' => "Selamat Berniaga (PIC BDG Team)",
+                        'email' => $email,
+                        'timestamp' => Carbon::now()->toDateTimeString(),
+                        'value' => 'store',
+                    ];
+                    dispatch(new \App\Jobs\UserEmailJob($details));
+                }
+                catch(\Exception $e){
+                    return response()->json(['error' => 'Email failed to send.', 'description' => $e]);
+                }
             }
 
             try{
@@ -329,7 +330,7 @@ class UserController extends Controller
             $request->validate([
                 'level' => 'required|numeric',
                 'email' => 'required|max:200|email|unique:App\Models\User,email,'.$id,
-                'name' => 'required|max:100|regex:/^[\pL\s\-]+$/u',
+                'name' => 'required|max:100',
                 'ktp' => 'nullable|numeric|digits_between:16,16|unique:App\Models\User,ktp,'.$id,
                 'npwp' => 'nullable|numeric|digits_between:15,15|unique:App\Models\User,npwp,'.$id,
                 'phone' => 'nullable|numeric|digits_between:10,12|unique:App\Models\User,phone,'.$id,

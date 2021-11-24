@@ -105,16 +105,13 @@
                     }
                 });
 
-                $('#username, #email').on('keypress', function ( event ) {
-                    var key = event.keyCode;
-                    if (key === 32) {
-                        $(this).val(key.replace(/ /g, '_'));
-                    }
+                $("#username, #email").on('input', function() {
+                    this.value = this.value.replace(/\s/g,'');
                 });
 
-                $("#username, #email").on('input', function(key) {
-                    var value = $(this).val();
-                    $(this).val(value.replace(/ /g, '_'));
+                $("#name").on("input", function(){
+                    this.value = this.value.replace(/[^0-9a-zA-Z/\s.,]+$/g, '');
+                    this.value = this.value.replace(/\s\s+/g, ' ');
                 });
 
 

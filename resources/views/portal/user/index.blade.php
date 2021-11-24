@@ -415,7 +415,7 @@ User
                         <p>(<span class="text-danger">*</span>) wajib diisi.</p>
                     </div>
                     <div class="custom-control custom-checkbox mr-sm-2 mb-3" id="divCheckEmail">
-                        <input type="checkbox" class="custom-control-input" id="checkEmail" name="checkEmail" value="checked" onclick="return false">
+                        <input type="checkbox" class="custom-control-input" id="checkEmail" name="checkEmail" value="checked">
                         <label class="custom-control-label" for="checkEmail">Kirim Email Verifikasi</label>
                     </div>
                 </div>
@@ -592,14 +592,18 @@ User
             return keys.indexOf(e.key) > -1
         });
 
-        $("#username, #email").on('input', function(key) {
-            var value = $(this).val();
-            $(this).val(value.replace(/ /g, '_'));
+        $("#email").on('input', function() {
+            this.value = this.value.replace(/\s/g, '');
         });
         $("#phone").on("input", function() {
             if (/^0/.test(this.value)) {
-                this.value = this.value.replace(/^0/, "")
+                this.value = this.value.replace(/^0/, "");
             }
+        });
+
+        $("#name").on("input", function(){
+            this.value = this.value.replace(/[^0-9a-zA-Z/\s.,]+$/g, '');
+            this.value = this.value.replace(/\s\s+/g, ' ');
         });
 
         $("#btn_copy").click( function(){;
