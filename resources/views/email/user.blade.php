@@ -27,7 +27,7 @@
                                 <p>Berikut adalah pesan untuk <b>{{$type}}</b> akun anda <a href="{{url('/')}}">Member Area</a> Pasar Induk Caringin Kota Bandung sebagai <b>{{$role}}</b>.</p>
                                 <p>Silakan klik tombol di bawah ini :</p>
                                 <div style="text-align: center;">
-                                    <p>username : <b>{{$username}}</b></p>
+                                    <p>uid : <b>{{$uid}}</b></p>
                                     <p>password : <b>{{$password}}</b></p>
                                     <a href="{{$url}}" style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #4fc3f7; border-radius: 60px; text-decoration:none;">{{$button}}</a>
                                 </div>

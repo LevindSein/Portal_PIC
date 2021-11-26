@@ -21044,6 +21044,10 @@ File: scss
     border-radius: 5px;
 }
 
+.iti {
+    width: 100%;
+}
+
 .se-pre-con {
     position: fixed;
     left: 0;

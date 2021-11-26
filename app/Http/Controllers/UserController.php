@@ -35,7 +35,7 @@ class UserController extends Controller
             else{
                 $level = AUth::user()->level;
             }
-            $data = User::where([['level',$level],['active','!=','0']])->select('id','username','name','active');
+            $data = User::where([['level',$level],['active','!=','0']])->select('id','uid','name','active');
             return DataTables::of($data)
                 ->addColumn('action', function($data){
                     $button = '';
@@ -73,7 +73,7 @@ class UserController extends Controller
             if(Auth::user()->level > 1){
                 $level = 3;
             }
-            $data = User::where([['level',$level],['active','1']])->select('id','username','name','active');
+            $data = User::where([['level',$level],['active','1']])->select('id','uid','name','active');
             return DataTables::of($data)
                 ->addColumn('action', function($data){
                     $button = '';
@@ -110,7 +110,7 @@ class UserController extends Controller
             if(Auth::user()->level > 1){
                 $level = 3;
             }
-            $data = User::where([['level', $level],['active','0']])->select('id','username','name','active');
+            $data = User::where([['level', $level],['active','0']])->select('id','uid','name','active');
             return DataTables::of($data)
                 ->addColumn('action', function($data){
                     $button = '<a type="button" data-toggle="tooltip" title="Restore" name="restore" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="restore"><i class="fas fa-undo" style="color:#4e73df;"></i></a>';
@@ -138,7 +138,7 @@ class UserController extends Controller
             if(Auth::user()->level > 1){
                 $level = 3;
             }
-            $data = User::where([['level', $level],['active','2']])->select('id','username','name','active');
+            $data = User::where([['level', $level],['active','2']])->select('id','uid','name','active');
             return DataTables::of($data)
                 ->addColumn('action', function($data){
                     $button = '<a type="button" data-toggle="tooltip" title="Activate" name="activate" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="activateUser"><i class="fas fa-shield-check" style="color:#36bea6;"></i></a>';
@@ -182,14 +182,14 @@ class UserController extends Controller
                 'level' => 'required|numeric',
                 'email' => 'required|max:200|email|unique:App\Models\User,email',
                 'name' => 'required|max:100',
-                'ktp' => 'nullable|numeric|digits_between:16,16|unique:App\Models\User,ktp',
+                'ktp' => 'required|numeric|digits_between:16,16|unique:App\Models\User,ktp',
                 'npwp' => 'nullable|numeric|digits_between:15,15|unique:App\Models\User,npwp',
-                'phone' => 'nullable|numeric|digits_between:10,12|unique:App\Models\User,phone',
-                'address' => 'nullable|max:255'
+                'phone' => 'required|numeric|digits_between:10,12|unique:App\Models\User,phone',
+                'address' => 'required|max:255'
             ]);
 
-            $username = Identity::make('username');
-            $data['username'] = $username;
+            $uid = Identity::make('uid');
+            $data['uid'] = $uid;
             $name = $request->name;
             $data['name'] = $name;
             $level = $request->level;
@@ -221,7 +221,7 @@ class UserController extends Controller
                         'name' => $name,
                         'role' => User::level($level),
                         'type' => "verifikasi",
-                        'username' => $username,
+                        'uid' => $uid,
                         'password' => $password,
                         'button' => "Verifikasi",
                         'url' => url('email/verify/'.$level.'/'.Crypt::encrypt($member . "+" . Carbon::now()->addDays(2)->toDateTimeString())),
@@ -331,10 +331,10 @@ class UserController extends Controller
                 'level' => 'required|numeric',
                 'email' => 'required|max:200|email|unique:App\Models\User,email,'.$id,
                 'name' => 'required|max:100',
-                'ktp' => 'nullable|numeric|digits_between:16,16|unique:App\Models\User,ktp,'.$id,
+                'ktp' => 'required|numeric|digits_between:16,16|unique:App\Models\User,ktp,'.$id,
                 'npwp' => 'nullable|numeric|digits_between:15,15|unique:App\Models\User,npwp,'.$id,
-                'phone' => 'nullable|numeric|digits_between:10,12|unique:App\Models\User,phone,'.$id,
-                'address' => 'nullable|max:255',
+                'phone' => 'required|numeric|digits_between:10,12|unique:App\Models\User,phone,'.$id,
+                'address' => 'required|max:255',
             ]);
 
             try{

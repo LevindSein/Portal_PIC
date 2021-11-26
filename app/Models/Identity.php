@@ -12,7 +12,7 @@ class Identity extends Model
     use HasFactory;
 
     public static function make($type){
-        if($type == 'username'){
+        if($type == 'uid'){
             $data = "aabbccddeeffgghhkkmmnnppqqrrssttwwyy2233445566778899";
             $data = str_shuffle($data);
             $data = substr($data, 0, 8);
@@ -29,8 +29,7 @@ class Identity extends Model
             return $data;
         }
 
-        $user = User::where($type, $data)->count();
-        if($user != 0)
+        if(User::where($type, $data)->exists())
             return self::make($type);
         else
             return $data;

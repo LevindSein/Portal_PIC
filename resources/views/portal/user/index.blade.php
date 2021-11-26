@@ -44,10 +44,7 @@ User
                     <select class="form-control" id="category" name="category">
                         @if(Auth::user()->level == 1)
                         <option value="1">Super Admin</option>
-                        <option value="2">Admin</option>
-                        <option value="4">Kasir</option>
-                        <option value="5">Keuangan</option>
-                        <option value="6">Manajer</option>
+                        <option value="2">Organisator</option>
                         @endif
                         <option value="3">Nasabah</option>
                     </select>
@@ -57,7 +54,7 @@ User
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Username</th>
+                                <th>UID</th>
                                 <th>Name</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -162,13 +159,13 @@ User
                                     <div class="card-body">
                                         <h3 id="showLevel"></h3>
                                         <h5 id="showActive"></h5>
-                                        <small class="text-muted pt-4 db">Username</small>
-                                        <h6 id="showUsername"></h6>
+                                        <small class="text-muted pt-4 db">UID</small>
+                                        <h6 id="showUid"></h6>
                                         <small class="text-muted pt-4 db">No.Anggota</small>
                                         <h6 id="showMember"></h6>
                                         <small class="text-muted pt-4 db">Email</small>
                                         <h6 id="showEmail"></h6>
-                                        <small class="text-muted pt-4 db">Whatsapp</small>
+                                        <small class="text-muted pt-4 db">Handphone</small>
                                         <h6 id="showPhone"></h6>
                                         <small class="text-muted pt-4 db">Alamat</small>
                                         <h6 id="showAddress"></h6>
@@ -199,14 +196,11 @@ User
             <form id="userForm">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Pilih Role <span class="text-danger">*</span></label>
+                        <label>Pilih Ketegori <span class="text-danger">*</span></label>
                         <select class="form-control" id="level" name="level">
                             @if(Auth::user()->level == 1)
                             <option value="1">Super Admin</option>
-                            <option value="2">Admin</option>
-                            <option value="4">Kasir</option>
-                            <option value="5">Keuangan</option>
-                            <option value="6">Manajer</option>
+                            <option value="2">Organisator</option>
                             @endif
                             <option value="3">Nasabah</option>
                         </select>
@@ -220,31 +214,31 @@ User
                         <input type="email" id="email" name="email" maxlength="200" required autocomplete="off" placeholder="something@email.com" class="form-control form-control-line" style="text-transform:lowercase;">
                     </div>
                     <div class="form-group">
-                        <label>Whatsapp</label>
+                        <label>Handphone <span class="text-danger">*</span></label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">+62</span>
                             </div>
-                            <input type="tel" name="phone" id="phone" autocomplete="off" minlength="10" maxlength="12" placeholder="878123xxxxx" class="form-control form-control-line">
+                            <input required type="tel" name="phone" id="phone" autocomplete="off" minlength="10" maxlength="12" placeholder="878123xxxxx" class="form-control form-control-line">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>KTP</label>
-                        <input type="tel" id="ktp" name="ktp" autocomplete="off" minlength="16" maxlength="16" placeholder="16 digit nomor KTP" class="form-control form-control-line">
+                        <label>KTP <span class="text-danger">*</span></label>
+                        <input required type="tel" id="ktp" name="ktp" autocomplete="off" minlength="16" maxlength="16" placeholder="16 digit nomor KTP" class="form-control form-control-line">
                     </div>
                     <div class="form-group">
                         <label>NPWP</label>
                         <input type="tel" id="npwp" name="npwp" autocomplete="off" minlength="15" maxlength="15" placeholder="15 digit nomor NPWP" class="form-control form-control-line">
                     </div>
                     <div class="form-group">
-                        <label>Alamat</label>
-                        <textarea rows="5" id="address" name="address" autocomplete="off" placeholder="Ketikkan Alamat disini" maxlength="255" class="form-control form-control-line"></textarea>
+                        <label>Alamat <span class="text-danger">*</span></label>
+                        <textarea required rows="5" id="address" name="address" autocomplete="off" placeholder="Ketikkan Alamat disini" maxlength="255" class="form-control form-control-line"></textarea>
                     </div>
                     <div class="form-group" id="authorityDiv">
                         <label>Otoritas <span class="text-danger">*</span></label>
                         <select class="select2 form-control" multiple="multiple" style="height: 36px;width: 100%;" id="group" name="group[]"></select>
                         <div class="text-center form-group">
-                            <strong>Pilih Pengelolaan :</strong>
+                            <strong>Privileged :</strong>
                         </div>
                         <div class="form-group col-lg-12 justify-content-between" style="display: flex;flex-wrap: wrap;">
                             <div>
@@ -770,7 +764,7 @@ User
                         $("#showPicture").attr('src', '/' + data.user.photo + '?' + rand);
                         $("#showLevel").text(data.user.level);
                         $("#showActive").html(data.user.active);
-                        $("#showUsername").text(data.user.username);
+                        $("#showUid").text(data.user.uid);
                         $("#showName").text(data.user.name);
                         $("#showMember").text(data.user.member);
 
@@ -1006,7 +1000,7 @@ User
                 "serverSide": true,
                 "ajax": url,
                 "columns": [
-                    { data: 'username', name: 'username', class : 'text-center' },
+                    { data: 'uid', name: 'uid', class : 'text-center' },
                     { data: 'name', name: 'name', class : 'text-center' },
                     { data: 'active', name: 'active', class : 'text-center' },
                     { data: 'action', name: 'action', class : 'text-center' },

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\User;
+use App\Models\Country;
 
 use Image;
 
@@ -45,24 +46,36 @@ class ProfileController extends Controller
     {
         if(request()->ajax()){
             $request->validate([
-                'username' => 'required|max:50|alpha_dash|unique:App\Models\User,username,'.Auth::user()->id,
+                'uid' => 'required|max:50|alpha_dash|unique:App\Models\User,uid,'.Auth::user()->id,
                 'email' => 'required|max:200|email|unique:App\Models\User,email,'.Auth::user()->id,
                 'name' => 'required|max:100',
-                'ktp' => 'required|numeric|digits_between:16,16|unique:App\Models\User,ktp,'.Auth::user()->id,
+                'ktp' => 'required|numeric|digits_between:7,16|unique:App\Models\User,ktp,'.Auth::user()->id,
                 'npwp' => 'nullable|numeric|digits_between:15,15|unique:App\Models\User,npwp,'.Auth::user()->id,
-                'phone' => 'nullable|numeric|digits_between:10,12|unique:App\Models\User,phone,'.Auth::user()->id,
+                'country' => 'required|string|min:2|max:2',
+                'phone' => 'required|numeric|digits_between:8,15|unique:App\Models\User,phone,'.Auth::user()->id,
                 'address' => 'required|max:255',
                 'password' => 'required|min:6|alpha_dash',
                 'passwordNew' => 'nullable|min:6|alpha_dash',
             ]);
 
-            $username = strtolower($request->username);
+            $uid = strtolower($request->uid);
             $name = $request->name;
             $email = strtolower($request->email);
+
+            $country = $request->country;
+            $country = Country::where('iso', $country)->first();
+            if(!is_null($country)){
+                $country = $country->id;
+            }
+            else{
+                return response()->json(['error' => "Country code not found."]);
+            }
+
             $phone = $request->phone;
             if(substr($phone,0,1) == "0"){
                 return response()->json(['warning' => "Whatsapp number incorrect."]);
             }
+
             $ktp = $request->ktp;
             $npwp = $request->npwp;
             $address = $request->address;
@@ -75,12 +88,13 @@ class ProfileController extends Controller
                 return response()->json(['error' => "User not found."]);
             }
 
-            $user->username = $username;
+            $user->uid = $uid;
             $user->name = $name;
             if($user->email != $email){
                 $user->email_verified_at = NULL;
             }
             $user->email = $email;
+            $user->country_id = $country;
             $user->phone = $phone;
             $user->ktp = $ktp;
             $user->npwp = $npwp;

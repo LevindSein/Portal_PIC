@@ -25,9 +25,9 @@
                 <div class="signin-signup">
                     <form class="sign-in-form" id="loginForm">
                         <h2 class="title">Masuk</h2>
-                        <div id="check-username" class="input-field">
+                        <div id="check-uid" class="input-field">
                             <i class="fas fa-user"></i>
-                            <input required type="text" maxlength="100" id="username" name="username" placeholder="Username/Email" style="text-transform:lowercase;"/>
+                            <input required type="text" maxlength="100" id="uid" name="uid" placeholder="UID/Email" style="text-transform:lowercase;"/>
                         </div>
                         <div id="check-password" class="input-field">
                             <i class="fas fa-lock"></i>
@@ -83,7 +83,7 @@
         <script src="{{asset('custom.js')}}"></script>
         <script>
             $(document).ready(function(){
-                $("#username").focus();
+                $("#uid").focus();
 
                 $('#passwordRegShow').click(function(){
                     if($('#passwordReg').attr('type') == 'password'){
@@ -105,7 +105,7 @@
                     }
                 });
 
-                $("#username, #email").on('input', function() {
+                $("#uid, #email").on('input', function() {
                     this.value = this.value.replace(/\s/g,'');
                 });
 
@@ -218,7 +218,7 @@
                         complete:function(data){
                             if(type == "login"){
                                 $("#loginForm")[0].reset();
-                                $("#username").focus();
+                                $("#uid").focus();
                             }
                             else{
                                 $("#registerForm")[0].reset();

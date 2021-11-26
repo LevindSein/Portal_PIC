@@ -35,8 +35,9 @@ Profil
                 <h6>{{Auth::user()->email}}</h6>
                 @endif
                 @if(Auth::user()->phone)
-                <small class="text-muted pt-4 db">Whatsapp</small>
-                <h6>+62{{Auth::user()->phone}}</h6>
+                <small class="text-muted pt-4 db">Handphone</small>
+                <h6><span id="showCountry"></span> {{Auth::user()->phone}}</h6>
+                </span>
                 @endif
                 @if(Auth::user()->address)
                 <small class="text-muted pt-4 db">Alamat</small>
@@ -82,9 +83,9 @@ Profil
                     <div class="card-body">
                         <form id="profileForm" class="form-horizontal form-material">
                             <div class="form-group">
-                                <label class="col-md-12">Username (untuk Login) <span class="text-danger">*</span></label>
+                                <label class="col-md-12">UID (untuk Login) <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
-                                    <input type="text" id="username" name="username" required autocomplete="off" maxlength="50" placeholder="Username" value="{{Auth::user()->username}}" class="form-control form-control-line" style="text-transform:lowercase;">
+                                    <input type="text" id="uid" name="uid" required autocomplete="off" maxlength="50" placeholder="UID" value="{{Auth::user()->uid}}" class="form-control form-control-line" style="text-transform:lowercase;">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -100,18 +101,16 @@ Profil
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">Whatsapp</label>
-                                <div class="col-md-12 input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">+62</span>
-                                    </div>
-                                    <input type="tel" name="phone" id ="phone" autocomplete="off" minlength="10" maxlength="12" placeholder="878123xxxxx" value="{{Auth::user()->phone}}" class="form-control form-control-line">
+                                <label class="col-md-12">Handphone <span class="text-danger">*</span></label>
+                                <div class="col-md-12">
+                                    <input type="hidden" id="country" name="country" />
+                                    <input id="phone" name="phone" type="tel" autocomplete="off" minlength="8" maxlength="15" placeholder="878123xxxxx" value="{{Auth::user()->phone}}" class="form-control form-control-line">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">KTP <span class="text-danger">*</span></label>
+                                <label class="col-md-12">KTP / Paspor<span class="text-danger">*</span></label>
                                 <div class="col-md-12">
-                                    <input type="tel" id="ktp" name="ktp" required autocomplete="off" minlength="16" maxlength="16" placeholder="16 digit nomor KTP" value="{{Auth::user()->ktp}}" class="form-control form-control-line">
+                                    <input required type="tel" id="ktp" name="ktp" required autocomplete="off" minlength="7" maxlength="16" placeholder="16 digit nomor KTP" value="{{Auth::user()->ktp}}" class="form-control form-control-line">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -241,7 +240,7 @@ Profil
             return keys.indexOf(e.key) > -1;
         });
 
-        $("#username").on("input", function(){
+        $("#uid").on("input", function(){
             this.value = this.value.replace(/[^0-9a-zA-Z/\w_]+$/g, '');
             this.value = this.value.replace(/\s/g, '_');
         });
@@ -259,8 +258,37 @@ Profil
             this.value = this.value.replace(/\s\s+/g, ' ');
         });
 
+        var iti;
+        function initializeTel(init) {
+            iti = window.intlTelInput(document.querySelector("#phone"), {
+                hiddenInput: "full",
+                initialCountry: init,
+                preferredCountries: ['id'],
+                formatOnDisplay: false,
+                separateDialCode: true,
+                hiddenInput: "full",
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js"
+            });
+        }
+
+        $.ajax({
+            url: "/search/countries",
+            type: "GET",
+            cache: false,
+            success: function(data){
+                initializeTel(data.iso);
+                $("#showCountry").text("+" + data.phonecode);
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+
         $("#profileForm").submit(function(e){
             e.preventDefault();
+
+            var country = iti.getSelectedCountryData();
+            $("#country").val(country.iso2);
 
             $.ajaxSetup({
                 headers: {

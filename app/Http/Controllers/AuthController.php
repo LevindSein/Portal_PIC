@@ -82,16 +82,16 @@ class AuthController extends Controller
         //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah
         if($request->ajax()){
             $request->validate([
-                'username' => 'required|max:100',
+                'uid' => 'required|max:100',
                 'password' => 'required|min:6',
             ]);
 
-            $username = strtolower($request->username);
-            if(filter_var($username, FILTER_VALIDATE_EMAIL)) {
-                $credentials['email'] = $username;
+            $uid = strtolower($request->uid);
+            if(filter_var($uid, FILTER_VALIDATE_EMAIL)) {
+                $credentials['email'] = $uid;
             }
             else{
-                $credentials['username'] = $username;
+                $credentials['uid'] = $uid;
             }
             $credentials['password'] = sha1(md5(hash('gost',$request->password)));
             if (Auth::attempt($credentials)) {
@@ -124,11 +124,11 @@ class AuthController extends Controller
                 }
             }
             else{
-                if(filter_var($username, FILTER_VALIDATE_EMAIL)) {
-                    $exist = User::where('email', $username)->first();
+                if(filter_var($uid, FILTER_VALIDATE_EMAIL)) {
+                    $exist = User::where('email', $uid)->first();
                 }
                 else{
-                    $exist = User::where('username', $username)->first();
+                    $exist = User::where('uid', $uid)->first();
                 }
 
                 if(!is_null($exist)){
@@ -209,9 +209,9 @@ class AuthController extends Controller
         $email = strtolower($request->email);
         $password = $request->password;
 
-        $username = Identity::make('username');
+        $uid = Identity::make('uid');
         $member = 'BP3C'.Identity::make('member');
-        $data['username'] = $username;
+        $data['uid'] = $uid;
         $data['name'] = $nama;
         $data['email'] = $email;
         $data['member'] = $member;

@@ -64,6 +64,8 @@ Route::middleware('checkauth')->group(function(){
     Route::resource('profile', ProfileController::class);
 
     Route::resource('changelogs', ChangeLogController::class);
+
+    Route::get('search/countries',[SearchController::class, 'country']);
 });
 
 Route::get('expired', function(){
@@ -85,7 +87,7 @@ Route::get('email/verified', function(){
     return view('email.verified');
 });
 
-Route::get('search/groups',[SearchController::class, 'init']);
+Route::get('search/groups',[SearchController::class, 'group']);
 
 Route::get('scan/qr/{type}/{data}',[ScanController::class, 'scanQr']);
 Route::post('scan/qr/register',[ScanController::class, 'scanQrRegister']);

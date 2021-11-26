@@ -22,7 +22,7 @@ class HistoryController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = DataLogin::select('id','username','name','level','active','platform','status','updated_at','created_at');
+            $data = DataLogin::select('id','uid','name','level','active','platform','status','updated_at','created_at');
             return DataTables::of($data)
             ->editColumn('created_at', function ($data) {
                 return [

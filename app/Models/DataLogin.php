@@ -14,7 +14,7 @@ class DataLogin extends Model
 
     protected $table = 'data_login';
     protected $fillable = [
-        'username',
+        'uid',
         'name',
         'level',
         'active',
@@ -25,7 +25,7 @@ class DataLogin extends Model
     public static function success(){
         $agent = new Agent();
 
-        $data['username'] = Auth::user()->username;
+        $data['uid'] = Auth::user()->uid;
         $data['name'] = Auth::user()->name;
         $data['level'] = Auth::user()->level;
         $data['active'] = Auth::user()->active;
@@ -38,7 +38,7 @@ class DataLogin extends Model
     public static function error(){
         $agent = new Agent();
 
-        $data['username'] = Auth::user()->username;
+        $data['uid'] = Auth::user()->uid;
         $data['name'] = Auth::user()->name;
         $data['level'] = Auth::user()->level;
         $data['active'] = Auth::user()->active;
@@ -53,7 +53,7 @@ class DataLogin extends Model
 
         $agent = new Agent();
 
-        $data['username'] = $ip;
+        $data['uid'] = $ip;
         $data['name'] = $request->username;
         $data['status'] = 0;
         $data['platform'] = $agent->platform()." ".$agent->version($agent->platform())." ".$agent->browser()." ".$agent->version($agent->browser());

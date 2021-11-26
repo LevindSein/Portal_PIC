@@ -16,7 +16,7 @@ Riwayat Login
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Username</th>
+                                <th>UID</th>
                                 <th>Name</th>
                                 <th>Role</th>
                                 <th>Status</th>
@@ -45,8 +45,8 @@ Riwayat Login
             <div class="modal-body">
                 <h3 id="showLevel"></h3>
                 <h5 id="showActive"></h5>
-                <small class="text-muted pt-4 db">Username</small>
-                <h6 id="showUsername"></h6>
+                <small class="text-muted pt-4 db">UID</small>
+                <h6 id="showUid"></h6>
                 <small class="text-muted pt-4 db">Nama</small>
                 <h6 id="showName"></h6>
                 <small class="text-muted pt-4 db">Status</small>
@@ -77,7 +77,7 @@ Riwayat Login
             "serverSide": true,
             "ajax": "/production/histories",
             "columns": [
-                { data: 'username', name: 'username', class : 'text-center' },
+                { data: 'uid', name: 'uid', class : 'text-center' },
                 { data: 'name', name: 'name', class : 'text-center' },
                 { data: 'level', name: 'level', class : 'text-center' },
                 { data: 'status', name: 'status', class : 'text-center' },
@@ -123,7 +123,7 @@ Riwayat Login
                     if(data.success){
                         $("#showLevel").text(data.user.level);
                         $("#showActive").html(data.user.active);
-                        $("#showUsername").text(data.user.username);
+                        $("#showUid").text(data.user.uid);
                         $("#showName").text(data.user.name);
                         $("#showStatus").html(data.user.status);
                         $("#showPlatform").text(data.user.platform);

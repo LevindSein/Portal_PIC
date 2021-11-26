@@ -15,6 +15,8 @@
     {{-- Select2 --}}
     <link rel="stylesheet" type="text/css" href="{{asset('vendor/select2/dist/css/select2.min.css')}}">
 
+    <link rel="stylesheet" href="{{asset('vendor/intTelInput/build/css/intlTelInput.css')}}">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{asset('template/dist/css/style.min.css')}}">
 
@@ -465,6 +467,8 @@
     <script src="{{asset('vendor/select2/dist/js/select2.min.js')}}"></script>
 
     <script src="{{asset('vendor/block-ui/jquery.blockUI.js')}}"></script>
+
+    <script src="{{asset('vendor/intTelInput/build/js/intlTelInput.js')}}"></script>
 
     <script>
         $(window).on('load', function() {
