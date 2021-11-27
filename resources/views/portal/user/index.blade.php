@@ -215,15 +215,11 @@ User
                     </div>
                     <div class="form-group">
                         <label>Handphone <span class="text-danger">*</span></label>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">+62</span>
-                            </div>
-                            <input required type="tel" name="phone" id="phone" autocomplete="off" minlength="10" maxlength="12" placeholder="878123xxxxx" class="form-control form-control-line">
-                        </div>
+                        <input type="hidden" id="country" name="country" />
+                        <input id="phone" name="phone" type="tel" autocomplete="off" minlength="8" maxlength="15" placeholder="878123xxxxx" class="form-control form-control-line">
                     </div>
                     <div class="form-group">
-                        <label>KTP <span class="text-danger">*</span></label>
+                        <label>KTP / Paspor<span class="text-danger">*</span></label>
                         <input required type="tel" id="ktp" name="ktp" autocomplete="off" minlength="16" maxlength="16" placeholder="16 digit nomor KTP" class="form-control form-control-line">
                     </div>
                     <div class="form-group">
@@ -452,6 +448,20 @@ User
             home();
         });
 
+        var iti;
+        function initializeTel(init) {
+            iti = window.intlTelInput(document.querySelector("#phone"), {
+                hiddenInput: "full",
+                initialCountry: init,
+                preferredCountries: ['id'],
+                formatOnDisplay: false,
+                separateDialCode: true,
+                hiddenInput: "full",
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js"
+            });
+        }
+        initializeTel("id");
+
         var intervalAktivasi;
         $(".activation").click(function(){
             $.ajax({
@@ -630,6 +640,8 @@ User
             $('#divCheckEmail').show();
             $('#checkEmail').prop("checked", true);
             $("#userFormValue").val('add');
+            iti.destroy();
+            initializeTel("id");
             $('#userModal').modal('show');
 
             $("#group").prop("required",false);
@@ -654,6 +666,8 @@ User
                     if(data.success){
                         $("#name").val(data.user.name);
                         $("#email").val(data.user.email);
+                        iti.destroy();
+                        initializeTel(data.user.iso);
                         $("#phone").val(data.user.phone);
                         $("#ktp").val(data.user.ktp);
                         $("#npwp").val(data.user.npwp);
@@ -774,7 +788,7 @@ User
                             $("#showEmail").html("&mdash;");
 
                         if(data.user.phone)
-                            $("#showPhone").html("<a target='_blank' href='https://wa.me/62" + data.user.phone + "'>+62" + data.user.phone + " <i class='fas fa-external-link'></i></a>");
+                            $("#showPhone").html("<a target='_blank' href='https://api.whatsapp.com/send?phone=" + data.user.phone + "'>+" + data.user.phone + " <i class='fas fa-external-link'></i></a>");
                         else
                             $("#showPhone").html("&mdash;");
 
@@ -815,6 +829,8 @@ User
 
         $('#userForm').submit(function(e){
             e.preventDefault();
+            var country = iti.getSelectedCountryData();
+            $("#country").val(country.iso2);
             value = $("#userFormValue").val();
             if(value == 'add'){
                 url = "/production/users";

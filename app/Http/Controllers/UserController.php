@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Identity;
 use App\Models\ActivationCode;
+use App\Models\Country;
 
 class UserController extends Controller
 {
@@ -184,7 +185,7 @@ class UserController extends Controller
                 'name' => 'required|max:100',
                 'ktp' => 'required|numeric|digits_between:16,16|unique:App\Models\User,ktp',
                 'npwp' => 'nullable|numeric|digits_between:15,15|unique:App\Models\User,npwp',
-                'phone' => 'required|numeric|digits_between:10,12|unique:App\Models\User,phone',
+                'phone' => 'required|numeric|digits_between:8,15|unique:App\Models\User,phone',
                 'address' => 'required|max:255'
             ]);
 
@@ -199,6 +200,21 @@ class UserController extends Controller
             $data['level'] = $level;
             if($level == 2){
                 $data['authority'] = $this->authorityCheck($request);
+            }
+
+            $country = $request->country;
+            $country = Country::where('iso', $country)->first();
+            if(!is_null($country)){
+                $country = $country->id;
+            }
+            else{
+                return response()->json(['error' => "Country code not found."]);
+            }
+            $data['country_id'] = $country;
+
+            $phone = $request->phone;
+            if(substr($phone,0,1) == "0"){
+                return response()->json(['warning' => "Whatsapp number incorrect."]);
             }
             $data['phone'] = $request->phone;
             $email = $request->email;
@@ -274,6 +290,7 @@ class UserController extends Controller
 
             $user['level'] = User::level($user->level);
             $user['active'] = User::active($user->active);
+            $user['phone'] = Country::find($user->country_id)->phonecode.$user->phone;
 
             return response()->json(['success' => 'Fetching data success.', 'user' => $user]);
         }
@@ -302,6 +319,8 @@ class UserController extends Controller
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'User not found.', 'description' => $e]);
             }
+
+            $user['iso'] = Country::find($user->country_id)->iso;
 
             return response()->json(['success' => 'Fetching data success.', 'user' => $user]);
         }
@@ -333,7 +352,7 @@ class UserController extends Controller
                 'name' => 'required|max:100',
                 'ktp' => 'required|numeric|digits_between:16,16|unique:App\Models\User,ktp,'.$id,
                 'npwp' => 'nullable|numeric|digits_between:15,15|unique:App\Models\User,npwp,'.$id,
-                'phone' => 'required|numeric|digits_between:10,12|unique:App\Models\User,phone,'.$id,
+                'phone' => 'required|numeric|digits_between:8,15|unique:App\Models\User,phone,'.$id,
                 'address' => 'required|max:255',
             ]);
 
@@ -355,6 +374,17 @@ class UserController extends Controller
             else{
                 $user->authority = NULL;
             }
+
+            $country = $request->country;
+            $country = Country::where('iso', $country)->first();
+            if(!is_null($country)){
+                $country = $country->id;
+            }
+            else{
+                return response()->json(['error' => "Country code not found."]);
+            }
+            $user->country_id = $country;
+
             $user->phone = $request->phone;
             $email = $request->email;
             if($user->email != $email){

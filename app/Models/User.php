@@ -23,7 +23,7 @@ class User extends Authenticatable
         'uid',
         'name',
         'level',
-        'country',
+        'country_id',
         'phone',
         'email',
         'member',
