@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
 
 use App\Models\User;
 
@@ -24,6 +25,7 @@ class EmailController extends Controller
             }
             else{
                 try{
+                    $lock = Cache::lock('resend', 90);
                     $details = [
                         'sender' => "Admin dari PIC",
                         'header' => "Silakan Verifikasi Email Anda",
@@ -37,7 +39,9 @@ class EmailController extends Controller
                         'timestamp' => Carbon::now()->toDateTimeString(),
                         'value' => 'resend',
                     ];
-                    dispatch(new \App\Jobs\VerifyEmailJob($details));
+                    if ($lock->get()) {
+                        dispatch(new \App\Jobs\VerifyEmailJob($details));
+                    }
                 }
                 catch(\Exception $e){
                     return response()->json(['error' => 'Email failed to send.', 'description' => $e]);
@@ -50,7 +54,7 @@ class EmailController extends Controller
         }
     }
 
-    public function verifyResend($level, $aktif, $member){
+    public function verifyResend($level, $active, $member){
         try {
             $decrypted = Crypt::decrypt($member);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
@@ -70,7 +74,7 @@ class EmailController extends Controller
             $user = User::where('member', $member)->first();
 
             if(!is_null($user)){
-                if($user->level == $level && $user->active == $aktif){
+                if($user->level == $level && $user->active == $active){
                     $user->email_verified_at = Carbon::now()->toDateTimeString();
                     $user->save();
                 }
@@ -137,6 +141,7 @@ class EmailController extends Controller
 
                 if(!is_null($user)){
                     try{
+                        $lock = Cache::lock('forgot', 90);
                         $details = [
                             'sender' => "Admin dari PIC",
                             'header' => "Reset Password",
@@ -151,7 +156,9 @@ class EmailController extends Controller
                             'timestamp' => Carbon::now()->toDateTimeString(),
                             'value' => 'forgot',
                         ];
-                        dispatch(new \App\Jobs\VerifyEmailJob($details));
+                        if($lock->get()){
+                            dispatch(new \App\Jobs\VerifyEmailJob($details));
+                        }
                     }
                     catch(\Exception $e){
                         return response()->json(['error' => "Email failed to send", 'description' => $e]);

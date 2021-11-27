@@ -279,7 +279,7 @@ class UserController extends Controller
             try {
                 $id = Crypt::decrypt($id);
             } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.']);
+                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
             }
 
             try{
@@ -290,7 +290,19 @@ class UserController extends Controller
 
             $user['level'] = User::level($user->level);
             $user['active'] = User::active($user->active);
-            $user['phone'] = Country::find($user->country_id)->phonecode.$user->phone;
+
+            $country = Country::find($user->country_id);
+            if(!is_null($country)){
+                $user['phone'] = $country->phonecode.$user->phone;
+            }
+            else{
+                $user['phone'] = $user->phone;
+                return response()->json([
+                    'success' => 'Retrieve data success.',
+                    'user' => $user,
+                    'warning' => 'Phone number failure.'
+                ]);
+            }
 
             return response()->json(['success' => 'Fetching data success.', 'user' => $user]);
         }
@@ -311,7 +323,7 @@ class UserController extends Controller
             try {
                 $id = Crypt::decrypt($id);
             } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.']);
+                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
             }
 
             try{
@@ -320,7 +332,18 @@ class UserController extends Controller
                 return response()->json(['error' => 'User not found.', 'description' => $e]);
             }
 
-            $user['iso'] = Country::find($user->country_id)->iso;
+            $country = Country::find($user->country_id);
+            if(!is_null($country)){
+                $user['iso'] = $country->iso;
+            }
+            else{
+                $user['iso'] = "";
+                return response()->json([
+                    'success' => 'Retrieve data success.',
+                    'user' => $user,
+                    'warning' => 'Phone number failure.'
+                ]);
+            }
 
             return response()->json(['success' => 'Fetching data success.', 'user' => $user]);
         }
@@ -343,7 +366,7 @@ class UserController extends Controller
             try {
                 $id = Crypt::decrypt($id);
             } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.']);
+                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
             }
 
             $request->validate([
@@ -470,7 +493,7 @@ class UserController extends Controller
             try {
                 $id = Crypt::decrypt($id);
             } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.']);
+                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
             }
 
             try{
@@ -566,7 +589,7 @@ class UserController extends Controller
             try {
                 $id = Crypt::decrypt($id);
             } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.']);
+                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
             }
 
             try{
@@ -594,7 +617,7 @@ class UserController extends Controller
             try {
                 $id = Crypt::decrypt($id);
             } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.']);
+                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
             }
 
             try{
@@ -676,7 +699,7 @@ class UserController extends Controller
             try {
                 $id = Crypt::decrypt($id);
             } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.']);
+                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
             }
 
             try{
@@ -718,7 +741,7 @@ class UserController extends Controller
                 try{
                     ActivationCode::create($data);
                 } catch(\Exception $e){
-                    return response()->json(['error' => 'Failed to retrieve activation code.']);
+                    return response()->json(['error' => 'Failed to retrieve activation code.', 'description' => $e]);
                 }
             }
 

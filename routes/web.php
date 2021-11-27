@@ -74,15 +74,15 @@ Route::get('expired', function(){
 
 Route::get('email/forgot', [EmailController::class, 'forgot']);
 Route::post('email/forgot/{data}', [EmailController::class, 'forgotStore']);
-Route::get('email/forgot/{level}/{anggota}', [EmailController::class, 'forgotVerify']);
+Route::get('email/forgot/{level}/{member}', [EmailController::class, 'forgotVerify']);
 Route::get('email/forgot/reset', function(){
     return view('email.forgot-recover',[
         'member' => session('member')
     ]);
 });
 
-Route::get('email/verify/{level}/{anggota}', [EmailController::class, 'verify']);
-Route::get('email/verify/resend/{level}/{aktif}/{anggota}', [EmailController::class, 'verifyResend']);
+Route::get('email/verify/{level}/{member}', [EmailController::class, 'verify']);
+Route::get('email/verify/resend/{level}/{active}/{member}', [EmailController::class, 'verifyResend']);
 Route::get('email/verified', function(){
     return view('email.verified');
 });

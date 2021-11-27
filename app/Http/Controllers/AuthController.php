@@ -99,7 +99,7 @@ class AuthController extends Controller
                 if($user->active == 2){
                     DataLogin::success();
                     $token = Crypt::encrypt($user->member . '+' . $user->available);
-                    return response()->json(['register' => $token]);
+                    return response()->json(['description' => $token]);
                 }
                 else if($user->active == 1){
                     if ($user->level == 1 || $user->level == 2){
@@ -227,7 +227,7 @@ class AuthController extends Controller
             return response()->json(['error' => "Data failed to create.", 'description' => $e]);
         }
         $token = Crypt::encrypt($member . '+' . $available);
-        return response()->json(['register' => $token]);
+        return response()->json(['description' => $token]);
     }
 
     public function registerQr($token){

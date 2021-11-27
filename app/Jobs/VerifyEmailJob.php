@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ResendEmail;
 use App\Mail\ForgotEmail;
 
-class VerifyEmailJob implements ShouldQueue, ShouldBeUnique
+class VerifyEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

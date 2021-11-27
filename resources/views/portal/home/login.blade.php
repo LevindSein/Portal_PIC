@@ -155,45 +155,40 @@
                                 toastr.success(data.success);
                                 location.href = "/login";
                             }
-                            else if(data.warning){
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.warning(data.warning);
-                            }
-                            else if(data.info){
+
+                            if(data.info){
                                 toastr.options = {
                                     "closeButton": true,
                                     "preventDuplicates": true,
                                 };
                                 toastr.info(data.info);
                             }
-                            else if(data.error){
+
+                            if(data.warning){
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.warning(data.warning);
+                                if(data.description){
+                                    setTimeout(function() {
+                                        location.href = "/profile";
+                                    }, 1000);
+                                }
+                            }
+
+                            if(data.error){
                                 toastr.options = {
                                     "closeButton": true,
                                     "preventDuplicates": true,
                                 };
                                 toastr.error(data.error);
-                                if(data.description){
-                                    console.log(data.description);
-                                }
                             }
-                            else if(data.register){
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.success("Please complete registration.");
-                                location.href = "/register/" + data.register;
-                            }
-                            else{
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.error(data);
-                                console.log(data);
+
+                            if(data.description){
+                                console.log(data.description);
+
+                                location.href = "/register/" + data.description;
                             }
                         },
                         error:function(data){

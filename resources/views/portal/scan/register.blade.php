@@ -167,43 +167,33 @@
                                 window.close();
                             });
                         }
-                        else if(data.warning){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.warning(data.warning);
-                            if(data.description){
 
-                            }
-                        }
-                        else if(data.info){
+                        if(data.info){
                             toastr.options = {
                                 "closeButton": true,
                                 "preventDuplicates": true,
                             };
                             toastr.info(data.info);
-                            if(data.description){
-
-                            }
                         }
-                        else if(data.error){
+
+                        if(data.warning){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.warning(data.warning);
+                        }
+
+                        if(data.error){
                             toastr.options = {
                                 "closeButton": true,
                                 "preventDuplicates": true,
                             };
                             toastr.error(data.error);
-                            if(data.description){
-                                console.log(data.description);
-                            }
                         }
-                        else{
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error(data);
-                            console.log(data);
+
+                        if(data.description){
+                            console.log(data.description);
                         }
                     },
                     error:function(data){

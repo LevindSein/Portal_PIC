@@ -170,7 +170,16 @@
                                 }, 2000);
                             }
                         }
-                        else if(data.warning){
+
+                        if(data.info){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.info(data.info);
+                        }
+
+                        if(data.warning){
                             toastr.options = {
                                 "closeButton": true,
                                 "preventDuplicates": true,
@@ -182,33 +191,17 @@
                                 }, 1000);
                             }
                         }
-                        else if(data.info){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.info(data.info);
-                            if(data.description){
 
-                            }
-                        }
-                        else if(data.error){
+                        if(data.error){
                             toastr.options = {
                                 "closeButton": true,
                                 "preventDuplicates": true,
                             };
                             toastr.error(data.error);
-                            if(data.description){
-                                console.log(data.description);
-                            }
                         }
-                        else{
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error(data);
-                            console.log(data);
+
+                        if(data.description){
+                            console.log(data.description);
                         }
                     },
                     error:function(data){

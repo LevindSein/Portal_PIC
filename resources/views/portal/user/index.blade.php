@@ -472,43 +472,33 @@ User
                     if(data.success){
                         $("#activation_code").text(data.result.code);
                     }
-                    else if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                        if(data.description){
 
-                        }
-                    }
-                    else if(data.info){
+                    if(data.info){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
                         toastr.info(data.info);
-                        if(data.description){
-
-                        }
                     }
-                    else if(data.error){
+
+                    if(data.warning){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.warning(data.warning);
+                    }
+
+                    if(data.error){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
                         toastr.error(data.error);
-                        if(data.description){
-                            console.log(data.description);
-                        }
                     }
-                    else{
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data);
-                        console.log(data);
+
+                    if(data.description){
+                        console.log(data.description);
                     }
                 },
                 error:function(data){
@@ -552,8 +542,33 @@ User
                                         location.href = '/production/service/register?data=' + data.result;
                                     }, 2000);
                                 }
-                                else{
-                                    console.log(data.error);
+
+                                if(data.info){
+                                    toastr.options = {
+                                        "closeButton": true,
+                                        "preventDuplicates": true,
+                                    };
+                                    toastr.info(data.info);
+                                }
+
+                                if(data.warning){
+                                    toastr.options = {
+                                        "closeButton": true,
+                                        "preventDuplicates": true,
+                                    };
+                                    toastr.warning(data.warning);
+                                }
+
+                                if(data.error){
+                                    toastr.options = {
+                                        "closeButton": true,
+                                        "preventDuplicates": true,
+                                    };
+                                    toastr.error(data.error);
+                                }
+
+                                if(data.description){
+                                    console.log(data.description);
                                 }
                             },
                             error:function(data){
@@ -695,12 +710,33 @@ User
                             select2custom("#group", "/search/groups", "-- Pilih Kelompok --");
                         }
                     }
-                    else{
+
+                    if(data.info){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.info(data.info);
+                    }
+
+                    if(data.warning){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.warning(data.warning);
+                    }
+
+                    if(data.error){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
                         toastr.error(data.error);
+                    }
+
+                    if(data.description){
+                        console.log(data.description);
                     }
                 },
                 error:function(data){
@@ -797,20 +833,33 @@ User
                         else
                             $("#showAddress").html("&mdash;");
                     }
-                    else if(data.exception){
+
+                    if(data.info){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error("Data gagal diproses.");
-                        console.log(data.exception);
+                        toastr.info(data.info);
                     }
-                    else{
+
+                    if(data.warning){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.warning(data.warning);
+                    }
+
+                    if(data.error){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
                         toastr.error(data.error);
+                    }
+
+                    if(data.description){
+                        console.log(data.description);
                     }
                 },
                 error:function(data){
@@ -933,43 +982,33 @@ User
                             $('#warning-deleted').hide();
                         }
                     }
-                    else if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                        if(data.description){
 
-                        }
-                    }
-                    else if(data.info){
+                    if(data.info){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
                         toastr.info(data.info);
-                        if(data.description){
-
-                        }
                     }
-                    else if(data.error){
+
+                    if(data.warning){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.warning(data.warning);
+                    }
+
+                    if(data.error){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
                         toastr.error(data.error);
-                        if(data.description){
-                            console.log(data.description);
-                        }
                     }
-                    else{
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data);
-                        console.log(data);
+
+                    if(data.description){
+                        console.log(data.description);
                     }
                     dtableReload();
                 },
