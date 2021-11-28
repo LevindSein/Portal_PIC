@@ -603,8 +603,8 @@ class UserController extends Controller
             }
 
             $user->delete();
-            return response()->json(['success' => 'Data deleted.']);
 
+            return response()->json(['success' => 'Data deleted.']);
         }
         else{
             abort(404);

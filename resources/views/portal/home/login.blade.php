@@ -27,7 +27,7 @@
                         <h2 class="title">Masuk</h2>
                         <div id="check-uid" class="input-field">
                             <i class="fas fa-user"></i>
-                            <input required type="text" maxlength="100" id="uid" name="uid" placeholder="UID/Email" style="text-transform:lowercase;"/>
+                            <input required type="text" maxlength="100" id="uid" name="uid" placeholder="Email / UID" style="text-transform:lowercase;"/>
                         </div>
                         <div id="check-password" class="input-field">
                             <i class="fas fa-lock"></i>

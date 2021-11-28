@@ -212,7 +212,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/dashboard*')) ? 'active' : '' }}" href="{{url('production/dashboard')}}"
                                 aria-expanded="false">
-                                <i class="mdi mdi-view-dashboard"></i>
+                                <i class="mdi mdi-view-dashboard text-info"></i>
                                 <span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
@@ -221,7 +221,7 @@
                                 class="sidebar-link has-arrow waves-effect waves-dark"
                                 href="javascript:void(0)"
                                 aria-expanded="false">
-                                <i class="fad fa-user-headset"></i>
+                                <i class="fad fa-user-headset text-info"></i>
                                 <span class="hide-menu">Layanan</span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
@@ -242,7 +242,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
-                                <i class="fad fa-file-invoice"></i>
+                                <i class="fad fa-file-invoice text-info"></i>
                                 <span class="hide-menu">Kelola&nbsp;Tagihan</span>
                             </a>
                         </li>
@@ -251,7 +251,7 @@
                                 class="sidebar-link has-arrow waves-effect waves-dark"
                                 href="javascript:void(0)"
                                 aria-expanded="false">
-                                <i class="fad fa-book"></i>
+                                <i class="fad fa-book text-info"></i>
                                 <span class="hide-menu">Laporan</span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
@@ -278,7 +278,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
-                                <i class="fad fa-clipboard-list"></i>
+                                <i class="fad fa-clipboard-list text-info"></i>
                                 <span class="hide-menu">Data&nbsp;Usaha</span>
                             </a>
                         </li>
@@ -287,7 +287,7 @@
                                 class="sidebar-link has-arrow waves-effect waves-dark"
                                 href="javascript:void(0)"
                                 aria-expanded="false">
-                                <i class="fad fa-tools"></i>
+                                <i class="fad fa-tools text-info"></i>
                                 <span class="hide-menu">Utilities</span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
@@ -314,35 +314,35 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/users*')) ? 'active' : '' }}" href="{{url('production/users')}}"
                                 aria-expanded="false">
-                                <i class="fas fa-user"></i>
+                                <i class="fas fa-user text-info"></i>
                                 <span class="hide-menu">User</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
-                                <i class="fas fa-building"></i>
+                                <i class="fas fa-building text-info"></i>
                                 <span class="hide-menu">Tempat&nbsp;Usaha</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/histories*')) ? 'active' : '' }}" href="{{url('production/histories')}}"
                                 aria-expanded="false">
-                                <i class="fad fa-clock"></i>
+                                <i class="fad fa-clock text-info"></i>
                                 <span class="hide-menu">Riwayat&nbsp;Login</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/changelogs*')) ? 'active' : '' }}" href="{{url('production/changelogs')}}"
                                 aria-expanded="false">
-                                <i class="fas fa-info"></i>
+                                <i class="fas fa-info text-info"></i>
                                 <span class="hide-menu">Changelog</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
-                                <i class="fad fa-box-open"></i>
+                                <i class="fad fa-box-open text-info"></i>
                                 <span class="hide-menu">Kotak&nbsp;Saran</span>
                             </a>
                         </li>

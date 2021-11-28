@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2021 at 08:32 PM
+-- Generation Time: Nov 28, 2021 at 07:29 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -359,6 +359,46 @@ CREATE TABLE `groups` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `groups`
+--
+
+INSERT INTO `groups` (`id`, `name`, `description`, `updated_at`, `created_at`) VALUES
+(1, 'A-1', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(2, 'A-2', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(3, 'B-1', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(4, 'B-2', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(5, 'B-3', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(6, 'B-4', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(7, 'C-1', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(8, 'D-1', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(10, 'E-0', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(11, 'E-1', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(12, 'E-2', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(13, 'E-3', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(14, 'E-4', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(15, 'E-5', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(16, 'E-6', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(17, 'E-7', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(18, 'E-8', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(19, 'E-9', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(20, 'E10', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(22, 'F-0', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(23, 'F-1', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(24, 'FIB', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(25, 'H-1', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(26, 'H-2', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(27, 'K5', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(28, 'L-0', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(29, 'M-1', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(30, 'MCK', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(31, 'P-O', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(32, 'POM', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(33, 'WC', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(35, 'TLK', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
+(36, 'GARDU', NULL, '2020-12-23 18:01:06', '2020-12-23 18:01:06'),
+(37, 'M-2', NULL, '2021-04-22 06:15:43', '2021-04-22 06:15:43');
+
 -- --------------------------------------------------------
 
 --
@@ -373,59 +413,6 @@ CREATE TABLE `jobs` (
   `reserved_at` int(10) UNSIGNED DEFAULT NULL,
   `available_at` int(10) UNSIGNED NOT NULL,
   `created_at` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `migrations`
---
-
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2019_08_19_000000_create_failed_jobs_table', 1),
-(4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(5, '2021_02_01_000005_create_short_urls_table', 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `password_resets`
---
-
-CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `personal_access_tokens`
---
-
-CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `last_used_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -464,7 +451,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `photo`, `uid`, `name`, `level`, `country_id`, `phone`, `email`, `email_verified_at`, `member`, `ktp`, `npwp`, `address`, `authority`, `active`, `password`, `remember_token`, `nonactive`, `activation_code`, `available`, `created_at`, `updated_at`) VALUES
-(1, 'storage/users/1.png', 'super_admin', 'Fahni / Amsyari', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-11-23 19:16:45', 'BP3C11111111', '3215130101990004', '123456789012345', 'Perum Villa Permata Cikampek', NULL, 1, '$2y$10$ZDkdEmhO4pf3p0xblMcQXuw48ARaLqrItapurREEPD3WcIwzcJYsO', NULL, NULL, NULL, NULL, '2021-11-09 16:22:51', '2021-11-26 19:21:15');
+(1, 'storage/users/1.png', 'super_admin', 'Fahni Amsyari', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-11-28 10:39:37', 'BP3C11111111', '3215130101990003', NULL, 'Perum Villa Permata Cikampek', NULL, 1, '$2y$10$JRff2.2ySRefq3s5Gv6h2.GS4ZVdwJrUibKrLYl.tDj9S/P0oEuMS', NULL, NULL, NULL, NULL, '2021-11-09 16:22:51', '2021-11-28 10:42:59');
 
 -- --------------------------------------------------------
 
@@ -486,7 +473,7 @@ CREATE TABLE `visitors` (
 --
 
 INSERT INTO `visitors` (`id`, `visit_per_day`, `day_count`, `visit_on_day`, `updated_at`, `created_at`) VALUES
-(1, 0, 0, 66, '2021-11-26 19:03:43', '2021-11-24 04:37:33');
+(1, 0, 0, 100, '2021-11-28 18:27:23', '2021-11-24 04:37:33');
 
 --
 -- Indexes for dumped tables
@@ -538,26 +525,6 @@ ALTER TABLE `groups`
 ALTER TABLE `jobs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `jobs_queue_index` (`queue`);
-
---
--- Indexes for table `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
-
---
--- Indexes for table `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
-  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
 -- Indexes for table `users`
@@ -616,7 +583,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -625,22 +592,10 @@ ALTER TABLE `jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `visitors`

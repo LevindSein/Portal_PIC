@@ -1027,7 +1027,7 @@ User
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error("Kesalahan Sistem.");
+                        toastr.error("System error.");
                     }
                     console.log(data);
                 },
