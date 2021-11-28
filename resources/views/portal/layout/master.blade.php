@@ -240,10 +240,24 @@
                             </ul>
                         </li>
                         <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/users*')) ? 'active' : '' }}" href="{{url('production/users')}}"
+                                aria-expanded="false">
+                                <i class="fas fa-user text-info"></i>
+                                <span class="hide-menu">Pengguna</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
+                                aria-expanded="false">
+                                <i class="fas fa-building text-info"></i>
+                                <span class="hide-menu">Tempat&nbsp;Usaha</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
                                 <i class="fad fa-file-invoice text-info"></i>
-                                <span class="hide-menu">Kelola&nbsp;Tagihan</span>
+                                <span class="hide-menu">Tagihan</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -278,51 +292,8 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
-                                <i class="fad fa-clipboard-list text-info"></i>
-                                <span class="hide-menu">Data&nbsp;Usaha</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a
-                                class="sidebar-link has-arrow waves-effect waves-dark"
-                                href="javascript:void(0)"
-                                aria-expanded="false">
-                                <i class="fad fa-tools text-info"></i>
-                                <span class="hide-menu">Utilities</span>
-                            </a>
-                            <ul aria-expanded="false" class="collapse first-level">
-                                <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
-                                        <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Tarif</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
-                                        <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Alat&nbsp;Meter</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
-                                        <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Hari&nbsp;Libur</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/users*')) ? 'active' : '' }}" href="{{url('production/users')}}"
-                                aria-expanded="false">
-                                <i class="fas fa-user text-info"></i>
-                                <span class="hide-menu">User</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
-                                aria-expanded="false">
-                                <i class="fas fa-building text-info"></i>
-                                <span class="hide-menu">Tempat&nbsp;Usaha</span>
+                                <i class="far fa-rocket-launch text-info"></i>
+                                <span class="hide-menu">Potensional</span>
                             </a>
                         </li>
                         <li class="sidebar-item">

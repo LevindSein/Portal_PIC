@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2021 at 07:29 PM
+-- Generation Time: Nov 28, 2021 at 08:00 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -49,6 +49,21 @@ CREATE TABLE `change_log` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `change_log`
+--
+
+INSERT INTO `change_log` (`id`, `data`, `updated_at`, `created_at`) VALUES
+(1, '{\"title\":\"Update Caringin V2\",\"data\":\"Peningkatan Sistem Admin dan Kasir, dari sisi Tagihan dan berbagai fitur yang lain.\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-04-04 14:18:35', '2021-04-04 14:18:35'),
+(2, '{\"title\":\"Bugs Fixed\",\"data\":\"Fixing Bug Tabel Tagihan, Menambahkan Tooltips pada Total Tagihan dan Tombol Sistem.\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-07 10:08:04\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-07  10:08:04\"}', '2021-04-07 03:08:04', '2021-04-07 03:08:04'),
+(3, '{\"title\":\"Bugs Fixed\",\"data\":\"Fixing Bug Pencarian Periode Tagihan, Home Tagihan, dan Checking Report Tagihan.\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-07 10:29:29\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-07  12:28:42\"}', '2021-04-07 05:28:42', '2021-04-07 05:28:29'),
+(4, '{\"title\":\"Keuangan Already\",\"data\":\"Done.\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-07 15:41:37\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-08  00:51:11\"}', '2021-04-07 17:51:11', '2021-04-07 08:41:37'),
+(5, '{\"title\":\"Peningkatan Sistem\",\"data\":\"Improvement sistem kasir pada bagian pencetakan struk tagihan susulan dan notifikasi konfirmasi transaksi\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-07 16:17:00\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-07  16:17:11\"}', '2021-04-07 09:17:00', '2021-04-07 09:17:00'),
+(6, '{\"title\":\"Peningkatan Sistem\",\"data\":\"Tambah Laporan Tunggakan, Replacing View Data Usaha, Tambah Generate Laporan Pendapatan, Fixing Bug Form Pendataan Tagihan Baru, Fixing Bug Datatable Scroll Horizontal, Fixing Bug Mobile View\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-22 14:45:58\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-07  14:48:06\"}', '2021-04-22 07:48:06', '2021-04-22 07:45:58'),
+(7, '{\"title\":\"Peningkatan Sistem\",\"data\":\"Improve Sistem, Notifikasi, Fixing Database, Show Detail Data Usaha\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-27 13:32:34\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-28  05:34:30\"}', '2021-04-27 22:34:30', '2021-04-27 06:32:34'),
+(8, '{\"title\":\"Peningkatan Sistem\",\"data\":\"Add Profile Settiings, Add Kotak Saran, Fixing Layout & some bugs\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-28 05:34:10\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-28  05:34:20\"}', '2021-04-27 22:34:20', '2021-04-27 22:34:10'),
+(9, '{\"title\":\"Keuangan Details\",\"data\":\"Done\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-05-29 13:36:14\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-05-29  13:36:14\"}', '2021-05-29 06:36:14', '2021-05-29 06:36:14');
 
 -- --------------------------------------------------------
 
@@ -559,7 +574,7 @@ ALTER TABLE `activation_code`
 -- AUTO_INCREMENT for table `change_log`
 --
 ALTER TABLE `change_log`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `country`
