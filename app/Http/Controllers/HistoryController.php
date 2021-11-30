@@ -41,11 +41,11 @@ class HistoryController extends Controller
                     return '<span class="text-success">Accessed</span>';
                 }
             })
-            ->addColumn('show', function($data){
-                $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details btn btn-sm btn-info">Show</button>';
+            ->addColumn('action', function($data){
+                $button = '<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                 return $button;
             })
-            ->rawColumns(['show','status'])
+            ->rawColumns(['action','status'])
             ->make(true);
         }
         return view('portal.history.index');

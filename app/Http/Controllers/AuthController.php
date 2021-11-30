@@ -35,8 +35,11 @@ class AuthController extends Controller
                     $name = Auth::user()->name;
                     return redirect('production/dashboard')->with('success',"Welcome $name.");
                 }
+                else if($user->level == 3){
+                    return "Dashboard Nasabah";
+                }
                 else{
-                    return "level >2";
+                    abort(403);
                 }
             }
             else if($user->active == 0){

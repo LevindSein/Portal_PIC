@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2021 at 08:00 PM
+-- Generation Time: Nov 29, 2021 at 06:35 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -466,7 +466,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `photo`, `uid`, `name`, `level`, `country_id`, `phone`, `email`, `email_verified_at`, `member`, `ktp`, `npwp`, `address`, `authority`, `active`, `password`, `remember_token`, `nonactive`, `activation_code`, `available`, `created_at`, `updated_at`) VALUES
-(1, 'storage/users/1.png', 'super_admin', 'Fahni Amsyari', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-11-28 10:39:37', 'BP3C11111111', '3215130101990003', NULL, 'Perum Villa Permata Cikampek', NULL, 1, '$2y$10$JRff2.2ySRefq3s5Gv6h2.GS4ZVdwJrUibKrLYl.tDj9S/P0oEuMS', NULL, NULL, NULL, NULL, '2021-11-09 16:22:51', '2021-11-28 10:42:59');
+(1, 'storage/users/1.png', 'super_admin', 'Fahni Amsyari', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-11-28 10:39:37', 'BP3C11111111', '3215130101990003', NULL, 'Perum Villa Permata Cikampek', NULL, 1, '$2y$10$JRff2.2ySRefq3s5Gv6h2.GS4ZVdwJrUibKrLYl.tDj9S/P0oEuMS', NULL, NULL, NULL, NULL, '2021-11-09 16:22:51', '2021-11-28 22:21:12');
 
 -- --------------------------------------------------------
 
@@ -482,13 +482,6 @@ CREATE TABLE `visitors` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `visitors`
---
-
-INSERT INTO `visitors` (`id`, `visit_per_day`, `day_count`, `visit_on_day`, `updated_at`, `created_at`) VALUES
-(1, 0, 0, 100, '2021-11-28 18:27:23', '2021-11-24 04:37:33');
 
 --
 -- Indexes for dumped tables
@@ -616,7 +609,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

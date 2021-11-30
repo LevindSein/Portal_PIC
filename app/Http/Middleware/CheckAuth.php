@@ -19,6 +19,7 @@ class CheckAuth
     public function handle(Request $request, Closure $next)
     {
         if(Auth::check()){
+            $response = $next($request);
             if(Auth::user()->active == 0){
                 $temp = Session::get("_token");
                 Session::flush();
@@ -26,7 +27,18 @@ class CheckAuth
                 Auth::logout();
                 return Redirect('login')->with('error','Account has been disabled.');
             }
-            return $next($request);
+
+            if(is_null($request->cookie('first_come'))){
+                return $response->withCookie(cookie()->forever('first_come', Auth::user()->id));
+            }
+            else{
+                $first_come = $request->cookie('first_come');
+                $explode = explode(',',$first_come);
+                if(in_array(Auth::user()->id, $explode))
+                    return $response;
+                else
+                    return $response->withCookie(cookie()->forever('first_come', $first_come.','.Auth::user()->id));
+            }
         }
         else{
             return redirect('login')->with('warning', 'Please login.');

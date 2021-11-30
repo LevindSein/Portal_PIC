@@ -1,7 +1,7 @@
 @extends('portal.layout.master')
 
 @section('content-title')
-User
+Pengguna
 @endsection
 
 @section('content-button')
@@ -42,11 +42,11 @@ User
                 <div class="form-group col-md-2 col-sm-2" style="padding: 0;">
                     <label for="kategori">Pilih Kategori</label>
                     <select class="form-control" id="category" name="category">
-                        @if(Auth::user()->level == 1)
-                        <option value="1">Super Admin</option>
-                        <option value="2">Organisator</option>
-                        @endif
                         <option value="3">Nasabah</option>
+                        @if(Auth::user()->level == 1)
+                        <option value="2">Organisator</option>
+                        <option value="1">Super Admin</option>
+                        @endif
                     </select>
                 </div>
                 <p id="warning-deleted" class="text-danger">*) Data Penghapusan akan terhapus secara permanen oleh sistem saat 30 hari sejak akun yang terkait dihapus.</p>
@@ -58,7 +58,6 @@ User
                                 <th>Name</th>
                                 <th>Status</th>
                                 <th>Action</th>
-                                <th>Details</th>
                             </tr>
                         </thead>
                     </table>
@@ -138,41 +137,29 @@ User
             <div class="modal-body">
                 <div class="row">
                     <!-- Column -->
-                    <div class="col-lg-4 col-xlg-3 col-md-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="mt-4 text-center">
-                                    <img id="showPicture" class="rounded-circle" width="150" />
-                                    <h4 class="card-title mt-2" id="showName"></h4>
-                                    <div class="row text-center justify-content-md-center">
-                                    </div>
-                                </div>
+                    <div class="col-lg-4 col-xlg-3">
+                        <div class="mt-4 text-center">
+                            <img id="showPicture" class="rounded-circle" width="150" />
+                            <h4 class="card-title mt-2" id="showName"></h4>
+                            <div class="row text-center justify-content-md-center">
                             </div>
                         </div>
                     </div>
                     <!-- Column -->
                     <!-- Column -->
-                    <div class="col-lg-8 col-xlg-9 col-md-7">
-                        <div class="card">
-                            <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="settings" role="tabpanel" aria-labelledby="pills-timeline-tab">
-                                    <div class="card-body">
-                                        <h3 id="showLevel"></h3>
-                                        <h5 id="showActive"></h5>
-                                        <small class="text-muted pt-4 db">UID</small>
-                                        <h6 id="showUid"></h6>
-                                        <small class="text-muted pt-4 db">No.Anggota</small>
-                                        <h6 id="showMember"></h6>
-                                        <small class="text-muted pt-4 db">Email</small>
-                                        <h6 id="showEmail"></h6>
-                                        <small class="text-muted pt-4 db">Handphone</small>
-                                        <h6 id="showPhone"></h6>
-                                        <small class="text-muted pt-4 db">Alamat</small>
-                                        <h6 id="showAddress"></h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-lg-8 col-xlg-9">
+                        <h3 id="showLevel"></h3>
+                        <h5 id="showActive"></h5>
+                        <small class="text-muted pt-4 db">UID</small>
+                        <h6 id="showUid"></h6>
+                        <small class="text-muted pt-4 db">No.Anggota</small>
+                        <h6 id="showMember"></h6>
+                        <small class="text-muted pt-4 db">Email</small>
+                        <h6 id="showEmail"></h6>
+                        <small class="text-muted pt-4 db">Handphone</small>
+                        <h6 id="showPhone"></h6>
+                        <small class="text-muted pt-4 db">Alamat</small>
+                        <h6 id="showAddress"></h6>
                     </div>
                     <!-- Column -->
                 </div>
@@ -198,11 +185,11 @@ User
                     <div class="form-group">
                         <label>Pilih Ketegori <span class="text-danger">*</span></label>
                         <select class="form-control" id="level" name="level">
-                            @if(Auth::user()->level == 1)
-                            <option value="1">Super Admin</option>
-                            <option value="2">Organisator</option>
-                            @endif
                             <option value="3">Nasabah</option>
+                            @if(Auth::user()->level == 1)
+                            <option value="2">Organisator</option>
+                            <option value="1">Super Admin</option>
+                            @endif
                         </select>
                     </div>
                     <div class="form-group">
@@ -451,12 +438,10 @@ User
         var iti;
         function initializeTel(init) {
             iti = window.intlTelInput(document.querySelector("#phone"), {
-                hiddenInput: "full",
                 initialCountry: init,
                 preferredCountries: ['id'],
                 formatOnDisplay: false,
                 separateDialCode: true,
-                hiddenInput: "full",
                 utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js"
             });
         }
@@ -584,10 +569,6 @@ User
         $(".activationClose").click(function(){
             clearInterval(intervalAktivasi);
         });
-
-        setInterval(function(){
-            dtableReload();
-        }, 5000);
 
         $("#level").on('change', function(){
             var level = $("#level").val();
@@ -976,7 +957,7 @@ User
                         else if(value == 'add' || value == 'update'){
                             var selectedLevel = $('#level').val();
                             $("#category").val(selectedLevel).change();
-                            $(".page-title").text("User");
+                            $(".page-title").text("Pengguna Aktif");
                             window.history.replaceState(null, null, "?data=user");
                             dtable = dtableInit("/production/users/level/" + selectedLevel);
                             $('#warning-deleted').hide();
@@ -1059,15 +1040,14 @@ User
                     { data: 'name', name: 'name', class : 'text-center' },
                     { data: 'active', name: 'active', class : 'text-center' },
                     { data: 'action', name: 'action', class : 'text-center' },
-                    { data: 'show', name: 'show', class : 'text-center' },
                 ],
                 "stateSave": true,
                 "deferRender": true,
                 "pageLength": 10,
                 "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
                 "aoColumnDefs": [
-                    { "bSortable": false, "aTargets": [3,4] },
-                    { "bSearchable": false, "aTargets": [2,3,4] }
+                    { "bSortable": false, "aTargets": [3] },
+                    { "bSearchable": false, "aTargets": [2,3] }
                 ],
                 "scrollY": "35vh",
                 "scrollX": true,
@@ -1085,6 +1065,10 @@ User
                 },
             });
         }
+
+        setInterval(function(){
+            dtableReload();
+        }, 5000);
 
         function dtableReload(){
             dtable.ajax.reload(function(){
@@ -1106,7 +1090,7 @@ User
                 }
             }
             return false;
-        };
+        }
 
         function shuffle(string) {
             var parts = string.split('');
@@ -1145,7 +1129,7 @@ User
             $("#category").prop('selectedIndex',0)
             $(".page-title").text("Data Penghapusan");
             window.history.replaceState(null, null, "?data=deleted");
-            dtable = dtableInit("/production/users/deleted/1");
+            dtable = dtableInit("/production/users/deleted/3");
             $('#warning-deleted').show();
         }
 
@@ -1153,13 +1137,13 @@ User
             $("#category").prop('selectedIndex',0)
             $(".page-title").text("Data Pendaftar");
             window.history.replaceState(null, null, "?data=registered");
-            dtable = dtableInit("/production/users/registered/1");
+            dtable = dtableInit("/production/users/registered/3");
             $('#warning-deleted').hide();
         }
 
         function home(){
             $("#category").prop('selectedIndex',0)
-            $(".page-title").text("User");
+            $(".page-title").text("Pengguna Aktif");
             window.history.replaceState(null, null, "?data=user");
             dtable = dtableInit("/production/users");
             $('#warning-deleted').hide();

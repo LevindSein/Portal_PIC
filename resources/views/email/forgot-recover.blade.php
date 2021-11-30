@@ -59,7 +59,7 @@
                                     <div class="col-md-12 input-group">
                                         <input class="form-control form-control-lg" required type="password" minlength="6" id="password" name="password" placeholder="Ketikkan Password Baru"/>
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-eye" id="passwordShow"></i></span>
+                                            <span class="input-group-text"><i class="fas fa-eye-slash" id="passwordShow"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -118,10 +118,10 @@
             $("#passwordShow").click(function(){
                 if($('#password').attr('type') == 'password'){
                     $('#password').prop('type', 'text');
-                    $('#passwordShow').removeClass('fa-eye').addClass('fa-eye-slash');
+                    $('#passwordShow').removeClass('fa-eye-slash').addClass('fa-eye');
                 }else{
                     $('#password').prop('type', 'password');
-                    $('#passwordShow').addClass('fa-eye').removeClass('fa-eye-slash');
+                    $('#passwordShow').addClass('fa-eye-slash').removeClass('fa-eye');
                 }
             });
 

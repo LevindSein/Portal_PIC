@@ -30,13 +30,7 @@ class UserController extends Controller
         //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah, 4 = Kasir, 5 = Keuangan, 6 = Manajer
         if(request()->ajax())
         {
-            if(Auth::user()->level > 1){
-                $level = 3;
-            }
-            else{
-                $level = AUth::user()->level;
-            }
-            $data = User::where([['level',$level],['active','!=','0']])->select('id','uid','name','active');
+            $data = User::where([['level',3],['active',1]])->select('id','uid','name','active');
             return DataTables::of($data)
                 ->addColumn('action', function($data){
                     $button = '';
@@ -45,10 +39,7 @@ class UserController extends Controller
                         $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
                         $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
                     }
-                    return $button;
-                })
-                ->addColumn('show', function($data){
-                    $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details btn btn-sm btn-info">Show</button>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                     return $button;
                 })
                 ->editColumn('active', function($data){
@@ -60,7 +51,7 @@ class UserController extends Controller
                     }
                     return $button;
                 })
-                ->rawColumns(['action','show','active'])
+                ->rawColumns(['action','active'])
                 ->make(true);
         }
         return view('portal.user.index');
@@ -83,6 +74,7 @@ class UserController extends Controller
                         $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
                         $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
                     }
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                     return $button;
                 })
                 ->addColumn('show', function($data){
@@ -98,7 +90,7 @@ class UserController extends Controller
                     }
                     return $button;
                 })
-                ->rawColumns(['action','show','active'])
+                ->rawColumns(['action','active'])
                 ->make(true);
         }
     }
@@ -116,17 +108,14 @@ class UserController extends Controller
                 ->addColumn('action', function($data){
                     $button = '<a type="button" data-toggle="tooltip" title="Restore" name="restore" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="restore"><i class="fas fa-undo" style="color:#4e73df;"></i></a>';
                     $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="Delete Permanent" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="deletePermanently"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
-                    return $button;
-                })
-                ->addColumn('show', function($data){
-                    $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details btn btn-sm btn-info">Show</button>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                     return $button;
                 })
                 ->editColumn('active', function($data){
                     $button = '<span style="color:#e74a3b;">nonactive</span>';
                     return $button;
                 })
-                ->rawColumns(['action','show','active'])
+                ->rawColumns(['action','active'])
                 ->make(true);
         }
     }
@@ -144,17 +133,14 @@ class UserController extends Controller
                 ->addColumn('action', function($data){
                     $button = '<a type="button" data-toggle="tooltip" title="Activate" name="activate" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="activateUser"><i class="fas fa-shield-check" style="color:#36bea6;"></i></a>';
                     $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="Delete Permanent" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="deletePermanently"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
-                    return $button;
-                })
-                ->addColumn('show', function($data){
-                    $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details btn btn-sm btn-info">Show</button>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                     return $button;
                 })
                 ->editColumn('active', function($data){
                     $button = '<span style="color:#2962FF;">Register</span>';
                     return $button;
                 })
-                ->rawColumns(['action','show','active'])
+                ->rawColumns(['action','active'])
                 ->make(true);
         }
     }
@@ -487,7 +473,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id) //Review Ulang
     {
         if(request()->ajax()){
             try {
@@ -583,7 +569,7 @@ class UserController extends Controller
         }
     }
 
-    public function permanent($id)
+    public function permanent($id) //Review Ulang
     {
         if(request()->ajax()){
             try {

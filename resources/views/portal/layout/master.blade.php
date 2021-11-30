@@ -99,52 +99,6 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav float-right">
                         <!-- ============================================================== -->
-                        <!-- Comment -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="mdi mdi-bell font-24"></i>
-
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right mailbox animated fadeIn">
-                                <span class="with-arrow">
-                                    <span class="bg-primary"></span></span>
-                                <ul class="list-style-none">
-                                    <li>
-                                        <div class="drop-title bg-primary text-white">
-                                            <h4 class="mb-0 mt-1">(Angka) (Baru)</h4>
-                                            <span class="font-light">Notifikasi</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="message-center notifications">
-                                            <!-- Message -->
-                                            <a href="javascript:void(0)" class="message-item">
-                                                <span class="btn btn-danger btn-circle">
-                                                    <i class="fa fa-link"></i>
-                                                </span>
-                                                <div class="mail-contnet">
-                                                    <h5 class="message-title">(Judul Notif)</h5>
-                                                    <span class="mail-desc">(Just see the my new admin!)</span>
-                                                    <span class="time">(9:30 AM)</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link text-center mb-1 text-dark" href="javascript:void(0);">
-                                            <strong>Semua Notifikasi</strong>
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- ============================================================== -->
-                        <!-- End Comment -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
@@ -247,6 +201,13 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/groups*')) ? 'active' : '' }}" href="{{url('production/groups')}}"
+                                aria-expanded="false">
+                                <i class="fad fa-layer-group text-info"></i>
+                                <span class="hide-menu">Grup&nbsp;Tempat</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
                                 <i class="fas fa-building text-info"></i>
@@ -281,12 +242,6 @@
                                         <span class="hide-menu">Pendapatan</span>
                                     </a>
                                 </li>
-                                <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
-                                        <i class="mdi mdi-adjust"></i>
-                                        <span class="hide-menu">Tunggakan</span>
-                                    </a>
-                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-item">
@@ -308,13 +263,6 @@
                                 aria-expanded="false">
                                 <i class="fas fa-info text-info"></i>
                                 <span class="hide-menu">Changelog</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
-                                aria-expanded="false">
-                                <i class="fad fa-box-open text-info"></i>
-                                <span class="hide-menu">Kotak&nbsp;Saran</span>
                             </a>
                         </li>
                         @endif
@@ -364,6 +312,31 @@
                 @yield('content-body')
 
                 @yield('content-modal')
+
+                <div id="firstCome" class="modal fade" role="dialog" tabIndex="-1">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title titles">UPGRADE VERSION 3</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-lg-4 col-xlg-3">
+                                        <div class="mt-4 text-center">
+                                            <img id="showPicture" width="150" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8 col-xlg-9">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div id="confirmModal" class="modal fade" role="dialog" tabIndex="-1">
                     <div class="modal-dialog modal-dialog-centered">
@@ -441,10 +414,44 @@
 
     <script src="{{asset('vendor/intTelInput/build/js/intlTelInput.js')}}"></script>
 
+    @if(!in_array(Auth::user()->id, explode(',', request()->cookie('first_come'))))
+    <script>
+        $(document).ready(function(){
+            setTimeout(() => {
+                $("#firstCome").modal('show');
+            }, 2000);
+        });
+    </script>
+    @endif
+
     <script>
         $(window).on('load', function() {
             $(".se-pre-con").fadeIn("slow").fadeOut("slow");
         });
+
+        // notifyForThisMinute(); // First call starts process
+        // function notifyForThisMinute() {
+        //     // Notify user of things we should notify them of as of this minute
+        //     // ...
+        //     $.ajax({
+        //         url: "/notification/bill/reviews",
+        //         type: "GET",
+        //         cache:false,
+        //         success:function(data)
+        //         {
+        //             if(data.success){
+        //                 console.log(data.success);
+        //             }
+        //         },
+        //         error:function(data){
+        //             console.log(data);
+        //         }
+        //     });
+
+        //     // Schedule next check for beginning of next minute; always wait
+        //     // until we're a second into the minute to make the checks easier
+        //     setTimeout(notifyForThisMinute, (61 - new Date().getSeconds()) * 1000);
+        // }
 
         $(document).ready(function(){
             $(".sidebartoggler").click(function(){
@@ -478,7 +485,7 @@
             $("#emailResend").click( function(e){
                 e.preventDefault();
                 $.ajax({
-                    url: "/email/verify/resend/",
+                    url: "/email/verify/resend",
                     type: "GET",
                     cache:false,
                     beforeSend:function(){
@@ -520,9 +527,9 @@
 
                         if(data.description){
                             console.log(data.description);
-                            // setTimeout(function() {
-                            //     location.href = "/profile";
-                            // }, 1000);
+                            setTimeout(function() {
+                                location.href = "/profile";
+                            }, 1000);
                         }
                     },
                     error:function(data){

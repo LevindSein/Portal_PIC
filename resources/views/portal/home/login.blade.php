@@ -32,7 +32,7 @@
                         <div id="check-password" class="input-field">
                             <i class="fas fa-lock"></i>
                             <input required type="password" minlength="6" id="passwordLog" name="password" placeholder="Password"/>
-                            <i class="fas fa-eye" id="passwordLogShow"></i>
+                            <i class="fas fa-eye-slash" id="passwordLogShow"></i>
                         </div>
                         <input type="submit" class="btn" value="Submit" />
                         <div>
@@ -52,7 +52,7 @@
                         <div class="input-field">
                             <i class="fas fa-lock"></i>
                             <input required type="password" minlength="6" id="passwordReg" name="password" placeholder="Ketikkan Password"/>
-                            <i class="fas fa-eye" id="passwordRegShow"></i>
+                            <i class="fas fa-eye-slash" id="passwordRegShow"></i>
                         </div>
                         <input type="submit" class="btn" value="Submit"/>
                     </form>
@@ -88,20 +88,20 @@
                 $('#passwordRegShow').click(function(){
                     if($('#passwordReg').attr('type') == 'password'){
                         $('#passwordReg').prop('type', 'text');
-                        $('#passwordRegShow').removeClass('fa-eye').addClass('fa-eye-slash');
+                        $('#passwordRegShow').removeClass('fa-eye-slash').addClass('fa-eye');
                     }else{
                         $('#passwordReg').prop('type', 'password');
-                        $('#passwordRegShow').addClass('fa-eye').removeClass('fa-eye-slash');
+                        $('#passwordRegShow').addClass('fa-eye-slash').removeClass('fa-eye');
                     }
                 });
 
                 $('#passwordLogShow').click(function(){
                     if($('#passwordLog').attr('type') == 'password'){
                         $('#passwordLog').prop('type', 'text');
-                        $('#passwordLogShow').removeClass('fa-eye').addClass('fa-eye-slash');
+                        $('#passwordLogShow').removeClass('fa-eye-slash').addClass('fa-eye');
                     }else{
                         $('#passwordLog').prop('type', 'password');
-                        $('#passwordLogShow').addClass('fa-eye').removeClass('fa-eye-slash');
+                        $('#passwordLogShow').addClass('fa-eye-slash').removeClass('fa-eye');
                     }
                 });
 

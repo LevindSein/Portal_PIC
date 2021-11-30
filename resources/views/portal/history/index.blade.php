@@ -21,7 +21,7 @@ Riwayat Login
                                 <th>Role</th>
                                 <th>Status</th>
                                 <th>Time</th>
-                                <th>Details</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -82,7 +82,7 @@ Riwayat Login
                 { data: 'level', name: 'level', class : 'text-center' },
                 { data: 'status', name: 'status', class : 'text-center' },
                 { data: { '_': 'created_at.display', 'sort': 'created_at.timestamp' }, name: 'created_at', class : 'text-center'  },
-                { data: 'show', name: 'show', class : 'text-center' },
+                { data: 'action', name: 'action', class : 'text-center' },
             ],
             "stateSave": true,
             "deferRender": true,

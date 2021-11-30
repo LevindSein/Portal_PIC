@@ -37,7 +37,7 @@ class ChangeLogController extends Controller
                     if(Auth::user()->level == 1){
                         $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
                         $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                        $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" class="details"><i class="fas fa-eye" style="color:#36bea6;"></i></a>';
+                        $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                     }
                     else{
                         $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" class="details btn btn-sm btn-info">Show</button>';

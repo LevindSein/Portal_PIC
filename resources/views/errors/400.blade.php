@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{asset('template/dist/css/style.min.css')}}">
 
     <!-- Favicon icon -->
-    <title>404 | Portal PIC</title>
+    <title>400 | Portal PIC</title>
 </head>
 
 <body>

@@ -62,19 +62,10 @@ class User extends Authenticatable
             return 'Super Admin';
         }
         else if($data == 2){
-            return 'Admin';
+            return 'Organisator';
         }
         else if($data == 3){
             return 'Nasabah';
-        }
-        else if($data == 4){
-            return 'Kasir';
-        }
-        else if($data == 5){
-            return 'Keuangan';
-        }
-        else if($data == 6){
-            return 'Manajer';
         }
         else{
             return $data;

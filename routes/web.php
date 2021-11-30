@@ -11,7 +11,8 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ScanController;
-use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ChangeLogController;
 
 /*
@@ -55,6 +56,8 @@ Route::middleware('checkauth')->group(function(){
             Route::get('users/level/{params}', [UserController::class, 'level']);
             Route::resource('users', UserController::class);
 
+            Route::resource('groups', GroupController::class);
+
             Route::resource('histories', HistoryController::class);
 
             Route::resource('changelogs', ChangeLogController::class);
@@ -67,6 +70,8 @@ Route::middleware('checkauth')->group(function(){
     Route::resource('profile', ProfileController::class);
 
     Route::get('search/countries',[SearchController::class, 'country']);
+
+    // Route::get('notification/bill/reviews',[NotificationController::class, 'billReviews']);
 });
 
 Route::get('expired', function(){

@@ -129,7 +129,7 @@ Profil
                                 <label class="col-md-12">Password saat ini <span class="text-danger">*</span></label>
                                 <div class="col-md-12 input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-eye" id="passwordShow"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-eye-slash" id="passwordShow"></i></span>
                                     </div>
                                     <input type="password" id="password" name="password" required autocomplete="off" minlength="6" placeholder="Ketikkan password saat ini" class="form-control form-control-line">
                                 </div>
@@ -138,7 +138,7 @@ Profil
                                 <label class="col-md-12">Password Baru</label>
                                 <div class="col-md-12 input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-eye" id="passwordNewShow"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-eye-slash" id="passwordNewShow"></i></span>
                                     </div>
                                     <input type="password" id="passwordNew" name="passwordNew" minlength="6" autocomplete="off" placeholder="Ketikkan jika ubah password" class="form-control form-control-line">
                                 </div>
@@ -210,20 +210,20 @@ Profil
         $("#passwordNewShow").click(function(){
             if($('#passwordNew').attr('type') == 'password'){
                 $('#passwordNew').prop('type', 'text');
-                $('#passwordNewShow').removeClass('fa-eye').addClass('fa-eye-slash');
+                $('#passwordNewShow').removeClass('fa-eye-slash').addClass('fa-eye');
             }else{
                 $('#passwordNew').prop('type', 'password');
-                $('#passwordNewShow').addClass('fa-eye').removeClass('fa-eye-slash');
+                $('#passwordNewShow').addClass('fa-eye-slash').removeClass('fa-eye');
             }
         });
 
         $("#passwordShow").click(function(){
             if($('#password').attr('type') == 'password'){
                 $('#password').prop('type', 'text');
-                $('#passwordShow').removeClass('fa-eye').addClass('fa-eye-slash');
+                $('#passwordShow').removeClass('fa-eye-slash').addClass('fa-eye');
             }else{
                 $('#password').prop('type', 'password');
-                $('#passwordShow').addClass('fa-eye').removeClass('fa-eye-slash');
+                $('#passwordShow').addClass('fa-eye-slash').removeClass('fa-eye');
             }
         });
 
@@ -261,12 +261,10 @@ Profil
         var iti;
         function initializeTel(init) {
             iti = window.intlTelInput(document.querySelector("#phone"), {
-                hiddenInput: "full",
                 initialCountry: init,
                 preferredCountries: ['id'],
                 formatOnDisplay: false,
                 separateDialCode: true,
-                hiddenInput: "full",
                 utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js"
             });
         }
