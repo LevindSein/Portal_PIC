@@ -57,16 +57,9 @@
                     <a class="navbar-brand" href="#">
                         <!-- Logo icon -->
                         <b class="logo-icon">
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
                             <img src="{{asset("img/favicon.png")}}" width="50" height="40" class="dark-logo" />
                         </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
-                        {{-- <span class="logo-text"> --}}
-                            <!-- dark Logo text -->
-                            {{-- <img src="{{asset("img/logo.png")}}" width="90" height="20" class="dark-logo" /> --}}
-                        {{-- </span> --}}
                     </a>
                     <!-- ============================================================== -->
                     <!-- End Logo -->
@@ -87,9 +80,9 @@
                     <!-- ============================================================== -->
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
-                    <ul class="navbar-nav float-left mr-auto">
+                    <ul class="navbar-nav float-left mr-auto" id="sidebarType">
                         <li class="nav-item d-none d-md-block">
-                            <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"data-sidebartype="mini-sidebar">
+                            <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar">
                                 <i class="mdi mdi-menu font-24"></i>
                             </a>
                         </li>
@@ -125,7 +118,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="javascript:void(0)" oncontextmenu="return false;"
                                     onclick="location.href = '/logout' ">
-                                    <i class="fas fa-power-off mr-1 ml-1"></i>
+                                    <i class="fad fa-sign-out-alt mr-1 ml-1"></i>
                                     Logout
                                 </a>
                             </div>
@@ -167,7 +160,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/dashboard*')) ? 'active' : '' }}" href="{{url('production/dashboard')}}"
                                 aria-expanded="false">
-                                <i class="mdi mdi-view-dashboard text-info"></i>
+                                <i class="mdi mdi-view-dashboard mr-1 text-info"></i>
                                 <span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
@@ -176,19 +169,19 @@
                                 class="sidebar-link has-arrow waves-effect waves-dark"
                                 href="javascript:void(0)"
                                 aria-expanded="false">
-                                <i class="fad fa-user-headset text-info"></i>
+                                <i class="fad fa-user-headset mr-1 text-info"></i>
                                 <span class="hide-menu">Layanan</span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
                                     <a href="{{url('#')}}" class="sidebar-link">
-                                        <i class="mdi mdi-adjust"></i>
+                                        <i class="mdi mdi-adjust mr-1"></i>
                                         <span class="hide-menu">Registrasi</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a href="{{url('#')}}" class="sidebar-link">
-                                        <i class="mdi mdi-adjust"></i>
+                                        <i class="mdi mdi-adjust mr-1"></i>
                                         <span class="hide-menu">Pembongkaran</span>
                                     </a>
                                 </li>
@@ -197,28 +190,28 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/users*')) ? 'active' : '' }}" href="{{url('production/users')}}"
                                 aria-expanded="false">
-                                <i class="fas fa-user text-info"></i>
+                                <i class="fas fa-users mr-1 text-info"></i>
                                 <span class="hide-menu">Pengguna</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/groups*')) ? 'active' : '' }}" href="{{url('production/groups')}}"
                                 aria-expanded="false">
-                                <i class="fad fa-shapes text-info"></i>
+                                <i class="fad fa-shapes mr-1 text-info"></i>
                                 <span class="hide-menu">Grup&nbsp;Tempat</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
-                                <i class="fas fa-building text-info"></i>
+                                <i class="fas fa-building mr-1 text-info"></i>
                                 <span class="hide-menu">Tempat&nbsp;Usaha</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
-                                <i class="fad fa-file-invoice text-info"></i>
+                                <i class="fad fa-file-invoice mr-1 text-info"></i>
                                 <span class="hide-menu">Tagihan</span>
                             </a>
                         </li>
@@ -227,19 +220,19 @@
                                 class="sidebar-link has-arrow waves-effect waves-dark"
                                 href="javascript:void(0)"
                                 aria-expanded="false">
-                                <i class="fad fa-book text-info"></i>
+                                <i class="fad fa-book mr-1 text-info"></i>
                                 <span class="hide-menu">Laporan</span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
                                     <a href="{{url('#')}}" class="sidebar-link">
-                                        <i class="mdi mdi-adjust"></i>
+                                        <i class="mdi mdi-adjust mr-1"></i>
                                         <span class="hide-menu">Pemakaian</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
                                     <a href="{{url('#')}}" class="sidebar-link">
-                                        <i class="mdi mdi-adjust"></i>
+                                        <i class="mdi mdi-adjust mr-1"></i>
                                         <span class="hide-menu">Pendapatan</span>
                                     </a>
                                 </li>
@@ -248,25 +241,37 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
                                 aria-expanded="false">
-                                <i class="far fa-rocket-launch text-info"></i>
+                                <i class="far fa-rocket-launch mr-1 text-info"></i>
                                 <span class="hide-menu">Potensional</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/histories*')) ? 'active' : '' }}" href="{{url('production/histories')}}"
                                 aria-expanded="false">
-                                <i class="fad fa-clock text-info"></i>
+                                <i class="fad fa-clock mr-1 text-info"></i>
                                 <span class="hide-menu">Riwayat&nbsp;Login</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/changelogs*')) ? 'active' : '' }}" href="{{url('production/changelogs')}}"
                                 aria-expanded="false">
-                                <i class="fas fa-info text-info"></i>
+                                <i class="fas fa-info mr-1 text-info"></i>
                                 <span class="hide-menu">Changelog</span>
                             </a>
                         </li>
                         @endif
+
+                        <hr class="hide-menu">
+
+                        <li class="nav-small-cap"></li>
+                        <div class="text-center">
+                            <a class="hide-menu text-danger" href="javascript:void(0)"
+                                oncontextmenu="return false;"
+                                onclick="location.href = '/logout' ">
+                                <i class="fad fa-sign-out-alt mr-1 ml-1"></i>
+                                Logout
+                            </a>
+                        </div>
 
                         <li class="nav-small-cap"></li>
                         <div class="text-center">
