@@ -143,20 +143,24 @@ Pengguna
                             <div class="row text-center justify-content-md-center">
                             </div>
                         </div>
-                    </div>
-                    <!-- Column -->
-                    <!-- Column -->
-                    <div class="col-lg-8 col-xlg-9">
                         <div class="text-center">
                             <h3 id="showLevel"></h3>
                             <h5 id="showActive"></h5>
                         </div>
+                    </div>
+                    <!-- Column -->
+                    <!-- Column -->
+                    <div class="col-lg-8 col-xlg-9">
                         <small class="text-muted pt-4 db">UID</small>
                         <h6 id="showUid"></h6>
                         <small class="text-muted pt-4 db">Nama Lengkap</small>
                         <h6 id="showName"></h6>
                         <small class="text-muted pt-4 db">No.Anggota</small>
                         <h6 id="showMember"></h6>
+                        <small class="text-muted pt-4 db">KTP / Paspor</small>
+                        <h6 id="showKtp"></h6>
+                        <small class="text-muted pt-4 db">NPWP</small>
+                        <h6 id="showNpwp"></h6>
                         <small class="text-muted pt-4 db">Email</small>
                         <h6 id="showEmail"></h6>
                         <small class="text-muted pt-4 db">Handphone</small>
@@ -813,20 +817,15 @@ Pengguna
                         $("#showCreate").text(data.user.create);
                         $("#showUpdate").text(data.user.update);
 
-                        if(data.user.email)
-                            $("#showEmail").html("<a target='_blank' href='mailto:" + data.user.email + "'>" + data.user.email + " <i class='fas fa-external-link'></i></a>");
-                        else
-                            $("#showEmail").html("&mdash;");
+                        (data.user.ktp) ? $("#showKtp").html(data.user.ktp) : $("#showKtp").html("&mdash;");
 
-                        if(data.user.phone)
-                            $("#showPhone").html("<a target='_blank' href='https://api.whatsapp.com/send?phone=" + data.user.phone + "'>+" + data.user.phone + " <i class='fas fa-external-link'></i></a>");
-                        else
-                            $("#showPhone").html("&mdash;");
+                        (data.user.npwp) ? $("#showNpwp").html(data.user.npwp) : $("#showNpwp").html("&mdash;");
 
-                        if(data.user.address)
-                            $("#showAddress").html(data.user.address);
-                        else
-                            $("#showAddress").html("&mdash;");
+                        (data.user.email) ? $("#showEmail").html("<a target='_blank' href='mailto:" + data.user.email + "'>" + data.user.email + " <i class='fas fa-external-link'></i></a>") : $("#showEmail").html("&mdash;");
+
+                        (data.user.phone) ? $("#showPhone").html("<a target='_blank' href='https://api.whatsapp.com/send?phone=" + data.user.phone + "'>+" + data.user.phone + " <i class='fas fa-external-link'></i></a>") : $("#showPhone").html("&mdash;");
+
+                        (data.user.address) ? $("#showAddress").html(data.user.address) : $("#showAddress").html("&mdash;");
                     }
 
                     if(data.info){

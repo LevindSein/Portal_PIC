@@ -379,18 +379,11 @@ Grup Tempat
                 success:function(data){
                     if(data.success){
                         $("#showGroup").text(data.group.name);
-                        if(!data.group.los){
-                            $("#showCreate").html("&mdash;");
-                            $("#showEdit").html("&mdash;");
-                            $("#showCount").html("&mdash;");
-                            $("#showData").html("&mdash;");
-                        }
-                        else{
-                            $("#showCreate").html(data.group.los.username_create + "<br>pada " + data.group.los.created_at);
-                            $("#showEdit").html(data.group.los.username_update + "<br>pada " + data.group.los.updated_at);
-                            $("#showCount").html(data.group.count);
-                            $("#showData").html(data.group.los.data);
-                        }
+
+                        (data.group.los && data.group.los.username_create) ? $("#showCreate").html(data.group.los.username_create + "<br>pada " + data.group.los.created_at) : $("#showCreate").html("&mdash;");
+                        (data.group.los && data.group.los.username_update) ? $("#showEdit").html(data.group.los.username_update + "<br>pada " + data.group.los.updated_at) : $("#showEdit").html("&mdash;");
+                        (data.group.count) ? $("#showCount").html(data.group.count) : $("#showCount").html("&mdash;");
+                        (data.group.los && data.group.los.data) ? $("#showData").html(data.group.los.data) : $("#showData").html("&mdash;");
                     }
 
                     if(data.info){

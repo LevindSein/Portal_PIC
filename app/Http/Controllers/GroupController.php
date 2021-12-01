@@ -63,7 +63,14 @@ class GroupController extends Controller
             ]);
 
             $group = strtoupper($request->group);
-            $los = rtrim(strtoupper($request->los), ',');
+            $los = null;
+            if(!is_null($request->los)){
+                $los = rtrim(strtoupper($request->los), ',');
+                $los = explode(',', $los);
+                $los = array_unique($los);
+                sort($los);
+                $los = implode(',', $los);
+            }
 
             $dataset['name'] = $group;
             $json = json_encode([
@@ -113,8 +120,12 @@ class GroupController extends Controller
 
             if(!is_null($data->data)){
                 $json = json_decode($data->data);
-                $count = explode(',', $json->data);
-                $count = count($count);
+
+                $count = 0;
+                if(!is_null($json->data)){
+                    $count = explode(',', $json->data);
+                    $count = count($count);
+                }
 
                 $data['los'] = $json;
                 $data['count'] = $count;
@@ -187,7 +198,14 @@ class GroupController extends Controller
             ]);
 
             $group = strtoupper($request->group);
-            $los = rtrim(strtoupper($request->los), ',');
+            $los = null;
+            if(!is_null($request->los)){
+                $los = rtrim(strtoupper($request->los), ',');
+                $los = explode(',', $los);
+                $los = array_unique($los);
+                sort($los);
+                $los = implode(',', $los);
+            }
 
             try{
                 $data = Group::findOrFail($decrypted);
