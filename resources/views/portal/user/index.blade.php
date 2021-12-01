@@ -138,9 +138,8 @@ Pengguna
                 <div class="row">
                     <!-- Column -->
                     <div class="col-lg-4 col-xlg-3">
-                        <div class="mt-4 text-center">
+                        <div class="form-group mt-4 text-center">
                             <img id="showPicture" class="rounded-circle" width="150" />
-                            <h4 class="card-title mt-2" id="showName"></h4>
                             <div class="row text-center justify-content-md-center">
                             </div>
                         </div>
@@ -148,10 +147,14 @@ Pengguna
                     <!-- Column -->
                     <!-- Column -->
                     <div class="col-lg-8 col-xlg-9">
-                        <h3 id="showLevel"></h3>
-                        <h5 id="showActive"></h5>
+                        <div class="text-center">
+                            <h3 id="showLevel"></h3>
+                            <h5 id="showActive"></h5>
+                        </div>
                         <small class="text-muted pt-4 db">UID</small>
                         <h6 id="showUid"></h6>
+                        <small class="text-muted pt-4 db">Nama Lengkap</small>
+                        <h6 id="showName"></h6>
                         <small class="text-muted pt-4 db">No.Anggota</small>
                         <h6 id="showMember"></h6>
                         <small class="text-muted pt-4 db">Email</small>
@@ -160,6 +163,10 @@ Pengguna
                         <h6 id="showPhone"></h6>
                         <small class="text-muted pt-4 db">Alamat</small>
                         <h6 id="showAddress"></h6>
+                        <small class="text-muted pt-4 db">Dibuat pada</small>
+                        <h6 id="showCreate"></h6>
+                        <small class="text-muted pt-4 db">Diperbaharui pada</small>
+                        <h6 id="showUpdate"></h6>
                     </div>
                     <!-- Column -->
                 </div>
@@ -206,7 +213,7 @@ Pengguna
                         <input id="phone" name="phone" type="tel" autocomplete="off" minlength="8" maxlength="15" placeholder="878123xxxxx" class="form-control form-control-line">
                     </div>
                     <div class="form-group">
-                        <label>KTP / Paspor<span class="text-danger">*</span></label>
+                        <label>KTP / Paspor <span class="text-danger">*</span></label>
                         <input required type="tel" id="ktp" name="ktp" autocomplete="off" minlength="16" maxlength="16" placeholder="16 digit nomor KTP" class="form-control form-control-line">
                     </div>
                     <div class="form-group">
@@ -411,29 +418,42 @@ Pengguna
 <script>
     $(document).ready(function(){
         var id;
-        var params = getUrlParameter('data');
 
-        if(params == "deleted"){
-            deleted();
-        }
-        else if(params == "registered"){
-            registered();
-        }
-        else{
-            home();
-        }
-
-        $(".deleted").click(function(){
-            deleted();
-        });
+        if(getUrlParameter('data') !== false)
+            init(getUrlParameter('data'), 3);
+        else
+            init(1, 3);
 
         $(".registered").click(function(){
-            registered();
+            init(2, 3);
         });
 
         $(".home").click(function(){
-            home();
+            init(1, 3);
         });
+
+        $(".deleted").click(function(){
+            init(0, 3);
+        });
+
+        function init(active, level){
+            $("#category").prop('selectedIndex',0)
+            if(active == 2){
+                $(".page-title").text("Data Pendaftar");
+                $('#warning-deleted').hide();
+            }
+            else if(active == 1){
+                $(".page-title").text("Pengguna Aktif");
+                $('#warning-deleted').hide();
+            }
+            else{
+                $(".page-title").text("Data Penghapusan");
+                $('#warning-deleted').show();
+            }
+
+            window.history.replaceState(null, null, "?data=" + active + "&lev=" + level);
+            dtable = dtableInit("/production/users?data=" + active + "&lev=" + level);
+        }
 
         var iti;
         function initializeTel(init) {
@@ -618,15 +638,7 @@ Pengguna
         });
 
         $('#category').on('change', function() {
-            if(getUrlParameter('data') == 'deleted'){
-                dtable = dtableInit("/production/users/deleted/" + this.value);
-            }
-            else if(getUrlParameter('data') == 'registered'){
-                dtable = dtableInit("/production/users/registered/" + this.value);
-            }
-            else{
-                dtable = dtableInit("/production/users/level/" + this.value);
-            }
+            dtable = dtableInit("/production/users?data=" + getUrlParameter('data') + "&lev=" + this.value);
         });
 
         $(".add").click( function(){
@@ -798,6 +810,8 @@ Pengguna
                         $("#showUid").text(data.user.uid);
                         $("#showName").text(data.user.name);
                         $("#showMember").text(data.user.member);
+                        $("#showCreate").text(data.user.create);
+                        $("#showUpdate").text(data.user.update);
 
                         if(data.user.email)
                             $("#showEmail").html("<a target='_blank' href='mailto:" + data.user.email + "'>" + data.user.email + " <i class='fas fa-external-link'></i></a>");
@@ -958,8 +972,8 @@ Pengguna
                             var selectedLevel = $('#level').val();
                             $("#category").val(selectedLevel).change();
                             $(".page-title").text("Pengguna Aktif");
-                            window.history.replaceState(null, null, "?data=user");
-                            dtable = dtableInit("/production/users/level/" + selectedLevel);
+                            window.history.replaceState(null, null, "?data=1&lev=" + selectedLevel);
+                            dtable = dtableInit("/production/users?data=1&lev=" + selectedLevel);
                             $('#warning-deleted').hide();
                         }
                     }
@@ -1025,6 +1039,7 @@ Pengguna
         }
 
         function dtableInit(url){
+            console.log(url);
             $('#dtable').DataTable().clear().destroy();
             return $('#dtable').DataTable({
                 "language": {
@@ -1123,30 +1138,6 @@ Pengguna
                     },
                 }
             });
-        }
-
-        function deleted(){
-            $("#category").prop('selectedIndex',0)
-            $(".page-title").text("Data Penghapusan");
-            window.history.replaceState(null, null, "?data=deleted");
-            dtable = dtableInit("/production/users/deleted/3");
-            $('#warning-deleted').show();
-        }
-
-        function registered(){
-            $("#category").prop('selectedIndex',0)
-            $(".page-title").text("Data Pendaftar");
-            window.history.replaceState(null, null, "?data=registered");
-            dtable = dtableInit("/production/users/registered/3");
-            $('#warning-deleted').hide();
-        }
-
-        function home(){
-            $("#category").prop('selectedIndex',0)
-            $(".page-title").text("Pengguna Aktif");
-            window.history.replaceState(null, null, "?data=user");
-            dtable = dtableInit("/production/users");
-            $('#warning-deleted').hide();
         }
     });
 </script>

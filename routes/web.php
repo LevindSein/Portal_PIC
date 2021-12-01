@@ -51,9 +51,6 @@ Route::middleware('checkauth')->group(function(){
             Route::delete('users/permanent/{id}', [UserController::class, 'permanent']);
             Route::post('users/reset/{id}', [UserController::class, 'reset']);
             Route::post('users/restore/{id}', [UserController::class, 'restore']);
-            Route::get('users/deleted/{params}', [UserController::class, 'deleted']);
-            Route::get('users/registered/{params}', [UserController::class, 'registered']);
-            Route::get('users/level/{params}', [UserController::class, 'level']);
             Route::resource('users', UserController::class);
 
             Route::resource('groups', GroupController::class);

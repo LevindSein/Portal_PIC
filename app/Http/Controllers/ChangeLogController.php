@@ -28,7 +28,7 @@ class ChangeLogController extends Controller
             return DataTables::of($data)
                 ->editColumn('updated_at', function ($data) {
                     return [
-                        'display' => $data->updated_at->format('d-m-Y H:i:s'),
+                        'display' => $data->updated_at->format('Y-m-d H:i:s'),
                         'timestamp' => $data->updated_at->timestamp
                     ];
                 })
@@ -46,9 +46,9 @@ class ChangeLogController extends Controller
                 })
                 ->editColumn('data', function($data){
                     $data = json_decode($data->data);
-                    return "<b>$data->title</b>";
+                    return substr($data->title,0,30);
                 })
-                ->rawColumns(['action', 'data'])
+                ->rawColumns(['action'])
                 ->make(true);
         }
         return view('portal.changelog.index');

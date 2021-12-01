@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2021 at 06:35 PM
+-- Generation Time: Dec 01, 2021 at 12:45 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -369,7 +369,7 @@ CREATE TABLE `failed_jobs` (
 CREATE TABLE `groups` (
   `id` int(11) NOT NULL,
   `name` varchar(10) DEFAULT NULL,
-  `description` longtext DEFAULT NULL,
+  `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -378,7 +378,7 @@ CREATE TABLE `groups` (
 -- Dumping data for table `groups`
 --
 
-INSERT INTO `groups` (`id`, `name`, `description`, `updated_at`, `created_at`) VALUES
+INSERT INTO `groups` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
 (1, 'A-1', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
 (2, 'A-2', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),
 (3, 'B-1', NULL, '2020-11-16 04:06:27', '2020-11-16 04:06:27'),

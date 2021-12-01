@@ -107,8 +107,9 @@
                                     src="{{asset(Auth::user()->photo)}}?{{$rand}}" alt="user" class="rounded-circle" width="31"></a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated fadeIn">
                                 <span class="with-arrow">
-                                    <span class="bg-primary"></span></span>
-                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white mb-2">
+                                    <span class="bg-dark"></span>
+                                </span>
+                                <div class="d-flex no-block align-items-center p-15 bg-dark text-white mb-2">
                                     <div class=""><img src="{{asset(Auth::user()->photo)}}?{{$rand}}" alt="user" class="img-circle"
                                             width="60"></div>
                                     <div class="ml-2">
@@ -203,7 +204,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/groups*')) ? 'active' : '' }}" href="{{url('production/groups')}}"
                                 aria-expanded="false">
-                                <i class="fad fa-layer-group text-info"></i>
+                                <i class="fad fa-shapes text-info"></i>
                                 <span class="hide-menu">Grup&nbsp;Tempat</span>
                             </a>
                         </li>
@@ -266,7 +267,11 @@
                             </a>
                         </li>
                         @endif
+
                         <li class="nav-small-cap"></li>
+                        <div class="text-center">
+                            <span class="hide-menu text-muted">Version 3.0.1</span>
+                        </div>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -317,21 +322,31 @@
                     <div class="modal-dialog modal-dialog-centered modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title titles">UPGRADE VERSION 3</h5>
+                                <h5 class="modal-title titles">UPGRADE VERSION 3.0</h5>
                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-lg-4 col-xlg-3">
+                                <div class="row form-group">
+                                    <div class="col-lg-6 col-xlg-6">
                                         <div class="mt-4 text-center">
-                                            <img id="showPicture" width="150" />
+                                            <img src="{{asset('img/upgrade.svg')}}" width="150" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-8 col-xlg-9">
-
+                                    <div class="col-lg-6 col-xlg-6">
+                                        <h3>Apa yang baru ?</h3>
+                                        <h5>Banyak Hal di versi 3.0</h5>
+                                        <h6><i class="fad fa-arrow-up"></i> Simple User Interface</h6>
+                                        <h6><i class="fad fa-arrow-up"></i> Performance</h6>
+                                        <h6><i class="fad fa-arrow-up"></i> Security</h6>
+                                        <h6><i class="fad fa-arrow-up"></i> Feature</h6>
+                                        <h6><i class="fad fa-arrow-up"></i> Bug Fixed</h6>
+                                        <small class="text-muted pt-4 db">Released on 12.2021</small>
                                     </div>
+                                </div>
+                                <div class="text-center">
+                                    <button data-dismiss="modal" class="btn btn-success btn-rounded">Mengerti</button>
                                 </div>
                             </div>
                         </div>

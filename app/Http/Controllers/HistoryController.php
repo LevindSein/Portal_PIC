@@ -26,9 +26,12 @@ class HistoryController extends Controller
             return DataTables::of($data)
             ->editColumn('created_at', function ($data) {
                 return [
-                    'display' => $data->created_at->format('d-m-Y H:i:s'),
+                    'display' => $data->created_at->format('Y-m-d H:i:s'),
                     'timestamp' => $data->created_at->timestamp
                 ];
+            })
+            ->editColumn('name', function ($data){
+                return substr($data->name, 0, 15);
             })
             ->editColumn('level', function ($data){
                 return User::level($data->level);
@@ -42,7 +45,7 @@ class HistoryController extends Controller
                 }
             })
             ->addColumn('action', function($data){
-                $button = '<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                $button = '<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                 return $button;
             })
             ->rawColumns(['action','status'])

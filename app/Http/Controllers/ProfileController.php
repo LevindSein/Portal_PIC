@@ -46,7 +46,7 @@ class ProfileController extends Controller
     {
         if(request()->ajax()){
             $request->validate([
-                'uid' => 'required|max:50|alpha_dash|unique:App\Models\User,uid,'.Auth::user()->id,
+                'uid' => 'required|max:15|alpha_dash|unique:App\Models\User,uid,'.Auth::user()->id,
                 'email' => 'required|max:200|email|unique:App\Models\User,email,'.Auth::user()->id,
                 'name' => 'required|max:100',
                 'ktp' => 'required|numeric|digits_between:7,16|unique:App\Models\User,ktp,'.Auth::user()->id,

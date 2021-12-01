@@ -44,13 +44,15 @@ Grup Tempat
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <small class="text-muted pt-4 db">Judul</small>
-                <h6 id="showTitle"></h6>
-                <small class="text-muted pt-4 db">Dibuat oleh :</small>
+                <small class="text-muted pt-4 db">Grup</small>
+                <h4 id="showGroup"></h4>
+                <small class="text-muted pt-4 db">Dibuat oleh</small>
                 <h6 id="showCreate"></h6>
-                <small class="text-muted pt-4 db">Disunting oleh :</small>
+                <small class="text-muted pt-4 db">Disunting oleh</small>
                 <h6 id="showEdit"></h6>
-                <small class="text-muted pt-4 db">Data Log :</small>
+                <small class="text-muted pt-4 db">Banyak Los</small>
+                <h6 id="showCount"></h6>
+                <small class="text-muted pt-4 db">Data Los</small>
                 <h6 id="showData"></h6>
             </div>
             <div class="modal-footer">
@@ -72,6 +74,14 @@ Grup Tempat
             <form id="groupForm">
                 <div class="modal-body">
                     <div class="form-group">
+                        <label>Nama Grup <span class="text-danger">*</span></label>
+                        <input required type="text" id="group" name="group" autocomplete="off" maxlength="10" placeholder="Contoh: A-1" class="form-control form-control-line" style="text-transform: uppercase">
+                    </div>
+                    <div class="form-group">
+                        <label>Alamat Los</label>
+                        <textarea rows="10" id="los" name="los" autocomplete="off" placeholder="Contoh: 1,2,3,4,5,6" class="form-control form-control-line" style="text-transform: uppercase"></textarea>
+                    </div>
+                    <div class="form-group">
                         <p>(<span class="text-danger">*</span>) wajib diisi.</p>
                     </div>
                 </div>
@@ -89,6 +99,15 @@ Grup Tempat
 @section('content-js')
 <script>
     $(document).ready(function(){
+        $("#group").on("input", function(){
+            this.value = this.value.replace(/[^0-9a-zA-Z/\-]+$/g, '');
+        });
+
+        $("#los").on("input", function(){
+            this.value = this.value.replace(/\,\,+/g, ',');
+            this.value = this.value.replace(/\s/g,'');
+        });
+
         var id;
 
         var dtable = $('#dtable').DataTable({
@@ -113,7 +132,7 @@ Grup Tempat
                 { "bSortable": false, "aTargets": [1] },
                 { "bSearchable": false, "aTargets": [1] }
             ],
-            "scrollY": "35vh",
+            "scrollY": "50vh",
             "scrollX": true,
             "preDrawCallback": function( settings ) {
                 scrollPosition = $(".dataTables_scrollBody").scrollTop();
@@ -138,6 +157,74 @@ Grup Tempat
                 console.log("Refresh Automatic")
             }, false);
         }
+
+        $(".add").click( function(){
+            $("#groupForm")[0].reset();
+            $('.titles').text('Tambah data Grup Tempat');
+            $("#groupFormValue").val('add');
+            $('#groupModal').modal('show');
+        });
+
+        $(document).on('click', '.edit', function(){
+            id = $(this).attr('id');
+            nama = $(this).attr('nama');
+            $('.titles').text('Edit data ' + nama);
+            $("#groupForm")[0].reset();
+            $("#groupFormValue").val('update');
+
+            $.ajax({
+                url: "/production/groups/" + id + "/edit",
+                type: "GET",
+                cache:false,
+                success:function(data){
+                    if(data.success){
+                        $("#group").val(data.group.name);
+                        if(data.group.los){
+                            $("#los").val(data.group.los.data);
+                        }
+                    }
+
+                    if(data.info){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.info(data.info);
+                    }
+
+                    if(data.warning){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.warning(data.warning);
+                    }
+
+                    if(data.error){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                    }
+
+                    if(data.description){
+                        console.log(data.description);
+                    }
+                },
+                error:function(data){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("Fetching data failed.");
+                    console.log(data);
+                },
+                complete:function(){
+                    $('#groupModal').modal('show');
+                }
+            });
+        });
 
         $(document).on('click', '.delete', function(){
             id = $(this).attr('id');
@@ -164,6 +251,24 @@ Grup Tempat
                 ok_btn_completed = "Hapus";
                 ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
             }
+        });
+
+        $('#groupForm').submit(function(e){
+            e.preventDefault();
+
+            value = $("#groupFormValue").val();
+            if(value == 'add'){
+                url = "/production/groups";
+                type = "POST";
+            }
+            else if(value == 'update'){
+                url = "/production/groups/" + id;
+                type = "PUT";
+            }
+            dataset = $(this).serialize();
+            ok_btn_before = "Menyimpan...";
+            ok_btn_completed = "Simpan";
+            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
         });
 
         function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
@@ -263,6 +368,72 @@ Grup Tempat
                 }
             });
         }
+
+        $(document).on('click', '.details', function(){
+            id = $(this).attr('id');
+
+            $.ajax({
+                url: "/production/groups/" + id,
+                type: "GET",
+                cache:false,
+                success:function(data){
+                    if(data.success){
+                        $("#showGroup").text(data.group.name);
+                        if(!data.group.los){
+                            $("#showCreate").html("&mdash;");
+                            $("#showEdit").html("&mdash;");
+                            $("#showCount").html("&mdash;");
+                            $("#showData").html("&mdash;");
+                        }
+                        else{
+                            $("#showCreate").html(data.group.los.username_create + "<br>pada " + data.group.los.created_at);
+                            $("#showEdit").html(data.group.los.username_update + "<br>pada " + data.group.los.updated_at);
+                            $("#showCount").html(data.group.count);
+                            $("#showData").html(data.group.los.data);
+                        }
+                    }
+
+                    if(data.info){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.info(data.info);
+                    }
+
+                    if(data.warning){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.warning(data.warning);
+                    }
+
+                    if(data.error){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                    }
+
+                    if(data.description){
+                        console.log(data.description);
+                    }
+                },
+                error:function(data){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("Fetching data failed.");
+                    console.log(data);
+                },
+                complete:function(){
+                    $('#showModal').modal('show');
+                }
+            });
+        });
     });
 </script>
 @endsection

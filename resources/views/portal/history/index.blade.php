@@ -47,7 +47,7 @@ Riwayat Login
                 <h5 id="showActive"></h5>
                 <small class="text-muted pt-4 db">UID</small>
                 <h6 id="showUid"></h6>
-                <small class="text-muted pt-4 db">Nama</small>
+                <small class="text-muted pt-4 db">Nama Lengkap</small>
                 <h6 id="showName"></h6>
                 <small class="text-muted pt-4 db">Status</small>
                 <h6 id="showStatus"></h6>
@@ -91,9 +91,9 @@ Riwayat Login
             "order": [[ 4, "desc" ]],
             "aoColumnDefs": [
                 { "bSortable": false, "aTargets": [5] },
-                { "bSearchable": false, "aTargets": [2,3,4,5] }
+                { "bSearchable": false, "aTargets": [5] }
             ],
-            "scrollY": "35vh",
+            "scrollY": "50vh",
             "scrollX": true,
             "preDrawCallback": function( settings ) {
                 scrollPosition = $(".dataTables_scrollBody").scrollTop();

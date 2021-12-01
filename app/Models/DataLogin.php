@@ -23,6 +23,8 @@ class DataLogin extends Model
     ];
 
     public static function success(){
+        $ip = \Request::ip();
+
         $agent = new Agent();
 
         $data['uid'] = Auth::user()->uid;
@@ -30,12 +32,14 @@ class DataLogin extends Model
         $data['level'] = Auth::user()->level;
         $data['active'] = Auth::user()->active;
         $data['status'] = 1;
-        $data['platform'] = $agent->platform()." ".$agent->version($agent->platform())." ".$agent->browser()." ".$agent->version($agent->browser());
+        $data['platform'] = $agent->platform()." ".$agent->version($agent->platform())." ".$agent->browser()." ".$agent->version($agent->browser())." ".$ip;
 
         self::create($data);
     }
 
     public static function error(){
+        $ip = \Request::ip();
+
         $agent = new Agent();
 
         $data['uid'] = Auth::user()->uid;
@@ -43,7 +47,7 @@ class DataLogin extends Model
         $data['level'] = Auth::user()->level;
         $data['active'] = Auth::user()->active;
         $data['status'] = 0;
-        $data['platform'] = $agent->platform()." ".$agent->version($agent->platform())." ".$agent->browser()." ".$agent->version($agent->browser());
+        $data['platform'] = $agent->platform()." ".$agent->version($agent->platform())." ".$agent->browser()." ".$agent->version($agent->browser())." ".$ip;
 
         self::create($data);
     }
@@ -56,7 +60,7 @@ class DataLogin extends Model
         $data['uid'] = $ip;
         $data['name'] = $request->username;
         $data['status'] = 0;
-        $data['platform'] = $agent->platform()." ".$agent->version($agent->platform())." ".$agent->browser()." ".$agent->version($agent->browser());
+        $data['platform'] = $agent->platform()." ".$agent->version($agent->platform())." ".$agent->browser()." ".$agent->version($agent->browser())." ".$ip;
 
         self::create($data);
     }

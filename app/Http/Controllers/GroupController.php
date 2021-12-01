@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\Group;
 
 use DataTables;
+use Carbon\Carbon;
 
 class GroupController extends Controller
 {
@@ -52,7 +56,38 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->ajax()){
+            $request->validate([
+                'group' => 'required|max:10|alpha_dash|unique:App\Models\Group,name',
+                'los' => 'nullable',
+            ]);
+
+            $group = strtoupper($request->group);
+            $los = rtrim(strtoupper($request->los), ',');
+
+            $dataset['name'] = $group;
+            $json = json_encode([
+                'data' => $los,
+                'user_create' => Auth::user()->id,
+                'username_create' => Auth::user()->name,
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'user_update' => Auth::user()->id,
+                'username_update' => Auth::user()->name,
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+            $dataset['data'] = $json;
+
+            try{
+                Group::create($dataset);
+            } catch(\Exception $e){
+                return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
+            }
+
+            return response()->json(['success' => 'Data saved.']);
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**
@@ -63,7 +98,35 @@ class GroupController extends Controller
      */
     public function show($id)
     {
-        //
+        if(request()->ajax()){
+            try {
+                $id = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
+            }
+
+            try{
+                $data = Group::findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            if(!is_null($data->data)){
+                $json = json_decode($data->data);
+                $count = explode(',', $json->data);
+                $count = count($count);
+
+                $data['los'] = $json;
+                $data['count'] = $count;
+            }
+            else
+                $data['los'] = null;
+
+            return response()->json(['success' => 'Fetching data success.', 'group' => $data]);
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**
@@ -74,7 +137,32 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(request()->ajax()){
+            try {
+                $id = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
+            }
+
+            try{
+                $data = Group::findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            if(!is_null($data->data)){
+                $json = json_decode($data->data);
+
+                $data['los'] = $json;
+            }
+            else
+                $data['los'] = null;
+
+            return response()->json(['success' => 'Fetching data success.', 'group' => $data]);
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**
@@ -86,7 +174,42 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
+            }
+
+            $request->validate([
+                'group' => 'required|max:10|alpha_dash|unique:App\Models\Group,name,'.$decrypted,
+                'los' => 'nullable',
+            ]);
+
+            $group = strtoupper($request->group);
+            $los = rtrim(strtoupper($request->los), ',');
+
+            try{
+                $data = Group::findOrFail($decrypted);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'User not found.', 'description' => $e]);
+            }
+
+            $data->name = $group;
+            $json = json_decode($data->data);
+            $json->data = $los;
+            $json->user_update = Auth::user()->id;
+            $json->username_update = Auth::user()->name;
+            $json->updated_at = Carbon::now()->toDateTimeString();
+            $data->data = json_encode($json);
+
+            $data->save();
+
+            return response()->json(['success' => 'Data saved.']);
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**

@@ -21,13 +21,16 @@ Profil
                             </div>
                         </div>
                     </div>
-                    <h4 class="card-title mt-2">{{Auth::user()->name}}</h4>
                     <div class="row text-center justify-content-md-center">
                     </div>
                 </div>
             </div>
             <hr>
             <div class="card-body">
+                <small class="text-muted pt-4 db">UID</small>
+                <h6>{{Auth::user()->uid}}</h6>
+                <small class="text-muted pt-4 db">Nama Lengkap</small>
+                <h6>{{Auth::user()->name}}</h6>
                 <small class="text-muted pt-4 db">No.Anggota</small>
                 <h6>{{Auth::user()->member}}</h6>
                 @if(Auth::user()->email)
@@ -83,9 +86,9 @@ Profil
                     <div class="card-body">
                         <form id="profileForm" class="form-horizontal form-material">
                             <div class="form-group">
-                                <label class="col-md-12">UID (untuk Login) <span class="text-danger">*</span></label>
+                                <label class="col-md-12">UID <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
-                                    <input type="text" id="uid" name="uid" required autocomplete="off" maxlength="50" placeholder="UID" value="{{Auth::user()->uid}}" class="form-control form-control-line" style="text-transform:lowercase;">
+                                    <input type="text" id="uid" name="uid" required autocomplete="off" maxlength="15" placeholder="UID" value="{{Auth::user()->uid}}" class="form-control form-control-line" style="text-transform:lowercase;">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -108,7 +111,7 @@ Profil
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">KTP / Paspor<span class="text-danger">*</span></label>
+                                <label class="col-md-12">KTP / Paspor <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
                                     <input required type="tel" id="ktp" name="ktp" required autocomplete="off" minlength="7" maxlength="16" placeholder="16 digit nomor KTP" value="{{Auth::user()->ktp}}" class="form-control form-control-line">
                                 </div>

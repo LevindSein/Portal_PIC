@@ -49,11 +49,11 @@ Daftar Log Perubahan
             <div class="modal-body">
                 <small class="text-muted pt-4 db">Judul</small>
                 <h6 id="showTitle"></h6>
-                <small class="text-muted pt-4 db">Dibuat oleh :</small>
+                <small class="text-muted pt-4 db">Dibuat oleh</small>
                 <h6 id="showCreate"></h6>
-                <small class="text-muted pt-4 db">Disunting oleh :</small>
+                <small class="text-muted pt-4 db">Disunting oleh</small>
                 <h6 id="showEdit"></h6>
-                <small class="text-muted pt-4 db">Data Log :</small>
+                <small class="text-muted pt-4 db">Data Log</small>
                 <h6 id="showData"></h6>
             </div>
             <div class="modal-footer">
@@ -123,9 +123,9 @@ Daftar Log Perubahan
             "order": [[ 0, "desc" ]],
             "aoColumnDefs": [
                 { "bSortable": false, "aTargets": [2] },
-                { "bSearchable": false, "aTargets": [0,1,2] }
+                { "bSearchable": false, "aTargets": [2] }
             ],
-            "scrollY": "35vh",
+            "scrollY": "50vh",
             "scrollX": true,
             "preDrawCallback": function( settings ) {
                 scrollPosition = $(".dataTables_scrollBody").scrollTop();

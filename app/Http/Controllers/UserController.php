@@ -25,24 +25,47 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah, 4 = Kasir, 5 = Keuangan, 6 = Manajer
+        //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah
         if(request()->ajax())
         {
-            $data = User::where([['level',3],['active',1]])->select('id','uid','name','active');
+            $level = $request->lev;
+            $active = $request->data;
+
+            if(Auth::user()->level > 1){
+                $level = 3;
+            }
+
+            $data = User::where([['level',$level],['active',$active]])->select('id','uid','name','active');
             return DataTables::of($data)
                 ->addColumn('action', function($data){
                     $button = '';
                     if(Auth::user()->id != $data->id){
-                        $button .= '<a type="button" data-toggle="tooltip" title="Reset Password" name="reset" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="reset"><i class="fas fa-key" style="color:#fd7e14;"></i></a>';
-                        $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                        $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                        if($data->active == 2){
+                            $button = '<a type="button" data-toggle="tooltip" title="Activate" name="activate" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="activateUser"><i class="fas fa-shield-check" style="color:#36bea6;"></i></a>';
+                            $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="Delete Permanent" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="deletePermanently"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
+                        }
+                        else if($data->active == 1){
+                            $button .= '<a type="button" data-toggle="tooltip" title="Reset Password" name="reset" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="reset"><i class="fas fa-key" style="color:#fd7e14;"></i></a>';
+                            $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                            $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                        }
+                        else{
+                            $button = '<a type="button" data-toggle="tooltip" title="Restore" name="restore" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="restore"><i class="fas fa-undo" style="color:#4e73df;"></i></a>';
+                            $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="Delete Permanent" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="deletePermanently"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
+                        }
                     }
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                     return $button;
                 })
+                ->editColumn('name', function($data){
+                    return substr($data->name, 0, 15);
+                })
                 ->editColumn('active', function($data){
+                    if($data->active == 0){
+                        $button = '<span style="color:#e74a3b;">nonactive</span>';
+                    }
                     if($data->active == 1){
                         $button = '<span style="color:#36bea6;">Active</span>';
                     }
@@ -55,94 +78,6 @@ class UserController extends Controller
                 ->make(true);
         }
         return view('portal.user.index');
-    }
-
-    public function level($level)
-    {
-        //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah, 4 = Kasir, 5 = Keuangan, 6 = Manajer
-        if(request()->ajax())
-        {
-            if(Auth::user()->level > 1){
-                $level = 3;
-            }
-            $data = User::where([['level',$level],['active','1']])->select('id','uid','name','active');
-            return DataTables::of($data)
-                ->addColumn('action', function($data){
-                    $button = '';
-                    if(Auth::user()->id != $data->id){
-                        $button .= '<a type="button" data-toggle="tooltip" title="Reset Password" name="reset" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="reset"><i class="fas fa-key" style="color:#fd7e14;"></i></a>';
-                        $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                        $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                    }
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
-                    return $button;
-                })
-                ->addColumn('show', function($data){
-                    $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details btn btn-sm btn-info">Show</button>';
-                    return $button;
-                })
-                ->editColumn('active', function($data){
-                    if($data->active == 1){
-                        $button = '<span style="color:#36bea6;">Active</span>';
-                    }
-                    else if($data->active == 2){
-                        $button = '<span style="color:#2962FF;">Register</span>';
-                    }
-                    return $button;
-                })
-                ->rawColumns(['action','active'])
-                ->make(true);
-        }
-    }
-
-    public function deleted($level)
-    {
-        //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah, 4 = Kasir, 5 = Keuangan, 6 = Manajer
-        if(request()->ajax())
-        {
-            if(Auth::user()->level > 1){
-                $level = 3;
-            }
-            $data = User::where([['level', $level],['active','0']])->select('id','uid','name','active');
-            return DataTables::of($data)
-                ->addColumn('action', function($data){
-                    $button = '<a type="button" data-toggle="tooltip" title="Restore" name="restore" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="restore"><i class="fas fa-undo" style="color:#4e73df;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="Delete Permanent" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="deletePermanently"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
-                    return $button;
-                })
-                ->editColumn('active', function($data){
-                    $button = '<span style="color:#e74a3b;">nonactive</span>';
-                    return $button;
-                })
-                ->rawColumns(['action','active'])
-                ->make(true);
-        }
-    }
-
-    public function registered($level)
-    {
-        //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah, 4 = Kasir, 5 = Keuangan, 6 = Manajer
-        if(request()->ajax())
-        {
-            if(Auth::user()->level > 1){
-                $level = 3;
-            }
-            $data = User::where([['level', $level],['active','2']])->select('id','uid','name','active');
-            return DataTables::of($data)
-                ->addColumn('action', function($data){
-                    $button = '<a type="button" data-toggle="tooltip" title="Activate" name="activate" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="activateUser"><i class="fas fa-shield-check" style="color:#36bea6;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="Delete Permanent" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="deletePermanently"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
-                    return $button;
-                })
-                ->editColumn('active', function($data){
-                    $button = '<span style="color:#2962FF;">Register</span>';
-                    return $button;
-                })
-                ->rawColumns(['action','active'])
-                ->make(true);
-        }
     }
 
     /**
@@ -289,6 +224,9 @@ class UserController extends Controller
                     'warning' => 'Phone number failure.'
                 ]);
             }
+
+            $user['create'] = Carbon::parse($user->created_at)->toDateTimeString();
+            $user['update'] = Carbon::parse($user->updated_at)->toDateTimeString();
 
             return response()->json(['success' => 'Fetching data success.', 'user' => $user]);
         }
@@ -707,12 +645,11 @@ class UserController extends Controller
     }
 
     public function activate(){
-        //submit 0 = belum untuk aktivasi, 1 = sudah di submit belum di aktivasi, 2 = akun teraktivasi dan code di hapus;
         if(request()->ajax()){
             $now = Carbon::now()->toDateTimeString();
             $code = ActivationCode::where([
                 ['user_id', Auth::user()->id],
-                ['submit','<', 2],
+                ['submit', 0],
                 ['available', '>', $now],
             ])->first();
 
@@ -762,7 +699,7 @@ class UserController extends Controller
             }
             else{
                 return response()->json([
-                    'error' => "Activation code not found."
+                    'description' => "Activation code active."
                 ]);
             }
         }
