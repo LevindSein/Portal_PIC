@@ -122,12 +122,16 @@ class GroupController extends Controller
                 $json = json_decode($data->data);
 
                 $count = 0;
+                $long_data = '';
                 if(!is_null($json->data)){
-                    $count = explode(',', $json->data);
-                    $count = count($count);
+                    $explode = explode(',', $json->data);
+                    $count = count($explode);
+                    $long_data = implode(', ', $explode);
+                    $long_data = rtrim($long_data, ', ');
                 }
 
                 $data['los'] = $json;
+                $data['long'] = $long_data;
                 $data['count'] = $count;
             }
             else
@@ -214,12 +218,26 @@ class GroupController extends Controller
             }
 
             $data->name = $group;
-            $json = json_decode($data->data);
-            $json->data = $los;
-            $json->user_update = Auth::user()->id;
-            $json->username_update = Auth::user()->name;
-            $json->updated_at = Carbon::now()->toDateTimeString();
-            $data->data = json_encode($json);
+            if(!is_null($data->data)){
+                $json = json_decode($data->data);
+                $json->data = $los;
+                $json->user_update = Auth::user()->id;
+                $json->username_update = Auth::user()->name;
+                $json->updated_at = Carbon::now()->toDateTimeString();
+                $data->data = json_encode($json);
+            }
+            else{
+                $json = json_encode([
+                    'data' => $los,
+                    'user_create' => Auth::user()->id,
+                    'username_create' => Auth::user()->name,
+                    'created_at' => Carbon::now()->toDateTimeString(),
+                    'user_update' => Auth::user()->id,
+                    'username_update' => Auth::user()->name,
+                    'updated_at' => Carbon::now()->toDateTimeString(),
+                ]);
+                $data->data = $json;
+            }
 
             $data->save();
 

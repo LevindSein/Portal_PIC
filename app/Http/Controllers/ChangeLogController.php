@@ -26,30 +26,30 @@ class ChangeLogController extends Controller
         if(request()->ajax()){
             $data = ChangeLog::select('id','data','updated_at');
             return DataTables::of($data)
-                ->editColumn('updated_at', function ($data) {
-                    return [
-                        'display' => $data->updated_at->format('Y-m-d H:i:s'),
-                        'timestamp' => $data->updated_at->timestamp
-                    ];
-                })
-                ->addColumn('action', function($data){
-                    $button = '';
-                    if(Auth::user()->level == 1){
-                        $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                        $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                        $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
-                    }
-                    else{
-                        $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" class="details btn btn-sm btn-info">Show</button>';
-                    }
-                    return $button;
-                })
-                ->editColumn('data', function($data){
-                    $data = json_decode($data->data);
-                    return substr($data->title,0,30);
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+            ->editColumn('updated_at', function ($data) {
+                return [
+                    'display' => $data->updated_at->format('Y-m-d H:i:s'),
+                    'timestamp' => $data->updated_at->timestamp
+                ];
+            })
+            ->addColumn('action', function($data){
+                $button = '';
+                if(Auth::user()->level == 1){
+                    $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                }
+                else{
+                    $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" class="details btn btn-sm btn-info">Show</button>';
+                }
+                return $button;
+            })
+            ->editColumn('data', function($data){
+                $data = json_decode($data->data);
+                return substr($data->title,0,30);
+            })
+            ->rawColumns(['action'])
+            ->make(true);
         }
         return view('portal.changelog.index');
     }

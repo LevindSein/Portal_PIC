@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('activationcode:delete')->twiceDaily(1, 13);
         $schedule->command('fileqr:delete')->dailyAt('02:00');
         $schedule->command('database:backup')->dailyAt('03:00');
-        $schedule->command('user:delete')->dailyAt('04:00'); //Review Ulang
+        // $schedule->command('user:delete')->dailyAt('04:00'); //Review Ulang
         $schedule->command('datalogin:delete')->dailyAt('05:00');
     }
 

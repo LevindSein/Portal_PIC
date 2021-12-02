@@ -14,6 +14,7 @@ use App\Http\Controllers\ScanController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ChangeLogController;
+use App\Http\Controllers\PriceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,20 @@ Route::middleware('checkauth')->group(function(){
             Route::resource('histories', HistoryController::class);
 
             Route::resource('changelogs', ChangeLogController::class);
+
+            Route::get('price/listrik', [PriceController::class, 'listrik']);
+            Route::post('price/listrik', [PriceController::class, 'listrikStore']);
+            Route::get('price/listrik/{id}/edit', [PriceController::class, 'listrikEdit']);
+            Route::put('price/listrik/{id}', [PriceController::class, 'listrikUpdate']);
+            Route::get('price/listrik/{id}', [PriceController::class, 'listrikShow']);
+            Route::delete('price/listrik/{id}', [PriceController::class, 'listrikDestroy']);
+
+            Route::get('price/airbersih', [PriceController::class, 'airbersih']);
+            Route::post('price/airbersih', [PriceController::class, 'airbersihStore']);
+            Route::get('price/airbersih/{id}/edit', [PriceController::class, 'airbersihEdit']);
+            Route::put('price/airbersih/{id}', [PriceController::class, 'airbersihUpdate']);
+            Route::get('price/airbersih/{id}', [PriceController::class, 'airbersihShow']);
+            Route::delete('price/airbersih/{id}', [PriceController::class, 'airbersihDestroy']);
         });
     });
 

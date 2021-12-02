@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2021 at 12:45 PM
+-- Generation Time: Dec 02, 2021 at 09:10 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -433,6 +433,34 @@ CREATE TABLE `jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `p_airbersih`
+--
+
+CREATE TABLE `p_airbersih` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `data` longtext DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `p_listrik`
+--
+
+CREATE TABLE `p_listrik` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `data` longtext DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -466,7 +494,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `photo`, `uid`, `name`, `level`, `country_id`, `phone`, `email`, `email_verified_at`, `member`, `ktp`, `npwp`, `address`, `authority`, `active`, `password`, `remember_token`, `nonactive`, `activation_code`, `available`, `created_at`, `updated_at`) VALUES
-(1, 'storage/users/1.png', 'super_admin', 'Fahni Amsyari', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-11-28 10:39:37', 'BP3C11111111', '3215130101990003', NULL, 'Perum Villa Permata Cikampek', NULL, 1, '$2y$10$JRff2.2ySRefq3s5Gv6h2.GS4ZVdwJrUibKrLYl.tDj9S/P0oEuMS', NULL, NULL, NULL, NULL, '2021-11-09 16:22:51', '2021-11-28 22:21:12');
+(1598, 'storage/users/1.png', 'super_admin', 'MASTER', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-11-28 10:39:37', 'BP3C11111111', '3211111111111111', NULL, 'Di bawah langit berpijak pada bumi.', NULL, 1, '$2y$10$JRff2.2ySRefq3s5Gv6h2.GS4ZVdwJrUibKrLYl.tDj9S/P0oEuMS', NULL, NULL, NULL, NULL, '2021-11-09 16:22:51', '2021-12-01 17:59:54');
 
 -- --------------------------------------------------------
 
@@ -535,6 +563,20 @@ ALTER TABLE `jobs`
   ADD KEY `jobs_queue_index` (`queue`);
 
 --
+-- Indexes for table `p_airbersih`
+--
+ALTER TABLE `p_airbersih`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `p_listrik`
+--
+ALTER TABLE `p_listrik`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -600,10 +642,22 @@ ALTER TABLE `jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `p_airbersih`
+--
+ALTER TABLE `p_airbersih`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `p_listrik`
+--
+ALTER TABLE `p_listrik`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1599;
 
 --
 -- AUTO_INCREMENT for table `visitors`
