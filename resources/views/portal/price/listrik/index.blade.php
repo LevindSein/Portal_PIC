@@ -72,6 +72,10 @@ Tarif Listrik
                 <h6 id="showDenda2"></h6>
                 <small class="text-muted pt-4 db">PPN</small>
                 <h6 id="showPpn"></h6>
+                <small class="text-muted pt-4 db">Dibuat oleh</small>
+                <h6 id="showCreate"></h6>
+                <small class="text-muted pt-4 db">Diperbaharui oleh</small>
+                <h6 id="showEdit"></h6>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
@@ -138,7 +142,7 @@ Tarif Listrik
                             <div class="form-group">
                                 <label>PJU <span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <input maxlength="3" required type="text" id="pju" name="pju" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="percent form-control form-control-line">
+                                    <input maxlength="3" required type="text" id="pju" name="pju" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">%</span>
                                     </div>
@@ -156,7 +160,7 @@ Tarif Listrik
                             <div class="form-group">
                                 <label>Denda 2 <span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <input maxlength="3" required type="text" id="denda2" name="denda2" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="percent form-control form-control-line">
+                                    <input maxlength="3" required type="text" id="denda2" name="denda2" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">%</span>
                                     </div>
@@ -165,7 +169,7 @@ Tarif Listrik
                             <div class="form-group">
                                 <label>PPN <span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <input maxlength="3" required type="text" id="ppn" name="ppn" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="percent form-control form-control-line">
+                                    <input maxlength="3" required type="text" id="ppn" name="ppn" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">%</span>
                                     </div>
@@ -192,7 +196,7 @@ Tarif Listrik
 <script>
     $(document).ready(function(){
         $(".number").on('input', function (e) {
-            if(event.which >= 37 && event.which <= 40) return;
+            if(e.which >= 37 && e.which <= 40) return;
 
             if (/^[0-9.,]+$/.test($(this).val())) {
                 $(this).val(parseFloat($(this).val().replace(/,/g, '')).toLocaleString('en-US'));
@@ -496,6 +500,8 @@ Tarif Listrik
                         $("#showDenda1").text("Rp. " + Number(data.show.data.denda1).toLocaleString('en-US'));
                         $("#showDenda2").text(data.show.data.denda2 + " %");
                         $("#showPpn").text(data.show.data.ppn + " %");
+                        $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
+                        $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                     }
 
                     if(data.info){

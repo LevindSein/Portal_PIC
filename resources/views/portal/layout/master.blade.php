@@ -215,26 +215,26 @@
                                         <span class="hide-menu">Air&nbsp;Bersih</span>
                                     </a>
                                 </li>
-                                <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
+                                <li class="sidebar-item {{ (request()->is('production/price/keamananipk*')) ? 'active' : '' }}">
+                                    <a href="{{url('production/price/keamananipk')}}" class="sidebar-link {{ (request()->is('production/price/keamananipk*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1"></i>
                                         <span class="hide-menu">Keamanan&nbsp;IPK</span>
                                     </a>
                                 </li>
-                                <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
+                                <li class="sidebar-item {{ (request()->is('production/price/kebersihan*')) ? 'active' : '' }}">
+                                    <a href="{{url('production/price/kebersihan')}}" class="sidebar-link {{ (request()->is('production/price/kebersihan*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1"></i>
                                         <span class="hide-menu">Kebersihan</span>
                                     </a>
                                 </li>
-                                <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
+                                <li class="sidebar-item {{ (request()->is('production/price/airkotor*')) ? 'active' : '' }}">
+                                    <a href="{{url('production/price/airkotor')}}" class="sidebar-link {{ (request()->is('production/price/airkotor*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1"></i>
-                                        <span class="hide-menu">Air Kotor</span>
+                                        <span class="hide-menu">Air&nbsp;Kotor</span>
                                     </a>
                                 </li>
-                                <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
+                                <li class="sidebar-item {{ (request()->is('production/price/lain*')) ? 'active' : '' }}">
+                                    <a href="{{url('production/price/lain')}}" class="sidebar-link {{ (request()->is('production/price/lain*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1"></i>
                                         <span class="hide-menu">Lainnya</span>
                                     </a>

@@ -73,6 +73,34 @@ Route::middleware('checkauth')->group(function(){
             Route::put('price/airbersih/{id}', [PriceController::class, 'airbersihUpdate']);
             Route::get('price/airbersih/{id}', [PriceController::class, 'airbersihShow']);
             Route::delete('price/airbersih/{id}', [PriceController::class, 'airbersihDestroy']);
+
+            Route::get('price/keamananipk', [PriceController::class, 'keamananipk']);
+            Route::post('price/keamananipk', [PriceController::class, 'keamananipkStore']);
+            Route::get('price/keamananipk/{id}/edit', [PriceController::class, 'keamananipkEdit']);
+            Route::put('price/keamananipk/{id}', [PriceController::class, 'keamananipkUpdate']);
+            Route::get('price/keamananipk/{id}', [PriceController::class, 'keamananipkShow']);
+            Route::delete('price/keamananipk/{id}', [PriceController::class, 'keamananipkDestroy']);
+
+            Route::get('price/kebersihan', [PriceController::class, 'kebersihan']);
+            Route::post('price/kebersihan', [PriceController::class, 'kebersihanStore']);
+            Route::get('price/kebersihan/{id}/edit', [PriceController::class, 'kebersihanEdit']);
+            Route::put('price/kebersihan/{id}', [PriceController::class, 'kebersihanUpdate']);
+            Route::get('price/kebersihan/{id}', [PriceController::class, 'kebersihanShow']);
+            Route::delete('price/kebersihan/{id}', [PriceController::class, 'kebersihanDestroy']);
+
+            Route::get('price/airkotor', [PriceController::class, 'airkotor']);
+            Route::post('price/airkotor', [PriceController::class, 'airkotorStore']);
+            Route::get('price/airkotor/{id}/edit', [PriceController::class, 'airkotorEdit']);
+            Route::put('price/airkotor/{id}', [PriceController::class, 'airkotorUpdate']);
+            Route::get('price/airkotor/{id}', [PriceController::class, 'airkotorShow']);
+            Route::delete('price/airkotor/{id}', [PriceController::class, 'airkotorDestroy']);
+
+            Route::get('price/lain', [PriceController::class, 'lain']);
+            Route::post('price/lain', [PriceController::class, 'lainStore']);
+            Route::get('price/lain/{id}/edit', [PriceController::class, 'lainEdit']);
+            Route::put('price/lain/{id}', [PriceController::class, 'lainUpdate']);
+            Route::get('price/lain/{id}', [PriceController::class, 'lainShow']);
+            Route::delete('price/lain/{id}', [PriceController::class, 'lainDestroy']);
         });
     });
 
