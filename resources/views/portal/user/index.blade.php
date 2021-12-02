@@ -27,7 +27,7 @@ Pengguna
             <span>Data Pendaftar</span>
         </a>
         <a class="dropdown-item activation" href="javascript:void(0)">
-            <i class="fas fa-fw fa-qrcode mr-1 ml-1"></i>
+            <i class="fad fa-fw fa-barcode-read fa-swap-opacity mr-1 ml-1"></i>
             <span>Aktivasi Pendaftaran</span>
         </a>
     </div>
@@ -137,7 +137,7 @@ Pengguna
             <div class="modal-body">
                 <div class="row">
                     <!-- Column -->
-                    <div class="col-lg-4 col-xlg-3">
+                    <div class="col-lg-5 col-xlg-5">
                         <div class="form-group mt-4 text-center">
                             <img id="showPicture" class="rounded-circle" width="150" />
                             <div class="row text-center justify-content-md-center">
@@ -150,7 +150,7 @@ Pengguna
                     </div>
                     <!-- Column -->
                     <!-- Column -->
-                    <div class="col-lg-8 col-xlg-9">
+                    <div class="col-lg-7 col-xlg-7">
                         <small class="text-muted pt-4 db">UID</small>
                         <h6 id="showUid"></h6>
                         <small class="text-muted pt-4 db">Nama Lengkap</small>

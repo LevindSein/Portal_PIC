@@ -206,7 +206,7 @@ class UserController extends Controller
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             $user['level'] = User::level($user->level);
@@ -253,7 +253,7 @@ class UserController extends Controller
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             $country = Country::find($user->country_id);
@@ -306,7 +306,7 @@ class UserController extends Controller
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             $user->name = $request->name;
@@ -423,7 +423,7 @@ class UserController extends Controller
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             if($user->id == Auth::user()->id){
@@ -494,9 +494,11 @@ class UserController extends Controller
                     dispatch(new \App\Jobs\UserEmailJob($details));
                 }
                 catch(\Exception $e){
-                    return response()->json(['error' => 'User not found.', 'description' => $e]);
+                    return response()->json(['error' => 'Data not found.', 'description' => $e]);
                 }
             }
+
+            //Cek di Tempat Usaha harus dihapus
 
             $user->save();
 
@@ -519,7 +521,7 @@ class UserController extends Controller
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             if($user->id == Auth::user()->id){
@@ -547,7 +549,7 @@ class UserController extends Controller
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             if(!is_null($user->nonactive)){
@@ -607,7 +609,7 @@ class UserController extends Controller
             try{
                 $user->save();
             } catch (\Exception $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             return response()->json(['success' => 'Data restored.']);
@@ -629,7 +631,7 @@ class UserController extends Controller
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
             $pass = str_shuffle('00112233445566778899');
             $pass = substr($pass,0,7);

@@ -85,7 +85,7 @@ class ProfileController extends Controller
             try{
                 $user = User::findOrFail(Auth::user()->id);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => "User not found."]);
+                return response()->json(['error' => "Data not found.", 'description' => $e]);
             }
 
             $user->uid = $uid;
@@ -128,7 +128,7 @@ class ProfileController extends Controller
         try{
             $user = User::find(Auth::user()->id);
         }catch(ModelNotFoundException $e){
-            return redirect('profile')->with('error', "User not found.");
+            return redirect('profile')->with('error', "Data not found.");
         }
 
         if($request->hasFile('pictureInput')){

@@ -27,7 +27,7 @@ class GroupController extends Controller
             $data = Group::select('id','name');
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                $button = '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="edit pointera"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
                 $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
                 $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                 return $button;
@@ -67,8 +67,8 @@ class GroupController extends Controller
             if(!is_null($request->los)){
                 $los = rtrim(strtoupper($request->los), ',');
                 $los = explode(',', $los);
-                $los = array_unique($los, SORT_STRING);
-                sort($los, SORT_STRING);
+                $los = array_unique($los);
+                natsort($los);
                 $los = implode(',', $los);
             }
 
@@ -206,15 +206,15 @@ class GroupController extends Controller
             if(!is_null($request->los)){
                 $los = rtrim(strtoupper($request->los), ',');
                 $los = explode(',', $los);
-                $los = array_unique($los, SORT_STRING);
-                sort($los, SORT_STRING);
+                $los = array_unique($los);
+                natsort($los);
                 $los = implode(',', $los);
             }
 
             try{
                 $data = Group::findOrFail($decrypted);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             $data->name = $group;

@@ -556,13 +556,9 @@
             $(document).on('shown.bs.tooltip', function (e) {
                 setTimeout(function () {
                     $(e.target).tooltip('hide');
-                }, 1000);
-            });
-            setInterval(function(){
-                setTimeout(function(){
                     $(".tooltip").tooltip("hide");
                 }, 1000);
-            }, 10000);
+            });
 
             setInterval(() => {
                 var email = localStorage.getItem("email");

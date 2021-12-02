@@ -53,50 +53,8 @@ class UserDelete extends Command
 
             $interval = $from->diffInSeconds($end);
 
-            if($interval > 86340){
-                if($history > 5){
-                    $length = $history - 5;
-                    array_splice($json, 0, $length);
-                }
-
-                // Get last id
-                $last_item    = end($json);
-                $last_item_id = $last_item->id;
-
-                $id = ++$last_item_id;
-
-                $person = [
-                    'photo' => $d->photo,
-                    'name' => $d->name,
-                    'phone' => $d->phone,
-                    'email' => $d->email,
-                    'member' => $d->member,
-                    'ktp' => $d->ktp,
-                    'npwp' => $d->npwp,
-                    'address' => $d->address,
-                ];
-
-                $json[] = array(
-                    'id' => $id,
-                    'status' => 'delete permanently',
-                    'active' => $d->active,
-                    'member' => 'by Sistem',
-                    'timestamp' => Carbon::now()->toDateTimeString(),
-                    'data' => $person,
-                );
-                $nonactive = json_encode($json);
-
-                $d->phone = NULL;
-                $d->email = NULL;
-                $d->email_verified_at = NULL;
-                $d->ktp = NULL;
-                $d->npwp = NULL;
-                $d->address = NULL;
-                $d->authority = NULL;
-
-                $d->active = NULL;
-                $d->nonactive = $nonactive;
-                $d->save();
+            if($interval > 2592000){
+                $d->delete();
                 $deleted++ ;
             }
             else{
@@ -104,7 +62,7 @@ class UserDelete extends Command
             }
         }
 
-        \Log::info("UserDelete success. permanent: " . $deleted . " Deleted & " . $undeleted . " < 24 hours");
+        \Log::info("UserDelete success. permanent: " . $deleted . " Deleted & " . $undeleted . " < 30 days");
 
         //unregistered
         $user = User::where('active',2)->get();
