@@ -242,11 +242,27 @@
                             </ul>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}"
+                            <a
+                                class="sidebar-link has-arrow waves-effect waves-dark {{ (request()->is('production/tools*')) ? 'active' : '' }}"
+                                href="javascript:void(0)"
                                 aria-expanded="false">
                                 <i class="fas fa-tachometer-alt mr-1 text-info"></i>
                                 <span class="hide-menu">Alat&nbsp;Meter</span>
                             </a>
+                            <ul aria-expanded="false" class="collapse first-level {{ (request()->is('production/tools*')) ? 'in' : '' }}">
+                                <li class="sidebar-item {{ (request()->is('production/tools/listrik*')) ? 'active' : '' }}">
+                                    <a href="{{url('production/tools/listrik')}}" class="sidebar-link {{ (request()->is('production/tools/listrik*')) ? 'active' : '' }}">
+                                        <i class="mdi mdi-adjust mr-1"></i>
+                                        <span class="hide-menu">Listrik</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item {{ (request()->is('production/tools/airbersih*')) ? 'active' : '' }}">
+                                    <a href="{{url('production/tools/airbersih')}}" class="sidebar-link {{ (request()->is('production/tools/airbersih*')) ? 'active' : '' }}">
+                                        <i class="mdi mdi-adjust mr-1"></i>
+                                        <span class="hide-menu">Air&nbsp;Bersih</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/groups*')) ? 'active' : '' }}" href="{{url('production/groups')}}"

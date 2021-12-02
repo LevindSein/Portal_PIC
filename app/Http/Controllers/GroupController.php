@@ -67,8 +67,8 @@ class GroupController extends Controller
             if(!is_null($request->los)){
                 $los = rtrim(strtoupper($request->los), ',');
                 $los = explode(',', $los);
-                $los = array_unique($los);
-                sort($los);
+                $los = array_unique($los, SORT_STRING);
+                sort($los, SORT_STRING);
                 $los = implode(',', $los);
             }
 
@@ -206,8 +206,8 @@ class GroupController extends Controller
             if(!is_null($request->los)){
                 $los = rtrim(strtoupper($request->los), ',');
                 $los = explode(',', $los);
-                $los = array_unique($los);
-                sort($los);
+                $los = array_unique($los, SORT_STRING);
+                sort($los, SORT_STRING);
                 $los = implode(',', $los);
             }
 

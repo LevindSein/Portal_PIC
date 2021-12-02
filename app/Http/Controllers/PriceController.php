@@ -20,7 +20,6 @@ use App\Models\PLain;
 use DataTables;
 use Carbon\Carbon;
 
-
 class PriceController extends Controller
 {
     public function listrik(){
@@ -147,7 +146,7 @@ class PriceController extends Controller
             try{
                 $data = PListrik::findOrFail($decrypted);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             $json = json_decode($data->data);
@@ -168,8 +167,6 @@ class PriceController extends Controller
 
             $data->data = $json;
             $data->name = $request->name;
-
-            $data->save();
 
             $data->save();
 
@@ -349,7 +346,7 @@ class PriceController extends Controller
             try{
                 $data = PAirBersih::findOrFail($decrypted);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             $json = json_decode($data->data);
@@ -528,7 +525,7 @@ class PriceController extends Controller
             try{
                 $data = PKeamananIpk::findOrFail($decrypted);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             $json = json_decode($data->data);
@@ -544,8 +541,6 @@ class PriceController extends Controller
 
             $data->data = $json;
             $data->name = $request->name;
-
-            $data->save();
 
             $data->save();
 
@@ -699,7 +694,7 @@ class PriceController extends Controller
             try{
                 $data = PKebersihan::findOrFail($decrypted);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             $json = json_decode($data->data);
@@ -713,8 +708,6 @@ class PriceController extends Controller
 
             $data->data = $json;
             $data->name = $request->name;
-
-            $data->save();
 
             $data->save();
 
@@ -868,7 +861,7 @@ class PriceController extends Controller
             try{
                 $data = PAirkotor::findOrFail($decrypted);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             $json = json_decode($data->data);
@@ -882,8 +875,6 @@ class PriceController extends Controller
 
             $data->data = $json;
             $data->name = $request->name;
-
-            $data->save();
 
             $data->save();
 
@@ -1037,7 +1028,7 @@ class PriceController extends Controller
             try{
                 $data = PLain::findOrFail($decrypted);
             }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'User not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             $json = json_decode($data->data);
@@ -1051,8 +1042,6 @@ class PriceController extends Controller
 
             $data->data = $json;
             $data->name = $request->name;
-
-            $data->save();
 
             $data->save();
 

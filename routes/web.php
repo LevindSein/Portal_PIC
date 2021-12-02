@@ -15,6 +15,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ChangeLogController;
 use App\Http\Controllers\PriceController;
+use App\Http\Controllers\ToolsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,6 +102,13 @@ Route::middleware('checkauth')->group(function(){
             Route::put('price/lain/{id}', [PriceController::class, 'lainUpdate']);
             Route::get('price/lain/{id}', [PriceController::class, 'lainShow']);
             Route::delete('price/lain/{id}', [PriceController::class, 'lainDestroy']);
+
+            Route::get('tools/listrik', [ToolsController::class, 'listrik']);
+            Route::post('tools/listrik', [ToolsController::class, 'listrikStore']);
+            Route::get('tools/listrik/{id}/edit', [ToolsController::class, 'listrikEdit']);
+            Route::put('tools/listrik/{id}', [ToolsController::class, 'listrikUpdate']);
+            Route::get('tools/listrik/{id}', [ToolsController::class, 'listrikShow']);
+            Route::delete('tools/listrik/{id}', [ToolsController::class, 'listrikDestroy']);
         });
     });
 

@@ -5,7 +5,7 @@ File: scss
 */
 /*******************************/
 /*******************************/
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;1,300&family=Rubik:wght@300;400&display=swap");
 /*Theme Colors*/
 /*Topbar Colors*/
 /*Sidebar Colors*/
@@ -13,19 +13,6 @@ File: scss
 /*Shadow*/
 /*transitions*/
 /*Dark transparent bg*/
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
-@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
 @import url(icons/font-awesome/css/fontawesome-all.css);
 @import url(icons/simple-line-icons/css/simple-line-icons.css);
 @import url(icons/weather-icons/css/weather-icons.min.css);
@@ -488,7 +475,7 @@ body[data-theme="dark"] .ct-grid {
     --breakpoint-md: 768px;
     --breakpoint-lg: 992px;
     --breakpoint-xl: 1600px;
-    --font-family-sans-serif: "Nunito Sans", sans-serif;
+    --font-family-sans-serif: 'Rubik', sans-serif;
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -520,7 +507,7 @@ section {
 
 body {
     margin: 0;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: 'Rubik', sans-serif;
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5;
@@ -6675,12 +6662,12 @@ a.close.disabled {
 .modal-dialog-centered {
     display: flex;
     align-items: center;
-    min-height: calc(100% - (0.5rem * 2));
+    min-height: calc(100% - (1rem));
 }
 
 .modal-dialog-centered::before {
     display: block;
-    height: calc(100vh - (0.5rem * 2));
+    height: calc(100vh - (1rem));
     content: "";
 }
 
@@ -6805,7 +6792,7 @@ a.close.disabled {
     z-index: 1070;
     display: block;
     margin: 0;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: 'Rubik', sans-serif;
     font-style: normal;
     font-weight: 400;
     line-height: 1.5;
@@ -6930,7 +6917,7 @@ a.close.disabled {
     z-index: 1060;
     display: block;
     max-width: 276px;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: 'Rubik', sans-serif;
     font-style: normal;
     font-weight: 400;
     line-height: 1.5;
@@ -11685,12 +11672,6 @@ html[dir="ltr"] body .p-l-0 {
     padding-left: 0;
 }
 
-#main-wrapper[data-layout="vertical"],
-#main-wrapper[data-layout="horizontal"] {
-    /*This is for the logo bg*/
-    /*This is for the sidebar bg*/
-}
-
 #main-wrapper[data-layout="vertical"] .topbar .top-navbar .navbar-header[data-logobg="skin1"],
 #main-wrapper[data-layout="horizontal"] .topbar .top-navbar .navbar-header[data-logobg="skin1"] {
     background: #2962FF;
@@ -11962,13 +11943,6 @@ html[dir="ltr"] body .p-l-0 {
 /*******************
  Vertical layout
 *******************/
-#main-wrapper[data-layout="vertical"] {
-    /*Vertical*/
-    /*sidebar type*/
-    /*Sidebar position*/
-    /*Header position*/
-    /*Boxed Layout*/
-}
 
 #main-wrapper[data-layout="vertical"] .topbar .top-navbar .navbar-header {
     transition: 0.2s ease-in;
@@ -12043,12 +12017,6 @@ html[dir="ltr"] body .p-l-0 {
  Vertical responsive layout
 *******************/
 @media (min-width: 768px) {
-    #main-wrapper[data-layout="vertical"] {
-        /*Vertical*/
-        /*Sidebar position*/
-        /*Vertical with mini-sidebar*/
-        /*Fixed sidebar with minisidebar*/
-    }
 
     #main-wrapper[data-layout="vertical"][data-sidebartype="full"] .topbar .top-navbar .navbar-header {
         width: 250px;
@@ -12119,9 +12087,6 @@ html[dir="ltr"] body .p-l-0 {
 }
 
 @media (max-width: 766px) {
-    #main-wrapper {
-        /*Header position*/
-    }
 
     #main-wrapper[data-sidebartype="mini-sidebar"] .left-sidebar {
         left: -250px;
@@ -12524,7 +12489,7 @@ Card
 }
 
 .card-hover:hover {
-    webkit-transform: translateY(-4px) scale(1.01);
+    -webkit-transform: translateY(-4px) scale(1.01);
     -moz-transform: translateY(-4px) scale(1.01);
     -ms-transform: translateY(-4px) scale(1.01);
     -o-transform: translateY(-4px) scale(1.01);
@@ -12687,6 +12652,7 @@ Notify
     -webkit-animation: heartbit 1s ease-out;
     -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
+    animation: heartbit 1s ease-out;
 }
 
 .notify .point {
@@ -12701,7 +12667,7 @@ Notify
     top: -10px;
 }
 
-@-moz-keyframes heartbit {
+@keyframes heartbit {
     0% {
         -moz-transform: scale(0);
         opacity: 0.0;
@@ -13094,12 +13060,6 @@ sidebar navigation
     position: relative;
 }
 
-.sidebar-nav ul {
-    /*******************
-         Small cap
-         ******************/
-}
-
 .sidebar-nav ul .sidebar-item {
     width: 250px;
     /*******************
@@ -13171,9 +13131,6 @@ sidebar navigation
     margin: 0 5px;
 }
 
-.sidebar-nav>#sidebarnav>.sidebar-item>.sidebar-link:hover {
-    /*background: rgba(0, 0, 0, 0.04);*/
-}
 
 /*******************
  common m-p removed
@@ -13351,6 +13308,7 @@ html body .waves-notransition {
     line-height: 2.5em;
     border-radius: 50%;
     -webkit-mask-image: none;
+    mask-image:none;
 }
 
 .waves-input-wrapper {
@@ -17320,7 +17278,7 @@ body .jqstooltip {
     padding: 10px 20px;
     background: #2962FF;
     color: #fff;
-    ext-align: center;
+    text-align: center;
     pointer-events: none;
     z-index: 1;
     -webkit-transition: opacity .2s linear;
@@ -17558,7 +17516,7 @@ label {
 .error-box {
     height: 100%;
     position: fixed;
-    background: url(../../../../assets/images/background/error-bg.jpg) no-repeat center center #fff;
+    background: url(../../assets/images/background/error-bg.jpg) no-repeat center center #fff;
     width: 100%;
 }
 
@@ -17664,23 +17622,6 @@ table.footable thead tr.footable-filtering th ul.dropdown-menu li .checkbox labe
     margin-left: 0;
     border-bottom-left-radius: .25rem;
     border-top-left-radius: .25rem;
-}
-
-html[dir="rtl"] {
-    /*******************
-Padding margin property
-*******************/
-    /** * Zero */
-    /* Stickey inner-left-part */
-    /* plugins */
-    /*.sl-icon i,
-    [class*=" ti-"],
-    [class^=ti-] {
-        float: right;
-        margin-left: 10px;
-        line-height: 20px;
-    }*/
-    /* Vertical responsive layout */
 }
 
 html[dir="rtl"] body .m-t-5 {
@@ -18313,10 +18254,6 @@ html[dir="rtl"] .treeview span.icon {
     margin-left: 5px;
 }
 
-html[dir="rtl"] #main-wrapper {
-    /*sidebar type*/
-}
-
 html[dir="rtl"] #main-wrapper[data-sidebartype="full"] .page-wrapper {
     margin-right: 250px;
     margin-left: 0;
@@ -18342,10 +18279,6 @@ html[dir="rtl"] .dz-hidden-input {
 }
 
 @media (min-width: 768px) {
-    html[dir="rtl"] #main-wrapper {
-        /*Sidebar position*/
-        /*Fixed sidebar with minisidebar*/
-    }
 
     html[dir="rtl"] #main-wrapper[data-sidebar-position="fixed"][data-sidebartype="full"] .topbar .top-navbar .navbar-collapse,
     html[dir="rtl"] #main-wrapper[data-sidebar-position="fixed"][data-sidebartype="overlay"] .topbar .top-navbar .navbar-collapse {
@@ -19350,7 +19283,7 @@ User card page
 .el-element-overlay .el-card-item .el-overlay-1:hover img {
     -ms-transform: scale(1.2) translateZ(0);
     -webkit-transform: scale(1.2) translateZ(0);
-    /* transform: scale(1.2) translateZ(0); */
+    transform: scale(1.2) translateZ(0);
 }
 
 .el-element-overlay .el-card-item .el-overlay-1 .el-info {
@@ -20703,14 +20636,6 @@ Template Name: Admin Template
 Author: Niravjoshi / Wrappixel
 File: scss
 */
-#main-wrapper[data-layout="horizontal"] {
-    /****************************
-    This is for the fixed header layout
-    ***************************/
-    /****************************
-    This is for the fixed sidebar layout
-    ***************************/
-}
 
 #main-wrapper[data-layout="horizontal"][data-header-position="fixed"] .topbar {
     position: fixed;
@@ -21055,5 +20980,5 @@ File: scss
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background: url(../../../img/pulse.gif) center no-repeat #fff
+    background: url(../../assets/images/pulse.gif) center no-repeat #fff
 }
