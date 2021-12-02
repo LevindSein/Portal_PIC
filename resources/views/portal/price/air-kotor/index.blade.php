@@ -14,10 +14,6 @@ Tarif Air Kotor
             <i class="fas fa-fw fa-plus mr-1 ml-1"></i>
             <span>Tambah Data</span>
         </a>
-        <a class="dropdown-item simulation" href="javascript:void(0)">
-            <i class="fas fa-fw fa-function mr-1 ml-1"></i>
-            <span>Simulasi</span>
-        </a>
     </div>
 </div>
 @endsection
