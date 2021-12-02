@@ -168,7 +168,11 @@ class PriceController extends Controller
             $data->data = $json;
             $data->name = $request->name;
 
-            $data->save();
+            try{
+                $data->save();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data saved.']);
         }
@@ -214,7 +218,11 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data->delete();
+            try{
+                $data->delete();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to delete.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data deleted.']);
         }
@@ -367,7 +375,11 @@ class PriceController extends Controller
             $data->data = $json;
             $data->name = $request->name;
 
-            $data->save();
+            try{
+                $data->save();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data saved.']);
         }
@@ -413,7 +425,11 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data->delete();
+            try{
+                $data->delete();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to delete.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data deleted.']);
         }
@@ -542,7 +558,11 @@ class PriceController extends Controller
             $data->data = $json;
             $data->name = $request->name;
 
-            $data->save();
+            try{
+                $data->save();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data saved.']);
         }
@@ -588,7 +608,11 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data->delete();
+            try{
+                $data->delete();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to delete.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data deleted.']);
         }
@@ -709,7 +733,11 @@ class PriceController extends Controller
             $data->data = $json;
             $data->name = $request->name;
 
-            $data->save();
+            try{
+                $data->save();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data saved.']);
         }
@@ -755,7 +783,11 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data->delete();
+            try{
+                $data->delete();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to delete.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data deleted.']);
         }
@@ -876,7 +908,11 @@ class PriceController extends Controller
             $data->data = $json;
             $data->name = $request->name;
 
-            $data->save();
+            try{
+                $data->save();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data saved.']);
         }
@@ -922,7 +958,11 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data->delete();
+            try{
+                $data->delete();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to delete.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data deleted.']);
         }
@@ -1043,7 +1083,11 @@ class PriceController extends Controller
             $data->data = $json;
             $data->name = $request->name;
 
-            $data->save();
+            try{
+                $data->save();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data saved.']);
         }
@@ -1089,7 +1133,11 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data->delete();
+            try{
+                $data->delete();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to delete.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data deleted.']);
         }

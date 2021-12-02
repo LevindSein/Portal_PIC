@@ -342,7 +342,11 @@ class UserController extends Controller
             $user->npwp = $request->npwp;
             $user->address = $request->address;
 
-            $user->save();
+            try{
+                $user->save();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+            }
             return response()->json(['success' => 'Data saved.']);
         }
         else{
@@ -500,7 +504,11 @@ class UserController extends Controller
 
             //Cek di Tempat Usaha harus dihapus
 
-            $user->save();
+            try{
+                $user->save();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to delete.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data deleted.']);
         }
@@ -528,7 +536,11 @@ class UserController extends Controller
                 return response()->json(['error' => 'Data currently.']);
             }
 
-            $user->delete();
+            try{
+                $user->delete();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to delete.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data deleted.']);
         }
@@ -606,10 +618,11 @@ class UserController extends Controller
             $nonactive = json_encode($json);
 
             $user->nonactive = $nonactive;
+
             try{
                 $user->save();
             } catch (\Exception $e){
-                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+                return response()->json(['error' => 'Data failed to restore.', 'description' => $e]);
             }
 
             return response()->json(['success' => 'Data restored.']);
@@ -637,7 +650,12 @@ class UserController extends Controller
             $pass = substr($pass,0,7);
 
             $user->password = Hash::make(sha1(md5(hash('gost', $pass))));
-            $user->save();
+
+            try{
+                $user->save();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Password failed to reset.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Password resetted.', 'pass' => $pass]);
         }

@@ -203,7 +203,12 @@ class ChangeLogController extends Controller
             $data = json_encode($data);
 
             $dataset->data = $data;
-            $dataset->save();
+
+            try{
+                $dataset->save();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data saved.']);
         }
@@ -233,7 +238,11 @@ class ChangeLogController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data->delete();
+            try{
+                $data->delete();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to delete.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data deleted.']);
         }

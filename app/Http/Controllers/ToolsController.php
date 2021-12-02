@@ -129,7 +129,11 @@ class ToolsController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data->delete();
+            try{
+                $data->delete();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to delete.", 'description' => $e]);
+            }
 
             return response()->json(['success' => 'Data deleted.']);
         }

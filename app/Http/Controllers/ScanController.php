@@ -69,10 +69,20 @@ class ScanController extends Controller
                 $user = User::where('member',$member)->first();
                 if(!is_null($user)){
                     $user->activation_code = $activation;
-                    $user->save();
+
+                    try{
+                        $user->save();
+                    } catch(\Exception $e){
+                        return response()->json(['error' => "Data failed to sent.", 'description' => $e]);
+                    }
                 }
                 $code->submit = 1;
-                $code->save();
+
+                try{
+                    $code->save();
+                } catch(\Exception $e){
+                    return response()->json(['error' => "Data failed to sent.", 'description' => $e]);
+                }
             }
             else{
                 return response()->json(['error' => 'Activation code invalid.']);

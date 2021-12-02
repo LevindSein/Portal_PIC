@@ -103,10 +103,18 @@ class ProfileController extends Controller
             if (Hash::check(sha1(md5(hash('gost',$password))), $user->password)) {
                 if(!is_null($passwordNew)){
                     $user->password = Hash::make(sha1(md5(hash('gost',$passwordNew))));
-                    $user->save();
+                    try{
+                        $user->save();
+                    } catch(\Exception $e){
+                        return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+                    }
                 }
                 else{
-                    $user->save();
+                    try{
+                        $user->save();
+                    } catch(\Exception $e){
+                        return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+                    }
                 }
             }
             else{
@@ -141,11 +149,21 @@ class ProfileController extends Controller
             $image_name = Auth::user()->id;
             $image_full_name = "users/" . $image_name . '.png';
             $location = storage_path('app/public/' . $image_full_name);
-            $image->save($location);
+
+            try{
+                $image->save($location);
+            } catch(\Exception $e){
+                return response()->json(['error' => "Image failed to save.", 'description' => $e]);
+            }
 
             $data = $image_full_name;
             $user->photo = "storage/" . $data;
-            $user->save();
+
+            try{
+                $user->save();
+            } catch(\Exception $e){
+                return redirect('profile')->with('error', 'Profile picture failed to change.');
+            }
 
             return redirect('profile')->with('success', 'Profile picture changed.');
         }
