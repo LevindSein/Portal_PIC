@@ -35,7 +35,7 @@ class GroupController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.group.index');
+        return view('portal.point.group.index');
     }
 
     /**
@@ -90,7 +90,9 @@ class GroupController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
-            return response()->json(['success' => 'Data saved.']);
+            $searchKey = $request->group;
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
         else{
             abort(404);

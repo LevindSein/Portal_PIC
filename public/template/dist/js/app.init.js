@@ -13,6 +13,29 @@ $(function() {
             HeaderPosition: true, // it can be true / false ( true means Fixed and false means absolute )
             BoxedLayout: false, // it can be true / false ( true means Boxed and false means Fluid )
         });
+        if(sidebarType_cookie == 'full'){
+            $(".menuku").css("padding-left", "1rem");
+
+            $(".left-sidebar").hover(
+                function () {
+                    $(".menuku").css("padding-left", "1rem");
+                },
+                function () {
+                    $(".menuku").css("padding-left", "1rem");
+                }
+            );
+        }
+        else{
+            $(".menuku").css("padding-left", "0px");
+            $(".left-sidebar").hover(
+                function () {
+                    $(".menuku").css("padding-left", "1rem");
+                },
+                function () {
+                    $(".menuku").css("padding-left", "0px");
+                }
+            );
+        }
     }
     else{
         setCookie('sidebarType','full',1);
@@ -27,6 +50,16 @@ $(function() {
             HeaderPosition: true, // it can be true / false ( true means Fixed and false means absolute )
             BoxedLayout: false, // it can be true / false ( true means Boxed and false means Fluid )
         });
+        $(".menuku").css("padding-left", "1rem");
+
+        $(".left-sidebar").hover(
+            function () {
+                $(".menuku").css("padding-left", "1rem");
+            },
+            function () {
+                $(".menuku").css("padding-left", "1rem");
+            }
+        );
     }
 
 
@@ -45,6 +78,15 @@ $(function() {
                 HeaderPosition: true, // it can be true / false ( true means Fixed and false means absolute )
                 BoxedLayout: false, // it can be true / false ( true means Boxed and false means Fluid )
             });
+            $(".menuku").css("padding-left", "0px");
+            $(".left-sidebar").hover(
+                function () {
+                    $(".menuku").css("padding-left", "1rem");
+                },
+                function () {
+                    $(".menuku").css("padding-left", "0px");
+                }
+            );
         }
         else{
             setCookie('sidebarType','full',1);
@@ -59,6 +101,15 @@ $(function() {
                 HeaderPosition: true, // it can be true / false ( true means Fixed and false means absolute )
                 BoxedLayout: false, // it can be true / false ( true means Boxed and false means Fluid )
             });
+            $(".menuku").css("padding-left", "1rem");
+            $(".left-sidebar").hover(
+                function () {
+                    $(".menuku").css("padding-left", "1rem");
+                },
+                function () {
+                    $(".menuku").css("padding-left", "1rem");
+                }
+            );
         }
     });
 

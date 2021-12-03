@@ -57,7 +57,7 @@ Alat Listrik
                 }
             },
             "serverSide": true,
-            "ajax": "/production/tools/listrik",
+            "ajax": "/production/point/tools/listrik",
             "columns": [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', class : 'text-center' },
                 { data: 'name', name: 'name', class : 'text-center' },
@@ -90,10 +90,13 @@ Alat Listrik
         });
 
         setInterval(function(){
-            dtableReload();
+            dtableReload('');
         }, 5000);
 
-        function dtableReload(){
+        function dtableReload(searchKey){
+            if(searchKey){
+                dtable.search(searchKey).draw();
+            }
             dtable.ajax.reload(function(){
                 console.log("Refresh Automatic")
             }, false);

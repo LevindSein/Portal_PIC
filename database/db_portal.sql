@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2021 at 11:57 PM
+-- Generation Time: Dec 03, 2021 at 04:46 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -630,7 +630,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `photo`, `uid`, `name`, `level`, `country_id`, `phone`, `email`, `email_verified_at`, `member`, `ktp`, `npwp`, `address`, `authority`, `active`, `password`, `remember_token`, `nonactive`, `activation_code`, `available`, `created_at`, `updated_at`) VALUES
-(1598, 'storage/users/1.png', 'super_admin', 'MASTER', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-11-28 10:39:37', 'BP3C11111111', '3211111111111111', NULL, 'Di bawah langit berpijak pada bumi.', NULL, 1, '$2y$10$JRff2.2ySRefq3s5Gv6h2.GS4ZVdwJrUibKrLYl.tDj9S/P0oEuMS', NULL, NULL, NULL, NULL, '2021-11-09 16:22:51', '2021-12-01 17:59:54');
+(1598, 'storage/users/1.png', 'super_admin', 'MASTER', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-11-28 10:39:37', 'BP3C11111111', '3211111111111111', NULL, 'Di bawah langit berpijak pada bumi.', NULL, 1, '$argon2id$v=19$m=1024,t=2,p=2$bEQ4ZjBPSzJOZEduSG1QeQ$6GYMfgK5Pg+ibGbp7v2jrAyfRmIqe9Aa4/N9Qpb8KM4', NULL, NULL, NULL, NULL, '2021-11-09 16:22:51', '2021-12-03 03:45:48');
 
 -- --------------------------------------------------------
 

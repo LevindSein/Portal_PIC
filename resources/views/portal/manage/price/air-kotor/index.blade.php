@@ -1,7 +1,7 @@
 @extends('portal.layout.master')
 
 @section('content-title')
-Tarif Keamanan IPK
+Tarif Air Kotor
 @endsection
 
 @section('content-button')
@@ -44,7 +44,7 @@ Tarif Keamanan IPK
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tarif Keamanan IPK</h5>
+                <h5 class="modal-title">Tarif Air Kotor</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -54,10 +54,6 @@ Tarif Keamanan IPK
                 <h4 id="showName"></h4>
                 <small class="text-muted pt-4 db">Tarif</small>
                 <h6 id="showTarif"></h6>
-                <small class="text-muted pt-4 db">Keamanan</small>
-                <h6 id="showKeamanan"></h6>
-                <small class="text-muted pt-4 db">IPK</small>
-                <h6 id="showIpk"></h6>
                 <small class="text-muted pt-4 db">Dibuat oleh</small>
                 <h6 id="showCreate"></h6>
                 <small class="text-muted pt-4 db">Diperbaharui oleh</small>
@@ -92,27 +88,6 @@ Tarif Keamanan IPK
                                 <span class="input-group-text">Rp.</span>
                             </div>
                             <input maxlength="11" required type="text" id="tarif" name="tarif" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">/ Los</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Keamanan <span class="text-danger">*</span></label>
-                        <div class="input-group">
-                            <input maxlength="11" required type="text" id="keamanan" name="keamanan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-line">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>IPK <span class="text-danger">*</span></label>
-                        <div class="input-group">
-                            <input maxlength="11" required type="text" id="ipk" name="ipk" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-line">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">%</span>
-                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -133,31 +108,11 @@ Tarif Keamanan IPK
 @section('content-js')
 <script>
     $(document).ready(function(){
-        $("#keamanan").on('input', function (e) {
-            var keamanan = $("#keamanan").val();
-
-            var ipk = 100 - keamanan;
-            if(ipk < 0){
-                ipk = 0;
-            }
-            $("#ipk").val(ipk);
-        });
-
-        $("#ipk").on('input', function (e) {
-            var ipk = $("#ipk").val();
-
-            var keamanan = 100 - ipk;
-            if(keamanan < 0){
-                keamanan = 0;
-            }
-            $("#keamanan").val(keamanan);
-        });
-
         $(".number").on('input', function (e) {
             if(e.which >= 37 && e.which <= 40) return;
 
             if (/^[0-9.,]+$/.test($(this).val())) {
-                $(this).val(parseFloat($(this).val().replace(/,/g, '')).toLocaleString('en-US'));
+                $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
             }
             else {
                 $(this).val($(this).val().substring(0, $(this).val().length - 1));
@@ -185,7 +140,7 @@ Tarif Keamanan IPK
                 }
             },
             "serverSide": true,
-            "ajax": "/production/price/keamananipk",
+            "ajax": "/production/manage/prices/airkotor",
             "columns": [
                 { data: 'name', name: 'name', class : 'text-center' },
                 { data: 'action', name: 'action', class : 'text-center' },
@@ -216,10 +171,13 @@ Tarif Keamanan IPK
         });
 
         setInterval(function(){
-            dtableReload();
+            dtableReload('');
         }, 5000);
 
-        function dtableReload(){
+        function dtableReload(searchKey){
+            if(searchKey){
+                dtable.search(searchKey).draw();
+            }
             dtable.ajax.reload(function(){
                 console.log("Refresh Automatic")
             }, false);
@@ -227,7 +185,7 @@ Tarif Keamanan IPK
 
         $(".add").click( function(){
             $("#priceForm")[0].reset();
-            $('.titles').text('Tambah Tarif Keamanan IPK');
+            $('.titles').text('Tambah Tarif Air Kotor');
             $("#priceFormValue").val('add');
             $('#priceModal').modal('show');
         });
@@ -235,19 +193,17 @@ Tarif Keamanan IPK
         $(document).on('click', '.edit', function(){
             id = $(this).attr('id');
             $("#priceForm")[0].reset();
-            $('.titles').text('Edit data Tarif Keamanan IPK');
+            $('.titles').text('Edit data Tarif Air Kotor');
             $("#priceFormValue").val('update');
 
             $.ajax({
-                url: "/production/price/keamananipk/" + id + "/edit",
+                url: "/production/manage/prices/airkotor/" + id + "/edit",
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
                         $("#name").val(data.show.name);
-                        $("#tarif").val(Number(data.show.data.tarif).toLocaleString('en-US'));
-                        $("#keamanan").val(data.show.data.keamanan);
-                        $("#ipk").val(data.show.data.ipk);
+                        $("#tarif").val(Number(data.show.data.tarif).toLocaleString('id-ID'));
                     }
 
                     if(data.info){
@@ -311,7 +267,7 @@ Tarif Keamanan IPK
                 '_token' : token,
             }
             if(value == 'delete'){
-                url = "/production/price/keamananipk/" + id;
+                url = "/production/manage/prices/airkotor/" + id;
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Hapus";
@@ -324,11 +280,11 @@ Tarif Keamanan IPK
 
             value = $("#priceFormValue").val();
             if(value == 'add'){
-                url = "/production/price/keamananipk";
+                url = "/production/manage/prices/airkotor";
                 type = "POST";
             }
             else if(value == 'update'){
-                url = "/production/price/keamananipk/" + id;
+                url = "/production/manage/prices/airkotor/" + id;
                 type = "PUT";
             }
             dataset = $(this).serialize();
@@ -372,6 +328,7 @@ Tarif Keamanan IPK
                             "preventDuplicates": true,
                         };
                         toastr.success(data.success);
+                        dtableReload(data.searchKey);
                     }
 
                     if(data.info){
@@ -401,8 +358,6 @@ Tarif Keamanan IPK
                     if(data.description){
                         console.log(data.description);
                     }
-
-                    dtableReload();
                 },
                 error:function(data){
                     if (data.status == 422) {
@@ -440,15 +395,13 @@ Tarif Keamanan IPK
             id = $(this).attr('id');
 
             $.ajax({
-                url: "/production/price/keamananipk/" + id,
+                url: "/production/manage/prices/airkotor/" + id,
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
                         $("#showName").text(data.show.name);
-                        $("#showTarif").text("Rp. " + Number(data.show.data.tarif).toLocaleString('en-US') + " / Los");
-                        $("#showKeamanan").text(data.show.data.keamanan + " %");
-                        $("#showIpk").text(data.show.data.ipk + " %");
+                        $("#showTarif").text("Rp. " + Number(data.show.data.tarif).toLocaleString('id-ID'));
                         $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
                         $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                     }

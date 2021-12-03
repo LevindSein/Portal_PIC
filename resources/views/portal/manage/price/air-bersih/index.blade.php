@@ -1,7 +1,7 @@
 @extends('portal.layout.master')
 
 @section('content-title')
-Tarif Kebersihan
+Tarif Air Bersih
 @endsection
 
 @section('content-button')
@@ -44,7 +44,7 @@ Tarif Kebersihan
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tarif Kebersihan</h5>
+                <h5 class="modal-title">Tarif Air Bersih</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -52,8 +52,20 @@ Tarif Kebersihan
             <div class="modal-body">
                 <small class="text-muted pt-4 db">Nama Tarif</small>
                 <h4 id="showName"></h4>
-                <small class="text-muted pt-4 db">Tarif</small>
-                <h6 id="showTarif"></h6>
+                <small class="text-muted pt-4 db">Tarif 1</small>
+                <h6 id="showTarif1"></h6>
+                <small class="text-muted pt-4 db">Tarif 2</small>
+                <h6 id="showTarif2"></h6>
+                <small class="text-muted pt-4 db">Pemeliharaan</small>
+                <h6 id="showPemeliharaan"></h6>
+                <small class="text-muted pt-4 db">Beban</small>
+                <h6 id="showBeban"></h6>
+                <small class="text-muted pt-4 db">Air Kotor</small>
+                <h6 id="showAirKotor"></h6>
+                <small class="text-muted pt-4 db">Denda</small>
+                <h6 id="showDenda"></h6>
+                <small class="text-muted pt-4 db">PPN</small>
+                <h6 id="showPpn"></h6>
                 <small class="text-muted pt-4 db">Dibuat oleh</small>
                 <h6 id="showCreate"></h6>
                 <small class="text-muted pt-4 db">Diperbaharui oleh</small>
@@ -67,7 +79,7 @@ Tarif Kebersihan
 </div>
 
 <div id="priceModal" class="modal fade" role="dialog" tabIndex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title titles">{Title}</h5>
@@ -81,15 +93,78 @@ Tarif Kebersihan
                         <label>Nama Tarif <span class="text-danger">*</span></label>
                         <input required type="text" id="name" name="name" autocomplete="off" maxlength="100" placeholder="Contoh: Tarif 1" class="form-control form-control-line">
                     </div>
-                    <div class="form-group">
-                        <label>Tarif <span class="text-danger">*</span></label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Rp.</span>
+                    <div class="row">
+                        <div class="col-lg-6 col-xlg-6">
+                            <div class="form-group">
+                                <label>Tarif 1 <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Rp.</span>
+                                    </div>
+                                    <input maxlength="11" required type="text" id="tarif1" name="tarif1" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">/ M<sup>3</sup></span>
+                                    </div>
+                                </div>
                             </div>
-                            <input maxlength="11" required type="text" id="tarif" name="tarif" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">/ Los</span>
+                            <div class="form-group">
+                                <label>tarif 2 <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Rp.</span>
+                                    </div>
+                                    <input maxlength="11" required type="text" id="tarif2" name="tarif2" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">/ M<sup>3</sup></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Pemeliharaan <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Rp.</span>
+                                    </div>
+                                    <input maxlength="11" required type="text" id="pemeliharaan" name="pemeliharaan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Beban <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Rp.</span>
+                                    </div>
+                                    <input maxlength="11" required type="text" id="beban" name="beban" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-xlg-6">
+                            <div class="form-group">
+                                <label>Air Kotor <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input maxlength="3" required type="text" id="airkotor" name="airkotor" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Denda <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Rp.</span>
+                                    </div>
+                                    <input maxlength="11" required type="text" id="denda" name="denda" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>PPN <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input maxlength="3" required type="text" id="ppn" name="ppn" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -115,7 +190,7 @@ Tarif Kebersihan
             if(e.which >= 37 && e.which <= 40) return;
 
             if (/^[0-9.,]+$/.test($(this).val())) {
-                $(this).val(parseFloat($(this).val().replace(/,/g, '')).toLocaleString('en-US'));
+                $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
             }
             else {
                 $(this).val($(this).val().substring(0, $(this).val().length - 1));
@@ -143,7 +218,7 @@ Tarif Kebersihan
                 }
             },
             "serverSide": true,
-            "ajax": "/production/price/kebersihan",
+            "ajax": "/production/manage/prices/airbersih",
             "columns": [
                 { data: 'name', name: 'name', class : 'text-center' },
                 { data: 'action', name: 'action', class : 'text-center' },
@@ -174,10 +249,13 @@ Tarif Kebersihan
         });
 
         setInterval(function(){
-            dtableReload();
+            dtableReload('');
         }, 5000);
 
-        function dtableReload(){
+        function dtableReload(searchKey){
+            if(searchKey){
+                dtable.search(searchKey).draw();
+            }
             dtable.ajax.reload(function(){
                 console.log("Refresh Automatic")
             }, false);
@@ -185,7 +263,7 @@ Tarif Kebersihan
 
         $(".add").click( function(){
             $("#priceForm")[0].reset();
-            $('.titles').text('Tambah Tarif Kebersihan');
+            $('.titles').text('Tambah Tarif Air Bersih');
             $("#priceFormValue").val('add');
             $('#priceModal').modal('show');
         });
@@ -193,17 +271,23 @@ Tarif Kebersihan
         $(document).on('click', '.edit', function(){
             id = $(this).attr('id');
             $("#priceForm")[0].reset();
-            $('.titles').text('Edit data Tarif Kebersihan');
+            $('.titles').text('Edit data Tarif Air Bersih');
             $("#priceFormValue").val('update');
 
             $.ajax({
-                url: "/production/price/kebersihan/" + id + "/edit",
+                url: "/production/manage/prices/airbersih/" + id + "/edit",
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
                         $("#name").val(data.show.name);
-                        $("#tarif").val(Number(data.show.data.tarif).toLocaleString('en-US'));
+                        $("#tarif1").val(Number(data.show.data.tarif1).toLocaleString('id-ID'));
+                        $("#tarif2").val(Number(data.show.data.tarif2).toLocaleString('id-ID'));
+                        $("#pemeliharaan").val(Number(data.show.data.pemeliharaan).toLocaleString('id-ID'));
+                        $("#beban").val(Number(data.show.data.beban).toLocaleString('id-ID'));
+                        $("#airkotor").val(data.show.data.airkotor);
+                        $("#denda").val(Number(data.show.data.denda).toLocaleString('id-ID'));
+                        $("#ppn").val(data.show.data.ppn);
                     }
 
                     if(data.info){
@@ -267,7 +351,7 @@ Tarif Kebersihan
                 '_token' : token,
             }
             if(value == 'delete'){
-                url = "/production/price/kebersihan/" + id;
+                url = "/production/manage/prices/airbersih/" + id;
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Hapus";
@@ -280,11 +364,11 @@ Tarif Kebersihan
 
             value = $("#priceFormValue").val();
             if(value == 'add'){
-                url = "/production/price/kebersihan";
+                url = "/production/manage/prices/airbersih";
                 type = "POST";
             }
             else if(value == 'update'){
-                url = "/production/price/kebersihan/" + id;
+                url = "/production/manage/prices/airbersih/" + id;
                 type = "PUT";
             }
             dataset = $(this).serialize();
@@ -328,6 +412,7 @@ Tarif Kebersihan
                             "preventDuplicates": true,
                         };
                         toastr.success(data.success);
+                        dtableReload(data.searchKey);
                     }
 
                     if(data.info){
@@ -357,8 +442,6 @@ Tarif Kebersihan
                     if(data.description){
                         console.log(data.description);
                     }
-
-                    dtableReload();
                 },
                 error:function(data){
                     if (data.status == 422) {
@@ -396,13 +479,19 @@ Tarif Kebersihan
             id = $(this).attr('id');
 
             $.ajax({
-                url: "/production/price/kebersihan/" + id,
+                url: "/production/manage/prices/airbersih/" + id,
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
                         $("#showName").text(data.show.name);
-                        $("#showTarif").text("Rp. " + Number(data.show.data.tarif).toLocaleString('en-US') + " / Los");
+                        $("#showTarif1").text("Rp. " + Number(data.show.data.tarif1).toLocaleString('id-ID'));
+                        $("#showTarif2").text("Rp. " + Number(data.show.data.tarif2).toLocaleString('id-ID'));
+                        $("#showPemeliharaan").text("Rp. " + Number(data.show.data.pemeliharaan).toLocaleString('id-ID'));
+                        $("#showBeban").text("Rp. " + Number(data.show.data.beban).toLocaleString('id-ID'));
+                        $("#showAirKotor").text(data.show.data.airkotor + " %");
+                        $("#showDenda").text("Rp. " + Number(data.show.data.denda).toLocaleString('id-ID'));
+                        $("#showPpn").text(data.show.data.ppn + " %");
                         $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
                         $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                     }

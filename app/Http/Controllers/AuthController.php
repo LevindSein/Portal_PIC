@@ -213,7 +213,7 @@ class AuthController extends Controller
         $password = $request->password;
 
         $uid = Identity::make('uid');
-        $member = 'BP3C'.Identity::make('member');
+        $member = Identity::make('member');
         $data['uid'] = $uid;
         $data['name'] = $nama;
         $data['email'] = $email;

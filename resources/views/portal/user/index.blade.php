@@ -962,6 +962,7 @@ Pengguna
                             "preventDuplicates": true,
                         };
                         toastr.success(data.success);
+                        dtableReload(data.searchKey);
 
                         if(value == 'reset'){
                             $('#newPassword').html(data.pass);
@@ -1004,7 +1005,6 @@ Pengguna
                     if(data.description){
                         console.log(data.description);
                     }
-                    dtableReload();
                 },
                 error:function(data){
                     if (data.status == 422) {
@@ -1081,10 +1081,13 @@ Pengguna
         }
 
         setInterval(function(){
-            dtableReload();
+            dtableReload('');
         }, 5000);
 
-        function dtableReload(){
+        function dtableReload(searchKey){
+            if(searchKey){
+                dtable.search(searchKey).draw();
+            }
             dtable.ajax.reload(function(){
                 console.log("Refresh Automatic")
             }, false);

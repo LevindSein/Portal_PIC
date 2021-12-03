@@ -13199,7 +13199,7 @@ Down arrow
     -o-transform-origin: top;
     transform-origin: top;
     top: 26px;
-    right: 15px;
+    right: 25px;
     -webkit-transition: all .3s ease-out;
     -o-transition: all .3s ease-out;
     transition: all .3s ease-out;
@@ -20997,6 +20997,10 @@ File: scss
 
 .iti {
     width: 100%;
+}
+
+.menuku {
+    padding-left: 1rem;
 }
 
 .se-pre-con {

@@ -51,7 +51,7 @@ Daftar Log Perubahan
                 <h6 id="showTitle"></h6>
                 <small class="text-muted pt-4 db">Dibuat oleh</small>
                 <h6 id="showCreate"></h6>
-                <small class="text-muted pt-4 db">Disunting oleh</small>
+                <small class="text-muted pt-4 db">Diperbaharui oleh</small>
                 <h6 id="showEdit"></h6>
                 <small class="text-muted pt-4 db">Data Log</small>
                 <h6 id="showData"></h6>
@@ -142,10 +142,13 @@ Daftar Log Perubahan
         });
 
         setInterval(function(){
-            dtableReload();
+            dtableReload('');
         }, 5000);
 
-        function dtableReload(){
+        function dtableReload(searchKey){
+            if(searchKey){
+                dtable.search(searchKey).draw();
+            }
             dtable.ajax.reload(function(){
                 console.log("Refresh Automatic")
             }, false);
@@ -295,6 +298,7 @@ Daftar Log Perubahan
                             "preventDuplicates": true,
                         };
                         toastr.success(data.success);
+                        dtableReload(data.searchKey);
                     }
 
                     if(data.info){
@@ -324,8 +328,6 @@ Daftar Log Perubahan
                     if(data.description){
                         console.log(data.description);
                     }
-
-                    dtableReload();
                 },
                 error:function(data){
                     if (data.status == 422) {

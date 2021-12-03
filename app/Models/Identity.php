@@ -13,20 +13,13 @@ class Identity extends Model
 
     public static function make($type){
         if($type == 'uid'){
-            $data = "aabbccddeeffgghhkkmmnnppqqrrssttwwyy2233445566778899";
-            $data = str_shuffle($data);
-            $data = substr($data, 0, 8);
+            $data = substr(str_shuffle(str_repeat("abcdefghkmnprstuwy",3)), 0, 5).mt_rand(111,999);
         }
         else if($type == 'member'){
-            $data = "11223344556677889900";
-            $data = str_shuffle($data);
-            $data = substr($data, 0, 8);
+            $data = 'BP3C'.mt_rand(11111111, 99999999);
         }
         else if($type == 'password'){
-            $data = "111222333444555666777888999";
-            $data = str_shuffle($data);
-            $data = substr($data, 0, 8);
-            return $data;
+            $data = mt_rand(11111111, 99999999);
         }
 
         if(User::where($type, $data)->exists())

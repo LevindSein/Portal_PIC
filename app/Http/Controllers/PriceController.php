@@ -39,16 +39,16 @@ class PriceController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.price.listrik.index');
+        return view('portal.manage.price.listrik.index');
     }
 
     public function listrikStore(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            $data['beban'] = str_replace(',','',$request->beban);
-            $data['blok1'] = str_replace(',','',$request->blok1);
-            $data['blok2'] = str_replace(',','',$request->blok2);
-            $data['denda1'] = str_replace(',','',$request->denda1);
+            $data['beban'] = str_replace('.','',$request->beban);
+            $data['blok1'] = str_replace('.','',$request->blok1);
+            $data['blok2'] = str_replace('.','',$request->blok2);
+            $data['denda1'] = str_replace('.','',$request->denda1);
 
             Validator::make($data, [
                 'name' => 'required|max:100|unique:App\Models\PListrik,name',
@@ -63,12 +63,12 @@ class PriceController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'beban' => str_replace(',','',$request->beban),
-                'blok1' => str_replace(',','',$request->blok1),
-                'blok2' => str_replace(',','',$request->blok2),
+                'beban' => str_replace('.','',$request->beban),
+                'blok1' => str_replace('.','',$request->blok1),
+                'blok2' => str_replace('.','',$request->blok2),
                 'standar' => $request->standar,
                 'pju' => $request->pju,
-                'denda1' => str_replace(',','',$request->denda1),
+                'denda1' => str_replace('.','',$request->denda1),
                 'denda2' => $request->denda2,
                 'ppn' => $request->ppn,
                 'user_create' => Auth::user()->id,
@@ -87,7 +87,9 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
-            return response()->json(['success' => 'Data saved.']);
+            $searchKey = $request->name;
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
         else{
             abort(404);
@@ -120,10 +122,10 @@ class PriceController extends Controller
     public function listrikUpdate(Request $request, $id){
         if($request->ajax()){
             $data = $request->all();
-            $data['beban'] = str_replace(',','',$request->beban);
-            $data['blok1'] = str_replace(',','',$request->blok1);
-            $data['blok2'] = str_replace(',','',$request->blok2);
-            $data['denda1'] = str_replace(',','',$request->denda1);
+            $data['beban'] = str_replace('.','',$request->beban);
+            $data['blok1'] = str_replace('.','',$request->blok1);
+            $data['blok2'] = str_replace('.','',$request->blok2);
+            $data['denda1'] = str_replace('.','',$request->denda1);
 
             try {
                 $decrypted = Crypt::decrypt($id);
@@ -151,12 +153,12 @@ class PriceController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->beban = str_replace(',','',$request->beban);
-            $json->blok1 = str_replace(',','',$request->blok1);
-            $json->blok2 = str_replace(',','',$request->blok2);
+            $json->beban = str_replace('.','',$request->beban);
+            $json->blok1 = str_replace('.','',$request->blok1);
+            $json->blok2 = str_replace('.','',$request->blok2);
             $json->standar = $request->standar;
             $json->pju = $request->pju;
-            $json->denda1 = str_replace(',','',$request->denda1);
+            $json->denda1 = str_replace('.','',$request->denda1);
             $json->denda2 = $request->denda2;
             $json->ppn = $request->ppn;
             $json->user_update = Auth::user()->id;
@@ -248,17 +250,17 @@ class PriceController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.price.air-bersih.index');
+        return view('portal.manage.price.air-bersih.index');
     }
 
     public function airbersihStore(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            $data['tarif1'] = str_replace(',','',$request->tarif1);
-            $data['tarif2'] = str_replace(',','',$request->tarif2);
-            $data['pemeliharaan'] = str_replace(',','',$request->pemeliharaan);
-            $data['beban'] = str_replace(',','',$request->beban);
-            $data['denda'] = str_replace(',','',$request->denda);
+            $data['tarif1'] = str_replace('.','',$request->tarif1);
+            $data['tarif2'] = str_replace('.','',$request->tarif2);
+            $data['pemeliharaan'] = str_replace('.','',$request->pemeliharaan);
+            $data['beban'] = str_replace('.','',$request->beban);
+            $data['denda'] = str_replace('.','',$request->denda);
 
             Validator::make($data, [
                 'name' => 'required|max:100|unique:App\Models\PAirBersih,name',
@@ -272,12 +274,12 @@ class PriceController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'tarif1' => str_replace(',','',$request->tarif1),
-                'tarif2' => str_replace(',','',$request->tarif2),
-                'pemeliharaan' => str_replace(',','',$request->pemeliharaan),
-                'beban' => str_replace(',','',$request->beban),
+                'tarif1' => str_replace('.','',$request->tarif1),
+                'tarif2' => str_replace('.','',$request->tarif2),
+                'pemeliharaan' => str_replace('.','',$request->pemeliharaan),
+                'beban' => str_replace('.','',$request->beban),
                 'airkotor' => $request->airkotor,
-                'denda' => str_replace(',','',$request->denda),
+                'denda' => str_replace('.','',$request->denda),
                 'ppn' => $request->ppn,
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
@@ -295,7 +297,9 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
-            return response()->json(['success' => 'Data saved.']);
+            $searchKey = $request->name;
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
         else{
             abort(404);
@@ -328,11 +332,11 @@ class PriceController extends Controller
     public function airbersihUpdate(Request $request, $id){
         if($request->ajax()){
             $data = $request->all();
-            $data['tarif1'] = str_replace(',','',$request->tarif1);
-            $data['tarif2'] = str_replace(',','',$request->tarif2);
-            $data['pemeliharaan'] = str_replace(',','',$request->pemeliharaan);
-            $data['beban'] = str_replace(',','',$request->beban);
-            $data['denda'] = str_replace(',','',$request->denda);
+            $data['tarif1'] = str_replace('.','',$request->tarif1);
+            $data['tarif2'] = str_replace('.','',$request->tarif2);
+            $data['pemeliharaan'] = str_replace('.','',$request->pemeliharaan);
+            $data['beban'] = str_replace('.','',$request->beban);
+            $data['denda'] = str_replace('.','',$request->denda);
 
             try {
                 $decrypted = Crypt::decrypt($id);
@@ -359,12 +363,12 @@ class PriceController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->tarif1 = str_replace(',','',$request->tarif1);
-            $json->tarif2 = str_replace(',','',$request->tarif2);
-            $json->pemeliharaan = str_replace(',','',$request->pemeliharaan);
-            $json->beban = str_replace(',','',$request->beban);
+            $json->tarif1 = str_replace('.','',$request->tarif1);
+            $json->tarif2 = str_replace('.','',$request->tarif2);
+            $json->pemeliharaan = str_replace('.','',$request->pemeliharaan);
+            $json->beban = str_replace('.','',$request->beban);
             $json->airkotor = $request->airkotor;
-            $json->denda = str_replace(',','',$request->denda);
+            $json->denda = str_replace('.','',$request->denda);
             $json->ppn = $request->ppn;
             $json->user_update = Auth::user()->id;
             $json->username_update = Auth::user()->name;
@@ -455,13 +459,13 @@ class PriceController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.price.keamanan-ipk.index');
+        return view('portal.manage.price.keamanan-ipk.index');
     }
 
     public function keamananipkStore(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            $data['tarif'] = str_replace(',','',$request->tarif);
+            $data['tarif'] = str_replace('.','',$request->tarif);
 
             Validator::make($data, [
                 'name' => 'required|max:100|unique:App\Models\PKeamananIpk,name',
@@ -471,7 +475,7 @@ class PriceController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'tarif' => str_replace(',','',$request->tarif),
+                'tarif' => str_replace('.','',$request->tarif),
                 'keamanan' => $request->keamanan,
                 'ipk' => $request->ipk,
                 'user_create' => Auth::user()->id,
@@ -490,7 +494,9 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
-            return response()->json(['success' => 'Data saved.']);
+            $searchKey = $request->name;
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
         else{
             abort(404);
@@ -523,7 +529,7 @@ class PriceController extends Controller
     public function keamananipkUpdate(Request $request, $id){
         if($request->ajax()){
             $data = $request->all();
-            $data['tarif'] = str_replace(',','',$request->tarif);
+            $data['tarif'] = str_replace('.','',$request->tarif);
 
             try {
                 $decrypted = Crypt::decrypt($id);
@@ -546,7 +552,7 @@ class PriceController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->tarif = str_replace(',','',$request->tarif);
+            $json->tarif = str_replace('.','',$request->tarif);
             $json->keamanan = $request->keamanan;
             $json->ipk = $request->ipk;
             $json->user_update = Auth::user()->id;
@@ -638,13 +644,13 @@ class PriceController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.price.kebersihan.index');
+        return view('portal.manage.price.kebersihan.index');
     }
 
     public function kebersihanStore(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            $data['tarif'] = str_replace(',','',$request->tarif);
+            $data['tarif'] = str_replace('.','',$request->tarif);
 
             Validator::make($data, [
                 'name' => 'required|max:100|unique:App\Models\PKebersihan,name',
@@ -652,7 +658,7 @@ class PriceController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'tarif' => str_replace(',','',$request->tarif),
+                'tarif' => str_replace('.','',$request->tarif),
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -669,7 +675,9 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
-            return response()->json(['success' => 'Data saved.']);
+            $searchKey = $request->name;
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
         else{
             abort(404);
@@ -702,7 +710,7 @@ class PriceController extends Controller
     public function kebersihanUpdate(Request $request, $id){
         if($request->ajax()){
             $data = $request->all();
-            $data['tarif'] = str_replace(',','',$request->tarif);
+            $data['tarif'] = str_replace('.','',$request->tarif);
 
             try {
                 $decrypted = Crypt::decrypt($id);
@@ -723,7 +731,7 @@ class PriceController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->tarif = str_replace(',','',$request->tarif);
+            $json->tarif = str_replace('.','',$request->tarif);
             $json->user_update = Auth::user()->id;
             $json->username_update = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
@@ -813,13 +821,13 @@ class PriceController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.price.air-kotor.index');
+        return view('portal.manage.price.air-kotor.index');
     }
 
     public function airkotorStore(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            $data['tarif'] = str_replace(',','',$request->tarif);
+            $data['tarif'] = str_replace('.','',$request->tarif);
 
             Validator::make($data, [
                 'name' => 'required|max:100|unique:App\Models\PAirkotor,name',
@@ -827,7 +835,7 @@ class PriceController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'tarif' => str_replace(',','',$request->tarif),
+                'tarif' => str_replace('.','',$request->tarif),
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -844,7 +852,9 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
-            return response()->json(['success' => 'Data saved.']);
+            $searchKey = $request->name;
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
         else{
             abort(404);
@@ -877,7 +887,7 @@ class PriceController extends Controller
     public function airkotorUpdate(Request $request, $id){
         if($request->ajax()){
             $data = $request->all();
-            $data['tarif'] = str_replace(',','',$request->tarif);
+            $data['tarif'] = str_replace('.','',$request->tarif);
 
             try {
                 $decrypted = Crypt::decrypt($id);
@@ -898,7 +908,7 @@ class PriceController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->tarif = str_replace(',','',$request->tarif);
+            $json->tarif = str_replace('.','',$request->tarif);
             $json->user_update = Auth::user()->id;
             $json->username_update = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
@@ -988,13 +998,13 @@ class PriceController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.price.lain.index');
+        return view('portal.manage.price.lain.index');
     }
 
     public function lainStore(Request $request){
         if($request->ajax()){
             $data = $request->all();
-            $data['tarif'] = str_replace(',','',$request->tarif);
+            $data['tarif'] = str_replace('.','',$request->tarif);
 
             Validator::make($data, [
                 'name' => 'required|max:100|unique:App\Models\PLain,name',
@@ -1002,7 +1012,7 @@ class PriceController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'tarif' => str_replace(',','',$request->tarif),
+                'tarif' => str_replace('.','',$request->tarif),
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -1019,7 +1029,9 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
-            return response()->json(['success' => 'Data saved.']);
+            $searchKey = $request->name;
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
         else{
             abort(404);
@@ -1052,7 +1064,7 @@ class PriceController extends Controller
     public function lainUpdate(Request $request, $id){
         if($request->ajax()){
             $data = $request->all();
-            $data['tarif'] = str_replace(',','',$request->tarif);
+            $data['tarif'] = str_replace('.','',$request->tarif);
 
             try {
                 $decrypted = Crypt::decrypt($id);
@@ -1073,7 +1085,7 @@ class PriceController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->tarif = str_replace(',','',$request->tarif);
+            $json->tarif = str_replace('.','',$request->tarif);
             $json->user_update = Auth::user()->id;
             $json->username_update = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();

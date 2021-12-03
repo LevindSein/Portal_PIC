@@ -32,14 +32,16 @@ class ToolsController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.tools.listrik.index');
+        return view('portal.point.tools.listrik.index');
     }
 
     public function listrikStore(Request $request){
         if($request->ajax()){
             //
 
-            return response()->json(['success' => 'Data saved.']);
+            $searchKey = $request->name;
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
         else{
             abort(404);

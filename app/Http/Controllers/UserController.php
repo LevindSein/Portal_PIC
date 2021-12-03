@@ -140,7 +140,7 @@ class UserController extends Controller
             $data['phone'] = $request->phone;
             $email = $request->email;
             $data['email'] = $email;
-            $member = 'BP3C'.Identity::make('member');
+            $member = Identity::make('member');
             $data['member'] = $member;
             $data['ktp'] = $request->ktp;
             $data['npwp'] = $request->npwp;
@@ -181,7 +181,9 @@ class UserController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
-            return response()->json(['success' => 'Data saved.']);
+            $searchKey = $uid;
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
         else{
             abort(404);

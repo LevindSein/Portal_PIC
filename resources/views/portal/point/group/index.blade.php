@@ -48,7 +48,7 @@ Grup Tempat
                 <h4 id="showGroup"></h4>
                 <small class="text-muted pt-4 db">Dibuat oleh</small>
                 <h6 id="showCreate"></h6>
-                <small class="text-muted pt-4 db">Disunting oleh</small>
+                <small class="text-muted pt-4 db">Diperbaharui oleh</small>
                 <h6 id="showEdit"></h6>
                 <small class="text-muted pt-4 db">Banyak Los</small>
                 <h6 id="showCount"></h6>
@@ -118,7 +118,7 @@ Grup Tempat
                 }
             },
             "serverSide": true,
-            "ajax": "/production/groups",
+            "ajax": "/production/point/groups",
             "columns": [
                 { data: 'name', name: 'name', class : 'text-center' },
                 { data: 'action', name: 'action', class : 'text-center' },
@@ -149,10 +149,13 @@ Grup Tempat
         });
 
         setInterval(function(){
-            dtableReload();
+            dtableReload('');
         }, 5000);
 
-        function dtableReload(){
+        function dtableReload(searchKey){
+            if(searchKey){
+                dtable.search(searchKey).draw();
+            }
             dtable.ajax.reload(function(){
                 console.log("Refresh Automatic")
             }, false);
@@ -173,7 +176,7 @@ Grup Tempat
             $("#groupFormValue").val('update');
 
             $.ajax({
-                url: "/production/groups/" + id + "/edit",
+                url: "/production/point/groups/" + id + "/edit",
                 type: "GET",
                 cache:false,
                 success:function(data){
@@ -245,7 +248,7 @@ Grup Tempat
                 '_token' : token,
             }
             if(value == 'delete'){
-                url = "/production/groups/" + id;
+                url = "/production/point/groups/" + id;
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Hapus";
@@ -258,11 +261,11 @@ Grup Tempat
 
             value = $("#groupFormValue").val();
             if(value == 'add'){
-                url = "/production/groups";
+                url = "/production/point/groups";
                 type = "POST";
             }
             else if(value == 'update'){
-                url = "/production/groups/" + id;
+                url = "/production/point/groups/" + id;
                 type = "PUT";
             }
             dataset = $(this).serialize();
@@ -306,6 +309,7 @@ Grup Tempat
                             "preventDuplicates": true,
                         };
                         toastr.success(data.success);
+                        dtableReload(data.searchKey);
                     }
 
                     if(data.info){
@@ -335,8 +339,6 @@ Grup Tempat
                     if(data.description){
                         console.log(data.description);
                     }
-
-                    dtableReload();
                 },
                 error:function(data){
                     if (data.status == 422) {
@@ -374,7 +376,7 @@ Grup Tempat
             id = $(this).attr('id');
 
             $.ajax({
-                url: "/production/groups/" + id,
+                url: "/production/point/groups/" + id,
                 type: "GET",
                 cache:false,
                 success:function(data){

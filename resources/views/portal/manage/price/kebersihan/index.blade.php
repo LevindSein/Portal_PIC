@@ -1,7 +1,7 @@
 @extends('portal.layout.master')
 
 @section('content-title')
-Tarif Listrik
+Tarif Kebersihan
 @endsection
 
 @section('content-button')
@@ -44,7 +44,7 @@ Tarif Listrik
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tarif Listrik</h5>
+                <h5 class="modal-title">Tarif Kebersihan</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -52,22 +52,8 @@ Tarif Listrik
             <div class="modal-body">
                 <small class="text-muted pt-4 db">Nama Tarif</small>
                 <h4 id="showName"></h4>
-                <small class="text-muted pt-4 db">Beban Daya</small>
-                <h6 id="showBeban"></h6>
-                <small class="text-muted pt-4 db">Blok 1</small>
-                <h6 id="showBlok1"></h6>
-                <small class="text-muted pt-4 db">Blok 2</small>
-                <h6 id="showBlok2"></h6>
-                <small class="text-muted pt-4 db">Standar Operasional</small>
-                <h6 id="showStandar"></h6>
-                <small class="text-muted pt-4 db">PJU</small>
-                <h6 id="showPju"></h6>
-                <small class="text-muted pt-4 db">Denda 1</small>
-                <h6 id="showDenda1"></h6>
-                <small class="text-muted pt-4 db">Denda 2</small>
-                <h6 id="showDenda2"></h6>
-                <small class="text-muted pt-4 db">PPN</small>
-                <h6 id="showPpn"></h6>
+                <small class="text-muted pt-4 db">Tarif</small>
+                <h6 id="showTarif"></h6>
                 <small class="text-muted pt-4 db">Dibuat oleh</small>
                 <h6 id="showCreate"></h6>
                 <small class="text-muted pt-4 db">Diperbaharui oleh</small>
@@ -81,7 +67,7 @@ Tarif Listrik
 </div>
 
 <div id="priceModal" class="modal fade" role="dialog" tabIndex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title titles">{Title}</h5>
@@ -95,81 +81,15 @@ Tarif Listrik
                         <label>Nama Tarif <span class="text-danger">*</span></label>
                         <input required type="text" id="name" name="name" autocomplete="off" maxlength="100" placeholder="Contoh: Tarif 1" class="form-control form-control-line">
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-xlg-6">
-                            <div class="form-group">
-                                <label>Beban Daya <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <input maxlength="11" required type="text" id="beban" name="beban" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Watt</span>
-                                    </div>
-                                </div>
+                    <div class="form-group">
+                        <label>Tarif <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Rp.</span>
                             </div>
-                            <div class="form-group">
-                                <label>Blok 1 <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp.</span>
-                                    </div>
-                                    <input maxlength="11" required type="text" id="blok1" name="blok1" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Blok 2 <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp.</span>
-                                    </div>
-                                    <input maxlength="11" required type="text" id="blok2" name="blok2" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Standar Operasional <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <input maxlength="2" required type="text" id="standar" name="standar" autocomplete="off" placeholder="Ketikkan dalam angka 0-24" class="number hour form-control form-control-line">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><sup>Jam&nbsp;</sup>&frasl;<sub>&nbsp;Hari</sub></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-xlg-6">
-                            <div class="form-group">
-                                <label>PJU <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <input maxlength="3" required type="text" id="pju" name="pju" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Denda 1 <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp.</span>
-                                    </div>
-                                    <input maxlength="11" required type="text" id="denda1" name="denda1" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Denda 2 <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <input maxlength="3" required type="text" id="denda2" name="denda2" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>PPN <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <input maxlength="3" required type="text" id="ppn" name="ppn" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                </div>
+                            <input maxlength="11" required type="text" id="tarif" name="tarif" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">/ Los</span>
                             </div>
                         </div>
                     </div>
@@ -195,7 +115,7 @@ Tarif Listrik
             if(e.which >= 37 && e.which <= 40) return;
 
             if (/^[0-9.,]+$/.test($(this).val())) {
-                $(this).val(parseFloat($(this).val().replace(/,/g, '')).toLocaleString('en-US'));
+                $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
             }
             else {
                 $(this).val($(this).val().substring(0, $(this).val().length - 1));
@@ -223,7 +143,7 @@ Tarif Listrik
                 }
             },
             "serverSide": true,
-            "ajax": "/production/price/listrik",
+            "ajax": "/production/manage/prices/kebersihan",
             "columns": [
                 { data: 'name', name: 'name', class : 'text-center' },
                 { data: 'action', name: 'action', class : 'text-center' },
@@ -254,10 +174,13 @@ Tarif Listrik
         });
 
         setInterval(function(){
-            dtableReload();
+            dtableReload('');
         }, 5000);
 
-        function dtableReload(){
+        function dtableReload(searchKey){
+            if(searchKey){
+                dtable.search(searchKey).draw();
+            }
             dtable.ajax.reload(function(){
                 console.log("Refresh Automatic")
             }, false);
@@ -265,7 +188,7 @@ Tarif Listrik
 
         $(".add").click( function(){
             $("#priceForm")[0].reset();
-            $('.titles').text('Tambah Tarif Listrik');
+            $('.titles').text('Tambah Tarif Kebersihan');
             $("#priceFormValue").val('add');
             $('#priceModal').modal('show');
         });
@@ -273,24 +196,17 @@ Tarif Listrik
         $(document).on('click', '.edit', function(){
             id = $(this).attr('id');
             $("#priceForm")[0].reset();
-            $('.titles').text('Edit data Tarif Listrik');
+            $('.titles').text('Edit data Tarif Kebersihan');
             $("#priceFormValue").val('update');
 
             $.ajax({
-                url: "/production/price/listrik/" + id + "/edit",
+                url: "/production/manage/prices/kebersihan/" + id + "/edit",
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
                         $("#name").val(data.show.name);
-                        $("#beban").val(Number(data.show.data.beban).toLocaleString('en-US'));
-                        $("#blok1").val(Number(data.show.data.blok1).toLocaleString('en-US'));
-                        $("#blok2").val(Number(data.show.data.blok2).toLocaleString('en-US'));
-                        $("#standar").val(data.show.data.standar);
-                        $("#pju").val(data.show.data.pju);
-                        $("#denda1").val(Number(data.show.data.denda1).toLocaleString('en-US'));
-                        $("#denda2").val(data.show.data.denda2);
-                        $("#ppn").val(data.show.data.ppn);
+                        $("#tarif").val(Number(data.show.data.tarif).toLocaleString('id-ID'));
                     }
 
                     if(data.info){
@@ -354,7 +270,7 @@ Tarif Listrik
                 '_token' : token,
             }
             if(value == 'delete'){
-                url = "/production/price/listrik/" + id;
+                url = "/production/manage/prices/kebersihan/" + id;
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Hapus";
@@ -367,11 +283,11 @@ Tarif Listrik
 
             value = $("#priceFormValue").val();
             if(value == 'add'){
-                url = "/production/price/listrik";
+                url = "/production/manage/prices/kebersihan";
                 type = "POST";
             }
             else if(value == 'update'){
-                url = "/production/price/listrik/" + id;
+                url = "/production/manage/prices/kebersihan/" + id;
                 type = "PUT";
             }
             dataset = $(this).serialize();
@@ -415,6 +331,7 @@ Tarif Listrik
                             "preventDuplicates": true,
                         };
                         toastr.success(data.success);
+                        dtableReload(data.searchKey);
                     }
 
                     if(data.info){
@@ -444,8 +361,6 @@ Tarif Listrik
                     if(data.description){
                         console.log(data.description);
                     }
-
-                    dtableReload();
                 },
                 error:function(data){
                     if (data.status == 422) {
@@ -483,20 +398,13 @@ Tarif Listrik
             id = $(this).attr('id');
 
             $.ajax({
-                url: "/production/price/listrik/" + id,
+                url: "/production/manage/prices/kebersihan/" + id,
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
                         $("#showName").text(data.show.name);
-                        $("#showBeban").text(Number(data.show.data.beban).toLocaleString('en-US') + " Watt");
-                        $("#showBlok1").text("Rp. " + Number(data.show.data.blok1).toLocaleString('en-US'));
-                        $("#showBlok2").text("Rp. " + Number(data.show.data.blok2).toLocaleString('en-US'));
-                        $("#showStandar").html(data.show.data.standar + " <sup>Jam&nbsp;</sup>&frasl;<sub>&nbsp;Hari</sub>");
-                        $("#showPju").text(data.show.data.pju + " %");
-                        $("#showDenda1").text("Rp. " + Number(data.show.data.denda1).toLocaleString('en-US'));
-                        $("#showDenda2").text(data.show.data.denda2 + " %");
-                        $("#showPpn").text(data.show.data.ppn + " %");
+                        $("#showTarif").text("Rp. " + Number(data.show.data.tarif).toLocaleString('id-ID') + " / Los");
                         $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
                         $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                     }
