@@ -104,8 +104,8 @@ class UserController extends Controller
                 'level' => 'required|numeric',
                 'email' => 'required|max:200|email|unique:App\Models\User,email',
                 'name' => 'required|max:100',
-                'ktp' => 'required|numeric|digits_between:16,16|unique:App\Models\User,ktp',
-                'npwp' => 'nullable|numeric|digits_between:15,15|unique:App\Models\User,npwp',
+                'ktp' => 'required|numeric|digits_between:7,16|unique:App\Models\User,ktp',
+                'npwp' => 'nullable|numeric|digits:15|unique:App\Models\User,npwp',
                 'phone' => 'required|numeric|digits_between:8,15|unique:App\Models\User,phone',
                 'address' => 'required|max:255'
             ]);
@@ -297,8 +297,8 @@ class UserController extends Controller
                 'level' => 'required|numeric',
                 'email' => 'required|max:200|email|unique:App\Models\User,email,'.$id,
                 'name' => 'required|max:100',
-                'ktp' => 'required|numeric|digits_between:16,16|unique:App\Models\User,ktp,'.$id,
-                'npwp' => 'nullable|numeric|digits_between:15,15|unique:App\Models\User,npwp,'.$id,
+                'ktp' => 'required|numeric|digits_between:7,16|unique:App\Models\User,ktp,'.$id,
+                'npwp' => 'nullable|numeric|digits:15|unique:App\Models\User,npwp,'.$id,
                 'phone' => 'required|numeric|digits_between:8,15|unique:App\Models\User,phone,'.$id,
                 'address' => 'required|max:255',
             ]);

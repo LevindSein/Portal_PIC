@@ -348,7 +348,8 @@ Daftar Log Perubahan
                 },
                 complete:function(data){
                     if(value == 'add' || value == 'update'){
-                        $('#logModal').modal('hide');
+                        if(JSON.parse(data.responseText).success)
+                            $('#logModal').modal('hide');
                     }
                     else{
                         $('#confirmModal').modal('hide');

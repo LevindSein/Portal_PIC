@@ -378,7 +378,8 @@ Tarif Lainnya
                 },
                 complete:function(data){
                     if(value == 'add' || value == 'update'){
-                        $('#priceModal').modal('hide');
+                        if(JSON.parse(data.responseText).success)
+                            $('#priceModal').modal('hide');
                     }
                     else{
                         $('#confirmModal').modal('hide');

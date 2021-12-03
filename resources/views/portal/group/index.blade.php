@@ -359,7 +359,8 @@ Grup Tempat
                 },
                 complete:function(data){
                     if(value == 'add' || value == 'update'){
-                        $('#groupModal').modal('hide');
+                        if(JSON.parse(data.responseText).success)
+                            $('#groupModal').modal('hide');
                     }
                     else{
                         $('#confirmModal').modal('hide');

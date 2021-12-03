@@ -1027,7 +1027,8 @@ Pengguna
                 },
                 complete:function(data){
                     if(value == 'add' || value == 'update'){
-                        $('#userModal').modal('hide');
+                        if(JSON.parse(data.responseText).success)
+                            $('#userModal').modal('hide');
                     }
                     else{
                         $('#confirmModal').modal('hide');
@@ -1038,7 +1039,6 @@ Pengguna
         }
 
         function dtableInit(url){
-            console.log(url);
             $('#dtable').DataTable().clear().destroy();
             return $('#dtable').DataTable({
                 "language": {

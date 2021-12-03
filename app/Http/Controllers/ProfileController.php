@@ -50,7 +50,7 @@ class ProfileController extends Controller
                 'email' => 'required|max:200|email|unique:App\Models\User,email,'.Auth::user()->id,
                 'name' => 'required|max:100',
                 'ktp' => 'required|numeric|digits_between:7,16|unique:App\Models\User,ktp,'.Auth::user()->id,
-                'npwp' => 'nullable|numeric|digits_between:15,15|unique:App\Models\User,npwp,'.Auth::user()->id,
+                'npwp' => 'nullable|numeric|digits:15,15|unique:App\Models\User,npwp,'.Auth::user()->id,
                 'country' => 'required|string|min:2|max:2',
                 'phone' => 'required|numeric|digits_between:8,15|unique:App\Models\User,phone,'.Auth::user()->id,
                 'address' => 'required|max:255',
