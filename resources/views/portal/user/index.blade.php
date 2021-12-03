@@ -962,7 +962,6 @@ Pengguna
                             "preventDuplicates": true,
                         };
                         toastr.success(data.success);
-                        dtableReload(data.searchKey);
 
                         if(value == 'reset'){
                             $('#newPassword').html(data.pass);
@@ -976,6 +975,8 @@ Pengguna
                             dtable = dtableInit("/production/users?data=1&lev=" + selectedLevel);
                             $('#warning-deleted').hide();
                         }
+
+                        dtableReload(data.searchKey);
                     }
 
                     if(data.info){

@@ -210,14 +210,14 @@
                                         <i class="mdi mdi-playlist-plus mr-1 text-info"></i>
                                         <span class="hide-menu">Alat&nbsp;Meter</span>
                                     </a>
-                                    <ul style="padding-left: 1rem;" aria-expanded="false" class="collapse second-level {{ (request()->is('production/point/tools*')) ? 'in' : '' }}">
-                                        <li class="sidebar-item {{ (request()->is('production/point/tools/listrik*')) ? 'active' : '' }}">
+                                    <ul aria-expanded="false" class="collapse second-level {{ (request()->is('production/point/tools*')) ? 'in' : '' }}">
+                                        <li class="sidebar-item menuku {{ (request()->is('production/point/tools/listrik*')) ? 'active' : '' }}">
                                             <a href="{{url('production/point/tools/listrik')}}" class="sidebar-link {{ (request()->is('production/point/tools/listrik*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Meteran&nbsp;Listrik</span>
                                             </a>
                                         </li>
-                                        <li class="sidebar-item {{ (request()->is('production/point/tools/airbersih*')) ? 'active' : '' }}">
+                                        <li class="sidebar-item menuku {{ (request()->is('production/point/tools/airbersih*')) ? 'active' : '' }}">
                                             <a href="{{url('production/point/tools/airbersih')}}" class="sidebar-link {{ (request()->is('production/point/tools/airbersih*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Meteran&nbsp;Air</span>
