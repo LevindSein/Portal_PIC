@@ -11,6 +11,7 @@ class PLain extends Model
     protected $table = 'p_lain';
     protected $fillable = [
         'name',
+        'price',
         'data'
     ];
 }

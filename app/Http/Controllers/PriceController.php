@@ -444,7 +444,7 @@ class PriceController extends Controller
 
     public function keamananipk(){
         if(request()->ajax()){
-            $data = PKeamananIpk::select('id','name');
+            $data = PKeamananIpk::select('id','price','name');
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
@@ -455,6 +455,9 @@ class PriceController extends Controller
             })
             ->editColumn('name', function($data){
                 return substr($data->name,0,30);
+            })
+            ->editColumn('price', function($data){
+                return number_format($data->price);
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -485,6 +488,7 @@ class PriceController extends Controller
                 'username_update' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
+            $dataset['price'] = str_replace('.','',$request->tarif);
             $dataset['data'] = $json;
             $dataset['name'] = $request->name;
 
@@ -561,6 +565,7 @@ class PriceController extends Controller
 
             $json = json_encode($json);
 
+            $data->price = str_replace('.','',$request->tarif);
             $data->data = $json;
             $data->name = $request->name;
 
@@ -629,7 +634,7 @@ class PriceController extends Controller
 
     public function kebersihan(){
         if(request()->ajax()){
-            $data = PKebersihan::select('id','name');
+            $data = PKebersihan::select('id','price','name');
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
@@ -640,6 +645,9 @@ class PriceController extends Controller
             })
             ->editColumn('name', function($data){
                 return substr($data->name,0,30);
+            })
+            ->editColumn('price', function($data){
+                return number_format($data->price);
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -666,6 +674,7 @@ class PriceController extends Controller
                 'username_update' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
+            $dataset['price'] = str_replace('.','',$request->tarif);
             $dataset['data'] = $json;
             $dataset['name'] = $request->name;
 
@@ -738,6 +747,7 @@ class PriceController extends Controller
 
             $json = json_encode($json);
 
+            $data->price = str_replace('.','',$request->tarif);
             $data->data = $json;
             $data->name = $request->name;
 
@@ -806,7 +816,7 @@ class PriceController extends Controller
 
     public function airkotor(){
         if(request()->ajax()){
-            $data = PAirkotor::select('id','name');
+            $data = PAirkotor::select('id','price','name');
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
@@ -817,6 +827,9 @@ class PriceController extends Controller
             })
             ->editColumn('name', function($data){
                 return substr($data->name,0,30);
+            })
+            ->editColumn('price', function($data){
+                return number_format($data->price);
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -843,6 +856,7 @@ class PriceController extends Controller
                 'username_update' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
+            $dataset['price'] = str_replace('.','',$request->tarif);
             $dataset['data'] = $json;
             $dataset['name'] = $request->name;
 
@@ -915,6 +929,7 @@ class PriceController extends Controller
 
             $json = json_encode($json);
 
+            $data->price = str_replace('.','',$request->tarif);
             $data->data = $json;
             $data->name = $request->name;
 
@@ -983,7 +998,7 @@ class PriceController extends Controller
 
     public function lain(){
         if(request()->ajax()){
-            $data = PLain::select('id','name');
+            $data = PLain::select('id','price','name');
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
@@ -994,6 +1009,9 @@ class PriceController extends Controller
             })
             ->editColumn('name', function($data){
                 return substr($data->name,0,30);
+            })
+            ->editColumn('price', function($data){
+                return number_format($data->price);
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -1020,6 +1038,7 @@ class PriceController extends Controller
                 'username_update' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
+            $dataset['price'] = str_replace('.','',$request->tarif);
             $dataset['data'] = $json;
             $dataset['name'] = $request->name;
 
@@ -1092,6 +1111,7 @@ class PriceController extends Controller
 
             $json = json_encode($json);
 
+            $data->price = str_replace('.','',$request->tarif);
             $data->data = $json;
             $data->name = $request->name;
 

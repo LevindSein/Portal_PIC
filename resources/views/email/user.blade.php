@@ -13,7 +13,7 @@
             <table cellpadding="0" cellspacing="0" style="width: 100%; border: 0;">
                 <tbody>
                     <tr>
-                        <td style="background:#e24c26; padding:20px; color:#fff; text-align:center;"> {{$header}} </td>
+                        <td style="background:#2962ff; padding:20px; color:#fff; text-align:center;"> {{$header}} </td>
                     </tr>
                 </tbody>
             </table>
@@ -24,7 +24,7 @@
                             <td>
                                 <p>Yth. Sdr/i {{$name}}</p>
                                 <p>Terimakasih telah menjadi bagian dari kami.</p>
-                                <p>Berikut adalah pesan untuk <b>{{$type}}</b> akun anda <a href="{{url('/')}}">Member Area</a> Pasar Induk Caringin Kota Bandung sebagai <b>{{$role}}</b>.</p>
+                                <p>Berikut adalah pesan untuk <b>{{$type}}</b> akun anda di <a href="{{url('/')}}">Member Area</a> Pasar Induk Caringin Kota Bandung sebagai <b>{{$role}}</b>.</p>
                                 <p>Silakan klik tombol di bawah ini :</p>
                                 <div style="text-align: center;">
                                     <p>uid : <b>{{$uid}}</b></p>

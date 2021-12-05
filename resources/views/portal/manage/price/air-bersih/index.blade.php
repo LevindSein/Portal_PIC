@@ -266,6 +266,9 @@ Tarif Air Bersih
             $('.titles').text('Tambah Tarif Air Bersih');
             $("#priceFormValue").val('add');
             $('#priceModal').modal('show');
+            $('#priceModal').on('shown.bs.modal', function() {
+                $('#name').focus();
+            });
         });
 
         $(document).on('click', '.edit', function(){
@@ -328,6 +331,9 @@ Tarif Air Bersih
                 },
                 complete:function(){
                     $('#priceModal').modal('show');
+                    $('#priceModal').on('shown.bs.modal', function() {
+                        $('#name').focus();
+                    });
                 }
             });
         });

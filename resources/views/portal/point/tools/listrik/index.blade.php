@@ -27,9 +27,9 @@ Alat Listrik
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
                             <tr>
-                                <th>No.</th>
                                 <th>Code</th>
                                 <th>ID</th>
+                                <th>Power (Watt)</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -59,9 +59,9 @@ Alat Listrik
             "serverSide": true,
             "ajax": "/production/point/tools/listrik",
             "columns": [
-                { data: 'DT_RowIndex', name: 'DT_RowIndex', class : 'text-center' },
-                { data: 'name', name: 'name', class : 'text-center' },
                 { data: 'code', name: 'code', class : 'text-center' },
+                { data: 'name', name: 'name', class : 'text-center' },
+                { data: 'power', name: 'power', class : 'text-center' },
                 { data: 'action', name: 'action', class : 'text-center' },
             ],
             "stateSave": true,
@@ -70,8 +70,8 @@ Alat Listrik
             "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
             "order": [[ 1, "asc" ]],
             "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [0,3] },
-                { "bSearchable": false, "aTargets": [0,3] }
+                { "bSortable": false, "aTargets": [3] },
+                { "bSearchable": false, "aTargets": [3] }
             ],
             "scrollY": "50vh",
             "scrollX": true,

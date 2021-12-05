@@ -58,9 +58,8 @@ class AuthController extends Controller
                 return redirect('login')->with('warning', 'Please login.');
             }
         }
-        else{
-            return view('portal.home.login');
-        }
+
+        return view('portal.home.login');
     }
 
     /**

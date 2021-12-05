@@ -7468,7 +7468,7 @@ button.bg-danger:focus {
 }
 
 .bg-light {
-    background-color: #f8f9fa !important;
+    background-color: #a0adbb !important;
 }
 
 a.bg-light:hover,
@@ -7595,7 +7595,7 @@ button.bg-purple:focus {
 }
 
 .border-light {
-    border-color: #f8f9fa !important;
+    border-color: #d5dbe1 !important;
 }
 
 .border-dark {
@@ -20997,10 +20997,6 @@ File: scss
 
 .iti {
     width: 100%;
-}
-
-.menuku {
-    padding-left: 1rem;
 }
 
 .se-pre-con {

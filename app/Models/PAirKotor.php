@@ -11,6 +11,7 @@ class PAirKotor extends Model
     protected $table = 'p_airkotor';
     protected $fillable = [
         'name',
+        'price',
         'data'
     ];
 }

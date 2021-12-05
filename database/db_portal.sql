@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2021 at 04:46 AM
+-- Generation Time: Dec 05, 2021 at 11:21 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -460,6 +460,7 @@ INSERT INTO `p_airbersih` (`id`, `name`, `data`, `updated_at`, `created_at`) VAL
 CREATE TABLE `p_airkotor` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -469,9 +470,9 @@ CREATE TABLE `p_airkotor` (
 -- Dumping data for table `p_airkotor`
 --
 
-INSERT INTO `p_airkotor` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', '{\"tarif\":\"250000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:45:22\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:45:22\"}', '2021-12-02 10:45:22', '2021-12-02 10:45:22'),
-(2, 'Tarif 2', '{\"tarif\":\"3000000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:45:30\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:45:30\"}', '2021-12-02 10:45:30', '2021-12-02 10:45:30');
+INSERT INTO `p_airkotor` (`id`, `name`, `price`, `data`, `updated_at`, `created_at`) VALUES
+(1, 'Tarif 1', 250000, '{\"tarif\":\"250000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:45:22\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:35\"}', '2021-12-05 22:21:35', '2021-12-02 10:45:22'),
+(2, 'Tarif 2', 3000000, '{\"tarif\":\"3000000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:45:30\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:38\"}', '2021-12-05 22:21:38', '2021-12-02 10:45:30');
 
 -- --------------------------------------------------------
 
@@ -482,6 +483,7 @@ INSERT INTO `p_airkotor` (`id`, `name`, `data`, `updated_at`, `created_at`) VALU
 CREATE TABLE `p_keamananipk` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -491,14 +493,14 @@ CREATE TABLE `p_keamananipk` (
 -- Dumping data for table `p_keamananipk`
 --
 
-INSERT INTO `p_keamananipk` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', '{\"tarif\":\"120000\",\"keamanan\":\"67\",\"ipk\":\"33\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:25:12\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:25:12\"}', '2021-12-02 10:25:12', '2021-12-02 10:25:12'),
-(2, 'Tarif 2', '{\"tarif\":\"165000\",\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:25:29\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:25:29\"}', '2021-12-02 10:25:29', '2021-12-02 10:25:29'),
-(3, 'Tarif 3', '{\"tarif\":\"145000\",\"keamanan\":\"74\",\"ipk\":\"26\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:25:46\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:25:46\"}', '2021-12-02 10:25:46', '2021-12-02 10:25:46'),
-(4, 'Tarif 4', '{\"tarif\":\"130000\",\"keamanan\":\"85\",\"ipk\":\"15\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:26:01\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:26:11\"}', '2021-12-02 10:26:11', '2021-12-02 10:26:01'),
-(5, 'Tarif 5', '{\"tarif\":\"200000\",\"keamanan\":\"73\",\"ipk\":\"27\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:26:30\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:27:06\"}', '2021-12-02 10:27:06', '2021-12-02 10:26:30'),
-(6, 'Tarif 6', '{\"tarif\":\"500000\",\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:27:19\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:27:19\"}', '2021-12-02 10:27:19', '2021-12-02 10:27:19'),
-(7, 'Tarif 7', '{\"tarif\":\"265000\",\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:27:32\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:27:32\"}', '2021-12-02 10:27:32', '2021-12-02 10:27:32');
+INSERT INTO `p_keamananipk` (`id`, `name`, `price`, `data`, `updated_at`, `created_at`) VALUES
+(1, 'Tarif 1', 120000, '{\"tarif\":\"120000\",\"keamanan\":\"67\",\"ipk\":\"33\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:25:12\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:16:10\"}', '2021-12-05 22:16:10', '2021-12-02 10:25:12'),
+(2, 'Tarif 2', 165000, '{\"tarif\":\"165000\",\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:25:29\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:11\"}', '2021-12-05 22:20:11', '2021-12-02 10:25:29'),
+(3, 'Tarif 3', 145000, '{\"tarif\":\"145000\",\"keamanan\":\"74\",\"ipk\":\"26\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:25:46\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:16\"}', '2021-12-05 22:20:16', '2021-12-02 10:25:46'),
+(4, 'Tarif 4', 130000, '{\"tarif\":\"130000\",\"keamanan\":\"85\",\"ipk\":\"15\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:26:01\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:27\"}', '2021-12-05 22:20:27', '2021-12-02 10:26:01'),
+(5, 'Tarif 5', 200000, '{\"tarif\":\"200000\",\"keamanan\":\"73\",\"ipk\":\"27\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:26:30\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:31\"}', '2021-12-05 22:20:31', '2021-12-02 10:26:30'),
+(6, 'Tarif 6', 500000, '{\"tarif\":\"500000\",\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:27:19\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:35\"}', '2021-12-05 22:20:35', '2021-12-02 10:27:19'),
+(7, 'Tarif 7', 265000, '{\"tarif\":\"265000\",\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:27:32\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:38\"}', '2021-12-05 22:20:38', '2021-12-02 10:27:32');
 
 -- --------------------------------------------------------
 
@@ -509,6 +511,7 @@ INSERT INTO `p_keamananipk` (`id`, `name`, `data`, `updated_at`, `created_at`) V
 CREATE TABLE `p_kebersihan` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -518,16 +521,16 @@ CREATE TABLE `p_kebersihan` (
 -- Dumping data for table `p_kebersihan`
 --
 
-INSERT INTO `p_kebersihan` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', '{\"tarif\":\"120000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:14\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:35:14\"}', '2021-12-02 10:35:14', '2021-12-02 10:35:14'),
-(2, 'Tarif 2', '{\"tarif\":\"130000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:25\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:35:25\"}', '2021-12-02 10:35:25', '2021-12-02 10:35:25'),
-(3, 'Tarif 3', '{\"tarif\":\"140000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:37\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:35:37\"}', '2021-12-02 10:35:37', '2021-12-02 10:35:37'),
-(4, 'Tarif 4', '{\"tarif\":\"150000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:47\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:36:38\"}', '2021-12-02 10:36:38', '2021-12-02 10:35:47'),
-(5, 'Tarif 5', '{\"tarif\":\"155000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:56\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:36:47\"}', '2021-12-02 10:36:47', '2021-12-02 10:35:56'),
-(6, 'Tarif 6', '{\"tarif\":\"156000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:36:04\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:36:55\"}', '2021-12-02 10:36:55', '2021-12-02 10:36:04'),
-(7, 'Tarif 7', '{\"tarif\":\"195000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:36:12\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:37:05\"}', '2021-12-02 10:37:05', '2021-12-02 10:36:12'),
-(8, 'Tarif 8', '{\"tarif\":\"235000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:36:21\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:37:16\"}', '2021-12-02 10:37:16', '2021-12-02 10:36:21'),
-(9, 'Tarif 9', '{\"tarif\":\"780000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:36:28\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 17:37:24\"}', '2021-12-02 10:37:24', '2021-12-02 10:36:28');
+INSERT INTO `p_kebersihan` (`id`, `name`, `price`, `data`, `updated_at`, `created_at`) VALUES
+(1, 'Tarif 1', 120000, '{\"tarif\":\"120000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:14\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:49\"}', '2021-12-05 22:20:49', '2021-12-02 10:35:14'),
+(2, 'Tarif 2', 130000, '{\"tarif\":\"130000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:25\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:54\"}', '2021-12-05 22:20:54', '2021-12-02 10:35:25'),
+(3, 'Tarif 3', 140000, '{\"tarif\":\"140000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:37\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:58\"}', '2021-12-05 22:20:58', '2021-12-02 10:35:37'),
+(4, 'Tarif 4', 150000, '{\"tarif\":\"150000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:47\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:03\"}', '2021-12-05 22:21:03', '2021-12-02 10:35:47'),
+(5, 'Tarif 5', 155000, '{\"tarif\":\"155000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:56\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:09\"}', '2021-12-05 22:21:09', '2021-12-02 10:35:56'),
+(6, 'Tarif 6', 156000, '{\"tarif\":\"156000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:36:04\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:13\"}', '2021-12-05 22:21:13', '2021-12-02 10:36:04'),
+(7, 'Tarif 7', 195000, '{\"tarif\":\"195000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:36:12\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:18\"}', '2021-12-05 22:21:18', '2021-12-02 10:36:12'),
+(8, 'Tarif 8', 235000, '{\"tarif\":\"235000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:36:21\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:23\"}', '2021-12-05 22:21:23', '2021-12-02 10:36:21'),
+(9, 'Tarif 9', 780000, '{\"tarif\":\"780000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:36:28\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:26\"}', '2021-12-05 22:21:26', '2021-12-02 10:36:28');
 
 -- --------------------------------------------------------
 
@@ -538,6 +541,7 @@ INSERT INTO `p_kebersihan` (`id`, `name`, `data`, `updated_at`, `created_at`) VA
 CREATE TABLE `p_lain` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -589,6 +593,7 @@ CREATE TABLE `t_listrik` (
   `id` int(11) NOT NULL,
   `code` varchar(8) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `power` int(11) NOT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL

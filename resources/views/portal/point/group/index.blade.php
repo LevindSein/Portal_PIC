@@ -166,6 +166,9 @@ Grup Tempat
             $('.titles').text('Tambah data Grup Tempat');
             $("#groupFormValue").val('add');
             $('#groupModal').modal('show');
+            $('#groupModal').on('shown.bs.modal', function() {
+                $('#group').focus();
+            });
         });
 
         $(document).on('click', '.edit', function(){
@@ -225,6 +228,9 @@ Grup Tempat
                 },
                 complete:function(){
                     $('#groupModal').modal('show');
+                    $('#groupModal').on('shown.bs.modal', function() {
+                        $('#group').focus();
+                    });
                 }
             });
         });

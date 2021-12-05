@@ -12,6 +12,7 @@ class TListrik extends Model
     protected $fillable = [
         'code',
         'name',
+        'power',
         'data'
     ];
 }

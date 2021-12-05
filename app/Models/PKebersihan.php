@@ -11,6 +11,7 @@ class PKebersihan extends Model
     protected $table = 'p_kebersihan';
     protected $fillable = [
         'name',
+        'price',
         'data'
     ];
 }

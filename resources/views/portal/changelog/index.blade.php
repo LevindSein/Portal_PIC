@@ -159,6 +159,9 @@ Daftar Log Perubahan
             $('.titles').text('Tambah data Log Perubahan');
             $("#logFormValue").val('add');
             $('#logModal').modal('show');
+            $('#logModal').on('shown.bs.modal', function() {
+                $('#title').focus();
+            });
         });
 
         $(document).on('click', '.edit', function(){
@@ -215,6 +218,9 @@ Daftar Log Perubahan
                 },
                 complete:function(){
                     $('#logModal').modal('show');
+                    $('#logModal').on('shown.bs.modal', function() {
+                        $('#title').focus();
+                    });
                 }
             });
         });

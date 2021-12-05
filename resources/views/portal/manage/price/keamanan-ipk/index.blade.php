@@ -28,6 +28,7 @@ Tarif Keamanan IPK
                         <thead>
                             <tr>
                                 <th>Data</th>
+                                <th><sup>Price&nbsp;</sup>&frasl;<sub>&nbsp;Los</sub></th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -188,6 +189,7 @@ Tarif Keamanan IPK
             "ajax": "/production/manage/prices/keamananipk",
             "columns": [
                 { data: 'name', name: 'name', class : 'text-center' },
+                { data: 'price', name: 'price', class : 'text-center' },
                 { data: 'action', name: 'action', class : 'text-center' },
             ],
             "stateSave": true,
@@ -196,8 +198,8 @@ Tarif Keamanan IPK
             "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
             "order": [[ 0, "asc" ]],
             "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [1] },
-                { "bSearchable": false, "aTargets": [1] }
+                { "bSortable": false, "aTargets": [2] },
+                { "bSearchable": false, "aTargets": [2] }
             ],
             "scrollY": "50vh",
             "scrollX": true,
@@ -233,6 +235,9 @@ Tarif Keamanan IPK
             $('.titles').text('Tambah Tarif Keamanan IPK');
             $("#priceFormValue").val('add');
             $('#priceModal').modal('show');
+            $('#priceModal').on('shown.bs.modal', function() {
+                $('#name').focus();
+            });
         });
 
         $(document).on('click', '.edit', function(){
@@ -291,6 +296,9 @@ Tarif Keamanan IPK
                 },
                 complete:function(){
                     $('#priceModal').modal('show');
+                    $('#priceModal').on('shown.bs.modal', function() {
+                        $('#name').focus();
+                    });
                 }
             });
         });

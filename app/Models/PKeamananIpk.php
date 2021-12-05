@@ -11,6 +11,7 @@ class PKeamananIpk extends Model
     protected $table = 'p_keamananipk';
     protected $fillable = [
         'name',
+        'price',
         'data'
     ];
 }

@@ -19,9 +19,8 @@ class ToolsController extends Controller
 {
     public function listrik(){
         if(request()->ajax()){
-            $data = TListrik::select('id','code','name');
+            $data = TListrik::select('id','code','name','power');
             return DataTables::of($data)
-            ->addIndexColumn()
             ->addColumn('action', function($data){
                 $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
                 $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';

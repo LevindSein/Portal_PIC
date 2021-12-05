@@ -28,6 +28,7 @@ Tarif Lainnya
                         <thead>
                             <tr>
                                 <th>Data</th>
+                                <th><sup>Price&nbsp;</sup>&frasl;<sub>&nbsp;Los</sub></th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -143,6 +144,7 @@ Tarif Lainnya
             "ajax": "/production/manage/prices/lain",
             "columns": [
                 { data: 'name', name: 'name', class : 'text-center' },
+                { data: 'price', name: 'price', class : 'text-center' },
                 { data: 'action', name: 'action', class : 'text-center' },
             ],
             "stateSave": true,
@@ -151,8 +153,8 @@ Tarif Lainnya
             "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
             "order": [[ 0, "asc" ]],
             "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [1] },
-                { "bSearchable": false, "aTargets": [1] }
+                { "bSortable": false, "aTargets": [2] },
+                { "bSearchable": false, "aTargets": [2] }
             ],
             "scrollY": "50vh",
             "scrollX": true,
@@ -188,6 +190,9 @@ Tarif Lainnya
             $('.titles').text('Tambah Tarif Lainnya');
             $("#priceFormValue").val('add');
             $('#priceModal').modal('show');
+            $('#priceModal').on('shown.bs.modal', function() {
+                $('#name').focus();
+            });
         });
 
         $(document).on('click', '.edit', function(){
@@ -244,6 +249,9 @@ Tarif Lainnya
                 },
                 complete:function(){
                     $('#priceModal').modal('show');
+                    $('#priceModal').on('shown.bs.modal', function() {
+                        $('#name').focus();
+                    });
                 }
             });
         });
