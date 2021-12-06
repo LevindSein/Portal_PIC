@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2021 at 11:21 PM
+-- Generation Time: Dec 06, 2021 at 02:01 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -578,6 +578,7 @@ CREATE TABLE `t_airbersih` (
   `id` int(11) NOT NULL,
   `code` varchar(8) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `meter` int(11) DEFAULT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -593,7 +594,8 @@ CREATE TABLE `t_listrik` (
   `id` int(11) NOT NULL,
   `code` varchar(8) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `power` int(11) NOT NULL,
+  `meter` int(11) DEFAULT NULL,
+  `power` int(11) DEFAULT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL

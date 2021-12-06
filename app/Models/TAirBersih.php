@@ -12,6 +12,7 @@ class TAirBersih extends Model
     protected $fillable = [
         'code',
         'name',
+        'meter',
         'data'
     ];
 }
