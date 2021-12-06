@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2021 at 03:50 AM
+-- Generation Time: Dec 06, 2021 at 04:52 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -615,6 +615,33 @@ INSERT INTO `p_listrik` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUE
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `shops`
+--
+
+CREATE TABLE `shops` (
+  `id` bigint(20) NOT NULL,
+  `kd_kontrol` varchar(20) DEFAULT NULL,
+  `group` int(11) DEFAULT NULL,
+  `no_los` text DEFAULT NULL,
+  `jml_los` int(11) DEFAULT NULL,
+  `id_pengguna` bigint(20) DEFAULT NULL,
+  `id_pemilik` bigint(20) DEFAULT NULL,
+  `stt_tempat` tinyint(1) DEFAULT NULL,
+  `usaha` varchar(255) DEFAULT NULL,
+  `fas_listrik` longtext DEFAULT NULL,
+  `fas_airbersih` longtext DEFAULT NULL,
+  `fas_keamananipk` longtext DEFAULT NULL,
+  `fas_kebersihan` longtext DEFAULT NULL,
+  `fas_airkotor` longtext DEFAULT NULL,
+  `fas_lain` longtext DEFAULT NULL,
+  `data` longtext DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `t_airbersih`
 --
 
@@ -652,7 +679,7 @@ CREATE TABLE `t_listrik` (
 --
 
 CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) NOT NULL,
   `photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'storage/users/user.jpg',
   `uid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -805,6 +832,16 @@ ALTER TABLE `p_listrik`
   ADD UNIQUE KEY `name` (`name`);
 
 --
+-- Indexes for table `shops`
+--
+ALTER TABLE `shops`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `kd_kontrol` (`kd_kontrol`),
+  ADD KEY `fk_group` (`group`),
+  ADD KEY `fk_pengguna` (`id_pengguna`),
+  ADD KEY `fk_pemilik` (`id_pemilik`);
+
+--
 -- Indexes for table `t_airbersih`
 --
 ALTER TABLE `t_airbersih`
@@ -928,6 +965,12 @@ ALTER TABLE `p_listrik`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `shops`
+--
+ALTER TABLE `shops`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `t_airbersih`
 --
 ALTER TABLE `t_airbersih`
@@ -943,13 +986,25 @@ ALTER TABLE `t_listrik`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1599;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1599;
 
 --
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `shops`
+--
+ALTER TABLE `shops`
+  ADD CONSTRAINT `fk_group` FOREIGN KEY (`group`) REFERENCES `groups` (`id`),
+  ADD CONSTRAINT `fk_pemilik` FOREIGN KEY (`id_pemilik`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `fk_pengguna` FOREIGN KEY (`id_pengguna`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

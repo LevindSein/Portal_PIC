@@ -17,6 +17,7 @@ use App\Http\Controllers\ChangeLogController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\DayOffController;
+use App\Http\Controllers\ShopsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +56,8 @@ Route::middleware('checkauth')->group(function(){
             Route::post('users/reset/{id}', [UserController::class, 'reset']);
             Route::post('users/restore/{id}', [UserController::class, 'restore']);
             Route::resource('users', UserController::class);
+
+            Route::resource('point/shops', ShopsController::class);
 
             Route::resource('point/groups', GroupController::class);
 

@@ -15,7 +15,7 @@ Pengguna
     <div class="dropdown-menu animated fadeIn">
         <a class="dropdown-item add" href="javascript:void(0)">
             <i class="fas fa-fw fa-plus mr-1 ml-1"></i>
-            <span>Tambah User</span>
+            <span>Tambah Data</span>
         </a>
         <a class="dropdown-item deleted" href="javascript:void(0)">
             <i class="fas fa-fw fa-trash mr-1 ml-1"></i>

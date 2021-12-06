@@ -1,7 +1,7 @@
 @extends('portal.layout.master')
 
 @section('content-title')
-Hari Libur
+Libur Tagihan
 @endsection
 
 @section('content-button')

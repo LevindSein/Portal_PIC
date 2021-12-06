@@ -12,7 +12,7 @@ Grup Tempat
     <div class="dropdown-menu animated fadeIn">
         <a class="dropdown-item add" href="javascript:void(0)">
             <i class="fas fa-fw fa-plus mr-1 ml-1"></i>
-            <span>Tambah Grup</span>
+            <span>Tambah Data</span>
         </a>
     </div>
 </div>
