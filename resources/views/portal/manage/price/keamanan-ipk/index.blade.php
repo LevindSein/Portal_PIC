@@ -242,8 +242,9 @@ Tarif Keamanan IPK
 
         $(document).on('click', '.edit', function(){
             id = $(this).attr('id');
+            name = $(this).attr('nama');
             $("#priceForm")[0].reset();
-            $('.titles').text('Edit data Tarif Keamanan IPK');
+            $('.titles').text('Edit data ' + name);
             $("#priceFormValue").val('update');
 
             $.ajax({
