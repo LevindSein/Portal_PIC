@@ -16,24 +16,4 @@ class TListrik extends Model
         'power',
         'data'
     ];
-
-    public static function available($data){
-        if($data == 1){
-            $data = "<span class='text-success'>Tersedia</span>";
-        }
-        else{
-            $data = "<span class='text-danger'>Digunakan</span>";
-        }
-        return $data;
-    }
-
-    public static function paid($data){
-        if($data == 1){
-            $data = "<span class='text-success>Dibayar</span>";
-        }
-        else{
-            $data = "<span class='text-info'>Idle</span>";
-        }
-        return $data;
-    }
 }

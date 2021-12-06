@@ -221,13 +221,13 @@
                                         <li class="sidebar-item {{ (request()->is('production/point/tools/listrik*')) ? 'active' : '' }}">
                                             <a href="{{url('production/point/tools/listrik')}}" class="sidebar-link {{ (request()->is('production/point/tools/listrik*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
-                                                <span class="hide-menu">Meteran&nbsp;Listrik</span>
+                                                <span class="hide-menu">Listrik</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-item {{ (request()->is('production/point/tools/airbersih*')) ? 'active' : '' }}">
                                             <a href="{{url('production/point/tools/airbersih')}}" class="sidebar-link {{ (request()->is('production/point/tools/airbersih*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
-                                                <span class="hide-menu">Meteran&nbsp;Air</span>
+                                                <span class="hide-menu">Air&nbsp;Bersih</span>
                                             </a>
                                         </li>
                                     </ul>

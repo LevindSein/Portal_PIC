@@ -109,6 +109,13 @@ Route::middleware('checkauth')->group(function(){
             Route::put('point/tools/listrik/{id}', [ToolsController::class, 'listrikUpdate']);
             Route::get('point/tools/listrik/{id}', [ToolsController::class, 'listrikShow']);
             Route::delete('point/tools/listrik/{id}', [ToolsController::class, 'listrikDestroy']);
+
+            Route::get('point/tools/airbersih', [ToolsController::class, 'airbersih']);
+            Route::post('point/tools/airbersih', [ToolsController::class, 'airbersihStore']);
+            Route::get('point/tools/airbersih/{id}/edit', [ToolsController::class, 'airbersihEdit']);
+            Route::put('point/tools/airbersih/{id}', [ToolsController::class, 'airbersihUpdate']);
+            Route::get('point/tools/airbersih/{id}', [ToolsController::class, 'airbersihShow']);
+            Route::delete('point/tools/airbersih/{id}', [ToolsController::class, 'airbersihDestroy']);
         });
     });
 
