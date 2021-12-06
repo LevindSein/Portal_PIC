@@ -112,7 +112,7 @@ class PriceController extends Controller
 
             $data['data'] = json_decode($data->data);
 
-            return response()->json(['success' => 'Data deleted.', 'show' => $data]);
+            return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
         else{
             abort(404);
@@ -322,7 +322,7 @@ class PriceController extends Controller
 
             $data['data'] = json_decode($data->data);
 
-            return response()->json(['success' => 'Data deleted.', 'show' => $data]);
+            return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
         else{
             abort(404);
@@ -523,7 +523,7 @@ class PriceController extends Controller
 
             $data['data'] = json_decode($data->data);
 
-            return response()->json(['success' => 'Data deleted.', 'show' => $data]);
+            return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
         else{
             abort(404);
@@ -709,7 +709,7 @@ class PriceController extends Controller
 
             $data['data'] = json_decode($data->data);
 
-            return response()->json(['success' => 'Data deleted.', 'show' => $data]);
+            return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
         else{
             abort(404);
@@ -891,7 +891,7 @@ class PriceController extends Controller
 
             $data['data'] = json_decode($data->data);
 
-            return response()->json(['success' => 'Data deleted.', 'show' => $data]);
+            return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
         else{
             abort(404);
@@ -1073,7 +1073,7 @@ class PriceController extends Controller
 
             $data['data'] = json_decode($data->data);
 
-            return response()->json(['success' => 'Data deleted.', 'show' => $data]);
+            return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
         else{
             abort(404);

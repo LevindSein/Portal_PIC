@@ -1,7 +1,7 @@
 @extends('portal.layout.master')
 
 @section('content-title')
-Alat Air Bersih
+Hari Libur
 @endsection
 
 @section('content-button')
@@ -27,9 +27,8 @@ Alat Air Bersih
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Code</th>
-                                <th>ID</th>
-                                <th>Meter</th>
+                                <th>Date</th>
+                                <th>Desc</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -46,16 +45,10 @@ Alat Air Bersih
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <small class="text-muted pt-4 db">Kode</small>
-                <h6 id="showCode"></h6>
-                <small class="text-muted pt-4 db">ID</small>
-                <h6 id="showName"></h6>
-                <small class="text-muted pt-4 db">Meter</small>
-                <h6 id="showMeter"></h6>
-                <small class="text-muted pt-4 db">Status Ketersediaan</small>
-                <h6 id="showAvailable"></h6>
-                <small class="text-muted pt-4 db">Status Pembayaran</small>
-                <h6 id="showPaid"></h6>
+                <small class="text-muted pt-4 db">Tanggal</small>
+                <h6 id="showDate"></h6>
+                <small class="text-muted pt-4 db">Deskripsi</small>
+                <h6 id="showDesc"></h6>
                 <small class="text-muted pt-4 db">Dibuat oleh</small>
                 <h6 id="showCreate"></h6>
                 <small class="text-muted pt-4 db">Diperbaharui oleh</small>
@@ -68,7 +61,7 @@ Alat Air Bersih
     </div>
 </div>
 
-<div id="toolsModal" class="modal fade" role="dialog" tabIndex="-1">
+<div id="dayOffModal" class="modal fade" role="dialog" tabIndex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -77,22 +70,22 @@ Alat Air Bersih
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form id="toolsForm">
+            <form id="dayOffForm">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>ID Alat <span class="text-danger">*</span></label>
-                        <input required type="text" id="name" name="name" autocomplete="off" maxlength="30" placeholder="Contoh: 170002xxxxx" class="form-control form-control-line">
+                        <label>Tanggal <span class="text-danger">*</span></label>
+                        <input required type="date" id="date" name="date" class="form-control form-control-line">
                     </div>
                     <div class="form-group">
-                        <label>Meter <span class="text-danger">*</span></label>
-                        <input required type="text" id="meter" name="meter" autocomplete="off" maxlength="12" placeholder="Ketikkan Meter dalam angka" class="number form-control form-control-line">
+                        <label>Deskripsi</label>
+                        <textarea rows="5" id="desc" name="desc" autocomplete="off" maxlength="255" placeholder="Ketikkan deskripsi" class="form-control form-control-line"></textarea>
                     </div>
                     <div class="form-group">
                         <p>(<span class="text-danger">*</span>) wajib diisi.</p>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" id="toolsFormValue"/>
+                    <input type="hidden" id="dayOffFormValue"/>
                     <button type="submit" id="save_btn" class="btn btn-success">Simpan</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
                 </div>
@@ -105,17 +98,6 @@ Alat Air Bersih
 @section('content-js')
 <script>
     $(document).ready(function(){
-        $(".number").on('input', function (e) {
-            if(e.which >= 37 && e.which <= 40) return;
-
-            if (/^[0-9.,]+$/.test($(this).val())) {
-                $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
-            }
-            else {
-                $(this).val($(this).val().substring(0, $(this).val().length - 1));
-            }
-        });
-
         var id;
 
         var dtable = $('#dtable').DataTable({
@@ -126,21 +108,20 @@ Alat Air Bersih
                 }
             },
             "serverSide": true,
-            "ajax": "/production/point/tools/airbersih",
+            "ajax": "/production/manage/dayoff",
             "columns": [
-                { data: 'code', name: 'code', class : 'text-center' },
-                { data: 'name', name: 'name', class : 'text-center' },
-                { data: 'meter', name: 'meter', class : 'text-center' },
+                { data: 'date', name: 'date', class : 'text-center' },
+                { data: 'data', name: 'data', class : 'text-center' },
                 { data: 'action', name: 'action', class : 'text-center' },
             ],
             "stateSave": true,
             "deferRender": true,
             "pageLength": 10,
             "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
-            "order": [[ 0, "asc" ]],
+            "order": [[ 0, "desc" ]],
             "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [3] },
-                { "bSearchable": false, "aTargets": [3] }
+                { "bSortable": false, "aTargets": [2] },
+                { "bSearchable": false, "aTargets": [2] }
             ],
             "scrollY": "50vh",
             "scrollX": true,
@@ -172,30 +153,30 @@ Alat Air Bersih
         }
 
         $(".add").click( function(){
-            $("#toolsForm")[0].reset();
-            $('.titles').text('Tambah Alat Listrik');
-            $("#toolsFormValue").val('add');
-            $('#toolsModal').modal('show');
-            $('#toolsModal').on('shown.bs.modal', function() {
-                $('#name').focus();
+            $("#dayOffForm")[0].reset();
+            $('.titles').text('Tambah data Hari Libur');
+            $("#dayOffFormValue").val('add');
+            $('#dayOffModal').modal('show');
+            $('#dayOffModal').on('shown.bs.modal', function() {
+                $('#date').focus();
             });
         });
 
         $(document).on('click', '.edit', function(){
             id = $(this).attr('id');
             name = $(this).attr('nama');
-            $("#toolsForm")[0].reset();
+            $("#dayOffForm")[0].reset();
             $('.titles').text('Edit data ' + name);
-            $("#toolsFormValue").val('update');
+            $("#dayOffFormValue").val('update');
 
             $.ajax({
-                url: "/production/point/tools/airbersih/" + id + "/edit",
+                url: "/production/manage/dayoff/" + id + "/edit",
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
-                        $("#name").val(data.show.name);
-                        $("#meter").val(Number(data.show.meter).toLocaleString('id-ID'));
+                        $("#date").val(data.show.date);
+                        $("#desc").val(data.show.data.desc);
                     }
 
                     if(data.info){
@@ -235,9 +216,9 @@ Alat Air Bersih
                     console.log(data);
                 },
                 complete:function(){
-                    $('#toolsModal').modal('show');
-                    $('#toolsModal').on('shown.bs.modal', function() {
-                        $('#name').focus();
+                    $('#dayOffModal').modal('show');
+                    $('#dayOffModal').on('shown.bs.modal', function() {
+                        $('#date').focus();
                     });
                 }
             });
@@ -245,12 +226,30 @@ Alat Air Bersih
 
         $(document).on('click', '.delete', function(){
             id = $(this).attr('id');
-            nama = $(this).attr('nama');
-            $('.titles').text('Hapus data ' + nama + ' ?');
-            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data alat.');
+            name = $(this).attr('nama');
+            $('.titles').text('Hapus data ' + name + '?');
+            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data hari libur.');
             $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
             $('#confirmValue').val('delete');
             $('#confirmModal').modal('show');
+        });
+
+        $('#dayOffForm').submit(function(e){
+            e.preventDefault();
+
+            value = $("#dayOffFormValue").val();
+            if(value == 'add'){
+                url = "/production/manage/dayoff";
+                type = "POST";
+            }
+            else if(value == 'update'){
+                url = "/production/manage/dayoff/" + id;
+                type = "PUT";
+            }
+            dataset = $(this).serialize();
+            ok_btn_before = "Menyimpan...";
+            ok_btn_completed = "Simpan";
+            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
         });
 
         $('#confirmForm').submit(function(e){
@@ -262,30 +261,12 @@ Alat Air Bersih
                 '_token' : token,
             }
             if(value == 'delete'){
-                url = "/production/point/tools/airbersih/" + id;
+                url = "/production/manage/dayoff/" + id;
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Hapus";
                 ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
             }
-        });
-
-        $('#toolsForm').submit(function(e){
-            e.preventDefault();
-
-            value = $("#toolsFormValue").val();
-            if(value == 'add'){
-                url = "/production/point/tools/airbersih";
-                type = "POST";
-            }
-            else if(value == 'update'){
-                url = "/production/point/tools/airbersih/" + id;
-                type = "PUT";
-            }
-            dataset = $(this).serialize();
-            ok_btn_before = "Menyimpan...";
-            ok_btn_completed = "Simpan";
-            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
         });
 
         function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
@@ -376,7 +357,7 @@ Alat Air Bersih
                 complete:function(data){
                     if(value == 'add' || value == 'update'){
                         if(JSON.parse(data.responseText).success)
-                            $('#toolsModal').modal('hide');
+                            $('#dayOffModal').modal('hide');
                     }
                     else{
                         $('#confirmModal').modal('hide');
@@ -390,16 +371,13 @@ Alat Air Bersih
             id = $(this).attr('id');
 
             $.ajax({
-                url: "/production/point/tools/airbersih/" + id,
+                url: "/production/manage/dayoff/" + id,
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
-                        $("#showCode").text(data.show.code);
-                        (data.show.name) ? $("#showName").text(data.show.name) : $("#showName").html("&mdash;");
-                        $("#showMeter").text(Number(data.show.meter).toLocaleString('id-ID'));
-                        $("#showAvailable").html(data.show.available);
-                        $("#showPaid").html(data.show.paid);
+                        $("#showDate").text(data.show.date);
+                        $("#showDesc").html(data.show.data.desc);
                         $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
                         $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                     }

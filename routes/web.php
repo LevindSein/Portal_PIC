@@ -16,6 +16,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ChangeLogController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ToolsController;
+use App\Http\Controllers\DayOffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,8 @@ Route::middleware('checkauth')->group(function(){
             Route::resource('histories', HistoryController::class);
 
             Route::resource('changelogs', ChangeLogController::class);
+
+            Route::resource('manage/dayoff', DayOffController::class);
 
             Route::get('manage/prices/listrik', [PriceController::class, 'listrik']);
             Route::post('manage/prices/listrik', [PriceController::class, 'listrikStore']);

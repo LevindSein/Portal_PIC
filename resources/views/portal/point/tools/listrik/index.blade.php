@@ -256,7 +256,7 @@ Alat Listrik
             id = $(this).attr('id');
             nama = $(this).attr('nama');
             $('.titles').text('Hapus data ' + nama + ' ?');
-            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data tarif.');
+            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data alat.');
             $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
             $('#confirmValue').val('delete');
             $('#confirmModal').modal('show');

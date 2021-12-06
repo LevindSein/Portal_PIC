@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2021 at 02:01 AM
+-- Generation Time: Dec 06, 2021 at 03:50 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -343,6 +343,50 @@ CREATE TABLE `data_login` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `day_off`
+--
+
+CREATE TABLE `day_off` (
+  `id` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `data` longtext DEFAULT NULL,
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `day_off`
+--
+
+INSERT INTO `day_off` (`id`, `date`, `data`, `updated_at`, `created_at`) VALUES
+(1, '2020-03-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(2, '2020-11-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(4, '2022-04-15', '{\"desc\":\"Wafat Isa Al\'Masih\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(5, '2022-05-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(6, '2023-01-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(7, '2023-10-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(8, '2024-09-15', '{\"desc\":\"Maulid Nabi Muhammad SAW\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(9, '2024-12-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(10, '2025-06-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(11, '2026-02-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(12, '2026-03-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(13, '2026-11-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(14, '2027-08-15', '{\"desc\":\"Maulid Nabi Muhammad SAW\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(15, '2028-10-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(16, '2029-02-15', '{\"desc\":\"Hari Raya Idul Fitri 1450 H\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(17, '2029-03-15', '{\"desc\":\"Hari Raya Nyepi\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(18, '2029-04-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(19, '2029-05-15', '{\"desc\":\"Tahun Baru Hijriyah\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(20, '2029-07-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(21, '2030-09-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(22, '2030-12-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(23, '2021-08-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '2021-08-16 00:14:17'),
+(24, '2021-07-15', '{\"desc\":\"Listrik Padam Di Sore Hari\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '2021-08-16 13:13:07'),
+(25, '2021-06-15', '{\"desc\":\"Handle\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '2021-08-16 16:29:21');
 
 -- --------------------------------------------------------
 
@@ -693,6 +737,12 @@ ALTER TABLE `data_login`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `day_off`
+--
+ALTER TABLE `day_off`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -816,6 +866,12 @@ ALTER TABLE `country`
 --
 ALTER TABLE `data_login`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `day_off`
+--
+ALTER TABLE `day_off`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`

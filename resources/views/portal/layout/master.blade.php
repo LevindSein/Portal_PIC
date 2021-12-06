@@ -200,13 +200,13 @@
                                 <span class="hide-menu">Tempat&nbsp;Usaha</span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level {{ (request()->is('production/point*')) ? 'in' : '' }}">
-                                <li class="sidebar-item {{ (request()->is('production/point/shops*')) ? 'active' : '' }}">
+                                <li class="sidebar-item">
                                     <a href="{{url('production/point/shops')}}" class="sidebar-link {{ (request()->is('production/point/shops*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
                                         <span class="hide-menu">Data&nbsp;Tempat</span>
                                     </a>
                                 </li>
-                                <li class="sidebar-item {{ (request()->is('production/point/groups*')) ? 'active' : '' }}">
+                                <li class="sidebar-item">
                                     <a href="{{url('production/point/groups')}}" class="sidebar-link {{ (request()->is('production/point/groups*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
                                         <span class="hide-menu">Blok&nbsp;Tempat</span>
@@ -218,13 +218,13 @@
                                         <span class="hide-menu">Alat&nbsp;Meter</span>
                                     </a>
                                     <ul aria-expanded="false" class="collapse second-level {{ (request()->is('production/point/tools*')) ? 'in' : '' }}">
-                                        <li class="sidebar-item {{ (request()->is('production/point/tools/listrik*')) ? 'active' : '' }}">
+                                        <li class="sidebar-item">
                                             <a href="{{url('production/point/tools/listrik')}}" class="sidebar-link {{ (request()->is('production/point/tools/listrik*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Listrik</span>
                                             </a>
                                         </li>
-                                        <li class="sidebar-item {{ (request()->is('production/point/tools/airbersih*')) ? 'active' : '' }}">
+                                        <li class="sidebar-item">
                                             <a href="{{url('production/point/tools/airbersih')}}" class="sidebar-link {{ (request()->is('production/point/tools/airbersih*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Air&nbsp;Bersih</span>
@@ -247,9 +247,9 @@
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
+                                    <a href="{{url('production/manage/dayoff')}}" class="sidebar-link {{ (request()->is('production/manage/dayoff*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
-                                        <span class="hide-menu">Hari&nbsp;Libur</span>
+                                        <span class="hide-menu">Libur&nbsp;Tagihan</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item {{ (request()->is('production/manage/prices*')) ? 'bg-light' : '' }}">
@@ -258,37 +258,37 @@
                                         <span class="hide-menu">Rumusan&nbsp;Tarif</span>
                                     </a>
                                     <ul aria-expanded="false" class="collapse first-level {{ (request()->is('production/manage/prices*')) ? 'in' : '' }}">
-                                        <li class="sidebar-item {{ (request()->is('production/manage/prices/listrik*')) ? 'active' : '' }}">
+                                        <li class="sidebar-item">
                                             <a href="{{url('production/manage/prices/listrik')}}" class="sidebar-link {{ (request()->is('production/manage/prices/listrik*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Listrik</span>
                                             </a>
                                         </li>
-                                        <li class="sidebar-item {{ (request()->is('production/manage/prices/airbersih*')) ? 'active' : '' }}">
+                                        <li class="sidebar-item">
                                             <a href="{{url('production/manage/prices/airbersih')}}" class="sidebar-link {{ (request()->is('production/manage/prices/airbersih*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Air&nbsp;Bersih</span>
                                             </a>
                                         </li>
-                                        <li class="sidebar-item {{ (request()->is('production/manage/prices/keamananipk*')) ? 'active' : '' }}">
+                                        <li class="sidebar-item">
                                             <a href="{{url('production/manage/prices/keamananipk')}}" class="sidebar-link {{ (request()->is('production/manage/prices/keamananipk*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Keamanan&nbsp;IPK</span>
                                             </a>
                                         </li>
-                                        <li class="sidebar-item {{ (request()->is('production/manage/prices/kebersihan*')) ? 'active' : '' }}">
+                                        <li class="sidebar-item">
                                             <a href="{{url('production/manage/prices/kebersihan')}}" class="sidebar-link {{ (request()->is('production/manage/prices/kebersihan*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Kebersihan</span>
                                             </a>
                                         </li>
-                                        <li class="sidebar-item {{ (request()->is('production/manage/prices/airkotor*')) ? 'active' : '' }}">
+                                        <li class="sidebar-item">
                                             <a href="{{url('production/manage/prices/airkotor')}}" class="sidebar-link {{ (request()->is('production/manage/prices/airkotor*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Air&nbsp;Kotor</span>
                                             </a>
                                         </li>
-                                        <li class="sidebar-item {{ (request()->is('production/manage/prices/lain*')) ? 'active' : '' }}">
+                                        <li class="sidebar-item">
                                             <a href="{{url('production/manage/prices/lain')}}" class="sidebar-link {{ (request()->is('production/manage/prices/lain*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Lainnya</span>
