@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2021 at 04:52 PM
+-- Generation Time: Dec 06, 2021 at 08:03 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -621,6 +621,7 @@ INSERT INTO `p_listrik` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUE
 CREATE TABLE `shops` (
   `id` bigint(20) NOT NULL,
   `kd_kontrol` varchar(20) DEFAULT NULL,
+  `nicename` varchar(50) DEFAULT NULL,
   `group` int(11) DEFAULT NULL,
   `no_los` text DEFAULT NULL,
   `jml_los` int(11) DEFAULT NULL,
@@ -680,9 +681,9 @@ CREATE TABLE `t_listrik` (
 
 CREATE TABLE `users` (
   `id` bigint(20) NOT NULL,
-  `photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'storage/users/user.jpg',
-  `uid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'storage/users/user.jpg',
   `level` tinyint(1) NOT NULL DEFAULT 3,
   `country_id` smallint(6) DEFAULT NULL,
   `phone` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -707,8 +708,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `photo`, `uid`, `name`, `level`, `country_id`, `phone`, `email`, `email_verified_at`, `member`, `ktp`, `npwp`, `address`, `authority`, `active`, `password`, `remember_token`, `nonactive`, `activation_code`, `available`, `created_at`, `updated_at`) VALUES
-(1598, 'storage/users/1.png', 'super_admin', 'MASTER', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-11-28 10:39:37', 'BP3C11111111', '3211111111111111', NULL, 'Di bawah langit berpijak pada bumi.', NULL, 1, '$argon2id$v=19$m=1024,t=2,p=2$bEQ4ZjBPSzJOZEduSG1QeQ$6GYMfgK5Pg+ibGbp7v2jrAyfRmIqe9Aa4/N9Qpb8KM4', NULL, NULL, NULL, NULL, '2021-11-09 16:22:51', '2021-12-03 03:45:48');
+INSERT INTO `users` (`id`, `name`, `uid`, `photo`, `level`, `country_id`, `phone`, `email`, `email_verified_at`, `member`, `ktp`, `npwp`, `address`, `authority`, `active`, `password`, `remember_token`, `nonactive`, `activation_code`, `available`, `created_at`, `updated_at`) VALUES
+(1598, 'MASTER', 'super_admin', 'storage/users/1.png', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-11-28 10:39:37', 'BP3C11111111', '3211111111111111', NULL, 'Di bawah langit berpijak pada bumi.', NULL, 1, '$argon2id$v=19$m=1024,t=2,p=2$bEQ4ZjBPSzJOZEduSG1QeQ$6GYMfgK5Pg+ibGbp7v2jrAyfRmIqe9Aa4/N9Qpb8KM4', NULL, NULL, NULL, NULL, '2021-11-09 16:22:51', '2021-12-03 03:45:48');
 
 -- --------------------------------------------------------
 

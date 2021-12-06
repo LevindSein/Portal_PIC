@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,9 +23,9 @@ class ToolsController extends Controller
             $data = TListrik::select('id','code','name','power','meter');
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->code.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.$data->code.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->code.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->code.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.$data->code.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->code.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
 
                 return $button;
             })
@@ -88,14 +87,8 @@ class ToolsController extends Controller
 
     public function listrikEdit($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = TListrik::findOrFail($decrypted);
+                $data = TListrik::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -111,24 +104,18 @@ class ToolsController extends Controller
 
     public function listrikUpdate(Request $request, $id){
         if($request->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             $data = $request->all();
             $data['power'] = str_replace('.','',$request->power);
             $data['meter'] = str_replace('.','',$request->meter);
 
             Validator::make($data, [
-                'name' => 'required|max:30|unique:App\Models\TListrik,name,'.$decrypted,
+                'name' => 'required|max:30|unique:App\Models\TListrik,name,'.$id,
                 'power' => 'required|numeric|lte:999999999',
                 'meter' => 'required|numeric|lte:999999999',
             ])->validate();
 
             try{
-                $data = TListrik::findOrFail($decrypted);
+                $data = TListrik::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -161,14 +148,8 @@ class ToolsController extends Controller
 
     public function listrikShow($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = TListrik::findOrFail($decrypted);
+                $data = TListrik::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -188,14 +169,8 @@ class ToolsController extends Controller
 
     public function listrikDestroy($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = TListrik::findOrFail($decrypted);
+                $data = TListrik::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -218,9 +193,9 @@ class ToolsController extends Controller
             $data = TAirBersih::select('id','code','name','meter');
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->code.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.$data->code.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->code.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->code.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.$data->code.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->code.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
 
                 return $button;
             })
@@ -276,14 +251,8 @@ class ToolsController extends Controller
 
     public function airbersihEdit($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = TAirBersih::findOrFail($decrypted);
+                $data = TAirBersih::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -299,22 +268,16 @@ class ToolsController extends Controller
 
     public function airbersihUpdate(Request $request, $id){
         if($request->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             $data = $request->all();
             $data['meter'] = str_replace('.','',$request->meter);
 
             Validator::make($data, [
-                'name' => 'required|max:30|unique:App\Models\TAirBersih,name,'.$decrypted,
+                'name' => 'required|max:30|unique:App\Models\TAirBersih,name,'.$id,
                 'meter' => 'required|numeric|lte:999999999',
             ])->validate();
 
             try{
-                $data = TAirBersih::findOrFail($decrypted);
+                $data = TAirBersih::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -346,14 +309,8 @@ class ToolsController extends Controller
 
     public function airbersihShow($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = TAirBersih::findOrFail($decrypted);
+                $data = TAirBersih::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -373,14 +330,8 @@ class ToolsController extends Controller
 
     public function airbersihDestroy($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = TAirBersih::findOrFail($decrypted);
+                $data = TAirBersih::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }

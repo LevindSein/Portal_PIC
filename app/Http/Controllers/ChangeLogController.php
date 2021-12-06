@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -35,12 +34,12 @@ class ChangeLogController extends Controller
             ->addColumn('action', function($data){
                 $button = '';
                 if(Auth::user()->level == 1){
-                    $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                    $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                 }
                 else{
-                    $button = '<button title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" class="details btn btn-sm btn-info">Show</button>';
+                    $button = '<button title="Show Details" name="show" id="'.$data->id.'" class="details btn btn-sm btn-info">Show</button>';
                 }
                 return $button;
             })
@@ -117,14 +116,8 @@ class ChangeLogController extends Controller
     public function show($id)
     {
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             try{
-                $data = ChangeLog::findOrFail($decrypted);
+                $data = ChangeLog::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -147,14 +140,8 @@ class ChangeLogController extends Controller
     public function edit($id)
     {
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = ChangeLog::findOrFail($decrypted);
+                $data = ChangeLog::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -178,19 +165,13 @@ class ChangeLogController extends Controller
     public function update(Request $request, $id)
     {
         if($request->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             $request->validate([
                 'title' => 'required',
                 'data' => 'required',
             ]);
 
             try{
-                $dataset = ChangeLog::findOrFail($decrypted);
+                $dataset = ChangeLog::findOrFail($id);
             } catch(ModelNotFoundException $e){
                 return response()->json(['error' => "Data not found.", 'description' => $e]);
             }
@@ -228,14 +209,8 @@ class ChangeLogController extends Controller
     public function destroy($id)
     {
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = ChangeLog::findOrFail($decrypted);
+                $data = ChangeLog::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }

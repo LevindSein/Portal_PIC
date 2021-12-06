@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 
 use App\Models\DayOff;
 use App\Models\IndoDate;
@@ -25,9 +24,9 @@ class DayOffController extends Controller
             $data = DayOff::select('id','date','data');
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->date.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.$data->date.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->date.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->date.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.$data->date.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->date.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
 
                 return $button;
             })
@@ -100,14 +99,8 @@ class DayOffController extends Controller
     public function show($id)
     {
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = DayOff::findOrFail($decrypted);
+                $data = DayOff::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -131,14 +124,8 @@ class DayOffController extends Controller
     public function edit($id)
     {
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = DayOff::findOrFail($decrypted);
+                $data = DayOff::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -162,19 +149,13 @@ class DayOffController extends Controller
     public function update(Request $request, $id)
     {
         if($request->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             $request->validate([
-                'date' => 'required|date|unique:App\Models\DayOff,date,'.$decrypted,
+                'date' => 'required|date|unique:App\Models\DayOff,date,'.$id,
                 'desc' => 'required|max:255',
             ]);
 
             try{
-                $data = DayOff::findOrFail($decrypted);
+                $data = DayOff::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -213,14 +194,8 @@ class DayOffController extends Controller
     public function destroy($id)
     {
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = DayOff::findOrFail($decrypted);
+                $data = DayOff::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,9 +26,9 @@ class PriceController extends Controller
             $data = PListrik::select('id','name');
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
 
                 return $button;
             })
@@ -98,14 +97,8 @@ class PriceController extends Controller
 
     public function listrikEdit($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PListrik::findOrFail($decrypted);
+                $data = PListrik::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -127,14 +120,8 @@ class PriceController extends Controller
             $data['blok2'] = str_replace('.','',$request->blok2);
             $data['denda1'] = str_replace('.','',$request->denda1);
 
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             Validator::make($data, [
-                'name' => 'required|max:100|unique:App\Models\PListrik,name,'.$decrypted,
+                'name' => 'required|max:100|unique:App\Models\PListrik,name,'.$id,
                 'beban' => 'required|numeric|lte:999999999',
                 'blok1' => 'required|numeric|lte:999999999',
                 'blok2' => 'required|numeric|lte:999999999',
@@ -146,7 +133,7 @@ class PriceController extends Controller
             ])->validate();
 
             try{
-                $data = PListrik::findOrFail($decrypted);
+                $data = PListrik::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -185,14 +172,8 @@ class PriceController extends Controller
 
     public function listrikShow($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PListrik::findOrFail($decrypted);
+                $data = PListrik::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -208,14 +189,8 @@ class PriceController extends Controller
 
     public function listrikDestroy($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PListrik::findOrFail($decrypted);
+                $data = PListrik::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -238,9 +213,9 @@ class PriceController extends Controller
             $data = PAirBersih::select('id','name');
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
 
                 return $button;
             })
@@ -308,14 +283,8 @@ class PriceController extends Controller
 
     public function airbersihEdit($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PAirBersih::findOrFail($decrypted);
+                $data = PAirBersih::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -338,14 +307,8 @@ class PriceController extends Controller
             $data['beban'] = str_replace('.','',$request->beban);
             $data['denda'] = str_replace('.','',$request->denda);
 
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             Validator::make($data, [
-                'name' => 'required|max:100|unique:App\Models\PAirBersih,name,'.$decrypted,
+                'name' => 'required|max:100|unique:App\Models\PAirBersih,name,'.$id,
                 'tarif1' => 'required|numeric|lte:999999999',
                 'tarif2' => 'required|numeric|lte:999999999',
                 'pemeliharaan' => 'required|numeric|lte:999999999',
@@ -356,7 +319,7 @@ class PriceController extends Controller
             ])->validate();
 
             try{
-                $data = PAirBersih::findOrFail($decrypted);
+                $data = PAirBersih::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -394,14 +357,8 @@ class PriceController extends Controller
 
     public function airbersihShow($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PAirBersih::findOrFail($decrypted);
+                $data = PAirBersih::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -417,14 +374,8 @@ class PriceController extends Controller
 
     public function airbersihDestroy($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PAirBersih::findOrFail($decrypted);
+                $data = PAirBersih::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -447,9 +398,9 @@ class PriceController extends Controller
             $data = PKeamananIpk::select('id','price','name');
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
 
                 return $button;
             })
@@ -509,14 +460,8 @@ class PriceController extends Controller
 
     public function keamananipkEdit($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PKeamananIpk::findOrFail($decrypted);
+                $data = PKeamananIpk::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -535,21 +480,15 @@ class PriceController extends Controller
             $data = $request->all();
             $data['tarif'] = str_replace('.','',$request->tarif);
 
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             Validator::make($data, [
-                'name' => 'required|max:100|unique:App\Models\PKeamananIpk,name,'.$decrypted,
+                'name' => 'required|max:100|unique:App\Models\PKeamananIpk,name,'.$id,
                 'tarif' => 'required|numeric|lte:999999999',
                 'keamanan' => 'required|numeric|lte:100',
                 'ipk' => 'required|numeric|lte:100',
             ])->validate();
 
             try{
-                $data = PKeamananIpk::findOrFail($decrypted);
+                $data = PKeamananIpk::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -584,14 +523,8 @@ class PriceController extends Controller
 
     public function keamananipkShow($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PKeamananIpk::findOrFail($decrypted);
+                $data = PKeamananIpk::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -607,14 +540,8 @@ class PriceController extends Controller
 
     public function keamananipkDestroy($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PKeamananIpk::findOrFail($decrypted);
+                $data = PKeamananIpk::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -637,9 +564,9 @@ class PriceController extends Controller
             $data = PKebersihan::select('id','price','name');
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
 
                 return $button;
             })
@@ -695,14 +622,8 @@ class PriceController extends Controller
 
     public function kebersihanEdit($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PKebersihan::findOrFail($decrypted);
+                $data = PKebersihan::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -721,19 +642,13 @@ class PriceController extends Controller
             $data = $request->all();
             $data['tarif'] = str_replace('.','',$request->tarif);
 
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             Validator::make($data, [
-                'name' => 'required|max:100|unique:App\Models\PKebersihan,name,'.$decrypted,
+                'name' => 'required|max:100|unique:App\Models\PKebersihan,name,'.$id,
                 'tarif' => 'required|numeric|lte:999999999',
             ])->validate();
 
             try{
-                $data = PKebersihan::findOrFail($decrypted);
+                $data = PKebersihan::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -766,14 +681,8 @@ class PriceController extends Controller
 
     public function kebersihanShow($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PKebersihan::findOrFail($decrypted);
+                $data = PKebersihan::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -789,14 +698,8 @@ class PriceController extends Controller
 
     public function kebersihanDestroy($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PKebersihan::findOrFail($decrypted);
+                $data = PKebersihan::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -819,9 +722,9 @@ class PriceController extends Controller
             $data = PAirkotor::select('id','price','name');
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
 
                 return $button;
             })
@@ -877,14 +780,8 @@ class PriceController extends Controller
 
     public function airkotorEdit($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PAirkotor::findOrFail($decrypted);
+                $data = PAirkotor::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -903,19 +800,13 @@ class PriceController extends Controller
             $data = $request->all();
             $data['tarif'] = str_replace('.','',$request->tarif);
 
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             Validator::make($data, [
-                'name' => 'required|max:100|unique:App\Models\PAirkotor,name,'.$decrypted,
+                'name' => 'required|max:100|unique:App\Models\PAirkotor,name,'.$id,
                 'tarif' => 'required|numeric|lte:999999999',
             ])->validate();
 
             try{
-                $data = PAirkotor::findOrFail($decrypted);
+                $data = PAirkotor::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -948,14 +839,8 @@ class PriceController extends Controller
 
     public function airkotorShow($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PAirkotor::findOrFail($decrypted);
+                $data = PAirkotor::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -971,14 +856,8 @@ class PriceController extends Controller
 
     public function airkotorDestroy($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PAirkotor::findOrFail($decrypted);
+                $data = PAirkotor::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -1001,9 +880,9 @@ class PriceController extends Controller
             $data = PLain::select('id','price','name');
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
 
                 return $button;
             })
@@ -1059,14 +938,8 @@ class PriceController extends Controller
 
     public function lainEdit($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PLain::findOrFail($decrypted);
+                $data = PLain::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -1085,19 +958,13 @@ class PriceController extends Controller
             $data = $request->all();
             $data['tarif'] = str_replace('.','',$request->tarif);
 
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             Validator::make($data, [
-                'name' => 'required|max:100|unique:App\Models\PLain,name,'.$decrypted,
+                'name' => 'required|max:100|unique:App\Models\PLain,name,'.$id,
                 'tarif' => 'required|numeric|lte:999999999',
             ])->validate();
 
             try{
-                $data = PLain::findOrFail($decrypted);
+                $data = PLain::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -1130,14 +997,8 @@ class PriceController extends Controller
 
     public function lainShow($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PLain::findOrFail($decrypted);
+                $data = PLain::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
@@ -1153,14 +1014,8 @@ class PriceController extends Controller
 
     public function lainDestroy($id){
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = PLain::findOrFail($decrypted);
+                $data = PLain::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -27,9 +26,9 @@ class GroupController extends Controller
             $data = Group::select('id','name');
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="edit pointera"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                $button = '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->name.'" class="edit pointera"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.$data->name.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->name.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                 return $button;
             })
             ->rawColumns(['action'])
@@ -108,12 +107,6 @@ class GroupController extends Controller
     public function show($id)
     {
         if(request()->ajax()){
-            try {
-                $id = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             try{
                 $data = Group::findOrFail($id);
             }catch(ModelNotFoundException $e){
@@ -155,12 +148,6 @@ class GroupController extends Controller
     public function edit($id)
     {
         if(request()->ajax()){
-            try {
-                $id = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             try{
                 $data = Group::findOrFail($id);
             }catch(ModelNotFoundException $e){
@@ -192,16 +179,16 @@ class GroupController extends Controller
     public function update(Request $request, $id)
     {
         if($request->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             $request->validate([
-                'group' => 'required|max:10|alpha_dash|unique:App\Models\Group,name,'.$decrypted,
+                'group' => 'required|max:10|alpha_dash|unique:App\Models\Group,name,'.$id,
                 'los' => 'nullable',
             ]);
+
+            try{
+                $data = Group::findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
 
             $group = strtoupper($request->group);
             $los = null;
@@ -211,12 +198,6 @@ class GroupController extends Controller
                 $los = array_unique($los);
                 natsort($los);
                 $los = implode(',', $los);
-            }
-
-            try{
-                $data = Group::findOrFail($decrypted);
-            }catch(ModelNotFoundException $e){
-                return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             $data->name = $group;
@@ -263,14 +244,8 @@ class GroupController extends Controller
     public function destroy($id)
     {
         if(request()->ajax()){
-            try {
-                $decrypted = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid', 'description' => $e]);
-            }
-
             try{
-                $data = Group::findOrFail($decrypted);
+                $data = Group::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }

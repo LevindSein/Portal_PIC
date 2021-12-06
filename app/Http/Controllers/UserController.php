@@ -43,20 +43,20 @@ class UserController extends Controller
                     $button = '';
                     if(Auth::user()->id != $data->id){
                         if($data->active == 2){
-                            $button = '<a type="button" data-toggle="tooltip" title="Activate" name="activate" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="activateUser"><i class="fas fa-shield-check" style="color:#36bea6;"></i></a>';
-                            $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="Delete Permanent" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="deletePermanently"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
+                            $button = '<a type="button" data-toggle="tooltip" title="Activate" name="activate" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="activateUser"><i class="fas fa-shield-check" style="color:#36bea6;"></i></a>';
+                            $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="Delete Permanent" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="deletePermanently"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
                         }
                         else if($data->active == 1){
-                            $button .= '<a type="button" data-toggle="tooltip" title="Reset Password" name="reset" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="reset"><i class="fas fa-key" style="color:#fd7e14;"></i></a>';
-                            $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                            $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                            $button .= '<a type="button" data-toggle="tooltip" title="Reset Password" name="reset" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="reset"><i class="fas fa-key" style="color:#fd7e14;"></i></a>';
+                            $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                            $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
                         }
                         else{
-                            $button = '<a type="button" data-toggle="tooltip" title="Restore" name="restore" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="restore"><i class="fas fa-undo" style="color:#4e73df;"></i></a>';
-                            $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="Delete Permanent" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="deletePermanently"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
+                            $button = '<a type="button" data-toggle="tooltip" title="Restore" name="restore" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="restore"><i class="fas fa-undo" style="color:#4e73df;"></i></a>';
+                            $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="Delete Permanent" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="deletePermanently"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
                         }
                     }
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.substr($data->name,0,15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                     return $button;
                 })
                 ->editColumn('name', function($data){
@@ -64,13 +64,13 @@ class UserController extends Controller
                 })
                 ->editColumn('active', function($data){
                     if($data->active == 0){
-                        $button = '<span style="color:#e74a3b;">nonactive</span>';
+                        $button = '<span style="color:#e74a3b;">Nonaktif</span>';
                     }
                     if($data->active == 1){
-                        $button = '<span style="color:#36bea6;">Active</span>';
+                        $button = '<span style="color:#36bea6;">Aktif</span>';
                     }
                     else if($data->active == 2){
-                        $button = '<span style="color:#2962FF;">Register</span>';
+                        $button = '<span style="color:#2962FF;">Pendaftaran</span>';
                     }
                     return $button;
                 })
@@ -199,12 +199,6 @@ class UserController extends Controller
     public function show($id)
     {
         if(request()->ajax()){
-            try {
-                $id = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
@@ -246,12 +240,6 @@ class UserController extends Controller
     public function edit($id)
     {
         if(request()->ajax()){
-            try {
-                $id = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
@@ -289,12 +277,6 @@ class UserController extends Controller
     {
         if(request()->ajax()){
             //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah, 4 = Kasir, 5 = Keuangan, 6 = Manajer
-            try {
-                $id = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             $request->validate([
                 'level' => 'required|numeric',
                 'email' => 'required|max:200|email|unique:App\Models\User,email,'.$id,
@@ -420,12 +402,6 @@ class UserController extends Controller
     public function destroy($id) //Review Ulang
     {
         if(request()->ajax()){
-            try {
-                $id = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
@@ -522,12 +498,6 @@ class UserController extends Controller
     public function permanent($id) //Review Ulang
     {
         if(request()->ajax()){
-            try {
-                $id = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
@@ -554,12 +524,6 @@ class UserController extends Controller
     public function restore($id)
     {
         if(request()->ajax()){
-            try {
-                $id = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){
@@ -637,12 +601,6 @@ class UserController extends Controller
     public function reset($id)
     {
         if(request()->ajax()){
-            try {
-                $id = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             try{
                 $user = User::findOrFail($id);
             }catch(ModelNotFoundException $e){

@@ -36,12 +36,6 @@ Riwayat Login
 <div id="showModal" class="modal fade" role="dialog" tabIndex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title titles">{Title}</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
             <div class="modal-body">
                 <h3 id="showLevel"></h3>
                 <h5 id="showActive"></h5>
@@ -113,7 +107,6 @@ Riwayat Login
         $(document).on('click', '.details', function(){
             id = $(this).attr('id');
             nama = $(this).attr('nama');
-            $('.titles').text('Informasi ' + nama);
 
             $.ajax({
                 url: "/production/histories/" + id,

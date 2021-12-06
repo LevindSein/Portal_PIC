@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 
 use App\Models\DataLogin;
 use App\Models\User;
@@ -45,7 +44,7 @@ class HistoryController extends Controller
                 }
             })
             ->addColumn('action', function($data){
-                $button = '<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                $button = '<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.substr($data->name, 0, 15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                 return $button;
             })
             ->rawColumns(['action','status'])
@@ -84,12 +83,6 @@ class HistoryController extends Controller
     public function show($id)
     {
         if(request()->ajax()){
-            try {
-                $id = Crypt::decrypt($id);
-            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-                return response()->json(['error' => 'Data invalid.', 'description' => $e]);
-            }
-
             try{
                 $data = DataLogin::findOrFail($id);
             }catch(ModelNotFoundException $e){
