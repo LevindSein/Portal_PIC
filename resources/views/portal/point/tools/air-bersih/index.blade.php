@@ -54,8 +54,6 @@ Alat Air Bersih
                 <h6 id="showMeter"></h6>
                 <small class="text-muted pt-4 db">Status Ketersediaan</small>
                 <h6 id="showAvailable"></h6>
-                <small class="text-muted pt-4 db">Status Pembayaran</small>
-                <h6 id="showPaid"></h6>
                 <small class="text-muted pt-4 db">Dibuat oleh</small>
                 <h6 id="showCreate"></h6>
                 <small class="text-muted pt-4 db">Diperbaharui oleh</small>
@@ -399,7 +397,6 @@ Alat Air Bersih
                         (data.show.name) ? $("#showName").text(data.show.name) : $("#showName").html("&mdash;");
                         $("#showMeter").text(Number(data.show.meter).toLocaleString('id-ID'));
                         $("#showAvailable").html(data.show.available);
-                        $("#showPaid").html(data.show.paid);
                         $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
                         $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                     }

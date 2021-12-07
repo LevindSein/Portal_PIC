@@ -8,8 +8,16 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+use App\Models\Group;
 use App\Models\Shops;
+use App\Models\Commodity;
 use App\Models\TListrik;
+use App\Models\TAirBersih;
+use App\Models\PAirBersih;
+use App\Models\PKeamananIpk;
+use App\Models\PKebersihan;
+use App\Models\PAirKotor;
+use App\Models\PLain;
 use DataTables;
 use Carbon\Carbon;
 
@@ -51,7 +59,7 @@ class ShopsController extends Controller
                 $airbersih = ($data->fas_airbersih != NULL) ? '<a type="button" data-toggle="tooltip" title="Air Bersih" class="pointera"><i class="fas fa-tint" style="color:#36b9cc;""></i></a>' : '<a type="button" data-toggle="tooltip" title="No - Air Bersih"><i class="fas fa-tint" style="color:#d7d8cc;""></i></a>';
                 $keamananipk = ($data->fas_keamananipk != NULL) ? '<a type="button" data-toggle="tooltip" title="Keamanan IPK" class="pointera"><i class="fas fa-lock" style="color:#e74a3b;""></i></a>' : '<a type="button" data-toggle="tooltip" title="No - Keamanan IPK"><i class="fas fa-lock" style="color:#d7d8cc;""></i></a>';
                 $kebersihan = ($data->fas_kebersihan != NULL) ? '<a type="button" data-toggle="tooltip" title="Kebersihan" class="pointera"><i class="fas fa-leaf" style="color:#1cc88a;""></i></a>' : '<a type="button" data-toggle="tooltip" title="No - Kebersihan"><i class="fas fa-leaf" style="color:#d7d8cc;""></i></a>';
-                $airkotor = ($data->fas_airkotor != NULL) ? '<a type="button" data-toggle="tooltip" title="Air Kotor" class="pointera"><i class="fad fa-burn" style="color:#2e96a6;""></i></a>' : '<a type="button" data-toggle="tooltip" title="No - Air Kotor"><i class="fas fa-burn" style="color:#d7d8cc;""></i></a>';
+                $airkotor = ($data->fas_airkotor != NULL) ? '<a type="button" data-toggle="tooltip" title="Air Kotor" class="pointera"><i class="fad fa-burn" style="color:#000000;""></i></a>' : '<a type="button" data-toggle="tooltip" title="No - Air Kotor"><i class="fas fa-burn" style="color:#d7d8cc;""></i></a>';
                 $lain = ($data->fas_lain != NULL) ? '<a type="button" data-toggle="tooltip" title="Lain Lain" class="pointera"><i class="fas fa-chart-pie" style="color:#c5793a;""></i></a>' : '<a type="button" data-toggle="tooltip" title="No - Lain Lain"><i class="fas fa-chart-pie" style="color:#d7d8cc;""></i></a>';
                 return $listrik."&nbsp;&nbsp;".$airbersih."&nbsp;&nbsp;".$keamananipk."&nbsp;&nbsp;".$kebersihan."&nbsp;&nbsp;".$airkotor."&nbsp;&nbsp;".$lain;
             })
@@ -102,9 +110,9 @@ class ShopsController extends Controller
             $data['group'] = $request->group;
 
             $los = $this->multipleSelect($request->los);
-            $data['jml_los'] = count($los);
             sort($los, SORT_NATURAL);
             $data['no_los'] = implode(',', $los);
+            $data['jml_los'] = count($los);
 
             $data['kd_kontrol'] = strtoupper($request->kontrol);
             $data['nicename'] = str_replace('-','',$request->kontrol);
@@ -123,6 +131,7 @@ class ShopsController extends Controller
 
             $data['lokasi'] = $request->location;
 
+            //Listrik
             if(!empty($request->fas_listrik)){
                 $tools = TListrik::find($request->tlistrik);
                 $tools->stt_available = 0;
@@ -131,7 +140,52 @@ class ShopsController extends Controller
                 $data['fas_listrik'] = json_encode([
                     'id_tools' => $request->tlistrik,
                     'id_price' => $request->plistrik,
-                    'dis_listrik' => $request->dlistrik
+                    'diskon' => $request->dlistrik
+                ]);
+            }
+
+            //Air Bersih
+            if(!empty($request->fas_airbersih)){
+                $tools = TAirBersih::find($request->tairbersih);
+                $tools->stt_available = 0;
+                $tools->save();
+
+                $data['fas_airbersih'] = json_encode([
+                    'id_tools' => $request->tairbersih,
+                    'id_price' => $request->pairbersih,
+                    'diskon' => $request->dairbersih
+                ]);
+            }
+
+            //Keamanan IPK
+            if(!empty($request->fas_keamananipk)){
+                $data['fas_keamananipk'] = json_encode([
+                    'id_price' => $request->pkeamananipk,
+                    'diskon' => $request->dkeamananipk
+                ]);
+            }
+
+            //Kebersihan
+            if(!empty($request->fas_kebersihan)){
+                $data['fas_kebersihan'] = json_encode([
+                    'id_price' => $request->pkebersihan,
+                    'diskon' => $request->dkebersihan
+                ]);
+            }
+
+            //Air Kotor
+            if(!empty($request->fas_airkotor)){
+                $data['fas_airkotor'] = json_encode([
+                    'id_price' => $request->pairkotor,
+                    'diskon' => $request->dairkotor
+                ]);
+            }
+
+            //Lain
+            if(!empty($request->fas_lain)){
+                $data['fas_lain'] = json_encode([
+                    'id_price' => $request->plain,
+                    'diskon' => $request->dlain
                 ]);
             }
 
@@ -225,6 +279,58 @@ class ShopsController extends Controller
                 $data = Shops::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            if(!is_null($data->fas_listrik)){
+                $tools = json_decode($data->fas_listrik);
+                try{
+                    $tools = TListrik::findOrFail($tools->id_tools);
+                } catch(ModelNotFoundException $e){
+                    return response()->json(['error' => 'Data Tools Listrik not found','description' => $e]);
+                }
+
+                $json = json_decode($tools->data);
+
+                $json->user_update = Auth::user()->id;
+                $json->username_update = Auth::user()->name;
+                $json->updated_at = Carbon::now()->toDateTimeString();
+
+                $json = json_encode($json);
+
+                $tools->stt_available = 1;
+                $tools->data = $json;
+
+                try{
+                    $tools->save();
+                } catch(\Exception $e){
+                    return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+                }
+            }
+
+            if(!is_null($data->fas_airbersih)){
+                $tools = json_decode($data->fas_airbersih);
+                try{
+                    $tools = TAirBersih::findOrFail($tools->id_tools);
+                } catch(ModelNotFoundException $e){
+                    return response()->json(['error' => 'Data Tools Air Bersih not found','description' => $e]);
+                }
+
+                $json = json_decode($tools->data);
+
+                $json->user_update = Auth::user()->id;
+                $json->username_update = Auth::user()->name;
+                $json->updated_at = Carbon::now()->toDateTimeString();
+
+                $json = json_encode($json);
+
+                $tools->stt_available = 1;
+                $tools->data = $json;
+
+                try{
+                    $tools->save();
+                } catch(\Exception $e){
+                    return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+                }
             }
 
             try{

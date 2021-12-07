@@ -164,6 +164,12 @@ Route::get('search/{group}/los',[SearchController::class, 'los']);
 Route::get('search/commodities',[SearchController::class, 'commodity']);
 Route::get('search/tools/listrik',[SearchController::class, 'tlistrik']);
 Route::get('search/price/listrik',[SearchController::class, 'plistrik']);
+Route::get('search/tools/airbersih',[SearchController::class, 'tairbersih']);
+Route::get('search/price/airbersih',[SearchController::class, 'pairbersih']);
+Route::get('search/price/keamananipk',[SearchController::class, 'pkeamananipk']);
+Route::get('search/price/kebersihan',[SearchController::class, 'pkebersihan']);
+Route::get('search/price/airkotor',[SearchController::class, 'pairkotor']);
+Route::get('search/price/lain',[SearchController::class, 'plain']);
 
 Route::get('scan/qr/{type}/{data}',[ScanController::class, 'scanQr']);
 Route::post('scan/qr/register',[ScanController::class, 'scanQrRegister']);

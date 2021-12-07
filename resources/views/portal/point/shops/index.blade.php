@@ -122,57 +122,215 @@ Data Tempat
                     <div class="row">
                         <div class="col-lg-6 col-xlg-6">
                             {{-- Listrik --}}
-                            <div class="form-group form-check form-check-inline">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="fas_listrik" name="fas_listrik">
-                                    <label class="custom-control-label" for="fas_listrik">Listrik</label>
-                                </div>
-                            </div>
-                            <div id="divlistrik" style="padding-left: 2rem;">
-                                <div class="form-group">
-                                    <label>Pilih Alat Meter <span class="text-danger">*</span> <sup><a href="{{url('production/point/tools/listrik')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
-                                    <select id="tlistrik" name="tlistrik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/listrik')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
-                                    <select id="plistrik" name="plistrik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Diskon</label>
-                                    <div class="input-group">
-                                        <input maxlength="3" type="text" id="dlistrik" name="dlistrik" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">%</span>
-                                        </div>
+                            <div>
+                                <div class="form-group form-check form-check-inline">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="fas_listrik" name="fas_listrik">
+                                        <label class="custom-control-label" for="fas_listrik">Listrik</label>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <hr>
+                                <div id="divlistrik" style="padding-left: 2rem;">
+                                    <div class="form-group">
+                                        <label>Pilih Alat Meter <span class="text-danger">*</span> <sup><a href="{{url('production/point/tools/listrik')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <select id="tlistrik" name="tlistrik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/listrik')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <select id="plistrik" name="plistrik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Diskon</label>
+                                        <div class="input-group">
+                                            <input maxlength="3" type="text" id="dlistrik" name="dlistrik" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <hr>
+                                    </div>
                                 </div>
                             </div>
                             {{-- End Listrik --}}
-                            <div class="form-group">
-                                <label>Air Bersih <span class="text-danger">*</span></label>
-                                <input type="text" autocomplete="off" class="form-control form-control-line">
+                            {{-- Air Bersih --}}
+                            <div>
+                                <div class="form-group form-check form-check-inline">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="fas_airbersih" name="fas_airbersih">
+                                        <label class="custom-control-label" for="fas_airbersih">Air Bersih</label>
+                                    </div>
+                                </div>
+                                <div id="divairbersih" style="padding-left: 2rem;">
+                                    <div class="form-group">
+                                        <label>Pilih Alat Meter <span class="text-danger">*</span> <sup><a href="{{url('production/point/tools/airbersih')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <select id="tairbersih" name="tairbersih" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/airbersih')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <select id="pairbersih" name="pairbersih" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Diskon</label>
+                                        <div class="input-group">
+                                            <input maxlength="3" type="text" id="dairbersih" name="dairbersih" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <hr>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Air Kotor <span class="text-danger">*</span></label>
-                                <input type="text" autocomplete="off" class="form-control form-control-line">
+                            {{-- End Air Bersih --}}
+                            {{-- Air Kotor --}}
+                            <div>
+                                <div class="form-group form-check form-check-inline">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="fas_airkotor" name="fas_airkotor">
+                                        <label class="custom-control-label" for="fas_airkotor">Air Kotor</label>
+                                    </div>
+                                </div>
+                                <div id="divairkotor" style="padding-left: 2rem;">
+                                    <div class="form-group">
+                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/airkotor')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                            <select id="pairkotor" name="pairkotor" class="select2 form-control form-control-line"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Diskon</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                            <input maxlength="11" type="text" id="dairkotor" name="dairkotor" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <hr>
+                                    </div>
+                                </div>
                             </div>
+                            {{-- End Air Kotor --}}
                         </div>
                         <div class="col-lg-6 col-xlg-6">
-                            <div class="form-group">
-                                <label>Keamanan IPK <span class="text-danger">*</span></label>
-                                <input type="text" autocomplete="off" class="form-control form-control-line">
+                            {{-- Keamanan IPK --}}
+                            <div>
+                                <div class="form-group form-check form-check-inline">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="fas_keamananipk" name="fas_keamananipk">
+                                        <label class="custom-control-label" for="fas_keamananipk">Keamanan IPK</label>
+                                    </div>
+                                </div>
+                                <div id="divkeamananipk" style="padding-left: 2rem;">
+                                    <div class="form-group">
+                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/keamananipk')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                            <select id="pkeamananipk" name="pkeamananipk" class="select2 form-control form-control-line"></select>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">/ Los</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Diskon</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                            <input maxlength="11" type="text" id="dkeamananipk" name="dkeamananipk" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">/ Los</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <hr>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Kebersihan <span class="text-danger">*</span></label>
-                                <input type="text" autocomplete="off" class="form-control form-control-line">
+                            {{-- End Keamanan IPK --}}
+                            {{-- Kebersihan --}}
+                            <div>
+                                <div class="form-group form-check form-check-inline">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="fas_kebersihan" name="fas_kebersihan">
+                                        <label class="custom-control-label" for="fas_kebersihan">Kebersihan</label>
+                                    </div>
+                                </div>
+                                <div id="divkebersihan" style="padding-left: 2rem;">
+                                    <div class="form-group">
+                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/kebersihan')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                            <select id="pkebersihan" name="pkebersihan" class="select2 form-control form-control-line"></select>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">/ Los</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Diskon</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                            <input maxlength="11" type="text" id="dkebersihan" name="dkebersihan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">/ Los</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <hr>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Lainnya <span class="text-danger">*</span></label>
-                                <input type="text" autocomplete="off" class="form-control form-control-line">
+                            {{-- End Kebersihan --}}
+                            {{-- Lainnya --}}
+                            <div>
+                                <div class="form-group form-check form-check-inline">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="fas_lain" name="fas_lain">
+                                        <label class="custom-control-label" for="fas_lain">Lainnya</label>
+                                    </div>
+                                </div>
+                                <div id="divlain" style="padding-left: 2rem;">
+                                    <div class="form-group">
+                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/lain')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                            <select id="plain" name="plain" class="select2 form-control form-control-line"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Diskon</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                            <input maxlength="11" type="text" id="dlain" name="dlain" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <hr>
+                                    </div>
+                                </div>
                             </div>
+                            {{-- End Lainnya --}}
                         </div>
                     </div>
                     <div class="form-group">
@@ -325,22 +483,43 @@ Data Tempat
             select2tlistrik("#tlistrik", "/search/tools/listrik", "-- Cari Alat Listrik --");
             $("#plistrik").val("");
             select2idname("#plistrik", "/search/price/listrik", "-- Cari Tarif Listrik --");
-
             fasListrik("hide");
+
+            $("#tairbersih").val("");
+            select2tairbersih("#tairbersih", "/search/tools/airbersih", "-- Cari Alat Air Bersih --");
+            $("#pairbersih").val("");
+            select2idname("#pairbersih", "/search/price/airbersih", "-- Cari Tarif Air Bersih --");
+            fasAirBersih("hide");
+
+            $("#pkeamananipk").val("");
+            select2idprice("#pkeamananipk", "/search/price/keamananipk", "-- Cari Tarif Keamanan IPK --");
+            fasKeamananIpk("hide");
+
+            $("#pkebersihan").val("");
+            select2idprice("#pkebersihan", "/search/price/kebersihan", "-- Cari Tarif Kebersihan --");
+            fasKebersihan("hide");
+
+            $("#pairkotor").val("");
+            select2idprice("#pairkotor", "/search/price/airkotor", "-- Cari Tarif Air Kotor --");
+            fasAirKotor("hide");
+
+            $("#plain").val("");
+            select2idprice("#plain", "/search/price/lain", "-- Cari Tarif Lainnya --");
+            fasLain("hide");
         }
 
         function fasListrik(data){
             if(data == 'show'){
                 $("#divlistrik").show();
-                $("#tlistik").prop("required", true);
-                $("#plistik").prop("required", true);
-                $("#fas_listik").prop("checked", true);
+                $("#tlistrik").prop("required", true);
+                $("#plistrik").prop("required", true);
+                $("#fas_listrik").prop("checked", true);
             }
             else{
                 $("#divlistrik").hide();
-                $("#tlistik").prop("required", false);
-                $("#plistik").prop("required", false);
-                $("#fas_listik").prop("checked", false);
+                $("#tlistrik").prop("required", false);
+                $("#plistrik").prop("required", false);
+                $("#fas_listrik").prop("checked", false);
             }
         }
 
@@ -353,6 +532,123 @@ Data Tempat
             }
         }
         $('#fas_listrik').click(checkFasListrik).each(checkFasListrik);
+
+        function fasAirBersih(data){
+            if(data == 'show'){
+                $("#divairbersih").show();
+                $("#tairbersih").prop("required", true);
+                $("#pairbersih").prop("required", true);
+                $("#fas_airbersih").prop("checked", true);
+            }
+            else{
+                $("#divairbersih").hide();
+                $("#tairbersih").prop("required", false);
+                $("#pairbersih").prop("required", false);
+                $("#fas_airbersih").prop("checked", false);
+            }
+        }
+
+        function checkFasAirBersih(){
+            if($("#fas_airbersih").is(":checked")){
+                fasAirBersih("show");
+            }
+            else{
+                fasAirBersih("hide");
+            }
+        }
+        $('#fas_airbersih').click(checkFasAirBersih).each(checkFasAirBersih);
+
+        function fasKeamananIpk(data){
+            if(data == 'show'){
+                $("#divkeamananipk").show();
+                $("#pkeamananipk").prop("required", true);
+                $("#fas_keamananipk").prop("checked", true);
+            }
+            else{
+                $("#divkeamananipk").hide();
+                $("#pkeamananipk").prop("required", false);
+                $("#fas_keamananipk").prop("checked", false);
+            }
+        }
+
+        function checkFasKeamananIpk(){
+            if($("#fas_keamananipk").is(":checked")){
+                fasKeamananIpk("show");
+            }
+            else{
+                fasKeamananIpk("hide");
+            }
+        }
+        $('#fas_keamananipk').click(checkFasKeamananIpk).each(checkFasKeamananIpk);
+
+        function fasKebersihan(data){
+            if(data == 'show'){
+                $("#divkebersihan").show();
+                $("#pkebersihan").prop("required", true);
+                $("#fas_kebersihan").prop("checked", true);
+            }
+            else{
+                $("#divkebersihan").hide();
+                $("#pkebersihan").prop("required", false);
+                $("#fas_kebersihan").prop("checked", false);
+            }
+        }
+
+        function checkFasKebersihan(){
+            if($("#fas_kebersihan").is(":checked")){
+                fasKebersihan("show");
+            }
+            else{
+                fasKebersihan("hide");
+            }
+        }
+        $('#fas_kebersihan').click(checkFasKebersihan).each(checkFasKebersihan);
+
+        function fasAirKotor(data){
+            if(data == 'show'){
+                $("#divairkotor").show();
+                $("#pairkotor").prop("required", true);
+                $("#fas_airkotor").prop("checked", true);
+            }
+            else{
+                $("#divairkotor").hide();
+                $("#pairkotor").prop("required", false);
+                $("#fas_airkotor").prop("checked", false);
+            }
+        }
+
+        function checkFasAirKotor(){
+            if($("#fas_airkotor").is(":checked")){
+                fasAirKotor("show");
+            }
+            else{
+                fasAirKotor("hide");
+            }
+        }
+        $('#fas_airkotor').click(checkFasAirKotor).each(checkFasAirKotor);
+
+        function fasLain(data){
+            if(data == 'show'){
+                $("#divlain").show();
+                $("#plain").prop("required", true);
+                $("#fas_lain").prop("checked", true);
+            }
+            else{
+                $("#divlain").hide();
+                $("#plain").prop("required", false);
+                $("#fas_lain").prop("checked", false);
+            }
+        }
+
+        function checkFasLain(){
+            if($("#fas_lain").is(":checked")){
+                fasLain("show");
+            }
+            else{
+                fasLain("hide");
+            }
+        }
+        $('#fas_lain').click(checkFasLain).each(checkFasLain);
 
         function statusTempat() {
             if ($('#stt_aktif').is(':checked')) {
@@ -631,6 +927,29 @@ Data Tempat
             });
         }
 
+        function select2idprice(select2id, url, placeholder){
+            $(select2id).select2({
+                placeholder: placeholder,
+                maximumSelectionLength: 3,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    processResults: function (data) {
+                        return {
+                            results:  $.map(data, function (d) {
+                                return {
+                                    id: d.id,
+                                    text: d.name + ' - ' + Number(d.price).toLocaleString('id-ID')
+                                }
+                            })
+                        };
+                    },
+                }
+            });
+        }
+
         function select2tlistrik(select2id, url, placeholder){
             $(select2id).select2({
                 placeholder: placeholder,
@@ -645,6 +964,28 @@ Data Tempat
                                 return {
                                     id: d.id,
                                     text: d.code + ' - (' + Number(d.meter).toLocaleString('id-ID') + ') - ' + d.power + ' Watt' + ' - ID: ' + d.name
+                                }
+                            })
+                        };
+                    },
+                }
+            });
+        }
+
+        function select2tairbersih(select2id, url, placeholder){
+            $(select2id).select2({
+                placeholder: placeholder,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    processResults: function (data) {
+                        return {
+                            results:  $.map(data, function (d) {
+                                return {
+                                    id: d.id,
+                                    text: d.code + ' - (' + Number(d.meter).toLocaleString('id-ID') + ')' + ' - ID: ' + d.name
                                 }
                             })
                         };

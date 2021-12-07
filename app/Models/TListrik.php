@@ -15,7 +15,6 @@ class TListrik extends Model
         'meter',
         'power',
         'stt_available',
-        'stt_paid',
         'data'
     ];
 }

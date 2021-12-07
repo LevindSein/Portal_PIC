@@ -55,14 +55,4 @@ class Identity extends Model
         }
         return $data;
     }
-
-    public static function paid($data){
-        if($data == 1){
-            $data = "<span class='text-success>Dibayar</span>";
-        }
-        else{
-            $data = "<span class='text-info'>Idle</span>";
-        }
-        return $data;
-    }
 }

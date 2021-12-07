@@ -67,7 +67,6 @@ class ToolsController extends Controller
             $dataset['power'] = str_replace('.','',$request->power);
             $dataset['meter'] = str_replace('.','',$request->meter);
             $dataset['stt_available'] = 1;
-            $dataset['stt_paid'] = 0;
             $dataset['data'] = $json;
 
             try{
@@ -155,7 +154,6 @@ class ToolsController extends Controller
             }
 
             $data['available'] = Identity::available($data->stt_available);
-            $data['paid'] = Identity::paid($data->stt_paid);
 
             $json = json_decode($data->data);
             $data['data'] = $json;
@@ -231,7 +229,6 @@ class ToolsController extends Controller
             $dataset['name'] = $request->name;
             $dataset['meter'] = str_replace('.','',$request->meter);
             $dataset['stt_available'] = 1;
-            $dataset['stt_paid'] = 0;
             $dataset['data'] = $json;
 
             try{
@@ -316,7 +313,6 @@ class ToolsController extends Controller
             }
 
             $data['available'] = Identity::available($data->stt_available);
-            $data['paid'] = Identity::paid($data->stt_paid);
 
             $json = json_decode($data->data);
             $data['data'] = $json;

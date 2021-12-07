@@ -14,7 +14,6 @@ class TAirBersih extends Model
         'name',
         'meter',
         'stt_available',
-        'stt_paid',
         'data'
     ];
 }

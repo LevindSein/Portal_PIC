@@ -11,6 +11,12 @@ use App\Models\User;
 use App\Models\Commodity;
 use App\Models\TListrik;
 use App\Models\PListrik;
+use App\Models\TAirBersih;
+use App\Models\PAirBersih;
+use App\Models\PKeamananIpk;
+use App\Models\PKebersihan;
+use App\Models\PAirKotor;
+use App\Models\PLain;
 
 class SearchController extends Controller
 {
@@ -77,11 +83,87 @@ class SearchController extends Controller
         return response()->json($data);
     }
 
+    public function tairbersih(Request $request){
+        $data = [];
+        if($request->ajax()) {
+            $key = $request->q;
+            $data = TAirBersih::select('id', 'code', 'name', 'meter')
+            ->where([['code', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
+            ->orWhere([['name', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
+            ->orWhere([['meter', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
+            ->orderBy('code','asc')
+            ->limit(10)
+            ->get();
+        }
+        return response()->json($data);
+    }
+
     public function plistrik(Request $request){
         $data = [];
         if($request->ajax()) {
             $key = $request->q;
             $data = PListrik::select('id', 'name')->where('name', 'LIKE', '%'.$key.'%')->orderBy('name','asc')->get();
+        }
+        return response()->json($data);
+    }
+
+    public function pairbersih(Request $request){
+        $data = [];
+        if($request->ajax()) {
+            $key = $request->q;
+            $data = PAirBersih::select('id', 'name')->where('name', 'LIKE', '%'.$key.'%')->orderBy('name','asc')->get();
+        }
+        return response()->json($data);
+    }
+
+    public function pkeamananipk(Request $request){
+        $data = [];
+        if($request->ajax()) {
+            $key = $request->q;
+            $data = PKeamananIpk::select('id', 'name', 'price')
+            ->where('name', 'LIKE', '%'.$key.'%')
+            ->orWhere('price', 'LIKE', '%'.$key.'%')
+            ->orderBy('name','asc')
+            ->get();
+        }
+        return response()->json($data);
+    }
+
+    public function pkebersihan(Request $request){
+        $data = [];
+        if($request->ajax()) {
+            $key = $request->q;
+            $data = PKebersihan::select('id', 'name', 'price')
+            ->where('name', 'LIKE', '%'.$key.'%')
+            ->orWhere('price', 'LIKE', '%'.$key.'%')
+            ->orderBy('name','asc')
+            ->get();
+        }
+        return response()->json($data);
+    }
+
+    public function pairkotor(Request $request){
+        $data = [];
+        if($request->ajax()) {
+            $key = $request->q;
+            $data = PAirKotor::select('id', 'name', 'price')
+            ->where('name', 'LIKE', '%'.$key.'%')
+            ->orWhere('price', 'LIKE', '%'.$key.'%')
+            ->orderBy('name','asc')
+            ->get();
+        }
+        return response()->json($data);
+    }
+
+    public function plain(Request $request){
+        $data = [];
+        if($request->ajax()) {
+            $key = $request->q;
+            $data = PLain::select('id', 'name', 'price')
+            ->where('name', 'LIKE', '%'.$key.'%')
+            ->orWhere('price', 'LIKE', '%'.$key.'%')
+            ->orderBy('name','asc')
+            ->get();
         }
         return response()->json($data);
     }
