@@ -1,7 +1,7 @@
 @extends('portal.layout.master')
 
 @section('content-title')
-Blok Tempat
+Daftar Komoditi
 @endsection
 
 @section('content-button')
@@ -44,16 +44,12 @@ Blok Tempat
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <small class="text-muted pt-4 db">Blok</small>
-                <h4 id="showGroup"></h4>
+                <small class="text-muted pt-4 db">Nama</small>
+                <h6 id="showName"></h6>
                 <small class="text-muted pt-4 db">Dibuat oleh</small>
                 <h6 id="showCreate"></h6>
                 <small class="text-muted pt-4 db">Diperbaharui oleh</small>
                 <h6 id="showEdit"></h6>
-                <small class="text-muted pt-4 db">Banyak Los</small>
-                <h6 id="showCount"></h6>
-                <small class="text-muted pt-4 db">Data Los</small>
-                <h6 id="showData"></h6>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
@@ -62,7 +58,7 @@ Blok Tempat
     </div>
 </div>
 
-<div id="groupModal" class="modal fade" role="dialog" tabIndex="-1">
+<div id="commodityModal" class="modal fade" role="dialog" tabIndex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -71,22 +67,18 @@ Blok Tempat
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form id="groupForm">
+            <form id="commodityForm">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Nama Blok <span class="text-danger">*</span></label>
-                        <input required type="text" id="group" name="group" autocomplete="off" maxlength="10" placeholder="Contoh: A-1" class="form-control form-control-line" style="text-transform: uppercase">
-                    </div>
-                    <div class="form-group">
-                        <label>Alamat Los</label>
-                        <textarea rows="10" id="los" name="los" autocomplete="off" placeholder="Contoh: 1,2,3,4,5,6" class="form-control form-control-line" style="text-transform: uppercase"></textarea>
+                        <label>Nama Komoditi <span class="text-danger">*</span></label>
+                        <input required type="text" id="name" name="name" autocomplete="off" maxlength="100" placeholder="Ketikkan komoditi disini" class="form-control form-control-line">
                     </div>
                     <div class="form-group">
                         <p>(<span class="text-danger">*</span>) wajib diisi.</p>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" id="groupFormValue"/>
+                    <input type="hidden" id="commodityFormValue"/>
                     <button type="submit" id="save_btn" class="btn btn-success">Simpan</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
                 </div>
@@ -99,15 +91,6 @@ Blok Tempat
 @section('content-js')
 <script>
     $(document).ready(function(){
-        $("#group").on("input", function(){
-            this.value = this.value.replace(/[^0-9a-zA-Z/\-]+$/g, '');
-        });
-
-        $("#los").on("input", function(){
-            this.value = this.value.replace(/\,\,+/g, ',');
-            this.value = this.value.replace(/\s/g,'');
-        });
-
         var id;
 
         var dtable = $('#dtable').DataTable({
@@ -118,7 +101,7 @@ Blok Tempat
                 }
             },
             "serverSide": true,
-            "ajax": "/production/point/groups",
+            "ajax": "/production/point/commodities",
             "columns": [
                 { data: 'name', name: 'name', class : 'text-center' },
                 { data: 'action', name: 'action', class : 'text-center' },
@@ -127,7 +110,7 @@ Blok Tempat
             "deferRender": true,
             "pageLength": 10,
             "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
-            "order": [[ 0, "asc" ]],
+            "order": [[ 0, "desc" ]],
             "aoColumnDefs": [
                 { "bSortable": false, "aTargets": [1] },
                 { "bSearchable": false, "aTargets": [1] }
@@ -162,32 +145,28 @@ Blok Tempat
         }
 
         $(".add").click( function(){
-            $("#groupForm")[0].reset();
-            $('.titles').text('Tambah data Blok Tempat');
-            $("#groupFormValue").val('add');
-            $('#groupModal').modal('show');
-            $('#groupModal').on('shown.bs.modal', function() {
-                $('#group').focus();
+            $("#commodityForm")[0].reset();
+            $('.titles').text('Tambah data komoditi');
+            $("#commodityFormValue").val('add');
+            $('#commodityModal').modal('show');
+            $('#commodityModal').on('shown.bs.modal', function() {
+                $('#name').focus();
             });
         });
 
         $(document).on('click', '.edit', function(){
             id = $(this).attr('id');
-            nama = $(this).attr('nama');
-            $('.titles').text('Edit data ' + nama);
-            $("#groupForm")[0].reset();
-            $("#groupFormValue").val('update');
+            $("#commodityForm")[0].reset();
+            $('.titles').text('Edit data komoditi');
+            $("#commodityFormValue").val('update');
 
             $.ajax({
-                url: "/production/point/groups/" + id + "/edit",
+                url: "/production/point/commodities/" + id + "/edit",
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
-                        $("#group").val(data.group.name);
-                        if(data.group.los){
-                            $("#los").val(data.group.los.data);
-                        }
+                        $("#name").val(data.show.name);
                     }
 
                     if(data.info){
@@ -227,9 +206,9 @@ Blok Tempat
                     console.log(data);
                 },
                 complete:function(){
-                    $('#groupModal').modal('show');
-                    $('#groupModal').on('shown.bs.modal', function() {
-                        $('#group').focus();
+                    $('#commodityModal').modal('show');
+                    $('#commodityModal').on('shown.bs.modal', function() {
+                        $('#title').focus();
                     });
                 }
             });
@@ -237,12 +216,29 @@ Blok Tempat
 
         $(document).on('click', '.delete', function(){
             id = $(this).attr('id');
-            nama = $(this).attr('nama');
-            $('.titles').text('Hapus data ' + nama + ' ?');
-            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data blok.');
+            $('.titles').text('Hapus data komoditi ?');
+            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data komoditi.');
             $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
             $('#confirmValue').val('delete');
             $('#confirmModal').modal('show');
+        });
+
+        $('#commodityForm').submit(function(e){
+            e.preventDefault();
+
+            value = $("#commodityFormValue").val();
+            if(value == 'add'){
+                url = "/production/point/commodities";
+                type = "POST";
+            }
+            else if(value == 'update'){
+                url = "/production/point/commodities/" + id;
+                type = "PUT";
+            }
+            dataset = $(this).serialize();
+            ok_btn_before = "Menyimpan...";
+            ok_btn_completed = "Simpan";
+            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
         });
 
         $('#confirmForm').submit(function(e){
@@ -254,30 +250,12 @@ Blok Tempat
                 '_token' : token,
             }
             if(value == 'delete'){
-                url = "/production/point/groups/" + id;
+                url = "/production/point/commodities/" + id;
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Hapus";
                 ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
             }
-        });
-
-        $('#groupForm').submit(function(e){
-            e.preventDefault();
-
-            value = $("#groupFormValue").val();
-            if(value == 'add'){
-                url = "/production/point/groups";
-                type = "POST";
-            }
-            else if(value == 'update'){
-                url = "/production/point/groups/" + id;
-                type = "PUT";
-            }
-            dataset = $(this).serialize();
-            ok_btn_before = "Menyimpan...";
-            ok_btn_completed = "Simpan";
-            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
         });
 
         function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
@@ -368,7 +346,7 @@ Blok Tempat
                 complete:function(data){
                     if(value == 'add' || value == 'update'){
                         if(JSON.parse(data.responseText).success)
-                            $('#groupModal').modal('hide');
+                            $('#commodityModal').modal('hide');
                     }
                     else{
                         $('#confirmModal').modal('hide');
@@ -382,17 +360,14 @@ Blok Tempat
             id = $(this).attr('id');
 
             $.ajax({
-                url: "/production/point/groups/" + id,
+                url: "/production/point/commodities/" + id,
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
-                        $("#showGroup").text(data.group.name);
-
-                        (data.group.los && data.group.los.username_create) ? $("#showCreate").html(data.group.los.username_create + "<br>pada " + data.group.los.created_at) : $("#showCreate").html("&mdash;");
-                        (data.group.los && data.group.los.username_update) ? $("#showEdit").html(data.group.los.username_update + "<br>pada " + data.group.los.updated_at) : $("#showEdit").html("&mdash;");
-                        (data.group.count) ? $("#showCount").html(data.group.count) : $("#showCount").html("&mdash;");
-                        (data.group.long && data.group.long) ? $("#showData").html(data.group.long) : $("#showData").html("&mdash;");
+                        $("#showName").text(data.show.name);
+                        $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
+                        $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                     }
 
                     if(data.info){

@@ -386,7 +386,7 @@ class UserController extends Controller
         $group = $temp;
 
         $authority = [
-            'group' => $temp,
+            'group' => $group,
             'authority' => $authority,
         ];
 

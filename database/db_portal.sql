@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2021 at 08:03 PM
+-- Generation Time: Dec 07, 2021 at 01:27 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -64,6 +64,29 @@ INSERT INTO `change_log` (`id`, `data`, `updated_at`, `created_at`) VALUES
 (7, '{\"title\":\"Peningkatan Sistem\",\"data\":\"Improve Sistem, Notifikasi, Fixing Database, Show Detail Data Usaha\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-27 13:32:34\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-28  05:34:30\"}', '2021-04-27 22:34:30', '2021-04-27 06:32:34'),
 (8, '{\"title\":\"Peningkatan Sistem\",\"data\":\"Add Profile Settiings, Add Kotak Saran, Fixing Layout & some bugs\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-28 05:34:10\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-28  05:34:20\"}', '2021-04-27 22:34:20', '2021-04-27 22:34:10'),
 (9, '{\"title\":\"Keuangan Details\",\"data\":\"Done\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-05-29 13:36:14\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-05-29  13:36:14\"}', '2021-05-29 06:36:14', '2021-05-29 06:36:14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `commodity`
+--
+
+CREATE TABLE `commodity` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `data` longtext DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `commodity`
+--
+
+INSERT INTO `commodity` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
+(1, 'Sandang', '{\"name\":\"Sandang\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:48\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:48\"}', '2021-12-07 12:16:48', '2021-12-07 12:16:48'),
+(2, 'Pangan', '{\"name\":\"Pangan\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:53\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:53\"}', '2021-12-07 12:16:53', '2021-12-07 12:16:53'),
+(3, 'Papan', '{\"name\":\"Papan\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:59\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:59\"}', '2021-12-07 12:16:59', '2021-12-07 12:16:59');
 
 -- --------------------------------------------------------
 
@@ -622,13 +645,15 @@ CREATE TABLE `shops` (
   `id` bigint(20) NOT NULL,
   `kd_kontrol` varchar(20) DEFAULT NULL,
   `nicename` varchar(50) DEFAULT NULL,
-  `group` int(11) DEFAULT NULL,
+  `group` varchar(10) DEFAULT NULL,
   `no_los` text DEFAULT NULL,
   `jml_los` int(11) DEFAULT NULL,
   `id_pengguna` bigint(20) DEFAULT NULL,
   `id_pemilik` bigint(20) DEFAULT NULL,
-  `stt_tempat` tinyint(1) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `ket` text DEFAULT NULL,
   `usaha` varchar(255) DEFAULT NULL,
+  `lokasi` text DEFAULT NULL,
   `fas_listrik` longtext DEFAULT NULL,
   `fas_airbersih` longtext DEFAULT NULL,
   `fas_keamananipk` longtext DEFAULT NULL,
@@ -751,6 +776,12 @@ ALTER TABLE `change_log`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `commodity`
+--
+ALTER TABLE `commodity`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `country`
 --
 ALTER TABLE `country`
@@ -838,7 +869,6 @@ ALTER TABLE `p_listrik`
 ALTER TABLE `shops`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `kd_kontrol` (`kd_kontrol`),
-  ADD KEY `fk_group` (`group`),
   ADD KEY `fk_pengguna` (`id_pengguna`),
   ADD KEY `fk_pemilik` (`id_pemilik`);
 
@@ -892,6 +922,12 @@ ALTER TABLE `activation_code`
 --
 ALTER TABLE `change_log`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `commodity`
+--
+ALTER TABLE `commodity`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `country`
@@ -1003,7 +1039,6 @@ ALTER TABLE `visitors`
 -- Constraints for table `shops`
 --
 ALTER TABLE `shops`
-  ADD CONSTRAINT `fk_group` FOREIGN KEY (`group`) REFERENCES `groups` (`id`),
   ADD CONSTRAINT `fk_pemilik` FOREIGN KEY (`id_pemilik`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `fk_pengguna` FOREIGN KEY (`id_pengguna`) REFERENCES `users` (`id`);
 COMMIT;

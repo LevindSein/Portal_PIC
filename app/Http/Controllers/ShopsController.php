@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\Shops;
-use App\Models\User;
 
 use DataTables;
 use Carbon\Carbon;
@@ -79,7 +78,72 @@ class ShopsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->ajax()){
+            $data['group'] = $request->group;
+
+            $los = $this->multipleSelect($request->los);
+            sort($los, SORT_NATURAL);
+            $data['no_los'] = implode(',', $los);
+            $data['jml_los'] = count($los);
+
+            $data['kd_kontrol'] = strtoupper($request->kontrol);
+            $data['nicename'] = str_replace('-','',$request->kontrol);
+
+            $data['id_pengguna'] = $request->pengguna;
+            $data['id_pemilik'] = $request->pemilik;
+
+            $data['status'] = $request->status;
+            $data['ket'] = $request->ket;
+
+            $komoditi = $this->multipleSelect($request->commodity);
+            sort($komoditi, SORT_NATURAL);
+            $data['komoditi'] = implode(',', $komoditi);
+
+            $data['lokasi'] = $request->location;
+
+            $data['data'] = json_encode([
+                'user_create' => Auth::user()->id,
+                'username_create' => Auth::user()->name,
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'user_update' => Auth::user()->id,
+                'username_update' => Auth::user()->name,
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+            try{
+                Shops::create($data);
+            }
+            catch(\Exception $e){
+                return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
+            }
+
+            $searchKey = str_replace('-','',$request->kontrol);
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
+        }
+        else{
+            abort(404);
+        }
+    }
+
+    public function gKontrol(Request $request){
+        $group = $request->group;
+        $los = $this->multipleSelect($request->los);
+        sort($los, SORT_NATURAL);
+
+        $los = $los[0];
+        $data = Shops::kontrol($group,$los);
+        return response()->json(['success' => $data]);
+    }
+
+    public function multipleSelect($data){
+        $temp = [];
+        for($i = 0; $i < count($data); $i++){
+            $temp[$i] = $data[$i];
+        }
+        $group = $temp;
+
+        return $group;
     }
 
     /**

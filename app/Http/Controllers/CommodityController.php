@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-use App\Models\ChangeLog;
+use App\Models\Commodity;
 
 use DataTables;
 use Carbon\Carbon;
 
-class ChangeLogController extends Controller
+class CommodityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,34 +23,21 @@ class ChangeLogController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = ChangeLog::select('id','data','updated_at');
+            $data = Commodity::select('id','name');
             return DataTables::of($data)
-            ->editColumn('updated_at', function ($data) {
-                return [
-                    'display' => $data->updated_at->format('Y-m-d H:i:s'),
-                    'timestamp' => $data->updated_at->timestamp
-                ];
-            })
             ->addColumn('action', function($data){
-                $button = '';
-                if(Auth::user()->level == 1){
-                    $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
-                }
-                else{
-                    $button = '<button title="Show Details" name="show" id="'.$data->id.'" class="details btn btn-sm btn-info">Show</button>';
-                }
+                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                 return $button;
             })
-            ->editColumn('data', function($data){
-                $data = json_decode($data->data);
-                return substr($data->title,0,30);
+            ->editColumn('name', function($data){
+                return substr($data->name,0,30);
             })
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.changelog.index');
+        return view('portal.point.commodity.index');
     }
 
     /**
@@ -73,16 +60,13 @@ class ChangeLogController extends Controller
     {
         if($request->ajax()){
             $request->validate([
-                'title' => 'required|max:100',
-                'data' => 'required',
+                'name' => 'required|max:100',
             ]);
 
-            $title = $request->title;
-            $data = $request->data;
+            $name = $request->name;
 
             $json = json_encode([
-                'title' => $title,
-                'data' => $data,
+                'name' => $name,
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -90,15 +74,16 @@ class ChangeLogController extends Controller
                 'username_update' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
+            $dataset['name'] = $name;
             $dataset['data'] = $json;
 
             try{
-                Changelog::create($dataset);
+                Commodity::create($dataset);
             } catch(\Exception $e){
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
-            $searchKey = $request->title;
+            $searchKey = $name;
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
@@ -117,14 +102,14 @@ class ChangeLogController extends Controller
     {
         if(request()->ajax()){
             try{
-                $data = ChangeLog::findOrFail($id);
+                $data = Commodity::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data = json_decode($data->data);
+            $data['data'] = json_decode($data->data);
 
-            return response()->json(['success' => 'Fetching data success.', 'changelog' => $data]);
+            return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
         else{
             abort(404);
@@ -141,14 +126,12 @@ class ChangeLogController extends Controller
     {
         if(request()->ajax()){
             try{
-                $data = ChangeLog::findOrFail($id);
+                $data = Commodity::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data = json_decode($data->data);
-
-            return response()->json(['success' => 'Data deleted.', 'changelog' => $data]);
+            return response()->json(['success' => 'Data deleted.', 'show' => $data]);
         }
         else{
             abort(404);
@@ -166,25 +149,24 @@ class ChangeLogController extends Controller
     {
         if($request->ajax()){
             $request->validate([
-                'title' => 'required|max:100',
-                'data' => 'required',
+                'name' => 'required|max:100',
             ]);
 
             try{
-                $dataset = ChangeLog::findOrFail($id);
+                $dataset = Commodity::findOrFail($id);
             } catch(ModelNotFoundException $e){
                 return response()->json(['error' => "Data not found.", 'description' => $e]);
             }
 
             $data = json_decode($dataset->data);
-            $data->title = $request->title;
-            $data->data = $request->data;
+            $data->name = $request->name;
             $data->user_update = Auth::user()->id;
             $data->username_update = Auth::user()->name;
             $data->updated_at = Carbon::now()->toDateTimeString();
 
             $data = json_encode($data);
 
+            $dataset->name = $request->name;
             $dataset->data = $data;
 
             try{
@@ -210,7 +192,7 @@ class ChangeLogController extends Controller
     {
         if(request()->ajax()){
             try{
-                $data = ChangeLog::findOrFail($id);
+                $data = Commodity::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }

@@ -212,6 +212,12 @@
                                         <span class="hide-menu">Blok&nbsp;Tempat</span>
                                     </a>
                                 </li>
+                                <li class="sidebar-item">
+                                    <a href="{{url('production/point/commodities')}}" class="sidebar-link {{ (request()->is('production/point/commodities*')) ? 'active' : '' }}">
+                                        <i class="mdi mdi-adjust mr-1 text-success"></i>
+                                        <span class="hide-menu">Kategori&nbsp;Komoditi</span>
+                                    </a>
+                                </li>
                                 <li class="sidebar-item {{ (request()->is('production/point/tools*')) ? 'bg-light' : '' }}">
                                     <a class="has-arrow sidebar-link  waves-effect waves-dark {{ (request()->is('production/point/tools*')) ? 'active' : '' }}" href="javascript:void(0)" aria-expanded="false">
                                         <i class="mdi mdi-playlist-plus mr-1 text-info"></i>

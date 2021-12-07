@@ -230,7 +230,7 @@ Pengguna
                     </div>
                     <div class="form-group" id="authorityDiv">
                         <label>Otoritas <span class="text-danger">*</span></label>
-                        <select class="select2 form-control" multiple="multiple" style="height: 36px;width: 100%;" id="group" name="group[]"></select>
+                        <select id="group" name="group[]" class="select2 form-control form-control-line" style="width: 100%; height:36px;" multiple></select>
                         <div class="text-center form-group">
                             <strong>Privileged :</strong>
                         </div>
@@ -598,7 +598,7 @@ Pengguna
             var level = $("#level").val();
             if(level == '2'){
                 $("#authorityDiv").show();
-                select2custom("#group", "/search/groups", "-- Pilih Kelompok --");
+                select2custom("#group", "/search/groups", "-- Cari Blok Tempat --");
                 $("#group").prop("required",true);
             }
             else{
@@ -704,7 +704,7 @@ Pengguna
                                     s1.append($('<option>').text(e));
                             });
                             s1.val(value).trigger("change");
-                            select2custom("#group", "/search/groups", "-- Pilih Kelompok --");
+                            select2custom("#group", "/search/groups", "-- Cari Blok Tempat --");
                         }
                     }
 

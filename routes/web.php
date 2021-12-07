@@ -18,6 +18,7 @@ use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\DayOffController;
 use App\Http\Controllers\ShopsController;
+use App\Http\Controllers\CommodityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +58,10 @@ Route::middleware('checkauth')->group(function(){
             Route::post('users/restore/{id}', [UserController::class, 'restore']);
             Route::resource('users', UserController::class);
 
+            Route::get('point/shops/generate/kontrol', [ShopsController::class, 'gKontrol']);
             Route::resource('point/shops', ShopsController::class);
+
+            Route::resource('point/commodities', CommodityController::class);
 
             Route::resource('point/groups', GroupController::class);
 
@@ -154,7 +158,10 @@ Route::get('email/verified', function(){
     return view('email.verified');
 });
 
+Route::get('search/users',[SearchController::class, 'users']);
 Route::get('search/groups',[SearchController::class, 'group']);
+Route::get('search/{group}/los',[SearchController::class, 'los']);
+Route::get('search/commodities',[SearchController::class, 'commodity']);
 
 Route::get('scan/qr/{type}/{data}',[ScanController::class, 'scanQr']);
 Route::post('scan/qr/register',[ScanController::class, 'scanQrRegister']);
