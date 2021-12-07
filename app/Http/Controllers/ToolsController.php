@@ -55,8 +55,6 @@ class ToolsController extends Controller
 
             $code = Identity::listrikCode();
             $json = json_encode([
-                'stt_available' => 1,
-                'stt_paid' => 0,
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -68,6 +66,8 @@ class ToolsController extends Controller
             $dataset['name'] = $request->name;
             $dataset['power'] = str_replace('.','',$request->power);
             $dataset['meter'] = str_replace('.','',$request->meter);
+            $dataset['stt_available'] = 1;
+            $dataset['stt_paid'] = 0;
             $dataset['data'] = $json;
 
             try{
@@ -154,11 +154,11 @@ class ToolsController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
+            $data['available'] = Identity::available($data->stt_available);
+            $data['paid'] = Identity::paid($data->stt_paid);
+
             $json = json_decode($data->data);
             $data['data'] = $json;
-
-            $data['available'] = Identity::available($json->stt_available);
-            $data['paid'] = Identity::paid($json->stt_paid);
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
@@ -220,8 +220,6 @@ class ToolsController extends Controller
 
             $code = Identity::airbersihCode();
             $json = json_encode([
-                'stt_available' => 1,
-                'stt_paid' => 0,
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -232,6 +230,8 @@ class ToolsController extends Controller
             $dataset['code'] = $code;
             $dataset['name'] = $request->name;
             $dataset['meter'] = str_replace('.','',$request->meter);
+            $dataset['stt_available'] = 1;
+            $dataset['stt_paid'] = 0;
             $dataset['data'] = $json;
 
             try{
@@ -315,11 +315,11 @@ class ToolsController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
+            $data['available'] = Identity::available($data->stt_available);
+            $data['paid'] = Identity::paid($data->stt_paid);
+
             $json = json_decode($data->data);
             $data['data'] = $json;
-
-            $data['available'] = Identity::available($json->stt_available);
-            $data['paid'] = Identity::paid($json->stt_paid);
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }

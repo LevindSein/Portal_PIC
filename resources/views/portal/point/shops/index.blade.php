@@ -44,7 +44,7 @@ Data Tempat
 @endsection
 
 @section('content-modal')
-<div id="shopsModal" class="modal fade" role="dialog" tabIndex="-1">
+<div id="shopsModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -58,11 +58,11 @@ Data Tempat
                     <div class="row">
                         <div class="col-lg-6 col-xlg-6">
                             <div class="form-group">
-                                <label>Blok Tempat <span class="text-danger">*</span></label>
+                                <label>Blok Tempat <span class="text-danger">*</span> <sup><a href="{{url('production/point/groups')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
                                 <select required id="group" name="group" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                             </div>
                             <div class="form-group">
-                                <label>Nomor Los <span class="text-danger">*</span></label>
+                                <label>Nomor Los <span class="text-danger">*</span> <sup><a href="{{url('production/point/groups')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
                                 <select required id="los" name="los[]" class="select2 form-control form-control-line" style="width: 100%; height:36px;" multiple></select>
                             </div>
                             <div class="form-group">
@@ -70,17 +70,17 @@ Data Tempat
                                 <input required type="text" id="kontrol" name="kontrol" autocomplete="off" maxlength="20" placeholder="Sesuaikan Blok & No.Los" class="form-control form-control-line" style="text-transform: uppercase">
                             </div>
                             <div class="form-group">
-                                <label>Pengguna Tempat <span class="text-danger">*</span></label>
+                                <label>Pengguna Tempat <span class="text-danger">*</span> <sup><a href="{{url('production/users')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
                                 <select required id="pengguna" name="pengguna" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                             </div>
                             <div class="form-group">
-                                <label>Pemilik Tempat <span class="text-danger">*</span></label>
+                                <label>Pemilik Tempat <span class="text-danger">*</span> <sup><a href="{{url('production/users')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
                                 <select required id="pemilik" name="pemilik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                             </div>
                         </div>
                         <div class="col-lg-6 col-xlg-6">
                             <div class="form-group">
-                                <label>Kategori Komoditi</label>
+                                <label>Kategori Komoditi <sup><a href="{{url('production/point/commodities')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
                                 <select id="commodity" name="commodity[]" class="select2 form-control form-control-line" style="width: 100%; height:36px;" multiple></select>
                             </div>
                             <div class="form-group">
@@ -89,19 +89,19 @@ Data Tempat
                                     <div class="form-check form-check-inline">
                                         <div class="custom-control custom-radio">
                                             <input type="radio" class="custom-control-input" id="stt_aktif" name="status" value="1" checked>
-                                            <label class="custom-control-label" for="stt_aktif">Aktif</label>
+                                            <label class="custom-control-label" style="font-weight: 400;" for="stt_aktif">Aktif</label>
                                         </div>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <div class="custom-control custom-radio">
                                             <input type="radio" class="custom-control-input" id="stt_bebas" name="status" value="2">
-                                            <label class="custom-control-label" for="stt_bebas">Bebas Bayar</label>
+                                            <label class="custom-control-label" style="font-weight: 400;" for="stt_bebas">Bebas Bayar</label>
                                         </div>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <div class="custom-control custom-radio">
                                             <input type="radio" class="custom-control-input" id="stt_nonaktif" name="status" value="3">
-                                            <label class="custom-control-label" for="stt_nonaktif">Nonaktif</label>
+                                            <label class="custom-control-label" style="font-weight: 400;" for="stt_nonaktif">Nonaktif</label>
                                         </div>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@ Data Tempat
                                 <textarea rows="3" id="ket" name="ket" autocomplete="off" placeholder="Ketikkan Keterangan disini" maxlength="255" class="form-control form-control-line"></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Info Lokasi</label>
+                                <label>Info Tambahan</label>
                                 <textarea rows="3" id="location" name="location" autocomplete="off" placeholder="Ketikkan info tambahan disini" maxlength="255" class="form-control form-control-line"></textarea>
                             </div>
                         </div>
@@ -121,10 +121,36 @@ Data Tempat
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-xlg-6">
-                            <div class="form-group">
-                                <label>Listrik <span class="text-danger">*</span></label>
-                                <input type="text" autocomplete="off" class="form-control form-control-line">
+                            {{-- Listrik --}}
+                            <div class="form-group form-check form-check-inline">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="fas_listrik" name="fas_listrik">
+                                    <label class="custom-control-label" for="fas_listrik">Listrik</label>
+                                </div>
                             </div>
+                            <div id="divlistrik" style="padding-left: 2rem;">
+                                <div class="form-group">
+                                    <label>Pilih Alat Meter <span class="text-danger">*</span> <sup><a href="{{url('production/point/tools/listrik')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                    <select id="tlistrik" name="tlistrik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/listrik')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                    <select id="plistrik" name="plistrik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Diskon</label>
+                                    <div class="input-group">
+                                        <input maxlength="3" type="text" id="dlistrik" name="dlistrik" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <hr>
+                                </div>
+                            </div>
+                            {{-- End Listrik --}}
                             <div class="form-group">
                                 <label>Air Bersih <span class="text-danger">*</span></label>
                                 <input type="text" autocomplete="off" class="form-control form-control-line">
@@ -169,6 +195,21 @@ Data Tempat
     $(document).ready(function(){
         $("#kontrol").on("input", function(){
             this.value = this.value.replace(/[^0-9a-zA-Z/\-]+$/g, '');
+        });
+
+        $(".number").on('input', function (e) {
+            if(e.which >= 37 && e.which <= 40) return;
+
+            if (/^[0-9.,]+$/.test($(this).val())) {
+                $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
+            }
+            else {
+                $(this).val($(this).val().substring(0, $(this).val().length - 1));
+            }
+        });
+
+        $('.percent').on('input', function (e) {
+            if ($(this).val() > 100) $(this).val($(this).val().replace($(this).val(), 100));
         });
 
         var showtempat = getCookie('showtempat');
@@ -276,10 +317,42 @@ Data Tempat
             select2user("#pemilik", "/search/users", "-- Cari Pemilik Tempat --");
 
             $("#commodity").val("");
-            select2commodity("#commodity", "/search/commodities", "-- Cari Kategori Komoditi --");
+            select2idname("#commodity", "/search/commodities", "-- Cari Kategori Komoditi --");
 
             statusTempat();
+
+            $("#tlistrik").val("");
+            select2tlistrik("#tlistrik", "/search/tools/listrik", "-- Cari Alat Listrik --");
+            $("#plistrik").val("");
+            select2idname("#plistrik", "/search/price/listrik", "-- Cari Tarif Listrik --");
+
+            fasListrik("hide");
         }
+
+        function fasListrik(data){
+            if(data == 'show'){
+                $("#divlistrik").show();
+                $("#tlistik").prop("required", true);
+                $("#plistik").prop("required", true);
+                $("#fas_listik").prop("checked", true);
+            }
+            else{
+                $("#divlistrik").hide();
+                $("#tlistik").prop("required", false);
+                $("#plistik").prop("required", false);
+                $("#fas_listik").prop("checked", false);
+            }
+        }
+
+        function checkFasListrik(){
+            if($("#fas_listrik").is(":checked")){
+                fasListrik("show");
+            }
+            else{
+                fasListrik("hide");
+            }
+        }
+        $('#fas_listrik').click(checkFasListrik).each(checkFasListrik);
 
         function statusTempat() {
             if ($('#stt_aktif').is(':checked')) {
@@ -295,7 +368,7 @@ Data Tempat
                 $("#ket").prop("required", true);
             }
         }
-        $('input[type="radio"]').click(statusTempat).each(statusTempat);
+        $('input[name="status"]').click(statusTempat).each(statusTempat);
 
         //Nomor Los
         $('#group').on("change", function(e) {
@@ -364,6 +437,33 @@ Data Tempat
             ok_btn_before = "Menyimpan...";
             ok_btn_completed = "Simpan";
             ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        });
+
+        $(document).on('click', '.delete', function(){
+            id = $(this).attr('id');
+            nama = $(this).attr('nama');
+            $('.titles').text('Hapus data ' + nama + ' ?');
+            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data tempat.');
+            $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
+            $('#confirmValue').val('delete');
+            $('#confirmModal').modal('show');
+        });
+
+        $('#confirmForm').submit(function(e){
+            e.preventDefault();
+            var token = $("meta[name='csrf-token']").attr("content");
+            var value = $('#confirmValue').val();
+            dataset = {
+                'id' : id,
+                '_token' : token,
+            }
+            if(value == 'delete'){
+                url = "/production/point/shops/" + id;
+                type = "DELETE";
+                ok_btn_before = "Menghapus...";
+                ok_btn_completed = "Hapus";
+                ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+            }
         });
 
         function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
@@ -467,7 +567,6 @@ Data Tempat
         function select2custom(select2id, url, placeholder){
             $(select2id).select2({
                 placeholder: placeholder,
-                dropdownParent: $('#shopsModal'),
                 ajax: {
                     url: url,
                     dataType: 'json',
@@ -490,7 +589,6 @@ Data Tempat
         function select2user(select2id, url, placeholder){
             $(select2id).select2({
                 placeholder: placeholder,
-                dropdownParent: $('#shopsModal'),
                 ajax: {
                     url: url,
                     dataType: 'json',
@@ -510,10 +608,9 @@ Data Tempat
             });
         }
 
-        function select2commodity(select2id, url, placeholder){
+        function select2idname(select2id, url, placeholder){
             $(select2id).select2({
                 placeholder: placeholder,
-                dropdownParent: $('#shopsModal'),
                 maximumSelectionLength: 3,
                 ajax: {
                     url: url,
@@ -526,6 +623,28 @@ Data Tempat
                                 return {
                                     id: d.id,
                                     text: d.name
+                                }
+                            })
+                        };
+                    },
+                }
+            });
+        }
+
+        function select2tlistrik(select2id, url, placeholder){
+            $(select2id).select2({
+                placeholder: placeholder,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    processResults: function (data) {
+                        return {
+                            results:  $.map(data, function (d) {
+                                return {
+                                    id: d.id,
+                                    text: d.code + ' - (' + Number(d.meter).toLocaleString('id-ID') + ') - ' + d.power + ' Watt' + ' - ID: ' + d.name
                                 }
                             })
                         };

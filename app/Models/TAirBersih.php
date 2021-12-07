@@ -13,6 +13,8 @@ class TAirBersih extends Model
         'code',
         'name',
         'meter',
+        'stt_available',
+        'stt_paid',
         'data'
     ];
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2021 at 01:27 PM
+-- Generation Time: Dec 07, 2021 at 05:33 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -650,6 +650,7 @@ CREATE TABLE `shops` (
   `jml_los` int(11) DEFAULT NULL,
   `id_pengguna` bigint(20) DEFAULT NULL,
   `id_pemilik` bigint(20) DEFAULT NULL,
+  `komoditi` text DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   `ket` text DEFAULT NULL,
   `usaha` varchar(255) DEFAULT NULL,
@@ -676,6 +677,8 @@ CREATE TABLE `t_airbersih` (
   `code` varchar(8) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `meter` int(11) DEFAULT NULL,
+  `stt_available` tinyint(1) DEFAULT NULL,
+  `stt_paid` tinyint(1) DEFAULT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -693,6 +696,8 @@ CREATE TABLE `t_listrik` (
   `name` varchar(255) DEFAULT NULL,
   `meter` int(11) DEFAULT NULL,
   `power` int(11) DEFAULT NULL,
+  `stt_available` tinyint(1) DEFAULT NULL,
+  `stt_paid` tinyint(1) DEFAULT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL

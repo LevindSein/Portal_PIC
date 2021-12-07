@@ -9,6 +9,8 @@ use App\Models\Group;
 use App\Models\Country;
 use App\Models\User;
 use App\Models\Commodity;
+use App\Models\TListrik;
+use App\Models\PListrik;
 
 class SearchController extends Controller
 {
@@ -55,6 +57,31 @@ class SearchController extends Controller
         if($request->ajax()) {
             $key = $request->q;
             $data = Commodity::select('id', 'name')->where('name', 'LIKE', '%'.$key.'%')->orderBy('name','asc')->get();
+        }
+        return response()->json($data);
+    }
+
+    public function tlistrik(Request $request){
+        $data = [];
+        if($request->ajax()) {
+            $key = $request->q;
+            $data = TListrik::select('id', 'code', 'name', 'meter', 'power')
+            ->where([['code', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
+            ->orWhere([['name', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
+            ->orWhere([['meter', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
+            ->orWhere([['power', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
+            ->orderBy('code','asc')
+            ->limit(10)
+            ->get();
+        }
+        return response()->json($data);
+    }
+
+    public function plistrik(Request $request){
+        $data = [];
+        if($request->ajax()) {
+            $key = $request->q;
+            $data = PListrik::select('id', 'name')->where('name', 'LIKE', '%'.$key.'%')->orderBy('name','asc')->get();
         }
         return response()->json($data);
     }
