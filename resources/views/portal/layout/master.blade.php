@@ -10,8 +10,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/favicon.png')}}">
     <title>@yield('content-title') | Portal PIC</title>
 
-    <script src="{{asset('template/assets/libs/jquery/dist/jquery.min.js')}}"></script>
-
     {{-- Select2 --}}
     <link rel="stylesheet" type="text/css" href="{{asset('vendor/select2/dist/css/select2.min.css')}}">
 
@@ -29,7 +27,6 @@
 
     {{-- Toastr --}}
     <link rel="stylesheet" type="text/css" href="{{asset('vendor/toastr/toastr.min.css')}}">
-    <script src="{{asset('vendor/toastr/toastr.min.js')}}"></script>
 </head>
 
 <body>
@@ -215,7 +212,7 @@
                                 <li class="sidebar-item">
                                     <a href="{{url('production/point/commodities')}}" class="sidebar-link {{ (request()->is('production/point/commodities*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
-                                        <span class="hide-menu">Kategori&nbsp;Komoditi</span>
+                                        <span class="hide-menu">Komoditi</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item {{ (request()->is('production/point/tools*')) ? 'bg-light' : '' }}">
@@ -493,18 +490,18 @@
     <!-- apps -->
     <script src="{{asset('template/dist/js/app.min.js')}}"></script>
     <script src="{{asset('template/dist/js/app.init.js')}}"></script>
-    <script src="{{asset('template/dist/js/app-style-switcher.js')}}"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="{{asset('template/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>
-    <script src="{{asset('template/assets/extra-libs/sparkline/sparkline.js')}}"></script>
     <!--Wave Effects -->
-    <script src="{{asset('template/dist/js/waves.js')}}"></script>
+    <script src="{{asset('template/dist/js/waves.min.js')}}"></script>
     <!--Menu sidebar -->
-    <script src="{{asset('template/dist/js/sidebarmenu.js')}}"></script>
+    <script src="{{asset('template/dist/js/sidebarmenu.min.js')}}"></script>
     <!--Custom JavaScript -->
     <script src="{{asset('template/dist/js/custom.min.js')}}"></script>
 
     <script src="{{asset('custom.js')}}"></script>
+
+    <script src="{{asset('vendor/toastr/toastr.min.js')}}"></script>
 
     <script src="{{asset('vendor/DataTables/datatables.min.js')}}"></script>
     <script src="{{asset('vendor/datatables.net-bs4/js/dataTables.bootstrap4.js')}}"></script>

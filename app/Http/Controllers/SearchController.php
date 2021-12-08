@@ -43,19 +43,24 @@ class SearchController extends Controller
         return response()->json($data);
     }
 
-    public function los($group){
+    public function los(Request $request, $group){
         $data = Group::where('name', $group)->first();
-        $data = json_decode($data)->data;
+        $data = $data->data;
         $data = json_decode($data)->data;
         $data = explode(',', $data);
-        $i = 0;
-        $dataset = [];
-        foreach($data as $d){
-            $dataset[$i]['id'] = $d;
-            $dataset[$i]['name'] = $d;
-            $i++;
+        if($request->ajax()) {
+            $key = preg_quote($request->q, '~');
+            $data = preg_grep('~' . $key. '~', $data);
+
+            $i = 0;
+            $dataset = [];
+            foreach($data as $d){
+                $dataset[$i]['id'] = $d;
+                $dataset[$i]['name'] = $d;
+                $i++;
+            }
         }
-        return json_encode($dataset);
+        return response()->json($dataset);
     }
 
     public function commodity(Request $request){
