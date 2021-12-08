@@ -418,7 +418,7 @@ class PriceController extends Controller
                 return substr($data->name,0,30);
             })
             ->editColumn('price', function($data){
-                return number_format($data->price);
+                return number_format($data->price,0,'','.');
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -588,7 +588,7 @@ class PriceController extends Controller
                 return substr($data->name,0,30);
             })
             ->editColumn('price', function($data){
-                return number_format($data->price);
+                return number_format($data->price,0,'','.');
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -750,7 +750,7 @@ class PriceController extends Controller
                 return substr($data->name,0,30);
             })
             ->editColumn('price', function($data){
-                return number_format($data->price);
+                return number_format($data->price,0,'','.');
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -912,7 +912,7 @@ class PriceController extends Controller
                 return substr($data->name,0,30);
             })
             ->editColumn('price', function($data){
-                return number_format($data->price);
+                return number_format($data->price,0,'','.');
             })
             ->rawColumns(['action'])
             ->make(true);

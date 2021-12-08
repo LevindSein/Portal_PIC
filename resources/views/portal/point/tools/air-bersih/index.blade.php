@@ -23,8 +23,10 @@ Alat Air Bersih
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div><div class='color color-success'></div>&nbsp;Tersedia</div>
-                <div><div class='color color-danger'></div>&nbsp;Digunakan</div><br>
+                <div class="form-group d-flex">
+                    <div class="mr-1 ml-1"><div class='color color-success'></div>&nbsp;Tersedia</div>
+                    <div class="mr-1 ml-1"><div class='color color-danger'></div>&nbsp;Digunakan</div>
+                </div>
                 <div class="table-responsive">
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
@@ -142,7 +144,7 @@ Alat Air Bersih
                 { "bSortable": false, "aTargets": [3] },
                 { "bSearchable": false, "aTargets": [3] }
             ],
-            "scrollY": "50vh",
+            "scrollY": "45vh",
             "scrollX": true,
             "preDrawCallback": function( settings ) {
                 scrollPosition = $(".dataTables_scrollBody").scrollTop();

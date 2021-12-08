@@ -40,10 +40,10 @@ class ToolsController extends Controller
                 return "<span class='$color'>$data->code</span>";
             })
             ->editColumn('power', function($data){
-                return number_format($data->power);
+                return number_format($data->power,0,'','.');
             })
             ->editColumn('meter', function($data){
-                return number_format($data->meter);
+                return number_format($data->meter,0,'','.');
             })
             ->rawColumns(['action', 'code'])
             ->make(true);
@@ -220,7 +220,7 @@ class ToolsController extends Controller
                 return $button;
             })
             ->editColumn('meter', function($data){
-                return number_format($data->meter);
+                return number_format($data->meter,0,'','.');
             })
             ->editColumn('code', function($data){
                 if($data->stt_available == 1){

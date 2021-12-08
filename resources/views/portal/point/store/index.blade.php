@@ -24,9 +24,11 @@ Data Tempat
         <div class="card">
             <div class="card-body">
                 <p id="showtempat" class="text-danger">*) <b>Menambah</b>, <b>Mengedit</b>, atau <b>Menghapus</b> Data Tempat Usaha tidak akan mempengaruhi <b>Data Tagihan</b> yang sedang berlangsung. <sup><a href="javascript:void(0)" type="button" id="showagain"><i class="fas fa-times"></i> Jangan tampilkan lagi.</a></sup></p>
-                <div><div class='color color-success'></div>&nbsp;Aktif</div>
-                <div><div class='color color-info'></div>&nbsp;Bebas Bayar</div>
-                <div><div class='color color-danger'></div>&nbsp;Nonaktif</div><br>
+                <div class="form-group d-flex">
+                    <div class="mr-1 ml-1"><div class='color color-success'></div>&nbsp;Aktif</div>
+                    <div class="mr-1 ml-1"><div class='color color-info'></div>&nbsp;Bebas Bayar</div>
+                    <div class="mr-1 ml-1"><div class='color color-danger'></div>&nbsp;Nonaktif</div>
+                </div>
                 <div class="table-responsive">
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
@@ -245,9 +247,6 @@ Data Tempat
                                                 <span class="input-group-text">Rp.</span>
                                             </div>
                                             <select id="pkeamananipk" name="pkeamananipk" class="select2 form-control form-control-line"></select>
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">/ Los</span>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -257,9 +256,6 @@ Data Tempat
                                                 <span class="input-group-text">Rp.</span>
                                             </div>
                                             <input maxlength="11" type="text" id="dkeamananipk" name="dkeamananipk" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">/ Los</span>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -360,75 +356,6 @@ Data Tempat
 @section('content-js')
 <script>
     $(document).ready(function(){
-        $('#storeModal').on('shown.bs.modal', function() {
-            $('#pengguna, #pemilik').on('select2:open', () => {
-                $('input.select2-search__field').prop('placeholder', 'Ketik Nama/KTP/Paspor disini..');
-            });
-            $('#tlistrik').on('select2:open', () => {
-                $('input.select2-search__field').prop('placeholder', 'Ketik Kode/Meter/Daya/ID disini..');
-            });
-            $('#tairbersih').on('select2:open', () => {
-                $('input.select2-search__field').prop('placeholder', 'Ketik Kode/Meter/ID disini..');
-            });
-            $('#plistrik, #pairbersih').on('select2:open', () => {
-                $('input.select2-search__field').prop('placeholder', 'Ketik Nama Tarif disini..');
-            });
-            $('#pkeamananipk, #pkebersihan, #pairkotor, #plain').on('select2:open', () => {
-                $('input.select2-search__field').prop('placeholder', 'Ketik Tarif/Nama Tarif disini..');
-            });
-        });
-
-        $("#kontrol").on("input", function(){
-            this.value = this.value.replace(/[^0-9a-zA-Z/\-]+$/g, '');
-        });
-
-        $(".number").on('input', function (e) {
-            if(e.which >= 37 && e.which <= 40) return;
-
-            if (/^[0-9.,]+$/.test($(this).val())) {
-                $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
-            }
-            else {
-                $(this).val($(this).val().substring(0, $(this).val().length - 1));
-            }
-        });
-
-        $('.percent').on('input', function (e) {
-            if ($(this).val() > 100) $(this).val($(this).val().replace($(this).val(), 100));
-        });
-
-        var showtempat = getCookie('showtempat');
-        if(showtempat == 'hide'){
-            $("#showtempat").hide();
-        }
-        else{
-            $("#showtempat").show();
-        }
-        $("#showagain").click(function(){
-            setCookie('showtempat','hide',30);
-            $("#showtempat").hide();
-        });
-
-        function setCookie(name,value,days) {
-            var expires = "";
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days*24*60*60*1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-        }
-        function getCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for(var i=0;i < ca.length;i++) {
-                var c = ca[i];
-                while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-            }
-            return null;
-        }
-
         var id;
 
         var dtable = $('#dtable').DataTable({
@@ -456,7 +383,7 @@ Data Tempat
                 { "bSortable": false, "aTargets": [3,4] },
                 { "bSearchable": false, "aTargets": [3,4] }
             ],
-            "scrollY": "35vh",
+            "scrollY": "45vh",
             "scrollX": true,
             "preDrawCallback": function( settings ) {
                 scrollPosition = $(".dataTables_scrollBody").scrollTop();
@@ -489,6 +416,60 @@ Data Tempat
                 console.log("Refresh Automatic")
             }, false);
         }
+
+        $(".add").click( function(){
+            $("#storeForm")[0].reset();
+            $('.titles').text('Tambah data Tempat Usaha');
+            $("#storeFormValue").val('add');
+
+            initForm();
+
+            $('#storeModal').modal('show');
+        });
+
+        $('#storeForm').submit(function(e){
+            e.preventDefault();
+            value = $("#storeFormValue").val();
+            if(value == 'add'){
+                url = "/production/point/stores";
+                type = "POST";
+            }
+            else if(value == 'update'){
+                url = "/production/point/stores/" + id;
+                type = "PUT";
+            }
+            dataset = $(this).serialize();
+            ok_btn_before = "Menyimpan...";
+            ok_btn_completed = "Simpan";
+            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        });
+
+        $(document).on('click', '.delete', function(){
+            id = $(this).attr('id');
+            nama = $(this).attr('nama');
+            $('.titles').text('Hapus data ' + nama + ' ?');
+            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data tempat.');
+            $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
+            $('#confirmValue').val('delete');
+            $('#confirmModal').modal('show');
+        });
+
+        $('#confirmForm').submit(function(e){
+            e.preventDefault();
+            var token = $("meta[name='csrf-token']").attr("content");
+            var value = $('#confirmValue').val();
+            dataset = {
+                'id' : id,
+                '_token' : token,
+            }
+            if(value == 'delete'){
+                url = "/production/point/stores/" + id;
+                type = "DELETE";
+                ok_btn_before = "Menghapus...";
+                ok_btn_completed = "Hapus";
+                ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+            }
+        });
 
         function initForm(){
             $("#group").val("");
@@ -542,6 +523,181 @@ Data Tempat
             select2idprice("#plain", "/search/price/lain", "-- Cari Tarif Lainnya --");
             fasLain("hide");
         }
+
+        function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
+            $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: url,
+                type: type,
+                cache:false,
+                data: dataset,
+                beforeSend:function(){
+                    $.blockUI({
+                        message: '<i class="fas fa-spin fa-sync text-white"></i>',
+                        baseZ: 9999,
+                        overlayCSS: {
+                            backgroundColor: '#000',
+                            opacity: 0.5,
+                            cursor: 'wait'
+                        },
+                        css: {
+                            border: 0,
+                            padding: 0,
+                            backgroundColor: 'transparent'
+                        }
+                    });
+                },
+                success:function(data)
+                {
+                    if(data.success){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.success(data.success);
+                        dtableReload(data.searchKey);
+                    }
+
+                    if(data.info){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.info(data.info);
+                    }
+
+                    if(data.warning){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.warning(data.warning);
+                    }
+
+                    if(data.error){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                    }
+
+                    if(data.description){
+                        console.log(data.description);
+                    }
+                },
+                error:function(data){
+                    if (data.status == 422) {
+                        $.each(data.responseJSON.errors, function (i, error) {
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.error(error[0]);
+                        });
+                    }
+                    else{
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error("System error.");
+                    }
+                    console.log(data);
+                },
+                complete:function(data){
+                    if(value == 'add' || value == 'update'){
+                        if(JSON.parse(data.responseText).success)
+                            $('#storeModal').modal('hide');
+                    }
+                    else{
+                        $('#confirmModal').modal('hide');
+                    }
+                    $.unblockUI();
+                }
+            });
+        }
+
+        //Nomor Los
+        $('#group').on("change", function(e) {
+            var group = $('#group').val();
+            $("#los").prop("disabled", false);
+            $("#los").val("");
+            select2custom("#los", "/search/" + group + "/los", "-- Cari Nomor Los --");
+        });
+
+        //Kode Kontrol
+        $('#los').on('change', function(e) {
+            if($("#los").val() == ""){
+                $("#kontrol").prop("disabled", true).val("");
+            }
+            else{
+                $("#kontrol").prop("disabled", false);
+
+                var dataset = {
+                    'group' : $("#group").val(),
+                    'los' : $("#los").val(),
+                };
+                $.ajax({
+                    url: "/production/point/stores/generate/kontrol",
+                    type: "GET",
+                    cache: false,
+                    data: dataset,
+                    success:function(data)
+                    {
+                        $("#kontrol").val(data.success);
+                        console.log(data.success);
+                    },
+                    error:function(data){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error("System error.");
+                        console.log(data);
+                    }
+                });
+            }
+        });
+
+        //Pengguna
+        $('#pengguna').on("input", function(e) {
+            if($('#pengguna').val()){
+                $("#stt_aktif").prop("checked", true);
+                $("#cancelPengguna").show();
+            }
+            else{
+                $("#cancelPengguna").hide();
+                $("#stt_nonaktif").prop("checked", true);
+            }
+            statusTempat();
+        });
+
+        $("#cancelPengguna").click(function(){
+            $("#pengguna").val(null).trigger("change");
+            $("#cancelPengguna").hide();
+            $("#stt_nonaktif").prop("checked", true);
+            statusTempat();
+        });
+
+        //Pemilik
+        $('#pemilik').on("input", function(e) {
+            if($('#pemilik').val()){
+                $("#cancelPemilik").show();
+            }
+            else{
+                $("#cancelPemilik").hide();
+            }
+        });
+
+        $("#cancelPemilik").click(function(){
+            $("#pemilik").val(null).trigger("change");
+            $("#cancelPemilik").hide();
+        });
 
         function fasListrik(data){
             if(data == 'show'){
@@ -701,235 +857,6 @@ Data Tempat
         }
         $('input[name="status"]').click(statusTempat).each(statusTempat);
 
-        //Pengguna
-        $('#pengguna').on("input", function(e) {
-            if($('#pengguna').val()){
-                $("#stt_aktif").prop("checked", true);
-                $("#cancelPengguna").show();
-            }
-            else{
-                $("#cancelPengguna").hide();
-                $("#stt_nonaktif").prop("checked", true);
-            }
-            statusTempat();
-        });
-
-        $("#cancelPengguna").click(function(){
-            $("#pengguna").val(null).trigger("change");
-            $("#cancelPengguna").hide();
-            $("#stt_nonaktif").prop("checked", true);
-            statusTempat();
-        });
-
-        //Pemilik
-        $('#pemilik').on("input", function(e) {
-            if($('#pemilik').val()){
-                $("#cancelPemilik").show();
-            }
-            else{
-                $("#cancelPemilik").hide();
-            }
-        });
-
-        $("#cancelPemilik").click(function(){
-            $("#pemilik").val(null).trigger("change");
-            $("#cancelPemilik").hide();
-        });
-
-        //Nomor Los
-        $('#group').on("change", function(e) {
-            var group = $('#group').val();
-            $("#los").prop("disabled", false);
-            $("#los").val("");
-            select2custom("#los", "/search/" + group + "/los", "-- Cari Nomor Los --");
-        });
-
-        //Kode Kontrol
-        $('#los').on('change', function(e) {
-            if($("#los").val() == ""){
-                $("#kontrol").prop("disabled", true).val("");
-            }
-            else{
-                $("#kontrol").prop("disabled", false);
-
-                var dataset = {
-                    'group' : $("#group").val(),
-                    'los' : $("#los").val(),
-                };
-                $.ajax({
-                    url: "/production/point/stores/generate/kontrol",
-                    type: "GET",
-                    cache: false,
-                    data: dataset,
-                    success:function(data)
-                    {
-                        $("#kontrol").val(data.success);
-                        console.log(data.success);
-                    },
-                    error:function(data){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error("System error.");
-                        console.log(data);
-                    }
-                });
-            }
-        });
-
-        $(".add").click( function(){
-            $("#storeForm")[0].reset();
-            $('.titles').text('Tambah data Tempat Usaha');
-            $("#storeFormValue").val('add');
-
-            initForm();
-
-            $('#storeModal').modal('show');
-        });
-
-        $('#storeForm').submit(function(e){
-            e.preventDefault();
-            value = $("#storeFormValue").val();
-            if(value == 'add'){
-                url = "/production/point/stores";
-                type = "POST";
-            }
-            else if(value == 'update'){
-                url = "/production/point/stores/" + id;
-                type = "PUT";
-            }
-            dataset = $(this).serialize();
-            ok_btn_before = "Menyimpan...";
-            ok_btn_completed = "Simpan";
-            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-        });
-
-        $(document).on('click', '.delete', function(){
-            id = $(this).attr('id');
-            nama = $(this).attr('nama');
-            $('.titles').text('Hapus data ' + nama + ' ?');
-            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data tempat.');
-            $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
-            $('#confirmValue').val('delete');
-            $('#confirmModal').modal('show');
-        });
-
-        $('#confirmForm').submit(function(e){
-            e.preventDefault();
-            var token = $("meta[name='csrf-token']").attr("content");
-            var value = $('#confirmValue').val();
-            dataset = {
-                'id' : id,
-                '_token' : token,
-            }
-            if(value == 'delete'){
-                url = "/production/point/stores/" + id;
-                type = "DELETE";
-                ok_btn_before = "Menghapus...";
-                ok_btn_completed = "Hapus";
-                ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-            }
-        });
-
-        function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
-            $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: url,
-                type: type,
-                cache:false,
-                data: dataset,
-                beforeSend:function(){
-                    $.blockUI({
-                        message: '<i class="fas fa-spin fa-sync text-white"></i>',
-                        baseZ: 9999,
-                        overlayCSS: {
-                            backgroundColor: '#000',
-                            opacity: 0.5,
-                            cursor: 'wait'
-                        },
-                        css: {
-                            border: 0,
-                            padding: 0,
-                            backgroundColor: 'transparent'
-                        }
-                    });
-                },
-                success:function(data)
-                {
-                    if(data.success){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.success(data.success);
-                        dtableReload(data.searchKey);
-                    }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
-                    if (data.status == 422) {
-                        $.each(data.responseJSON.errors, function (i, error) {
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error(error[0]);
-                        });
-                    }
-                    else{
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error("System error.");
-                    }
-                    console.log(data);
-                },
-                complete:function(data){
-                    if(value == 'add' || value == 'update'){
-                        if(JSON.parse(data.responseText).success)
-                            $('#storeModal').modal('hide');
-                    }
-                    else{
-                        $('#confirmModal').modal('hide');
-                    }
-                    $.unblockUI();
-                }
-            });
-        }
-
         function select2custom(select2id, url, placeholder){
             $(select2id).select2({
                 placeholder: placeholder,
@@ -1078,6 +1005,76 @@ Data Tempat
             }
             return false;
         }
+
+        $("#kontrol").on("input", function(){
+            this.value = this.value.replace(/[^0-9a-zA-Z/\-]+$/g, '');
+        });
+
+        $(".number").on('input', function (e) {
+            if(e.which >= 37 && e.which <= 40) return;
+
+            if (/^[0-9.,]+$/.test($(this).val())) {
+                $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
+            }
+            else {
+                $(this).val($(this).val().substring(0, $(this).val().length - 1));
+            }
+        });
+
+        $('.percent').on('input', function (e) {
+            if ($(this).val() > 100) $(this).val($(this).val().replace($(this).val(), 100));
+        });
+
+        var showtempat = getCookie('showtempat');
+        if(showtempat == 'hide'){
+            $("#showtempat").hide();
+        }
+        else{
+            $("#showtempat").show();
+        }
+        $("#showagain").click(function(){
+            setCookie('showtempat','hide',30);
+            $("#showtempat").hide();
+        });
+
+        function setCookie(name,value,days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+
+        $('#storeModal').on('shown.bs.modal', function() {
+            $('#pengguna, #pemilik').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik Nama/KTP/Paspor disini..');
+            });
+            $('#tlistrik').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik Kode/Meter/Daya/ID disini..');
+            });
+            $('#tairbersih').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik Kode/Meter/ID disini..');
+            });
+            $('#plistrik, #pairbersih').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik Nama Tarif disini..');
+            });
+            $('#pkeamananipk, #pkebersihan, #pairkotor, #plain').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik Tarif/Nama Tarif disini..');
+            });
+        });
     });
 </script>
 @endsection

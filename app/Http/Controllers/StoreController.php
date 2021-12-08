@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -107,12 +108,35 @@ class StoreController extends Controller
     public function store(Request $request)
     {
         if($request->ajax()){
+            $valid['blok'] = $request->group;
+            $valid['nomorLos'] = $request->los;
+            $valid['kodeKontrol'] = $request->kontrol;
+            $valid['pengguna'] = $request->pengguna;
+            $valid['pemilik'] = $request->pemilik;
+            $valid['komoditi'] = $request->commodity;
+            $valid['status'] = $request->status;
+            $valid['keterangan'] = $request->ket;
+            $valid['infoTambahan'] = $request->location;
+
+            Validator::make($valid, [
+                'blok' => 'required|max:10|alpha_dash',
+                'nomorLos' => 'required|array',
+                'kodeKontrol' => 'required|max:20|unique:App\Models\Store,kd_kontrol',
+                'pengguna' => 'nullable|numeric|exists:App\Models\User,id',
+                'pemiik' => 'nullable|numeric|exists:App\Models\User,id',
+                'komoditi' => 'nullable|array',
+                'status' => 'required|in:1,2,3',
+                'keterangan' => 'nullable|max:255',
+                'infoTambahan' => 'nullable|max:255',
+            ])->validate();
+
             $data['group'] = $request->group;
 
             $los = $this->multipleSelect($request->los);
             sort($los, SORT_NATURAL);
             $data['no_los'] = implode(',', $los);
-            $data['jml_los'] = count($los);
+            $jml_los = count($los);
+            $data['jml_los'] = $jml_los;
 
             $data['kd_kontrol'] = strtoupper($request->kontrol);
             $data['nicename'] = str_replace('-','',$request->kontrol);
@@ -135,6 +159,16 @@ class StoreController extends Controller
 
             //Listrik
             if(!empty($request->fas_listrik)){
+                $valid['alatListrik'] = $request->tlistrik;
+                $valid['tarifListrik'] = $request->plistrik;
+                $valid['diskonListrik'] = $request->dlistrik;
+
+                Validator::make($valid, [
+                    'alatListrik' => 'required|numeric|exists:App\Models\TListrik,id',
+                    'tarifListrik' => 'required|numeric|exists:App\Models\PListrik,id',
+                    'diskonListrik' => 'nullable|numeric|lte:100',
+                ])->validate();
+
                 $tools = TListrik::find($request->tlistrik);
                 $tools->stt_available = 0;
                 $tools->save();
@@ -147,6 +181,16 @@ class StoreController extends Controller
 
             //Air Bersih
             if(!empty($request->fas_airbersih)){
+                $valid['alatAirBersih'] = $request->tairbersih;
+                $valid['tarifAirBersih'] = $request->pairbersih;
+                $valid['diskonAirBersih'] = $request->dairbersih;
+
+                Validator::make($valid, [
+                    'alatAirBersih' => 'required|numeric|exists:App\Models\TAirBersih,id',
+                    'tarifAirBersih' => 'required|numeric|exists:App\Models\PAirBersih,id',
+                    'diskonAirBersih' => 'nullable|numeric|lte:100',
+                ])->validate();
+
                 $tools = TAirBersih::find($request->tairbersih);
                 $tools->stt_available = 0;
                 $tools->save();
@@ -159,6 +203,23 @@ class StoreController extends Controller
 
             //Keamanan IPK
             if(!empty($request->fas_keamananipk)){
+                $valid['tarifKeamananIpk'] = $request->pkeamananipk;
+
+                Validator::make($valid, [
+                    'tarifKeamananIpk' => 'required|numeric|exists:App\Models\PKeamananIpk,id'
+                ])->validate();
+
+                $price = PKeamananIpk::find($request->pkeamananipk);
+                if(!is_null($request->dkeamananipk)){
+                    $max_disc = $price->price * $jml_los;
+
+                    $valid['diskonKeamananIpk'] = $request->dkeamananipk;
+
+                    Validator::make($valid, [
+                        'diskonKeamananIpk' => 'nullable|lte:'.number_format($max_disc, 0, '', '.'),
+                    ])->validate();
+                }
+
                 $data['fas_keamananipk'] = $request->pkeamananipk;
 
                 $diskon['keamananipk'] = str_replace('.','',$request->dkeamananipk);
@@ -166,6 +227,23 @@ class StoreController extends Controller
 
             //Kebersihan
             if(!empty($request->fas_kebersihan)){
+                $valid['tarifKebersihan'] = $request->pkebersihan;
+
+                Validator::make($valid, [
+                    'tarifKebersihan' => 'required|numeric|exists:App\Models\PKebersihan,id'
+                ])->validate();
+
+                $price = PKebersihan::find($request->pkebersihan);
+                if(!is_null($request->dkebersihan)){
+                    $max_disc = $price->price * $jml_los;
+
+                    $valid['diskonKebersihan'] = $request->dkebersihan;
+
+                    Validator::make($valid, [
+                        'diskonKebersihan' => 'nullable|lte:'.number_format($max_disc, 0, '', '.'),
+                    ])->validate();
+                }
+
                 $data['fas_kebersihan'] = $request->pkebersihan;
 
                 $diskon['kebersihan'] = str_replace('.','',$request->dkebersihan);
@@ -173,6 +251,21 @@ class StoreController extends Controller
 
             //Air Kotor
             if(!empty($request->fas_airkotor)){
+                $valid['tarifAirKotor'] = $request->pairkotor;
+
+                Validator::make($valid, [
+                    'tarifAirKotor' => 'required|numeric|exists:App\Models\PAirKotor,id'
+                ])->validate();
+
+                $price = PAirKotor::find($request->pairkotor);
+                if(!is_null($request->dairkotor)){
+                    $valid['diskonAirKotor'] = $request->dairkotor;
+
+                    Validator::make($valid, [
+                        'diskonAirKotor' => 'nullable|lte:'.number_format($price->price, 0, '', '.'),
+                    ])->validate();
+                }
+
                 $data['fas_airkotor'] = $request->pairkotor;
 
                 $diskon['airkotor'] = str_replace('.','',$request->dairkotor);
@@ -180,6 +273,21 @@ class StoreController extends Controller
 
             //Lain
             if(!empty($request->fas_lain)){
+                $valid['tarifLainnya'] = $request->plain;
+
+                Validator::make($valid, [
+                    'tarifLainnya' => 'required|numeric|exists:App\Models\PLain,id'
+                ])->validate();
+
+                $price = PLain::find($request->plain);
+                if(!is_null($request->dlain)){
+                    $valid['diskonLainnya'] = $request->dlain;
+
+                    Validator::make($valid, [
+                        'diskonLainnya' => 'nullable|lte:'.number_format($price->price, 0, '', '.'),
+                    ])->validate();
+                }
+
                 $data['fas_lain'] = $request->plain;
 
                 $diskon['lain'] = str_replace('.','',$request->dlain);
