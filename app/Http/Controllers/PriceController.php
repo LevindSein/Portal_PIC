@@ -16,6 +16,8 @@ use App\Models\PKebersihan;
 use App\Models\PAirKotor;
 use App\Models\PLain;
 
+use App\Models\Store;
+
 use DataTables;
 use Carbon\Carbon;
 
@@ -193,6 +195,10 @@ class PriceController extends Controller
                 $data = PListrik::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            if(!is_null(Store::where('fas_listrik', $id)->first())){
+                return response()->json(['error' => "Price currently use."]);
             }
 
             try{
@@ -380,6 +386,10 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
+            if(!is_null(Store::where('fas_airbersih', $id)->first())){
+                return response()->json(['error' => "Price currently use."]);
+            }
+
             try{
                 $data->delete();
             } catch(\Exception $e){
@@ -546,6 +556,10 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
+            if(!is_null(Store::where('fas_keamananipk', $id)->first())){
+                return response()->json(['error' => "Price currently use."]);
+            }
+
             try{
                 $data->delete();
             } catch(\Exception $e){
@@ -702,6 +716,10 @@ class PriceController extends Controller
                 $data = PKebersihan::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            if(!is_null(Store::where('fas_kebersihan', $id)->first())){
+                return response()->json(['error' => "Price currently use."]);
             }
 
             try{
@@ -862,6 +880,10 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
+            if(!is_null(Store::where('fas_airkotor', $id)->first())){
+                return response()->json(['error' => "Price currently use."]);
+            }
+
             try{
                 $data->delete();
             } catch(\Exception $e){
@@ -1018,6 +1040,10 @@ class PriceController extends Controller
                 $data = PLain::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            if(!is_null(Store::where('fas_lain', $id)->first())){
+                return response()->json(['error' => "Price currently use."]);
             }
 
             try{

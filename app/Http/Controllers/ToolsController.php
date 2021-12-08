@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\TListrik;
 use App\Models\TAirBersih;
 use App\Models\Identity;
+use App\Models\Store;
 
 use DataTables;
 use Carbon\Carbon;
@@ -20,7 +21,7 @@ class ToolsController extends Controller
 {
     public function listrik(){
         if(request()->ajax()){
-            $data = TListrik::select('id','code','name','power','meter');
+            $data = TListrik::select('id','code','name','power','meter','stt_available');
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->code.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
@@ -29,13 +30,22 @@ class ToolsController extends Controller
 
                 return $button;
             })
+            ->editColumn('code', function($data){
+                if($data->stt_available == 1){
+                    $color = 'text-success';
+                }
+                else{
+                    $color = 'text-danger';
+                }
+                return "<span class='$color'>$data->code</span>";
+            })
             ->editColumn('power', function($data){
                 return number_format($data->power);
             })
             ->editColumn('meter', function($data){
                 return number_format($data->meter);
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'code'])
             ->make(true);
         }
         return view('portal.point.tools.listrik.index');
@@ -53,7 +63,6 @@ class ToolsController extends Controller
                 'meter' => 'required|numeric|lte:999999999',
             ])->validate();
 
-            $code = Identity::listrikCode();
             $json = json_encode([
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
@@ -62,8 +71,11 @@ class ToolsController extends Controller
                 'username_update' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
+
+            $code = Identity::listrikCode();
+
             $dataset['code'] = $code;
-            $dataset['name'] = $request->name;
+            $dataset['name'] = strtoupper($request->name);
             $dataset['power'] = str_replace('.','',$request->power);
             $dataset['meter'] = str_replace('.','',$request->meter);
             $dataset['stt_available'] = 1;
@@ -127,7 +139,7 @@ class ToolsController extends Controller
 
             $json = json_encode($json);
 
-            $data->name = $request->name;
+            $data->name = strtoupper($request->name);
             $data->power = str_replace('.','',$request->power);
             $data->meter = str_replace('.','',$request->meter);
             $data->data = $json;
@@ -153,7 +165,13 @@ class ToolsController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data['available'] = Identity::available($data->stt_available);
+            $kontrol = Store::where('id_tlistrik', $id)->select('kd_kontrol')->first();
+            if(!is_null($kontrol)){
+                $data['kontrol'] = $kontrol->kd_kontrol;
+            }
+            else{
+                $data['kontrol'] = '';
+            }
 
             $json = json_decode($data->data);
             $data['data'] = $json;
@@ -173,6 +191,10 @@ class ToolsController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
+            if($data->stt_available == 0){
+                return response()->json(['error' => "Tools currently use."]);
+            }
+
             try{
                 $data->delete();
             } catch(\Exception $e){
@@ -188,7 +210,7 @@ class ToolsController extends Controller
 
     public function airbersih(){
         if(request()->ajax()){
-            $data = TAirBersih::select('id','code','name','meter');
+            $data = TAirBersih::select('id','code','name','meter','stt_available');
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->code.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
@@ -200,7 +222,16 @@ class ToolsController extends Controller
             ->editColumn('meter', function($data){
                 return number_format($data->meter);
             })
-            ->rawColumns(['action'])
+            ->editColumn('code', function($data){
+                if($data->stt_available == 1){
+                    $color = 'text-success';
+                }
+                else{
+                    $color = 'text-danger';
+                }
+                return "<span class='$color'>$data->code</span>";
+            })
+            ->rawColumns(['action', 'code'])
             ->make(true);
         }
         return view('portal.point.tools.air-bersih.index');
@@ -216,7 +247,6 @@ class ToolsController extends Controller
                 'meter' => 'required|numeric|lte:999999999',
             ])->validate();
 
-            $code = Identity::airbersihCode();
             $json = json_encode([
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
@@ -225,8 +255,11 @@ class ToolsController extends Controller
                 'username_update' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
+
+            $code = Identity::airbersihCode();
+
             $dataset['code'] = $code;
-            $dataset['name'] = $request->name;
+            $dataset['name'] = strtoupper($request->name);
             $dataset['meter'] = str_replace('.','',$request->meter);
             $dataset['stt_available'] = 1;
             $dataset['data'] = $json;
@@ -287,7 +320,7 @@ class ToolsController extends Controller
 
             $json = json_encode($json);
 
-            $data->name = $request->name;
+            $data->name = strtoupper($request->name);
             $data->meter = str_replace('.','',$request->meter);
             $data->data = $json;
 
@@ -312,7 +345,13 @@ class ToolsController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data['available'] = Identity::available($data->stt_available);
+            $kontrol = Store::where('id_tairbersih', $id)->select('kd_kontrol')->first();
+            if(!is_null($kontrol)){
+                $data['kontrol'] = $kontrol->kd_kontrol;
+            }
+            else{
+                $data['kontrol'] = '';
+            }
 
             $json = json_decode($data->data);
             $data['data'] = $json;
@@ -330,6 +369,10 @@ class ToolsController extends Controller
                 $data = TAirBersih::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            if($data->stt_available == 0){
+                return response()->json(['error' => "Tools currently use."]);
             }
 
             try{

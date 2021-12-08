@@ -19917,6 +19917,28 @@ File: scss
     width: 100%;
 }
 
+.color {
+    float: left;
+    height: 10px;
+    width: 10px;
+    margin-top: 5px;
+    border: 1px solid black;
+    clear: both;
+    border-radius: 50%;
+}
+
+.color-danger {
+    background-color: #f62d51;
+}
+
+.color-success {
+    background-color: #36bea6;
+}
+
+.color-info {
+    background-color: #2962ff;
+}
+
 .se-pre-con {
     position: fixed;
     left: 0;

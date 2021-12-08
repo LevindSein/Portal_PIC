@@ -9,7 +9,7 @@ class ChangeLog extends Model
 {
     use HasFactory;
 
-    protected $table = 'change_log';
+    protected $table = 'change_logs';
     protected $fillable = [
         'data',
     ];

@@ -198,7 +198,7 @@
                             </a>
                             <ul aria-expanded="false" class="collapse first-level {{ (request()->is('production/point*')) ? 'in' : '' }}">
                                 <li class="sidebar-item">
-                                    <a href="{{url('production/point/shops')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/point/shops*')) ? 'active' : '' }}">
+                                    <a href="{{url('production/point/stores')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/point/stores*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
                                         <span class="hide-menu">Data&nbsp;Tempat</span>
                                     </a>

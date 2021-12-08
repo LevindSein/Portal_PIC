@@ -17,6 +17,7 @@ use App\Models\User;
 use App\Models\Identity;
 use App\Models\ActivationCode;
 use App\Models\Country;
+use App\Models\Store;
 
 class UserController extends Controller
 {
@@ -480,8 +481,6 @@ class UserController extends Controller
                 }
             }
 
-            //Cek di Tempat Usaha harus dihapus
-
             try{
                 $user->save();
             } catch(\Exception $e){
@@ -506,6 +505,14 @@ class UserController extends Controller
 
             if($user->id == Auth::user()->id){
                 return response()->json(['error' => 'Data currently.']);
+            }
+
+            $data = User::with(['pengguna:id,id_pengguna', 'pemilik:id,id_pemilik'])->find($id);
+            foreach($data->pengguna as $d => $key){
+                Store::penggunaDeletePermanent($key->id);
+            }
+            foreach($data->pemilik as $d => $key){
+                Store::pemilikDeletePermanent($key->id);
             }
 
             try{

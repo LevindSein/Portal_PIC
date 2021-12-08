@@ -17,7 +17,7 @@ use App\Http\Controllers\ChangeLogController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\DayOffController;
-use App\Http\Controllers\ShopsController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\CommodityController;
 
 /*
@@ -58,8 +58,8 @@ Route::middleware('checkauth')->group(function(){
             Route::post('users/restore/{id}', [UserController::class, 'restore']);
             Route::resource('users', UserController::class);
 
-            Route::get('point/shops/generate/kontrol', [ShopsController::class, 'gKontrol']);
-            Route::resource('point/shops', ShopsController::class);
+            Route::get('point/stores/generate/kontrol', [StoreController::class, 'gKontrol']);
+            Route::resource('point/stores', StoreController::class);
 
             Route::resource('point/commodities', CommodityController::class);
 

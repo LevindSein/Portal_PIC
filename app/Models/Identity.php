@@ -45,14 +45,4 @@ class Identity extends Model
         else
             return $data;
     }
-
-    public static function available($data){
-        if($data == 1){
-            $data = "<span class='text-success'>Tersedia</span>";
-        }
-        else{
-            $data = "<span class='text-danger'>Digunakan</span>";
-        }
-        return $data;
-    }
 }

@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Carbon\Carbon;
 
 use App\Models\User;
+use App\Models\Store;
 
 class UserDelete extends Command
 {
@@ -54,7 +55,16 @@ class UserDelete extends Command
             $interval = $from->diffInSeconds($end);
 
             if($interval > 2592000){
+                $dataset = User::with(['pengguna:id,id_pengguna', 'pemilik:id,id_pemilik'])->find($d->id);
+                foreach($dataset->pengguna as $data => $key){
+                    Store::penggunaDeletePermanent($key->id);
+                }
+                foreach($dataset->pemilik as $data => $key){
+                    Store::pemilikDeletePermanent($key->id);
+                }
+
                 $d->delete();
+
                 $deleted++ ;
             }
             else{

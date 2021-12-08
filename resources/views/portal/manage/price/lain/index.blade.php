@@ -28,7 +28,7 @@ Tarif Lainnya
                         <thead>
                             <tr>
                                 <th>Data</th>
-                                <th><sup>Price&nbsp;</sup>&frasl;<sub>&nbsp;Los</sub></th>
+                                <th>Price</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

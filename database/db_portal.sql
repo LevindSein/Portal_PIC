@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2021 at 06:33 PM
+-- Generation Time: Dec 08, 2021 at 01:43 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -40,10 +40,10 @@ CREATE TABLE `activation_code` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `change_log`
+-- Table structure for table `change_logs`
 --
 
-CREATE TABLE `change_log` (
+CREATE TABLE `change_logs` (
   `id` bigint(20) NOT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -51,10 +51,10 @@ CREATE TABLE `change_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `change_log`
+-- Dumping data for table `change_logs`
 --
 
-INSERT INTO `change_log` (`id`, `data`, `updated_at`, `created_at`) VALUES
+INSERT INTO `change_logs` (`id`, `data`, `updated_at`, `created_at`) VALUES
 (1, '{\"title\":\"Update Caringin V2\",\"data\":\"Peningkatan Sistem Admin dan Kasir, dari sisi Tagihan dan berbagai fitur yang lain.\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-04-04 14:18:35', '2021-04-04 14:18:35'),
 (2, '{\"title\":\"Bugs Fixed\",\"data\":\"Fixing Bug Tabel Tagihan, Menambahkan Tooltips pada Total Tagihan dan Tombol Sistem.\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-07 10:08:04\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-07  10:08:04\"}', '2021-04-07 03:08:04', '2021-04-07 03:08:04'),
 (3, '{\"title\":\"Bugs Fixed\",\"data\":\"Fixing Bug Pencarian Periode Tagihan, Home Tagihan, dan Checking Report Tagihan.\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-07 10:29:29\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-07  12:28:42\"}', '2021-04-07 05:28:42', '2021-04-07 05:28:29'),
@@ -68,10 +68,10 @@ INSERT INTO `change_log` (`id`, `data`, `updated_at`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `commodity`
+-- Table structure for table `commodities`
 --
 
-CREATE TABLE `commodity` (
+CREATE TABLE `commodities` (
   `id` bigint(20) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `data` longtext DEFAULT NULL,
@@ -80,10 +80,10 @@ CREATE TABLE `commodity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `commodity`
+-- Dumping data for table `commodities`
 --
 
-INSERT INTO `commodity` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
+INSERT INTO `commodities` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
 (1, 'Sandang', '{\"name\":\"Sandang\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:48\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:48\"}', '2021-12-07 12:16:48', '2021-12-07 12:16:48'),
 (2, 'Pangan', '{\"name\":\"Pangan\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:53\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:53\"}', '2021-12-07 12:16:53', '2021-12-07 12:16:53'),
 (3, 'Papan', '{\"name\":\"Papan\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:59\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:59\"}', '2021-12-07 12:16:59', '2021-12-07 12:16:59');
@@ -91,10 +91,10 @@ INSERT INTO `commodity` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `country`
+-- Table structure for table `countries`
 --
 
-CREATE TABLE `country` (
+CREATE TABLE `countries` (
   `id` int(11) NOT NULL,
   `iso` char(2) NOT NULL,
   `name` varchar(80) NOT NULL,
@@ -105,10 +105,10 @@ CREATE TABLE `country` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `country`
+-- Dumping data for table `countries`
 --
 
-INSERT INTO `country` (`id`, `iso`, `name`, `nicename`, `iso3`, `numcode`, `phonecode`) VALUES
+INSERT INTO `countries` (`id`, `iso`, `name`, `nicename`, `iso3`, `numcode`, `phonecode`) VALUES
 (1, 'AF', 'AFGHANISTAN', 'Afghanistan', 'AFG', 4, 93),
 (2, 'AL', 'ALBANIA', 'Albania', 'ALB', 8, 355),
 (3, 'DZ', 'ALGERIA', 'Algeria', 'DZA', 12, 213),
@@ -638,10 +638,10 @@ INSERT INTO `p_listrik` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shops`
+-- Table structure for table `stores`
 --
 
-CREATE TABLE `shops` (
+CREATE TABLE `stores` (
   `id` bigint(20) NOT NULL,
   `kd_kontrol` varchar(20) DEFAULT NULL,
   `nicename` varchar(50) DEFAULT NULL,
@@ -653,14 +653,15 @@ CREATE TABLE `shops` (
   `komoditi` text DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   `ket` text DEFAULT NULL,
-  `usaha` varchar(255) DEFAULT NULL,
   `lokasi` text DEFAULT NULL,
-  `fas_listrik` longtext DEFAULT NULL,
-  `fas_airbersih` longtext DEFAULT NULL,
-  `fas_keamananipk` longtext DEFAULT NULL,
-  `fas_kebersihan` longtext DEFAULT NULL,
-  `fas_airkotor` longtext DEFAULT NULL,
-  `fas_lain` longtext DEFAULT NULL,
+  `id_tlistrik` int(11) DEFAULT NULL,
+  `id_tairbersih` int(11) DEFAULT NULL,
+  `fas_listrik` int(11) DEFAULT NULL,
+  `fas_airbersih` int(11) DEFAULT NULL,
+  `fas_keamananipk` int(11) DEFAULT NULL,
+  `fas_kebersihan` int(11) DEFAULT NULL,
+  `fas_airkotor` int(11) DEFAULT NULL,
+  `fas_lain` int(11) DEFAULT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -773,21 +774,21 @@ ALTER TABLE `activation_code`
   ADD UNIQUE KEY `kode` (`code`);
 
 --
--- Indexes for table `change_log`
+-- Indexes for table `change_logs`
 --
-ALTER TABLE `change_log`
+ALTER TABLE `change_logs`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `commodity`
+-- Indexes for table `commodities`
 --
-ALTER TABLE `commodity`
+ALTER TABLE `commodities`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `country`
+-- Indexes for table `countries`
 --
-ALTER TABLE `country`
+ALTER TABLE `countries`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `iso` (`iso`),
   ADD UNIQUE KEY `iso3` (`iso3`);
@@ -867,13 +868,21 @@ ALTER TABLE `p_listrik`
   ADD UNIQUE KEY `name` (`name`);
 
 --
--- Indexes for table `shops`
+-- Indexes for table `stores`
 --
-ALTER TABLE `shops`
+ALTER TABLE `stores`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `kd_kontrol` (`kd_kontrol`),
   ADD KEY `fk_pengguna` (`id_pengguna`),
-  ADD KEY `fk_pemilik` (`id_pemilik`);
+  ADD KEY `fk_pemilik` (`id_pemilik`),
+  ADD KEY `fk_tlistrik` (`id_tlistrik`),
+  ADD KEY `fk_tairbersih` (`id_tairbersih`),
+  ADD KEY `fk_plistrik` (`fas_listrik`),
+  ADD KEY `fk_pairbersih` (`fas_airbersih`),
+  ADD KEY `fk_pkeamananipk` (`fas_keamananipk`),
+  ADD KEY `fk_pkebersihan` (`fas_kebersihan`),
+  ADD KEY `fk_pairkotor` (`fas_airkotor`),
+  ADD KEY `fk_plain` (`fas_lain`);
 
 --
 -- Indexes for table `t_airbersih`
@@ -921,21 +930,21 @@ ALTER TABLE `activation_code`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `change_log`
+-- AUTO_INCREMENT for table `change_logs`
 --
-ALTER TABLE `change_log`
+ALTER TABLE `change_logs`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `commodity`
+-- AUTO_INCREMENT for table `commodities`
 --
-ALTER TABLE `commodity`
+ALTER TABLE `commodities`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `country`
+-- AUTO_INCREMENT for table `countries`
 --
-ALTER TABLE `country`
+ALTER TABLE `countries`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=240;
 
 --
@@ -1005,9 +1014,9 @@ ALTER TABLE `p_listrik`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `shops`
+-- AUTO_INCREMENT for table `stores`
 --
-ALTER TABLE `shops`
+ALTER TABLE `stores`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
@@ -1039,11 +1048,19 @@ ALTER TABLE `visitors`
 --
 
 --
--- Constraints for table `shops`
+-- Constraints for table `stores`
 --
-ALTER TABLE `shops`
+ALTER TABLE `stores`
+  ADD CONSTRAINT `fk_pairbersih` FOREIGN KEY (`fas_airbersih`) REFERENCES `p_airbersih` (`id`),
+  ADD CONSTRAINT `fk_pairkotor` FOREIGN KEY (`fas_airkotor`) REFERENCES `p_airkotor` (`id`),
   ADD CONSTRAINT `fk_pemilik` FOREIGN KEY (`id_pemilik`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `fk_pengguna` FOREIGN KEY (`id_pengguna`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `fk_pengguna` FOREIGN KEY (`id_pengguna`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `fk_pkeamananipk` FOREIGN KEY (`fas_keamananipk`) REFERENCES `p_keamananipk` (`id`),
+  ADD CONSTRAINT `fk_pkebersihan` FOREIGN KEY (`fas_kebersihan`) REFERENCES `p_kebersihan` (`id`),
+  ADD CONSTRAINT `fk_plain` FOREIGN KEY (`fas_lain`) REFERENCES `p_lain` (`id`),
+  ADD CONSTRAINT `fk_plistrik` FOREIGN KEY (`fas_listrik`) REFERENCES `p_listrik` (`id`),
+  ADD CONSTRAINT `fk_tairbersih` FOREIGN KEY (`id_tairbersih`) REFERENCES `t_airbersih` (`id`),
+  ADD CONSTRAINT `fk_tlistrik` FOREIGN KEY (`id_tlistrik`) REFERENCES `t_listrik` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

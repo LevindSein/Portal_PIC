@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\Group;
-use App\Models\Shops;
+use App\Models\Store;
 use App\Models\Commodity;
 use App\Models\TListrik;
 use App\Models\TAirBersih;
@@ -21,7 +21,7 @@ use App\Models\PLain;
 use DataTables;
 use Carbon\Carbon;
 
-class ShopsController extends Controller
+class StoreController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,7 +31,7 @@ class ShopsController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = Shops::
+            $data = Store::
             with('pengguna:id,name')
             ->select(
                 'id',
@@ -85,7 +85,7 @@ class ShopsController extends Controller
             ->rawColumns(['action','kd_kontrol','fasilitas'])
             ->make(true);
         }
-        return view('portal.point.shops.index');
+        return view('portal.point.store.index');
     }
 
     /**
@@ -131,17 +131,18 @@ class ShopsController extends Controller
 
             $data['lokasi'] = $request->location;
 
+            $diskon = [];
+
             //Listrik
             if(!empty($request->fas_listrik)){
                 $tools = TListrik::find($request->tlistrik);
                 $tools->stt_available = 0;
                 $tools->save();
 
-                $data['fas_listrik'] = json_encode([
-                    'id_tools' => $request->tlistrik,
-                    'id_price' => $request->plistrik,
-                    'diskon' => $request->dlistrik
-                ]);
+                $data['id_tlistrik'] = $request->tlistrik;
+                $data['fas_listrik'] = $request->plistrik;
+
+                $diskon['listrik'] = $request->dlistrik;
             }
 
             //Air Bersih
@@ -150,46 +151,42 @@ class ShopsController extends Controller
                 $tools->stt_available = 0;
                 $tools->save();
 
-                $data['fas_airbersih'] = json_encode([
-                    'id_tools' => $request->tairbersih,
-                    'id_price' => $request->pairbersih,
-                    'diskon' => $request->dairbersih
-                ]);
+                $data['id_tairbersih'] = $request->tairbersih;
+                $data['fas_airbersih'] = $request->pairbersih;
+
+                $diskon['airbersih'] = $request->dairbersih;
             }
 
             //Keamanan IPK
             if(!empty($request->fas_keamananipk)){
-                $data['fas_keamananipk'] = json_encode([
-                    'id_price' => $request->pkeamananipk,
-                    'diskon' => $request->dkeamananipk
-                ]);
+                $data['fas_keamananipk'] = $request->pkeamananipk;
+
+                $diskon['keamananipk'] = str_replace('.','',$request->dkeamananipk);
             }
 
             //Kebersihan
             if(!empty($request->fas_kebersihan)){
-                $data['fas_kebersihan'] = json_encode([
-                    'id_price' => $request->pkebersihan,
-                    'diskon' => $request->dkebersihan
-                ]);
+                $data['fas_kebersihan'] = $request->pkebersihan;
+
+                $diskon['kebersihan'] = str_replace('.','',$request->dkebersihan);
             }
 
             //Air Kotor
             if(!empty($request->fas_airkotor)){
-                $data['fas_airkotor'] = json_encode([
-                    'id_price' => $request->pairkotor,
-                    'diskon' => $request->dairkotor
-                ]);
+                $data['fas_airkotor'] = $request->pairkotor;
+
+                $diskon['airkotor'] = str_replace('.','',$request->dairkotor);
             }
 
             //Lain
             if(!empty($request->fas_lain)){
-                $data['fas_lain'] = json_encode([
-                    'id_price' => $request->plain,
-                    'diskon' => $request->dlain
-                ]);
+                $data['fas_lain'] = $request->plain;
+
+                $diskon['lain'] = str_replace('.','',$request->dlain);
             }
 
             $data['data'] = json_encode([
+                'diskon' => $diskon,
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -199,7 +196,7 @@ class ShopsController extends Controller
             ]);
 
             try{
-                Shops::create($data);
+                Store::create($data);
             }
             catch(\Exception $e){
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
@@ -220,7 +217,7 @@ class ShopsController extends Controller
         sort($los, SORT_NATURAL);
 
         $los = $los[0];
-        $data = Shops::kontrol($group,$los);
+        $data = Store::kontrol($group,$los);
         return response()->json(['success' => $data]);
     }
 
@@ -276,15 +273,14 @@ class ShopsController extends Controller
     {
         if(request()->ajax()){
             try{
-                $data = Shops::findOrFail($id);
+                $data = Store::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
             if(!is_null($data->fas_listrik)){
-                $tools = json_decode($data->fas_listrik);
                 try{
-                    $tools = TListrik::findOrFail($tools->id_tools);
+                    $tools = TListrik::findOrFail($data->id_tlistrik);
                 } catch(ModelNotFoundException $e){
                     return response()->json(['error' => 'Data Tools Listrik not found','description' => $e]);
                 }
@@ -308,9 +304,8 @@ class ShopsController extends Controller
             }
 
             if(!is_null($data->fas_airbersih)){
-                $tools = json_decode($data->fas_airbersih);
                 try{
-                    $tools = TAirBersih::findOrFail($tools->id_tools);
+                    $tools = TAirBersih::findOrFail($data->id_tairbersih);
                 } catch(ModelNotFoundException $e){
                     return response()->json(['error' => 'Data Tools Air Bersih not found','description' => $e]);
                 }

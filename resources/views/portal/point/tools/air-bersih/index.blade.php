@@ -23,6 +23,8 @@ Alat Air Bersih
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <div><div class='color color-success'></div>&nbsp;Tersedia</div>
+                <div><div class='color color-danger'></div>&nbsp;Digunakan</div><br>
                 <div class="table-responsive">
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
@@ -79,7 +81,7 @@ Alat Air Bersih
                 <div class="modal-body">
                     <div class="form-group">
                         <label>ID Alat <span class="text-danger">*</span></label>
-                        <input required type="text" id="name" name="name" autocomplete="off" maxlength="30" placeholder="Contoh: 170002xxxxx" class="form-control form-control-line">
+                        <input required type="text" id="name" name="name" autocomplete="off" maxlength="30" placeholder="Contoh: 170002xxxxx" class="form-control form-control-line" style="text-transform: uppercase;">
                     </div>
                     <div class="form-group">
                         <label>Meter <span class="text-danger">*</span></label>
@@ -396,7 +398,9 @@ Alat Air Bersih
                         $("#showCode").text(data.show.code);
                         (data.show.name) ? $("#showName").text(data.show.name) : $("#showName").html("&mdash;");
                         $("#showMeter").text(Number(data.show.meter).toLocaleString('id-ID'));
-                        $("#showAvailable").html(data.show.available);
+                        (data.show.kontrol && !data.show.stt_available)
+                            ? $("#showAvailable").html("<a class='text-danger' href='/production/point/stores?s=" + data.show.kontrol + "'>Digunakan&nbsp;" + data.show.kontrol + "&nbsp;<sup><i class='fas fa-external-link'></i></sup></a>")
+                            : $("#showAvailable").html("<span class='text-success'>Tersedia</span>");
                         $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
                         $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                     }

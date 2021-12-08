@@ -5,12 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\User;
-
-class Shops extends Model
+class Store extends Model
 {
     use HasFactory;
-    protected $table = 'shops';
+    protected $table = 'stores';
     protected $fillable = [
         'kd_kontrol',
         'nicename',
@@ -19,10 +17,12 @@ class Shops extends Model
         'jml_los',
         'id_pengguna',
         'id_pemilik',
+        'komoditi',
         'status',
         'ket',
-        'komoditi',
         'lokasi',
+        'id_tlistrik',
+        'id_tairbersih',
         'fas_listrik',
         'fas_airbersih',
         'fas_keamananipk',
@@ -34,7 +34,15 @@ class Shops extends Model
 
     public function pengguna()
     {
-        return $this->belongsTo(User::class, 'id_pengguna');
+        return $this->belongsTo(User::class, 'id_pengguna')->withDefault([
+            'name' => '-'
+        ]);
+    }
+
+    public function pemilik(){
+        return $this->belongsTo(User::class, 'id_pemilik')->withDefault([
+            'name' => '-'
+        ]);
     }
 
     public static function kontrol($group, $los){
@@ -74,5 +82,19 @@ class Shops extends Model
             }
         }
         return $kontrol;
+    }
+
+    public static function penggunaDeletePermanent($id)
+    {
+        $existing = self::find($id);
+        $existing->id_pengguna = NULL;
+        $existing->save();
+    }
+
+    public static function pemilikDeletePermanent($id)
+    {
+        $existing = self::find($id);
+        $existing->id_pemilik = NULL;
+        $existing->save();
     }
 }

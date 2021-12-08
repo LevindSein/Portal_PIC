@@ -24,6 +24,9 @@ Data Tempat
         <div class="card">
             <div class="card-body">
                 <p id="showtempat" class="text-danger">*) <b>Menambah</b>, <b>Mengedit</b>, atau <b>Menghapus</b> Data Tempat Usaha tidak akan mempengaruhi <b>Data Tagihan</b> yang sedang berlangsung. <sup><a href="javascript:void(0)" type="button" id="showagain"><i class="fas fa-times"></i> Jangan tampilkan lagi.</a></sup></p>
+                <div><div class='color color-success'></div>&nbsp;Aktif</div>
+                <div><div class='color color-info'></div>&nbsp;Bebas Bayar</div>
+                <div><div class='color color-danger'></div>&nbsp;Nonaktif</div><br>
                 <div class="table-responsive">
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
@@ -44,7 +47,7 @@ Data Tempat
 @endsection
 
 @section('content-modal')
-<div id="shopsModal" class="modal fade" role="dialog">
+<div id="storeModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -53,7 +56,7 @@ Data Tempat
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form id="shopsForm">
+            <form id="storeForm">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-6 col-xlg-6">
@@ -70,12 +73,12 @@ Data Tempat
                                 <input required type="text" id="kontrol" name="kontrol" autocomplete="off" maxlength="20" placeholder="Sesuaikan Blok & No.Los" class="form-control form-control-line" style="text-transform: uppercase">
                             </div>
                             <div class="form-group">
-                                <label>Pengguna Tempat <span class="text-danger">*</span> <sup><a href="{{url('production/users')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
-                                <select required id="pengguna" name="pengguna" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                <label>Pengguna Tempat <sup><a href="{{url('production/users')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                <select id="pengguna" name="pengguna" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                             </div>
                             <div class="form-group">
-                                <label>Pemilik Tempat <span class="text-danger">*</span> <sup><a href="{{url('production/users')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
-                                <select required id="pemilik" name="pemilik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                <label>Pemilik Tempat <sup><a href="{{url('production/users')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                <select id="pemilik" name="pemilik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                             </div>
                         </div>
                         <div class="col-lg-6 col-xlg-6">
@@ -338,7 +341,7 @@ Data Tempat
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" id="shopsFormValue"/>
+                    <input type="hidden" id="storeFormValue"/>
                     <button type="submit" id="save_btn" class="btn btn-success">Simpan</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
                 </div>
@@ -351,6 +354,24 @@ Data Tempat
 @section('content-js')
 <script>
     $(document).ready(function(){
+        $('#storeModal').on('shown.bs.modal', function() {
+            $('#pengguna, #pemilik').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik Nama/KTP/Paspor disini..');
+            });
+            $('#tlistrik').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik Kode/Meter/Daya/ID disini..');
+            });
+            $('#tairbersih').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik Kode/Meter/ID disini..');
+            });
+            $('#plistrik, #pairbersih').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik Nama Tarif disini..');
+            });
+            $('#pkeamananipk, #pkebersihan, #pairkotor, #plain').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik Tarif/Nama Tarif disini..');
+            });
+        });
+
         $("#kontrol").on("input", function(){
             this.value = this.value.replace(/[^0-9a-zA-Z/\-]+$/g, '');
         });
@@ -412,7 +433,7 @@ Data Tempat
                 }
             },
             "serverSide": true,
-            "ajax": "/production/point/shops",
+            "ajax": "/production/point/stores",
             "columns": [
                 { data: 'kd_kontrol', name: 'nicename', class : 'text-center'  },
                 { data: 'pengguna.name', name: 'pengguna.name', class : 'text-center' },
@@ -429,7 +450,7 @@ Data Tempat
                 { "bSortable": false, "aTargets": [3,4] },
                 { "bSearchable": false, "aTargets": [3,4] }
             ],
-            "scrollY": "50vh",
+            "scrollY": "35vh",
             "scrollX": true,
             "preDrawCallback": function( settings ) {
                 scrollPosition = $(".dataTables_scrollBody").scrollTop();
@@ -444,6 +465,11 @@ Data Tempat
                 }, 10)
             },
         });
+
+        var searchValue = getUrlParameter('s');
+        if(searchValue){
+            dtable.search(searchValue).draw();
+        }
 
         setInterval(function(){
             dtableReload('');
@@ -687,7 +713,7 @@ Data Tempat
                     'los' : $("#los").val(),
                 };
                 $.ajax({
-                    url: "/production/point/shops/generate/kontrol",
+                    url: "/production/point/stores/generate/kontrol",
                     type: "GET",
                     cache: false,
                     data: dataset,
@@ -709,24 +735,24 @@ Data Tempat
         });
 
         $(".add").click( function(){
-            $("#shopsForm")[0].reset();
+            $("#storeForm")[0].reset();
             $('.titles').text('Tambah data Tempat Usaha');
-            $("#shopsFormValue").val('add');
+            $("#storeFormValue").val('add');
 
             initForm();
 
-            $('#shopsModal').modal('show');
+            $('#storeModal').modal('show');
         });
 
-        $('#shopsForm').submit(function(e){
+        $('#storeForm').submit(function(e){
             e.preventDefault();
-            value = $("#shopsFormValue").val();
+            value = $("#storeFormValue").val();
             if(value == 'add'){
-                url = "/production/point/shops";
+                url = "/production/point/stores";
                 type = "POST";
             }
             else if(value == 'update'){
-                url = "/production/point/shops/" + id;
+                url = "/production/point/stores/" + id;
                 type = "PUT";
             }
             dataset = $(this).serialize();
@@ -754,7 +780,7 @@ Data Tempat
                 '_token' : token,
             }
             if(value == 'delete'){
-                url = "/production/point/shops/" + id;
+                url = "/production/point/stores/" + id;
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Hapus";
@@ -850,7 +876,7 @@ Data Tempat
                 complete:function(data){
                     if(value == 'add' || value == 'update'){
                         if(JSON.parse(data.responseText).success)
-                            $('#shopsModal').modal('hide');
+                            $('#storeModal').modal('hide');
                     }
                     else{
                         $('#confirmModal').modal('hide');
@@ -930,7 +956,6 @@ Data Tempat
         function select2idprice(select2id, url, placeholder){
             $(select2id).select2({
                 placeholder: placeholder,
-                maximumSelectionLength: 3,
                 ajax: {
                     url: url,
                     dataType: 'json',
@@ -992,6 +1017,22 @@ Data Tempat
                     },
                 }
             });
+        }
+
+        function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+            return false;
         }
     });
 </script>
