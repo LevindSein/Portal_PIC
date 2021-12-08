@@ -160,7 +160,7 @@
                         </li>
                         @if(Auth::user()->level != 3)
                         <li class="sidebar-item {{ (request()->is('production/dashboard*')) ? 'bg-light' : '' }}">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/dashboard*')) ? 'active' : '' }}" href="{{url('production/dashboard')}}" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark {{ (request()->is('production/dashboard*')) ? 'active' : '' }}" href="{{url('production/dashboard')}}" aria-expanded="false">
                                 <i class="mdi mdi-view-dashboard mr-1 text-info"></i>
                                 <span class="hide-menu">Dashboard</span>
                             </a>
@@ -172,13 +172,13 @@
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
+                                    <a href="{{url('#')}}" class="sidebar-link waves-effect waves-dark">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
                                         <span class="hide-menu">Registrasi</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
+                                    <a href="{{url('#')}}" class="sidebar-link waves-effect waves-dark">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
                                         <span class="hide-menu">Pembongkaran</span>
                                     </a>
@@ -186,7 +186,7 @@
                             </ul>
                         </li>
                         <li class="sidebar-item {{ (request()->is('production/users*')) ? 'bg-light' : '' }}">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/users*')) ? 'active' : '' }}" href="{{url('production/users')}}" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark {{ (request()->is('production/users*')) ? 'active' : '' }}" href="{{url('production/users')}}" aria-expanded="false">
                                 <i class="fas fa-users mr-1 text-info"></i>
                                 <span class="hide-menu">Pengguna</span>
                             </a>
@@ -198,37 +198,37 @@
                             </a>
                             <ul aria-expanded="false" class="collapse first-level {{ (request()->is('production/point*')) ? 'in' : '' }}">
                                 <li class="sidebar-item">
-                                    <a href="{{url('production/point/shops')}}" class="sidebar-link {{ (request()->is('production/point/shops*')) ? 'active' : '' }}">
+                                    <a href="{{url('production/point/shops')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/point/shops*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
                                         <span class="hide-menu">Data&nbsp;Tempat</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="{{url('production/point/groups')}}" class="sidebar-link {{ (request()->is('production/point/groups*')) ? 'active' : '' }}">
+                                    <a href="{{url('production/point/groups')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/point/groups*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
                                         <span class="hide-menu">Blok&nbsp;Tempat</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="{{url('production/point/commodities')}}" class="sidebar-link {{ (request()->is('production/point/commodities*')) ? 'active' : '' }}">
+                                    <a href="{{url('production/point/commodities')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/point/commodities*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
                                         <span class="hide-menu">Komoditi</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item {{ (request()->is('production/point/tools*')) ? 'bg-light' : '' }}">
-                                    <a class="has-arrow sidebar-link  waves-effect waves-dark {{ (request()->is('production/point/tools*')) ? 'active' : '' }}" href="javascript:void(0)" aria-expanded="false">
+                                    <a class="has-arrow sidebar-link waves-effect waves-dark {{ (request()->is('production/point/tools*')) ? 'active' : '' }}" href="javascript:void(0)" aria-expanded="false">
                                         <i class="mdi mdi-playlist-plus mr-1 text-info"></i>
                                         <span class="hide-menu">Alat&nbsp;Meter</span>
                                     </a>
                                     <ul aria-expanded="false" class="collapse second-level {{ (request()->is('production/point/tools*')) ? 'in' : '' }}">
                                         <li class="sidebar-item">
-                                            <a href="{{url('production/point/tools/listrik')}}" class="sidebar-link {{ (request()->is('production/point/tools/listrik*')) ? 'active' : '' }}">
+                                            <a href="{{url('production/point/tools/listrik')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/point/tools/listrik*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Listrik</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-item">
-                                            <a href="{{url('production/point/tools/airbersih')}}" class="sidebar-link {{ (request()->is('production/point/tools/airbersih*')) ? 'active' : '' }}">
+                                            <a href="{{url('production/point/tools/airbersih')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/point/tools/airbersih*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Air&nbsp;Bersih</span>
                                             </a>
@@ -244,13 +244,13 @@
                             </a>
                             <ul aria-expanded="false" class="collapse first-level {{ (request()->is('production/manage*')) ? 'in' : '' }}">
                                 <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
+                                    <a href="{{url('#')}}" class="sidebar-link waves-effect waves-dark">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
                                         <span class="hide-menu">Data Tagihan</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="{{url('production/manage/dayoff')}}" class="sidebar-link {{ (request()->is('production/manage/dayoff*')) ? 'active' : '' }}">
+                                    <a href="{{url('production/manage/dayoff')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/manage/dayoff*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
                                         <span class="hide-menu">Libur&nbsp;Tagihan</span>
                                     </a>
@@ -262,37 +262,37 @@
                                     </a>
                                     <ul aria-expanded="false" class="collapse first-level {{ (request()->is('production/manage/prices*')) ? 'in' : '' }}">
                                         <li class="sidebar-item">
-                                            <a href="{{url('production/manage/prices/listrik')}}" class="sidebar-link {{ (request()->is('production/manage/prices/listrik*')) ? 'active' : '' }}">
+                                            <a href="{{url('production/manage/prices/listrik')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/manage/prices/listrik*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Listrik</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-item">
-                                            <a href="{{url('production/manage/prices/airbersih')}}" class="sidebar-link {{ (request()->is('production/manage/prices/airbersih*')) ? 'active' : '' }}">
+                                            <a href="{{url('production/manage/prices/airbersih')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/manage/prices/airbersih*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Air&nbsp;Bersih</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-item">
-                                            <a href="{{url('production/manage/prices/keamananipk')}}" class="sidebar-link {{ (request()->is('production/manage/prices/keamananipk*')) ? 'active' : '' }}">
+                                            <a href="{{url('production/manage/prices/keamananipk')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/manage/prices/keamananipk*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Keamanan&nbsp;IPK</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-item">
-                                            <a href="{{url('production/manage/prices/kebersihan')}}" class="sidebar-link {{ (request()->is('production/manage/prices/kebersihan*')) ? 'active' : '' }}">
+                                            <a href="{{url('production/manage/prices/kebersihan')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/manage/prices/kebersihan*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Kebersihan</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-item">
-                                            <a href="{{url('production/manage/prices/airkotor')}}" class="sidebar-link {{ (request()->is('production/manage/prices/airkotor*')) ? 'active' : '' }}">
+                                            <a href="{{url('production/manage/prices/airkotor')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/manage/prices/airkotor*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Air&nbsp;Kotor</span>
                                             </a>
                                         </li>
                                         <li class="sidebar-item">
-                                            <a href="{{url('production/manage/prices/lain')}}" class="sidebar-link {{ (request()->is('production/manage/prices/lain*')) ? 'active' : '' }}">
+                                            <a href="{{url('production/manage/prices/lain')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/manage/prices/lain*')) ? 'active' : '' }}">
                                                 <i class="mdi mdi-adjust mr-1 text-success"></i>
                                                 <span class="hide-menu">Lainnya</span>
                                             </a>
@@ -308,13 +308,13 @@
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
+                                    <a href="{{url('#')}}" class="sidebar-link waves-effect waves-dark">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
                                         <span class="hide-menu">Pemakaian</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link">
+                                    <a href="{{url('#')}}" class="sidebar-link waves-effect waves-dark">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
                                         <span class="hide-menu">Pendapatan</span>
                                     </a>
@@ -322,19 +322,19 @@
                             </ul>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('#')}}" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark" href="{{url('#')}}" aria-expanded="false">
                                 <i class="far fa-rocket-launch mr-1 text-info"></i>
                                 <span class="hide-menu">Potensi</span>
                             </a>
                         </li>
                         <li class="sidebar-item {{ (request()->is('production/histories*')) ? 'bg-light' : '' }}">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/histories*')) ? 'active' : '' }}" href="{{url('production/histories')}}" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark {{ (request()->is('production/histories*')) ? 'active' : '' }}" href="{{url('production/histories')}}" aria-expanded="false">
                                 <i class="fad fa-clock mr-1 text-info"></i>
                                 <span class="hide-menu">Riwayat&nbsp;Login</span>
                             </a>
                         </li>
                         <li class="sidebar-item {{ (request()->is('production/changelogs*')) ? 'bg-light' : '' }}">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ (request()->is('production/changelogs*')) ? 'active' : '' }}" href="{{url('production/changelogs')}}" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark {{ (request()->is('production/changelogs*')) ? 'active' : '' }}" href="{{url('production/changelogs')}}" aria-expanded="false">
                                 <i class="fas fa-info mr-1 text-info"></i>
                                 <span class="hide-menu">Changelog</span>
                             </a>
