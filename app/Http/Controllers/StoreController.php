@@ -126,7 +126,7 @@ class StoreController extends Controller
             if(!is_null($request->commodity)){
                 $komoditi = $this->multipleSelect($request->commodity);
                 sort($komoditi, SORT_NATURAL);
-                $data['komoditi'] = implode(',', $komoditi);
+                $data['komoditi'] = json_encode($komoditi);
             }
 
             $data['lokasi'] = $request->location;

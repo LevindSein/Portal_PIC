@@ -73,11 +73,17 @@ Data Tempat
                                 <input required type="text" id="kontrol" name="kontrol" autocomplete="off" maxlength="20" placeholder="Sesuaikan Blok & No.Los" class="form-control form-control-line" style="text-transform: uppercase">
                             </div>
                             <div class="form-group">
-                                <label>Pengguna Tempat <sup><a href="{{url('production/users')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                <div class="d-flex justify-content-between">
+                                    <label>Pengguna Tempat <sup><a href="{{url('production/users')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                    <a id="cancelPengguna" type="button" class="text-danger" href="javascript:void(0)"><sup><i class="fas fa-sm fa-times"></i></sup> Hapus</a>
+                                </div>
                                 <select id="pengguna" name="pengguna" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                             </div>
                             <div class="form-group">
-                                <label>Pemilik Tempat <sup><a href="{{url('production/users')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                <div class="d-flex justify-content-between">
+                                    <label>Pemilik Tempat <sup><a href="{{url('production/users')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                    <a id="cancelPemilik" type="button" class="text-danger" href="javascript:void(0)"><sup><i class="fas fa-sm fa-times"></i></sup> Hapus</a>
+                                </div>
                                 <select id="pemilik" name="pemilik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                             </div>
                         </div>
@@ -91,7 +97,7 @@ Data Tempat
                                 <div>
                                     <div class="form-check form-check-inline">
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" id="stt_aktif" name="status" value="1" checked>
+                                            <input type="radio" class="custom-control-input" id="stt_aktif" name="status" value="1">
                                             <label class="custom-control-label" style="font-weight: 400;" for="stt_aktif">Aktif</label>
                                         </div>
                                     </div>
@@ -494,15 +500,18 @@ Data Tempat
 
             $("#kontrol").prop("disabled", true);
 
+            $("#cancelPengguna").hide();
             $("#pengguna").val("");
             select2user("#pengguna", "/search/users", "-- Cari Pengguna Tempat --");
 
+            $("#cancelPemilik").hide();
             $("#pemilik").val("");
             select2user("#pemilik", "/search/users", "-- Cari Pemilik Tempat --");
 
             $("#commodity").val("");
             select2idname("#commodity", "/search/commodities", "-- Cari Kategori Komoditi --");
 
+            $("#stt_nonaktif").prop("checked", true);
             statusTempat();
 
             $("#tlistrik").val("");
@@ -691,6 +700,41 @@ Data Tempat
             }
         }
         $('input[name="status"]').click(statusTempat).each(statusTempat);
+
+        //Pengguna
+        $('#pengguna').on("input", function(e) {
+            if($('#pengguna').val()){
+                $("#stt_aktif").prop("checked", true);
+                $("#cancelPengguna").show();
+            }
+            else{
+                $("#cancelPengguna").hide();
+                $("#stt_nonaktif").prop("checked", true);
+            }
+            statusTempat();
+        });
+
+        $("#cancelPengguna").click(function(){
+            $("#pengguna").val(null).trigger("change");
+            $("#cancelPengguna").hide();
+            $("#stt_nonaktif").prop("checked", true);
+            statusTempat();
+        });
+
+        //Pemilik
+        $('#pemilik').on("input", function(e) {
+            if($('#pemilik').val()){
+                $("#cancelPemilik").show();
+            }
+            else{
+                $("#cancelPemilik").hide();
+            }
+        });
+
+        $("#cancelPemilik").click(function(){
+            $("#pemilik").val(null).trigger("change");
+            $("#cancelPemilik").hide();
+        });
 
         //Nomor Los
         $('#group').on("change", function(e) {
