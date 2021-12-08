@@ -95,7 +95,7 @@ Tarif Kebersihan
                         </div>
                     </div>
                     <div class="form-group">
-                        <p>(<span class="text-danger">*</span>) wajib diisi.</p>
+                        <p>(<label class="text-danger">*</label>) wajib diisi.</p>
                     </div>
                 </div>
                 <div class="modal-footer">

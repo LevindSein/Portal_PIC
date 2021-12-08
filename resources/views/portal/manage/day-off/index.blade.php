@@ -81,7 +81,7 @@ Libur Tagihan
                         <textarea rows="5" id="desc" name="desc" autocomplete="off" maxlength="255" placeholder="Ketikkan deskripsi" class="form-control form-control-line"></textarea>
                     </div>
                     <div class="form-group">
-                        <p>(<span class="text-danger">*</span>) wajib diisi.</p>
+                        <p>(<label class="text-danger">*</label>) wajib diisi.</p>
                     </div>
                 </div>
                 <div class="modal-footer">

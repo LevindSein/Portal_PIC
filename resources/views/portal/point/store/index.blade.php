@@ -47,7 +47,7 @@ Data Tempat
 @endsection
 
 @section('content-modal')
-<div id="storeModal" class="modal fade" role="dialog">
+<div id="storeModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -66,7 +66,7 @@ Data Tempat
                             </div>
                             <div class="form-group">
                                 <label>Nomor Los <span class="text-danger">*</span> <sup><a href="{{url('production/point/groups')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
-                                <select required id="los" name="los[]" class="select2 form-control form-control-line" style="width: 100%; height:36px;" multiple></select>
+                                <select required id="los" name="los[]" class="select2 form-control form-control-line" style="width: 100%;" multiple></select>
                             </div>
                             <div class="form-group">
                                 <label>Kode Kontrol <span class="text-danger">*</span></label>
@@ -343,7 +343,7 @@ Data Tempat
                         </div>
                     </div>
                     <div class="form-group">
-                        <p>(<span class="text-danger">*</span>) wajib diisi.</p>
+                        <p>(<label class="text-danger">*</label>) wajib diisi.</p>
                     </div>
                 </div>
                 <div class="modal-footer">

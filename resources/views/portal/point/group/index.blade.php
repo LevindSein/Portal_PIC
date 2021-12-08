@@ -82,7 +82,7 @@ Blok Tempat
                         <textarea rows="10" id="los" name="los" autocomplete="off" placeholder="Contoh: 1,2,3,4,5,6" class="form-control form-control-line" style="text-transform: uppercase"></textarea>
                     </div>
                     <div class="form-group">
-                        <p>(<span class="text-danger">*</span>) wajib diisi.</p>
+                        <p>(<label class="text-danger">*</label>) wajib diisi.</p>
                     </div>
                 </div>
                 <div class="modal-footer">

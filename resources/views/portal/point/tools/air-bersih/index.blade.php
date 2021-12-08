@@ -88,7 +88,7 @@ Alat Air Bersih
                         <input required type="text" id="meter" name="meter" autocomplete="off" maxlength="12" placeholder="Ketikkan Meter dalam angka" class="number form-control form-control-line">
                     </div>
                     <div class="form-group">
-                        <p>(<span class="text-danger">*</span>) wajib diisi.</p>
+                        <p>(<label class="text-danger">*</label>) wajib diisi.</p>
                     </div>
                 </div>
                 <div class="modal-footer">

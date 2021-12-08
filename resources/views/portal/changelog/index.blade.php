@@ -83,7 +83,7 @@ Daftar Log Perubahan
                         <textarea required rows="10" id="data" name="data" autocomplete="off" placeholder="Ketikkan data perubahan" class="form-control form-control-line"></textarea>
                     </div>
                     <div class="form-group">
-                        <p>(<span class="text-danger">*</span>) wajib diisi.</p>
+                        <p>(<label class="text-danger">*</label>) wajib diisi.</p>
                     </div>
                 </div>
                 <div class="modal-footer">
