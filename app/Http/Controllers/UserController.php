@@ -642,12 +642,27 @@ class UserController extends Controller
 
             if(!is_null($code)){
                 $data = $code;
+
+                //disini baca waktu
+                $from = new Carbon($data->available);
+                $end = Carbon::now()->toDateTimeString();
+                $remain = $from->diffInSeconds($end);
+                $data['time'] = gmdate("i:s", $remain);
             }
             else{
-                $data['code'] = rand(111111,999999);
-                $data['available'] = Carbon::now()->addMinutes(15)->toDateTimeString();
+                $time = Carbon::now()->addMinutes(5);
+                $data['code'] = mt_rand(111111,999999);
+                $data['available'] = $time->toDateTimeString();
                 $data['user_id'] = Auth::user()->id;
                 $data['submit'] = 0;
+
+                $from = new Carbon($time->toDateTimeString());
+                $end = Carbon::now()->toDateTimeString();
+
+                $remain = $from->diffInSeconds($end);
+
+                $data['time'] = gmdate("i:s", $remain);
+
                 try{
                     ActivationCode::create($data);
                 } catch(\Exception $e){

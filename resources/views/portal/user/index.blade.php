@@ -5,9 +5,6 @@ Pengguna
 @endsection
 
 @section('content-button')
-<a type="button" href="javascript:void(0)" class="btn btn-success home" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip" title="Home">
-    <i class="fas fa-home"></i>
-</a>
 <div class="btn-group">
     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Menu
@@ -17,15 +14,20 @@ Pengguna
             <i class="fas fa-fw fa-plus mr-1 ml-1"></i>
             <span>Tambah Data</span>
         </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item home" href="javascript:void(0)">
+            <i class="fas fa-fw fa-home mr-1 ml-1 text-success"></i>
+            <span class="text-success">Data Pengguna</span>
+        </a>
         <a class="dropdown-item deleted" href="javascript:void(0)">
-            <i class="fas fa-fw fa-trash mr-1 ml-1"></i>
-            <span>Data Penghapusan</span>
+            <i class="fas fa-fw fa-trash mr-1 ml-1 text-danger"></i>
+            <span class="text-danger">Data Penghapusan</span>
+        </a>
+        <a class="dropdown-item registered" href="javascript:void(0)">
+            <i class="fas fa-fw fa-user mr-1 ml-1 text-info"></i>
+            <span class="text-info">Data Pendaftar</span>
         </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item registered" href="javascript:void(0)">
-            <i class="fas fa-fw fa-user-plus mr-1 ml-1"></i>
-            <span>Data Pendaftar</span>
-        </a>
         <a class="dropdown-item activation" href="javascript:void(0)">
             <i class="fad fa-fw fa-barcode-read fa-swap-opacity mr-1 ml-1"></i>
             <span>Aktivasi Pendaftaran</span>
@@ -91,18 +93,19 @@ Pengguna
     </div>
 </div>
 
-<div id="activationModal" class="modal fade" role="dialog" tabIndex="-1">
+<div id="activationModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Kode Aktivasi</h5>
-                <button class="close activationClose" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
             </div>
             <div class="modal-body">
                 <div class="text-center">
                     <p class="text-danger">Harap <b>Jangan di Tutup</b> sebelum QR Code terotentikasi. Apabila tertutup, lakukan <b>Aktivasi Pendaftaran</b> kembali.</p>
+                </div>
+                <div class="text-center">
+                    Waktu Tersisa
+                    <h5 id="countdown" class="text-info">-:--</h5>
                 </div>
                 <div class="text-center">
                     <p>Kode Aktivasi :</p>
@@ -113,7 +116,7 @@ Pengguna
                     <p>2. Lakukan <b>scanning</b> pada QR Code yang dimiliki Customer.</p>
                     <p>3. Kunjungi <b>situs</b> yang terbaca oleh QR Code Scanner.</p>
                     <p>4. Masukkan <b>Kode Aktivasi</b> di atas.</p>
-                    <p>5. Kode Aktivasi <b>valid</b> selama <b>15 menit & 1x Pakai.</b></p>
+                    <p>5. Kode Aktivasi <b>valid</b> selama <b>5 menit</b> & <b>1x Pakai.</b></p>
                     <p>6. Jika sukses, terdapat status <b>kode aktivasi terkirim</b>
                     <p>7. Selesaikan registrasi di aplikasi Portal PIC</p>
                 </div>
@@ -491,6 +494,37 @@ Pengguna
                 success:function(data){
                     if(data.success){
                         $("#activation_code").text(data.result.code);
+
+                        var timer2 = data.result.time;
+                        var interval = setInterval(function() {
+                            var timer = timer2.split(':');
+
+                            //by parsing integer, I avoid all extra string processing
+                            var minutes = parseInt(timer[0], 10);
+                            var seconds = parseInt(timer[1], 10);
+
+                            --seconds;
+                            minutes = (seconds < 0) ? --minutes : minutes;
+
+                            if(minutes < 0 && seconds < 0){
+                                $('#countdown').hide();
+                                clearInterval(intervalAktivasi);
+                                $('#activationModal').modal('hide');
+                            }
+
+                            if(minutes < 0){
+                                clearInterval(interval);
+                            }
+
+                            seconds = (seconds < 0) ? 59 : seconds;
+                            seconds = (seconds < 10) ? '0' + seconds : seconds;
+
+                            $('#countdown').html(minutes + ':' + seconds);
+
+                            timer2 = minutes + ':' + seconds;
+                        }, 1000);
+
+                        console.log(data.result.time);
                     }
 
                     if(data.info){
