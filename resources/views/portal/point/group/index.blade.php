@@ -75,7 +75,7 @@ Blok Tempat
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Nama Blok <span class="text-danger">*</span></label>
-                        <input required type="text" id="group" name="group" autocomplete="off" maxlength="10" placeholder="Contoh: A-1" class="form-control form-control-line" style="text-transform: uppercase">
+                        <input required type="text" id="blok" name="blok" autocomplete="off" maxlength="10" placeholder="Contoh: A-1" class="form-control form-control-line" style="text-transform: uppercase">
                     </div>
                     <div class="form-group">
                         <label>Alamat Los</label>
@@ -99,7 +99,7 @@ Blok Tempat
 @section('content-js')
 <script>
     $(document).ready(function(){
-        $("#group").on("input", function(){
+        $("#blok").on("input", function(){
             this.value = this.value.replace(/[^0-9a-zA-Z/\-]+$/g, '');
         });
 
@@ -167,7 +167,7 @@ Blok Tempat
             $("#groupFormValue").val('add');
             $('#groupModal').modal('show');
             $('#groupModal').on('shown.bs.modal', function() {
-                $('#group').focus();
+                $('#blok').focus();
             });
         });
 
@@ -184,7 +184,7 @@ Blok Tempat
                 cache:false,
                 success:function(data){
                     if(data.success){
-                        $("#group").val(data.group.name);
+                        $("#blok").val(data.group.name);
                         if(data.group.los){
                             $("#los").val(data.group.los.data);
                         }
@@ -229,7 +229,7 @@ Blok Tempat
                 complete:function(){
                     $('#groupModal').modal('show');
                     $('#groupModal').on('shown.bs.modal', function() {
-                        $('#group').focus();
+                        $('#blok').focus();
                     });
                 }
             });

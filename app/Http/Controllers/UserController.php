@@ -341,7 +341,7 @@ class UserController extends Controller
 
     public function authorityCheck($request){
         $request->validate([
-            'group' => 'required',
+            'group' => 'required|array',
         ]);
 
         $pilihanKelola = array(

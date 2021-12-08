@@ -57,11 +57,11 @@ class GroupController extends Controller
     {
         if($request->ajax()){
             $request->validate([
-                'group' => 'required|max:10|alpha_dash|unique:App\Models\Group,name',
+                'blok' => 'required|max:10|alpha_dash|unique:App\Models\Group,name',
                 'los' => 'nullable',
             ]);
 
-            $group = strtoupper($request->group);
+            $group = strtoupper($request->blok);
             $los = null;
             if(!is_null($request->los)){
                 $los = rtrim(strtoupper($request->los), ',');
@@ -89,7 +89,7 @@ class GroupController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
-            $searchKey = $request->group;
+            $searchKey = $request->blok;
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
@@ -180,7 +180,7 @@ class GroupController extends Controller
     {
         if($request->ajax()){
             $request->validate([
-                'group' => 'required|max:10|alpha_dash|unique:App\Models\Group,name,'.$id,
+                'blok' => 'required|max:10|alpha_dash|unique:App\Models\Group,name,'.$id,
                 'los' => 'nullable',
             ]);
 
@@ -190,7 +190,7 @@ class GroupController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $group = strtoupper($request->group);
+            $group = strtoupper($request->blok);
             $los = null;
             if(!is_null($request->los)){
                 $los = rtrim(strtoupper($request->los), ',');
