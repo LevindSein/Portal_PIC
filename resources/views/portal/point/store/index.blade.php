@@ -196,41 +196,6 @@ Data Tempat
                                 </div>
                             </div>
                             {{-- End Air Bersih --}}
-                            {{-- Air Kotor --}}
-                            <div>
-                                <div class="form-group form-check form-check-inline">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="fas_airkotor" name="fas_airkotor">
-                                        <label class="custom-control-label" for="fas_airkotor">Air Kotor</label>
-                                    </div>
-                                </div>
-                                <div id="divairkotor" style="padding-left: 2rem;">
-                                    <div class="form-group">
-                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/airkotor')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Rp.</span>
-                                            </div>
-                                            <select id="pairkotor" name="pairkotor" class="select2 form-control form-control-line"></select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Diskon</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Rp.</span>
-                                            </div>
-                                            <input maxlength="11" type="text" id="dairkotor" name="dairkotor" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <hr>
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- End Air Kotor --}}
-                        </div>
-                        <div class="col-lg-6 col-xlg-6">
                             {{-- Keamanan IPK --}}
                             <div>
                                 <div class="form-group form-check form-check-inline">
@@ -247,6 +212,9 @@ Data Tempat
                                                 <span class="input-group-text">Rp.</span>
                                             </div>
                                             <select id="pkeamananipk" name="pkeamananipk" class="select2 form-control form-control-line"></select>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">/ Los</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -292,9 +260,6 @@ Data Tempat
                                                 <span class="input-group-text">Rp.</span>
                                             </div>
                                             <input maxlength="11" type="text" id="dkebersihan" name="dkebersihan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">/ Los</span>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -303,22 +268,22 @@ Data Tempat
                                 </div>
                             </div>
                             {{-- End Kebersihan --}}
-                            {{-- Lainnya --}}
+                            {{-- Air Kotor --}}
                             <div>
                                 <div class="form-group form-check form-check-inline">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="fas_lain" name="fas_lain">
-                                        <label class="custom-control-label" for="fas_lain">Lainnya</label>
+                                        <input type="checkbox" class="custom-control-input" id="fas_airkotor" name="fas_airkotor">
+                                        <label class="custom-control-label" for="fas_airkotor">Air Kotor</label>
                                     </div>
                                 </div>
-                                <div id="divlain" style="padding-left: 2rem;">
+                                <div id="divairkotor" style="padding-left: 2rem;">
                                     <div class="form-group">
-                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/lain')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/airkotor')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp.</span>
                                             </div>
-                                            <select id="plain" name="plain" class="select2 form-control form-control-line"></select>
+                                            <select id="pairkotor" name="pairkotor" class="select2 form-control form-control-line"></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -327,12 +292,24 @@ Data Tempat
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp.</span>
                                             </div>
-                                            <input maxlength="11" type="text" id="dlain" name="dlain" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                            <input maxlength="11" type="text" id="dairkotor" name="dairkotor" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <hr>
                                     </div>
+                                </div>
+                            </div>
+                            {{-- End Air Kotor --}}
+                        </div>
+                        <div class="col-lg-6 col-xlg-6">
+                            {{-- Lainnya --}}
+                            <div>
+                                <div id="divlainNew"></div>
+
+                                <div class="form-group">
+                                    <button id="divlainAdd" class="btn btn-sm btn-rounded btn-info"><i class="fas fa-fw fa-plus mr-1"></i>Fasilitas Lainnya</button>
+                                    <sup><a href="{{url('production/manage/prices/lain')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup>
                                 </div>
                             </div>
                             {{-- End Lainnya --}}
@@ -356,6 +333,42 @@ Data Tempat
 @section('content-js')
 <script>
     $(document).ready(function(){
+        var lain = 0;
+        var plain = 1;
+        $("#divlainAdd").click(function (e) {
+            e.preventDefault();
+
+            var html = '';
+            html += '<div name="divlain" class="form-group">';
+            html += '<div class="d-flex justify-content-between">';
+            html += '<label>Pilih Tarif Fasilitas <span class="text-danger">*</span></label>';
+            html += '<a type="button" class="text-danger" href="javascript:void(0)" id="divlainRemove">';
+            html += 'Hapus <i class="fas fa-fw fa-eraser mr-1 ml-1"></i>';
+            html += '</a>';
+            html += '</div>';
+            html += '<select required id="plain'+ plain + '" name="plain[]" class="select2 form-control form-control-line"></select>';
+            html += '</div>';
+
+            if(lain < 5){
+                $('#divlainNew').append(html);
+                select2plain("#plain" + plain, "/search/price/lain", "-- Cari Tarif Fasilitas --");
+                plain++;
+                lain++;
+            }
+            else{
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Telah mencapai maksimal.");
+            }
+        });
+        // remove row
+        $(document).on('click', '#divlainRemove', function () {
+            lain--;
+            $(this).closest("[name='divlain']").remove();
+        });
+
         var id;
 
         var dtable = $('#dtable').DataTable({
@@ -442,6 +455,103 @@ Data Tempat
             $('#storeModal').modal('show');
         });
 
+        $(document).on('click', '.edit', function(){
+            id = $(this).attr('id');
+            nama = $(this).attr('nama');
+            $('.titles').text('Edit data ' + nama);
+            $("#storeFormValue").val('update');
+
+            initForm();
+
+            $.ajax({
+                url: "/production/point/stores/" + id + "/edit",
+                type: "GET",
+                cache:false,
+                success:function(data){
+                    if(data.success){
+                        (data.show.status == 3)
+                            ? $("#stt_nonaktif").prop("checked", true)
+                            : (data.show.status == 2)
+                            ? $("#stt_bebas").prop("checked", true)
+                            : $("#stt_aktif").prop("checked", true);
+                        statusTempat();
+
+                        $("#ket").val(data.show.ket);
+                        $("#location").val(data.show.lokasi);
+
+                        if(data.show.fas_listrik){
+                            $("#fas_listrik").prop("checked", true);
+                            fasListrik('show');
+                        }
+
+                        if(data.show.fas_airbersih){
+                            $("#fas_airbersih").prop("checked", true);
+                            fasAirBersih('show');
+                        }
+
+                        if(data.show.fas_keamananipk){
+                            $("#fas_keamananipk").prop("checked", true);
+                            fasKeamananIpk('show');
+                        }
+
+                        if(data.show.fas_kebersihan){
+                            $("#fas_kebersihan").prop("checked", true);
+                            fasKebersihan('show');
+                        }
+
+                        if(data.show.fas_airkotor){
+                            $("#fas_airkotor").prop("checked", true);
+                            fasAirKotor('show');
+                        }
+
+                        // if(data.show.fas_lain){
+                        //     $("#fas_lain").prop("checked", true);
+                        //     fasLain('show');
+                        // }
+                    }
+
+                    if(data.info){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.info(data.info);
+                    }
+
+                    if(data.warning){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.warning(data.warning);
+                    }
+
+                    if(data.error){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                    }
+
+                    if(data.description){
+                        console.log(data.description);
+                    }
+                },
+                error:function(data){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("Fetching data failed.");
+                    console.log(data);
+                },
+                complete:function(){
+                    $('#storeModal').modal('show');
+                }
+            });
+        });
+
         $('#storeForm').submit(function(e){
             e.preventDefault();
             value = $("#storeFormValue").val();
@@ -490,11 +600,12 @@ Data Tempat
             $("#group").val("");
             select2custom("#group", "/search/groups", "-- Cari Blok Tempat --");
 
+            $("#los").val("");
             $("#los").select2({
                 placeholder: "(Pilih Blok Tempat terlebih dulu)"
-            }).val("").prop("disabled", true);
+            }).prop("disabled", true);
 
-            $("#kontrol").prop("disabled", true);
+            $("#kontrol").prop("disabled", true).val("");
 
             $("#cancelPengguna").hide();
             $("#pengguna").val("");
@@ -514,29 +625,34 @@ Data Tempat
             select2tlistrik("#tlistrik", "/search/tools/listrik", "-- Cari Alat Listrik --");
             $("#plistrik").val("");
             select2idname("#plistrik", "/search/price/listrik", "-- Cari Tarif Listrik --");
+            $("#dlistrik").val("");
             fasListrik("hide");
 
             $("#tairbersih").val("");
             select2tairbersih("#tairbersih", "/search/tools/airbersih", "-- Cari Alat Air Bersih --");
             $("#pairbersih").val("");
             select2idname("#pairbersih", "/search/price/airbersih", "-- Cari Tarif Air Bersih --");
+            $("#dairbersih").val("");
             fasAirBersih("hide");
 
             $("#pkeamananipk").val("");
             select2idprice("#pkeamananipk", "/search/price/keamananipk", "-- Cari Tarif Keamanan IPK --");
+            $("#dkeamananipk").val("");
             fasKeamananIpk("hide");
 
             $("#pkebersihan").val("");
             select2idprice("#pkebersihan", "/search/price/kebersihan", "-- Cari Tarif Kebersihan --");
+            $("#dkebersihan").val("");
             fasKebersihan("hide");
 
             $("#pairkotor").val("");
             select2idprice("#pairkotor", "/search/price/airkotor", "-- Cari Tarif Air Kotor --");
+            $("#dairkotor").val("");
             fasAirKotor("hide");
 
-            $("#plain").val("");
-            select2idprice("#plain", "/search/price/lain", "-- Cari Tarif Lainnya --");
-            fasLain("hide");
+            lain = 0;
+            plain = 1;
+            $('div[name="divlain"]').remove();
         }
 
         function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
@@ -833,29 +949,6 @@ Data Tempat
         }
         $('#fas_airkotor').click(checkFasAirKotor).each(checkFasAirKotor);
 
-        function fasLain(data){
-            if(data == 'show'){
-                $("#divlain").show();
-                $("#plain").prop("required", true);
-                $("#fas_lain").prop("checked", true);
-            }
-            else{
-                $("#divlain").hide();
-                $("#plain").prop("required", false);
-                $("#fas_lain").prop("checked", false);
-            }
-        }
-
-        function checkFasLain(){
-            if($("#fas_lain").is(":checked")){
-                fasLain("show");
-            }
-            else{
-                fasLain("hide");
-            }
-        }
-        $('#fas_lain').click(checkFasLain).each(checkFasLain);
-
         function statusTempat() {
             if ($('#stt_aktif').is(':checked')) {
                 $("#ketLabel").addClass("hide");
@@ -1005,6 +1098,31 @@ Data Tempat
             });
         }
 
+        function select2plain(select2id, url, placeholder){
+            $(select2id).select2({
+                placeholder: placeholder,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    processResults: function (data) {
+                        return {
+                            results:  $.map(data, function (d) {
+                                return {
+                                    id: d.id,
+                                    text: d.name + ' - ' + Number(d.price).toLocaleString('id-ID') + " " + satuanLain(d.satuan)
+                                }
+                            })
+                        };
+                    },
+                }
+            });
+        }
+        function satuanLain(data){
+            return (data == 2) ? "per-Los" : "per-Kontrol";
+        }
+
         function getUrlParameter(sParam) {
             var sPageURL = window.location.search.substring(1),
                 sURLVariables = sPageURL.split('&'),
@@ -1086,7 +1204,10 @@ Data Tempat
             $('#plistrik, #pairbersih').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik Nama Tarif disini..');
             });
-            $('#pkeamananipk, #pkebersihan, #pairkotor, #plain').on('select2:open', () => {
+            // $('#pkeamananipk, #pkebersihan, #pairkotor, #plain').on('select2:open', () => {
+            //     $('input.select2-search__field').prop('placeholder', 'Ketik Tarif/Nama Tarif disini..');
+            // });
+            $('#pkeamananipk, #pkebersihan, #pairkotor').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik Tarif/Nama Tarif disini..');
             });
         });

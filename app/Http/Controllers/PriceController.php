@@ -443,7 +443,6 @@ class PriceController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'tarif' => str_replace('.','',$request->tarif),
                 'keamanan' => $request->keamanan,
                 'ipk' => $request->ipk,
                 'user_create' => Auth::user()->id,
@@ -453,9 +452,9 @@ class PriceController extends Controller
                 'username_update' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
+            $dataset['name'] = $request->name;
             $dataset['price'] = str_replace('.','',$request->tarif);
             $dataset['data'] = $json;
-            $dataset['name'] = $request->name;
 
             try{
                 PKeamananIpk::create($dataset);
@@ -509,7 +508,6 @@ class PriceController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->tarif = str_replace('.','',$request->tarif);
             $json->keamanan = $request->keamanan;
             $json->ipk = $request->ipk;
             $json->user_update = Auth::user()->id;
@@ -518,9 +516,9 @@ class PriceController extends Controller
 
             $json = json_encode($json);
 
+            $data->name = $request->name;
             $data->price = str_replace('.','',$request->tarif);
             $data->data = $json;
-            $data->name = $request->name;
 
             try{
                 $data->save();
@@ -613,7 +611,6 @@ class PriceController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'tarif' => str_replace('.','',$request->tarif),
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -621,9 +618,9 @@ class PriceController extends Controller
                 'username_update' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
+            $dataset['name'] = $request->name;
             $dataset['price'] = str_replace('.','',$request->tarif);
             $dataset['data'] = $json;
-            $dataset['name'] = $request->name;
 
             try{
                 PKebersihan::create($dataset);
@@ -675,16 +672,15 @@ class PriceController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->tarif = str_replace('.','',$request->tarif);
             $json->user_update = Auth::user()->id;
             $json->username_update = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
 
             $json = json_encode($json);
 
+            $data->name = $request->name;
             $data->price = str_replace('.','',$request->tarif);
             $data->data = $json;
-            $data->name = $request->name;
 
             try{
                 $data->save();
@@ -777,7 +773,6 @@ class PriceController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'tarif' => str_replace('.','',$request->tarif),
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -785,9 +780,9 @@ class PriceController extends Controller
                 'username_update' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
+            $dataset['name'] = $request->name;
             $dataset['price'] = str_replace('.','',$request->tarif);
             $dataset['data'] = $json;
-            $dataset['name'] = $request->name;
 
             try{
                 PAirkotor::create($dataset);
@@ -839,16 +834,15 @@ class PriceController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->tarif = str_replace('.','',$request->tarif);
             $json->user_update = Auth::user()->id;
             $json->username_update = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
 
             $json = json_encode($json);
 
+            $data->name = $request->name;
             $data->price = str_replace('.','',$request->tarif);
             $data->data = $json;
-            $data->name = $request->name;
 
             try{
                 $data->save();
@@ -938,10 +932,10 @@ class PriceController extends Controller
             Validator::make($data, [
                 'name' => 'required|max:100|unique:App\Models\PLain,name',
                 'tarif' => 'required|numeric|lte:999999999',
+                'satuan' => 'required|in:1,2',
             ])->validate();
 
             $json = json_encode([
-                'tarif' => str_replace('.','',$request->tarif),
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -949,9 +943,10 @@ class PriceController extends Controller
                 'username_update' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
-            $dataset['price'] = str_replace('.','',$request->tarif);
-            $dataset['data'] = $json;
             $dataset['name'] = $request->name;
+            $dataset['price'] = str_replace('.','',$request->tarif);
+            $dataset['satuan'] = $request->satuan;
+            $dataset['data'] = $json;
 
             try{
                 PLain::create($dataset);
@@ -993,6 +988,7 @@ class PriceController extends Controller
             Validator::make($data, [
                 'name' => 'required|max:100|unique:App\Models\PLain,name,'.$id,
                 'tarif' => 'required|numeric|lte:999999999',
+                'satuan' => 'required|in:1,2',
             ])->validate();
 
             try{
@@ -1003,16 +999,16 @@ class PriceController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->tarif = str_replace('.','',$request->tarif);
             $json->user_update = Auth::user()->id;
             $json->username_update = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
 
             $json = json_encode($json);
 
-            $data->price = str_replace('.','',$request->tarif);
-            $data->data = $json;
             $data->name = $request->name;
+            $data->price = str_replace('.','',$request->tarif);
+            $data->satuan = $request->satuan;
+            $data->data = $json;
 
             try{
                 $data->save();
@@ -1037,6 +1033,7 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
+            $data['satuan'] = PLain::satuan($data->satuan);
             $data['data'] = json_decode($data->data);
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);

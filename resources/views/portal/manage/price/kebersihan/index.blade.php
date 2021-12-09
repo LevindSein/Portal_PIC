@@ -212,7 +212,7 @@ Tarif Kebersihan
                 success:function(data){
                     if(data.success){
                         $("#name").val(data.show.name);
-                        $("#tarif").val(Number(data.show.data.tarif).toLocaleString('id-ID'));
+                        $("#tarif").val(data.show.price.toLocaleString('id-ID'));
                     }
 
                     if(data.info){
@@ -413,7 +413,7 @@ Tarif Kebersihan
                 success:function(data){
                     if(data.success){
                         $("#showName").text(data.show.name);
-                        $("#showTarif").text("Rp. " + Number(data.show.data.tarif).toLocaleString('id-ID') + " / Los");
+                        $("#showTarif").text("Rp. " + data.show.price.toLocaleString('id-ID') + " per-Los");
                         $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
                         $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                     }

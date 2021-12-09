@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2021 at 07:11 PM
+-- Generation Time: Dec 09, 2021 at 06:26 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -538,8 +538,8 @@ CREATE TABLE `p_airkotor` (
 --
 
 INSERT INTO `p_airkotor` (`id`, `name`, `price`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', 250000, '{\"tarif\":\"250000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:45:22\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:35\"}', '2021-12-05 22:21:35', '2021-12-02 10:45:22'),
-(2, 'Tarif 2', 3000000, '{\"tarif\":\"3000000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:45:30\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:38\"}', '2021-12-05 22:21:38', '2021-12-02 10:45:30');
+(1, 'Trf-1', 250000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:26:12\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:26:12\"}', '2021-12-09 17:26:12', '2021-12-09 17:26:12'),
+(2, 'Trf-2', 3000000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:26:23\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:26:23\"}', '2021-12-09 17:26:23', '2021-12-09 17:26:23');
 
 -- --------------------------------------------------------
 
@@ -561,13 +561,13 @@ CREATE TABLE `p_keamananipk` (
 --
 
 INSERT INTO `p_keamananipk` (`id`, `name`, `price`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', 120000, '{\"tarif\":\"120000\",\"keamanan\":\"67\",\"ipk\":\"33\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:25:12\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:16:10\"}', '2021-12-05 22:16:10', '2021-12-02 10:25:12'),
-(2, 'Tarif 2', 165000, '{\"tarif\":\"165000\",\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:25:29\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:11\"}', '2021-12-05 22:20:11', '2021-12-02 10:25:29'),
-(3, 'Tarif 3', 145000, '{\"tarif\":\"145000\",\"keamanan\":\"74\",\"ipk\":\"26\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:25:46\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:16\"}', '2021-12-05 22:20:16', '2021-12-02 10:25:46'),
-(4, 'Tarif 4', 130000, '{\"tarif\":\"130000\",\"keamanan\":\"85\",\"ipk\":\"15\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:26:01\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:27\"}', '2021-12-05 22:20:27', '2021-12-02 10:26:01'),
-(5, 'Tarif 5', 200000, '{\"tarif\":\"200000\",\"keamanan\":\"73\",\"ipk\":\"27\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:26:30\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:31\"}', '2021-12-05 22:20:31', '2021-12-02 10:26:30'),
-(6, 'Tarif 6', 500000, '{\"tarif\":\"500000\",\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:27:19\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:35\"}', '2021-12-05 22:20:35', '2021-12-02 10:27:19'),
-(7, 'Tarif 7', 265000, '{\"tarif\":\"265000\",\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:27:32\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:38\"}', '2021-12-05 22:20:38', '2021-12-02 10:27:32');
+(1, 'Trf-1', 120000, '{\"keamanan\":\"67\",\"ipk\":\"33\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:19:53\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:21:38\"}', '2021-12-09 17:21:38', '2021-12-09 17:19:53'),
+(2, 'Trf-2', 165000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:20:10\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:21:47\"}', '2021-12-09 17:21:47', '2021-12-09 17:20:10'),
+(3, 'Trf-3', 145000, '{\"keamanan\":\"74\",\"ipk\":\"26\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:20:39\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:21:57\"}', '2021-12-09 17:21:57', '2021-12-09 17:20:39'),
+(4, 'Trf-4', 130000, '{\"keamanan\":\"85\",\"ipk\":\"15\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:20:55\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:22:05\"}', '2021-12-09 17:22:05', '2021-12-09 17:20:55'),
+(5, 'Trf-5', 200000, '{\"keamanan\":\"73\",\"ipk\":\"27\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:22:22\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:22:22\"}', '2021-12-09 17:22:22', '2021-12-09 17:22:22'),
+(6, 'Trf-6', 500000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:22:37\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:22:37\"}', '2021-12-09 17:22:37', '2021-12-09 17:22:37'),
+(7, 'Trf-7', 265000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:22:52\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:22:52\"}', '2021-12-09 17:22:52', '2021-12-09 17:22:52');
 
 -- --------------------------------------------------------
 
@@ -589,15 +589,15 @@ CREATE TABLE `p_kebersihan` (
 --
 
 INSERT INTO `p_kebersihan` (`id`, `name`, `price`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', 120000, '{\"tarif\":\"120000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:14\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:49\"}', '2021-12-05 22:20:49', '2021-12-02 10:35:14'),
-(2, 'Tarif 2', 130000, '{\"tarif\":\"130000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:25\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:54\"}', '2021-12-05 22:20:54', '2021-12-02 10:35:25'),
-(3, 'Tarif 3', 140000, '{\"tarif\":\"140000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:37\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:20:58\"}', '2021-12-05 22:20:58', '2021-12-02 10:35:37'),
-(4, 'Tarif 4', 150000, '{\"tarif\":\"150000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:47\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:03\"}', '2021-12-05 22:21:03', '2021-12-02 10:35:47'),
-(5, 'Tarif 5', 155000, '{\"tarif\":\"155000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:35:56\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:09\"}', '2021-12-05 22:21:09', '2021-12-02 10:35:56'),
-(6, 'Tarif 6', 156000, '{\"tarif\":\"156000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:36:04\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:13\"}', '2021-12-05 22:21:13', '2021-12-02 10:36:04'),
-(7, 'Tarif 7', 195000, '{\"tarif\":\"195000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:36:12\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:18\"}', '2021-12-05 22:21:18', '2021-12-02 10:36:12'),
-(8, 'Tarif 8', 235000, '{\"tarif\":\"235000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:36:21\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:23\"}', '2021-12-05 22:21:23', '2021-12-02 10:36:21'),
-(9, 'Tarif 9', 780000, '{\"tarif\":\"780000\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:36:28\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 05:21:26\"}', '2021-12-05 22:21:26', '2021-12-02 10:36:28');
+(1, 'Trf-1', 120000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:23:27\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:23:27\"}', '2021-12-09 17:23:27', '2021-12-09 17:23:27'),
+(2, 'Trf-2', 130000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:23:39\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:23:39\"}', '2021-12-09 17:23:39', '2021-12-09 17:23:39'),
+(3, 'Trf-3', 140000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:23:48\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:23:48\"}', '2021-12-09 17:23:48', '2021-12-09 17:23:48'),
+(4, 'Trf-4', 150000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:23:56\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:23:56\"}', '2021-12-09 17:23:56', '2021-12-09 17:23:56'),
+(5, 'Trf-5', 155000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:24:09\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:24:09\"}', '2021-12-09 17:24:09', '2021-12-09 17:24:09'),
+(6, 'Trf-6', 156000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:24:19\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:24:19\"}', '2021-12-09 17:24:19', '2021-12-09 17:24:19'),
+(7, 'Trf-7', 195000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:24:32\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:24:32\"}', '2021-12-09 17:24:32', '2021-12-09 17:24:32'),
+(8, 'Trf-8', 235000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:24:39\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:24:39\"}', '2021-12-09 17:24:39', '2021-12-09 17:24:39'),
+(9, 'Trf-9', 780000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:24:51\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:24:51\"}', '2021-12-09 17:24:51', '2021-12-09 17:24:51');
 
 -- --------------------------------------------------------
 
@@ -609,6 +609,7 @@ CREATE TABLE `p_lain` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
+  `satuan` tinyint(1) DEFAULT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -661,7 +662,7 @@ CREATE TABLE `stores` (
   `fas_keamananipk` int(11) DEFAULT NULL,
   `fas_kebersihan` int(11) DEFAULT NULL,
   `fas_airkotor` int(11) DEFAULT NULL,
-  `fas_lain` int(11) DEFAULT NULL,
+  `fas_lain` longtext DEFAULT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -881,8 +882,7 @@ ALTER TABLE `stores`
   ADD KEY `fk_pairbersih` (`fas_airbersih`),
   ADD KEY `fk_pkeamananipk` (`fas_keamananipk`),
   ADD KEY `fk_pkebersihan` (`fas_kebersihan`),
-  ADD KEY `fk_pairkotor` (`fas_airkotor`),
-  ADD KEY `fk_plain` (`fas_lain`);
+  ADD KEY `fk_pairkotor` (`fas_airkotor`);
 
 --
 -- Indexes for table `t_airbersih`
@@ -1057,7 +1057,6 @@ ALTER TABLE `stores`
   ADD CONSTRAINT `fk_pengguna` FOREIGN KEY (`id_pengguna`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `fk_pkeamananipk` FOREIGN KEY (`fas_keamananipk`) REFERENCES `p_keamananipk` (`id`),
   ADD CONSTRAINT `fk_pkebersihan` FOREIGN KEY (`fas_kebersihan`) REFERENCES `p_kebersihan` (`id`),
-  ADD CONSTRAINT `fk_plain` FOREIGN KEY (`fas_lain`) REFERENCES `p_lain` (`id`),
   ADD CONSTRAINT `fk_plistrik` FOREIGN KEY (`fas_listrik`) REFERENCES `p_listrik` (`id`),
   ADD CONSTRAINT `fk_tairbersih` FOREIGN KEY (`id_tairbersih`) REFERENCES `t_airbersih` (`id`),
   ADD CONSTRAINT `fk_tlistrik` FOREIGN KEY (`id_tlistrik`) REFERENCES `t_listrik` (`id`);

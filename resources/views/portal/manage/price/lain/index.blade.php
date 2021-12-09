@@ -92,6 +92,23 @@ Tarif Lainnya
                         </div>
                     </div>
                     <div class="form-group">
+                        <label>Satuan Tarif <span class="text-danger">*</span></label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="per_kontrol" name="satuan" value="1" checked>
+                                    <label class="custom-control-label" style="font-weight: 400;" for="per_kontrol">per-Kontrol</label>
+                                </div>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="per_los" name="satuan" value="2">
+                                    <label class="custom-control-label" style="font-weight: 400;" for="per_los">per-Los</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <p>(<label class="text-danger">*</label>) wajib diisi.</p>
                     </div>
                 </div>
@@ -189,6 +206,7 @@ Tarif Lainnya
             $("#priceForm")[0].reset();
             $('.titles').text('Tambah Tarif Lainnya');
             $("#priceFormValue").val('add');
+            $("#per_kontrol").prop("checked", true)
             $('#priceModal').modal('show');
             $('#priceModal').on('shown.bs.modal', function() {
                 $('#name').focus();
@@ -201,6 +219,7 @@ Tarif Lainnya
             $("#priceForm")[0].reset();
             $('.titles').text('Edit data ' + name);
             $("#priceFormValue").val('update');
+            $("#per_kontrol").prop("checked", true)
 
             $.ajax({
                 url: "/production/manage/prices/lain/" + id + "/edit",
@@ -209,7 +228,8 @@ Tarif Lainnya
                 success:function(data){
                     if(data.success){
                         $("#name").val(data.show.name);
-                        $("#tarif").val(Number(data.show.data.tarif).toLocaleString('id-ID'));
+                        $("#tarif").val(data.show.price.toLocaleString('id-ID'));
+                        (data.show.satuan == 2) ? $("#per_los").prop("checked", true) : $("#per_kontrol").prop("checked", true);
                     }
 
                     if(data.info){
@@ -410,7 +430,7 @@ Tarif Lainnya
                 success:function(data){
                     if(data.success){
                         $("#showName").text(data.show.name);
-                        $("#showTarif").text("Rp. " + Number(data.show.data.tarif).toLocaleString('id-ID'));
+                        $("#showTarif").text("Rp. " + data.show.price.toLocaleString('id-ID') + " " + data.show.satuan);
                         $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
                         $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                     }

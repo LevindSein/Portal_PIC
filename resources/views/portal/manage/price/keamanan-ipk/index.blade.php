@@ -254,7 +254,7 @@ Tarif Keamanan IPK
                 success:function(data){
                     if(data.success){
                         $("#name").val(data.show.name);
-                        $("#tarif").val(Number(data.show.data.tarif).toLocaleString('id-ID'));
+                        $("#tarif").val(data.show.price.toLocaleString('id-ID'));
                         $("#keamanan").val(data.show.data.keamanan);
                         $("#ipk").val(data.show.data.ipk);
                     }
@@ -457,7 +457,7 @@ Tarif Keamanan IPK
                 success:function(data){
                     if(data.success){
                         $("#showName").text(data.show.name);
-                        $("#showTarif").text("Rp. " + Number(data.show.data.tarif).toLocaleString('id-ID') + " / Los");
+                        $("#showTarif").text("Rp. " + data.show.price.toLocaleString('id-ID') + " per-Los");
                         $("#showKeamanan").text(data.show.data.keamanan + " %");
                         $("#showIpk").text(data.show.data.ipk + " %");
                         $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);

@@ -12,6 +12,11 @@ class PLain extends Model
     protected $fillable = [
         'name',
         'price',
+        'satuan',
         'data'
     ];
+
+    public static function satuan($data){
+        return ($data == 2) ? "per-Los" : "per-Kontrol";
+    }
 }

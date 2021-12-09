@@ -271,26 +271,28 @@ class StoreController extends Controller
                 $diskon['airkotor'] = str_replace('.','',$request->dairkotor);
             }
 
-            //Lain
-            if(!empty($request->fas_lain)){
-                $valid['tarifLainnya'] = $request->plain;
-
-                Validator::make($valid, [
-                    'tarifLainnya' => 'required|numeric|exists:App\Models\PLain,id'
-                ])->validate();
-
-                $price = PLain::find($request->plain);
-                if(!is_null($request->dlain)){
-                    $valid['diskonLainnya'] = $request->dlain;
+            //Lainnya
+            if(!empty($request->plain)){
+                $plain = $request->plain;
+                $prices = [];
+                for($i = 0; $i < count($plain); $i++){
+                    $valid['tarifLainnya'] = $plain[$i];
 
                     Validator::make($valid, [
-                        'diskonLainnya' => 'nullable|lte:'.number_format($price->price, 0, '', '.'),
+                        'tarifLainnya' => 'required|numeric|exists:App\Models\PLain,id'
                     ])->validate();
+
+                    $price = PLain::find($plain[$i]);
+                    $prices[$i] = [
+                        'id' => $price->id,
+                        'name' => $price->name,
+                        'price' => $price->price,
+                        'satuan_id' => $price->satuan,
+                        'satuan_name' => PLain::satuan($price->satuan),
+                    ];
                 }
 
-                $data['fas_lain'] = $request->plain;
-
-                $diskon['lain'] = str_replace('.','',$request->dlain);
+                $data['fas_lain'] = json_encode($prices);
             }
 
             $data['data'] = json_encode([
@@ -356,7 +358,18 @@ class StoreController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(request()->ajax()){
+            try{
+                $data = Store::findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**

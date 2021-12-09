@@ -171,7 +171,7 @@ class SearchController extends Controller
         $data = [];
         if($request->ajax()) {
             $key = $request->q;
-            $data = PLain::select('id', 'name', 'price')
+            $data = PLain::select('id', 'name', 'price', 'satuan')
             ->where('name', 'LIKE', '%'.$key.'%')
             ->orWhere('price', 'LIKE', '%'.$key.'%')
             ->orderBy('name','asc')
