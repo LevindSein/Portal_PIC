@@ -63,27 +63,95 @@ Data Tempat
                     <div class="row">
                         <div class="col-lg-6 col-xlg-6">
                             <div class="form-group">
-                                <label>Blok Tempat <span class="text-danger">*</span> <sup><a href="{{url('production/point/groups')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                <label>Blok Tempat <span class="text-danger">*</span>
+                                    <sup>
+                                        <a href='{{url("production/point/groups")}}' target="_blank">
+                                            <i class="far fa-question-circle"
+                                                style="color:#5b5b5b;"
+                                                data-container="body"
+                                                data-trigger="hover"
+                                                title="Blok Tempat / Grup Tempat"
+                                                data-toggle="popover"
+                                                data-html="true"
+                                                data-content="Kode lokasi yang menunjukkan kelompok tempat usaha.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola Blok Tempat">
+                                            </i>
+                                        </a>
+                                    </sup>
+                                </label>
                                 <select required id="group" name="group" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                             </div>
                             <div class="form-group">
-                                <label>Nomor Los <span class="text-danger">*</span> <sup><a href="{{url('production/point/groups')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                <label>Nomor Los <span class="text-danger">*</span>
+                                    <sup>
+                                        <a href='{{url("production/point/groups")}}' target="_blank">
+                                            <i class="far fa-question-circle"
+                                                style="color:#5b5b5b;"
+                                                data-container="body"
+                                                data-trigger="hover"
+                                                title="Nomor Los"
+                                                data-toggle="popover"
+                                                data-html="true"
+                                                data-content="Nomor petunjuk lokasi tempat usaha, Anda dapat mengisinya setelah Blok Tempat terisi.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola Nomor Los pada Blok tempat">
+                                            </i>
+                                        </a>
+                                    </sup>
+                                </label>
                                 <select required id="los" name="los[]" class="select2 form-control form-control-line" style="width: 100%;" multiple></select>
                             </div>
                             <div class="form-group">
-                                <label>Kode Kontrol <span class="text-danger">*</span></label>
+                                <label>Kode Kontrol <span class="text-danger">*</span>
+                                    <sup>
+                                        <i class="far fa-question-circle"
+                                            style="color:#5b5b5b;"
+                                            data-container="body"
+                                            data-trigger="hover"
+                                            title="Kode Kontrol / Kontrol"
+                                            data-toggle="popover"
+                                            data-html="true"
+                                            data-content="Secara otomatis apabila Blok dan Nomor Los terisi, Namun anda dapat <b>menyesuaikan</b> kebutuhan.<br>Ketikkan apa yang anda butuhkan.">
+                                        </i>
+                                    </sup>
+                                </label>
                                 <input required type="text" id="kontrol" name="kontrol" autocomplete="off" maxlength="20" placeholder="Sesuaikan Blok & No.Los" class="form-control form-control-line" style="text-transform: uppercase">
                             </div>
                             <div class="form-group">
                                 <div class="d-flex justify-content-between">
-                                    <label>Pengguna Tempat <sup><a href="{{url('production/users')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                    <label>Pengguna Tempat
+                                        <sup>
+                                            <a href='{{url("production/users")}}' target="_blank">
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Pengguna Tempat"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Penanggung jawab terkait penggunaan aset.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola user">
+                                                </i>
+                                            </a>
+                                        </sup>
+                                    </label>
                                     <a id="cancelPengguna" type="button" class="text-danger" href="javascript:void(0)"><sup><i class="fas fa-sm fa-times"></i></sup> Hapus</a>
                                 </div>
                                 <select id="pengguna" name="pengguna" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                             </div>
                             <div class="form-group">
                                 <div class="d-flex justify-content-between">
-                                    <label>Pemilik Tempat <sup><a href="{{url('production/users')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                    <label>Pemilik Tempat
+                                        <sup>
+                                            <a href='{{url("production/users")}}' target="_blank">
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Pemilik Tempat"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Individu yang secara sah memiliki aset seutuhnya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola user">
+                                                </i>
+                                            </a>
+                                        </sup>
+                                    </label>
                                     <a id="cancelPemilik" type="button" class="text-danger" href="javascript:void(0)"><sup><i class="fas fa-sm fa-times"></i></sup> Hapus</a>
                                 </div>
                                 <select id="pemilik" name="pemilik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
@@ -91,11 +159,37 @@ Data Tempat
                         </div>
                         <div class="col-lg-6 col-xlg-6">
                             <div class="form-group">
-                                <label>Kategori Komoditi <sup><a href="{{url('production/point/commodities')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                <label>Kategori Komoditi
+                                    <sup>
+                                        <a href='{{url("production/point/commodities")}}' target="_blank">
+                                            <i class="far fa-question-circle"
+                                                style="color:#5b5b5b;"
+                                                data-container="body"
+                                                data-trigger="hover"
+                                                title="Kelola Kategori Komiditi"
+                                                data-toggle="popover"
+                                                data-html="true"
+                                                data-content="Jenis atau kelompok dari tempat usaha.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola kategori komoditi">
+                                            </i>
+                                        </a>
+                                    </sup>
+                                </label>
                                 <select id="commodity" name="commodity[]" class="select2 form-control form-control-line" style="width: 100%; height:36px;" multiple></select>
                             </div>
                             <div class="form-group">
-                                <label>Status Tempat <span class="text-danger">*</span></label>
+                                <label>Status Tempat <span class="text-danger">*</span>&nbsp;
+                                    <sup>
+                                        <i class="far fa-question-circle"
+                                            style="color:#5b5b5b;"
+                                            data-container="body"
+                                            data-trigger="hover"
+                                            title="Pilih salah satu"
+                                            data-toggle="popover"
+                                            data-html="true"
+                                            data-content="<b>Aktif</b> : Tagihan dibebankan setiap bulan.<br><b>Bebas Bayar</b> : Tempat digunakan tanpa beban tagihan setiap bulan.<br><b>Nonaktif</b> : Tempat tidak digunakan dan tidak ada beban tagihan.">
+                                        </i>
+                                    </sup>
+                                </label>
                                 <div>
                                     <div class="form-check form-check-inline">
                                         <div class="custom-control custom-radio">
@@ -118,12 +212,36 @@ Data Tempat
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Keterangan Status Tempat <span id="ketLabel" class="text-danger">*</span></label>
+                                <label>Keterangan Status Tempat <span id="ketLabel" class="text-danger">*</span>
+                                    <sup>
+                                        <i class="far fa-question-circle"
+                                            style="color:#5b5b5b;"
+                                            data-container="body"
+                                            data-trigger="hover"
+                                            title="Ketikkan sesuatu"
+                                            data-toggle="popover"
+                                            data-html="true"
+                                            data-content="<b>Wajib di isi</b> : Ketikkan keterangan ketika tempat dinonaktifkan.<br><b>Opsional</b> : Anda dapat mengisinya sewaktu-waktu dengan status tempat apapun.">
+                                        </i>
+                                    </sup>
+                                </label>
                                 <textarea rows="3" id="ket" name="ket" autocomplete="off" placeholder="Ketikkan Keterangan disini" maxlength="255" class="form-control form-control-line"></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Info Tambahan</label>
-                                <textarea rows="3" id="location" name="location" autocomplete="off" placeholder="Ketikkan info tambahan disini" maxlength="255" class="form-control form-control-line"></textarea>
+                                <label>Info Tambahan
+                                    <sup>
+                                        <i class="far fa-question-circle"
+                                            style="color:#5b5b5b;"
+                                            data-container="body"
+                                            data-trigger="hover"
+                                            title="Ketikkan sesuatu"
+                                            data-toggle="popover"
+                                            data-html="true"
+                                            data-content="<b>Opsional</b> : Anda dapat mengisinya dengan informasi tambahan seperti lokasi atau kondisi dari tempat.">
+                                        </i>
+                                    </sup>
+                                </label>
+                                <textarea rows="3" id="info" name="info" autocomplete="off" placeholder="Ketikkan info tambahan disini" maxlength="255" class="form-control form-control-line"></textarea>
                             </div>
                         </div>
                     </div>
@@ -142,15 +260,55 @@ Data Tempat
                                 </div>
                                 <div id="divlistrik" style="padding-left: 2rem;">
                                     <div class="form-group">
-                                        <label>Pilih Alat Meter <span class="text-danger">*</span> <sup><a href="{{url('production/point/tools/listrik')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <label>Pilih Alat Meter <span class="text-danger">*</span>
+                                            <sup>
+                                                <a href='{{url("production/point/tools/listrik")}}' target="_blank">
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Alat Listrik"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="Alat ukur penggunaan listrik bulanan untuk tempat usaha.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola alat listrik">
+                                                    </i>
+                                                </a>
+                                            </sup>
+                                        </label>
                                         <select id="tlistrik" name="tlistrik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/listrik')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <label>Pilih Tarif <span class="text-danger">*</span>
+                                            <sup>
+                                                <a href='{{url("production/manage/prices/listrik")}}' target="_blank">
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Tarif Listrik"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="Tarif listrik yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif listrik">
+                                                    </i>
+                                                </a>
+                                            </sup>
+                                        </label>
                                         <select id="plistrik" name="plistrik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Diskon</label>
+                                        <label>Diskon
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Ketikkan sesuatu"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="<b>Opsional</b> : Potongan harga tagihan listrik yang dibebankan secara persentase.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <input maxlength="3" type="text" id="dlistrik" name="dlistrik" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
                                             <div class="input-group-prepend">
@@ -174,15 +332,55 @@ Data Tempat
                                 </div>
                                 <div id="divairbersih" style="padding-left: 2rem;">
                                     <div class="form-group">
-                                        <label>Pilih Alat Meter <span class="text-danger">*</span> <sup><a href="{{url('production/point/tools/airbersih')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <label>Pilih Alat Meter <span class="text-danger">*</span>
+                                            <sup>
+                                                <a href='{{url("production/point/tools/airbersih")}}' target="_blank">
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Alat Air Bersih"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="Alat ukur penggunaan air bersih bulanan untuk tempat usaha.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola alat air bersih">
+                                                    </i>
+                                                </a>
+                                            </sup>
+                                        </label>
                                         <select id="tairbersih" name="tairbersih" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/airbersih')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <label>Pilih Tarif <span class="text-danger">*</span>
+                                            <sup>
+                                                <a href='{{url("production/manage/prices/airbersih")}}' target="_blank">
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Tarif Air Bersih"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="Tarif air bersih yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif air bersih">
+                                                    </i>
+                                                </a>
+                                            </sup>
+                                        </label>
                                         <select id="pairbersih" name="pairbersih" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Diskon</label>
+                                        <label>Diskon
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Ketikkan sesuatu"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="<b>Opsional</b> : Potongan harga tagihan air bersih yang dibebankan secara persentase.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <input maxlength="3" type="text" id="dairbersih" name="dairbersih" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
                                             <div class="input-group-prepend">
@@ -206,7 +404,21 @@ Data Tempat
                                 </div>
                                 <div id="divkeamananipk" style="padding-left: 2rem;">
                                     <div class="form-group">
-                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/keamananipk')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <label>Pilih Tarif <span class="text-danger">*</span>
+                                            <sup>
+                                                <a href='{{url("production/manage/prices/keamananipk")}}' target="_blank">
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Tarif Keamanan & IPK"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="Tarif keamanan & ipk per-Nomor Los yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif keamanan ipk">
+                                                    </i>
+                                                </a>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp.</span>
@@ -218,7 +430,19 @@ Data Tempat
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Diskon</label>
+                                        <label>Diskon
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Ketikkan sesuatu"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="<b>Opsional</b> : Potongan harga tagihan keamanan ipk yang dibebankan per-Tempat Usaha.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp.</span>
@@ -245,7 +469,21 @@ Data Tempat
                                 </div>
                                 <div id="divkebersihan" style="padding-left: 2rem;">
                                     <div class="form-group">
-                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/kebersihan')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <label>Pilih Tarif <span class="text-danger">*</span>
+                                            <sup>
+                                                <a href='{{url("production/manage/prices/kebersihan")}}' target="_blank">
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Tarif Kebersihan"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="Tarif kebersihan per-Nomor Los yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif kebersihan">
+                                                    </i>
+                                                </a>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp.</span>
@@ -257,7 +495,19 @@ Data Tempat
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Diskon</label>
+                                        <label>Diskon
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Ketikkan sesuatu"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="<b>Opsional</b> : Potongan harga tagihan kebersihan yang dibebankan per-Tempat Usaha.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp.</span>
@@ -284,7 +534,21 @@ Data Tempat
                                 </div>
                                 <div id="divairkotor" style="padding-left: 2rem;">
                                     <div class="form-group">
-                                        <label>Pilih Tarif <span class="text-danger">*</span> <sup><a href="{{url('production/manage/prices/airkotor')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup></label>
+                                        <label>Pilih Tarif <span class="text-danger">*</span>
+                                            <sup>
+                                                <a href='{{url("production/manage/prices/airkotor")}}' target="_blank">
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Tarif Air Kotor"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="Tarif air kotor yang dibebankan tempat usaha untuk setiap bulannya dikarenakan sesuatu yang kaitannya dengan air kotor.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif air kotor">
+                                                    </i>
+                                                </a>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp.</span>
@@ -296,7 +560,19 @@ Data Tempat
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Diskon</label>
+                                        <label>Diskon
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Ketikkan sesuatu"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="<b>Opsional</b> : Potongan harga tagihan air kotor yang dibebankan per-Tempat Usaha.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp.</span>
@@ -318,7 +594,19 @@ Data Tempat
 
                                 <div class="form-group">
                                     <button id="divlainAdd" class="btn btn-sm btn-rounded btn-info"><i class="fas fa-fw fa-plus mr-1"></i>Fasilitas Lainnya</button>
-                                    <sup><a href="{{url('production/manage/prices/lain')}}" target="_blank"><i class="far fa-question-circle" style="color:#5b5b5b;"></i></a></sup>
+                                    <sup>
+                                        <a href='{{url("production/manage/prices/lain")}}' target="_blank">
+                                            <i class="far fa-question-circle"
+                                                style="color:#5b5b5b;"
+                                                data-container="body"
+                                                data-trigger="hover"
+                                                title="Tarif Fasilitas Lainnya"
+                                                data-toggle="popover"
+                                                data-html="true"
+                                                data-content="Tambahkan tarif lainnya yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif lainnya">
+                                            </i>
+                                        </a>
+                                    </sup>
                                 </div>
                             </div>
                             {{-- End Lainnya --}}
@@ -358,7 +646,7 @@ Data Tempat
             html += '<select required id="plain'+ plain + '" name="plain[]" class="select2 form-control form-control-line"></select>';
             html += '</div>';
 
-            if(lain < 5){
+            if(lain < 10){
                 $('#divlainNew').append(html);
                 select2plain("#plain" + plain, "/search/price/lain", "-- Cari Tarif Fasilitas --");
 
@@ -491,7 +779,7 @@ Data Tempat
                         statusTempat();
 
                         $("#ket").val(data.show.ket);
-                        $("#location").val(data.show.lokasi);
+                        $("#info").val(data.show.info);
 
                         if(data.show.fas_listrik){
                             $("#fas_listrik").prop("checked", true);
@@ -1206,20 +1494,23 @@ Data Tempat
         }
 
         $('#storeModal').on('shown.bs.modal', function() {
+            $('#group').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Cari Kode Blok disini..');
+            });
             $('#pengguna, #pemilik').on('select2:open', () => {
-                $('input.select2-search__field').prop('placeholder', 'Ketik Nama/KTP/Paspor disini..');
+                $('input.select2-search__field').prop('placeholder', 'Cari Nama/KTP/Paspor disini..');
             });
             $('#tlistrik').on('select2:open', () => {
-                $('input.select2-search__field').prop('placeholder', 'Ketik Kode/Meter/Daya/ID disini..');
+                $('input.select2-search__field').prop('placeholder', 'Cari Kode/Meter/Daya/ID disini..');
             });
             $('#tairbersih').on('select2:open', () => {
-                $('input.select2-search__field').prop('placeholder', 'Ketik Kode/Meter/ID disini..');
+                $('input.select2-search__field').prop('placeholder', 'Cari Kode/Meter/ID disini..');
             });
             $('#plistrik, #pairbersih').on('select2:open', () => {
-                $('input.select2-search__field').prop('placeholder', 'Ketik Nama Tarif disini..');
+                $('input.select2-search__field').prop('placeholder', 'Cari Nama Tarif disini..');
             });
             $('#pkeamananipk, #pkebersihan, #pairkotor').on('select2:open', () => {
-                $('input.select2-search__field').prop('placeholder', 'Ketik Tarif/Nama Tarif disini..');
+                $('input.select2-search__field').prop('placeholder', 'Cari Tarif/Nama Tarif disini..');
             });
         });
     });

@@ -20,7 +20,7 @@ class Store extends Model
         'komoditi',
         'status',
         'ket',
-        'lokasi',
+        'info',
         'id_tlistrik',
         'id_tairbersih',
         'fas_listrik',

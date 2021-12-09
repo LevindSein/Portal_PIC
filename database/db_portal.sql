@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 09, 2021 at 06:26 PM
+-- Generation Time: Dec 09, 2021 at 07:31 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -654,7 +654,7 @@ CREATE TABLE `stores` (
   `komoditi` text DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   `ket` text DEFAULT NULL,
-  `lokasi` text DEFAULT NULL,
+  `info` text DEFAULT NULL,
   `id_tlistrik` int(11) DEFAULT NULL,
   `id_tairbersih` int(11) DEFAULT NULL,
   `fas_listrik` int(11) DEFAULT NULL,

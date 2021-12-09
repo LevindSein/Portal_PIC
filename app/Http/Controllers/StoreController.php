@@ -116,7 +116,7 @@ class StoreController extends Controller
             $valid['komoditi'] = $request->commodity;
             $valid['status'] = $request->status;
             $valid['keterangan'] = $request->ket;
-            $valid['infoTambahan'] = $request->location;
+            $valid['infoTambahan'] = $request->info;
 
             Validator::make($valid, [
                 'blok' => 'required|max:10|alpha_dash',
@@ -153,7 +153,7 @@ class StoreController extends Controller
                 $data['komoditi'] = json_encode($komoditi);
             }
 
-            $data['lokasi'] = $request->location;
+            $data['info'] = $request->info;
 
             $diskon = [];
 
