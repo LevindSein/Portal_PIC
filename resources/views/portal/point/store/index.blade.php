@@ -625,19 +625,19 @@ Data Tempat
             select2tlistrik("#tlistrik", "/search/tools/listrik", "-- Cari Alat Listrik --");
             $("#plistrik").val("");
             select2idname("#plistrik", "/search/price/listrik", "-- Cari Tarif Listrik --");
-            $("#dlistrik").val("");
+            $("#dlistrik").val(0);
             fasListrik("hide");
 
             $("#tairbersih").val("");
             select2tairbersih("#tairbersih", "/search/tools/airbersih", "-- Cari Alat Air Bersih --");
             $("#pairbersih").val("");
             select2idname("#pairbersih", "/search/price/airbersih", "-- Cari Tarif Air Bersih --");
-            $("#dairbersih").val("");
+            $("#dairbersih").val(0);
             fasAirBersih("hide");
 
             $("#pkeamananipk").val("");
             select2idprice("#pkeamananipk", "/search/price/keamananipk", "-- Cari Tarif Keamanan IPK --");
-            $("#dkeamananipk").val("");
+            $("#dkeamananipk").val(0);
             fasKeamananIpk("hide");
 
             $("#pkebersihan").val("");
@@ -647,7 +647,7 @@ Data Tempat
 
             $("#pairkotor").val("");
             select2idprice("#pairkotor", "/search/price/airkotor", "-- Cari Tarif Air Kotor --");
-            $("#dairkotor").val("");
+            $("#dairkotor").val(0);
             fasAirKotor("hide");
 
             lain = 0;

@@ -176,7 +176,8 @@ class StoreController extends Controller
                 $data['id_tlistrik'] = $request->tlistrik;
                 $data['fas_listrik'] = $request->plistrik;
 
-                $diskon['listrik'] = $request->dlistrik;
+                $dis = $request->dlistrik;
+                $diskon['listrik'] = (is_null($dis)) ? 0 : $dis;
             }
 
             //Air Bersih
@@ -198,7 +199,8 @@ class StoreController extends Controller
                 $data['id_tairbersih'] = $request->tairbersih;
                 $data['fas_airbersih'] = $request->pairbersih;
 
-                $diskon['airbersih'] = $request->dairbersih;
+                $dis = $request->dairbersih;
+                $diskon['airbersih'] = (is_null($dis)) ? 0 : $dis;
             }
 
             //Keamanan IPK
@@ -222,7 +224,8 @@ class StoreController extends Controller
 
                 $data['fas_keamananipk'] = $request->pkeamananipk;
 
-                $diskon['keamananipk'] = str_replace('.','',$request->dkeamananipk);
+                $dis = str_replace('.','',$request->dkeamananipk);
+                $diskon['keamananipk'] = (is_null($dis)) ? 0 : $dis;
             }
 
             //Kebersihan
@@ -246,7 +249,8 @@ class StoreController extends Controller
 
                 $data['fas_kebersihan'] = $request->pkebersihan;
 
-                $diskon['kebersihan'] = str_replace('.','',$request->dkebersihan);
+                $dis = str_replace('.','',$request->dkebersihan);
+                $diskon['kebersihan'] = (is_null($dis)) ? 0 : $dis;
             }
 
             //Air Kotor
@@ -268,7 +272,8 @@ class StoreController extends Controller
 
                 $data['fas_airkotor'] = $request->pairkotor;
 
-                $diskon['airkotor'] = str_replace('.','',$request->dairkotor);
+                $dis = str_replace('.','',$request->dairkotor);
+                $diskon['airkotor'] = (is_null($dis)) ? 0 : $dis;
             }
 
             //Lainnya
