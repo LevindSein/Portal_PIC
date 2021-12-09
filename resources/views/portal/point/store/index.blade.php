@@ -154,7 +154,7 @@ Data Tempat
                                         <div class="input-group">
                                             <input maxlength="3" type="text" id="dlistrik" name="dlistrik" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text">%</span>
+                                                <span class="input-group-text">% Tagihan</span>
                                             </div>
                                         </div>
                                     </div>
@@ -186,7 +186,7 @@ Data Tempat
                                         <div class="input-group">
                                             <input maxlength="3" type="text" id="dairbersih" name="dairbersih" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text">%</span>
+                                                <span class="input-group-text">% Tagihan</span>
                                             </div>
                                         </div>
                                     </div>
@@ -224,6 +224,9 @@ Data Tempat
                                                 <span class="input-group-text">Rp.</span>
                                             </div>
                                             <input maxlength="11" type="text" id="dkeamananipk" name="dkeamananipk" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">/ Kontrol</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -260,6 +263,9 @@ Data Tempat
                                                 <span class="input-group-text">Rp.</span>
                                             </div>
                                             <input maxlength="11" type="text" id="dkebersihan" name="dkebersihan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">/ Kontrol</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -284,6 +290,9 @@ Data Tempat
                                                 <span class="input-group-text">Rp.</span>
                                             </div>
                                             <select id="pairkotor" name="pairkotor" class="select2 form-control form-control-line"></select>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">/ Kontrol</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -352,6 +361,11 @@ Data Tempat
             if(lain < 5){
                 $('#divlainNew').append(html);
                 select2plain("#plain" + plain, "/search/price/lain", "-- Cari Tarif Fasilitas --");
+
+                $("#plain" + plain).on('select2:open', () => {
+                    $('input.select2-search__field').prop('placeholder', 'Ketik Tarif/Nama Tarif disini..');
+                });
+
                 plain++;
                 lain++;
             }
@@ -625,19 +639,19 @@ Data Tempat
             select2tlistrik("#tlistrik", "/search/tools/listrik", "-- Cari Alat Listrik --");
             $("#plistrik").val("");
             select2idname("#plistrik", "/search/price/listrik", "-- Cari Tarif Listrik --");
-            $("#dlistrik").val(0);
+            $("#dlistrik").val("");
             fasListrik("hide");
 
             $("#tairbersih").val("");
             select2tairbersih("#tairbersih", "/search/tools/airbersih", "-- Cari Alat Air Bersih --");
             $("#pairbersih").val("");
             select2idname("#pairbersih", "/search/price/airbersih", "-- Cari Tarif Air Bersih --");
-            $("#dairbersih").val(0);
+            $("#dairbersih").val("");
             fasAirBersih("hide");
 
             $("#pkeamananipk").val("");
             select2idprice("#pkeamananipk", "/search/price/keamananipk", "-- Cari Tarif Keamanan IPK --");
-            $("#dkeamananipk").val(0);
+            $("#dkeamananipk").val("");
             fasKeamananIpk("hide");
 
             $("#pkebersihan").val("");
@@ -647,7 +661,7 @@ Data Tempat
 
             $("#pairkotor").val("");
             select2idprice("#pairkotor", "/search/price/airkotor", "-- Cari Tarif Air Kotor --");
-            $("#dairkotor").val(0);
+            $("#dairkotor").val("");
             fasAirKotor("hide");
 
             lain = 0;
@@ -1204,9 +1218,6 @@ Data Tempat
             $('#plistrik, #pairbersih').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik Nama Tarif disini..');
             });
-            // $('#pkeamananipk, #pkebersihan, #pairkotor, #plain').on('select2:open', () => {
-            //     $('input.select2-search__field').prop('placeholder', 'Ketik Tarif/Nama Tarif disini..');
-            // });
             $('#pkeamananipk, #pkebersihan, #pairkotor').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik Tarif/Nama Tarif disini..');
             });
