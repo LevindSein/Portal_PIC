@@ -186,7 +186,7 @@ Pengguna
 </div>
 
 <div id="userModal" class="modal fade" role="dialog" tabIndex="-1" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title titles">{Title}</h5>
@@ -195,7 +195,7 @@ Pengguna
                 </button>
             </div>
             <form id="userForm">
-                <div class="modal-body">
+                <div class="modal-body-xl">
                     <div class="row">
                         <div class="col-lg-6 col-xlg-6">
                             <div class="form-group">

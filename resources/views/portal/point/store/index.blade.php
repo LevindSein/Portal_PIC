@@ -50,7 +50,7 @@ Data Tempat
 
 @section('content-modal')
 <div id="storeModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title titles">{Title}</h5>
@@ -59,7 +59,7 @@ Data Tempat
                 </button>
             </div>
             <form id="storeForm">
-                <div class="modal-body">
+                <div class="modal-body-xl">
                     <div class="row">
                         <div class="col-lg-6 col-xlg-6">
                             <div class="form-group">
@@ -632,7 +632,7 @@ Data Tempat
             $("#commodity").val("");
             select2idname("#commodity", "/search/commodities", "-- Cari Kategori Komoditi --");
 
-            $("#stt_nonaktif").prop("checked", true);
+            $("#stt_aktif").prop("checked", true);
             statusTempat();
 
             $("#tlistrik").val("");

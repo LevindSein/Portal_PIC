@@ -80,8 +80,8 @@ Tarif Listrik
     </div>
 </div>
 
-<div id="priceModal" class="modal fade" role="dialog" tabIndex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+<div id="priceModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title titles">{Title}</h5>
@@ -90,7 +90,7 @@ Tarif Listrik
                 </button>
             </div>
             <form id="priceForm">
-                <div class="modal-body">
+                <div class="modal-body-xl">
                     <div class="form-group">
                         <label>Nama Tarif <span class="text-danger">*</span></label>
                         <input required type="text" id="name" name="name" autocomplete="off" maxlength="100" placeholder="Contoh: Tarif 1" class="form-control form-control-line">

@@ -19948,3 +19948,14 @@ File: scss
     z-index: 9999;
     background: url(../../assets/images/pulse.gif) center no-repeat #fff
 }
+
+/* Important part */
+.modal-dialog-xl {
+    overflow-y: initial !important
+}
+.modal-body-xl {
+    flex: 1 1 auto;
+    padding: 1rem;
+    height: 65vh;
+    overflow-y: auto;
+}
