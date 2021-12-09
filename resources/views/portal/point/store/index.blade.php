@@ -23,7 +23,7 @@ Data Tempat
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <p id="showtempat" class="text-danger">*) <b>Menambah</b>, <b>Mengedit</b>, atau <b>Menghapus</b> Data Tempat Usaha tidak akan mempengaruhi <b>Data Tagihan</b> yang sedang berlangsung. <sup><a href="javascript:void(0)" type="button" id="showagain"><i class="fas fa-times"></i> Jangan tampilkan lagi.</a></sup></p>
+                <p id="showtempat" class="text-danger">*) <b>Menambah</b>, <b>Mengedit</b>, atau <b>Menghapus</b> Data Tempat Usaha tidak akan mempengaruhi <b>Data Tagihan</b> yang telah dibuat. <sup><a href="javascript:void(0)" type="button" id="showagain"><i class="fas fa-times"></i> Jangan tampilkan lagi.</a></sup></p>
                 <div class="form-group d-flex">
                     <div class="mr-1 ml-1"><div class='color color-success'></div>&nbsp;Aktif</div>
                     <div class="mr-1 ml-1"><div class='color color-info'></div>&nbsp;Bebas Bayar</div>
@@ -381,7 +381,7 @@ Data Tempat
             "order": [[ 0, "asc" ]],
             "aoColumnDefs": [
                 { "bSortable": false, "aTargets": [3,4] },
-                { "bSearchable": false, "aTargets": [3,4] }
+                { "bSearchable": false, "aTargets": [3,4] },
             ],
             "scrollY": "45vh",
             "scrollX": true,
@@ -398,6 +398,21 @@ Data Tempat
                 }, 10)
             },
         });
+
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            for ( var i=1 ; i<4 ; i++ ) {
+                dtable.column( i ).visible( false, false );
+            }
+            dtable.columns.adjust().draw( false );
+            // dtable.column(2).visible(false);
+        }
+        else{
+            for ( var i=1 ; i<4 ; i++ ) {
+                dtable.column( i ).visible( true, false );
+            }
+            dtable.columns.adjust().draw( false );
+            // dtable.column(2).visible(true);
+        }
 
         var searchValue = getUrlParameter('s');
         if(searchValue){
@@ -844,15 +859,15 @@ Data Tempat
         function statusTempat() {
             if ($('#stt_aktif').is(':checked')) {
                 $("#ketLabel").addClass("hide");
-                $("#ket").prop("required", false);
+                $("#ket").prop("required", false).attr("placeholder", "Ketikkan keterangan disini");
             }
             else if ($('#stt_bebas').is(':checked')) {
                 $("#ketLabel").addClass("hide");
-                $("#ket").prop("required", false);
+                $("#ket").prop("required", false).attr("placeholder", "Ketikkan keterangan disini");
             }
             else {
                 $("#ketLabel").removeClass("hide");
-                $("#ket").prop("required", true);
+                $("#ket").prop("required", true).attr("placeholder", "Kenapa nonaktif ?");
             }
         }
         $('input[name="status"]').click(statusTempat).each(statusTempat);

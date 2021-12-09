@@ -22,8 +22,7 @@ class Visitor extends Model
             \Artisan::call('visitor:run');
         }
         else{
-            $data->visit_on_day++;
-            $data->save();
+            $data->increment('visit_on_day');
         }
     }
 }

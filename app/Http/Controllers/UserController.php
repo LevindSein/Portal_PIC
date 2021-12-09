@@ -326,13 +326,17 @@ class UserController extends Controller
             $user->ktp = $request->ktp;
             $user->npwp = $request->npwp;
             $user->address = $request->address;
+            $uid = $user->uid;
 
             try{
                 $user->save();
             } catch(\Exception $e){
                 return response()->json(['error' => "Data failed to save.", 'description' => $e]);
             }
-            return response()->json(['success' => 'Data saved.']);
+
+            $searchKey = $uid;
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
         else{
             abort(404);

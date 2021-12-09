@@ -75,12 +75,15 @@ class SearchController extends Controller
     public function tlistrik(Request $request){
         $data = [];
         if($request->ajax()) {
-            $key = $request->q;
             $data = TListrik::select('id', 'code', 'name', 'meter', 'power')
-            ->where([['code', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
-            ->orWhere([['name', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
-            ->orWhere([['meter', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
-            ->orWhere([['power', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
+            ->where('stt_available', 1)
+            ->where(function ($query) use ($request) {
+                $key = $request->q;
+                $query->where('code', 'LIKE', '%'.$key.'%')
+                      ->orWhere('name', 'LIKE', '%'.$key.'%')
+                      ->orWhere('power', 'LIKE', '%'.$key.'%')
+                      ->orWhere('meter', 'LIKE', '%'.$key.'%');
+            })
             ->orderBy('code','asc')
             ->limit(10)
             ->get();
@@ -93,9 +96,13 @@ class SearchController extends Controller
         if($request->ajax()) {
             $key = $request->q;
             $data = TAirBersih::select('id', 'code', 'name', 'meter')
-            ->where([['code', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
-            ->orWhere([['name', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
-            ->orWhere([['meter', 'LIKE', '%'.$key.'%'], ['stt_available', 1]])
+            ->where('stt_available', 1)
+            ->where(function ($query) use ($request) {
+                $key = $request->q;
+                $query->where('code', 'LIKE', '%'.$key.'%')
+                      ->orWhere('name', 'LIKE', '%'.$key.'%')
+                      ->orWhere('meter', 'LIKE', '%'.$key.'%');
+            })
             ->orderBy('code','asc')
             ->limit(10)
             ->get();

@@ -178,7 +178,9 @@ class DayOffController extends Controller
                 return response()->json(['error' => "Data failed to save.", 'description' => $e]);
             }
 
-            return response()->json(['success' => 'Data saved.']);
+            $searchKey = $request->date;
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
         else{
             abort(404);

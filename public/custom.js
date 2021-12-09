@@ -1,6 +1,6 @@
 $(document).ready(function() {
     //Fullscreen
-    if (navigator.userAgent.match(/Android|webOS|iPhone|iPod|Blackberry/i)) {
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         window.scrollTo(0,0); // reset in case prev not scrolled
         var nPageH = $(document).height();
         var nViewH = window.outerHeight;

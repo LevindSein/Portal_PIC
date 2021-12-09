@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\Group;
+use App\Models\Store;
 
 use DataTables;
 use Carbon\Carbon;
@@ -190,7 +191,9 @@ class GroupController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
+            $groupOld = $data->name;
             $group = strtoupper($request->blok);
+
             $los = null;
             if(!is_null($request->los)){
                 $los = rtrim(strtoupper($request->los), ',');
@@ -222,13 +225,33 @@ class GroupController extends Controller
                 $data->data = $json;
             }
 
+            // Mempengaruhi Data Tempat
+            $stores = Store::where('group', $groupOld)->select('id','group', 'kd_kontrol', 'nicename')->get();
+            $i = 0;
+            foreach ($stores as $store) {
+                $store->group = $group;
+                $store->kd_kontrol = preg_replace('/'.$groupOld.'/i', $group, $store->kd_kontrol);
+                $store->nicename = str_replace('-', '', $store->kd_kontrol);
+
+                try{
+                    $store->save();
+                } catch(\Exception $e){
+                    return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+                }
+
+                $i++;
+            }
+            // End Data Tempat
+
             try{
                 $data->save();
             } catch(\Exception $e){
                 return response()->json(['error' => "Data failed to save.", 'description' => $e]);
             }
 
-            return response()->json(['success' => 'Data saved.']);
+            $searchKey = $group;
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey, 'info' => $i . " Data Tempat terpengaruh."]);
         }
         else{
             abort(404);
@@ -248,6 +271,10 @@ class GroupController extends Controller
                 $data = Group::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            if(!is_null(Store::where('group', $data->name)->first())){
+                return response()->json(['error' => "Group currently use."]);
             }
 
             try{

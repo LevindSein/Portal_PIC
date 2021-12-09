@@ -552,6 +552,11 @@
         // }
 
         $(document).ready(function(){
+            // $.fn.dataTable.ext.errMode = 'none';
+            // $('#dtable').on('error.dt', function(e, settings, techNote, message) {
+            //     console.log( 'An error has been reported by DataTables: ', message);
+            // })
+
             $(".sidebartoggler").click(function(){
                 var adjust = setInterval(() => {
                     var adjust = $($.fn.dataTable.tables(true)).DataTable().columns.adjust();

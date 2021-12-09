@@ -23,6 +23,7 @@ Blok Tempat
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <p id="showgroup" class="text-danger">*) <b>Mengedit</b> Data Blok memungkinkan untuk mempengaruhi <b>Data Tempat Usaha</b> yang ada. <sup><a href="javascript:void(0)" type="button" id="showagain"><i class="fas fa-times"></i> Jangan tampilkan lagi.</a></sup></p>
                 <div class="table-responsive">
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
@@ -104,8 +105,8 @@ Blok Tempat
         });
 
         $("#los").on("input", function(){
+            this.value = this.value.replace(/[^0-9a-zA-Z/\,]+$/g, '');
             this.value = this.value.replace(/\,\,+/g, ',');
-            this.value = this.value.replace(/\s/g,'');
         });
 
         var id;
@@ -132,7 +133,7 @@ Blok Tempat
                 { "bSortable": false, "aTargets": [1] },
                 { "bSearchable": false, "aTargets": [1] }
             ],
-            "scrollY": "50vh",
+            "scrollY": "45vh",
             "scrollX": true,
             "preDrawCallback": function( settings ) {
                 scrollPosition = $(".dataTables_scrollBody").scrollTop();
@@ -436,6 +437,39 @@ Blok Tempat
                 }
             });
         });
+
+        var showgroup = getCookie('showgroup');
+        if(showgroup == 'hide'){
+            $("#showgroup").hide();
+        }
+        else{
+            $("#showgroup").show();
+        }
+        $("#showagain").click(function(){
+            setCookie('showgroup','hide',30);
+            $("#showgroup").hide();
+        });
+
+        function setCookie(name,value,days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
     });
 </script>
 @endsection

@@ -98,7 +98,7 @@ class ChangeLogController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
-            $searchKey = $request->title;
+            $searchKey = substr($request->title, 0, 10);
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
@@ -193,7 +193,9 @@ class ChangeLogController extends Controller
                 return response()->json(['error' => "Data failed to save.", 'description' => $e]);
             }
 
-            return response()->json(['success' => 'Data saved.']);
+            $searchKey = substr($request->title, 0, 10);
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
         else{
             abort(404);
