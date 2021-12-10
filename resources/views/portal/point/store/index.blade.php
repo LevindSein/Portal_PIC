@@ -1293,13 +1293,15 @@ Data Tempat
                             html += '<div class="form-group">';
                             html += '<h5><i class="fas fa-lock" style="color:#e74a3b;"></i> Keamanan IPK</h5>';
                             html += '<small class="text-muted pt-4 db">Tarif</small>';
-                            html += '<h6>Rp. ' + Number(data.show.pkeamananipk.price).toLocaleString('id-ID') + ' per-Los</h6>';
+                            html += '<h6>Rp. ' + Number(data.show.pkeamananipk.price).toLocaleString('id-ID') + ' <small style="font-weight: 600;">per-Los</small></h6>';
                             html += '<small class="text-muted pt-4 db">Total sebelum Diskon</small>';
-                            html += '<h6>Rp. ' + Number(data.show.pkeamananipk.price * data.show.jml_los).toLocaleString('id-ID') + '</h6>';
+                            html += '<h6>Rp. ' + Number(data.show.pkeamananipk.price * data.show.jml_los).toLocaleString('id-ID') + ' <small style="font-weight: 600;">per-Kontrol</small></h6>';
                             html += '<small class="text-muted pt-4 db">Diskon</small>';
                             (data.show.data.diskon.keamananipk)
-                                ? html += '<h6>Rp. ' + Number(data.show.data.diskon.keamananipk).toLocaleString('id-ID') + '</h6>'
+                                ? html += '<h6>Rp. ' + Number(data.show.data.diskon.keamananipk).toLocaleString('id-ID') + ' <small style="font-weight: 600;">per-Kontrol</small></h6>'
                                 : html += '<h6>-</h6>';
+                            html += '<small class="text-muted pt-4 db">Total setelah Diskon</small>';
+                            html += '<h6>Rp. ' + Number((data.show.pkeamananipk.price * data.show.jml_los) - data.show.data.diskon.keamananipk).toLocaleString('id-ID') + ' <small style="font-weight: 600;">per-Kontrol</small></h6>';
                             html += '</div>';
                             html += '<hr>';
                         }
@@ -1308,13 +1310,15 @@ Data Tempat
                             html += '<div class="form-group">';
                             html += '<h5><i class="fas fa-leaf" style="color:#1cc88a;"></i> Kebersihan</h5>';
                             html += '<small class="text-muted pt-4 db">Tarif</small>';
-                            html += '<h6>Rp. ' + Number(data.show.pkebersihan.price).toLocaleString('id-ID') + ' per-Los</h6>';
+                            html += '<h6>Rp. ' + Number(data.show.pkebersihan.price).toLocaleString('id-ID') + ' <small style="font-weight: 600;">per-Los</small></h6>';
                             html += '<small class="text-muted pt-4 db">Total sebelum Diskon</small>';
-                            html += '<h6>Rp. ' + Number(data.show.pkebersihan.price * data.show.jml_los).toLocaleString('id-ID') + '</h6>';
+                            html += '<h6>Rp. ' + Number(data.show.pkebersihan.price * data.show.jml_los).toLocaleString('id-ID') + ' <small style="font-weight: 600;">per-Kontrol</small></h6>';
                             html += '<small class="text-muted pt-4 db">Diskon</small>';
                             (data.show.data.diskon.kebersihan)
-                                ? html += '<h6>Rp. ' + Number(data.show.data.diskon.kebersihan).toLocaleString('id-ID') + '</h6>'
+                                ? html += '<h6>Rp. ' + Number(data.show.data.diskon.kebersihan).toLocaleString('id-ID') + ' <small style="font-weight: 600;">per-Kontrol</small></h6>'
                                 : html += '<h6>-</h6>';
+                            html += '<small class="text-muted pt-4 db">Total setelah Diskon</small>';
+                            html += '<h6>Rp. ' + Number((data.show.pkebersihan.price * data.show.jml_los) - data.show.data.diskon.kebersihan).toLocaleString('id-ID') + ' <small style="font-weight: 600;">per-Kontrol</small></h6>';
                             html += '</div>';
                             html += '<hr>';
                         }
@@ -1323,11 +1327,13 @@ Data Tempat
                             html += '<div class="form-group">';
                             html += '<h5><i class="fad fa-burn" style="color:#000000;"></i> Air Kotor</h5>';
                             html += '<small class="text-muted pt-4 db">Tarif</small>';
-                            html += '<h6>Rp. ' + Number(data.show.pairkotor.price).toLocaleString('id-ID') + ' per-Kontrol</h6>';
+                            html += '<h6>Rp. ' + Number(data.show.pairkotor.price).toLocaleString('id-ID') + ' <small style="font-weight: 600;">per-Kontrol</small></h6>';
                             html += '<small class="text-muted pt-4 db">Diskon</small>';
                             (data.show.data.diskon.airkotor)
-                                ? html += '<h6>Rp. ' + Number(data.show.data.diskon.airkotor).toLocaleString('id-ID') +' per-Kontrol</h6>'
+                                ? html += '<h6>Rp. ' + Number(data.show.data.diskon.airkotor).toLocaleString('id-ID') + ' <small style="font-weight: 600;">per-Kontrol</small></h6>'
                                 : html += '<h6>-</h6>';
+                            html += '<small class="text-muted pt-4 db">Total setelah Diskon</small>';
+                            html += '<h6>Rp. ' + Number(data.show.pairkotor.price - data.show.data.diskon.airkotor).toLocaleString('id-ID') + ' <small style="font-weight: 600;">per-Kontrol</small></h6>';
                             html += '</div>';
                             html += '<hr>';
                         }
@@ -1335,6 +1341,13 @@ Data Tempat
                         if(data.show.fas_lain){
                             html += '<div class="form-group">';
                             html += '<h5><i class="fas fa-chart-pie" style="color:#c5793a;"></i> Lainnya</h5>';
+
+                            var json = $.parseJSON(data.show.fas_lain);
+                            $.each(json, function(i, val){
+                                html += '<small class="text-muted pt-4 db">Fasilitas ' + val.name + '</small>';
+                                html += '<h6>Rp. ' + Number(val.price).toLocaleString('id-ID') + " <small style='font-weight: 600;'>" + val.satuan_name + '</small></h6>';
+                            });
+
                             html += '</div>';
                             html += '<hr>';
                         }
