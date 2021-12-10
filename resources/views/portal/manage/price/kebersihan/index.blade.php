@@ -318,7 +318,7 @@ Tarif Kebersihan
                 data: dataset,
                 beforeSend:function(){
                     $.blockUI({
-                        message: '<i class="fas fa-spin fa-sync text-white"></i>',
+                        message: '<i class="fad fa-spin fa-spinner text-white"></i>',
                         baseZ: 9999,
                         overlayCSS: {
                             backgroundColor: '#000',

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2021 at 07:30 PM
+-- Generation Time: Dec 10, 2021 at 09:50 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -739,7 +739,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `uid`, `photo`, `level`, `country_id`, `phone`, `email`, `email_verified_at`, `member`, `ktp`, `npwp`, `address`, `authority`, `active`, `password`, `remember_token`, `nonactive`, `activation_code`, `available`, `created_at`, `updated_at`) VALUES
-(1598, 'MASTER', 'super_admin', 'storage/users/1.png', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-11-28 10:39:37', 'BP3C11111111', '3211111111111111', NULL, 'Di bawah langit berpijak pada bumi.', NULL, 1, '$argon2id$v=19$m=1024,t=2,p=2$bEQ4ZjBPSzJOZEduSG1QeQ$6GYMfgK5Pg+ibGbp7v2jrAyfRmIqe9Aa4/N9Qpb8KM4', NULL, NULL, NULL, NULL, '2021-11-09 16:22:51', '2021-12-03 03:45:48');
+(1598, 'MASTER', 'super_admin', 'storage/users/user.jpg', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-12-10 20:44:18', 'BP3C11111111', '1111111111111111', NULL, 'Dibawah langit berpijak pada bumi', NULL, 1, '$argon2id$v=19$m=1024,t=2,p=2$WTE0UHoyU0pGYlpIWDVOQQ$NY7eX/314e3aQ0go2uo27M2pvtPsRnuAbdp8yznkA1s', NULL, NULL, NULL, '2021-12-12 20:43:52', '2021-12-10 20:43:52', '2021-12-10 20:43:52');
 
 -- --------------------------------------------------------
 
@@ -755,6 +755,13 @@ CREATE TABLE `visitors` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `visitors`
+--
+
+INSERT INTO `visitors` (`id`, `visit_per_day`, `day_count`, `visit_on_day`, `updated_at`, `created_at`) VALUES
+(1, 0, 0, 6, '2021-12-10 20:50:01', '2021-12-10 20:43:14');
 
 --
 -- Indexes for dumped tables
@@ -1034,7 +1041,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

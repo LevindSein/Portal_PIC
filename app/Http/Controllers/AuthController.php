@@ -95,7 +95,7 @@ class AuthController extends Controller
             else{
                 $credentials['uid'] = $uid;
             }
-            $credentials['password'] = sha1(md5(hash('gost',$request->password)));
+            $credentials['password'] = sha1(md5($request->password));
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
                 if($user->active == 2){
@@ -218,7 +218,7 @@ class AuthController extends Controller
         $data['email'] = $email;
         $data['member'] = $member;
         $data['active'] = 2;
-        $data['password'] = Hash::make(sha1(md5(hash('gost', $password))));
+        $data['password'] = Hash::make(sha1(md5($password)));
         $available = Carbon::now()->addDays(2)->toDateTimeString();
         $data['available'] = $available;
 

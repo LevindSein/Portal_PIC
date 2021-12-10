@@ -81,6 +81,8 @@
 
         <script src="{{asset('portal/home/login/app.js')}}"></script>
         <script src="{{asset('custom.js')}}"></script>
+        <script src="{{asset('vendor/block-ui/jquery.blockUI.js')}}"></script>
+
         <script>
             $(document).ready(function(){
                 $("#uid").focus();
@@ -145,6 +147,22 @@
                         method: "POST",
                         data: data,
                         dataType: "json",
+                        beforeSend:function(){
+                            $.blockUI({
+                                message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                                baseZ: 9999,
+                                overlayCSS: {
+                                    backgroundColor: '#000',
+                                    opacity: 0.5,
+                                    cursor: 'wait'
+                                },
+                                css: {
+                                    border: 0,
+                                    padding: 0,
+                                    backgroundColor: 'transparent'
+                                }
+                            });
+                        },
                         success:function(data)
                         {
                             if(data.success){
@@ -219,6 +237,7 @@
                                 $("#registerForm")[0].reset();
                                 $("#name").focus();
                             }
+                            $.unblockUI();
                         }
                     });
                 }

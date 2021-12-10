@@ -436,3 +436,7 @@ form.sign-in-form {
     /* Recent browsers */
     text-transform: none;
 }
+
+.text-white {
+    color: #fff !important;
+}
