@@ -66,7 +66,6 @@ class CommodityController extends Controller
             $name = $request->name;
 
             $json = json_encode([
-                'name' => $name,
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -159,7 +158,6 @@ class CommodityController extends Controller
             }
 
             $data = json_decode($dataset->data);
-            $data->name = $request->name;
             $data->user_update = Auth::user()->id;
             $data->username_update = Auth::user()->name;
             $data->updated_at = Carbon::now()->toDateTimeString();

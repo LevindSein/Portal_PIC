@@ -59,14 +59,14 @@ class User extends Authenticatable
     ];
 
     public static function level($data){
-        if($data == 1){
-            return 'Super Admin';
+        if($data == 3){
+            return 'Nasabah';
         }
         else if($data == 2){
             return 'Organisator';
         }
-        else if($data == 3){
-            return 'Nasabah';
+        else if($data == 1){
+            return 'Super Admin';
         }
         else{
             return $data;
@@ -74,14 +74,14 @@ class User extends Authenticatable
     }
 
     public static function active($data){
-        if($data === 0){
-            return '<span class="text-danger">Nonaktif</span>';
+        if($data === 2){
+            return '<span class="text-info">Proses Pendaftaran</span>';
         }
         else if($data == 1){
             return '<span class="text-success">Aktif</span>';
         }
-        else if($data == 2){
-            return '<span class="text-info">Proses Pendaftaran</span>';
+        else if($data == 0){
+            return '<span class="text-danger">Nonaktif</span>';
         }
         else{
             return $data;
@@ -90,6 +90,11 @@ class User extends Authenticatable
 
     public function pengguna(){
         return $this->hasMany(Store::class, 'id_pengguna');
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id');
     }
 
     public function pemilik(){

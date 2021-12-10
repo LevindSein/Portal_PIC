@@ -9,12 +9,10 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-use App\Models\Group;
 use App\Models\Store;
 use App\Models\Commodity;
 use App\Models\TListrik;
 use App\Models\TAirBersih;
-use App\Models\PAirBersih;
 use App\Models\PKeamananIpk;
 use App\Models\PKebersihan;
 use App\Models\PAirKotor;
@@ -56,20 +54,20 @@ class StoreController extends Controller
                 return $button;
             })
             ->addColumn('fasilitas', function($data){
-                $listrik = ($data->fas_listrik != NULL) ? '<a type="button" data-toggle="tooltip" title="Listrik" class="pointera"><i class="fas fa-bolt" style="color:#fd7e14;""></i></a>' : '<a type="button" data-toggle="tooltip" title="No - Listrik"><i class="fas fa-bolt" style="color:#d7d8cc;""></i></a>';
-                $airbersih = ($data->fas_airbersih != NULL) ? '<a type="button" data-toggle="tooltip" title="Air Bersih" class="pointera"><i class="fas fa-tint" style="color:#36b9cc;""></i></a>' : '<a type="button" data-toggle="tooltip" title="No - Air Bersih"><i class="fas fa-tint" style="color:#d7d8cc;""></i></a>';
-                $keamananipk = ($data->fas_keamananipk != NULL) ? '<a type="button" data-toggle="tooltip" title="Keamanan IPK" class="pointera"><i class="fas fa-lock" style="color:#e74a3b;""></i></a>' : '<a type="button" data-toggle="tooltip" title="No - Keamanan IPK"><i class="fas fa-lock" style="color:#d7d8cc;""></i></a>';
-                $kebersihan = ($data->fas_kebersihan != NULL) ? '<a type="button" data-toggle="tooltip" title="Kebersihan" class="pointera"><i class="fas fa-leaf" style="color:#1cc88a;""></i></a>' : '<a type="button" data-toggle="tooltip" title="No - Kebersihan"><i class="fas fa-leaf" style="color:#d7d8cc;""></i></a>';
-                $airkotor = ($data->fas_airkotor != NULL) ? '<a type="button" data-toggle="tooltip" title="Air Kotor" class="pointera"><i class="fad fa-burn" style="color:#000000;""></i></a>' : '<a type="button" data-toggle="tooltip" title="No - Air Kotor"><i class="fas fa-burn" style="color:#d7d8cc;""></i></a>';
-                $lain = ($data->fas_lain != NULL) ? '<a type="button" data-toggle="tooltip" title="Lain Lain" class="pointera"><i class="fas fa-chart-pie" style="color:#c5793a;""></i></a>' : '<a type="button" data-toggle="tooltip" title="No - Lain Lain"><i class="fas fa-chart-pie" style="color:#d7d8cc;""></i></a>';
+                $listrik = ($data->fas_listrik != NULL) ? '<a type="button" data-toggle="tooltip" title="Listrik" class="pointera"><i class="fas fa-bolt" style="color:#fd7e14;"></i></a>' : '<a type="button" data-html="true" data-toggle="tooltip" title="<del>Listrik</del>"><i class="fas fa-bolt" style="color:#d7d8cc;"></i></a>';
+                $airbersih = ($data->fas_airbersih != NULL) ? '<a type="button" data-toggle="tooltip" title="Air Bersih" class="pointera"><i class="fas fa-tint" style="color:#36b9cc;"></i></a>' : '<a type="button" data-html="true" data-toggle="tooltip" title="<del>Air Bersih</del>"><i class="fas fa-tint" style="color:#d7d8cc;"></i></a>';
+                $keamananipk = ($data->fas_keamananipk != NULL) ? '<a type="button" data-toggle="tooltip" title="Keamanan IPK" class="pointera"><i class="fas fa-lock" style="color:#e74a3b;"></i></a>' : '<a type="button" data-html="true" data-toggle="tooltip" title="<del>Keamanan IPK</del>"><i class="fas fa-lock" style="color:#d7d8cc;"></i></a>';
+                $kebersihan = ($data->fas_kebersihan != NULL) ? '<a type="button" data-toggle="tooltip" title="Kebersihan" class="pointera"><i class="fas fa-leaf" style="color:#1cc88a;"></i></a>' : '<a type="button" data-html="true" data-toggle="tooltip" title="<del>Kebersihan</del>"><i class="fas fa-leaf" style="color:#d7d8cc;"></i></a>';
+                $airkotor = ($data->fas_airkotor != NULL) ? '<a type="button" data-toggle="tooltip" title="Air Kotor" class="pointera"><i class="fad fa-burn" style="color:#000000;"></i></a>' : '<a type="button" data-html="true" data-toggle="tooltip" title="<del>Air Kotor</del>"><i class="fas fa-burn" style="color:#d7d8cc;"></i></a>';
+                $lain = ($data->fas_lain != NULL) ? '<a type="button" data-toggle="tooltip" title="Lainnya" class="pointera"><i class="fas fa-chart-pie" style="color:#c5793a;"></i></a>' : '<a type="button" data-html="true" data-toggle="tooltip" title="<del>Lainnya</del>"><i class="fas fa-chart-pie" style="color:#d7d8cc;"></i></a>';
                 return $listrik."&nbsp;&nbsp;".$airbersih."&nbsp;&nbsp;".$keamananipk."&nbsp;&nbsp;".$kebersihan."&nbsp;&nbsp;".$airkotor."&nbsp;&nbsp;".$lain;
             })
             ->editColumn('kd_kontrol', function($data){
-                if($data->status == 1){
-                    $button = "<span class='text-success'>$data->kd_kontrol</span>";
-                }
-                else if($data->status == 2){
+                if($data->status == 2){
                     $button = "<span class='text-info'>$data->kd_kontrol</span>";
+                }
+                else if($data->status == 1){
+                    $button = "<span class='text-success'>$data->kd_kontrol</span>";
                 }
                 else{
                     $button = "<span class='text-danger'>$data->kd_kontrol</span>";
@@ -113,7 +111,6 @@ class StoreController extends Controller
             $valid['kodeKontrol'] = $request->kontrol;
             $valid['pengguna'] = $request->pengguna;
             $valid['pemilik'] = $request->pemilik;
-            $valid['komoditi'] = $request->commodity;
             $valid['status'] = $request->status;
             $valid['keterangan'] = $request->ket;
             $valid['infoTambahan'] = $request->info;
@@ -124,8 +121,7 @@ class StoreController extends Controller
                 'kodeKontrol' => 'required|max:20|unique:App\Models\Store,kd_kontrol',
                 'pengguna' => 'nullable|numeric|exists:App\Models\User,id',
                 'pemiik' => 'nullable|numeric|exists:App\Models\User,id',
-                'komoditi' => 'nullable|array',
-                'status' => 'required|in:1,2,3',
+                'status' => 'required|in:2,1,0',
                 'keterangan' => 'nullable|max:255',
                 'infoTambahan' => 'nullable|max:255',
             ])->validate();
@@ -148,20 +144,34 @@ class StoreController extends Controller
             $data['ket'] = $request->ket;
 
             if(!is_null($request->commodity)){
-                $komoditi = $this->multipleSelect($request->commodity);
-                sort($komoditi, SORT_NATURAL);
-                $data['komoditi'] = json_encode($komoditi);
+                $commodity = $this->multipleSelect($request->commodity);
+                $commodities = array();
+                for($i = 0; $i < count($commodity); $i++){
+                    $valid['kategoriKomoditi'] = $commodity[$i];
+
+                    Validator::make($valid, [
+                        'kategoriKomoditi' => 'required|numeric|exists:App\Models\Commodity,id'
+                    ])->validate();
+
+                    $com = Commodity::find($commodity[$i]);
+                    $commodities[$i] = [
+                        'id' => $com->id,
+                        'name' => $com->name,
+                    ];
+                }
+
+                $data['komoditi'] = json_encode($commodities);
             }
 
             $data['info'] = $request->info;
 
-            $diskon = [];
+            $diskon = array();
 
             //Listrik
             if(!empty($request->fas_listrik)){
                 $valid['alatListrik'] = $request->tlistrik;
                 $valid['tarifListrik'] = $request->plistrik;
-                $valid['diskonListrik'] = $request->dlistrik;
+                $valid['diskonListrik'] = str_replace('.','',$request->dlistrik);
 
                 Validator::make($valid, [
                     'alatListrik' => 'required|numeric|exists:App\Models\TListrik,id',
@@ -176,15 +186,16 @@ class StoreController extends Controller
                 $data['id_tlistrik'] = $request->tlistrik;
                 $data['fas_listrik'] = $request->plistrik;
 
-                $dis = $request->dlistrik;
-                $diskon['listrik'] = (is_null($dis)) ? 0 : $dis;
+                if(!is_null($request->dlistrik)){
+                    $diskon['listrik'] = str_replace('.','',$request->dlistrik);
+                }
             }
 
             //Air Bersih
             if(!empty($request->fas_airbersih)){
                 $valid['alatAirBersih'] = $request->tairbersih;
                 $valid['tarifAirBersih'] = $request->pairbersih;
-                $valid['diskonAirBersih'] = $request->dairbersih;
+                $valid['diskonAirBersih'] = str_replace('.','',$request->dairbersih);
 
                 Validator::make($valid, [
                     'alatAirBersih' => 'required|numeric|exists:App\Models\TAirBersih,id',
@@ -199,8 +210,9 @@ class StoreController extends Controller
                 $data['id_tairbersih'] = $request->tairbersih;
                 $data['fas_airbersih'] = $request->pairbersih;
 
-                $dis = $request->dairbersih;
-                $diskon['airbersih'] = (is_null($dis)) ? 0 : $dis;
+                if(!is_null($request->dairbersih)){
+                    $diskon['airbersih'] = str_replace('.','',$request->dairbersih);
+                }
             }
 
             //Keamanan IPK
@@ -215,17 +227,18 @@ class StoreController extends Controller
                 if(!is_null($request->dkeamananipk)){
                     $max_disc = $price->price * $jml_los;
 
-                    $valid['diskonKeamananIpk'] = $request->dkeamananipk;
+                    $valid['diskonKeamananIpk'] = str_replace('.','',$request->dkeamananipk);
 
                     Validator::make($valid, [
-                        'diskonKeamananIpk' => 'nullable|lte:'.number_format($max_disc, 0, '', '.'),
+                        'diskonKeamananIpk' => 'nullable|numeric|lte:'.$max_disc,
                     ])->validate();
                 }
 
                 $data['fas_keamananipk'] = $request->pkeamananipk;
 
-                $dis = str_replace('.','',$request->dkeamananipk);
-                $diskon['keamananipk'] = (is_null($dis)) ? 0 : $dis;
+                if(!is_null($request->dkeamananipk)){
+                    $diskon['keamananipk'] = str_replace('.','',$request->dkeamananipk);
+                }
             }
 
             //Kebersihan
@@ -240,17 +253,18 @@ class StoreController extends Controller
                 if(!is_null($request->dkebersihan)){
                     $max_disc = $price->price * $jml_los;
 
-                    $valid['diskonKebersihan'] = $request->dkebersihan;
+                    $valid['diskonKebersihan'] = str_replace('.','',$request->dkebersihan);
 
                     Validator::make($valid, [
-                        'diskonKebersihan' => 'nullable|lte:'.number_format($max_disc, 0, '', '.'),
+                        'diskonKebersihan' => 'nullable|numeric|lte:'.$max_disc,
                     ])->validate();
                 }
 
                 $data['fas_kebersihan'] = $request->pkebersihan;
 
-                $dis = str_replace('.','',$request->dkebersihan);
-                $diskon['kebersihan'] = (is_null($dis)) ? 0 : $dis;
+                if(!is_null($request->dkebersihan)){
+                    $diskon['kebersihan'] = str_replace('.','',$request->dkebersihan);
+                }
             }
 
             //Air Kotor
@@ -263,23 +277,24 @@ class StoreController extends Controller
 
                 $price = PAirKotor::find($request->pairkotor);
                 if(!is_null($request->dairkotor)){
-                    $valid['diskonAirKotor'] = $request->dairkotor;
+                    $valid['diskonAirKotor'] = str_replace('.','',$request->dairkotor);
 
                     Validator::make($valid, [
-                        'diskonAirKotor' => 'nullable|lte:'.number_format($price->price, 0, '', '.'),
+                        'diskonAirKotor' => 'nullable|numeric|lte:'.$price->price,
                     ])->validate();
                 }
 
                 $data['fas_airkotor'] = $request->pairkotor;
 
-                $dis = str_replace('.','',$request->dairkotor);
-                $diskon['airkotor'] = (is_null($dis)) ? 0 : $dis;
+                if(!is_null($request->dairkotor)){
+                    $diskon['airkotor'] = str_replace('.','',$request->dairkotor);
+                }
             }
 
             //Lainnya
             if(!empty($request->plain)){
                 $plain = $request->plain;
-                $prices = [];
+                $prices = array();
                 for($i = 0; $i < count($plain); $i++){
                     $valid['tarifLainnya'] = $plain[$i];
 
@@ -337,7 +352,7 @@ class StoreController extends Controller
     }
 
     public function multipleSelect($data){
-        $temp = [];
+        $temp = array();
         for($i = 0; $i < count($data); $i++){
             $temp[$i] = $data[$i];
         }
@@ -352,7 +367,39 @@ class StoreController extends Controller
      */
     public function show($id)
     {
-        //
+        if(request()->ajax()){
+            try{
+                $data = Store::with([
+                    'pengguna:id,name,uid,ktp,phone,email,country_id',
+                    'pengguna.country:id,phonecode',
+                    'pemilik:id,name,uid,ktp,phone,email,country_id',
+                    'pemilik.country:id,phonecode',
+                    'tlistrik:id,code,name,meter,power',
+                    'plistrik:id,name',
+                    'tairbersih:id,code,name,meter',
+                    'pairbersih:id,name',
+                    'pkeamananipk:id,name,price',
+                    'pkebersihan:id,name,price',
+                    'pairkotor:id,name,price',
+                ])
+                ->findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            $data['data'] = json_decode($data->data);
+
+            $explode = explode(',', $data->no_los);
+            $implode = implode(', ', $explode);
+            $data['no_los'] = rtrim($implode, ', ');
+
+            $data['status'] = Store::status($data->status);
+
+            return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**
@@ -365,10 +412,24 @@ class StoreController extends Controller
     {
         if(request()->ajax()){
             try{
-                $data = Store::findOrFail($id);
+                $data = Store::with([
+                    'pengguna:id,name,ktp',
+                    'pemilik:id,name,ktp',
+                    'tlistrik:id,code,name,meter,power',
+                    'plistrik:id,name',
+                    'tairbersih:id,code,name,meter',
+                    'pairbersih:id,name',
+                    'pkeamananipk:id,name,price',
+                    'pkebersihan:id,name,price',
+                    'pairkotor:id,name,price',
+                ])
+                ->findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
+
+            $data['data'] = json_decode($data->data);
+            $data['no_los'] = explode(',', $data->no_los);
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
@@ -386,7 +447,246 @@ class StoreController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->ajax()){
+            $valid['blok'] = $request->group;
+            $valid['nomorLos'] = $request->los;
+            $valid['kodeKontrol'] = $request->kontrol;
+            $valid['pengguna'] = $request->pengguna;
+            $valid['pemilik'] = $request->pemilik;
+            $valid['status'] = $request->status;
+            $valid['keterangan'] = $request->ket;
+            $valid['infoTambahan'] = $request->info;
+
+            Validator::make($valid, [
+                'blok' => 'required|max:10|alpha_dash',
+                'nomorLos' => 'required|array',
+                'kodeKontrol' => 'required|max:20|unique:App\Models\Store,kd_kontrol,'.$id,
+                'pengguna' => 'nullable|numeric|exists:App\Models\User,id',
+                'pemiik' => 'nullable|numeric|exists:App\Models\User,id',
+                'status' => 'required|in:2,1,0',
+                'keterangan' => 'nullable|max:255',
+                'infoTambahan' => 'nullable|max:255',
+            ])->validate();
+
+            try{
+                $data = Store::findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            $data->group = $request->group;
+
+            $los = $this->multipleSelect($request->los);
+            sort($los, SORT_NATURAL);
+            $data->no_los = implode(',', $los);
+            $jml_los = count($los);
+            $data->jml_los = $jml_los;
+
+            $data->kd_kontrol = strtoupper($request->kontrol);
+            $data->nicename = str_replace('-','',$request->kontrol);
+
+            $data->id_pengguna = $request->pengguna;
+            $data->id_pemilik = $request->pemilik;
+
+            $data->status = $request->status;
+            $data->ket = $request->ket;
+
+            if(!is_null($request->commodity)){
+                $commodity = $this->multipleSelect($request->commodity);
+                $commodities = array();
+                for($i = 0; $i < count($commodity); $i++){
+                    $valid['kategoriKomoditi'] = $commodity[$i];
+
+                    Validator::make($valid, [
+                        'kategoriKomoditi' => 'required|numeric|exists:App\Models\Commodity,id'
+                    ])->validate();
+
+                    $com = Commodity::find($commodity[$i]);
+                    $commodities[$i] = [
+                        'id' => $com->id,
+                        'name' => $com->name,
+                    ];
+                }
+
+                $data->komoditi = json_encode($commodities);
+            }
+
+            $data->info = $request->info;
+
+            $diskon = array();
+
+            //Listrik
+            if(!empty($request->fas_listrik)){
+                $valid['alatListrik'] = $request->tlistrik;
+                $valid['tarifListrik'] = $request->plistrik;
+                $valid['diskonListrik'] = str_replace('.','',$request->dlistrik);
+
+                Validator::make($valid, [
+                    'alatListrik' => 'required|numeric|exists:App\Models\TListrik,id',
+                    'tarifListrik' => 'required|numeric|exists:App\Models\PListrik,id',
+                    'diskonListrik' => 'nullable|numeric|lte:100',
+                ])->validate();
+
+                $tools = TListrik::find($request->tlistrik);
+                $tools->stt_available = 0;
+                $tools->save();
+
+                $data->id_tlistrik = $request->tlistrik;
+                $data->fas_listrik = $request->plistrik;
+
+                if(!is_null($request->dlistrik)){
+                    $diskon['listrik'] = str_replace('.','',$request->dlistrik);
+                }
+            }
+
+            //Air Bersih
+            if(!empty($request->fas_airbersih)){
+                $valid['alatAirBersih'] = $request->tairbersih;
+                $valid['tarifAirBersih'] = $request->pairbersih;
+                $valid['diskonAirBersih'] = str_replace('.','',$request->dairbersih);
+
+                Validator::make($valid, [
+                    'alatAirBersih' => 'required|numeric|exists:App\Models\TAirBersih,id',
+                    'tarifAirBersih' => 'required|numeric|exists:App\Models\PAirBersih,id',
+                    'diskonAirBersih' => 'nullable|numeric|lte:100',
+                ])->validate();
+
+                $tools = TAirBersih::find($request->tairbersih);
+                $tools->stt_available = 0;
+                $tools->save();
+
+                $data->id_tairbersih = $request->tairbersih;
+                $data->fas_airbersih = $request->pairbersih;
+
+                if(!is_null($request->dairbersih)){
+                    $diskon['airbersih'] = str_replace('.','',$request->dairbersih);
+                }
+            }
+
+            //Keamanan IPK
+            if(!empty($request->fas_keamananipk)){
+                $valid['tarifKeamananIpk'] = $request->pkeamananipk;
+
+                Validator::make($valid, [
+                    'tarifKeamananIpk' => 'required|numeric|exists:App\Models\PKeamananIpk,id'
+                ])->validate();
+
+                $price = PKeamananIpk::find($request->pkeamananipk);
+                if(!is_null($request->dkeamananipk)){
+                    $max_disc = $price->price * $jml_los;
+
+                    $valid['diskonKeamananIpk'] = str_replace('.','',$request->dkeamananipk);
+
+                    Validator::make($valid, [
+                        'diskonKeamananIpk' => 'nullable|numeric|lte:'.$max_disc,
+                    ])->validate();
+                }
+
+                $data->fas_keamananipk = $request->pkeamananipk;
+
+                if(!is_null($request->dkeamananipk)){
+                    $diskon['keamananipk'] = str_replace('.','',$request->dkeamananipk);
+                }
+            }
+
+            //Kebersihan
+            if(!empty($request->fas_kebersihan)){
+                $valid['tarifKebersihan'] = $request->pkebersihan;
+
+                Validator::make($valid, [
+                    'tarifKebersihan' => 'required|numeric|exists:App\Models\PKebersihan,id'
+                ])->validate();
+
+                $price = PKebersihan::find($request->pkebersihan);
+                if(!is_null($request->dkebersihan)){
+                    $max_disc = $price->price * $jml_los;
+
+                    $valid['diskonKebersihan'] = str_replace('.','',$request->dkebersihan);
+
+                    Validator::make($valid, [
+                        'diskonKebersihan' => 'nullable|numeric|lte:'.$max_disc,
+                    ])->validate();
+                }
+
+                $data->fas_kebersihan = $request->pkebersihan;
+
+                if(!is_null($request->dkebersihan)){
+                    $diskon['kebersihan'] = str_replace('.','',$request->dkebersihan);
+                }
+            }
+
+            //Air Kotor
+            if(!empty($request->fas_airkotor)){
+                $valid['tarifAirKotor'] = $request->pairkotor;
+
+                Validator::make($valid, [
+                    'tarifAirKotor' => 'required|numeric|exists:App\Models\PAirKotor,id'
+                ])->validate();
+
+                $price = PAirKotor::find($request->pairkotor);
+                if(!is_null($request->dairkotor)){
+                    $valid['diskonAirKotor'] = str_replace('.','',$request->dairkotor);
+
+                    Validator::make($valid, [
+                        'diskonAirKotor' => 'nullable|numeric|lte:'.$price->price,
+                    ])->validate();
+                }
+
+                $data->fas_airkotor = $request->pairkotor;
+
+                if(!is_null($request->dairkotor)){
+                    $diskon['airkotor'] = str_replace('.','',$request->dairkotor);
+                }
+            }
+
+            //Lainnya
+            if(!empty($request->plain)){
+                $plain = $request->plain;
+                $prices = array();
+                for($i = 0; $i < count($plain); $i++){
+                    $valid['tarifLainnya'] = $plain[$i];
+
+                    Validator::make($valid, [
+                        'tarifLainnya' => 'required|numeric|exists:App\Models\PLain,id'
+                    ])->validate();
+
+                    $price = PLain::find($plain[$i]);
+                    $prices[$i] = [
+                        'id' => $price->id,
+                        'name' => $price->name,
+                        'price' => $price->price,
+                        'satuan_id' => $price->satuan,
+                        'satuan_name' => PLain::satuan($price->satuan),
+                    ];
+                }
+
+                $data->fas_lain = json_encode($prices);
+            }
+
+            $json = json_decode($data->data);
+
+            $json->diskon = $diskon;
+            $json->user_update = Auth::user()->id;
+            $json->username_update = Auth::user()->name;
+            $json->updated_at = Carbon::now()->toDateTimeString();
+
+            $json = json_encode($json);
+
+            $data->data = $json;
+
+            try{
+                $data->save();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to save.", 'description' => $e]);
+            }
+
+            $searchKey = str_replace('-','',$request->kontrol);
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**

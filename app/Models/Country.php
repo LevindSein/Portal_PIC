@@ -9,5 +9,13 @@ class Country extends Model
 {
     use HasFactory;
     protected $table = 'countries';
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'iso',
+        'name',
+        'nicename',
+        'iso3',
+        'numcode',
+        'phonecode',
+    ];
 }

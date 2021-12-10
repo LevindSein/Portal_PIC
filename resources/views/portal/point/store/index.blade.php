@@ -49,13 +49,60 @@ Data Tempat
 @endsection
 
 @section('content-modal')
+<div id="showModal" class="modal fade" role="dialog" tabIndex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-xl dialog-modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title titles">{Title}</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body-xl">
+                <div class="row">
+                    <div class="col-lg-6 col-xlg-6">
+                        <small class="text-muted pt-4 db">Kontrol</small>
+                        <h6 id="showKontrol"></h6>
+                        <small class="text-muted pt-4 db">Blok</small>
+                        <h6 id="showGroup"></h6>
+                        <small class="text-muted pt-4 db">Nomor Los</small>
+                        <h6 id="showLos"></h6>
+                        <small class="text-muted pt-4 db">Jumlah Los</small>
+                        <h6 id="showJmlLos"></h6>
+                        <small class="text-muted pt-4 db">Pengguna</small>
+                        <h6 id="showPengguna"></h6>
+                        <small class="text-muted pt-4 db">Pemilik</small>
+                        <h6 id="showPemilik"></h6>
+                        <small class="text-muted pt-4 db">Komoditi</small>
+                        <h6 id="showKomoditi"></h6>
+                        <small class="text-muted pt-4 db">Status Tempat</small>
+                        <h6 id="showStatus"></h6>
+                        <small class="text-muted pt-4 db">Keterangan Status Tempat</small>
+                        <h6 id="showKet"></h6>
+                        <small class="text-muted pt-4 db">Info Tambahan</small>
+                        <h6 id="showInfo"></h6>
+                        <hr>
+                    </div>
+                    <div class="col-lg-6 col-xlg-6">
+                        <h3 class="text-center">Fasilitas Tempat</h3>
+                        <div id="showFasilitas"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="storeModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title titles">{Title}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">x</span>
                 </button>
             </div>
             <form id="storeForm">
@@ -205,7 +252,7 @@ Data Tempat
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" class="custom-control-input" id="stt_nonaktif" name="status" value="3">
+                                            <input type="radio" class="custom-control-input" id="stt_nonaktif" name="status" value="0">
                                             <label class="custom-control-label" style="font-weight: 400;" for="stt_nonaktif">Nonaktif</label>
                                         </div>
                                     </div>
@@ -420,13 +467,7 @@ Data Tempat
                                             </sup>
                                         </label>
                                         <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Rp.</span>
-                                            </div>
-                                            <select id="pkeamananipk" name="pkeamananipk" class="select2 form-control form-control-line"></select>
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">/ Los</span>
-                                            </div>
+                                            <select id="pkeamananipk" name="pkeamananipk" class="select2 form-control form-control-line" style="width: 100%"></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -449,7 +490,7 @@ Data Tempat
                                             </div>
                                             <input maxlength="11" type="text" id="dkeamananipk" name="dkeamananipk" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text">/ Kontrol</span>
+                                                <span class="input-group-text">per-Kontrol</span>
                                             </div>
                                         </div>
                                     </div>
@@ -485,13 +526,7 @@ Data Tempat
                                             </sup>
                                         </label>
                                         <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Rp.</span>
-                                            </div>
-                                            <select id="pkebersihan" name="pkebersihan" class="select2 form-control form-control-line"></select>
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">/ Los</span>
-                                            </div>
+                                            <select id="pkebersihan" name="pkebersihan" class="select2 form-control form-control-line" style="width: 100%"></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -514,7 +549,7 @@ Data Tempat
                                             </div>
                                             <input maxlength="11" type="text" id="dkebersihan" name="dkebersihan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text">/ Kontrol</span>
+                                                <span class="input-group-text">per-Kontrol</span>
                                             </div>
                                         </div>
                                     </div>
@@ -550,13 +585,7 @@ Data Tempat
                                             </sup>
                                         </label>
                                         <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Rp.</span>
-                                            </div>
-                                            <select id="pairkotor" name="pairkotor" class="select2 form-control form-control-line"></select>
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">/ Kontrol</span>
-                                            </div>
+                                            <select id="pairkotor" name="pairkotor" class="select2 form-control form-control-line" style="width: 100%"></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -593,7 +622,7 @@ Data Tempat
                                 <div id="divlainNew"></div>
 
                                 <div class="form-group">
-                                    <button id="divlainAdd" class="btn btn-sm btn-rounded btn-info"><i class="fas fa-fw fa-plus mr-1"></i>Fasilitas Lainnya</button>
+                                    <button id="divLainAdd" class="btn btn-sm btn-rounded btn-info"><i class="fas fa-fw fa-plus mr-1"></i>Fasilitas Lainnya</button>
                                     <sup>
                                         <a href='{{url("production/manage/prices/lain")}}' target="_blank">
                                             <i class="far fa-question-circle"
@@ -630,48 +659,9 @@ Data Tempat
 @section('content-js')
 <script>
     $(document).ready(function(){
+        var id;
         var lain = 0;
         var plain = 1;
-        $("#divlainAdd").click(function (e) {
-            e.preventDefault();
-
-            var html = '';
-            html += '<div name="divlain" class="form-group">';
-            html += '<div class="d-flex justify-content-between">';
-            html += '<label>Pilih Tarif Fasilitas <span class="text-danger">*</span></label>';
-            html += '<a type="button" class="text-danger" href="javascript:void(0)" id="divlainRemove">';
-            html += 'Hapus <i class="fas fa-fw fa-eraser mr-1 ml-1"></i>';
-            html += '</a>';
-            html += '</div>';
-            html += '<select required id="plain'+ plain + '" name="plain[]" class="select2 form-control form-control-line"></select>';
-            html += '</div>';
-
-            if(lain < 10){
-                $('#divlainNew').append(html);
-                select2plain("#plain" + plain, "/search/price/lain", "-- Cari Tarif Fasilitas --");
-
-                $("#plain" + plain).on('select2:open', () => {
-                    $('input.select2-search__field').prop('placeholder', 'Ketik Tarif/Nama Tarif disini..');
-                });
-
-                plain++;
-                lain++;
-            }
-            else{
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                };
-                toastr.error("Telah mencapai maksimal.");
-            }
-        });
-        // remove row
-        $(document).on('click', '#divlainRemove', function () {
-            lain--;
-            $(this).closest("[name='divlain']").remove();
-        });
-
-        var id;
 
         var dtable = $('#dtable').DataTable({
             "language": {
@@ -771,11 +761,46 @@ Data Tempat
                 cache:false,
                 success:function(data){
                     if(data.success){
-                        (data.show.status == 3)
-                            ? $("#stt_nonaktif").prop("checked", true)
-                            : (data.show.status == 2)
+                        $('#group').val("").html("");
+                        var group = new Option(data.show.group, data.show.group, false, false);
+                        $('#group').append(group).trigger('change');
+
+                        $('#los').val("").html("");
+                        var los = data.show.no_los;
+                        $.each( los, function( i, val ) {
+                            var option = $('<option></option>').attr('value', val).text(val).prop('selected', true);
+                            $('#los').append(option).trigger('change');
+                        });
+
+                        $("#kontrol").val(data.show.kd_kontrol);
+
+                        if(data.show.pengguna.id){
+                            $("#cancelPengguna").show();
+                            $('#pengguna').val("").html("");
+                            var pengguna = new Option(data.show.pengguna.name + ' (' + data.show.pengguna.ktp + ')', data.show.pengguna.id, false, false);
+                            $('#pengguna').append(pengguna).trigger('change');
+                        }
+
+                        if(data.show.pemilik.id){
+                            $("#cancelPemilik").show();
+                            $('#pemilik').val("").html("");
+                            var pemilik = new Option(data.show.pemilik.name + ' (' + data.show.pemilik.ktp + ')', data.show.pemilik.id, false, false);
+                            $('#pemilik').append(pemilik).trigger('change');
+                        }
+
+                        //Komoditi
+                        $('#commodity').val("").html("");
+                        var commodity = $.parseJSON(data.show.komoditi);
+                        $.each( commodity, function( i, val ) {
+                            var option = $('<option></option>').attr('value', val.id).text(val.name).prop('selected', true);
+                            $('#commodity').append(option).trigger('change');
+                        });
+
+                        (data.show.status == 2)
                             ? $("#stt_bebas").prop("checked", true)
-                            : $("#stt_aktif").prop("checked", true);
+                            : (data.show.status == 1)
+                            ? $("#stt_aktif").prop("checked", true)
+                            : $("#stt_nonaktif").prop("checked", true);
                         statusTempat();
 
                         $("#ket").val(data.show.ket);
@@ -784,32 +809,125 @@ Data Tempat
                         if(data.show.fas_listrik){
                             $("#fas_listrik").prop("checked", true);
                             fasListrik('show');
+
+                            $('#tlistrik').val("").html("");
+                            var tlistrik = new Option(
+                                data.show.tlistrik.code + ' - (' + Number(data.show.tlistrik.meter).toLocaleString('id-ID') + ') - ' + data.show.tlistrik.power + ' Watt' + ' - ID: ' + data.show.tlistrik.name,
+                                data.show.tlistrik.id,
+                                false,
+                                false
+                            );
+                            $('#tlistrik').append(tlistrik).trigger('change');
+
+                            $('#plistrik').val("").html("");
+                            var plistrik = new Option(
+                                data.show.plistrik.name,
+                                data.show.plistrik.id,
+                                false,
+                                false
+                            );
+                            $('#plistrik').append(plistrik).trigger('change');
+
+                            if(data.show.data.diskon.listrik){
+                                $("#dlistrik").val(Number(data.show.data.diskon.listrik).toLocaleString('id-ID'));
+                            }
                         }
 
                         if(data.show.fas_airbersih){
                             $("#fas_airbersih").prop("checked", true);
                             fasAirBersih('show');
+
+                            $('#tairbersih').val("").html("");
+                            var tairbersih = new Option(
+                                data.show.tairbersih.code + ' - (' + Number(data.show.tairbersih.meter).toLocaleString('id-ID') + ') - ID: ' + data.show.tairbersih.name,
+                                data.show.tairbersih.id,
+                                false,
+                                false
+                            );
+                            $('#tairbersih').append(tairbersih).trigger('change');
+
+                            $('#pairbersih').val("").html("");
+                            var pairbersih = new Option(
+                                data.show.pairbersih.name,
+                                data.show.pairbersih.id,
+                                false,
+                                false
+                            );
+                            $('#pairbersih').append(pairbersih).trigger('change');
+
+                            if(data.show.data.diskon.airbersih){
+                                $("#dairbersih").val(Number(data.show.data.diskon.airbersih).toLocaleString('id-ID'));
+                            }
                         }
 
                         if(data.show.fas_keamananipk){
                             $("#fas_keamananipk").prop("checked", true);
                             fasKeamananIpk('show');
+
+                            $('#pkeamananipk').val("").html("");
+                            var pkeamananipk = new Option(
+                                data.show.pkeamananipk.name + ' - ' + Number(data.show.pkeamananipk.price).toLocaleString('id-ID'),
+                                data.show.pkeamananipk.id,
+                                false,
+                                false
+                            );
+                            $('#pkeamananipk').append(pkeamananipk).trigger('change');
+
+                            if(data.show.data.diskon.keamananipk){
+                                $("#dkeamananipk").val(Number(data.show.data.diskon.keamananipk).toLocaleString('id-ID'));
+                            }
                         }
 
                         if(data.show.fas_kebersihan){
                             $("#fas_kebersihan").prop("checked", true);
                             fasKebersihan('show');
+
+                            $('#pkebersihan').val("").html("");
+                            var pkebersihan = new Option(
+                                data.show.pkebersihan.name + ' - ' + Number(data.show.pkebersihan.price).toLocaleString('id-ID'),
+                                data.show.pkebersihan.id,
+                                false,
+                                false
+                            );
+                            $('#pkebersihan').append(pkebersihan).trigger('change');
+
+                            if(data.show.data.diskon.kebersihan){
+                                $("#dkebersihan").val(Number(data.show.data.diskon.kebersihan).toLocaleString('id-ID'));
+                            }
                         }
 
                         if(data.show.fas_airkotor){
                             $("#fas_airkotor").prop("checked", true);
                             fasAirKotor('show');
+
+                            $('#pairkotor').val("").html("");
+                            var pairkotor = new Option(
+                                data.show.pairkotor.name + ' - ' + Number(data.show.pairkotor.price).toLocaleString('id-ID'),
+                                data.show.pairkotor.id,
+                                false,
+                                false
+                            );
+                            $('#pairkotor').append(pairkotor).trigger('change');
+
+                            if(data.show.data.diskon.airkotor){
+                                $("#dairkotor").val(Number(data.show.data.diskon.airkotor).toLocaleString('id-ID'));
+                            }
                         }
 
-                        // if(data.show.fas_lain){
-                        //     $("#fas_lain").prop("checked", true);
-                        //     fasLain('show');
-                        // }
+                        if(data.show.fas_lain){
+                            var json = $.parseJSON(data.show.fas_lain);
+                            $.each( json, function( i, val ) {
+                                $('#divLainAdd').trigger('click');
+                                $('#plain' + plain).val("").html("");
+                                var plainOpt = new Option(
+                                    val.name + ' - ' + Number(val.price).toLocaleString('id-ID') + ' ' + val.satuan_name,
+                                    val.id,
+                                    false,
+                                    false
+                                );
+                                $('#plain' + (i+1)).append(plainOpt).trigger('change');
+                            });
+                        }
                     }
 
                     if(data.info){
@@ -852,6 +970,44 @@ Data Tempat
                     $('#storeModal').modal('show');
                 }
             });
+        });
+
+        $("#divLainAdd").on('click', function (e) {
+            e.preventDefault();
+
+            var html = '';
+            html += '<div name="divlain" class="form-group">';
+            html += '<div class="d-flex justify-content-between">';
+            html += '<label>Pilih Tarif Fasilitas <span class="text-danger">*</span></label>';
+            html += '<a type="button" class="text-danger" href="javascript:void(0)" id="divlainRemove">';
+            html += 'Hapus <i class="fas fa-fw fa-eraser mr-1 ml-1"></i>';
+            html += '</a>';
+            html += '</div>';
+            html += '<select required id="plain'+ plain + '" name="plain[]" class="select2 form-control form-control-line" style="width: 100%"></select>';
+            html += '</div>';
+
+            if(lain < 10){
+                $('#divlainNew').append(html);
+                select2plain("#plain" + plain, "/search/price/lain", "-- Cari Tarif Fasilitas --");
+
+                $("#plain" + plain).on('select2:open', () => {
+                    $('input.select2-search__field').prop('placeholder', 'Ketik Tarif/Nama Tarif disini..');
+                });
+
+                plain++;
+                lain++;
+            }
+            else{
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Telah mencapai maksimal.");
+            }
+        });
+        $(document).on('click', '#divlainRemove', function () {
+            lain--;
+            $(this).closest("[name='divlain']").remove();
         });
 
         $('#storeForm').submit(function(e){
@@ -938,17 +1094,17 @@ Data Tempat
             fasAirBersih("hide");
 
             $("#pkeamananipk").val("");
-            select2idprice("#pkeamananipk", "/search/price/keamananipk", "-- Cari Tarif Keamanan IPK --");
+            select2idprice("#pkeamananipk", "/search/price/keamananipk", "-- Cari Tarif Keamanan IPK --", "per-Los");
             $("#dkeamananipk").val("");
             fasKeamananIpk("hide");
 
             $("#pkebersihan").val("");
-            select2idprice("#pkebersihan", "/search/price/kebersihan", "-- Cari Tarif Kebersihan --");
+            select2idprice("#pkebersihan", "/search/price/kebersihan", "-- Cari Tarif Kebersihan --", "per-Los");
             $("#dkebersihan").val("");
             fasKebersihan("hide");
 
             $("#pairkotor").val("");
-            select2idprice("#pairkotor", "/search/price/airkotor", "-- Cari Tarif Air Kotor --");
+            select2idprice("#pairkotor", "/search/price/airkotor", "-- Cari Tarif Air Kotor --", "per-Kontrol");
             $("#dairkotor").val("");
             fasAirKotor("hide");
 
@@ -1055,6 +1211,188 @@ Data Tempat
             });
         }
 
+        $(document).on('click', '.details', function(){
+            id = $(this).attr('id');
+            nama = $(this).attr('nama');
+            $('.titles').text('Informasi ' + nama);
+
+            $("#showFasilitas").html('');
+
+            $.ajax({
+                url: "/production/point/stores/" + id,
+                type: "GET",
+                cache:false,
+                success:function(data){
+                    if(data.success){
+                        $("#showKontrol").text(data.show.kd_kontrol);
+                        $("#showGroup").text(data.show.group);
+                        $("#showLos").text(data.show.no_los);
+                        $("#showJmlLos").text(data.show.jml_los);
+                        var pengguna = data.show.pengguna.name;
+                        pengguna += (data.show.pengguna.uid) ?  "<br><span style='font-weight:400; font-size: 12px;'>Phone : " + data.show.pengguna.uid + "</span>" : "";
+                        pengguna += (data.show.pengguna.phone) ?  "<br><span style='font-weight:400; font-size: 12px;'>Phone : +" + data.show.pengguna.country.phonecode + " " + data.show.pengguna.phone + "</span>" : "";
+                        pengguna += (data.show.pengguna.email) ?  "<br><span style='font-weight:400; font-size: 12px;'>Email : " + data.show.pengguna.email + "</span>" : "";
+                        pengguna += (data.show.pengguna.ktp) ?  "<br><span style='font-weight:400; font-size: 12px;'>KTP : " + data.show.pengguna.ktp + "</span>" : "";
+                        $("#showPengguna").html(pengguna);
+
+                        var pemilik = data.show.pemilik.name;
+                        pemilik += (data.show.pemilik.uid) ?  "<br><span style='font-weight:400; font-size: 12px;'>Phone : " + data.show.pemilik.uid + "</span>" : "";
+                        pemilik += (data.show.pemilik.phone) ?  "<br><span style='font-weight:400; font-size: 12px;'>Phone : +" + data.show.pemilik.country.phonecode + " " + data.show.pemilik.phone + "</span>" : "";
+                        pemilik += (data.show.pemilik.email) ?  "<br><span style='font-weight:400; font-size: 12px;'>Email : " + data.show.pemilik.email + "</span>" : "";
+                        pemilik += (data.show.pemilik.ktp) ?  "<br><span style='font-weight:400; font-size: 12px;'>KTP : " + data.show.pemilik.ktp + "</span>" : "";
+                        $("#showPemilik").html(pemilik);
+
+                        var json = $.parseJSON(data.show.komoditi);
+                        var text = '';
+                        $.each(json, function(i, val){
+                            text += val.name + ', ';
+                        });
+                        text = text.replace(/,\s*$/, "");
+                        (text) ? $("#showKomoditi").text(text) : $("#showKomoditi").text("-");
+
+                        $("#showStatus").html(data.show.status);
+
+                        (data.show.ket) ? $("#showKet").text(data.show.ket) : $("#showKet").text("-");
+                        (data.show.info) ? $("#showInfo").text(data.show.info) : $("#showInfo").text("-");
+
+                        var html = '';
+
+                        if(data.show.fas_listrik){
+                            html += '<div class="form-group">';
+                            html += '<h5><i class="fas fa-bolt" style="color:#fd7e14;"></i> Listrik</h5>';
+                            html += '<small class="text-muted pt-4 db">Alat Meter</small>';
+                            html += '<h6>' + data.show.tlistrik.code + ' - (' + Number(data.show.tlistrik.meter).toLocaleString('id-ID') + ') - ' + data.show.tlistrik.power + ' Watt</h6>';
+                            html += '<h6>ID : ' + data.show.tlistrik.name + '</h6>';
+                            html += '<small class="text-muted pt-4 db">Tarif</small>';
+                            html += '<h6>' + data.show.plistrik.name + '</h6>';
+                            html += '<small class="text-muted pt-4 db">Diskon</small>';
+                            (data.show.data.diskon.listrik)
+                                ? html += '<h6>' + data.show.data.diskon.listrik +' %</h6>'
+                                : html += '<h6>-</h6>';
+                            html += '</div>';
+                            html += '<hr>';
+                        }
+
+                        if(data.show.fas_airbersih){
+                            html += '<div class="form-group">';
+                            html += '<h5><i class="fas fa-tint" style="color:#36b9cc;""></i> Air Bersih</h5>';
+                            html += '<small class="text-muted pt-4 db">Alat Meter</small>';
+                            html += '<h6>' + data.show.tairbersih.code + ' - (' + Number(data.show.tairbersih.meter).toLocaleString('id-ID') + ')' + '</h6>'
+                            html += '<h6>ID : ' + data.show.tairbersih.name + '</h6>';
+                            html += '<small class="text-muted pt-4 db">Tarif</small>';
+                            html += '<h6>' + data.show.pairbersih.name + '</h6>';
+                            html += '<small class="text-muted pt-4 db">Diskon</small>';
+                            (data.show.data.diskon.airbersih)
+                                ? html += '<h6>' + data.show.data.diskon.airbersih +' %</h6>'
+                                : html += '<h6>-</h6>';
+                            html += '</div>';
+                            html += '<hr>';
+                        }
+
+                        if(data.show.fas_keamananipk){
+                            html += '<div class="form-group">';
+                            html += '<h5><i class="fas fa-lock" style="color:#e74a3b;"></i> Keamanan IPK</h5>';
+                            html += '<small class="text-muted pt-4 db">Tarif</small>';
+                            html += '<h6>Rp. ' + Number(data.show.pkeamananipk.price).toLocaleString('id-ID') + ' per-Los</h6>';
+                            html += '<small class="text-muted pt-4 db">Total sebelum Diskon</small>';
+                            html += '<h6>Rp. ' + Number(data.show.pkeamananipk.price * data.show.jml_los).toLocaleString('id-ID') + '</h6>';
+                            html += '<small class="text-muted pt-4 db">Diskon</small>';
+                            (data.show.data.diskon.keamananipk)
+                                ? html += '<h6>Rp. ' + Number(data.show.data.diskon.keamananipk).toLocaleString('id-ID') + '</h6>'
+                                : html += '<h6>-</h6>';
+                            html += '</div>';
+                            html += '<hr>';
+                        }
+
+                        if(data.show.fas_kebersihan){
+                            html += '<div class="form-group">';
+                            html += '<h5><i class="fas fa-leaf" style="color:#1cc88a;"></i> Kebersihan</h5>';
+                            html += '<small class="text-muted pt-4 db">Tarif</small>';
+                            html += '<h6>Rp. ' + Number(data.show.pkebersihan.price).toLocaleString('id-ID') + ' per-Los</h6>';
+                            html += '<small class="text-muted pt-4 db">Total sebelum Diskon</small>';
+                            html += '<h6>Rp. ' + Number(data.show.pkebersihan.price * data.show.jml_los).toLocaleString('id-ID') + '</h6>';
+                            html += '<small class="text-muted pt-4 db">Diskon</small>';
+                            (data.show.data.diskon.kebersihan)
+                                ? html += '<h6>Rp. ' + Number(data.show.data.diskon.kebersihan).toLocaleString('id-ID') + '</h6>'
+                                : html += '<h6>-</h6>';
+                            html += '</div>';
+                            html += '<hr>';
+                        }
+
+                        if(data.show.fas_airkotor){
+                            html += '<div class="form-group">';
+                            html += '<h5><i class="fad fa-burn" style="color:#000000;"></i> Air Kotor</h5>';
+                            html += '<small class="text-muted pt-4 db">Tarif</small>';
+                            html += '<h6>Rp. ' + Number(data.show.pairkotor.price).toLocaleString('id-ID') + ' per-Kontrol</h6>';
+                            html += '<small class="text-muted pt-4 db">Diskon</small>';
+                            (data.show.data.diskon.airkotor)
+                                ? html += '<h6>Rp. ' + Number(data.show.data.diskon.airkotor).toLocaleString('id-ID') +' per-Kontrol</h6>'
+                                : html += '<h6>-</h6>';
+                            html += '</div>';
+                            html += '<hr>';
+                        }
+
+                        if(data.show.fas_lain){
+                            html += '<div class="form-group">';
+                            html += '<h5><i class="fas fa-chart-pie" style="color:#c5793a;"></i> Lainnya</h5>';
+                            html += '</div>';
+                            html += '<hr>';
+                        }
+
+                        if(html){
+                            $("#showFasilitas").append(html);
+                        }
+                        else {
+                            html += '<div class="form-group mt-4 text-center">';
+                            html += '<img src="/img/sad.png" class="rounded-circle" width="180" />';
+                            html += '<h4>Tidak memiliki fasilitas apapun</h4>'
+                            html += '</div>';
+                            $("#showFasilitas").append(html);
+                        }
+                    }
+
+                    if(data.info){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.info(data.info);
+                    }
+
+                    if(data.warning){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.warning(data.warning);
+                    }
+
+                    if(data.error){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                    }
+
+                    if(data.description){
+                        console.log(data.description);
+                    }
+                },
+                error:function(data){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("Fetching data failed.");
+                    console.log(data);
+                },
+                complete:function(){
+                    $('#showModal').modal('show');
+                }
+            });
+        });
+
         //Nomor Los
         $('#group').on("change", function(e) {
             var group = $('#group').val();
@@ -1100,21 +1438,16 @@ Data Tempat
         //Pengguna
         $('#pengguna').on("input", function(e) {
             if($('#pengguna').val()){
-                $("#stt_aktif").prop("checked", true);
                 $("#cancelPengguna").show();
             }
             else{
                 $("#cancelPengguna").hide();
-                $("#stt_nonaktif").prop("checked", true);
             }
-            statusTempat();
         });
 
         $("#cancelPengguna").click(function(){
             $("#pengguna").val(null).trigger("change");
             $("#cancelPengguna").hide();
-            $("#stt_nonaktif").prop("checked", true);
-            statusTempat();
         });
 
         //Pemilik
@@ -1334,7 +1667,7 @@ Data Tempat
             });
         }
 
-        function select2idprice(select2id, url, placeholder){
+        function select2idprice(select2id, url, placeholder, satuan){
             $(select2id).select2({
                 placeholder: placeholder,
                 ajax: {
@@ -1347,7 +1680,7 @@ Data Tempat
                             results:  $.map(data, function (d) {
                                 return {
                                     id: d.id,
-                                    text: d.name + ' - ' + Number(d.price).toLocaleString('id-ID')
+                                    text: d.name + ' - ' + Number(d.price).toLocaleString('id-ID') + ' ' + satuan
                                 }
                             })
                         };
@@ -1391,7 +1724,7 @@ Data Tempat
                             results:  $.map(data, function (d) {
                                 return {
                                     id: d.id,
-                                    text: d.code + ' - (' + Number(d.meter).toLocaleString('id-ID') + ')' + ' - ID: ' + d.name
+                                    text: d.code + ' - (' + Number(d.meter).toLocaleString('id-ID') + ') - ID: ' + d.name
                                 }
                             })
                         };

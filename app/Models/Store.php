@@ -35,14 +35,70 @@ class Store extends Model
     public function pengguna()
     {
         return $this->belongsTo(User::class, 'id_pengguna')->withDefault([
+            'id' => null,
             'name' => '-'
         ]);
     }
 
     public function pemilik(){
         return $this->belongsTo(User::class, 'id_pemilik')->withDefault([
+            'id' => null,
             'name' => '-'
         ]);
+    }
+
+    public function tlistrik()
+    {
+        return $this->belongsTo(TListrik::class, 'id_tlistrik')->withDefault([
+            'name' => '-'
+        ]);
+    }
+
+    public function plistrik()
+    {
+        return $this->belongsTo(PListrik::class, 'fas_listrik');
+    }
+
+    public function tairbersih()
+    {
+        return $this->belongsTo(TAirBersih::class, 'id_tairbersih')->withDefault([
+            'name' => '-'
+        ]);
+    }
+
+    public function pairbersih()
+    {
+        return $this->belongsTo(PAirBersih::class, 'fas_airbersih');
+    }
+
+    public function pkeamananipk()
+    {
+        return $this->belongsTo(PKeamananIpk::class, 'fas_keamananipk');
+    }
+
+    public function pkebersihan()
+    {
+        return $this->belongsTo(PKebersihan::class, 'fas_kebersihan');
+    }
+
+    public function pairkotor()
+    {
+        return $this->belongsTo(PAirKotor::class, 'fas_airkotor');
+    }
+
+    public static function status($data){
+        if($data === 2){
+            return '<span class="text-info">Bebas Bayar</span>';
+        }
+        else if($data == 1){
+            return '<span class="text-success">Aktif</span>';
+        }
+        else if($data == 0){
+            return '<span class="text-danger">Nonaktif</span>';
+        }
+        else{
+            return $data;
+        }
     }
 
     public static function kontrol($group, $los){

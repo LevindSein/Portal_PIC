@@ -466,7 +466,7 @@
             <!-- ============================================================== -->
             <br>
             <footer class="footer text-center">
-                Copyright &copy;2020 PT.Pengelola Pusat Perdagangan Caringin
+               &copy;2021 PT.Pengelola Pusat Perdagangan Caringin
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
