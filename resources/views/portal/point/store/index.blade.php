@@ -709,14 +709,12 @@ Data Tempat
                 dtable.column( i ).visible( false, false );
             }
             dtable.columns.adjust().draw( false );
-            // dtable.column(2).visible(false);
         }
         else{
             for ( var i=1 ; i<4 ; i++ ) {
                 dtable.column( i ).visible( true, false );
             }
             dtable.columns.adjust().draw( false );
-            // dtable.column(2).visible(true);
         }
 
         var searchValue = getUrlParameter('s');

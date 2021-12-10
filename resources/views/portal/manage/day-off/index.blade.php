@@ -139,6 +139,15 @@ Libur Tagihan
             },
         });
 
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            dtable.column( 1 ).visible( false, false );
+            dtable.columns.adjust().draw( false );
+        }
+        else{
+            dtable.column( 1 ).visible( true, false );
+            dtable.columns.adjust().draw( false );
+        }
+
         setInterval(function(){
             dtableReload('');
         }, 5000);

@@ -160,7 +160,7 @@ Pengguna
                         <h6 id="showName"></h6>
                         <small class="text-muted pt-4 db">No.Anggota</small>
                         <h6 id="showMember"></h6>
-                        <small class="text-muted pt-4 db">KTP / Paspor</small>
+                        <small class="text-muted pt-4 db">KTP</small>
                         <h6 id="showKtp"></h6>
                         <small class="text-muted pt-4 db">NPWP</small>
                         <h6 id="showNpwp"></h6>
@@ -199,7 +199,19 @@ Pengguna
                     <div class="row">
                         <div class="col-lg-6 col-xlg-6">
                             <div class="form-group">
-                                <label>Pilih Ketegori <span class="text-danger">*</span></label>
+                                <label>Pilih Kategori <span class="text-danger">*</span>
+                                    <sup>
+                                        <i class="far fa-question-circle"
+                                            style="color:#5b5b5b;"
+                                            data-container="body"
+                                            data-trigger="hover"
+                                            title="Kategori User"
+                                            data-toggle="popover"
+                                            data-html="true"
+                                            data-content="<b>Nasabah</b> : Pelaku usaha atau pengguna aplikasi Portal PIC.<br><b>Organisator</b> : Pengelola usaha seperti Admin, Manager, Keuangan, dsb.<br><b>Super Admin</b> : Pengguna utama dalam pengelolaan aplikasi.">
+                                        </i>
+                                    </sup>
+                                </label>
                                 <select class="form-control" id="level" name="level">
                                     <option value="3">Nasabah</option>
                                     @if(Auth::user()->level == 1)
@@ -224,7 +236,19 @@ Pengguna
                         </div>
                         <div class="col-lg-6 col-xlg-6">
                             <div class="form-group">
-                                <label>KTP / Paspor <span class="text-danger">*</span></label>
+                                <label>KTP <span class="text-danger">*</span>
+                                    <sup>
+                                        <i class="far fa-question-circle"
+                                            style="color:#5b5b5b;"
+                                            data-container="body"
+                                            data-trigger="hover"
+                                            title="Kartu Tanda Penduduk"
+                                            data-toggle="popover"
+                                            data-html="true"
+                                            data-content="<b>KTP</b> : Nomor Identitas Negara yang sah.<br><b>SIM</b> : Alternatif bila Paspor tidak ada.<br><b>Paspor</b> : Alternatif bila KTP atau SIM tidak ada.">
+                                        </i>
+                                    </sup>
+                                </label>
                                 <input required type="tel" id="ktp" name="ktp" autocomplete="off" minlength="16" maxlength="16" placeholder="16 digit nomor KTP" class="form-control form-control-line">
                             </div>
                             <div class="form-group">
@@ -232,7 +256,19 @@ Pengguna
                                 <input type="tel" id="npwp" name="npwp" autocomplete="off" minlength="15" maxlength="15" placeholder="15 digit nomor NPWP" class="form-control form-control-line">
                             </div>
                             <div class="form-group">
-                                <label>Alamat <span class="text-danger">*</span></label>
+                                <label>Alamat <span class="text-danger">*</span>
+                                    <sup>
+                                        <i class="far fa-question-circle"
+                                            style="color:#5b5b5b;"
+                                            data-container="body"
+                                            data-trigger="hover"
+                                            title="Alamat Identitas"
+                                            data-toggle="popover"
+                                            data-html="true"
+                                            data-content="Diisi sesuai dengan alamat yang tertera pada kartu identitas(KTP, SIM, atau Paspor)">
+                                        </i>
+                                    </sup>
+                                </label>
                                 <textarea required rows="5" id="address" name="address" autocomplete="off" placeholder="Ketikkan Alamat disini" maxlength="255" class="form-control form-control-line"></textarea>
                             </div>
                         </div>
@@ -247,7 +283,22 @@ Pengguna
                         <div class="row">
                             <div class="col-lg-6 col-xlg-6">
                                 <div class="form-group">
-                                    <label>Otoritas <span class="text-danger">*</span></label>
+                                    <div class="d-flex justify-content-between">
+                                        <label>Otoritas <span class="text-danger">*</span>
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Otoritas Organisator"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Pilih Blok Tempat yang berhak dikelola oleh Organisator">
+                                                </i>
+                                            </sup>
+                                        </label>
+                                        <a id="chooseGroup" value="chooseAll" type="button" class="text-info" href="javascript:void(0)"></a>
+                                    </div>
                                     <select id="group" name="group[]" class="select2 form-control form-control-line" style="width: 100%;height: 36px;" multiple></select>
                                 </div>
                             </div>
@@ -435,6 +486,61 @@ Pengguna
 @section('content-js')
 <script>
     $(document).ready(function(){
+        $("#chooseGroup").click(function(){
+            if($("#chooseGroup").val() == 'chooseAll'){
+                $("#chooseGroup")
+                    .html('<i class="fas fa-sm fa-eraser"></i> Hapus Semua Blok')
+                    .val("deleteAll")
+                    .addClass("text-danger")
+                    .removeClass("text-info");
+                $.ajax({
+                    url: "/production/users/choose/group/all",
+                    type: "GET",
+                    cache:false,
+                    beforeSend:function(){
+                        $.blockUI({
+                            message: '<i class="fas fa-spin fa-sync text-white"></i>',
+                            baseZ: 9999,
+                            overlayCSS: {
+                                backgroundColor: '#000',
+                                opacity: 0.5,
+                                cursor: 'wait'
+                            },
+                            css: {
+                                border: 0,
+                                padding: 0,
+                                backgroundColor: 'transparent'
+                            }
+                        });
+                        $("#group").val(null).html("").trigger("change");
+                    },
+                    success:function(data){
+                        if(data.success){
+                            var group = data.success;
+                            $.each( group, function( i, val ) {
+                                var option = $('<option></option>').attr('value', val.name).text(val.name).prop('selected', true);
+                                $('#group').append(option).trigger('change');
+                            });
+                        }
+                    },
+                    error:function(data){
+                        console.log(data);
+                    },
+                    complete:function(data){
+                        $.unblockUI();
+                    }
+                });
+            }
+            else{
+                $("#chooseGroup")
+                    .html('<i class="fas fa-sm fa-hand-pointer"></i> Pilih Semua Blok')
+                    .val("chooseAll")
+                    .removeClass("text-danger")
+                    .addClass("text-info");
+                $("#group").val(null).html("").trigger("change");
+            }
+        });
+
         var id;
 
         if(getUrlParameter('data') !== false)
@@ -690,6 +796,10 @@ Pengguna
             dtable = dtableInit("/production/users?data=" + getUrlParameter('data') + "&lev=" + this.value);
         });
 
+        function initForm(){
+            $("#group").val(null).html("").trigger("change").prop("required",false);
+        }
+
         $(".add").click( function(){
             $("#userForm")[0].reset();
             $("#authorityDiv").hide();
@@ -699,9 +809,15 @@ Pengguna
             $("#userFormValue").val('add');
             iti.destroy();
             initializeTel("id");
-            $('#userModal').modal('show');
 
-            $("#group").prop("required",false);
+            initForm();
+            $("#chooseGroup")
+                .html('<i class="fas fa-sm fa-hand-pointer"></i> Pilih Semua Blok')
+                .val("chooseAll")
+                .removeClass("text-danger")
+                .addClass("text-info");
+
+            $('#userModal').modal('show');
         });
 
         $(document).on('click', '.edit', function(){
@@ -713,7 +829,22 @@ Pengguna
             $('#checkEmail').prop("checked", false);
             $("#userFormValue").val('update');
 
-            $("#group").prop("required",false);
+            initForm();
+
+            if($("#group").val()){
+                $("#chooseGroup")
+                    .html('<i class="fas fa-sm fa-eraser"></i> Hapus Semua Blok')
+                    .val("deleteAll")
+                    .addClass("text-danger")
+                    .removeClass("text-info");
+            }
+            else{
+                $("#chooseGroup")
+                    .html('<i class="fas fa-sm fa-hand-pointer"></i> Pilih Semua Blok')
+                    .val("chooseAll")
+                    .removeClass("text-danger")
+                    .addClass("text-info");
+            }
 
             $.ajax({
                 url: "/production/users/" + id + "/edit",

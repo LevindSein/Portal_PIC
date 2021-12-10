@@ -111,7 +111,7 @@ Profil
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-12">KTP / Paspor <span class="text-danger">*</span></label>
+                                <label class="col-md-12">KTP <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
                                     <input required type="tel" id="ktp" name="ktp" required autocomplete="off" minlength="7" maxlength="16" placeholder="16 digit nomor KTP" value="{{Auth::user()->ktp}}" class="form-control form-control-line">
                                 </div>

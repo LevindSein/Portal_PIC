@@ -14,6 +14,7 @@ use DataTables;
 use Carbon\Carbon;
 
 use App\Models\User;
+use App\Models\Group;
 use App\Models\Identity;
 use App\Models\ActivationCode;
 use App\Models\Country;
@@ -709,5 +710,10 @@ class UserController extends Controller
                 ]);
             }
         }
+    }
+
+    public function chooseGroupAll(){
+        $data = Group::select('id', 'name')->orderBy('name','asc')->get();
+        return response()->json(['success' => $data]);
     }
 }

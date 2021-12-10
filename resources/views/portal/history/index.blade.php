@@ -61,7 +61,7 @@ Riwayat Login
 @section('content-js')
 <script>
     $(document).ready(function(){
-        $('#dtable').DataTable({
+        var dtable = $('#dtable').DataTable({
             "language": {
                 paginate: {
                     previous: "<i class='fas fa-angle-left'>",
@@ -102,6 +102,29 @@ Riwayat Login
                 }, 10)
             },
         });
+
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            for ( var i=1 ; i<4 ; i++ ) {
+                dtable.column( i ).visible( false, false );
+            }
+            dtable.columns.adjust().draw( false );
+        }
+        else{
+            for ( var i=1 ; i<4 ; i++ ) {
+                dtable.column( i ).visible( true, false );
+            }
+            dtable.columns.adjust().draw( false );
+        }
+
+        setInterval(function(){
+            dtableReload();
+        }, 5000);
+
+        function dtableReload(){
+            dtable.ajax.reload(function(){
+                console.log("Refresh Automatic")
+            }, false);
+        }
 
         var id;
         $(document).on('click', '.details', function(){

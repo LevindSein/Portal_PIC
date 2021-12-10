@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 09, 2021 at 07:31 PM
+-- Generation Time: Dec 10, 2021 at 07:30 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -84,9 +84,9 @@ CREATE TABLE `commodities` (
 --
 
 INSERT INTO `commodities` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Sandang', '{\"name\":\"Sandang\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:48\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:48\"}', '2021-12-07 12:16:48', '2021-12-07 12:16:48'),
-(2, 'Pangan', '{\"name\":\"Pangan\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:53\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:53\"}', '2021-12-07 12:16:53', '2021-12-07 12:16:53'),
-(3, 'Papan', '{\"name\":\"Papan\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:59\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:59\"}', '2021-12-07 12:16:59', '2021-12-07 12:16:59');
+(1, 'Sandang', '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:48\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:48\"}', '2021-12-07 12:16:48', '2021-12-07 12:16:48'),
+(2, 'Pangan', '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:53\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:53\"}', '2021-12-07 12:16:53', '2021-12-07 12:16:53'),
+(3, 'Papan', '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:59\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:59\"}', '2021-12-07 12:16:59', '2021-12-07 12:16:59');
 
 -- --------------------------------------------------------
 
@@ -757,13 +757,6 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `visitors`
---
-
-INSERT INTO `visitors` (`id`, `visit_per_day`, `day_count`, `visit_on_day`, `updated_at`, `created_at`) VALUES
-(1, 0, 0, 0, '2021-12-02 14:01:18', '2021-12-02 09:26:17');
-
---
 -- Indexes for dumped tables
 --
 
@@ -1041,7 +1034,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

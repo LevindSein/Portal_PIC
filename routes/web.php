@@ -56,6 +56,7 @@ Route::middleware('checkauth')->group(function(){
             Route::delete('users/permanent/{id}', [UserController::class, 'permanent']);
             Route::post('users/reset/{id}', [UserController::class, 'reset']);
             Route::post('users/restore/{id}', [UserController::class, 'restore']);
+            Route::get('users/choose/group/all', [UserController::class, 'chooseGroupAll']);
             Route::resource('users', UserController::class);
 
             Route::get('point/stores/generate/kontrol', [StoreController::class, 'gKontrol']);
