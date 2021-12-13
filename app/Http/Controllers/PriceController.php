@@ -40,7 +40,7 @@ class PriceController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.manage.price.listrik.index');
+        return view('portal.price.listrik.index');
     }
 
     public function listrikStore(Request $request){
@@ -233,7 +233,7 @@ class PriceController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.manage.price.air-bersih.index');
+        return view('portal.price.air-bersih.index');
     }
 
     public function airbersihStore(Request $request){
@@ -427,7 +427,7 @@ class PriceController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.manage.price.keamanan-ipk.index');
+        return view('portal.price.keamanan-ipk.index');
     }
 
     public function keamananipkStore(Request $request){
@@ -597,7 +597,7 @@ class PriceController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.manage.price.kebersihan.index');
+        return view('portal.price.kebersihan.index');
     }
 
     public function kebersihanStore(Request $request){
@@ -759,7 +759,7 @@ class PriceController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.manage.price.air-kotor.index');
+        return view('portal.price.air-kotor.index');
     }
 
     public function airkotorStore(Request $request){
@@ -921,7 +921,7 @@ class PriceController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('portal.manage.price.lain.index');
+        return view('portal.price.lain.index');
     }
 
     public function lainStore(Request $request){

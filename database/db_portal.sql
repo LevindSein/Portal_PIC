@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2021 at 09:50 PM
+-- Generation Time: Dec 11, 2021 at 09:56 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -33,6 +33,35 @@ CREATE TABLE `activation_code` (
   `available` timestamp NULL DEFAULT NULL,
   `submit` tinyint(1) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bills`
+--
+
+CREATE TABLE `bills` (
+  `id` int(11) NOT NULL,
+  `code` varchar(8) DEFAULT NULL,
+  `stt_publish` tinyint(1) DEFAULT NULL,
+  `stt_bayar` tinyint(1) DEFAULT NULL,
+  `stt_lunas` tinyint(1) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `kd_kontrol` varchar(20) DEFAULT NULL,
+  `group` varchar(10) DEFAULT NULL,
+  `no_los` text DEFAULT NULL,
+  `jml_los` tinyint(4) DEFAULT NULL,
+  `b_listrik` longtext DEFAULT NULL,
+  `b_airbersih` longtext DEFAULT NULL,
+  `b_keamananipk` longtext DEFAULT NULL,
+  `b_kebersihan` longtext DEFAULT NULL,
+  `b_airkotor` longtext DEFAULT NULL,
+  `b_lain` longtext DEFAULT NULL,
+  `b_tagihan` longtext DEFAULT NULL,
+  `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -367,6 +396,13 @@ CREATE TABLE `data_login` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `data_login`
+--
+
+INSERT INTO `data_login` (`id`, `uid`, `name`, `level`, `active`, `platform`, `status`, `updated_at`, `created_at`) VALUES
+(1, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-11 07:37:27', '2021-12-11 07:37:27');
+
 -- --------------------------------------------------------
 
 --
@@ -648,7 +684,7 @@ CREATE TABLE `stores` (
   `nicename` varchar(50) DEFAULT NULL,
   `group` varchar(10) DEFAULT NULL,
   `no_los` text DEFAULT NULL,
-  `jml_los` int(11) DEFAULT NULL,
+  `jml_los` tinyint(4) DEFAULT NULL,
   `id_pengguna` bigint(20) DEFAULT NULL,
   `id_pemilik` bigint(20) DEFAULT NULL,
   `komoditi` text DEFAULT NULL,
@@ -761,7 +797,7 @@ CREATE TABLE `visitors` (
 --
 
 INSERT INTO `visitors` (`id`, `visit_per_day`, `day_count`, `visit_on_day`, `updated_at`, `created_at`) VALUES
-(1, 0, 0, 6, '2021-12-10 20:50:01', '2021-12-10 20:43:14');
+(1, 0, 0, 8, '2021-12-11 07:37:27', '2021-12-10 20:43:14');
 
 --
 -- Indexes for dumped tables
@@ -773,6 +809,13 @@ INSERT INTO `visitors` (`id`, `visit_per_day`, `day_count`, `visit_on_day`, `upd
 ALTER TABLE `activation_code`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `kode` (`code`);
+
+--
+-- Indexes for table `bills`
+--
+ALTER TABLE `bills`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `code` (`code`);
 
 --
 -- Indexes for table `change_logs`
@@ -930,6 +973,12 @@ ALTER TABLE `activation_code`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `bills`
+--
+ALTER TABLE `bills`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `change_logs`
 --
 ALTER TABLE `change_logs`
@@ -951,7 +1000,7 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `data_login`
 --
 ALTER TABLE `data_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `day_off`

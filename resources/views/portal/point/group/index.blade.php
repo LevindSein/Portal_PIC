@@ -11,9 +11,11 @@ Blok Tempat
     </button>
     <div class="dropdown-menu animated fadeIn">
         <a class="dropdown-item add" href="javascript:void(0)">
-            <i class="fas fa-fw fa-plus mr-1 ml-1"></i>
-            <span>Tambah Data</span>
+            <i class="fas fa-fw fa-plus mr-1"></i>
+            <span>Blok Tempat</span>
         </a>
+        <div class="dropdown-divider"></div>
+        @include('portal.point.button')
     </div>
 </div>
 @endsection
@@ -69,7 +71,7 @@ Blok Tempat
             <div class="modal-header">
                 <h5 class="modal-title titles">{Title}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">x</span>
                 </button>
             </div>
             <form id="groupForm">
@@ -151,7 +153,7 @@ Blok Tempat
 
         setInterval(function(){
             dtableReload('');
-        }, 5000);
+        }, 60000);
 
         function dtableReload(searchKey){
             if(searchKey){

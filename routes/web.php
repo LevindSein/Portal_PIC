@@ -19,6 +19,7 @@ use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\DayOffController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\CommodityController;
+use App\Http\Controllers\BillController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,49 +71,52 @@ Route::middleware('checkauth')->group(function(){
 
             Route::resource('changelogs', ChangeLogController::class);
 
+            Route::get('manage/bills/period', [BillController::class, 'period']);
+            Route::resource('manage/bills', BillController::class);
+
             Route::resource('manage/dayoff', DayOffController::class);
 
-            Route::get('manage/prices/listrik', [PriceController::class, 'listrik']);
-            Route::post('manage/prices/listrik', [PriceController::class, 'listrikStore']);
-            Route::get('manage/prices/listrik/{id}/edit', [PriceController::class, 'listrikEdit']);
-            Route::put('manage/prices/listrik/{id}', [PriceController::class, 'listrikUpdate']);
-            Route::get('manage/prices/listrik/{id}', [PriceController::class, 'listrikShow']);
-            Route::delete('manage/prices/listrik/{id}', [PriceController::class, 'listrikDestroy']);
+            Route::get('prices/listrik', [PriceController::class, 'listrik']);
+            Route::post('prices/listrik', [PriceController::class, 'listrikStore']);
+            Route::get('prices/listrik/{id}/edit', [PriceController::class, 'listrikEdit']);
+            Route::put('prices/listrik/{id}', [PriceController::class, 'listrikUpdate']);
+            Route::get('prices/listrik/{id}', [PriceController::class, 'listrikShow']);
+            Route::delete('prices/listrik/{id}', [PriceController::class, 'listrikDestroy']);
 
-            Route::get('manage/prices/airbersih', [PriceController::class, 'airbersih']);
-            Route::post('manage/prices/airbersih', [PriceController::class, 'airbersihStore']);
-            Route::get('manage/prices/airbersih/{id}/edit', [PriceController::class, 'airbersihEdit']);
-            Route::put('manage/prices/airbersih/{id}', [PriceController::class, 'airbersihUpdate']);
-            Route::get('manage/prices/airbersih/{id}', [PriceController::class, 'airbersihShow']);
-            Route::delete('manage/prices/airbersih/{id}', [PriceController::class, 'airbersihDestroy']);
+            Route::get('prices/airbersih', [PriceController::class, 'airbersih']);
+            Route::post('prices/airbersih', [PriceController::class, 'airbersihStore']);
+            Route::get('prices/airbersih/{id}/edit', [PriceController::class, 'airbersihEdit']);
+            Route::put('prices/airbersih/{id}', [PriceController::class, 'airbersihUpdate']);
+            Route::get('prices/airbersih/{id}', [PriceController::class, 'airbersihShow']);
+            Route::delete('prices/airbersih/{id}', [PriceController::class, 'airbersihDestroy']);
 
-            Route::get('manage/prices/keamananipk', [PriceController::class, 'keamananipk']);
-            Route::post('manage/prices/keamananipk', [PriceController::class, 'keamananipkStore']);
-            Route::get('manage/prices/keamananipk/{id}/edit', [PriceController::class, 'keamananipkEdit']);
-            Route::put('manage/prices/keamananipk/{id}', [PriceController::class, 'keamananipkUpdate']);
-            Route::get('manage/prices/keamananipk/{id}', [PriceController::class, 'keamananipkShow']);
-            Route::delete('manage/prices/keamananipk/{id}', [PriceController::class, 'keamananipkDestroy']);
+            Route::get('prices/keamananipk', [PriceController::class, 'keamananipk']);
+            Route::post('prices/keamananipk', [PriceController::class, 'keamananipkStore']);
+            Route::get('prices/keamananipk/{id}/edit', [PriceController::class, 'keamananipkEdit']);
+            Route::put('prices/keamananipk/{id}', [PriceController::class, 'keamananipkUpdate']);
+            Route::get('prices/keamananipk/{id}', [PriceController::class, 'keamananipkShow']);
+            Route::delete('prices/keamananipk/{id}', [PriceController::class, 'keamananipkDestroy']);
 
-            Route::get('manage/prices/kebersihan', [PriceController::class, 'kebersihan']);
-            Route::post('manage/prices/kebersihan', [PriceController::class, 'kebersihanStore']);
-            Route::get('manage/prices/kebersihan/{id}/edit', [PriceController::class, 'kebersihanEdit']);
-            Route::put('manage/prices/kebersihan/{id}', [PriceController::class, 'kebersihanUpdate']);
-            Route::get('manage/prices/kebersihan/{id}', [PriceController::class, 'kebersihanShow']);
-            Route::delete('manage/prices/kebersihan/{id}', [PriceController::class, 'kebersihanDestroy']);
+            Route::get('prices/kebersihan', [PriceController::class, 'kebersihan']);
+            Route::post('prices/kebersihan', [PriceController::class, 'kebersihanStore']);
+            Route::get('prices/kebersihan/{id}/edit', [PriceController::class, 'kebersihanEdit']);
+            Route::put('prices/kebersihan/{id}', [PriceController::class, 'kebersihanUpdate']);
+            Route::get('prices/kebersihan/{id}', [PriceController::class, 'kebersihanShow']);
+            Route::delete('prices/kebersihan/{id}', [PriceController::class, 'kebersihanDestroy']);
 
-            Route::get('manage/prices/airkotor', [PriceController::class, 'airkotor']);
-            Route::post('manage/prices/airkotor', [PriceController::class, 'airkotorStore']);
-            Route::get('manage/prices/airkotor/{id}/edit', [PriceController::class, 'airkotorEdit']);
-            Route::put('manage/prices/airkotor/{id}', [PriceController::class, 'airkotorUpdate']);
-            Route::get('manage/prices/airkotor/{id}', [PriceController::class, 'airkotorShow']);
-            Route::delete('manage/prices/airkotor/{id}', [PriceController::class, 'airkotorDestroy']);
+            Route::get('prices/airkotor', [PriceController::class, 'airkotor']);
+            Route::post('prices/airkotor', [PriceController::class, 'airkotorStore']);
+            Route::get('prices/airkotor/{id}/edit', [PriceController::class, 'airkotorEdit']);
+            Route::put('prices/airkotor/{id}', [PriceController::class, 'airkotorUpdate']);
+            Route::get('prices/airkotor/{id}', [PriceController::class, 'airkotorShow']);
+            Route::delete('prices/airkotor/{id}', [PriceController::class, 'airkotorDestroy']);
 
-            Route::get('manage/prices/lain', [PriceController::class, 'lain']);
-            Route::post('manage/prices/lain', [PriceController::class, 'lainStore']);
-            Route::get('manage/prices/lain/{id}/edit', [PriceController::class, 'lainEdit']);
-            Route::put('manage/prices/lain/{id}', [PriceController::class, 'lainUpdate']);
-            Route::get('manage/prices/lain/{id}', [PriceController::class, 'lainShow']);
-            Route::delete('manage/prices/lain/{id}', [PriceController::class, 'lainDestroy']);
+            Route::get('prices/lain', [PriceController::class, 'lain']);
+            Route::post('prices/lain', [PriceController::class, 'lainStore']);
+            Route::get('prices/lain/{id}/edit', [PriceController::class, 'lainEdit']);
+            Route::put('prices/lain/{id}', [PriceController::class, 'lainUpdate']);
+            Route::get('prices/lain/{id}', [PriceController::class, 'lainShow']);
+            Route::delete('prices/lain/{id}', [PriceController::class, 'lainDestroy']);
 
             Route::get('point/tools/listrik', [ToolsController::class, 'listrik']);
             Route::post('point/tools/listrik', [ToolsController::class, 'listrikStore']);
@@ -159,6 +163,7 @@ Route::get('email/verified', function(){
     return view('email.verified');
 });
 
+Route::get('search/period',[SearchController::class, 'period']);
 Route::get('search/users',[SearchController::class, 'users']);
 Route::get('search/groups',[SearchController::class, 'group']);
 Route::get('search/{group}/los',[SearchController::class, 'los']);

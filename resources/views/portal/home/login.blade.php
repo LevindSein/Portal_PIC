@@ -87,7 +87,8 @@
             $(document).ready(function(){
                 $("#uid").focus();
 
-                $('#passwordRegShow').click(function(){
+                $('#passwordRegShow').on('click touchstart', function(e){
+                    e.preventDefault();
                     if($('#passwordReg').attr('type') == 'password'){
                         $('#passwordReg').prop('type', 'text');
                         $('#passwordRegShow').removeClass('fa-eye-slash').addClass('fa-eye');
@@ -97,7 +98,8 @@
                     }
                 });
 
-                $('#passwordLogShow').click(function(){
+                $('#passwordLogShow').on('click touchstart', function(e){
+                    e.preventDefault();
                     if($('#passwordLog').attr('type') == 'password'){
                         $('#passwordLog').prop('type', 'text');
                         $('#passwordLogShow').removeClass('fa-eye-slash').addClass('fa-eye');

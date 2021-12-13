@@ -41,6 +41,7 @@ Pengguna
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <p id="warning-deleted" class="text-danger">*) Data Penghapusan akan terhapus secara permanen oleh sistem saat 30 hari sejak akun yang terkait dihapus.</p>
                 <div class="form-group col-md-2 col-sm-2" style="padding: 0;">
                     <label for="kategori">Pilih Kategori</label>
                     <select class="form-control" id="category" name="category">
@@ -51,7 +52,6 @@ Pengguna
                         @endif
                     </select>
                 </div>
-                <p id="warning-deleted" class="text-danger">*) Data Penghapusan akan terhapus secara permanen oleh sistem saat 30 hari sejak akun yang terkait dihapus.</p>
                 <div class="table-responsive">
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
@@ -77,7 +77,7 @@ Pengguna
             <div class="modal-header">
                 <h5 class="modal-title">Password Baru</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">x</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -134,7 +134,7 @@ Pengguna
             <div class="modal-header">
                 <h5 class="modal-title titles">{Title}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">x</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -191,7 +191,7 @@ Pengguna
             <div class="modal-header">
                 <h5 class="modal-title titles">{Title}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">x</span>
                 </button>
             </div>
             <form id="userForm">
@@ -1259,7 +1259,7 @@ Pengguna
 
         setInterval(function(){
             dtableReload('');
-        }, 5000);
+        }, 60000);
 
         function dtableReload(searchKey){
             if(searchKey){

@@ -12,8 +12,10 @@ Alat Air Bersih
     <div class="dropdown-menu animated fadeIn">
         <a class="dropdown-item add" href="javascript:void(0)">
             <i class="fas fa-fw fa-plus mr-1 ml-1"></i>
-            <span>Tambah Data</span>
+            <span>Alat Air Bersih</span>
         </a>
+        <div class="dropdown-divider"></div>
+        @include('portal.point.button')
     </div>
 </div>
 @endsection
@@ -76,7 +78,7 @@ Alat Air Bersih
             <div class="modal-header">
                 <h5 class="modal-title titles">{Title}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">x</span>
                 </button>
             </div>
             <form id="toolsForm">
@@ -162,7 +164,7 @@ Alat Air Bersih
 
         setInterval(function(){
             dtableReload('');
-        }, 5000);
+        }, 60000);
 
         function dtableReload(searchKey){
             if(searchKey){
@@ -175,7 +177,7 @@ Alat Air Bersih
 
         $(".add").click( function(){
             $("#toolsForm")[0].reset();
-            $('.titles').text('Tambah Alat Listrik');
+            $('.titles').text('Tambah Alat Air Bersih');
             $("#toolsFormValue").val('add');
             $('#toolsModal').modal('show');
             $('#toolsModal').on('shown.bs.modal', function() {

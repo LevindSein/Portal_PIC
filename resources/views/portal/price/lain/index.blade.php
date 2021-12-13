@@ -1,7 +1,7 @@
 @extends('portal.layout.master')
 
 @section('content-title')
-Tarif Air Bersih
+Tarif Lainnya
 @endsection
 
 @section('content-button')
@@ -28,6 +28,7 @@ Tarif Air Bersih
                         <thead>
                             <tr>
                                 <th>Data</th>
+                                <th>Price</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -44,28 +45,16 @@ Tarif Air Bersih
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tarif Air Bersih</h5>
+                <h5 class="modal-title">Tarif Lainnya</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">x</span>
                 </button>
             </div>
             <div class="modal-body">
                 <small class="text-muted pt-4 db">Nama Tarif</small>
                 <h4 id="showName"></h4>
-                <small class="text-muted pt-4 db">Tarif 1</small>
-                <h6 id="showTarif1"></h6>
-                <small class="text-muted pt-4 db">Tarif 2</small>
-                <h6 id="showTarif2"></h6>
-                <small class="text-muted pt-4 db">Pemeliharaan</small>
-                <h6 id="showPemeliharaan"></h6>
-                <small class="text-muted pt-4 db">Beban</small>
-                <h6 id="showBeban"></h6>
-                <small class="text-muted pt-4 db">Air Kotor</small>
-                <h6 id="showAirKotor"></h6>
-                <small class="text-muted pt-4 db">Denda</small>
-                <h6 id="showDenda"></h6>
-                <small class="text-muted pt-4 db">PPN</small>
-                <h6 id="showPpn"></h6>
+                <small class="text-muted pt-4 db">Tarif</small>
+                <h6 id="showTarif"></h6>
                 <small class="text-muted pt-4 db">Dibuat oleh</small>
                 <h6 id="showCreate"></h6>
                 <small class="text-muted pt-4 db">Diperbaharui oleh</small>
@@ -78,92 +67,43 @@ Tarif Air Bersih
     </div>
 </div>
 
-<div id="priceModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-xl">
+<div id="priceModal" class="modal fade" role="dialog" tabIndex="-1">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title titles">{Title}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">x</span>
                 </button>
             </div>
             <form id="priceForm">
-                <div class="modal-body-xl">
+                <div class="modal-body">
                     <div class="form-group">
                         <label>Nama Tarif <span class="text-danger">*</span></label>
                         <input required type="text" id="name" name="name" autocomplete="off" maxlength="100" placeholder="Contoh: Tarif 1" class="form-control form-control-line">
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-xlg-6">
-                            <div class="form-group">
-                                <label>Tarif 1 <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp.</span>
-                                    </div>
-                                    <input maxlength="11" required type="text" id="tarif1" name="tarif1" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">/ M<sup>3</sup></span>
-                                    </div>
-                                </div>
+                    <div class="form-group">
+                        <label>Tarif <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Rp.</span>
                             </div>
-                            <div class="form-group">
-                                <label>tarif 2 <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp.</span>
-                                    </div>
-                                    <input maxlength="11" required type="text" id="tarif2" name="tarif2" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">/ M<sup>3</sup></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Pemeliharaan <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp.</span>
-                                    </div>
-                                    <input maxlength="11" required type="text" id="pemeliharaan" name="pemeliharaan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Beban <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp.</span>
-                                    </div>
-                                    <input maxlength="11" required type="text" id="beban" name="beban" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                                </div>
-                            </div>
+                            <input maxlength="11" required type="text" id="tarif" name="tarif" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                         </div>
-                        <div class="col-lg-6 col-xlg-6">
-                            <div class="form-group">
-                                <label>Air Kotor <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <input maxlength="3" required type="text" id="airkotor" name="airkotor" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">%</span>
-                                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Satuan Tarif <span class="text-danger">*</span></label>
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="per_kontrol" name="satuan" value="1" checked>
+                                    <label class="custom-control-label" style="font-weight: 400;" for="per_kontrol">per-Kontrol</label>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label>Denda <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Rp.</span>
-                                    </div>
-                                    <input maxlength="11" required type="text" id="denda" name="denda" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>PPN <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <input maxlength="3" required type="text" id="ppn" name="ppn" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">%</span>
-                                    </div>
+                            <div class="form-check form-check-inline">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="per_los" name="satuan" value="2">
+                                    <label class="custom-control-label" style="font-weight: 400;" for="per_los">per-Los</label>
                                 </div>
                             </div>
                         </div>
@@ -218,9 +158,10 @@ Tarif Air Bersih
                 }
             },
             "serverSide": true,
-            "ajax": "/production/manage/prices/airbersih",
+            "ajax": "/production/prices/lain",
             "columns": [
                 { data: 'name', name: 'name', class : 'text-center' },
+                { data: 'price', name: 'price', class : 'text-center' },
                 { data: 'action', name: 'action', class : 'text-center' },
             ],
             "stateSave": true,
@@ -229,8 +170,8 @@ Tarif Air Bersih
             "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
             "order": [[ 0, "asc" ]],
             "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [1] },
-                { "bSearchable": false, "aTargets": [1] }
+                { "bSortable": false, "aTargets": [2] },
+                { "bSearchable": false, "aTargets": [2] }
             ],
             "scrollY": "50vh",
             "scrollX": true,
@@ -250,7 +191,7 @@ Tarif Air Bersih
 
         setInterval(function(){
             dtableReload('');
-        }, 5000);
+        }, 60000);
 
         function dtableReload(searchKey){
             if(searchKey){
@@ -263,8 +204,9 @@ Tarif Air Bersih
 
         $(".add").click( function(){
             $("#priceForm")[0].reset();
-            $('.titles').text('Tambah Tarif Air Bersih');
+            $('.titles').text('Tambah Tarif Lainnya');
             $("#priceFormValue").val('add');
+            $("#per_kontrol").prop("checked", true)
             $('#priceModal').modal('show');
             $('#priceModal').on('shown.bs.modal', function() {
                 $('#name').focus();
@@ -277,21 +219,17 @@ Tarif Air Bersih
             $("#priceForm")[0].reset();
             $('.titles').text('Edit data ' + name);
             $("#priceFormValue").val('update');
+            $("#per_kontrol").prop("checked", true)
 
             $.ajax({
-                url: "/production/manage/prices/airbersih/" + id + "/edit",
+                url: "/production/prices/lain/" + id + "/edit",
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
                         $("#name").val(data.show.name);
-                        $("#tarif1").val(Number(data.show.data.tarif1).toLocaleString('id-ID'));
-                        $("#tarif2").val(Number(data.show.data.tarif2).toLocaleString('id-ID'));
-                        $("#pemeliharaan").val(Number(data.show.data.pemeliharaan).toLocaleString('id-ID'));
-                        $("#beban").val(Number(data.show.data.beban).toLocaleString('id-ID'));
-                        $("#airkotor").val(data.show.data.airkotor);
-                        $("#denda").val(Number(data.show.data.denda).toLocaleString('id-ID'));
-                        $("#ppn").val(data.show.data.ppn);
+                        $("#tarif").val(data.show.price.toLocaleString('id-ID'));
+                        (data.show.satuan == 2) ? $("#per_los").prop("checked", true) : $("#per_kontrol").prop("checked", true);
                     }
 
                     if(data.info){
@@ -358,7 +296,7 @@ Tarif Air Bersih
                 '_token' : token,
             }
             if(value == 'delete'){
-                url = "/production/manage/prices/airbersih/" + id;
+                url = "/production/prices/lain/" + id;
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Hapus";
@@ -371,11 +309,11 @@ Tarif Air Bersih
 
             value = $("#priceFormValue").val();
             if(value == 'add'){
-                url = "/production/manage/prices/airbersih";
+                url = "/production/prices/lain";
                 type = "POST";
             }
             else if(value == 'update'){
-                url = "/production/manage/prices/airbersih/" + id;
+                url = "/production/prices/lain/" + id;
                 type = "PUT";
             }
             dataset = $(this).serialize();
@@ -486,19 +424,13 @@ Tarif Air Bersih
             id = $(this).attr('id');
 
             $.ajax({
-                url: "/production/manage/prices/airbersih/" + id,
+                url: "/production/prices/lain/" + id,
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
                         $("#showName").text(data.show.name);
-                        $("#showTarif1").text("Rp. " + Number(data.show.data.tarif1).toLocaleString('id-ID'));
-                        $("#showTarif2").text("Rp. " + Number(data.show.data.tarif2).toLocaleString('id-ID'));
-                        $("#showPemeliharaan").text("Rp. " + Number(data.show.data.pemeliharaan).toLocaleString('id-ID'));
-                        $("#showBeban").text("Rp. " + Number(data.show.data.beban).toLocaleString('id-ID'));
-                        $("#showAirKotor").text(data.show.data.airkotor + " %");
-                        $("#showDenda").text("Rp. " + Number(data.show.data.denda).toLocaleString('id-ID'));
-                        $("#showPpn").text(data.show.data.ppn + " %");
+                        $("#showTarif").text("Rp. " + data.show.price.toLocaleString('id-ID') + " " + data.show.satuan);
                         $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
                         $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                     }

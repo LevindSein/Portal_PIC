@@ -11,9 +11,11 @@ Data Tempat
     </button>
     <div class="dropdown-menu animated fadeIn">
         <a class="dropdown-item add" href="javascript:void(0)">
-            <i class="fas fa-fw fa-plus mr-1 ml-1"></i>
-            <span>Tambah Data</span>
+            <i class="fas fa-fw fa-plus mr-1"></i>
+            <span>Tempat Usaha</span>
         </a>
+        <div class="dropdown-divider"></div>
+        @include('portal.point.button')
     </div>
 </div>
 @endsection
@@ -327,7 +329,7 @@ Data Tempat
                                     <div class="form-group">
                                         <label>Pilih Tarif <span class="text-danger">*</span>
                                             <sup>
-                                                <a href='{{url("production/manage/prices/listrik")}}' target="_blank">
+                                                <a href='{{url("production/prices/listrik")}}' target="_blank">
                                                     <i class="far fa-question-circle"
                                                         style="color:#5b5b5b;"
                                                         data-container="body"
@@ -399,7 +401,7 @@ Data Tempat
                                     <div class="form-group">
                                         <label>Pilih Tarif <span class="text-danger">*</span>
                                             <sup>
-                                                <a href='{{url("production/manage/prices/airbersih")}}' target="_blank">
+                                                <a href='{{url("production/prices/airbersih")}}' target="_blank">
                                                     <i class="far fa-question-circle"
                                                         style="color:#5b5b5b;"
                                                         data-container="body"
@@ -453,7 +455,7 @@ Data Tempat
                                     <div class="form-group">
                                         <label>Pilih Tarif <span class="text-danger">*</span>
                                             <sup>
-                                                <a href='{{url("production/manage/prices/keamananipk")}}' target="_blank">
+                                                <a href='{{url("production/prices/keamananipk")}}' target="_blank">
                                                     <i class="far fa-question-circle"
                                                         style="color:#5b5b5b;"
                                                         data-container="body"
@@ -512,7 +514,7 @@ Data Tempat
                                     <div class="form-group">
                                         <label>Pilih Tarif <span class="text-danger">*</span>
                                             <sup>
-                                                <a href='{{url("production/manage/prices/kebersihan")}}' target="_blank">
+                                                <a href='{{url("production/prices/kebersihan")}}' target="_blank">
                                                     <i class="far fa-question-circle"
                                                         style="color:#5b5b5b;"
                                                         data-container="body"
@@ -571,7 +573,7 @@ Data Tempat
                                     <div class="form-group">
                                         <label>Pilih Tarif <span class="text-danger">*</span>
                                             <sup>
-                                                <a href='{{url("production/manage/prices/airkotor")}}' target="_blank">
+                                                <a href='{{url("production/prices/airkotor")}}' target="_blank">
                                                     <i class="far fa-question-circle"
                                                         style="color:#5b5b5b;"
                                                         data-container="body"
@@ -624,7 +626,7 @@ Data Tempat
                                 <div class="form-group">
                                     <button id="divLainAdd" class="btn btn-sm btn-rounded btn-info"><i class="fas fa-fw fa-plus mr-1"></i>Fasilitas Lainnya</button>
                                     <sup>
-                                        <a href='{{url("production/manage/prices/lain")}}' target="_blank">
+                                        <a href='{{url("production/prices/lain")}}' target="_blank">
                                             <i class="far fa-question-circle"
                                                 style="color:#5b5b5b;"
                                                 data-container="body"
@@ -724,7 +726,7 @@ Data Tempat
 
         setInterval(function(){
             dtableReload('');
-        }, 5000);
+        }, 60000);
 
         function dtableReload(searchKey){
             if(searchKey){

@@ -17,6 +17,7 @@ use App\Models\PKeamananIpk;
 use App\Models\PKebersihan;
 use App\Models\PAirKotor;
 use App\Models\PLain;
+use App\Models\Period;
 
 class SearchController extends Controller
 {
@@ -39,6 +40,15 @@ class SearchController extends Controller
         if($request->ajax()) {
             $key = $request->q;
             $data = Group::select('id', 'name')->where('name', 'LIKE', '%'.$key.'%')->orderBy('name','asc')->get();
+        }
+        return response()->json($data);
+    }
+
+    public function period(Request $request){
+        $data = [];
+        if($request->ajax()) {
+            $key = $request->q;
+            $data = Period::select('id', 'name','nicename')->where('nicename', 'LIKE', '%'.$key.'%')->orderBy('name','asc')->get();
         }
         return response()->json($data);
     }

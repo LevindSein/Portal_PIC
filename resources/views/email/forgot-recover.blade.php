@@ -115,7 +115,8 @@
         $(document).ready(function(){
             $("#password").focus();
 
-            $("#passwordShow").click(function(){
+            $("#passwordShow").on('click touchstart', function(e){
+                e.preventDefault()
                 if($('#password').attr('type') == 'password'){
                     $('#password').prop('type', 'text');
                     $('#passwordShow').removeClass('fa-eye-slash').addClass('fa-eye');

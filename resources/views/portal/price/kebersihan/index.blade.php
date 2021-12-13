@@ -1,7 +1,7 @@
 @extends('portal.layout.master')
 
 @section('content-title')
-Tarif Keamanan IPK
+Tarif Kebersihan
 @endsection
 
 @section('content-button')
@@ -45,9 +45,9 @@ Tarif Keamanan IPK
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tarif Keamanan IPK</h5>
+                <h5 class="modal-title">Tarif Kebersihan</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">x</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -55,10 +55,6 @@ Tarif Keamanan IPK
                 <h4 id="showName"></h4>
                 <small class="text-muted pt-4 db">Tarif</small>
                 <h6 id="showTarif"></h6>
-                <small class="text-muted pt-4 db">Keamanan</small>
-                <h6 id="showKeamanan"></h6>
-                <small class="text-muted pt-4 db">IPK</small>
-                <h6 id="showIpk"></h6>
                 <small class="text-muted pt-4 db">Dibuat oleh</small>
                 <h6 id="showCreate"></h6>
                 <small class="text-muted pt-4 db">Diperbaharui oleh</small>
@@ -77,7 +73,7 @@ Tarif Keamanan IPK
             <div class="modal-header">
                 <h5 class="modal-title titles">{Title}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">x</span>
                 </button>
             </div>
             <form id="priceForm">
@@ -99,24 +95,6 @@ Tarif Keamanan IPK
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Keamanan <span class="text-danger">*</span></label>
-                        <div class="input-group">
-                            <input maxlength="3" required type="text" id="keamanan" name="keamanan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-line">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>IPK <span class="text-danger">*</span></label>
-                        <div class="input-group">
-                            <input maxlength="3" required type="text" id="ipk" name="ipk" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-line">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <p>(<label class="text-danger">*</label>) wajib diisi.</p>
                     </div>
                 </div>
@@ -134,26 +112,6 @@ Tarif Keamanan IPK
 @section('content-js')
 <script>
     $(document).ready(function(){
-        $("#keamanan").on('input', function (e) {
-            var keamanan = $("#keamanan").val();
-
-            var ipk = 100 - keamanan;
-            if(ipk < 0){
-                ipk = 0;
-            }
-            $("#ipk").val(ipk);
-        });
-
-        $("#ipk").on('input', function (e) {
-            var ipk = $("#ipk").val();
-
-            var keamanan = 100 - ipk;
-            if(keamanan < 0){
-                keamanan = 0;
-            }
-            $("#keamanan").val(keamanan);
-        });
-
         $(".number").on('input', function (e) {
             if(e.which >= 37 && e.which <= 40) return;
 
@@ -186,7 +144,7 @@ Tarif Keamanan IPK
                 }
             },
             "serverSide": true,
-            "ajax": "/production/manage/prices/keamananipk",
+            "ajax": "/production/prices/kebersihan",
             "columns": [
                 { data: 'name', name: 'name', class : 'text-center' },
                 { data: 'price', name: 'price', class : 'text-center' },
@@ -219,7 +177,7 @@ Tarif Keamanan IPK
 
         setInterval(function(){
             dtableReload('');
-        }, 5000);
+        }, 60000);
 
         function dtableReload(searchKey){
             if(searchKey){
@@ -232,7 +190,7 @@ Tarif Keamanan IPK
 
         $(".add").click( function(){
             $("#priceForm")[0].reset();
-            $('.titles').text('Tambah Tarif Keamanan IPK');
+            $('.titles').text('Tambah Tarif Kebersihan');
             $("#priceFormValue").val('add');
             $('#priceModal').modal('show');
             $('#priceModal').on('shown.bs.modal', function() {
@@ -248,15 +206,13 @@ Tarif Keamanan IPK
             $("#priceFormValue").val('update');
 
             $.ajax({
-                url: "/production/manage/prices/keamananipk/" + id + "/edit",
+                url: "/production/prices/kebersihan/" + id + "/edit",
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
                         $("#name").val(data.show.name);
                         $("#tarif").val(data.show.price.toLocaleString('id-ID'));
-                        $("#keamanan").val(data.show.data.keamanan);
-                        $("#ipk").val(data.show.data.ipk);
                     }
 
                     if(data.info){
@@ -323,7 +279,7 @@ Tarif Keamanan IPK
                 '_token' : token,
             }
             if(value == 'delete'){
-                url = "/production/manage/prices/keamananipk/" + id;
+                url = "/production/prices/kebersihan/" + id;
                 type = "DELETE";
                 ok_btn_before = "Menghapus...";
                 ok_btn_completed = "Hapus";
@@ -336,11 +292,11 @@ Tarif Keamanan IPK
 
             value = $("#priceFormValue").val();
             if(value == 'add'){
-                url = "/production/manage/prices/keamananipk";
+                url = "/production/prices/kebersihan";
                 type = "POST";
             }
             else if(value == 'update'){
-                url = "/production/manage/prices/keamananipk/" + id;
+                url = "/production/prices/kebersihan/" + id;
                 type = "PUT";
             }
             dataset = $(this).serialize();
@@ -451,15 +407,13 @@ Tarif Keamanan IPK
             id = $(this).attr('id');
 
             $.ajax({
-                url: "/production/manage/prices/keamananipk/" + id,
+                url: "/production/prices/kebersihan/" + id,
                 type: "GET",
                 cache:false,
                 success:function(data){
                     if(data.success){
                         $("#showName").text(data.show.name);
                         $("#showTarif").text("Rp. " + data.show.price.toLocaleString('id-ID') + " per-Los");
-                        $("#showKeamanan").text(data.show.data.keamanan + " %");
-                        $("#showIpk").text(data.show.data.ipk + " %");
                         $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
                         $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                     }

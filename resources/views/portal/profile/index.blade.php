@@ -210,7 +210,8 @@ Profil
             }
         });
 
-        $("#passwordNewShow").click(function(){
+        $("#passwordNewShow").on('click touchstart', function(e){
+            e.preventDefault();
             if($('#passwordNew').attr('type') == 'password'){
                 $('#passwordNew').prop('type', 'text');
                 $('#passwordNewShow').removeClass('fa-eye-slash').addClass('fa-eye');
@@ -220,7 +221,8 @@ Profil
             }
         });
 
-        $("#passwordShow").click(function(){
+        $("#passwordShow").on('click touchstart', function(e){
+            e.preventDefault();
             if($('#password').attr('type') == 'password'){
                 $('#password').prop('type', 'text');
                 $('#passwordShow').removeClass('fa-eye-slash').addClass('fa-eye');

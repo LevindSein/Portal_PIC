@@ -118,7 +118,7 @@ Riwayat Login
 
         setInterval(function(){
             dtableReload();
-        }, 5000);
+        }, 60000);
 
         function dtableReload(){
             dtable.ajax.reload(function(){
