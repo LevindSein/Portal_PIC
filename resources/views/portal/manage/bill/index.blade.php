@@ -449,6 +449,10 @@ Kelola Tagihan
                             $('#pairkotor').val("").html("");
                             $("#dairkotor").val('');
 
+                            lain = 0;
+                            plain = 1;
+                            $('div[name="divlain"]').remove();
+
                             if(data.show.fas_listrik){
                                 $("#fas_listrik").prop("checked", true).attr('disabled', false);
                                 fasListrik('show');
@@ -549,7 +553,18 @@ Kelola Tagihan
 
                             $("#divLainAdd").attr('disabled', false);
                             if(data.show.fas_lain){
-
+                                var json = $.parseJSON(data.show.fas_lain);
+                                $.each( json, function( i, val ) {
+                                    $('#divLainAdd').trigger('click');
+                                    $('#plain' + plain).val("").html("");
+                                    var plainOpt = new Option(
+                                        val.name + ' - ' + Number(val.price).toLocaleString('id-ID') + ' ' + val.satuan_name,
+                                        val.id,
+                                        false,
+                                        false
+                                    );
+                                    $('#plain' + (i+1)).append(plainOpt).trigger('change');
+                                });
                             }
                         }
 
@@ -1033,6 +1048,31 @@ Kelola Tagihan
                     },
                 }
             });
+        }
+
+        function select2plain(select2id, url, placeholder){
+            $(select2id).select2({
+                placeholder: placeholder,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    processResults: function (data) {
+                        return {
+                            results:  $.map(data, function (d) {
+                                return {
+                                    id: d.id,
+                                    text: d.name + ' - ' + Number(d.price).toLocaleString('id-ID') + " " + satuanLain(d.satuan)
+                                }
+                            })
+                        };
+                    },
+                }
+            });
+        }
+        function satuanLain(data){
+            return (data == 2) ? "per-Los" : "per-Kontrol";
         }
 
         $(".number").on('input', function (e) {
