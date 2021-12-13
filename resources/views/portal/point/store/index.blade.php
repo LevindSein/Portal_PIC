@@ -9,7 +9,7 @@ Data Tempat
     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Menu
     </button>
-    <div class="dropdown-menu animated fadeIn">
+    <div class="dropdown-menu animated fadeIn mr-3">
         <a class="dropdown-item add" href="javascript:void(0)">
             <i class="fas fa-fw fa-plus mr-1"></i>
             <span>Tempat Usaha</span>
@@ -609,6 +609,9 @@ Data Tempat
                                                 <span class="input-group-text">Rp.</span>
                                             </div>
                                             <input maxlength="11" type="text" id="dairkotor" name="dairkotor" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">per-Kontrol</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -866,7 +869,7 @@ Data Tempat
 
                             $('#pkeamananipk').val("").html("");
                             var pkeamananipk = new Option(
-                                data.show.pkeamananipk.name + ' - ' + Number(data.show.pkeamananipk.price).toLocaleString('id-ID'),
+                                data.show.pkeamananipk.name + ' - ' + Number(data.show.pkeamananipk.price).toLocaleString('id-ID') + ' per-Los',
                                 data.show.pkeamananipk.id,
                                 false,
                                 false
@@ -884,7 +887,7 @@ Data Tempat
 
                             $('#pkebersihan').val("").html("");
                             var pkebersihan = new Option(
-                                data.show.pkebersihan.name + ' - ' + Number(data.show.pkebersihan.price).toLocaleString('id-ID'),
+                                data.show.pkebersihan.name + ' - ' + Number(data.show.pkebersihan.price).toLocaleString('id-ID') + ' per-Los',
                                 data.show.pkebersihan.id,
                                 false,
                                 false
@@ -902,7 +905,7 @@ Data Tempat
 
                             $('#pairkotor').val("").html("");
                             var pairkotor = new Option(
-                                data.show.pairkotor.name + ' - ' + Number(data.show.pairkotor.price).toLocaleString('id-ID'),
+                                data.show.pairkotor.name + ' - ' + Number(data.show.pairkotor.price).toLocaleString('id-ID') + ' per-Kontrol' ,
                                 data.show.pairkotor.id,
                                 false,
                                 false
@@ -1055,57 +1058,57 @@ Data Tempat
         });
 
         function initForm(){
-            $("#group").val("");
+            $("#group").val("").html("");
             select2custom("#group", "/search/groups", "-- Cari Blok Tempat --");
 
-            $("#los").val("");
+            $("#los").val("").html("");
             $("#los").select2({
                 placeholder: "(Pilih Blok Tempat terlebih dulu)"
             }).prop("disabled", true);
 
-            $("#kontrol").prop("disabled", true).val("");
+            $("#kontrol").prop("disabled", true).val("").html("");
 
             $("#cancelPengguna").hide();
-            $("#pengguna").val("");
+            $("#pengguna").val("").html("");
             select2user("#pengguna", "/search/users", "-- Cari Pengguna Tempat --");
 
             $("#cancelPemilik").hide();
-            $("#pemilik").val("");
+            $("#pemilik").val("").html("");
             select2user("#pemilik", "/search/users", "-- Cari Pemilik Tempat --");
 
-            $("#commodity").val("");
+            $("#commodity").val("").html("");
             select2idname("#commodity", "/search/commodities", "-- Cari Kategori Komoditi --");
 
             $("#stt_aktif").prop("checked", true);
             statusTempat();
 
-            $("#tlistrik").val("");
+            $("#tlistrik").val("").html("");
             select2tlistrik("#tlistrik", "/search/tools/listrik", "-- Cari Alat Listrik --");
-            $("#plistrik").val("");
+            $("#plistrik").val("").html("");
             select2idname("#plistrik", "/search/price/listrik", "-- Cari Tarif Listrik --");
-            $("#dlistrik").val("");
+            $("#dlistrik").val("").html("");
             fasListrik("hide");
 
-            $("#tairbersih").val("");
+            $("#tairbersih").val("").html("");
             select2tairbersih("#tairbersih", "/search/tools/airbersih", "-- Cari Alat Air Bersih --");
-            $("#pairbersih").val("");
+            $("#pairbersih").val("").html("");
             select2idname("#pairbersih", "/search/price/airbersih", "-- Cari Tarif Air Bersih --");
-            $("#dairbersih").val("");
+            $("#dairbersih").val("").html("");
             fasAirBersih("hide");
 
-            $("#pkeamananipk").val("");
+            $("#pkeamananipk").val("").html("");
             select2idprice("#pkeamananipk", "/search/price/keamananipk", "-- Cari Tarif Keamanan IPK --", "per-Los");
-            $("#dkeamananipk").val("");
+            $("#dkeamananipk").val("").html("");
             fasKeamananIpk("hide");
 
-            $("#pkebersihan").val("");
+            $("#pkebersihan").val("").html("");
             select2idprice("#pkebersihan", "/search/price/kebersihan", "-- Cari Tarif Kebersihan --", "per-Los");
-            $("#dkebersihan").val("");
+            $("#dkebersihan").val("").html("");
             fasKebersihan("hide");
 
-            $("#pairkotor").val("");
+            $("#pairkotor").val("").html("");
             select2idprice("#pairkotor", "/search/price/airkotor", "-- Cari Tarif Air Kotor --", "per-Kontrol");
-            $("#dairkotor").val("");
+            $("#dairkotor").val("").html("");
             fasAirKotor("hide");
 
             lain = 0;
@@ -1410,14 +1413,14 @@ Data Tempat
         $('#group').on("change", function(e) {
             var group = $('#group').val();
             $("#los").prop("disabled", false);
-            $("#los").val("");
+            $("#los").val("").html("");
             select2custom("#los", "/search/" + group + "/los", "-- Cari Nomor Los --");
         });
 
         //Kode Kontrol
         $('#los').on('change', function(e) {
             if($("#los").val() == ""){
-                $("#kontrol").prop("disabled", true).val("");
+                $("#kontrol").prop("disabled", true).val("").html("");
             }
             else{
                 $("#kontrol").prop("disabled", false);
@@ -1844,7 +1847,7 @@ Data Tempat
                 $('input.select2-search__field').prop('placeholder', 'Cari Kode Blok disini..');
             });
             $('#pengguna, #pemilik').on('select2:open', () => {
-                $('input.select2-search__field').prop('placeholder', 'Cari Nama/KTP/Paspor disini..');
+                $('input.select2-search__field').prop('placeholder', 'Cari Nama/KTP disini..');
             });
             $('#tlistrik').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Cari Kode/Meter/Daya/ID disini..');

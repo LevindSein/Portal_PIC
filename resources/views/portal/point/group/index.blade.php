@@ -9,7 +9,7 @@ Blok Tempat
     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Menu
     </button>
-    <div class="dropdown-menu animated fadeIn">
+    <div class="dropdown-menu animated fadeIn mr-3">
         <a class="dropdown-item add" href="javascript:void(0)">
             <i class="fas fa-fw fa-plus mr-1"></i>
             <span>Blok Tempat</span>

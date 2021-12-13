@@ -165,6 +165,8 @@ Route::get('email/verified', function(){
 
 Route::get('search/period',[SearchController::class, 'period']);
 Route::get('search/users',[SearchController::class, 'users']);
+Route::get('search/kontrol',[SearchController::class, 'kontrol']);
+Route::get('search/bill',[SearchController::class, 'bill']);
 Route::get('search/groups',[SearchController::class, 'group']);
 Route::get('search/{group}/los',[SearchController::class, 'los']);
 Route::get('search/commodities',[SearchController::class, 'commodity']);

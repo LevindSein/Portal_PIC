@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Group;
+use App\Models\Store;
 use App\Models\Country;
 use App\Models\User;
+use App\Models\Bill;
 use App\Models\Commodity;
 use App\Models\TListrik;
 use App\Models\PListrik;
@@ -44,11 +46,47 @@ class SearchController extends Controller
         return response()->json($data);
     }
 
+    public function kontrol(Request $request){
+        $data = [];
+        if($request->ajax()) {
+            $key = $request->q;
+            $data = Store::select('id', 'kd_kontrol', 'nicename')
+            ->where('kd_kontrol', 'LIKE', '%'.$key.'%')
+            ->orWhere('nicename', 'LIKE', '%'.$key.'%')
+            ->orderBy('kd_kontrol','asc')->get();
+        }
+        return response()->json($data);
+    }
+
+    public function bill(Request $request){
+        if(Bill::where([['kd_kontrol', $request->kontrol],['id_period', $request->periode]])->exists()){
+            return response()->json(['error' => 'Data Tagihan sudah ada.']);
+        }
+        else{
+            $data = Store::where('kd_kontrol', $request->kontrol)
+            ->with([
+                'pengguna:id,name,ktp',
+                'tlistrik:id,code,name,meter,power',
+                'plistrik:id,name',
+                'tairbersih:id,code,name,meter',
+                'pairbersih:id,name',
+                'pkeamananipk:id,name,price',
+                'pkebersihan:id,name,price',
+                'pairkotor:id,name,price',
+            ])
+            ->first();
+            $data['data'] = json_decode($data->data);
+            $data['no_los'] = explode(',', $data->no_los);
+
+            return response()->json(['success' => 'success', 'show' => $data]);
+        }
+    }
+
     public function period(Request $request){
         $data = [];
         if($request->ajax()) {
             $key = $request->q;
-            $data = Period::select('id', 'name','nicename')->where('nicename', 'LIKE', '%'.$key.'%')->orderBy('name','asc')->get();
+            $data = Period::select('id', 'name','nicename')->where('nicename', 'LIKE', '%'.$key.'%')->orderBy('name','desc')->get();
         }
         return response()->json($data);
     }
