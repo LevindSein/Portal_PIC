@@ -39,19 +39,29 @@ class VisitorRun extends Command
      */
     public function handle()
     {
-        $data = Visitor::firstOrCreate([
-            'visit_per_day' => 0,
-            'day_count' => 0,
-            'visit_on_day' => 0
-        ]);
-        $data->day_count++;
+        $data = Visitor::first();
 
-        $visit_per_day = ($data->visit_on_day + ($data->visit_per_day * $data->day_count)) / $data->day_count;
+        if(is_null($data)){
+            Visitor::create([
+                'visit_per_day' => 0,
+                'day_count' => 0,
+                'visit_on_day' => 0
+            ]);
+        }
+        else{
+            $data->day_count++;
 
-        $data->visit_per_day = ceil($visit_per_day);
-        $data->visit_on_day = 0;
-        $data->save();
+            $visit_per_day = ($data->visit_on_day + ($data->visit_per_day * $data->day_count)) / $data->day_count;
+
+            $data->visit_per_day = ceil($visit_per_day);
+            $data->visit_on_day = 0;
+            $data->save();
+        }
 
         \Log::info("VisitorRun success");
+
+        // $data = Visitor::first();
+
+        // \Log::info($data);
     }
 }

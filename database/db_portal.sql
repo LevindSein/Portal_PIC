@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2021 at 09:56 AM
+-- Generation Time: Dec 13, 2021 at 05:47 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -46,6 +46,7 @@ CREATE TABLE `activation_code` (
 CREATE TABLE `bills` (
   `id` int(11) NOT NULL,
   `code` varchar(8) DEFAULT NULL,
+  `id_period` int(11) DEFAULT NULL,
   `stt_publish` tinyint(1) DEFAULT NULL,
   `stt_bayar` tinyint(1) DEFAULT NULL,
   `stt_lunas` tinyint(1) DEFAULT NULL,
@@ -396,13 +397,6 @@ CREATE TABLE `data_login` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `data_login`
---
-
-INSERT INTO `data_login` (`id`, `uid`, `name`, `level`, `active`, `platform`, `status`, `updated_at`, `created_at`) VALUES
-(1, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-11 07:37:27', '2021-12-11 07:37:27');
-
 -- --------------------------------------------------------
 
 --
@@ -532,6 +526,31 @@ CREATE TABLE `jobs` (
   `available_at` int(10) UNSIGNED NOT NULL,
   `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `period`
+--
+
+CREATE TABLE `period` (
+  `id` int(11) NOT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `nicename` varchar(20) DEFAULT NULL,
+  `new_period` date DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `faktur` int(11) NOT NULL DEFAULT 0,
+  `surat` int(11) NOT NULL DEFAULT 0,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `period`
+--
+
+INSERT INTO `period` (`id`, `name`, `nicename`, `new_period`, `due_date`, `faktur`, `surat`, `updated_at`, `created_at`) VALUES
+(1, '2021-12', 'Desember 2021', '2021-12-23', '2022-01-15', 0, 0, '2021-12-13 16:47:18', '2021-12-13 16:47:18');
 
 -- --------------------------------------------------------
 
@@ -797,7 +816,7 @@ CREATE TABLE `visitors` (
 --
 
 INSERT INTO `visitors` (`id`, `visit_per_day`, `day_count`, `visit_on_day`, `updated_at`, `created_at`) VALUES
-(1, 0, 0, 8, '2021-12-11 07:37:27', '2021-12-10 20:43:14');
+(2, 0, 1, 0, '2021-12-13 16:47:39', '2021-12-13 16:47:39');
 
 --
 -- Indexes for dumped tables
@@ -868,6 +887,12 @@ ALTER TABLE `groups`
 ALTER TABLE `jobs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `jobs_queue_index` (`queue`);
+
+--
+-- Indexes for table `period`
+--
+ALTER TABLE `period`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `p_airbersih`
@@ -1000,7 +1025,7 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `data_login`
 --
 ALTER TABLE `data_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `day_off`
@@ -1025,6 +1050,12 @@ ALTER TABLE `groups`
 --
 ALTER TABLE `jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `period`
+--
+ALTER TABLE `period`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `p_airbersih`
@@ -1090,7 +1121,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

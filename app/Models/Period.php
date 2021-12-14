@@ -13,6 +13,8 @@ class Period extends Model
     protected $fillable = [
         'name',
         'nicename',
+        'new_period',
+        'due_date',
         'faktur',
         'surat'
     ];

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Cookie;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -26,10 +27,15 @@ class BillController extends Controller
     public function index(Request $request)
     {
         if(is_null($request->period)){
-            $data = Period::latest('id')->select('id')->firstOrCreate([
-                'name' => Carbon::now()->format('Y-m'),
-                'nicename' => IndoDate::bulan(Carbon::now()->format('Y-m'), ' ')
-            ]);
+            $data = Period::exists();
+
+            if(!$data){
+                \Artisan::call('period:new');
+
+                \Artisan::call('period:dayoff');
+            }
+
+            $data = Period::orderBy('name', 'desc')->first();
             $id_period = $data->id;
         }
         else{
@@ -46,7 +52,11 @@ class BillController extends Controller
         }
 
         if($request->ajax()){
-            $data = Bill::where('id_period', $id_period);
+            $data = Bill::whereId_period($id_period)
+            ->select(
+                'id',
+                'kd_kontrol',
+            );
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
