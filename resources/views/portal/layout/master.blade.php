@@ -11,7 +11,7 @@
     <title>@yield('content-title') | Portal PIC</title>
 
     {{-- Select2 --}}
-    <link rel="stylesheet" type="text/css" href="{{asset('vendor/select2/dist/css/select2.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="https://gistcdn.githack.com/LevindSein/f7c69066795ad91de5aabd3e257021b7/raw/869e04587bc9562c030de473491b4e3dc907a289/select2.min.css">
 
     <link rel="stylesheet" href="{{asset('vendor/intTelInput/build/css/intlTelInput.css')}}">
 
