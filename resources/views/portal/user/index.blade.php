@@ -930,7 +930,7 @@ Pengguna
         nama = $(this).attr('nama');
         $('.titles').text('Reset Password ' + nama + ' ?');
         $('.bodies').text('Pilih "Reset" di bawah ini jika anda yakin untuk me-reset password user.');
-        $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Reset');
+        $('#ok_button').removeClass().addClass('btn btn-danger').text('Reset');
         $('#confirmValue').val('reset');
         $('#confirmModal').modal('show');
     });
@@ -940,7 +940,7 @@ Pengguna
         nama = $(this).attr('nama');
         $('.titles').text('Hapus data ' + nama + ' ?');
         $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data user.');
-        $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
+        $('#ok_button').removeClass().addClass('btn btn-danger').text('Hapus');
         $('#confirmValue').val('delete');
         $('#confirmModal').modal('show');
     });
@@ -955,7 +955,7 @@ Pengguna
         nama = $(this).attr('nama');
         $('.titles').text('Hapus permanen data ' + nama + ' ?');
         $('.bodies').text('Pilih "Permanen" di bawah ini jika anda yakin untuk menghapus data user secara permanen.');
-        $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Permanen');
+        $('#ok_button').removeClass().addClass('btn btn-danger').text('Permanen');
         $('#confirmValue').val('deletePermanently');
         $('#confirmModal').modal('show');
     });
@@ -965,7 +965,7 @@ Pengguna
         nama = $(this).attr('nama');
         $('.titles').text('Pulihkan data ' + nama + ' ?');
         $('.bodies').text('Pilih "Restore" di bawah ini jika anda yakin untuk memulihkan data user.');
-        $('#ok_button').addClass('btn-info').removeClass('btn-danger').text('Restore');
+        $('#ok_button').removeClass().addClass('btn btn-info').text('Restore');
         $('#confirmValue').val('restore');
         $('#confirmModal').modal('show');
     });
@@ -1072,34 +1072,33 @@ Pengguna
             'id' : id,
             '_token' : token,
         }
+
         if(value == 'delete'){
             url = "/production/users/" + id;
             type = "DELETE";
             ok_btn_before = "Menghapus...";
             ok_btn_completed = "Hapus";
-            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
         }
         else if(value == 'deletePermanently'){
             url = "/production/users/permanent/" + id;
             type = "DELETE";
             ok_btn_before = "Menghapus...";
             ok_btn_completed = "Permanen";
-            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
         }
         else if(value == 'restore'){
             url = "/production/users/restore/" + id;
             type = "POST";
             ok_btn_before = "Memulihkan...";
             ok_btn_completed = "Restore";
-            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
         }
         else if(value == 'reset'){
             url = "/production/users/reset/" + id;
             type = "POST";
             ok_btn_before = "Resetting...";
             ok_btn_completed = "Reset";
-            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
         }
+
+        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
     });
 
     function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){

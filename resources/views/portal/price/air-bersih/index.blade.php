@@ -325,7 +325,7 @@ Tarif Air Bersih
         nama = $(this).attr('nama');
         $('.titles').text('Hapus data ' + nama + ' ?');
         $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data tarif.');
-        $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
+        $('#ok_button').removeClass().addClass('btn btn-danger').text('Hapus');
         $('#confirmValue').val('delete');
         $('#confirmModal').modal('show');
     });
@@ -338,13 +338,15 @@ Tarif Air Bersih
             'id' : id,
             '_token' : token,
         }
+
         if(value == 'delete'){
             url = "/production/prices/airbersih/" + id;
             type = "DELETE";
             ok_btn_before = "Menghapus...";
             ok_btn_completed = "Hapus";
-            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
         }
+
+        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
     });
 
     $('#priceForm').submit(function(e){

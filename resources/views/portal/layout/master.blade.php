@@ -389,7 +389,7 @@
                             <form id="confirmForm">
                                 <div class="modal-footer">
                                     <input type="hidden" id="confirmValue" value="">
-                                    <button type="submit" name="ok_button" id="ok_button" class="btn">{Button}</button>
+                                    <button type="submit" name="ok_button" id="ok_button">{Button}</button>
                                     <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
                                 </div>
                             </form>

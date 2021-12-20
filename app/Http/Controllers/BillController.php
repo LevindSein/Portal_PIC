@@ -30,20 +30,20 @@ class BillController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            $id_period = $request->period;
+            $id_period = Session::get('period');
             $valid['period'] = $id_period;
             $validator = Validator::make($valid, [
                 'period' => 'exists:App\Models\Period,id'
             ]);
 
             if($validator->fails()){
-                $data = Period::latest('name')->select('id')->first();
-                $id_period = $data->id;
+                $id_period = Period::latest('name')->select('id')->first()->id;
             }
 
             $data = Bill::where('id_period', $id_period)
             ->select(
                 'id',
+                'stt_publish',
                 'kd_kontrol',
                 'name',
                 'nicename',
@@ -51,10 +51,16 @@ class BillController extends Controller
             );
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
-
+                $button = '';
+                if($data->stt_publish == 1){
+                    $button .= '<a type="button" data-toggle="tooltip" title="Unpublish" name="unpublish" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="unpublish"><i class="fas fa-undo" style="color:#e74a3b;"></i></a>';
+                }
+                else{
+                    $button .= '<a type="button" data-toggle="tooltip" title="Publish" name="publish" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="publish"><i class="fas fa-check-square" style="color:#36bea6;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                }
                 return $button;
             })
             ->addColumn('fasilitas', function($data){
@@ -72,12 +78,24 @@ class BillController extends Controller
 
     public function period(){
         if(request()->ajax()){
-            $period = Period::orderBy('name','desc')->select('id','nicename')->first();
+            $id = Session::get('period');
+
+            if(is_null($id)){
+                return response()->json(['success' => Period::latest('name')->first()]);
+            }
+
+            $period = Period::find($id);
+
             return response()->json(['success' => $period]);
         }
         else{
             abort(404);
         }
+    }
+
+    public function periodChange($id){
+        Session::put('period', $id);
+        return response()->json(['success' => $id]);
     }
 
     public function refresh(Request $request){
@@ -111,7 +129,7 @@ class BillController extends Controller
 
         if($checked){
             $digit = str_repeat("9",strlen($awal));
-            $akhir = $digit + $akhir; //review
+            $akhir = $digit + $akhir;
         }
 
         if($daya > 4400){
@@ -162,7 +180,8 @@ class BillController extends Controller
     {
         if($request->ajax()){
             $data['code'] = Identity::billCode();
-            $data['id_period'] = $request->periode;
+            $period = $request->periode;
+            $data['id_period'] = $period;
 
             $data['stt_publish'] = 0;
             if($request->stt_publish){
@@ -200,6 +219,8 @@ class BillController extends Controller
             catch(\Exception $e){
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
+
+            Session::put('period', $period);
 
             $searchKey = str_replace('-','',$request->kontrol);
 
@@ -250,5 +271,33 @@ class BillController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function publish($id){
+        $tagihan = Bill::select('id', 'stt_publish', 'stt_bayar')->find($id);
+
+        $stt_publish = $tagihan->stt_publish;
+        $stt_bayar = $tagihan->stt_bayar;
+
+        if($stt_bayar == 1){
+            return response()->json(['error' => 'Data failed to unpublish.', 'info' => 'Tagihan sudah dibayar.']);
+        }
+        else{
+            if($stt_publish == 1){
+                $tagihan->stt_publish = 0;
+            }
+            else{
+                $tagihan->stt_publish = 1;
+            }
+
+            try{
+                $tagihan->save();
+            }
+            catch(\Exception $e){
+                return response()->json(['error' => 'Data failed to save.', 'description' => $e]);
+            }
+
+            return response()->json(['success' => 'Data updated.']);
+        }
     }
 }

@@ -346,12 +346,16 @@ Kelola Tagihan
 @section('content-js')
 <script>
     $(document).ready(function(){
-        $("#period").val("");
+        $("#period").val("").html("");
         select2period("#period", "/search/period", "-- Cari Periode Tagihan --");
         $("#period").on('select2:open', () => {
             $('input.select2-search__field').prop('placeholder', 'Ketik disini untuk mencari..');
         });
 
+        period();
+    });
+
+    function period(){
         $.ajax({
             url: "/production/manage/bills/period",
             type: "GET",
@@ -361,6 +365,20 @@ Kelola Tagihan
                     $("#period").val("").html("");
                     var period = new Option(data.success.nicename, data.success.id, false, false);
                     $('#period').append(period).trigger('change');
+                }
+            }
+        });
+    }
+
+    $("#period").on('change', function(e){
+        e.preventDefault();
+        $.ajax({
+            url: "/production/manage/bills/period/" + $("#period").val(),
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    dtableReload('');
                 }
             }
         });
@@ -784,6 +802,51 @@ Kelola Tagihan
         ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
     });
 
+    $(document).on('click', '.publish', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Publish ' + nama + ' ?');
+        $('.bodies').text('Pilih "Publish" di bawah ini jika anda yakin untuk publish tagihan.');
+        $('#ok_button').removeClass().addClass('btn btn-success').text('Publish');
+        $('#confirmValue').val('publish');
+        $('#confirmModal').modal('show');
+    });
+
+    $(document).on('click', '.unpublish', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Unpublish ' + nama + ' ?');
+        $('.bodies').text('Pilih "Unpublish" di bawah ini jika anda yakin untuk unpublish tagihan.');
+        $('#ok_button').removeClass().addClass('btn btn-danger').text('Unpublish');
+        $('#confirmValue').val('unpublish');
+        $('#confirmModal').modal('show');
+    });
+
+    $('#confirmForm').submit(function(e){
+        e.preventDefault();
+        var token = $("meta[name='csrf-token']").attr("content");
+        var value = $('#confirmValue').val();
+        dataset = {
+            'id' : id,
+            '_token' : token,
+        }
+
+        if(value == 'publish'){
+            url = "/production/manage/bills/publish/" + id;
+            type = "POST";
+            ok_btn_before = "Publishing...";
+            ok_btn_completed = "Publish";
+        }
+        else if(value == 'unpublish'){
+            url = "/production/manage/bills/publish/" + id;
+            type = "POST";
+            ok_btn_before = "Unpublishing...";
+            ok_btn_completed = "Unpublish";
+        }
+
+        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+    });
+
     function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
         $.ajaxSetup({
             headers: {
@@ -820,6 +883,7 @@ Kelola Tagihan
                     };
                     toastr.success(data.success);
                     dtableReload(data.searchKey);
+                    period();
                 }
 
                 if(data.info){
