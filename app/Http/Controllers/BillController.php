@@ -16,7 +16,8 @@ use App\Models\Period;
 use App\Models\Identity;
 use App\Models\User;
 use App\Models\PListrik;
-
+use App\Models\Store;
+use App\Models\TListrik;
 use DataTables;
 use Carbon\Carbon;
 
@@ -41,6 +42,7 @@ class BillController extends Controller
             }
 
             $data = Bill::where('id_period', $id_period)
+            ->whereIn('active', [1,2])
             ->select(
                 'id',
                 'stt_publish',
@@ -117,10 +119,7 @@ class BillController extends Controller
         $awal = str_replace('.','',$request->awal);
         $akhir = str_replace('.','',$request->akhir);
         $daya = str_replace('.','',$request->daya);
-        $diskon = str_replace('.','',$request->diskon);
-        if(is_null($request->diskon)){
-            $diskon = 0;
-        }
+
         $diff = $request->diff;
 
         if($checked){
@@ -148,8 +147,6 @@ class BillController extends Controller
             $denda = $denda->denda2 / 100;
 
             $tagihan = PListrik::tagihan($price, $awal, $akhir, $daya);
-
-            $tagihan = round($tagihan - ($tagihan * ($diskon / 100)));
 
             $denda = round($denda * $tagihan);
 
@@ -215,6 +212,52 @@ class BillController extends Controller
             $data['no_los'] = implode(',', $los);
 
             $data['active'] = 1;
+
+            //Listrik
+            if($request->fas_listrik){
+                $tarif_id = $request->plistrik;
+
+                $tarif = PListrik::find($tarif_id);
+                $tarif_data = json_decode($tarif->data);
+
+                $tarif_nama = $tarif->name;
+
+                $data['b_listrik'] = json_encode([
+                    'tarif_id' => $tarif_id,
+                    'tarif_nama' => $tarif_nama,
+                    'daya' => str_replace('.','',$request->dayalistrik),
+                    'awal' => str_replace('.','',$request->awlistrik),
+                    'akhir' => str_replace('.','',$request->aklistrik),
+                    'pakai' => $pakai,
+                    'bayar' => $bayar,
+                    'blok1' => $blok1,
+                    'blok2' => $blok2,
+                    'beban' => $beban,
+                    'bpju' => $bpju,
+                    'sub_tagihan' => $sub_tagihan,
+                    'denda' => $denda,
+                    'diskon' => $diskon,
+                    'ttl_tagihan' => $ttl_tagihan,
+                    'rea_tagihan' => $rea_tagihan,
+                    'sel_tagihan' => $sel_tagihan,
+                ]);
+            }
+            //Air Bersih
+            if($request->fas_airbersih){
+
+            }
+            //Keamanan IPK
+            if($request->fas_keamananipk){
+
+            }
+            //Kebersihan
+            if($request->fas_kebersihan){
+
+            }
+            //Air Kotor
+            if($request->fas_airkotor){
+
+            }
 
             $data['data'] = json_encode([
                 'user_create' => Auth::user()->id,
