@@ -44,6 +44,8 @@ class BillController extends Controller
             ->select(
                 'id',
                 'stt_publish',
+                'stt_bayar',
+                'stt_lunas',
                 'kd_kontrol',
                 'name',
                 'nicename',
@@ -53,10 +55,20 @@ class BillController extends Controller
             ->addColumn('action', function($data){
                 $button = '';
                 if($data->stt_publish == 1){
-                    $button .= '<a type="button" data-toggle="tooltip" title="Unpublish" name="unpublish" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="unpublish"><i class="fas fa-undo" style="color:#e74a3b;"></i></a>';
+                    if($data->stt_bayar == 1){
+                        if($data->stt_lunas == 1){
+                            $button .= '<span style="color:#36bea6;">Lunas</span>';
+                        }
+                        else{
+                            $button .= '<span style="color:#e74a3b;">Belum Lunas</span>';
+                        }
+                    }
+                    else{
+                        $button .= '<a type="button" data-toggle="tooltip" title="Unpublish" name="unpublish" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="unpublish"><i class="fas fa-undo" style="color:#e74a3b;"></i></a>';
+                    }
                 }
                 else{
-                    $button .= '<a type="button" data-toggle="tooltip" title="Publish" name="publish" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="publish"><i class="fas fa-check-square" style="color:#36bea6;"></i></a>';
+                    $button .= '<a type="button" data-toggle="tooltip" title="Publish" name="publish" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="publish"><i class="fas fa-check" style="color:#36bea6;"></i></a>';
                     $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
                     $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
                     $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
