@@ -114,122 +114,122 @@
 
         $(document).ready(function(){
             $("#password").focus();
+        });
 
-            $("#passwordShow").on('click touchstart', function(e){
-                e.preventDefault()
-                if($('#password').attr('type') == 'password'){
-                    $('#password').prop('type', 'text');
-                    $('#passwordShow').removeClass('fa-eye-slash').addClass('fa-eye');
-                }else{
-                    $('#password').prop('type', 'password');
-                    $('#passwordShow').addClass('fa-eye-slash').removeClass('fa-eye');
+        $("#passwordShow").on('click touchstart', function(e){
+            e.preventDefault()
+            if($('#password').attr('type') == 'password'){
+                $('#password').prop('type', 'text');
+                $('#passwordShow').removeClass('fa-eye-slash').addClass('fa-eye');
+            }else{
+                $('#password').prop('type', 'password');
+                $('#passwordShow').addClass('fa-eye-slash').removeClass('fa-eye');
+            }
+        });
+
+        $('#resetForm').on('submit', function(e){
+            e.preventDefault();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
-            $('#resetForm').on('submit', function(e){
-                e.preventDefault();
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $.ajax({
-                    url: "/email/forgot/password",
-                    cache: false,
-                    method: "POST",
-                    data: $(this).serialize(),
-                    dataType: "json",
-                    beforeSend:function(){
-                        $.blockUI({
-                            message: '<i class="fas fa-spin fa-sync text-white"></i>',
-                            baseZ: 9999,
-                            overlayCSS: {
-                                backgroundColor: '#000',
-                                opacity: 0.5,
-                                cursor: 'wait'
-                            },
-                            css: {
-                                border: 0,
-                                padding: 0,
-                                backgroundColor: 'transparent'
-                            }
-                        });
-                    },
-                    success:function(data)
-                    {
-                        if(data.success){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.success(data.success);
-                            if(data.description){
-                                setTimeout(() => {
-                                    location.href = "/logout";
-                                }, 2000);
-                            }
+            $.ajax({
+                url: "/email/forgot/password",
+                cache: false,
+                method: "POST",
+                data: $(this).serialize(),
+                dataType: "json",
+                beforeSend:function(){
+                    $.blockUI({
+                        message: '<i class="fas fa-spin fa-sync text-white"></i>',
+                        baseZ: 9999,
+                        overlayCSS: {
+                            backgroundColor: '#000',
+                            opacity: 0.5,
+                            cursor: 'wait'
+                        },
+                        css: {
+                            border: 0,
+                            padding: 0,
+                            backgroundColor: 'transparent'
                         }
-
-                        if(data.info){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.info(data.info);
-                        }
-
-                        if(data.warning){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.warning(data.warning);
-                            if(data.description){
-                                setTimeout(function() {
-                                    location.href = "/profile";
-                                }, 1000);
-                            }
-                        }
-
-                        if(data.error){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error(data.error);
-                        }
-
+                    });
+                },
+                success:function(data)
+                {
+                    if(data.success){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.success(data.success);
                         if(data.description){
-                            console.log(data.description);
+                            setTimeout(() => {
+                                location.href = "/logout";
+                            }, 2000);
                         }
-                    },
-                    error:function(data){
-                        if (data.status == 422) {
-                            $.each(data.responseJSON.errors, function (i, error) {
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.error(error[0]);
-                            });
+                    }
+
+                    if(data.info){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.info(data.info);
+                    }
+
+                    if(data.warning){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.warning(data.warning);
+                        if(data.description){
+                            setTimeout(function() {
+                                location.href = "/profile";
+                            }, 1000);
                         }
-                        else{
+                    }
+
+                    if(data.error){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                    }
+
+                    if(data.description){
+                        console.log(data.description);
+                    }
+                },
+                error:function(data){
+                    if (data.status == 422) {
+                        $.each(data.responseJSON.errors, function (i, error) {
                             toastr.options = {
                                 "closeButton": true,
                                 "preventDuplicates": true,
                             };
-                            toastr.error("System error.");
-                            console.log(data);
-                        }
-                    },
-                    complete:function(data){
-                        $.unblockUI();
-                        $("#resetForm")[0].reset();
-                        $("#email").focus();
+                            toastr.error(error[0]);
+                        });
                     }
-                });
+                    else{
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error("System error.");
+                        console.log(data);
+                    }
+                },
+                complete:function(data){
+                    $.unblockUI();
+                    $("#resetForm")[0].reset();
+                    $("#email").focus();
+                }
             });
         });
     </script>

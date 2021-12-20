@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
+use App\Models\Period;
+
 class CheckAuth
 {
     /**
@@ -18,6 +20,17 @@ class CheckAuth
      */
     public function handle(Request $request, Closure $next)
     {
+        //Initialize Period
+        $data = Period::exists();
+
+        if(!$data){
+            \Artisan::call('period:new');
+
+            \Artisan::call('period:dayoff');
+        }
+        //End Initialize period
+
+        //Auth Check
         if(Auth::check()){
             $response = $next($request);
             if(Auth::user()->active == 0){
@@ -43,5 +56,6 @@ class CheckAuth
         else{
             return redirect('login')->with('warning', 'Please login.');
         }
+        //End Auth Check
     }
 }

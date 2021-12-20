@@ -22,3 +22,21 @@ $(document).ready(function() {
             window.scrollTo(0, localStorage.getItem('scrollPosition'));
     },false);
 });
+
+$(".number").on('input', function (e) {
+    if(e.which >= 37 && e.which <= 40) return;
+
+    if (/^[0-9.,]+$/.test($(this).val())) {
+        $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
+    }
+    else {
+        $(this).val($(this).val().substring(0, $(this).val().length - 1));
+    }
+});
+
+$('.percent').on('input', function (e) {
+    if ($(this).val() > 100) $(this).val($(this).val().replace($(this).val(), 100));
+});
+$('.hour').on('input', function (e) {
+    if ($(this).val() > 24) $(this).val($(this).val().replace($(this).val(), 24));
+});

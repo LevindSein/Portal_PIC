@@ -168,7 +168,7 @@ class StoreController extends Controller
             $diskon = array();
 
             //Listrik
-            if(!empty($request->fas_listrik)){
+            if($request->fas_listrik){
                 $valid['alatListrik'] = $request->tlistrik;
                 $valid['tarifListrik'] = $request->plistrik;
                 $valid['diskonListrik'] = str_replace('.','',$request->dlistrik);
@@ -192,7 +192,7 @@ class StoreController extends Controller
             }
 
             //Air Bersih
-            if(!empty($request->fas_airbersih)){
+            if($request->fas_airbersih){
                 $valid['alatAirBersih'] = $request->tairbersih;
                 $valid['tarifAirBersih'] = $request->pairbersih;
                 $valid['diskonAirBersih'] = str_replace('.','',$request->dairbersih);
@@ -216,7 +216,7 @@ class StoreController extends Controller
             }
 
             //Keamanan IPK
-            if(!empty($request->fas_keamananipk)){
+            if($request->fas_keamananipk){
                 $valid['tarifKeamananIpk'] = $request->pkeamananipk;
 
                 Validator::make($valid, [
@@ -242,7 +242,7 @@ class StoreController extends Controller
             }
 
             //Kebersihan
-            if(!empty($request->fas_kebersihan)){
+            if($request->fas_kebersihan){
                 $valid['tarifKebersihan'] = $request->pkebersihan;
 
                 Validator::make($valid, [
@@ -268,7 +268,7 @@ class StoreController extends Controller
             }
 
             //Air Kotor
-            if(!empty($request->fas_airkotor)){
+            if($request->fas_airkotor){
                 $valid['tarifAirKotor'] = $request->pairkotor;
 
                 Validator::make($valid, [
@@ -292,7 +292,7 @@ class StoreController extends Controller
             }
 
             //Lainnya
-            if(!empty($request->plain)){
+            if($request->plain){
                 $plain = $request->plain;
                 $prices = array();
                 for($i = 0; $i < count($plain); $i++){
@@ -516,7 +516,7 @@ class StoreController extends Controller
             $diskon = array();
 
             //Listrik
-            if(!empty($request->fas_listrik)){
+            if($request->fas_listrik){
                 $valid['alatListrik'] = $request->tlistrik;
                 $valid['tarifListrik'] = $request->plistrik;
                 $valid['diskonListrik'] = str_replace('.','',$request->dlistrik);
@@ -540,7 +540,7 @@ class StoreController extends Controller
             }
 
             //Air Bersih
-            if(!empty($request->fas_airbersih)){
+            if($request->fas_airbersih){
                 $valid['alatAirBersih'] = $request->tairbersih;
                 $valid['tarifAirBersih'] = $request->pairbersih;
                 $valid['diskonAirBersih'] = str_replace('.','',$request->dairbersih);
@@ -564,7 +564,7 @@ class StoreController extends Controller
             }
 
             //Keamanan IPK
-            if(!empty($request->fas_keamananipk)){
+            if($request->fas_keamananipk){
                 $valid['tarifKeamananIpk'] = $request->pkeamananipk;
 
                 Validator::make($valid, [
@@ -590,7 +590,7 @@ class StoreController extends Controller
             }
 
             //Kebersihan
-            if(!empty($request->fas_kebersihan)){
+            if($request->fas_kebersihan){
                 $valid['tarifKebersihan'] = $request->pkebersihan;
 
                 Validator::make($valid, [
@@ -616,7 +616,7 @@ class StoreController extends Controller
             }
 
             //Air Kotor
-            if(!empty($request->fas_airkotor)){
+            if($request->fas_airkotor){
                 $valid['tarifAirKotor'] = $request->pairkotor;
 
                 Validator::make($valid, [
@@ -640,7 +640,7 @@ class StoreController extends Controller
             }
 
             //Lainnya
-            if(!empty($request->plain)){
+            if($request->plain){
                 $plain = $request->plain;
                 $prices = array();
                 for($i = 0; $i < count($plain); $i++){

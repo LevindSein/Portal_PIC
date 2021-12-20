@@ -485,635 +485,17 @@ Pengguna
 
 @section('content-js')
 <script>
-    $(document).ready(function(){
-        $("#chooseGroup").click(function(){
-            if($("#chooseGroup").val() == 'chooseAll'){
-                $("#chooseGroup")
-                    .html('<i class="fas fa-sm fa-eraser"></i> Hapus Semua Blok')
-                    .val("deleteAll")
-                    .addClass("text-danger")
-                    .removeClass("text-info");
-                $.ajax({
-                    url: "/production/users/choose/group/all",
-                    type: "GET",
-                    cache:false,
-                    beforeSend:function(){
-                        $.blockUI({
-                            message: '<i class="fad fa-spin fa-spinner text-white"></i>',
-                            baseZ: 9999,
-                            overlayCSS: {
-                                backgroundColor: '#000',
-                                opacity: 0.5,
-                                cursor: 'wait'
-                            },
-                            css: {
-                                border: 0,
-                                padding: 0,
-                                backgroundColor: 'transparent'
-                            }
-                        });
-                        $("#group").val(null).html("").trigger("change");
-                    },
-                    success:function(data){
-                        if(data.success){
-                            var group = data.success;
-                            $.each( group, function( i, val ) {
-                                var option = $('<option></option>').attr('value', val.name).text(val.name).prop('selected', true);
-                                $('#group').append(option).trigger('change');
-                            });
-                        }
-                    },
-                    error:function(data){
-                        console.log(data);
-                    },
-                    complete:function(data){
-                        $.unblockUI();
-                    }
-                });
-            }
-            else{
-                $("#chooseGroup")
-                    .html('<i class="fas fa-sm fa-hand-pointer"></i> Pilih Semua Blok')
-                    .val("chooseAll")
-                    .removeClass("text-danger")
-                    .addClass("text-info");
-                $("#group").val(null).html("").trigger("change");
-            }
-        });
-
-        var id;
-
-        if(getUrlParameter('data') !== false)
-            init(getUrlParameter('data'), 3);
-        else
-            init(1, 3);
-
-        $(".registered").click(function(){
-            init(2, 3);
-        });
-
-        $(".home").click(function(){
-            init(1, 3);
-        });
-
-        $(".deleted").click(function(){
-            init(0, 3);
-        });
-
-        function init(active, level){
-            $("#category").prop('selectedIndex',0)
-            if(active == 2){
-                $(".page-title").text("Data Pendaftar");
-                $('#warning-deleted').hide();
-            }
-            else if(active == 1){
-                $(".page-title").text("Pengguna Aktif");
-                $('#warning-deleted').hide();
-            }
-            else{
-                $(".page-title").text("Data Penghapusan");
-                $('#warning-deleted').show();
-            }
-
-            window.history.replaceState(null, null, "?data=" + active + "&lev=" + level);
-            dtable = dtableInit("/production/users?data=" + active + "&lev=" + level);
-        }
-
-        var iti;
-        function initializeTel(init) {
-            iti = window.intlTelInput(document.querySelector("#phone"), {
-                initialCountry: init,
-                preferredCountries: ['id'],
-                formatOnDisplay: false,
-                separateDialCode: true,
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js"
-            });
-        }
-        initializeTel("id");
-
-        var intervalAktivasi;
-        $(".activation").click(function(){
-            $.ajax({
-                url: "/production/users/code/activate",
-                type: "GET",
-                cache:false,
-                success:function(data){
-                    if(data.success){
-                        $("#activation_code").text(data.result.code);
-
-                        var timer2 = data.result.time;
-                        var interval = setInterval(function() {
-                            var timer = timer2.split(':');
-
-                            //by parsing integer, I avoid all extra string processing
-                            var minutes = parseInt(timer[0], 10);
-                            var seconds = parseInt(timer[1], 10);
-
-                            --seconds;
-                            minutes = (seconds < 0) ? --minutes : minutes;
-
-                            if(minutes < 0 && seconds < 0){
-                                $('#countdown').hide();
-                                clearInterval(intervalAktivasi);
-                                $('#activationModal').modal('hide');
-                            }
-
-                            if(minutes < 0){
-                                clearInterval(interval);
-                            }
-
-                            seconds = (seconds < 0) ? 59 : seconds;
-                            seconds = (seconds < 10) ? '0' + seconds : seconds;
-
-                            $('#countdown').html(minutes + ':' + seconds);
-
-                            timer2 = minutes + ':' + seconds;
-                        }, 1000);
-
-                        console.log(data.result.time);
-                    }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
-                    toastr.error("Fetching data failed.");
-                    console.log(data);
-                },
-                complete:function(){
-                    intervalAktivasi = setInterval(() => {
-                        $.ajax({
-                            url: "/production/users/activate/verify",
-                            type: "GET",
-                            cache:false,
-                            success:function(data){
-                                if(data.success){
-                                    toastr.options = {
-                                        "closeButton": true,
-                                        "preventDuplicates": true,
-                                    };
-                                    toastr.success(data.success);
-                                    $.blockUI({
-                                        message: '<i class="fad fa-spin fa-spinner text-white"></i>',
-                                        baseZ: 9999,
-                                        overlayCSS: {
-                                            backgroundColor: '#000',
-                                            opacity: 0.5,
-                                            cursor: 'wait'
-                                        },
-                                        css: {
-                                            border: 0,
-                                            padding: 0,
-                                            backgroundColor: 'transparent'
-                                        }
-                                    });
-
-                                    setTimeout(() => {
-                                        $.unblockUI();
-                                        location.href = '/production/service/register?data=' + data.result;
-                                    }, 2000);
-                                }
-
-                                if(data.info){
-                                    toastr.options = {
-                                        "closeButton": true,
-                                        "preventDuplicates": true,
-                                    };
-                                    toastr.info(data.info);
-                                }
-
-                                if(data.warning){
-                                    toastr.options = {
-                                        "closeButton": true,
-                                        "preventDuplicates": true,
-                                    };
-                                    toastr.warning(data.warning);
-                                }
-
-                                if(data.error){
-                                    toastr.options = {
-                                        "closeButton": true,
-                                        "preventDuplicates": true,
-                                    };
-                                    toastr.error(data.error);
-                                }
-
-                                if(data.description){
-                                    console.log(data.description);
-                                }
-                            },
-                            error:function(data){
-                                console.log(data);
-                            }
-                        });
-                    }, 1000);
-                    $('#activationModal').modal('show');
-                },
-            });
-        });
-
-        $(".activationClose").click(function(){
-            clearInterval(intervalAktivasi);
-        });
-
-        $("#level").on('change', function(){
-            var level = $("#level").val();
-            if(level == '2'){
-                $("#authorityDiv").show();
-                select2custom("#group", "/search/groups", "-- Cari Blok Tempat --");
-                $("#group").prop("required",true);
-            }
-            else{
-                $("#authorityDiv").hide();
-                $("#group").prop("required",false);
-            }
-        });
-
-        $('[type=tel]').on('change', function(e) {
-            $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
-        });
-
-        $('[type=tel]').on('keypress', function(e) {
-            keys = ['0','1','2','3','4','5','6','7','8','9']
-            return keys.indexOf(e.key) > -1
-        });
-
-        $("#email").on('input', function() {
-            this.value = this.value.replace(/\s/g, '');
-        });
-        $("#phone").on("input", function() {
-            if (/^0/.test(this.value)) {
-                this.value = this.value.replace(/^0/, "");
-            }
-        });
-
-        $("#name").on("input", function(){
-            this.value = this.value.replace(/[^0-9a-zA-Z/\s.,]+$/g, '');
-            this.value = this.value.replace(/\s\s+/g, ' ');
-        });
-
-        $("#btn_copy").click( function(){;
-            navigator.clipboard.writeText($("#newPassword").text());
-            $('#resetModal').modal('hide');
-
-            toastr.options = {
-                "closeButton": true,
-                "preventDuplicates": true,
-            };
-            toastr.success("Password copied.");
-        });
-
-        $('#category').on('change', function() {
-            dtable = dtableInit("/production/users?data=" + getUrlParameter('data') + "&lev=" + this.value);
-        });
-
-        function initForm(){
-            $("#group").val(null).html("").trigger("change").prop("required",false);
-        }
-
-        $(".add").click( function(){
-            $("#userForm")[0].reset();
-            $("#authorityDiv").hide();
-            $('.titles').text('Tambah User');
-            $('#divCheckEmail').show();
-            $('#checkEmail').prop("checked", true);
-            $("#userFormValue").val('add');
-            iti.destroy();
-            initializeTel("id");
-
-            initForm();
+    $("#chooseGroup").click(function(){
+        if($("#chooseGroup").val() == 'chooseAll'){
             $("#chooseGroup")
-                .html('<i class="fas fa-sm fa-hand-pointer"></i> Pilih Semua Blok')
-                .val("chooseAll")
-                .removeClass("text-danger")
-                .addClass("text-info");
-
-            $('#userModal').modal('show');
-        });
-
-        $(document).on('click', '.edit', function(){
-            id = $(this).attr('id');
-            nama = $(this).attr('nama');
-            $("#userForm")[0].reset();
-            $('.titles').text('Edit data ' + nama);
-            $('#divCheckEmail').hide();
-            $('#checkEmail').prop("checked", false);
-            $("#userFormValue").val('update');
-
-            initForm();
-
-            if($("#group").val()){
-                $("#chooseGroup")
-                    .html('<i class="fas fa-sm fa-eraser"></i> Hapus Semua Blok')
-                    .val("deleteAll")
-                    .addClass("text-danger")
-                    .removeClass("text-info");
-            }
-            else{
-                $("#chooseGroup")
-                    .html('<i class="fas fa-sm fa-hand-pointer"></i> Pilih Semua Blok')
-                    .val("chooseAll")
-                    .removeClass("text-danger")
-                    .addClass("text-info");
-            }
-
+                .html('<i class="fas fa-sm fa-eraser"></i> Hapus Semua Blok')
+                .val("deleteAll")
+                .addClass("text-danger")
+                .removeClass("text-info");
             $.ajax({
-                url: "/production/users/" + id + "/edit",
+                url: "/production/users/choose/group/all",
                 type: "GET",
                 cache:false,
-                success:function(data){
-                    if(data.success){
-                        $("#name").val(data.user.name);
-                        $("#email").val(data.user.email);
-                        iti.destroy();
-                        initializeTel(data.user.iso);
-                        $("#phone").val(data.user.phone);
-                        $("#ktp").val(data.user.ktp);
-                        $("#npwp").val(data.user.npwp);
-                        $("#address").val(data.user.address);
-                        $("#level").val(data.user.level).change();
-
-                        if(data.user.level == 2){
-                            var json = JSON.parse(data.user.authority);
-
-                            for (var k in json.authority) {
-                                if (json.authority.hasOwnProperty(k)) {
-                                    if(json.authority[k] == false){
-                                        $("#" + k).prop("checked",false);
-                                    }
-                                }
-                            }
-
-                            var s1 = $("#group").select2();
-                            var value = json.group;
-                            value.forEach(function(e){
-                                if(!s1.find('option:contains(' + e + ')').length)
-                                    s1.append($('<option>').text(e));
-                            });
-                            s1.val(value).trigger("change");
-                            select2custom("#group", "/search/groups", "-- Cari Blok Tempat --");
-                        }
-                    }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
-                    toastr.error("Fetching data failed.");
-                    console.log(data);
-                },
-                complete:function(){
-                    $('#userModal').modal('show');
-                }
-            });
-        });
-
-        $(document).on('click', '.reset', function(){
-            id = $(this).attr('id');
-            nama = $(this).attr('nama');
-            $('.titles').text('Reset Password ' + nama + ' ?');
-            $('.bodies').text('Pilih "Reset" di bawah ini jika anda yakin untuk me-reset password user.');
-            $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Reset');
-            $('#confirmValue').val('reset');
-            $('#confirmModal').modal('show');
-        });
-
-        $(document).on('click', '.delete', function(){
-            id = $(this).attr('id');
-            nama = $(this).attr('nama');
-            $('.titles').text('Hapus data ' + nama + ' ?');
-            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data user.');
-            $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
-            $('#confirmValue').val('delete');
-            $('#confirmModal').modal('show');
-        });
-
-        $(document).on('click', '.activateUser', function(){
-            id = $(this).attr('id');
-            location.href = '/production/service/register?data=' + id;
-        });
-
-        $(document).on('click', '.deletePermanently', function(){
-            id = $(this).attr('id');
-            nama = $(this).attr('nama');
-            $('.titles').text('Hapus permanen data ' + nama + ' ?');
-            $('.bodies').text('Pilih "Permanen" di bawah ini jika anda yakin untuk menghapus data user secara permanen.');
-            $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Permanen');
-            $('#confirmValue').val('deletePermanently');
-            $('#confirmModal').modal('show');
-        });
-
-        $(document).on('click', '.restore', function(){
-            id = $(this).attr('id');
-            nama = $(this).attr('nama');
-            $('.titles').text('Pulihkan data ' + nama + ' ?');
-            $('.bodies').text('Pilih "Restore" di bawah ini jika anda yakin untuk memulihkan data user.');
-            $('#ok_button').addClass('btn-info').removeClass('btn-danger').text('Restore');
-            $('#confirmValue').val('restore');
-            $('#confirmModal').modal('show');
-        });
-
-        $(document).on('click', '.details', function(){
-            id = $(this).attr('id');
-            nama = $(this).attr('nama');
-            $('.titles').text('Informasi ' + nama);
-
-            var rand = shuffle('1234567890');
-
-            $.ajax({
-                url: "/production/users/" + id,
-                type: "GET",
-                cache:false,
-                success:function(data){
-                    if(data.success){
-                        $("#showPicture").attr('src', '/' + data.user.photo + '?' + rand);
-                        $("#showLevel").text(data.user.level);
-                        $("#showActive").html(data.user.active);
-                        $("#showUid").text(data.user.uid);
-                        $("#showName").text(data.user.name);
-                        $("#showMember").text(data.user.member);
-                        $("#showCreate").text(data.user.create);
-                        $("#showUpdate").text(data.user.update);
-
-                        (data.user.ktp) ? $("#showKtp").html(data.user.ktp) : $("#showKtp").html("&mdash;");
-
-                        (data.user.npwp) ? $("#showNpwp").html(data.user.npwp) : $("#showNpwp").html("&mdash;");
-
-                        (data.user.email) ? $("#showEmail").html("<a target='_blank' href='mailto:" + data.user.email + "'>" + data.user.email + " <i class='fas fa-external-link'></i></a>") : $("#showEmail").html("&mdash;");
-
-                        (data.user.phone) ? $("#showPhone").html("<a target='_blank' href='https://api.whatsapp.com/send?phone=" + data.user.phone + "'>+" + data.user.phone + " <i class='fas fa-external-link'></i></a>") : $("#showPhone").html("&mdash;");
-
-                        (data.user.address) ? $("#showAddress").html(data.user.address) : $("#showAddress").html("&mdash;");
-                    }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
-                    toastr.error("Fetching data failed.");
-                    console.log(data);
-                },
-                complete:function(){
-                    $('#showModal').modal('show');
-                }
-            });
-        });
-
-        $('#userForm').submit(function(e){
-            e.preventDefault();
-            var country = iti.getSelectedCountryData();
-            $("#country").val(country.iso2);
-            value = $("#userFormValue").val();
-            if(value == 'add'){
-                url = "/production/users";
-                type = "POST";
-            }
-            else if(value == 'update'){
-                url = "/production/users/" + id;
-                type = "PUT";
-            }
-            dataset = $(this).serialize();
-            ok_btn_before = "Menyimpan...";
-            ok_btn_completed = "Simpan";
-            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-        });
-
-        $('#confirmForm').submit(function(e){
-            e.preventDefault();
-            var token = $("meta[name='csrf-token']").attr("content");
-            var value = $('#confirmValue').val();
-            dataset = {
-                'id' : id,
-                '_token' : token,
-            }
-            if(value == 'delete'){
-                url = "/production/users/" + id;
-                type = "DELETE";
-                ok_btn_before = "Menghapus...";
-                ok_btn_completed = "Hapus";
-                ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-            }
-            else if(value == 'deletePermanently'){
-                url = "/production/users/permanent/" + id;
-                type = "DELETE";
-                ok_btn_before = "Menghapus...";
-                ok_btn_completed = "Permanen";
-                ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-            }
-            else if(value == 'restore'){
-                url = "/production/users/restore/" + id;
-                type = "POST";
-                ok_btn_before = "Memulihkan...";
-                ok_btn_completed = "Restore";
-                ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-            }
-            else if(value == 'reset'){
-                url = "/production/users/reset/" + id;
-                type = "POST";
-                ok_btn_before = "Resetting...";
-                ok_btn_completed = "Reset";
-                ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-            }
-        });
-
-        function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
-            $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: url,
-                type: type,
-                cache:false,
-                data: dataset,
                 beforeSend:function(){
                     $.blockUI({
                         message: '<i class="fad fa-spin fa-spinner text-white"></i>',
@@ -1129,195 +511,811 @@ Pengguna
                             backgroundColor: 'transparent'
                         }
                     });
+                    $("#group").val(null).html("").trigger("change");
                 },
-                success:function(data)
-                {
+                success:function(data){
                     if(data.success){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.success(data.success);
-
-                        if(value == 'reset'){
-                            $('#newPassword').html(data.pass);
-                            $('#resetModal').modal('show');
-                        }
-                        else if(value == 'add' || value == 'update'){
-                            var selectedLevel = $('#level').val();
-                            $("#category").val(selectedLevel).change();
-                            $(".page-title").text("Pengguna Aktif");
-                            window.history.replaceState(null, null, "?data=1&lev=" + selectedLevel);
-                            dtable = dtableInit("/production/users?data=1&lev=" + selectedLevel);
-                            $('#warning-deleted').hide();
-                        }
-
-                        dtableReload(data.searchKey);
-                    }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
+                        var group = data.success;
+                        $.each( group, function( i, val ) {
+                            var option = $('<option></option>').attr('value', val.name).text(val.name).prop('selected', true);
+                            $('#group').append(option).trigger('change');
+                        });
                     }
                 },
                 error:function(data){
-                    if (data.status == 422) {
-                        $.each(data.responseJSON.errors, function (i, error) {
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error(error[0]);
-                        });
-                    }
-                    else{
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error("System error.");
-                    }
                     console.log(data);
                 },
                 complete:function(data){
-                    if(value == 'add' || value == 'update'){
-                        if(JSON.parse(data.responseText).success)
-                            $('#userModal').modal('hide');
-                    }
-                    else{
-                        $('#confirmModal').modal('hide');
-                    }
                     $.unblockUI();
                 }
             });
         }
-
-        function dtableInit(url){
-            $('#dtable').DataTable().clear().destroy();
-            return $('#dtable').DataTable({
-                "language": {
-                    paginate: {
-                        previous: "<i class='fas fa-angle-left'>",
-                        next: "<i class='fas fa-angle-right'>"
-                    }
-                },
-                "serverSide": true,
-                "ajax": url,
-                "columns": [
-                    { data: 'uid', name: 'uid', class : 'text-center' },
-                    { data: 'name', name: 'name', class : 'text-center' },
-                    { data: 'active', name: 'active', class : 'text-center' },
-                    { data: 'action', name: 'action', class : 'text-center' },
-                ],
-                "stateSave": true,
-                "deferRender": true,
-                "pageLength": 10,
-                "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
-                "aoColumnDefs": [
-                    { "bSortable": false, "aTargets": [3] },
-                    { "bSearchable": false, "aTargets": [2,3] }
-                ],
-                "scrollY": "35vh",
-                "scrollX": true,
-                "preDrawCallback": function( settings ) {
-                    scrollPosition = $(".dataTables_scrollBody").scrollTop();
-                },
-                "drawCallback": function( settings ) {
-                    $(".dataTables_scrollBody").scrollTop(scrollPosition);
-                    if(typeof rowIndex != 'undefined') {
-                        dtable.row(rowIndex).nodes().to$().addClass('row_selected');
-                    }
-                    setTimeout( function () {
-                        $("[data-toggle='tooltip']").tooltip();
-                    }, 10)
-                },
-            });
-        }
-
-        setInterval(function(){
-            dtableReload('');
-        }, 60000);
-
-        function dtableReload(searchKey){
-            if(searchKey){
-                dtable.search(searchKey).draw();
-            }
-            dtable.ajax.reload(function(){
-                console.log("Refresh Automatic")
-            }, false);
-        }
-
-        function getUrlParameter(sParam) {
-            var sPageURL = window.location.search.substring(1),
-                sURLVariables = sPageURL.split('&'),
-                sParameterName,
-                i;
-
-            for (i = 0; i < sURLVariables.length; i++) {
-                sParameterName = sURLVariables[i].split('=');
-
-                if (sParameterName[0] === sParam) {
-                    return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-                }
-            }
-            return false;
-        }
-
-        function shuffle(string) {
-            var parts = string.split('');
-            for (var i = parts.length; i > 0;) {
-                var random = parseInt(Math.random() * i);
-                var temp = parts[--i];
-                parts[i] = parts[random];
-                parts[random] = temp;
-            }
-            return parts.join('');
-        }
-
-        function select2custom(select2id, url, placeholder){
-            $(select2id).select2({
-                placeholder: placeholder,
-                ajax: {
-                    url: url,
-                    dataType: 'json',
-                    delay: 250,
-                    cache: true,
-                    processResults: function (data) {
-                        return {
-                            results:  $.map(data, function (d) {
-                                return {
-                                    id: d.name,
-                                    text: d.name
-                                }
-                            })
-                        };
-                    },
-                }
-            });
+        else{
+            $("#chooseGroup")
+                .html('<i class="fas fa-sm fa-hand-pointer"></i> Pilih Semua Blok')
+                .val("chooseAll")
+                .removeClass("text-danger")
+                .addClass("text-info");
+            $("#group").val(null).html("").trigger("change");
         }
     });
+
+    var id;
+
+    if(getUrlParameter('data') !== false)
+        init(getUrlParameter('data'), 3);
+    else
+        init(1, 3);
+
+    $(".registered").click(function(){
+        init(2, 3);
+    });
+
+    $(".home").click(function(){
+        init(1, 3);
+    });
+
+    $(".deleted").click(function(){
+        init(0, 3);
+    });
+
+    function init(active, level){
+        $("#category").prop('selectedIndex',0)
+        if(active == 2){
+            $(".page-title").text("Data Pendaftar");
+            $('#warning-deleted').hide();
+        }
+        else if(active == 1){
+            $(".page-title").text("Pengguna Aktif");
+            $('#warning-deleted').hide();
+        }
+        else{
+            $(".page-title").text("Data Penghapusan");
+            $('#warning-deleted').show();
+        }
+
+        window.history.replaceState(null, null, "?data=" + active + "&lev=" + level);
+        dtable = dtableInit("/production/users?data=" + active + "&lev=" + level);
+    }
+
+    var iti;
+    function initializeTel(init) {
+        iti = window.intlTelInput(document.querySelector("#phone"), {
+            initialCountry: init,
+            preferredCountries: ['id'],
+            formatOnDisplay: false,
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js"
+        });
+    }
+    initializeTel("id");
+
+    var intervalAktivasi;
+    $(".activation").click(function(){
+        $.ajax({
+            url: "/production/users/code/activate",
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#activation_code").text(data.result.code);
+
+                    var timer2 = data.result.time;
+                    var interval = setInterval(function() {
+                        var timer = timer2.split(':');
+
+                        //by parsing integer, I avoid all extra string processing
+                        var minutes = parseInt(timer[0], 10);
+                        var seconds = parseInt(timer[1], 10);
+
+                        --seconds;
+                        minutes = (seconds < 0) ? --minutes : minutes;
+
+                        if(minutes < 0 && seconds < 0){
+                            $('#countdown').hide();
+                            clearInterval(intervalAktivasi);
+                            $('#activationModal').modal('hide');
+                        }
+
+                        if(minutes < 0){
+                            clearInterval(interval);
+                        }
+
+                        seconds = (seconds < 0) ? 59 : seconds;
+                        seconds = (seconds < 10) ? '0' + seconds : seconds;
+
+                        $('#countdown').html(minutes + ':' + seconds);
+
+                        timer2 = minutes + ':' + seconds;
+                    }, 1000);
+
+                    console.log(data.result.time);
+                }
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                intervalAktivasi = setInterval(() => {
+                    $.ajax({
+                        url: "/production/users/activate/verify",
+                        type: "GET",
+                        cache:false,
+                        success:function(data){
+                            if(data.success){
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.success(data.success);
+                                $.blockUI({
+                                    message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                                    baseZ: 9999,
+                                    overlayCSS: {
+                                        backgroundColor: '#000',
+                                        opacity: 0.5,
+                                        cursor: 'wait'
+                                    },
+                                    css: {
+                                        border: 0,
+                                        padding: 0,
+                                        backgroundColor: 'transparent'
+                                    }
+                                });
+
+                                setTimeout(() => {
+                                    $.unblockUI();
+                                    location.href = '/production/service/register?data=' + data.result;
+                                }, 2000);
+                            }
+
+                            if(data.info){
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.info(data.info);
+                            }
+
+                            if(data.warning){
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.warning(data.warning);
+                            }
+
+                            if(data.error){
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.error(data.error);
+                            }
+
+                            if(data.description){
+                                console.log(data.description);
+                            }
+                        },
+                        error:function(data){
+                            console.log(data);
+                        }
+                    });
+                }, 1000);
+                $('#activationModal').modal('show');
+            },
+        });
+    });
+
+    $(".activationClose").click(function(){
+        clearInterval(intervalAktivasi);
+    });
+
+    $("#level").on('change', function(){
+        var level = $("#level").val();
+        if(level == '2'){
+            $("#authorityDiv").show();
+            select2custom("#group", "/search/groups", "-- Cari Blok Tempat --");
+            $("#group").prop("required",true);
+        }
+        else{
+            $("#authorityDiv").hide();
+            $("#group").prop("required",false);
+        }
+    });
+
+    $('[type=tel]').on('change', function(e) {
+        $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
+    });
+
+    $('[type=tel]').on('keypress', function(e) {
+        keys = ['0','1','2','3','4','5','6','7','8','9']
+        return keys.indexOf(e.key) > -1
+    });
+
+    $("#email").on('input', function() {
+        this.value = this.value.replace(/\s/g, '');
+    });
+    $("#phone").on("input", function() {
+        if (/^0/.test(this.value)) {
+            this.value = this.value.replace(/^0/, "");
+        }
+    });
+
+    $("#name").on("input", function(){
+        this.value = this.value.replace(/[^0-9a-zA-Z/\s.,]+$/g, '');
+        this.value = this.value.replace(/\s\s+/g, ' ');
+    });
+
+    $("#btn_copy").click( function(){;
+        navigator.clipboard.writeText($("#newPassword").text());
+        $('#resetModal').modal('hide');
+
+        toastr.options = {
+            "closeButton": true,
+            "preventDuplicates": true,
+        };
+        toastr.success("Password copied.");
+    });
+
+    $('#category').on('change', function() {
+        dtable = dtableInit("/production/users?data=" + getUrlParameter('data') + "&lev=" + this.value);
+    });
+
+    function initForm(){
+        $("#group").val(null).html("").trigger("change").prop("required",false);
+    }
+
+    $(".add").click( function(){
+        $("#userForm")[0].reset();
+        $("#authorityDiv").hide();
+        $('.titles').text('Tambah User');
+        $('#divCheckEmail').show();
+        $('#checkEmail').prop("checked", true);
+        $("#userFormValue").val('add');
+        iti.destroy();
+        initializeTel("id");
+
+        initForm();
+        $("#chooseGroup")
+            .html('<i class="fas fa-sm fa-hand-pointer"></i> Pilih Semua Blok')
+            .val("chooseAll")
+            .removeClass("text-danger")
+            .addClass("text-info");
+
+        $('#userModal').modal('show');
+    });
+
+    $(document).on('click', '.edit', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $("#userForm")[0].reset();
+        $('.titles').text('Edit data ' + nama);
+        $('#divCheckEmail').hide();
+        $('#checkEmail').prop("checked", false);
+        $("#userFormValue").val('update');
+
+        initForm();
+
+        if($("#group").val()){
+            $("#chooseGroup")
+                .html('<i class="fas fa-sm fa-eraser"></i> Hapus Semua Blok')
+                .val("deleteAll")
+                .addClass("text-danger")
+                .removeClass("text-info");
+        }
+        else{
+            $("#chooseGroup")
+                .html('<i class="fas fa-sm fa-hand-pointer"></i> Pilih Semua Blok')
+                .val("chooseAll")
+                .removeClass("text-danger")
+                .addClass("text-info");
+        }
+
+        $.ajax({
+            url: "/production/users/" + id + "/edit",
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#name").val(data.user.name);
+                    $("#email").val(data.user.email);
+                    iti.destroy();
+                    initializeTel(data.user.iso);
+                    $("#phone").val(data.user.phone);
+                    $("#ktp").val(data.user.ktp);
+                    $("#npwp").val(data.user.npwp);
+                    $("#address").val(data.user.address);
+                    $("#level").val(data.user.level).change();
+
+                    if(data.user.level == 2){
+                        var json = JSON.parse(data.user.authority);
+
+                        for (var k in json.authority) {
+                            if (json.authority.hasOwnProperty(k)) {
+                                if(json.authority[k] == false){
+                                    $("#" + k).prop("checked",false);
+                                }
+                            }
+                        }
+
+                        var s1 = $("#group").select2();
+                        var value = json.group;
+                        value.forEach(function(e){
+                            if(!s1.find('option:contains(' + e + ')').length)
+                                s1.append($('<option>').text(e));
+                        });
+                        s1.val(value).trigger("change");
+                        select2custom("#group", "/search/groups", "-- Cari Blok Tempat --");
+                    }
+                }
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#userModal').modal('show');
+            }
+        });
+    });
+
+    $(document).on('click', '.reset', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Reset Password ' + nama + ' ?');
+        $('.bodies').text('Pilih "Reset" di bawah ini jika anda yakin untuk me-reset password user.');
+        $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Reset');
+        $('#confirmValue').val('reset');
+        $('#confirmModal').modal('show');
+    });
+
+    $(document).on('click', '.delete', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Hapus data ' + nama + ' ?');
+        $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data user.');
+        $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
+        $('#confirmValue').val('delete');
+        $('#confirmModal').modal('show');
+    });
+
+    $(document).on('click', '.activateUser', function(){
+        id = $(this).attr('id');
+        location.href = '/production/service/register?data=' + id;
+    });
+
+    $(document).on('click', '.deletePermanently', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Hapus permanen data ' + nama + ' ?');
+        $('.bodies').text('Pilih "Permanen" di bawah ini jika anda yakin untuk menghapus data user secara permanen.');
+        $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Permanen');
+        $('#confirmValue').val('deletePermanently');
+        $('#confirmModal').modal('show');
+    });
+
+    $(document).on('click', '.restore', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Pulihkan data ' + nama + ' ?');
+        $('.bodies').text('Pilih "Restore" di bawah ini jika anda yakin untuk memulihkan data user.');
+        $('#ok_button').addClass('btn-info').removeClass('btn-danger').text('Restore');
+        $('#confirmValue').val('restore');
+        $('#confirmModal').modal('show');
+    });
+
+    $(document).on('click', '.details', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Informasi ' + nama);
+
+        var rand = shuffle('1234567890');
+
+        $.ajax({
+            url: "/production/users/" + id,
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#showPicture").attr('src', '/' + data.user.photo + '?' + rand);
+                    $("#showLevel").text(data.user.level);
+                    $("#showActive").html(data.user.active);
+                    $("#showUid").text(data.user.uid);
+                    $("#showName").text(data.user.name);
+                    $("#showMember").text(data.user.member);
+                    $("#showCreate").text(data.user.create);
+                    $("#showUpdate").text(data.user.update);
+
+                    (data.user.ktp) ? $("#showKtp").html(data.user.ktp) : $("#showKtp").html("&mdash;");
+
+                    (data.user.npwp) ? $("#showNpwp").html(data.user.npwp) : $("#showNpwp").html("&mdash;");
+
+                    (data.user.email) ? $("#showEmail").html("<a target='_blank' href='mailto:" + data.user.email + "'>" + data.user.email + " <i class='fas fa-external-link'></i></a>") : $("#showEmail").html("&mdash;");
+
+                    (data.user.phone) ? $("#showPhone").html("<a target='_blank' href='https://api.whatsapp.com/send?phone=" + data.user.phone + "'>+" + data.user.phone + " <i class='fas fa-external-link'></i></a>") : $("#showPhone").html("&mdash;");
+
+                    (data.user.address) ? $("#showAddress").html(data.user.address) : $("#showAddress").html("&mdash;");
+                }
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#showModal').modal('show');
+            }
+        });
+    });
+
+    $('#userForm').submit(function(e){
+        e.preventDefault();
+        var country = iti.getSelectedCountryData();
+        $("#country").val(country.iso2);
+        value = $("#userFormValue").val();
+        if(value == 'add'){
+            url = "/production/users";
+            type = "POST";
+        }
+        else if(value == 'update'){
+            url = "/production/users/" + id;
+            type = "PUT";
+        }
+        dataset = $(this).serialize();
+        ok_btn_before = "Menyimpan...";
+        ok_btn_completed = "Simpan";
+        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+    });
+
+    $('#confirmForm').submit(function(e){
+        e.preventDefault();
+        var token = $("meta[name='csrf-token']").attr("content");
+        var value = $('#confirmValue').val();
+        dataset = {
+            'id' : id,
+            '_token' : token,
+        }
+        if(value == 'delete'){
+            url = "/production/users/" + id;
+            type = "DELETE";
+            ok_btn_before = "Menghapus...";
+            ok_btn_completed = "Hapus";
+            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        }
+        else if(value == 'deletePermanently'){
+            url = "/production/users/permanent/" + id;
+            type = "DELETE";
+            ok_btn_before = "Menghapus...";
+            ok_btn_completed = "Permanen";
+            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        }
+        else if(value == 'restore'){
+            url = "/production/users/restore/" + id;
+            type = "POST";
+            ok_btn_before = "Memulihkan...";
+            ok_btn_completed = "Restore";
+            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        }
+        else if(value == 'reset'){
+            url = "/production/users/reset/" + id;
+            type = "POST";
+            ok_btn_before = "Resetting...";
+            ok_btn_completed = "Reset";
+            ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        }
+    });
+
+    function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            type: type,
+            cache:false,
+            data: dataset,
+            beforeSend:function(){
+                $.blockUI({
+                    message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                    baseZ: 9999,
+                    overlayCSS: {
+                        backgroundColor: '#000',
+                        opacity: 0.5,
+                        cursor: 'wait'
+                    },
+                    css: {
+                        border: 0,
+                        padding: 0,
+                        backgroundColor: 'transparent'
+                    }
+                });
+            },
+            success:function(data)
+            {
+                if(data.success){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.success(data.success);
+
+                    if(value == 'reset'){
+                        $('#newPassword').html(data.pass);
+                        $('#resetModal').modal('show');
+                    }
+                    else if(value == 'add' || value == 'update'){
+                        var selectedLevel = $('#level').val();
+                        $("#category").val(selectedLevel).change();
+                        $(".page-title").text("Pengguna Aktif");
+                        window.history.replaceState(null, null, "?data=1&lev=" + selectedLevel);
+                        dtable = dtableInit("/production/users?data=1&lev=" + selectedLevel);
+                        $('#warning-deleted').hide();
+                    }
+
+                    dtableReload(data.searchKey);
+                }
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                if (data.status == 422) {
+                    $.each(data.responseJSON.errors, function (i, error) {
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(error[0]);
+                    });
+                }
+                else{
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("System error.");
+                }
+                console.log(data);
+            },
+            complete:function(data){
+                if(value == 'add' || value == 'update'){
+                    if(JSON.parse(data.responseText).success)
+                        $('#userModal').modal('hide');
+                }
+                else{
+                    $('#confirmModal').modal('hide');
+                }
+                $.unblockUI();
+            }
+        });
+    }
+
+    function dtableInit(url){
+        $('#dtable').DataTable().clear().destroy();
+        return $('#dtable').DataTable({
+            "language": {
+                paginate: {
+                    previous: "<i class='fas fa-angle-left'>",
+                    next: "<i class='fas fa-angle-right'>"
+                }
+            },
+            "serverSide": true,
+            "ajax": url,
+            "columns": [
+                { data: 'uid', name: 'uid', class : 'text-center' },
+                { data: 'name', name: 'name', class : 'text-center' },
+                { data: 'active', name: 'active', class : 'text-center' },
+                { data: 'action', name: 'action', class : 'text-center' },
+            ],
+            "stateSave": true,
+            "deferRender": true,
+            "pageLength": 10,
+            "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [3] },
+                { "bSearchable": false, "aTargets": [2,3] }
+            ],
+            "scrollY": "35vh",
+            "scrollX": true,
+            "preDrawCallback": function( settings ) {
+                scrollPosition = $(".dataTables_scrollBody").scrollTop();
+            },
+            "drawCallback": function( settings ) {
+                $(".dataTables_scrollBody").scrollTop(scrollPosition);
+                if(typeof rowIndex != 'undefined') {
+                    dtable.row(rowIndex).nodes().to$().addClass('row_selected');
+                }
+                setTimeout( function () {
+                    $("[data-toggle='tooltip']").tooltip();
+                }, 10)
+            },
+        });
+    }
+
+    setInterval(function(){
+        dtableReload('');
+    }, 60000);
+
+    function dtableReload(searchKey){
+        if(searchKey){
+            dtable.search(searchKey).draw();
+        }
+        dtable.ajax.reload(function(){
+            console.log("Refresh Automatic")
+        }, false);
+    }
+
+    function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+        return false;
+    }
+
+    function shuffle(string) {
+        var parts = string.split('');
+        for (var i = parts.length; i > 0;) {
+            var random = parseInt(Math.random() * i);
+            var temp = parts[--i];
+            parts[i] = parts[random];
+            parts[random] = temp;
+        }
+        return parts.join('');
+    }
+
+    function select2custom(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.name,
+                                text: d.name
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
 </script>
 @endsection

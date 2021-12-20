@@ -18,6 +18,7 @@ class Bill extends Model
         'stt_lunas',
         'name',
         'kd_kontrol',
+        'nicename',
         'group',
         'no_los',
         'jml_los',
@@ -28,6 +29,8 @@ class Bill extends Model
         'b_airkotor',
         'b_lain',
         'b_tagihan',
-        'data'
+        'data',
+        'active',
+        'nonactive'
     ];
 }

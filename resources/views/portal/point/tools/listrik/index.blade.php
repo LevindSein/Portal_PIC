@@ -115,350 +115,337 @@ Alat Listrik
 
 @section('content-js')
 <script>
-    $(document).ready(function(){
-        $(".number").on('input', function (e) {
-            if(e.which >= 37 && e.which <= 40) return;
+    var id;
 
-            if (/^[0-9.,]+$/.test($(this).val())) {
-                $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
+    var dtable = $('#dtable').DataTable({
+        "language": {
+            paginate: {
+                previous: "<i class='fas fa-angle-left'>",
+                next: "<i class='fas fa-angle-right'>"
             }
-            else {
-                $(this).val($(this).val().substring(0, $(this).val().length - 1));
+        },
+        "serverSide": true,
+        "ajax": "/production/point/tools/listrik",
+        "columns": [
+            { data: 'code', name: 'code', class : 'text-center' },
+            { data: 'name', name: 'name', class : 'text-center' },
+            { data: 'power', name: 'power', class : 'text-center' },
+            { data: 'meter', name: 'meter', class : 'text-center' },
+            { data: 'action', name: 'action', class : 'text-center' },
+        ],
+        "stateSave": true,
+        "deferRender": true,
+        "pageLength": 10,
+        "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
+        "order": [[ 0, "asc" ]],
+        "aoColumnDefs": [
+            { "bSortable": false, "aTargets": [4] },
+            { "bSearchable": false, "aTargets": [4] }
+        ],
+        "scrollY": "45vh",
+        "scrollX": true,
+        "preDrawCallback": function( settings ) {
+            scrollPosition = $(".dataTables_scrollBody").scrollTop();
+        },
+        "drawCallback": function( settings ) {
+            $(".dataTables_scrollBody").scrollTop(scrollPosition);
+            if(typeof rowIndex != 'undefined') {
+                dtable.row(rowIndex).nodes().to$().addClass('row_selected');
             }
-        });
+            setTimeout( function () {
+                $("[data-toggle='tooltip']").tooltip();
+            }, 10)
+        },
+    });
 
-        var id;
+    setInterval(function(){
+        dtableReload('');
+    }, 60000);
 
-        var dtable = $('#dtable').DataTable({
-            "language": {
-                paginate: {
-                    previous: "<i class='fas fa-angle-left'>",
-                    next: "<i class='fas fa-angle-right'>"
-                }
-            },
-            "serverSide": true,
-            "ajax": "/production/point/tools/listrik",
-            "columns": [
-                { data: 'code', name: 'code', class : 'text-center' },
-                { data: 'name', name: 'name', class : 'text-center' },
-                { data: 'power', name: 'power', class : 'text-center' },
-                { data: 'meter', name: 'meter', class : 'text-center' },
-                { data: 'action', name: 'action', class : 'text-center' },
-            ],
-            "stateSave": true,
-            "deferRender": true,
-            "pageLength": 10,
-            "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
-            "order": [[ 0, "asc" ]],
-            "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [4] },
-                { "bSearchable": false, "aTargets": [4] }
-            ],
-            "scrollY": "45vh",
-            "scrollX": true,
-            "preDrawCallback": function( settings ) {
-                scrollPosition = $(".dataTables_scrollBody").scrollTop();
-            },
-            "drawCallback": function( settings ) {
-                $(".dataTables_scrollBody").scrollTop(scrollPosition);
-                if(typeof rowIndex != 'undefined') {
-                    dtable.row(rowIndex).nodes().to$().addClass('row_selected');
-                }
-                setTimeout( function () {
-                    $("[data-toggle='tooltip']").tooltip();
-                }, 10)
-            },
-        });
-
-        setInterval(function(){
-            dtableReload('');
-        }, 60000);
-
-        function dtableReload(searchKey){
-            if(searchKey){
-                dtable.search(searchKey).draw();
-            }
-            dtable.ajax.reload(function(){
-                console.log("Refresh Automatic")
-            }, false);
+    function dtableReload(searchKey){
+        if(searchKey){
+            dtable.search(searchKey).draw();
         }
+        dtable.ajax.reload(function(){
+            console.log("Refresh Automatic")
+        }, false);
+    }
 
-        $(".add").click( function(){
-            $("#toolsForm")[0].reset();
-            $('.titles').text('Tambah Alat Listrik');
-            $("#toolsFormValue").val('add');
-            $('#toolsModal').modal('show');
-            $('#toolsModal').on('shown.bs.modal', function() {
-                $('#name').focus();
-            });
+    $(".add").click( function(){
+        $("#toolsForm")[0].reset();
+        $('.titles').text('Tambah Alat Listrik');
+        $("#toolsFormValue").val('add');
+        $('#toolsModal').modal('show');
+        $('#toolsModal').on('shown.bs.modal', function() {
+            $('#name').focus();
         });
+    });
 
-        $(document).on('click', '.edit', function(){
-            id = $(this).attr('id');
-            name = $(this).attr('nama');
-            $("#toolsForm")[0].reset();
-            $('.titles').text('Edit data ' + name);
-            $("#toolsFormValue").val('update');
+    $(document).on('click', '.edit', function(){
+        id = $(this).attr('id');
+        name = $(this).attr('nama');
+        $("#toolsForm")[0].reset();
+        $('.titles').text('Edit data ' + name);
+        $("#toolsFormValue").val('update');
 
-            $.ajax({
-                url: "/production/point/tools/listrik/" + id + "/edit",
-                type: "GET",
-                cache:false,
-                success:function(data){
-                    if(data.success){
-                        $("#name").val(data.show.name);
-                        $("#power").val(Number(data.show.power).toLocaleString('id-ID'));
-                        $("#meter").val(Number(data.show.meter).toLocaleString('id-ID'));
-                    }
+        $.ajax({
+            url: "/production/point/tools/listrik/" + id + "/edit",
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#name").val(data.show.name);
+                    $("#power").val(Number(data.show.power).toLocaleString('id-ID'));
+                    $("#meter").val(Number(data.show.meter).toLocaleString('id-ID'));
+                }
 
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error("Fetching data failed.");
-                    console.log(data);
-                },
-                complete:function(){
-                    $('#toolsModal').modal('show');
-                    $('#toolsModal').on('shown.bs.modal', function() {
-                        $('#name').focus();
-                    });
+                    toastr.info(data.info);
                 }
-            });
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#toolsModal').modal('show');
+                $('#toolsModal').on('shown.bs.modal', function() {
+                    $('#name').focus();
+                });
+            }
         });
+    });
 
-        $(document).on('click', '.delete', function(){
-            id = $(this).attr('id');
-            nama = $(this).attr('nama');
-            $('.titles').text('Hapus data ' + nama + ' ?');
-            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data alat.');
-            $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
-            $('#confirmValue').val('delete');
-            $('#confirmModal').modal('show');
-        });
+    $(document).on('click', '.delete', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Hapus data ' + nama + ' ?');
+        $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data alat.');
+        $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
+        $('#confirmValue').val('delete');
+        $('#confirmModal').modal('show');
+    });
 
-        $('#confirmForm').submit(function(e){
-            e.preventDefault();
-            var token = $("meta[name='csrf-token']").attr("content");
-            var value = $('#confirmValue').val();
-            dataset = {
-                'id' : id,
-                '_token' : token,
-            }
-            if(value == 'delete'){
-                url = "/production/point/tools/listrik/" + id;
-                type = "DELETE";
-                ok_btn_before = "Menghapus...";
-                ok_btn_completed = "Hapus";
-                ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-            }
-        });
-
-        $('#toolsForm').submit(function(e){
-            e.preventDefault();
-
-            value = $("#toolsFormValue").val();
-            if(value == 'add'){
-                url = "/production/point/tools/listrik";
-                type = "POST";
-            }
-            else if(value == 'update'){
-                url = "/production/point/tools/listrik/" + id;
-                type = "PUT";
-            }
-            dataset = $(this).serialize();
-            ok_btn_before = "Menyimpan...";
-            ok_btn_completed = "Simpan";
+    $('#confirmForm').submit(function(e){
+        e.preventDefault();
+        var token = $("meta[name='csrf-token']").attr("content");
+        var value = $('#confirmValue').val();
+        dataset = {
+            'id' : id,
+            '_token' : token,
+        }
+        if(value == 'delete'){
+            url = "/production/point/tools/listrik/" + id;
+            type = "DELETE";
+            ok_btn_before = "Menghapus...";
+            ok_btn_completed = "Hapus";
             ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-        });
-
-        function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
-            $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: url,
-                type: type,
-                cache:false,
-                data: dataset,
-                beforeSend:function(){
-                    $.blockUI({
-                        message: '<i class="fad fa-spin fa-spinner text-white"></i>',
-                        baseZ: 9999,
-                        overlayCSS: {
-                            backgroundColor: '#000',
-                            opacity: 0.5,
-                            cursor: 'wait'
-                        },
-                        css: {
-                            border: 0,
-                            padding: 0,
-                            backgroundColor: 'transparent'
-                        }
-                    });
-                },
-                success:function(data)
-                {
-                    if(data.success){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.success(data.success);
-                        dtableReload(data.searchKey);
-                    }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
-                    if (data.status == 422) {
-                        $.each(data.responseJSON.errors, function (i, error) {
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error(error[0]);
-                        });
-                    }
-                    else{
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error("System error.");
-                    }
-                    console.log(data);
-                },
-                complete:function(data){
-                    if(value == 'add' || value == 'update'){
-                        if(JSON.parse(data.responseText).success)
-                            $('#toolsModal').modal('hide');
-                    }
-                    else{
-                        $('#confirmModal').modal('hide');
-                    }
-                    $.unblockUI();
-                }
-            });
         }
+    });
 
-        $(document).on('click', '.details', function(){
-            id = $(this).attr('id');
+    $('#toolsForm').submit(function(e){
+        e.preventDefault();
 
-            $.ajax({
-                url: "/production/point/tools/listrik/" + id,
-                type: "GET",
-                cache:false,
-                success:function(data){
-                    if(data.success){
-                        $("#showCode").text(data.show.code);
-                        (data.show.name) ? $("#showName").text(data.show.name) : $("#showName").html("&mdash;");
-                        $("#showPower").text(Number(data.show.power).toLocaleString('id-ID') + " Watt");
-                        $("#showMeter").text(Number(data.show.meter).toLocaleString('id-ID'));
-                        (data.show.kontrol && !data.show.stt_available)
-                            ? $("#showAvailable").html("<a class='text-danger' href='/production/point/stores?s=" + data.show.kontrol + "'>Digunakan&nbsp;" + data.show.kontrol + "&nbsp;<sup><i class='fas fa-external-link'></i></sup></a>")
-                            : $("#showAvailable").html("<span class='text-success'>Tersedia</span>");
-                        $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
-                        $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
+        value = $("#toolsFormValue").val();
+        if(value == 'add'){
+            url = "/production/point/tools/listrik";
+            type = "POST";
+        }
+        else if(value == 'update'){
+            url = "/production/point/tools/listrik/" + id;
+            type = "PUT";
+        }
+        dataset = $(this).serialize();
+        ok_btn_before = "Menyimpan...";
+        ok_btn_completed = "Simpan";
+        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+    });
+
+    function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            type: type,
+            cache:false,
+            data: dataset,
+            beforeSend:function(){
+                $.blockUI({
+                    message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                    baseZ: 9999,
+                    overlayCSS: {
+                        backgroundColor: '#000',
+                        opacity: 0.5,
+                        cursor: 'wait'
+                    },
+                    css: {
+                        border: 0,
+                        padding: 0,
+                        backgroundColor: 'transparent'
                     }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
+                });
+            },
+            success:function(data)
+            {
+                if(data.success){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error("Fetching data failed.");
-                    console.log(data);
-                },
-                complete:function(){
-                    $('#showModal').modal('show');
+                    toastr.success(data.success);
+                    dtableReload(data.searchKey);
                 }
-            });
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                if (data.status == 422) {
+                    $.each(data.responseJSON.errors, function (i, error) {
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(error[0]);
+                    });
+                }
+                else{
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("System error.");
+                }
+                console.log(data);
+            },
+            complete:function(data){
+                if(value == 'add' || value == 'update'){
+                    if(JSON.parse(data.responseText).success)
+                        $('#toolsModal').modal('hide');
+                }
+                else{
+                    $('#confirmModal').modal('hide');
+                }
+                $.unblockUI();
+            }
+        });
+    }
+
+    $(document).on('click', '.details', function(){
+        id = $(this).attr('id');
+
+        $.ajax({
+            url: "/production/point/tools/listrik/" + id,
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#showCode").text(data.show.code);
+                    (data.show.name) ? $("#showName").text(data.show.name) : $("#showName").html("&mdash;");
+                    $("#showPower").text(Number(data.show.power).toLocaleString('id-ID') + " Watt");
+                    $("#showMeter").text(Number(data.show.meter).toLocaleString('id-ID'));
+                    (data.show.kontrol && !data.show.stt_available)
+                        ? $("#showAvailable").html("<a class='text-danger' href='/production/point/stores?s=" + data.show.kontrol + "'>Digunakan&nbsp;" + data.show.kontrol + "&nbsp;<sup><i class='fas fa-external-link'></i></sup></a>")
+                        : $("#showAvailable").html("<span class='text-success'>Tersedia</span>");
+                    $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
+                    $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
+                }
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#showModal').modal('show');
+            }
         });
     });
 </script>

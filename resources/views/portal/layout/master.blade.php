@@ -11,7 +11,7 @@
     <title>@yield('content-title') | Portal PIC</title>
 
     {{-- Select2 --}}
-    <link rel="stylesheet" type="text/css" href="https://gistcdn.githack.com/LevindSein/f7c69066795ad91de5aabd3e257021b7/raw/869e04587bc9562c030de473491b4e3dc907a289/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('vendor/select2/dist/css/select2.min.css')}}">
 
     <link rel="stylesheet" href="{{asset('vendor/intTelInput/build/css/intlTelInput.css')}}">
 
@@ -496,93 +496,93 @@
             // $('#dtable').on('error.dt', function(e, settings, techNote, message) {
             //     console.log( 'An error has been reported by DataTables: ', message);
             // })
+        });
 
-            $(".sidebartoggler").click(function(){
-                var adjust = setInterval(() => {
-                    var adjust = $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
-                }, 10);
-                setTimeout(() => {
-                    clearInterval(adjust);
-                }, 1000);
-            });
+        $(".sidebartoggler").click(function(){
+            var adjust = setInterval(() => {
+                var adjust = $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+            }, 10);
+            setTimeout(() => {
+                clearInterval(adjust);
+            }, 1000);
+        });
 
-            $(document).on('shown.bs.tooltip', function (e) {
-                setTimeout(function () {
-                    $(e.target).tooltip('hide');
-                    $(".tooltip").tooltip("hide");
-                }, 1000);
-            });
+        $(document).on('shown.bs.tooltip', function (e) {
+            setTimeout(function () {
+                $(e.target).tooltip('hide');
+                $(".tooltip").tooltip("hide");
+            }, 1000);
+        });
 
-            setInterval(() => {
-                var email = localStorage.getItem("email");
-                if(email == 'terverifikasi'){
-                    localStorage.setItem("email", null);
-                    location.reload();
-                }
-            }, 60000);
+        setInterval(() => {
+            var email = localStorage.getItem("email");
+            if(email == 'terverifikasi'){
+                localStorage.setItem("email", null);
+                location.reload();
+            }
+        }, 60000);
 
-            $("#emailResend").click( function(e){
-                e.preventDefault();
-                $.ajax({
-                    url: "/email/verify/resend",
-                    type: "GET",
-                    cache:false,
-                    beforeSend:function(){
-                        $("#emailResend").text('mengirim email verifikasi . . ').removeAttr("href");
-                    },
-                    success:function(data)
-                    {
-                        if(data.success){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.success(data.success);
-                        }
-
-                        if(data.info){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.info(data.info);
-                        }
-
-                        if(data.warning){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.warning(data.warning);
-                        }
-
-                        if(data.error){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error(data.error);
-                        }
-
-                        if(data.description){
-                            console.log(data.description);
-                            setTimeout(function() {
-                                location.href = "/profile";
-                            }, 1000);
-                        }
-                    },
-                    error:function(data){
+        $("#emailResend").click( function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "/email/verify/resend",
+                type: "GET",
+                cache:false,
+                beforeSend:function(){
+                    $("#emailResend").text('mengirim email verifikasi . . ').removeAttr("href");
+                },
+                success:function(data)
+                {
+                    if(data.success){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error("System error.");
-                        console.log(data);
-                    },
-                    complete:function(data){
-                        $("#emailResend").text('disini').attr("href", "javascript:void(0)");
+                        toastr.success(data.success);
                     }
-                });
+
+                    if(data.info){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.info(data.info);
+                    }
+
+                    if(data.warning){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.warning(data.warning);
+                    }
+
+                    if(data.error){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                    }
+
+                    if(data.description){
+                        console.log(data.description);
+                        setTimeout(function() {
+                            location.href = "/profile";
+                        }, 1000);
+                    }
+                },
+                error:function(data){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("System error.");
+                    console.log(data);
+                },
+                complete:function(data){
+                    $("#emailResend").text('disini').attr("href", "javascript:void(0)");
+                }
             });
         });
     </script>

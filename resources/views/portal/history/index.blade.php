@@ -60,137 +60,135 @@ Riwayat Login
 
 @section('content-js')
 <script>
-    $(document).ready(function(){
-        var dtable = $('#dtable').DataTable({
-            "language": {
-                paginate: {
-                    previous: "<i class='fas fa-angle-left'>",
-                    next: "<i class='fas fa-angle-right'>"
-                }
-            },
-            "serverSide": true,
-            "ajax": "/production/histories",
-            "columns": [
-                { data: 'uid', name: 'uid', class : 'text-center' },
-                { data: 'name', name: 'name', class : 'text-center' },
-                { data: 'level', name: 'level', class : 'text-center' },
-                { data: 'status', name: 'status', class : 'text-center' },
-                { data: { '_': 'created_at.display', 'sort': 'created_at.timestamp' }, name: 'created_at', class : 'text-center'  },
-                { data: 'action', name: 'action', class : 'text-center' },
-            ],
-            "stateSave": true,
-            "deferRender": true,
-            "pageLength": 10,
-            "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
-            "order": [[ 4, "desc" ]],
-            "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [5] },
-                { "bSearchable": false, "aTargets": [5] }
-            ],
-            "scrollY": "50vh",
-            "scrollX": true,
-            "preDrawCallback": function( settings ) {
-                scrollPosition = $(".dataTables_scrollBody").scrollTop();
-            },
-            "drawCallback": function( settings ) {
-                $(".dataTables_scrollBody").scrollTop(scrollPosition);
-                if(typeof rowIndex != 'undefined') {
-                    dtable.row(rowIndex).nodes().to$().addClass('row_selected');
-                }
-                setTimeout( function () {
-                    $("[data-toggle='tooltip']").tooltip();
-                }, 10)
-            },
-        });
-
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-            for ( var i=1 ; i<4 ; i++ ) {
-                dtable.column( i ).visible( false, false );
+    var dtable = $('#dtable').DataTable({
+        "language": {
+            paginate: {
+                previous: "<i class='fas fa-angle-left'>",
+                next: "<i class='fas fa-angle-right'>"
             }
-            dtable.columns.adjust().draw( false );
-        }
-        else{
-            for ( var i=1 ; i<4 ; i++ ) {
-                dtable.column( i ).visible( true, false );
+        },
+        "serverSide": true,
+        "ajax": "/production/histories",
+        "columns": [
+            { data: 'uid', name: 'uid', class : 'text-center' },
+            { data: 'name', name: 'name', class : 'text-center' },
+            { data: 'level', name: 'level', class : 'text-center' },
+            { data: 'status', name: 'status', class : 'text-center' },
+            { data: { '_': 'created_at.display', 'sort': 'created_at.timestamp' }, name: 'created_at', class : 'text-center'  },
+            { data: 'action', name: 'action', class : 'text-center' },
+        ],
+        "stateSave": true,
+        "deferRender": true,
+        "pageLength": 10,
+        "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
+        "order": [[ 4, "desc" ]],
+        "aoColumnDefs": [
+            { "bSortable": false, "aTargets": [5] },
+            { "bSearchable": false, "aTargets": [5] }
+        ],
+        "scrollY": "50vh",
+        "scrollX": true,
+        "preDrawCallback": function( settings ) {
+            scrollPosition = $(".dataTables_scrollBody").scrollTop();
+        },
+        "drawCallback": function( settings ) {
+            $(".dataTables_scrollBody").scrollTop(scrollPosition);
+            if(typeof rowIndex != 'undefined') {
+                dtable.row(rowIndex).nodes().to$().addClass('row_selected');
             }
-            dtable.columns.adjust().draw( false );
+            setTimeout( function () {
+                $("[data-toggle='tooltip']").tooltip();
+            }, 10)
+        },
+    });
+
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        for ( var i=1 ; i<4 ; i++ ) {
+            dtable.column( i ).visible( false, false );
         }
-
-        setInterval(function(){
-            dtableReload();
-        }, 60000);
-
-        function dtableReload(){
-            dtable.ajax.reload(function(){
-                console.log("Refresh Automatic")
-            }, false);
+        dtable.columns.adjust().draw( false );
+    }
+    else{
+        for ( var i=1 ; i<4 ; i++ ) {
+            dtable.column( i ).visible( true, false );
         }
+        dtable.columns.adjust().draw( false );
+    }
 
-        var id;
-        $(document).on('click', '.details', function(){
-            id = $(this).attr('id');
-            nama = $(this).attr('nama');
+    setInterval(function(){
+        dtableReload();
+    }, 60000);
 
-            $.ajax({
-                url: "/production/histories/" + id,
-                type: "GET",
-                cache:false,
-                success:function(data){
-                    if(data.success){
-                        $("#showLevel").text(data.user.level);
-                        $("#showActive").html(data.user.active);
-                        $("#showUid").text(data.user.uid);
-                        $("#showName").text(data.user.name);
-                        $("#showStatus").html(data.user.status);
-                        $("#showPlatform").text(data.user.platform);
-                        $("#showTime").text(data.user.time + " WIB");
-                    }
+    function dtableReload(){
+        dtable.ajax.reload(function(){
+            console.log("Refresh Automatic")
+        }, false);
+    }
 
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
+    var id;
+    $(document).on('click', '.details', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
 
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                        if(data.description){
-                            setTimeout(function() {
-                                location.href = "/profile";
-                            }, 1000);
-                        }
-                    }
+        $.ajax({
+            url: "/production/histories/" + id,
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#showLevel").text(data.user.level);
+                    $("#showActive").html(data.user.active);
+                    $("#showUid").text(data.user.uid);
+                    $("#showName").text(data.user.name);
+                    $("#showStatus").html(data.user.status);
+                    $("#showPlatform").text(data.user.platform);
+                    $("#showTime").text(data.user.time + " WIB");
+                }
 
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error("Failed to retrieve data.");
-                    console.log(data);
-                },
-                complete:function(){
-                    $('#showModal').modal('show');
+                    toastr.info(data.info);
                 }
-            });
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                    if(data.description){
+                        setTimeout(function() {
+                            location.href = "/profile";
+                        }, 1000);
+                    }
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Failed to retrieve data.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#showModal').modal('show');
+            }
         });
     });
 </script>

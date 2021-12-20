@@ -99,338 +99,335 @@ Daftar Log Perubahan
 
 @section('content-js')
 <script>
-    $(document).ready(function(){
-        var id;
-
-        var dtable = $('#dtable').DataTable({
-            "language": {
-                paginate: {
-                    previous: "<i class='fas fa-angle-left'>",
-                    next: "<i class='fas fa-angle-right'>"
-                }
-            },
-            "serverSide": true,
-            "ajax": "/production/changelogs",
-            "columns": [
-                { data: { '_': 'updated_at.display', 'sort': 'updated_at.timestamp' }, name: 'updated_at', class : 'text-center'  },
-                { data: 'data', name: 'data', class : 'text-center' },
-                { data: 'action', name: 'action', class : 'text-center' },
-            ],
-            "stateSave": true,
-            "deferRender": true,
-            "pageLength": 10,
-            "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
-            "order": [[ 0, "desc" ]],
-            "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [2] },
-                { "bSearchable": false, "aTargets": [2] }
-            ],
-            "scrollY": "50vh",
-            "scrollX": true,
-            "preDrawCallback": function( settings ) {
-                scrollPosition = $(".dataTables_scrollBody").scrollTop();
-            },
-            "drawCallback": function( settings ) {
-                $(".dataTables_scrollBody").scrollTop(scrollPosition);
-                if(typeof rowIndex != 'undefined') {
-                    dtable.row(rowIndex).nodes().to$().addClass('row_selected');
-                }
-                setTimeout( function () {
-                    $("[data-toggle='tooltip']").tooltip();
-                }, 10)
-            },
-        });
-
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-            dtable.column( 1 ).visible( false, false );
-            dtable.columns.adjust().draw( false );
-        }
-        else{
-            dtable.column( 1 ).visible( true, false );
-            dtable.columns.adjust().draw( false );
-        }
-
-        setInterval(function(){
-            dtableReload('');
-        }, 60000);
-
-        function dtableReload(searchKey){
-            if(searchKey){
-                dtable.search(searchKey).draw();
+    var id;
+    var dtable = $('#dtable').DataTable({
+        "language": {
+            paginate: {
+                previous: "<i class='fas fa-angle-left'>",
+                next: "<i class='fas fa-angle-right'>"
             }
-            dtable.ajax.reload(function(){
-                console.log("Refresh Automatic")
-            }, false);
+        },
+        "serverSide": true,
+        "ajax": "/production/changelogs",
+        "columns": [
+            { data: { '_': 'updated_at.display', 'sort': 'updated_at.timestamp' }, name: 'updated_at', class : 'text-center'  },
+            { data: 'data', name: 'data', class : 'text-center' },
+            { data: 'action', name: 'action', class : 'text-center' },
+        ],
+        "stateSave": true,
+        "deferRender": true,
+        "pageLength": 10,
+        "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
+        "order": [[ 0, "desc" ]],
+        "aoColumnDefs": [
+            { "bSortable": false, "aTargets": [2] },
+            { "bSearchable": false, "aTargets": [2] }
+        ],
+        "scrollY": "50vh",
+        "scrollX": true,
+        "preDrawCallback": function( settings ) {
+            scrollPosition = $(".dataTables_scrollBody").scrollTop();
+        },
+        "drawCallback": function( settings ) {
+            $(".dataTables_scrollBody").scrollTop(scrollPosition);
+            if(typeof rowIndex != 'undefined') {
+                dtable.row(rowIndex).nodes().to$().addClass('row_selected');
+            }
+            setTimeout( function () {
+                $("[data-toggle='tooltip']").tooltip();
+            }, 10)
+        },
+    });
+
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        dtable.column( 1 ).visible( false, false );
+        dtable.columns.adjust().draw( false );
+    }
+    else{
+        dtable.column( 1 ).visible( true, false );
+        dtable.columns.adjust().draw( false );
+    }
+
+    setInterval(function(){
+        dtableReload('');
+    }, 60000);
+
+    function dtableReload(searchKey){
+        if(searchKey){
+            dtable.search(searchKey).draw();
         }
+        dtable.ajax.reload(function(){
+            console.log("Refresh Automatic")
+        }, false);
+    }
 
-        $(".add").click( function(){
-            $("#logForm")[0].reset();
-            $('.titles').text('Tambah data Log Perubahan');
-            $("#logFormValue").val('add');
-            $('#logModal').modal('show');
-            $('#logModal').on('shown.bs.modal', function() {
-                $('#title').focus();
-            });
+    $(".add").click( function(){
+        $("#logForm")[0].reset();
+        $('.titles').text('Tambah data Log Perubahan');
+        $("#logFormValue").val('add');
+        $('#logModal').modal('show');
+        $('#logModal').on('shown.bs.modal', function() {
+            $('#title').focus();
         });
+    });
 
-        $(document).on('click', '.edit', function(){
-            id = $(this).attr('id');
-            $("#logForm")[0].reset();
-            $('.titles').text('Edit data Log Perubahan');
-            $("#logFormValue").val('update');
+    $(document).on('click', '.edit', function(){
+        id = $(this).attr('id');
+        $("#logForm")[0].reset();
+        $('.titles').text('Edit data Log Perubahan');
+        $("#logFormValue").val('update');
 
-            $.ajax({
-                url: "/production/changelogs/" + id + "/edit",
-                type: "GET",
-                cache:false,
-                success:function(data){
-                    if(data.success){
-                        $("#title").val(data.changelog.title);
-                        $("#data").val(data.changelog.data);
-                    }
+        $.ajax({
+            url: "/production/changelogs/" + id + "/edit",
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#title").val(data.changelog.title);
+                    $("#data").val(data.changelog.data);
+                }
 
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error("Fetching data failed.");
-                    console.log(data);
-                },
-                complete:function(){
-                    $('#logModal').modal('show');
-                    $('#logModal').on('shown.bs.modal', function() {
-                        $('#title').focus();
-                    });
+                    toastr.info(data.info);
                 }
-            });
-        });
 
-        $(document).on('click', '.delete', function(){
-            id = $(this).attr('id');
-            $('.titles').text('Hapus data Log Perubahan ?');
-            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data log perubahan.');
-            $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
-            $('#confirmValue').val('delete');
-            $('#confirmModal').modal('show');
-        });
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
 
-        $('#logForm').submit(function(e){
-            e.preventDefault();
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
 
-            value = $("#logFormValue").val();
-            if(value == 'add'){
-                url = "/production/changelogs";
-                type = "POST";
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#logModal').modal('show');
+                $('#logModal').on('shown.bs.modal', function() {
+                    $('#title').focus();
+                });
             }
-            else if(value == 'update'){
-                url = "/production/changelogs/" + id;
-                type = "PUT";
-            }
-            dataset = $(this).serialize();
-            ok_btn_before = "Menyimpan...";
-            ok_btn_completed = "Simpan";
+        });
+    });
+
+    $(document).on('click', '.delete', function(){
+        id = $(this).attr('id');
+        $('.titles').text('Hapus data Log Perubahan ?');
+        $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data log perubahan.');
+        $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
+        $('#confirmValue').val('delete');
+        $('#confirmModal').modal('show');
+    });
+
+    $('#logForm').submit(function(e){
+        e.preventDefault();
+
+        value = $("#logFormValue").val();
+        if(value == 'add'){
+            url = "/production/changelogs";
+            type = "POST";
+        }
+        else if(value == 'update'){
+            url = "/production/changelogs/" + id;
+            type = "PUT";
+        }
+        dataset = $(this).serialize();
+        ok_btn_before = "Menyimpan...";
+        ok_btn_completed = "Simpan";
+        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+    });
+
+    $('#confirmForm').submit(function(e){
+        e.preventDefault();
+        var token = $("meta[name='csrf-token']").attr("content");
+        var value = $('#confirmValue').val();
+        dataset = {
+            'id' : id,
+            '_token' : token,
+        }
+        if(value == 'delete'){
+            url = "/production/changelogs/" + id;
+            type = "DELETE";
+            ok_btn_before = "Menghapus...";
+            ok_btn_completed = "Hapus";
             ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-        });
-
-        $('#confirmForm').submit(function(e){
-            e.preventDefault();
-            var token = $("meta[name='csrf-token']").attr("content");
-            var value = $('#confirmValue').val();
-            dataset = {
-                'id' : id,
-                '_token' : token,
-            }
-            if(value == 'delete'){
-                url = "/production/changelogs/" + id;
-                type = "DELETE";
-                ok_btn_before = "Menghapus...";
-                ok_btn_completed = "Hapus";
-                ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-            }
-        });
-
-        function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
-            $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: url,
-                type: type,
-                cache:false,
-                data: dataset,
-                beforeSend:function(){
-                    $.blockUI({
-                        message: '<i class="fad fa-spin fa-spinner text-white"></i>',
-                        baseZ: 9999,
-                        overlayCSS: {
-                            backgroundColor: '#000',
-                            opacity: 0.5,
-                            cursor: 'wait'
-                        },
-                        css: {
-                            border: 0,
-                            padding: 0,
-                            backgroundColor: 'transparent'
-                        }
-                    });
-                },
-                success:function(data)
-                {
-                    if(data.success){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.success(data.success);
-                        dtableReload(data.searchKey);
-                    }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
-                    if (data.status == 422) {
-                        $.each(data.responseJSON.errors, function (i, error) {
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error(error[0]);
-                        });
-                    }
-                    else{
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error("System error.");
-                    }
-                    console.log(data);
-                },
-                complete:function(data){
-                    if(value == 'add' || value == 'update'){
-                        if(JSON.parse(data.responseText).success)
-                            $('#logModal').modal('hide');
-                    }
-                    else{
-                        $('#confirmModal').modal('hide');
-                    }
-                    $.unblockUI();
-                }
-            });
         }
+    });
 
-        $(document).on('click', '.details', function(){
-            id = $(this).attr('id');
-
-            $.ajax({
-                url: "/production/changelogs/" + id,
-                type: "GET",
-                cache:false,
-                success:function(data){
-                    if(data.success){
-                        $("#showTitle").text(data.changelog.title);
-                        $("#showCreate").html(data.changelog.username_create + "<br>pada " + data.changelog.created_at);
-                        $("#showEdit").html(data.changelog.username_update + "<br>pada " + data.changelog.updated_at);
-                        $("#showData").html(data.changelog.data);
+    function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            type: type,
+            cache:false,
+            data: dataset,
+            beforeSend:function(){
+                $.blockUI({
+                    message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                    baseZ: 9999,
+                    overlayCSS: {
+                        backgroundColor: '#000',
+                        opacity: 0.5,
+                        cursor: 'wait'
+                    },
+                    css: {
+                        border: 0,
+                        padding: 0,
+                        backgroundColor: 'transparent'
                     }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
+                });
+            },
+            success:function(data)
+            {
+                if(data.success){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error("Fetching data failed.");
-                    console.log(data);
-                },
-                complete:function(){
-                    $('#showModal').modal('show');
+                    toastr.success(data.success);
+                    dtableReload(data.searchKey);
                 }
-            });
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                if (data.status == 422) {
+                    $.each(data.responseJSON.errors, function (i, error) {
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(error[0]);
+                    });
+                }
+                else{
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("System error.");
+                }
+                console.log(data);
+            },
+            complete:function(data){
+                if(value == 'add' || value == 'update'){
+                    if(JSON.parse(data.responseText).success)
+                        $('#logModal').modal('hide');
+                }
+                else{
+                    $('#confirmModal').modal('hide');
+                }
+                $.unblockUI();
+            }
+        });
+    }
+
+    $(document).on('click', '.details', function(){
+        id = $(this).attr('id');
+
+        $.ajax({
+            url: "/production/changelogs/" + id,
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#showTitle").text(data.changelog.title);
+                    $("#showCreate").html(data.changelog.username_create + "<br>pada " + data.changelog.created_at);
+                    $("#showEdit").html(data.changelog.username_update + "<br>pada " + data.changelog.updated_at);
+                    $("#showData").html(data.changelog.data);
+                }
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#showModal').modal('show');
+            }
         });
     });
 </script>

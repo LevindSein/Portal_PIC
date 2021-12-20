@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\User;
+use App\Models\Bill;
 use App\Models\TListrik;
 use App\Models\TAirBersih;
 
@@ -42,6 +43,14 @@ class Identity extends Model
         $data = 'MA'.mt_rand(00001, 99999);
         if(TAirBersih::where('code', $data)->exists())
             return self::listrikCode();
+        else
+            return $data;
+    }
+
+    public static function billCode(){
+        $data = mt_rand(1000000001, 9999999999);
+        if(Bill::where('code', $data)->exists())
+            return self::billCode();
         else
             return $data;
     }

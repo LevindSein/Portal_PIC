@@ -86,164 +86,163 @@
         <script>
             $(document).ready(function(){
                 $("#uid").focus();
+            });
 
-                $('#passwordRegShow').on('click touchstart', function(e){
-                    e.preventDefault();
-                    if($('#passwordReg').attr('type') == 'password'){
-                        $('#passwordReg').prop('type', 'text');
-                        $('#passwordRegShow').removeClass('fa-eye-slash').addClass('fa-eye');
-                    }else{
-                        $('#passwordReg').prop('type', 'password');
-                        $('#passwordRegShow').addClass('fa-eye-slash').removeClass('fa-eye');
-                    }
-                });
-
-                $('#passwordLogShow').on('click touchstart', function(e){
-                    e.preventDefault();
-                    if($('#passwordLog').attr('type') == 'password'){
-                        $('#passwordLog').prop('type', 'text');
-                        $('#passwordLogShow').removeClass('fa-eye-slash').addClass('fa-eye');
-                    }else{
-                        $('#passwordLog').prop('type', 'password');
-                        $('#passwordLogShow').addClass('fa-eye-slash').removeClass('fa-eye');
-                    }
-                });
-
-                $("#uid, #email").on('input', function() {
-                    this.value = this.value.replace(/\s/g,'');
-                });
-
-                $("#name").on("input", function(){
-                    this.value = this.value.replace(/[^0-9a-zA-Z/\s.,]+$/g, '');
-                    this.value = this.value.replace(/\s\s+/g, ' ');
-                });
-
-
-                $('#loginForm').on('submit', function(e){
-                    e.preventDefault();
-                    callingFunction("login", $(this).serialize());
-                });
-
-                $('#registerForm').on('submit', function(e){
-                    e.preventDefault();
-                    callingFunction("register", $(this).serialize());
-                });
-
-                function callingFunction(type, data){
-                    if(type == "login"){
-                        url = "/login";
-                    }
-                    else{
-                        url = "/register";
-                    }
-
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-
-                    $.ajax({
-                        url: url,
-                        cache: false,
-                        method: "POST",
-                        data: data,
-                        dataType: "json",
-                        beforeSend:function(){
-                            $.blockUI({
-                                message: '<i class="fad fa-spin fa-spinner text-white"></i>',
-                                baseZ: 9999,
-                                overlayCSS: {
-                                    backgroundColor: '#000',
-                                    opacity: 0.5,
-                                    cursor: 'wait'
-                                },
-                                css: {
-                                    border: 0,
-                                    padding: 0,
-                                    backgroundColor: 'transparent'
-                                }
-                            });
-                        },
-                        success:function(data)
-                        {
-                            if(data.success){
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.success(data.success);
-                                location.href = "/login";
-                            }
-
-                            if(data.info){
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.info(data.info);
-                            }
-
-                            if(data.warning){
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.warning(data.warning);
-                                if(data.description){
-                                    setTimeout(function() {
-                                        location.href = "/profile";
-                                    }, 1000);
-                                }
-                            }
-
-                            if(data.error){
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.error(data.error);
-                            }
-
-                            if(data.description){
-                                console.log(data.description);
-
-                                location.href = "/register/" + data.description;
-                            }
-                        },
-                        error:function(data){
-                            if (data.status == 422) {
-                                $.each(data.responseJSON.errors, function (i, error) {
-                                    toastr.options = {
-                                        "closeButton": true,
-                                        "preventDuplicates": true,
-                                    };
-                                    toastr.error(error[0]);
-                                });
-                            }
-                            else{
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.error("System error.");
-                                console.log(data);
-                            }
-                        },
-                        complete:function(data){
-                            if(type == "login"){
-                                $("#loginForm")[0].reset();
-                                $("#uid").focus();
-                            }
-                            else{
-                                $("#registerForm")[0].reset();
-                                $("#name").focus();
-                            }
-                            $.unblockUI();
-                        }
-                    });
+            $('#passwordRegShow').on('click touchstart', function(e){
+                e.preventDefault();
+                if($('#passwordReg').attr('type') == 'password'){
+                    $('#passwordReg').prop('type', 'text');
+                    $('#passwordRegShow').removeClass('fa-eye-slash').addClass('fa-eye');
+                }else{
+                    $('#passwordReg').prop('type', 'password');
+                    $('#passwordRegShow').addClass('fa-eye-slash').removeClass('fa-eye');
                 }
             });
+
+            $('#passwordLogShow').on('click touchstart', function(e){
+                e.preventDefault();
+                if($('#passwordLog').attr('type') == 'password'){
+                    $('#passwordLog').prop('type', 'text');
+                    $('#passwordLogShow').removeClass('fa-eye-slash').addClass('fa-eye');
+                }else{
+                    $('#passwordLog').prop('type', 'password');
+                    $('#passwordLogShow').addClass('fa-eye-slash').removeClass('fa-eye');
+                }
+            });
+
+            $("#uid, #email").on('input', function() {
+                this.value = this.value.replace(/\s/g,'');
+            });
+
+            $("#name").on("input", function(){
+                this.value = this.value.replace(/[^0-9a-zA-Z/\s.,]+$/g, '');
+                this.value = this.value.replace(/\s\s+/g, ' ');
+            });
+
+            $('#loginForm').on('submit', function(e){
+                e.preventDefault();
+                callingFunction("login", $(this).serialize());
+            });
+
+            $('#registerForm').on('submit', function(e){
+                e.preventDefault();
+                callingFunction("register", $(this).serialize());
+            });
+
+            function callingFunction(type, data){
+                if(type == "login"){
+                    url = "/login";
+                }
+                else{
+                    url = "/register";
+                }
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    method: "POST",
+                    data: data,
+                    dataType: "json",
+                    beforeSend:function(){
+                        $.blockUI({
+                            message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                            baseZ: 9999,
+                            overlayCSS: {
+                                backgroundColor: '#000',
+                                opacity: 0.5,
+                                cursor: 'wait'
+                            },
+                            css: {
+                                border: 0,
+                                padding: 0,
+                                backgroundColor: 'transparent'
+                            }
+                        });
+                    },
+                    success:function(data)
+                    {
+                        if(data.success){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.success(data.success);
+                            location.href = "/login";
+                        }
+
+                        if(data.info){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.info(data.info);
+                        }
+
+                        if(data.warning){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.warning(data.warning);
+                            if(data.description){
+                                setTimeout(function() {
+                                    location.href = "/profile";
+                                }, 1000);
+                            }
+                        }
+
+                        if(data.error){
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.error(data.error);
+                        }
+
+                        if(data.description){
+                            console.log(data.description);
+
+                            location.href = "/register/" + data.description;
+                        }
+                    },
+                    error:function(data){
+                        if (data.status == 422) {
+                            $.each(data.responseJSON.errors, function (i, error) {
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "preventDuplicates": true,
+                                };
+                                toastr.error(error[0]);
+                            });
+                        }
+                        else{
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.error("System error.");
+                            console.log(data);
+                        }
+                    },
+                    complete:function(data){
+                        if(type == "login"){
+                            $("#loginForm")[0].reset();
+                            $("#uid").focus();
+                        }
+                        else{
+                            $("#registerForm")[0].reset();
+                            $("#name").focus();
+                        }
+                        $.unblockUI();
+                    }
+                });
+            }
         </script>
 
         @include('message.toastr')

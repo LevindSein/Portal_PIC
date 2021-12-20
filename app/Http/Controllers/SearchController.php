@@ -12,14 +12,16 @@ use App\Models\User;
 use App\Models\Bill;
 use App\Models\Commodity;
 use App\Models\TListrik;
-use App\Models\PListrik;
 use App\Models\TAirBersih;
+use App\Models\PListrik;
 use App\Models\PAirBersih;
 use App\Models\PKeamananIpk;
 use App\Models\PKebersihan;
 use App\Models\PAirKotor;
 use App\Models\PLain;
 use App\Models\Period;
+
+use Carbon\Carbon;
 
 class SearchController extends Controller
 {
@@ -60,7 +62,7 @@ class SearchController extends Controller
 
     public function bill(Request $request){
         if(Bill::where([['kd_kontrol', $request->kontrol],['id_period', $request->periode]])->exists()){
-            return response()->json(['error' => 'Data Tagihan sudah ada.']);
+            return response()->json(['error' => 'Data Tagihan sudah ada.', 'exists' => true]);
         }
         else{
             $data = Store::where('kd_kontrol', $request->kontrol)
@@ -75,8 +77,68 @@ class SearchController extends Controller
                 'pairkotor:id,name,price',
             ])
             ->first();
-            $data['data'] = json_decode($data->data);
+            $desc = json_decode($data->data);
+            $data['data'] = $desc;
             $data['no_los'] = explode(',', $data->no_los);
+
+            $due = Carbon::parse(Period::find($request->periode)->due_date);
+            $now = Carbon::now()->format('Y-m-d');
+
+            $data['denlistrik'] = 0;
+            $data['denairbersih'] = 0;
+
+            $diff = 0;
+
+            if($now > $due){
+                $period = Carbon::parse($due);
+                $now = Carbon::parse($now);
+
+                $diff = $period->diffInMonths($now);
+                if($diff == 0){
+                    $diff = 1;
+                }
+                else{
+                    $exp = Period::whereName(Carbon::now()->format('Y-m'))->first();
+                    if($exp){
+                        $exp = Carbon::parse($exp->due_date)->format('Y-m-d');
+                        $now = Carbon::parse($now)->format('Y-m-d');
+                        if($now > $exp){
+                            $diff++;
+                        }
+                    }
+                }
+
+                if($data->tlistrik->id){
+                    $denda = PListrik::find($data->plistrik->id);
+                    $denda = json_decode($denda->data);
+                    if($data->tlistrik->power > 4400){
+                        $denda = $denda->denda2 / 100;
+
+                        $tagihan = PListrik::tagihan($data->plistrik->id, $data->tlistrik->meter, $data->tlistrik->meter, $data->tlistrik->power);
+
+                        if(array_key_exists('listrik', $desc->diskon)){
+                            $tagihan = round($tagihan - ($tagihan * ($desc->diskon->listrik / 100)));
+                        }
+
+                        $denda = round($denda * $tagihan);
+
+                        $data['denlistrik'] = $denda * $diff;
+                    }
+                    else{
+                        $denda = $denda->denda1;
+                        $data['denlistrik'] = $denda * $diff;
+                    }
+                }
+
+                if($data->tairbersih->id){
+                    $denda = PAirBersih::find($data->pairbersih->id);
+                    $denda = json_decode($denda->data);
+                    $denda = $denda->denda;
+                    $data['denairbersih'] = $denda * $diff;
+                }
+            }
+
+            $data['diff'] = $diff;
 
             return response()->json(['success' => 'success', 'show' => $data]);
         }

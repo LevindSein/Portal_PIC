@@ -201,191 +201,189 @@ Profil
 
 @section('content-js')
 <script>
-    $(document).ready(function(){
-        const fileBlocks = document.querySelectorAll('.custom-file');
-        [...fileBlocks].forEach(function (block) {
-            block.querySelector('input[type="file"]').onchange = function () {
-                const filename = this.files[0].name;
-                block.querySelector('.custom-file-label').textContent = filename.slice(0, 30);
-            }
-        });
-
-        $("#passwordNewShow").on('click touchstart', function(e){
-            e.preventDefault();
-            if($('#passwordNew').attr('type') == 'password'){
-                $('#passwordNew').prop('type', 'text');
-                $('#passwordNewShow').removeClass('fa-eye-slash').addClass('fa-eye');
-            }else{
-                $('#passwordNew').prop('type', 'password');
-                $('#passwordNewShow').addClass('fa-eye-slash').removeClass('fa-eye');
-            }
-        });
-
-        $("#passwordShow").on('click touchstart', function(e){
-            e.preventDefault();
-            if($('#password').attr('type') == 'password'){
-                $('#password').prop('type', 'text');
-                $('#passwordShow').removeClass('fa-eye-slash').addClass('fa-eye');
-            }else{
-                $('#password').prop('type', 'password');
-                $('#passwordShow').addClass('fa-eye-slash').removeClass('fa-eye');
-            }
-        });
-
-        $("#changePicture").click(function(){
-            $("#pictureModal").modal("show");
-        });
-
-        $('[type=tel]').on('change', function(e) {
-            $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''));
-        });
-
-        $('[type=tel]').on('keypress', function(e) {
-            keys = ['0','1','2','3','4','5','6','7','8','9'];
-            return keys.indexOf(e.key) > -1;
-        });
-
-        $("#uid").on("input", function(){
-            this.value = this.value.replace(/[^0-9a-zA-Z/\w_]+$/g, '');
-            this.value = this.value.replace(/\s/g, '_');
-        });
-        $("#email").on('input', function() {
-            this.value = this.value.replace(/\s/g, '');
-        });
-        $("#phone").on("input", function() {
-            if (/^0/.test(this.value)) {
-                this.value = this.value.replace(/^0/, "");
-            }
-        });
-
-        $("#name").on("input", function(){
-            this.value = this.value.replace(/[^0-9a-zA-Z/\s.,]+$/g, '');
-            this.value = this.value.replace(/\s\s+/g, ' ');
-        });
-
-        var iti;
-        function initializeTel(init) {
-            iti = window.intlTelInput(document.querySelector("#phone"), {
-                initialCountry: init,
-                preferredCountries: ['id'],
-                formatOnDisplay: false,
-                separateDialCode: true,
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js"
-            });
+    const fileBlocks = document.querySelectorAll('.custom-file');
+    [...fileBlocks].forEach(function (block) {
+        block.querySelector('input[type="file"]').onchange = function () {
+            const filename = this.files[0].name;
+            block.querySelector('.custom-file-label').textContent = filename.slice(0, 30);
         }
+    });
+
+    $("#passwordNewShow").on('click touchstart', function(e){
+        e.preventDefault();
+        if($('#passwordNew').attr('type') == 'password'){
+            $('#passwordNew').prop('type', 'text');
+            $('#passwordNewShow').removeClass('fa-eye-slash').addClass('fa-eye');
+        }else{
+            $('#passwordNew').prop('type', 'password');
+            $('#passwordNewShow').addClass('fa-eye-slash').removeClass('fa-eye');
+        }
+    });
+
+    $("#passwordShow").on('click touchstart', function(e){
+        e.preventDefault();
+        if($('#password').attr('type') == 'password'){
+            $('#password').prop('type', 'text');
+            $('#passwordShow').removeClass('fa-eye-slash').addClass('fa-eye');
+        }else{
+            $('#password').prop('type', 'password');
+            $('#passwordShow').addClass('fa-eye-slash').removeClass('fa-eye');
+        }
+    });
+
+    $("#changePicture").click(function(){
+        $("#pictureModal").modal("show");
+    });
+
+    $('[type=tel]').on('change', function(e) {
+        $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''));
+    });
+
+    $('[type=tel]').on('keypress', function(e) {
+        keys = ['0','1','2','3','4','5','6','7','8','9'];
+        return keys.indexOf(e.key) > -1;
+    });
+
+    $("#uid").on("input", function(){
+        this.value = this.value.replace(/[^0-9a-zA-Z/\w_]+$/g, '');
+        this.value = this.value.replace(/\s/g, '_');
+    });
+    $("#email").on('input', function() {
+        this.value = this.value.replace(/\s/g, '');
+    });
+    $("#phone").on("input", function() {
+        if (/^0/.test(this.value)) {
+            this.value = this.value.replace(/^0/, "");
+        }
+    });
+
+    $("#name").on("input", function(){
+        this.value = this.value.replace(/[^0-9a-zA-Z/\s.,]+$/g, '');
+        this.value = this.value.replace(/\s\s+/g, ' ');
+    });
+
+    var iti;
+    function initializeTel(init) {
+        iti = window.intlTelInput(document.querySelector("#phone"), {
+            initialCountry: init,
+            preferredCountries: ['id'],
+            formatOnDisplay: false,
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js"
+        });
+    }
+
+    $.ajax({
+        url: "/search/countries",
+        type: "GET",
+        cache: false,
+        success: function(data){
+            initializeTel(data.iso);
+            $("#showCountry").text("+" + data.phonecode);
+        },
+        error: function(data){
+            console.log(data);
+        }
+    });
+
+    $("#profileForm").submit(function(e){
+        e.preventDefault();
+
+        var country = iti.getSelectedCountryData();
+        $("#country").val(country.iso2);
+
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
         $.ajax({
-            url: "/search/countries",
-            type: "GET",
+            url: "/profile",
+            type: "POST",
             cache: false,
-            success: function(data){
-                initializeTel(data.iso);
-                $("#showCountry").text("+" + data.phonecode);
+            data: $(this).serialize(),
+            beforeSend:function(){
+                $.blockUI({
+                    message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                    baseZ: 9999,
+                    overlayCSS: {
+                        backgroundColor: '#000',
+                        opacity: 0.5,
+                        cursor: 'wait'
+                    },
+                    css: {
+                        border: 0,
+                        padding: 0,
+                        backgroundColor: 'transparent'
+                    }
+                });
             },
-            error: function(data){
-                console.log(data);
-            }
-        });
-
-        $("#profileForm").submit(function(e){
-            e.preventDefault();
-
-            var country = iti.getSelectedCountryData();
-            $("#country").val(country.iso2);
-
-            $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                url: "/profile",
-                type: "POST",
-                cache: false,
-                data: $(this).serialize(),
-                beforeSend:function(){
-                    $.blockUI({
-                        message: '<i class="fad fa-spin fa-spinner text-white"></i>',
-                        baseZ: 9999,
-                        overlayCSS: {
-                            backgroundColor: '#000',
-                            opacity: 0.5,
-                            cursor: 'wait'
-                        },
-                        css: {
-                            border: 0,
-                            padding: 0,
-                            backgroundColor: 'transparent'
-                        }
-                    });
-                },
-                success:function(data)
-                {
-                    if(data.success){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.success(data.success);
-                        if(data.description){
-                            setTimeout(() => {
-                                location.reload();
-                            }, 300);
-                        }
-                    }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
+            success:function(data)
+            {
+                if(data.success){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.success(data.success);
                     if(data.description){
-                        console.log(data.description);
+                        setTimeout(() => {
+                            location.reload();
+                        }, 300);
                     }
-                },
-                error:function(data){
-                    if (data.status == 422) {
-                        $.each(data.responseJSON.errors, function (i, error) {
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error(error[0]);
-                        });
-                    }
-                    else{
+                }
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                if (data.status == 422) {
+                    $.each(data.responseJSON.errors, function (i, error) {
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error("System error.");
-                    }
-                    console.log(data);
-                },
-                complete:function(data){
-                    $.unblockUI();
+                        toastr.error(error[0]);
+                    });
                 }
-            });
+                else{
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("System error.");
+                }
+                console.log(data);
+            },
+            complete:function(data){
+                $.unblockUI();
+            }
         });
     });
 </script>

@@ -121,104 +121,104 @@
 
         $(document).ready(function(){
             $("#activation").focus();
+        });
 
-            $('#activationForm').on('submit', function(e){
-                e.preventDefault();
+        $('#activationForm').on('submit', function(e){
+            e.preventDefault();
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-                $.ajax({
-                    url: "/scan/qr/register",
-                    cache: false,
-                    method: "POST",
-                    data: $(this).serialize(),
-                    dataType: "json",
-                    beforeSend:function(){
-                        $.blockUI({
-                            message: '<i class="fad fa-spin fa-spinner text-white"></i>',
-                            baseZ: 9999,
-                            overlayCSS: {
-                                backgroundColor: '#000',
-                                opacity: 0.5,
-                                cursor: 'wait'
-                            },
-                            css: {
-                                border: 0,
-                                padding: 0,
-                                backgroundColor: 'transparent'
-                            }
+            $.ajax({
+                url: "/scan/qr/register",
+                cache: false,
+                method: "POST",
+                data: $(this).serialize(),
+                dataType: "json",
+                beforeSend:function(){
+                    $.blockUI({
+                        message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                        baseZ: 9999,
+                        overlayCSS: {
+                            backgroundColor: '#000',
+                            opacity: 0.5,
+                            cursor: 'wait'
+                        },
+                        css: {
+                            border: 0,
+                            padding: 0,
+                            backgroundColor: 'transparent'
+                        }
+                    });
+                },
+                success:function(data)
+                {
+                    if(data.success){
+                        swal({
+                            title: 'Success',
+                            text: data.success,
+                            type: 'success',
+                            timer: 2000,
+                            showCancelButton: false,
+                            showConfirmButton: false
+                        }).then(function() {
+                            window.close();
                         });
-                    },
-                    success:function(data)
-                    {
-                        if(data.success){
-                            swal({
-                                title: 'Success',
-                                text: data.success,
-                                type: 'success',
-                                timer: 2000,
-                                showCancelButton: false,
-                                showConfirmButton: false
-                            }).then(function() {
-                                window.close();
-                            });
-                        }
-
-                        if(data.info){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.info(data.info);
-                        }
-
-                        if(data.warning){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.warning(data.warning);
-                        }
-
-                        if(data.error){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error(data.error);
-                        }
-
-                        if(data.description){
-                            console.log(data.description);
-                        }
-                    },
-                    error:function(data){
-                        if (data.status == 422) {
-                            $.each(data.responseJSON.errors, function (i, error) {
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
-                                toastr.error(error[0]);
-                            });
-                        }
-                        else{
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error("System error.");
-                            console.log(data);
-                        }
-                    },
-                    complete:function(data){
-                        $.unblockUI();
                     }
-                });
+
+                    if(data.info){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.info(data.info);
+                    }
+
+                    if(data.warning){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.warning(data.warning);
+                    }
+
+                    if(data.error){
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(data.error);
+                    }
+
+                    if(data.description){
+                        console.log(data.description);
+                    }
+                },
+                error:function(data){
+                    if (data.status == 422) {
+                        $.each(data.responseJSON.errors, function (i, error) {
+                            toastr.options = {
+                                "closeButton": true,
+                                "preventDuplicates": true,
+                            };
+                            toastr.error(error[0]);
+                        });
+                    }
+                    else{
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error("System error.");
+                        console.log(data);
+                    }
+                },
+                complete:function(data){
+                    $.unblockUI();
+                }
             });
         });
     </script>

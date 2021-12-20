@@ -111,353 +111,333 @@ Tarif Air Kotor
 
 @section('content-js')
 <script>
-    $(document).ready(function(){
-        $(".number").on('input', function (e) {
-            if(e.which >= 37 && e.which <= 40) return;
+    $("#name").on("input", function(){
+        this.value = this.value.replace(/\s\s+/g, ' ');
+    });
 
-            if (/^[0-9.,]+$/.test($(this).val())) {
-                $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
+    var id;
+
+    var dtable = $('#dtable').DataTable({
+        "language": {
+            paginate: {
+                previous: "<i class='fas fa-angle-left'>",
+                next: "<i class='fas fa-angle-right'>"
             }
-            else {
-                $(this).val($(this).val().substring(0, $(this).val().length - 1));
+        },
+        "serverSide": true,
+        "ajax": "/production/prices/airkotor",
+        "columns": [
+            { data: 'name', name: 'name', class : 'text-center' },
+            { data: 'price', name: 'price', class : 'text-center' },
+            { data: 'action', name: 'action', class : 'text-center' },
+        ],
+        "stateSave": true,
+        "deferRender": true,
+        "pageLength": 10,
+        "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
+        "order": [[ 0, "asc" ]],
+        "aoColumnDefs": [
+            { "bSortable": false, "aTargets": [2] },
+            { "bSearchable": false, "aTargets": [2] }
+        ],
+        "scrollY": "50vh",
+        "scrollX": true,
+        "preDrawCallback": function( settings ) {
+            scrollPosition = $(".dataTables_scrollBody").scrollTop();
+        },
+        "drawCallback": function( settings ) {
+            $(".dataTables_scrollBody").scrollTop(scrollPosition);
+            if(typeof rowIndex != 'undefined') {
+                dtable.row(rowIndex).nodes().to$().addClass('row_selected');
             }
-        });
+            setTimeout( function () {
+                $("[data-toggle='tooltip']").tooltip();
+            }, 10)
+        },
+    });
 
-        $('.percent').on('input', function (e) {
-            if ($(this).val() > 100) $(this).val($(this).val().replace($(this).val(), 100));
-        });
-        $('.hour').on('input', function (e) {
-            if ($(this).val() > 24) $(this).val($(this).val().replace($(this).val(), 24));
-        });
+    setInterval(function(){
+        dtableReload('');
+    }, 60000);
 
-        $("#name").on("input", function(){
-            this.value = this.value.replace(/\s\s+/g, ' ');
-        });
-
-        var id;
-
-        var dtable = $('#dtable').DataTable({
-            "language": {
-                paginate: {
-                    previous: "<i class='fas fa-angle-left'>",
-                    next: "<i class='fas fa-angle-right'>"
-                }
-            },
-            "serverSide": true,
-            "ajax": "/production/prices/airkotor",
-            "columns": [
-                { data: 'name', name: 'name', class : 'text-center' },
-                { data: 'price', name: 'price', class : 'text-center' },
-                { data: 'action', name: 'action', class : 'text-center' },
-            ],
-            "stateSave": true,
-            "deferRender": true,
-            "pageLength": 10,
-            "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
-            "order": [[ 0, "asc" ]],
-            "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [2] },
-                { "bSearchable": false, "aTargets": [2] }
-            ],
-            "scrollY": "50vh",
-            "scrollX": true,
-            "preDrawCallback": function( settings ) {
-                scrollPosition = $(".dataTables_scrollBody").scrollTop();
-            },
-            "drawCallback": function( settings ) {
-                $(".dataTables_scrollBody").scrollTop(scrollPosition);
-                if(typeof rowIndex != 'undefined') {
-                    dtable.row(rowIndex).nodes().to$().addClass('row_selected');
-                }
-                setTimeout( function () {
-                    $("[data-toggle='tooltip']").tooltip();
-                }, 10)
-            },
-        });
-
-        setInterval(function(){
-            dtableReload('');
-        }, 60000);
-
-        function dtableReload(searchKey){
-            if(searchKey){
-                dtable.search(searchKey).draw();
-            }
-            dtable.ajax.reload(function(){
-                console.log("Refresh Automatic")
-            }, false);
+    function dtableReload(searchKey){
+        if(searchKey){
+            dtable.search(searchKey).draw();
         }
+        dtable.ajax.reload(function(){
+            console.log("Refresh Automatic")
+        }, false);
+    }
 
-        $(".add").click( function(){
-            $("#priceForm")[0].reset();
-            $('.titles').text('Tambah Tarif Air Kotor');
-            $("#priceFormValue").val('add');
-            $('#priceModal').modal('show');
-            $('#priceModal').on('shown.bs.modal', function() {
-                $('#name').focus();
-            });
+    $(".add").click( function(){
+        $("#priceForm")[0].reset();
+        $('.titles').text('Tambah Tarif Air Kotor');
+        $("#priceFormValue").val('add');
+        $('#priceModal').modal('show');
+        $('#priceModal').on('shown.bs.modal', function() {
+            $('#name').focus();
         });
+    });
 
-        $(document).on('click', '.edit', function(){
-            id = $(this).attr('id');
-            name = $(this).attr('nama');
-            $("#priceForm")[0].reset();
-            $('.titles').text('Edit data ' + name);
-            $("#priceFormValue").val('update');
+    $(document).on('click', '.edit', function(){
+        id = $(this).attr('id');
+        name = $(this).attr('nama');
+        $("#priceForm")[0].reset();
+        $('.titles').text('Edit data ' + name);
+        $("#priceFormValue").val('update');
 
-            $.ajax({
-                url: "/production/prices/airkotor/" + id + "/edit",
-                type: "GET",
-                cache:false,
-                success:function(data){
-                    if(data.success){
-                        $("#name").val(data.show.name);
-                        $("#tarif").val(data.show.price.toLocaleString('id-ID'));
-                    }
+        $.ajax({
+            url: "/production/prices/airkotor/" + id + "/edit",
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#name").val(data.show.name);
+                    $("#tarif").val(data.show.price.toLocaleString('id-ID'));
+                }
 
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error("Fetching data failed.");
-                    console.log(data);
-                },
-                complete:function(){
-                    $('#priceModal').modal('show');
-                    $('#priceModal').on('shown.bs.modal', function() {
-                        $('#name').focus();
-                    });
+                    toastr.info(data.info);
                 }
-            });
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#priceModal').modal('show');
+                $('#priceModal').on('shown.bs.modal', function() {
+                    $('#name').focus();
+                });
+            }
         });
+    });
 
-        $(document).on('click', '.delete', function(){
-            id = $(this).attr('id');
-            nama = $(this).attr('nama');
-            $('.titles').text('Hapus data ' + nama + ' ?');
-            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data tarif.');
-            $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
-            $('#confirmValue').val('delete');
-            $('#confirmModal').modal('show');
-        });
+    $(document).on('click', '.delete', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Hapus data ' + nama + ' ?');
+        $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data tarif.');
+        $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
+        $('#confirmValue').val('delete');
+        $('#confirmModal').modal('show');
+    });
 
-        $('#confirmForm').submit(function(e){
-            e.preventDefault();
-            var token = $("meta[name='csrf-token']").attr("content");
-            var value = $('#confirmValue').val();
-            dataset = {
-                'id' : id,
-                '_token' : token,
-            }
-            if(value == 'delete'){
-                url = "/production/prices/airkotor/" + id;
-                type = "DELETE";
-                ok_btn_before = "Menghapus...";
-                ok_btn_completed = "Hapus";
-                ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-            }
-        });
-
-        $('#priceForm').submit(function(e){
-            e.preventDefault();
-
-            value = $("#priceFormValue").val();
-            if(value == 'add'){
-                url = "/production/prices/airkotor";
-                type = "POST";
-            }
-            else if(value == 'update'){
-                url = "/production/prices/airkotor/" + id;
-                type = "PUT";
-            }
-            dataset = $(this).serialize();
-            ok_btn_before = "Menyimpan...";
-            ok_btn_completed = "Simpan";
+    $('#confirmForm').submit(function(e){
+        e.preventDefault();
+        var token = $("meta[name='csrf-token']").attr("content");
+        var value = $('#confirmValue').val();
+        dataset = {
+            'id' : id,
+            '_token' : token,
+        }
+        if(value == 'delete'){
+            url = "/production/prices/airkotor/" + id;
+            type = "DELETE";
+            ok_btn_before = "Menghapus...";
+            ok_btn_completed = "Hapus";
             ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-        });
-
-        function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
-            $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: url,
-                type: type,
-                cache:false,
-                data: dataset,
-                beforeSend:function(){
-                    $.blockUI({
-                        message: '<i class="fad fa-spin fa-spinner text-white"></i>',
-                        baseZ: 9999,
-                        overlayCSS: {
-                            backgroundColor: '#000',
-                            opacity: 0.5,
-                            cursor: 'wait'
-                        },
-                        css: {
-                            border: 0,
-                            padding: 0,
-                            backgroundColor: 'transparent'
-                        }
-                    });
-                },
-                success:function(data)
-                {
-                    if(data.success){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.success(data.success);
-                        dtableReload(data.searchKey);
-                    }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
-                    if (data.status == 422) {
-                        $.each(data.responseJSON.errors, function (i, error) {
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error(error[0]);
-                        });
-                    }
-                    else{
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error("System error.");
-                    }
-                    console.log(data);
-                },
-                complete:function(data){
-                    if(value == 'add' || value == 'update'){
-                        if(JSON.parse(data.responseText).success)
-                            $('#priceModal').modal('hide');
-                    }
-                    else{
-                        $('#confirmModal').modal('hide');
-                    }
-                    $.unblockUI();
-                }
-            });
         }
+    });
 
-        $(document).on('click', '.details', function(){
-            id = $(this).attr('id');
+    $('#priceForm').submit(function(e){
+        e.preventDefault();
 
-            $.ajax({
-                url: "/production/prices/airkotor/" + id,
-                type: "GET",
-                cache:false,
-                success:function(data){
-                    if(data.success){
-                        $("#showName").text(data.show.name);
-                        $("#showTarif").text("Rp. " + data.show.price.toLocaleString('id-ID') + " per-Kontrol");
-                        $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
-                        $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
+        value = $("#priceFormValue").val();
+        if(value == 'add'){
+            url = "/production/prices/airkotor";
+            type = "POST";
+        }
+        else if(value == 'update'){
+            url = "/production/prices/airkotor/" + id;
+            type = "PUT";
+        }
+        dataset = $(this).serialize();
+        ok_btn_before = "Menyimpan...";
+        ok_btn_completed = "Simpan";
+        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+    });
+
+    function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            type: type,
+            cache:false,
+            data: dataset,
+            beforeSend:function(){
+                $.blockUI({
+                    message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                    baseZ: 9999,
+                    overlayCSS: {
+                        backgroundColor: '#000',
+                        opacity: 0.5,
+                        cursor: 'wait'
+                    },
+                    css: {
+                        border: 0,
+                        padding: 0,
+                        backgroundColor: 'transparent'
                     }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
+                });
+            },
+            success:function(data)
+            {
+                if(data.success){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error("Fetching data failed.");
-                    console.log(data);
-                },
-                complete:function(){
-                    $('#showModal').modal('show');
+                    toastr.success(data.success);
+                    dtableReload(data.searchKey);
                 }
-            });
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                if (data.status == 422) {
+                    $.each(data.responseJSON.errors, function (i, error) {
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(error[0]);
+                    });
+                }
+                else{
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("System error.");
+                }
+                console.log(data);
+            },
+            complete:function(data){
+                if(value == 'add' || value == 'update'){
+                    if(JSON.parse(data.responseText).success)
+                        $('#priceModal').modal('hide');
+                }
+                else{
+                    $('#confirmModal').modal('hide');
+                }
+                $.unblockUI();
+            }
+        });
+    }
+
+    $(document).on('click', '.details', function(){
+        id = $(this).attr('id');
+
+        $.ajax({
+            url: "/production/prices/airkotor/" + id,
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#showName").text(data.show.name);
+                    $("#showTarif").text("Rp. " + data.show.price.toLocaleString('id-ID') + " per-Kontrol");
+                    $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
+                    $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
+                }
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#showModal').modal('show');
+            }
         });
     });
 </script>

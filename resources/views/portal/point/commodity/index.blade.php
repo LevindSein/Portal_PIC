@@ -92,326 +92,323 @@ Daftar Komoditi
 
 @section('content-js')
 <script>
-    $(document).ready(function(){
-        var id;
-
-        var dtable = $('#dtable').DataTable({
-            "language": {
-                paginate: {
-                    previous: "<i class='fas fa-angle-left'>",
-                    next: "<i class='fas fa-angle-right'>"
-                }
-            },
-            "serverSide": true,
-            "ajax": "/production/point/commodities",
-            "columns": [
-                { data: 'name', name: 'name', class : 'text-center' },
-                { data: 'action', name: 'action', class : 'text-center' },
-            ],
-            "stateSave": true,
-            "deferRender": true,
-            "pageLength": 10,
-            "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
-            "order": [[ 0, "desc" ]],
-            "aoColumnDefs": [
-                { "bSortable": false, "aTargets": [1] },
-                { "bSearchable": false, "aTargets": [1] }
-            ],
-            "scrollY": "50vh",
-            "scrollX": true,
-            "preDrawCallback": function( settings ) {
-                scrollPosition = $(".dataTables_scrollBody").scrollTop();
-            },
-            "drawCallback": function( settings ) {
-                $(".dataTables_scrollBody").scrollTop(scrollPosition);
-                if(typeof rowIndex != 'undefined') {
-                    dtable.row(rowIndex).nodes().to$().addClass('row_selected');
-                }
-                setTimeout( function () {
-                    $("[data-toggle='tooltip']").tooltip();
-                }, 10)
-            },
-        });
-
-        setInterval(function(){
-            dtableReload('');
-        }, 60000);
-
-        function dtableReload(searchKey){
-            if(searchKey){
-                dtable.search(searchKey).draw();
+    var id;
+    var dtable = $('#dtable').DataTable({
+        "language": {
+            paginate: {
+                previous: "<i class='fas fa-angle-left'>",
+                next: "<i class='fas fa-angle-right'>"
             }
-            dtable.ajax.reload(function(){
-                console.log("Refresh Automatic")
-            }, false);
+        },
+        "serverSide": true,
+        "ajax": "/production/point/commodities",
+        "columns": [
+            { data: 'name', name: 'name', class : 'text-center' },
+            { data: 'action', name: 'action', class : 'text-center' },
+        ],
+        "stateSave": true,
+        "deferRender": true,
+        "pageLength": 10,
+        "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
+        "order": [[ 0, "desc" ]],
+        "aoColumnDefs": [
+            { "bSortable": false, "aTargets": [1] },
+            { "bSearchable": false, "aTargets": [1] }
+        ],
+        "scrollY": "50vh",
+        "scrollX": true,
+        "preDrawCallback": function( settings ) {
+            scrollPosition = $(".dataTables_scrollBody").scrollTop();
+        },
+        "drawCallback": function( settings ) {
+            $(".dataTables_scrollBody").scrollTop(scrollPosition);
+            if(typeof rowIndex != 'undefined') {
+                dtable.row(rowIndex).nodes().to$().addClass('row_selected');
+            }
+            setTimeout( function () {
+                $("[data-toggle='tooltip']").tooltip();
+            }, 10)
+        },
+    });
+
+    setInterval(function(){
+        dtableReload('');
+    }, 60000);
+
+    function dtableReload(searchKey){
+        if(searchKey){
+            dtable.search(searchKey).draw();
         }
+        dtable.ajax.reload(function(){
+            console.log("Refresh Automatic")
+        }, false);
+    }
 
-        $(".add").click( function(){
-            $("#commodityForm")[0].reset();
-            $('.titles').text('Tambah data komoditi');
-            $("#commodityFormValue").val('add');
-            $('#commodityModal').modal('show');
-            $('#commodityModal').on('shown.bs.modal', function() {
-                $('#name').focus();
-            });
+    $(".add").click( function(){
+        $("#commodityForm")[0].reset();
+        $('.titles').text('Tambah data komoditi');
+        $("#commodityFormValue").val('add');
+        $('#commodityModal').modal('show');
+        $('#commodityModal').on('shown.bs.modal', function() {
+            $('#name').focus();
         });
+    });
 
-        $(document).on('click', '.edit', function(){
-            id = $(this).attr('id');
-            $("#commodityForm")[0].reset();
-            $('.titles').text('Edit data komoditi');
-            $("#commodityFormValue").val('update');
+    $(document).on('click', '.edit', function(){
+        id = $(this).attr('id');
+        $("#commodityForm")[0].reset();
+        $('.titles').text('Edit data komoditi');
+        $("#commodityFormValue").val('update');
 
-            $.ajax({
-                url: "/production/point/commodities/" + id + "/edit",
-                type: "GET",
-                cache:false,
-                success:function(data){
-                    if(data.success){
-                        $("#name").val(data.show.name);
-                    }
+        $.ajax({
+            url: "/production/point/commodities/" + id + "/edit",
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#name").val(data.show.name);
+                }
 
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error("Fetching data failed.");
-                    console.log(data);
-                },
-                complete:function(){
-                    $('#commodityModal').modal('show');
-                    $('#commodityModal').on('shown.bs.modal', function() {
-                        $('#title').focus();
-                    });
+                    toastr.info(data.info);
                 }
-            });
-        });
 
-        $(document).on('click', '.delete', function(){
-            id = $(this).attr('id');
-            $('.titles').text('Hapus data komoditi ?');
-            $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data komoditi.');
-            $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
-            $('#confirmValue').val('delete');
-            $('#confirmModal').modal('show');
-        });
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
 
-        $('#commodityForm').submit(function(e){
-            e.preventDefault();
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
 
-            value = $("#commodityFormValue").val();
-            if(value == 'add'){
-                url = "/production/point/commodities";
-                type = "POST";
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#commodityModal').modal('show');
+                $('#commodityModal').on('shown.bs.modal', function() {
+                    $('#title').focus();
+                });
             }
-            else if(value == 'update'){
-                url = "/production/point/commodities/" + id;
-                type = "PUT";
-            }
-            dataset = $(this).serialize();
-            ok_btn_before = "Menyimpan...";
-            ok_btn_completed = "Simpan";
+        });
+    });
+
+    $(document).on('click', '.delete', function(){
+        id = $(this).attr('id');
+        $('.titles').text('Hapus data komoditi ?');
+        $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data komoditi.');
+        $('#ok_button').addClass('btn-danger').removeClass('btn-info').text('Hapus');
+        $('#confirmValue').val('delete');
+        $('#confirmModal').modal('show');
+    });
+
+    $('#commodityForm').submit(function(e){
+        e.preventDefault();
+
+        value = $("#commodityFormValue").val();
+        if(value == 'add'){
+            url = "/production/point/commodities";
+            type = "POST";
+        }
+        else if(value == 'update'){
+            url = "/production/point/commodities/" + id;
+            type = "PUT";
+        }
+        dataset = $(this).serialize();
+        ok_btn_before = "Menyimpan...";
+        ok_btn_completed = "Simpan";
+        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+    });
+
+    $('#confirmForm').submit(function(e){
+        e.preventDefault();
+        var token = $("meta[name='csrf-token']").attr("content");
+        var value = $('#confirmValue').val();
+        dataset = {
+            'id' : id,
+            '_token' : token,
+        }
+        if(value == 'delete'){
+            url = "/production/point/commodities/" + id;
+            type = "DELETE";
+            ok_btn_before = "Menghapus...";
+            ok_btn_completed = "Hapus";
             ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-        });
-
-        $('#confirmForm').submit(function(e){
-            e.preventDefault();
-            var token = $("meta[name='csrf-token']").attr("content");
-            var value = $('#confirmValue').val();
-            dataset = {
-                'id' : id,
-                '_token' : token,
-            }
-            if(value == 'delete'){
-                url = "/production/point/commodities/" + id;
-                type = "DELETE";
-                ok_btn_before = "Menghapus...";
-                ok_btn_completed = "Hapus";
-                ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
-            }
-        });
-
-        function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
-            $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: url,
-                type: type,
-                cache:false,
-                data: dataset,
-                beforeSend:function(){
-                    $.blockUI({
-                        message: '<i class="fad fa-spin fa-spinner text-white"></i>',
-                        baseZ: 9999,
-                        overlayCSS: {
-                            backgroundColor: '#000',
-                            opacity: 0.5,
-                            cursor: 'wait'
-                        },
-                        css: {
-                            border: 0,
-                            padding: 0,
-                            backgroundColor: 'transparent'
-                        }
-                    });
-                },
-                success:function(data)
-                {
-                    if(data.success){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.success(data.success);
-                        dtableReload(data.searchKey);
-                    }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
-                    if (data.status == 422) {
-                        $.each(data.responseJSON.errors, function (i, error) {
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
-                            toastr.error(error[0]);
-                        });
-                    }
-                    else{
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error("System error.");
-                    }
-                    console.log(data);
-                },
-                complete:function(data){
-                    if(value == 'add' || value == 'update'){
-                        if(JSON.parse(data.responseText).success)
-                            $('#commodityModal').modal('hide');
-                    }
-                    else{
-                        $('#confirmModal').modal('hide');
-                    }
-                    $.unblockUI();
-                }
-            });
         }
+    });
 
-        $(document).on('click', '.details', function(){
-            id = $(this).attr('id');
-
-            $.ajax({
-                url: "/production/point/commodities/" + id,
-                type: "GET",
-                cache:false,
-                success:function(data){
-                    if(data.success){
-                        $("#showName").text(data.show.name);
-                        $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
-                        $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
+    function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            type: type,
+            cache:false,
+            data: dataset,
+            beforeSend:function(){
+                $.blockUI({
+                    message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                    baseZ: 9999,
+                    overlayCSS: {
+                        backgroundColor: '#000',
+                        opacity: 0.5,
+                        cursor: 'wait'
+                    },
+                    css: {
+                        border: 0,
+                        padding: 0,
+                        backgroundColor: 'transparent'
                     }
-
-                    if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.info(data.info);
-                    }
-
-                    if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.warning(data.warning);
-                    }
-
-                    if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
-                        toastr.error(data.error);
-                    }
-
-                    if(data.description){
-                        console.log(data.description);
-                    }
-                },
-                error:function(data){
+                });
+            },
+            success:function(data)
+            {
+                if(data.success){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error("Fetching data failed.");
-                    console.log(data);
-                },
-                complete:function(){
-                    $('#showModal').modal('show');
+                    toastr.success(data.success);
+                    dtableReload(data.searchKey);
                 }
-            });
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                if (data.status == 422) {
+                    $.each(data.responseJSON.errors, function (i, error) {
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                        };
+                        toastr.error(error[0]);
+                    });
+                }
+                else{
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("System error.");
+                }
+                console.log(data);
+            },
+            complete:function(data){
+                if(value == 'add' || value == 'update'){
+                    if(JSON.parse(data.responseText).success)
+                        $('#commodityModal').modal('hide');
+                }
+                else{
+                    $('#confirmModal').modal('hide');
+                }
+                $.unblockUI();
+            }
+        });
+    }
+
+    $(document).on('click', '.details', function(){
+        id = $(this).attr('id');
+
+        $.ajax({
+            url: "/production/point/commodities/" + id,
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#showName").text(data.show.name);
+                    $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
+                    $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
+                }
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#showModal').modal('show');
+            }
         });
     });
 </script>

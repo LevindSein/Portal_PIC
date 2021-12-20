@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\Bill;
 use App\Models\IndoDate;
 use App\Models\Period;
+use App\Models\Identity;
+use App\Models\User;
+use App\Models\PListrik;
 
 use DataTables;
 use Carbon\Carbon;
@@ -25,36 +29,25 @@ class BillController extends Controller
      */
     public function index(Request $request)
     {
-        if(is_null($request->period)){
-            $data = Period::exists();
-
-            if(!$data){
-                \Artisan::call('period:new');
-
-                \Artisan::call('period:dayoff');
-            }
-
-            $data = Period::orderBy('name', 'desc')->first();
-            $id_period = $data->id;
-        }
-        else{
-            $valid['period'] = $request->period;
+        if($request->ajax()){
+            $id_period = $request->period;
+            $valid['period'] = $id_period;
             $validator = Validator::make($valid, [
                 'period' => 'exists:App\Models\Period,id'
             ]);
-            if($validator->fails()){
-                abort(404);
-            }
-            else{
-                $id_period = $request->period;
-            }
-        }
 
-        if($request->ajax()){
-            $data = Bill::whereId_period($id_period)
+            if($validator->fails()){
+                $data = Period::latest('name')->select('id')->first();
+                $id_period = $data->id;
+            }
+
+            $data = Bill::where('id_period', $id_period)
             ->select(
                 'id',
                 'kd_kontrol',
+                'name',
+                'nicename',
+                'b_tagihan',
             );
             return DataTables::of($data)
             ->addColumn('action', function($data){
@@ -67,6 +60,10 @@ class BillController extends Controller
             ->addColumn('fasilitas', function($data){
                 return '-';
             })
+            ->filterColumn('nicename', function ($query, $keyword) {
+                $keywords = trim($keyword);
+                $query->whereRaw("CONCAT(kd_kontrol, nicename) like ?", ["%{$keywords}%"]);
+            })
             ->rawColumns(['action'])
             ->make(true);
         }
@@ -75,12 +72,74 @@ class BillController extends Controller
 
     public function period(){
         if(request()->ajax()){
-            $period = Period::latest('id')->select('id','nicename')->first();
+            $period = Period::orderBy('name','desc')->select('id','nicename')->first();
             return response()->json(['success' => $period]);
         }
         else{
             abort(404);
         }
+    }
+
+    public function refresh(Request $request){
+        $price = $request->price;
+        $checked = $request->checked;
+        $digit = str_replace('.','',$request->digit);
+        $awal = str_replace('.','',$request->awal);
+        $akhir = str_replace('.','',$request->akhir);
+        $daya = str_replace('.','',$request->daya);
+        $diskon = str_replace('.','',$request->diskon);
+        if(is_null($request->diskon)){
+            $diskon = 0;
+        }
+        $diff = $request->diff;
+
+        if($checked){
+            if($digit < strlen($awal)){
+                $digit = strlen($awal);
+                return response()->json(['info' => "Alat Listrik Minimal $digit digit."]);
+            }
+        }
+        else{
+            if($awal > $akhir){
+                return response()->json(['info' => "Akhir Meter harus lebih besar dari Awal Meter."]);
+            }
+        }
+
+        $data = 0;
+        $denda = PListrik::find($price);
+        $denda = json_decode($denda->data);
+
+        if($checked){
+            $digit = str_repeat("9",strlen($awal));
+            $akhir = $digit + $akhir; //review
+        }
+
+        if($daya > 4400){
+            $denda = $denda->denda2 / 100;
+
+            $tagihan = PListrik::tagihan($price, $awal, $akhir, $daya);
+
+            $tagihan = round($tagihan - ($tagihan * ($diskon / 100)));
+
+            $denda = round($denda * $tagihan);
+
+            $data = $denda * $diff;
+        }
+        else{
+            $denda = $denda->denda1;
+
+            $data = $denda * $diff;
+        }
+
+        return response()->json(['success' => $data]);
+    }
+
+    public function multipleSelect($data){
+        $temp = array();
+        for($i = 0; $i < count($data); $i++){
+            $temp[$i] = $data[$i];
+        }
+        return $temp;
     }
 
     /**
@@ -101,7 +160,51 @@ class BillController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->ajax()){
+            $data['code'] = Identity::billCode();
+            $data['id_period'] = $request->periode;
+
+            $data['stt_publish'] = 0;
+            if($request->stt_publish){
+                $data['stt_publish'] = 1;
+            }
+
+            $data['stt_bayar'] = 0;
+            $data['stt_lunas'] = 0;
+
+            $data['name'] = User::find($request->pengguna)->name;
+
+            $data['kd_kontrol'] = $request->kontrol;
+            $data['nicename'] = str_replace('-','',$request->kontrol);
+            $data['group'] = $request->group;
+
+            $los = $this->multipleSelect($request->los);
+            sort($los, SORT_NATURAL);
+            $data['jml_los'] = count($los);
+            $data['no_los'] = implode(',', $los);
+
+            $data['active'] = 1;
+
+            $data['data'] = json_encode([
+                'user_create' => Auth::user()->id,
+                'username_create' => Auth::user()->name,
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'user_update' => Auth::user()->id,
+                'username_update' => Auth::user()->name,
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+            try{
+                Bill::create($data);
+            }
+            catch(\Exception $e){
+                return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
+            }
+
+            $searchKey = str_replace('-','',$request->kontrol);
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
+        }
     }
 
     /**
