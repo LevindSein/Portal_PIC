@@ -539,6 +539,8 @@ Kelola Tagihan
 
                             $("#hitlistrik").on('click', function(e){
                                 e.preventDefault();
+                                $("#denlistrik").val('');
+
                                 var checked = 0;
                                 if($("#checklistrik0").is(":checked")){
                                     checked = 1;
@@ -601,21 +603,6 @@ Kelola Tagihan
                             if(data.show.data.diskon.airbersih){
                                 $("#dairbersih").val(Number(data.show.data.diskon.airbersih).toLocaleString('id-ID'));
                             }
-
-                            $("#awairbersih, #inputairbersih0").on('input', function(e){
-                                e.preventDefault();
-                                var awal = $("#awairbersih").val().replace(/\./g, '');
-                                var digit = $("#inputairbersih0").val().replace(/\./g, '');
-
-                                if(digit < awal.length){
-
-                                    toastr.options = {
-                                        "closeButton": true,
-                                        "preventDuplicates": true,
-                                    };
-                                    toastr.info("Alat Air Bersih Minimal " + awal.length + " digit.");
-                                }
-                            });
 
                             $("#denairbersih").val(Number(data.show.denairbersih).toLocaleString('id-ID'));
                         }
@@ -981,7 +968,8 @@ Kelola Tagihan
         if(data == 'show'){
             $("#gruplistrik0").show();
             $("#labellistrik0").show();
-            $("#inputlistrik0").val('');
+            var digit = $("#awlistrik").val().replace(/\./g, '').length;
+            $("#inputlistrik0").val(digit);
             $("#inputlistrik0").prop("required", true);
         }
         else{
@@ -1035,7 +1023,8 @@ Kelola Tagihan
         if(data == 'show'){
             $("#grupairbersih0").show();
             $("#labelairbersih0").show();
-            $("#inputairbersih0").val('');
+            var digit = $("#awairbersih").val().replace(/\./g, '').length;
+            $("#inputairbersih0").val(digit);
             $("#inputairbersih0").prop("required", true);
         }
         else{

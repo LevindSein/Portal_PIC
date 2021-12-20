@@ -14,6 +14,7 @@ use App\Models\Bill;
 use App\Models\IndoDate;
 use App\Models\Period;
 use App\Models\Identity;
+use App\Models\PAirBersih;
 use App\Models\User;
 use App\Models\PListrik;
 use App\Models\Store;
@@ -125,8 +126,11 @@ class BillController extends Controller
         if($checked){
             if($digit < strlen($awal)){
                 $digit = strlen($awal);
-                return response()->json(['info' => "Alat Listrik Minimal $digit digit."]);
+                return response()->json(['info' => "Alat Listrik minimal $digit digit."]);
             }
+
+            $digit = str_repeat("9", $digit);
+            $akhir = $digit + $akhir;
         }
         else{
             if($awal > $akhir){
@@ -138,17 +142,12 @@ class BillController extends Controller
         $denda = PListrik::find($price);
         $denda = json_decode($denda->data);
 
-        if($checked){
-            $digit = str_repeat("9",strlen($awal));
-            $akhir = $digit + $akhir;
-        }
-
         if($daya > 4400){
             $denda = $denda->denda2 / 100;
 
             $tagihan = PListrik::tagihan($price, $awal, $akhir, $daya);
 
-            $denda = round($denda * $tagihan);
+            $denda = ceil($denda * $tagihan);
 
             $data = $denda * $diff;
         }
@@ -222,30 +221,130 @@ class BillController extends Controller
 
                 $tarif_nama = $tarif->name;
 
+                $daya = str_replace('.','',$request->dayalistrik);
+                $awal = str_replace('.','',$request->awlistrik);
+                $akhir = str_replace('.','',$request->aklistrik);
+                $digit = $request->inputlistrik0;
+
+                if($request->checklistrik0){
+                    if($digit < strlen($awal)){
+                        $digit = strlen($awal);
+                        return response()->json(['info' => "Alat Listrik minimal $digit digit."]);
+                    }
+                    $digit = str_repeat("9",$digit);
+                    $pakai = PListrik::pakai($awal, $digit + $akhir);
+                    $akhir_temp = $digit + $akhir;
+                }
+                else{
+                    if($awal > $akhir){
+                        return response()->json(['info' => "Akhir Meter harus lebih besar dari Awal Meter."]);
+                    }
+                    $pakai = PListrik::pakai($awal, $akhir);
+                    $akhir_temp = $akhir;
+                }
+
+                $standar = PListrik::standar($tarif_data->standar, $daya);
+                $blok1 = PListrik::blok1($tarif_data->blok1, $standar);
+                $blok2 = PListrik::blok2($tarif_data->blok2, $pakai, $standar);
+                $beban = PListrik::beban($tarif_data->beban, $daya);
+                $pju = PListrik::pju($tarif_data->pju, $blok1 + $blok2 + $beban);
+                $ppn = PListrik::ppn($tarif_data->ppn, $blok1 + $blok2 + $beban + $pju);
+                $sub = PListrik::tagihan($tarif_id, $awal, $akhir_temp, $daya);
+
+                $diskon = 0;
+                if($request->dlistrik){
+                    $diskon = round((str_replace('.','',$request->dlistrik) / 100) * $sub);
+                }
+
+                $denda = str_replace('.','',$request->denlistrik);
+
                 $data['b_listrik'] = json_encode([
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
-                    'daya' => str_replace('.','',$request->dayalistrik),
-                    'awal' => str_replace('.','',$request->awlistrik),
-                    'akhir' => str_replace('.','',$request->aklistrik),
+                    'daya' => $daya,
+                    'awal' => $awal,
+                    'akhir' => $akhir,
+                    'reset' => $digit,
                     'pakai' => $pakai,
-                    'bayar' => $bayar,
                     'blok1' => $blok1,
                     'blok2' => $blok2,
                     'beban' => $beban,
-                    'bpju' => $bpju,
-                    'sub_tagihan' => $sub_tagihan,
+                    'pju' => $pju,
+                    'ppn' => $ppn,
+                    'sub_tagihan' => $sub,
                     'denda' => $denda,
                     'diskon' => $diskon,
-                    'ttl_tagihan' => $ttl_tagihan,
-                    'rea_tagihan' => $rea_tagihan,
-                    'sel_tagihan' => $sel_tagihan,
+                    'ttl_tagihan' => $sub - $diskon + $denda,
+                    'rea_tagihan' => 0,
+                    'sel_tagihan' => $sub - $diskon + $denda,
                 ]);
             }
+
             //Air Bersih
             if($request->fas_airbersih){
+                $tarif_id = $request->pairbersih;
 
+                $tarif = PAirBersih::find($tarif_id);
+                $tarif_data = json_decode($tarif->data);
+
+                $tarif_nama = $tarif->name;
+
+                $awal = str_replace('.','',$request->awairbersih);
+                $akhir = str_replace('.','',$request->akairbersih);
+                $digit = $request->inputairbersih0;
+
+                if($request->checkairbersih0){
+                    if($digit < strlen($awal)){
+                        $digit = strlen($awal);
+                        return response()->json(['info' => "Alat Air Bersih minimal $digit digit."]);
+                    }
+                    $digit = str_repeat("9",$digit);
+                    $pakai = PAirBersih::pakai($awal, $digit + $akhir);
+                    $akhir_temp = $digit + $akhir;
+                }
+                else{
+                    if($awal > $akhir){
+                        return response()->json(['info' => "Akhir Meter harus lebih besar dari Awal Meter."]);
+                    }
+                    $pakai = PAirBersih::pakai($awal, $akhir);
+                    $akhir_temp = $akhir;
+                }
+
+                $bayar = PAirBersih::bayar($pakai, $tarif_data->tarif1, $tarif_data->tarif2);
+                $pemeliharaan = PAirBersih::pemeliharaan($tarif_data->pemeliharaan);
+                $beban = PAirBersih::beban($tarif_data->beban);
+                $arkot = PAirBersih::arkot($tarif_data->airkotor, $bayar);
+                $ppn = PAirBersih::ppn($tarif_data->ppn, $bayar + $pemeliharaan + $beban + $arkot);
+                $sub = PAirBersih::tagihan($tarif_id, $awal, $akhir_temp);
+
+                $diskon = 0;
+                if($request->dairbersih){
+                    $diskon = round((str_replace('.','',$request->dairbersih) / 100) * $sub);
+                }
+
+                $denda = str_replace('.','',$request->denairbersih);
+
+                $data['b_airbersih'] = json_encode([
+                    'tarif_id' => $tarif_id,
+                    'tarif_nama' => $tarif_nama,
+                    'awal' => $awal,
+                    'akhir' => $akhir,
+                    'reset' => $digit,
+                    'pakai' => $pakai,
+                    'bayar' => $bayar,
+                    'pemeliharaan' => $pemeliharaan,
+                    'beban' => $beban,
+                    'arkot' => $arkot,
+                    'ppn' => $ppn,
+                    'sub_tagihan' => $sub,
+                    'denda' => $denda,
+                    'diskon' => $diskon,
+                    'ttl_tagihan' => $sub - $diskon + $denda,
+                    'rea_tagihan' => 0,
+                    'sel_tagihan' => $sub - $diskon + $denda,
+                ]);
             }
+
             //Keamanan IPK
             if($request->fas_keamananipk){
 
