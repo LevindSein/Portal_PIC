@@ -14,4 +14,10 @@ class PKebersihan extends Model
         'price',
         'data'
     ];
+
+    public static function tagihan($tarif, $jml){
+        $tarif = self::find($tarif);
+
+        return $tarif->price * $jml;
+    }
 }

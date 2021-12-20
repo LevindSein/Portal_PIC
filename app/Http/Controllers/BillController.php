@@ -14,11 +14,16 @@ use App\Models\Bill;
 use App\Models\IndoDate;
 use App\Models\Period;
 use App\Models\Identity;
-use App\Models\PAirBersih;
-use App\Models\User;
 use App\Models\PListrik;
+use App\Models\PAirBersih;
+use App\Models\PKeamananIpk;
+use App\Models\PKebersihan;
+use App\Models\PAirKotor;
+use App\Models\PLain;
+use App\Models\User;
 use App\Models\Store;
 use App\Models\TListrik;
+use App\Models\TAirBersih;
 use DataTables;
 use Carbon\Carbon;
 
@@ -207,7 +212,8 @@ class BillController extends Controller
 
             $los = $this->multipleSelect($request->los);
             sort($los, SORT_NATURAL);
-            $data['jml_los'] = count($los);
+            $jml_los = count($los);
+            $data['jml_los'] = $jml_los;
             $data['no_los'] = implode(',', $los);
 
             $data['active'] = 1;
@@ -347,12 +353,75 @@ class BillController extends Controller
 
             //Keamanan IPK
             if($request->fas_keamananipk){
+                $tarif_id = $request->pkeamananipk;
 
+                $tarif = PKeamananIpk::find($tarif_id);
+                $tarif_data = json_decode($tarif->data);
+
+                $tarif_nama = $tarif->name;
+
+                $sub = PKeamananIpk::tagihan($tarif_id, $jml_los);
+
+                $diskon = 0;
+                if($request->dkeamananipk){
+                    $diskon = str_replace('.','',$request->dkeamananipk);
+
+                    if($diskon > $sub){
+                        return response()->json(['info' => "Diskon Keamanan IPK maksimal $sub."]);
+                    }
+                }
+
+                $total = $sub - $diskon;
+
+                $keamanan = round(($tarif_data->keamanan / 100) * $total);
+                $ipk = $total - $keamanan;
+
+                $data['b_keamananipk'] = json_encode([
+                    'tarif_id' => $tarif_id,
+                    'tarif_nama' => $tarif_nama,
+                    'sub_tagihan' => $sub,
+                    'diskon' => $diskon,
+                    'keamanan' => $keamanan,
+                    'ipk' => $ipk,
+                    'ttl_tagihan' => $total,
+                    'rea_tagihan' => 0,
+                    'sel_tagihan' => $total,
+                ]);
             }
+
             //Kebersihan
             if($request->fas_kebersihan){
+                $tarif_id = $request->pkebersihan;
 
+                $tarif = PKebersihan::find($tarif_id);
+                $tarif_data = json_decode($tarif->data);
+
+                $tarif_nama = $tarif->name;
+
+                $sub = PKebersihan::tagihan($tarif_id, $jml_los);
+
+                $diskon = 0;
+                if($request->dkebersihan){
+                    $diskon = str_replace('.','',$request->dkebersihan);
+
+                    if($diskon > $sub){
+                        return response()->json(['info' => "Diskon Kebersihan maksimal $sub."]);
+                    }
+                }
+
+                $total = $sub - $diskon;
+
+                $data['b_kebersihan'] = json_encode([
+                    'tarif_id' => $tarif_id,
+                    'tarif_nama' => $tarif_nama,
+                    'sub_tagihan' => $sub,
+                    'diskon' => $diskon,
+                    'ttl_tagihan' => $total,
+                    'rea_tagihan' => 0,
+                    'sel_tagihan' => $total,
+                ]);
             }
+
             //Air Kotor
             if($request->fas_airkotor){
 
