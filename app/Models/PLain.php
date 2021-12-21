@@ -19,4 +19,15 @@ class PLain extends Model
     public static function satuan($data){
         return ($data == 2) ? "per-Los" : "per-Kontrol";
     }
+
+    public static function tagihan($tarif, $jml){
+        $tarif = self::find($tarif);
+
+        if($tarif->satuan == 2){
+            return $tarif->price * $jml;
+        }
+        else{
+            return $tarif->price;
+        }
+    }
 }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+use App\Models\Group;
 use App\Models\Store;
 use App\Models\Commodity;
 use App\Models\TListrik;
@@ -107,7 +108,6 @@ class StoreController extends Controller
     {
         if($request->ajax()){
             $valid['blok'] = $request->group;
-            $valid['nomorLos'] = $request->los;
             $valid['kodeKontrol'] = $request->kontrol;
             $valid['pengguna'] = $request->pengguna;
             $valid['pemilik'] = $request->pemilik;
@@ -116,8 +116,7 @@ class StoreController extends Controller
             $valid['infoTambahan'] = $request->info;
 
             Validator::make($valid, [
-                'blok' => 'required|max:10|alpha_dash',
-                'nomorLos' => 'required|array',
+                'blok' => 'required|exists:App\Models\Group,name',
                 'kodeKontrol' => 'required|max:20|unique:App\Models\Store,kd_kontrol',
                 'pengguna' => 'nullable|numeric|exists:App\Models\User,id',
                 'pemiik' => 'nullable|numeric|exists:App\Models\User,id',
@@ -130,6 +129,15 @@ class StoreController extends Controller
 
             $los = $this->multipleSelect($request->los);
             sort($los, SORT_NATURAL);
+
+            $no_los = json_decode(Group::where('name', $request->group)->first()->data)->data;
+            foreach($los as $l){
+                $valid['nomorLos'] = $l;
+                Validator::make($valid, [
+                    'nomorLos' => 'required|in:'.$no_los,
+                ])->validate();
+            }
+
             $data['no_los'] = implode(',', $los);
             $jml_los = count($los);
             $data['jml_los'] = $jml_los;
@@ -449,7 +457,6 @@ class StoreController extends Controller
     {
         if($request->ajax()){
             $valid['blok'] = $request->group;
-            $valid['nomorLos'] = $request->los;
             $valid['kodeKontrol'] = $request->kontrol;
             $valid['pengguna'] = $request->pengguna;
             $valid['pemilik'] = $request->pemilik;
@@ -458,8 +465,7 @@ class StoreController extends Controller
             $valid['infoTambahan'] = $request->info;
 
             Validator::make($valid, [
-                'blok' => 'required|max:10|alpha_dash',
-                'nomorLos' => 'required|array',
+                'blok' => 'required|exists:App\Models\Group,name',
                 'kodeKontrol' => 'required|max:20|unique:App\Models\Store,kd_kontrol,'.$id,
                 'pengguna' => 'nullable|numeric|exists:App\Models\User,id',
                 'pemiik' => 'nullable|numeric|exists:App\Models\User,id',
@@ -478,6 +484,15 @@ class StoreController extends Controller
 
             $los = $this->multipleSelect($request->los);
             sort($los, SORT_NATURAL);
+
+            $no_los = json_decode(Group::where('name', $request->group)->first()->data)->data;
+            foreach($los as $l){
+                $valid['nomorLos'] = $l;
+                Validator::make($valid, [
+                    'nomorLos' => 'required|in:'.$no_los,
+                ])->validate();
+            }
+
             $data->no_los = implode(',', $los);
             $jml_los = count($los);
             $data->jml_los = $jml_los;

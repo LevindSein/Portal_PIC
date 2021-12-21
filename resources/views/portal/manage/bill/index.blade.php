@@ -49,6 +49,83 @@ Kelola Tagihan
 @endsection
 
 @section('content-modal')
+<div id="deleteModal" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title titles"></h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <form id="deleteForm">
+                <div class="modal-body">
+                    <p>Pilih tagihan yang ingin dihapus, kemudian klik "Hapus" untuk menghapus data tagihan yang telah dipilih.</p>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-xlg-6">
+                            <div>
+                                <div class="form-group form-check form-check-inline">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="dellistrik" name="dellistrik" checked>
+                                        <label class="custom-control-label" for="dellistrik">Listrik</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group form-check form-check-inline">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="delairbersih" name="delairbersih" checked>
+                                        <label class="custom-control-label" for="delairbersih">Air Bersih</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group form-check form-check-inline">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="delkeamananipk" name="delkeamananipk" checked>
+                                        <label class="custom-control-label" for="delkeamananipk">Keamanan IPK</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-xlg-6">
+                            <div>
+                                <div class="form-group form-check form-check-inline">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="delkebersihan" name="delkebersihan" checked>
+                                        <label class="custom-control-label" for="delkebersihan">Kebersihan</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group form-check form-check-inline">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="delairkotor" name="delairkotor" checked>
+                                        <label class="custom-control-label" for="delairkotor">Air Kotor</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group form-check form-check-inline">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="dellain" name="dellain" checked>
+                                        <label class="custom-control-label" for="dellain">Lainnya</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div id="billModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-xl">
         <div class="modal-content">
@@ -410,7 +487,7 @@ Kelola Tagihan
         "order": [[ 0, "asc" ]],
         "aoColumnDefs": [
             { "bSortable": false, "aTargets": [2,3,4] },
-            { "bSearchable": false, "aTargets": [2,3,4] }
+            { "bSearchable": false, "aTargets": [2,4] }
         ],
         "scrollY": "50vh",
         "scrollX": true,
@@ -424,7 +501,10 @@ Kelola Tagihan
             }
             setTimeout( function () {
                 $("[data-toggle='tooltip']").tooltip();
-            }, 10)
+            }, 10);
+            setTimeout( function () {
+                $("[data-toggle='popover']").popover();
+            }, 10);
         },
     });
 
@@ -832,6 +912,16 @@ Kelola Tagihan
         }
 
         ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+    });
+
+    $(document).on('click', '.delete', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Hapus Tagihan ' + nama + ' ?');
+
+        $("#deleteForm")[0].reset();
+
+        $('#deleteModal').modal('show');
     });
 
     function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){

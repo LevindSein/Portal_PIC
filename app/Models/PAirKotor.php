@@ -14,4 +14,10 @@ class PAirKotor extends Model
         'price',
         'data'
     ];
+
+    public static function tagihan($tarif){
+        $tarif = self::find($tarif);
+
+        return $tarif->price;
+    }
 }

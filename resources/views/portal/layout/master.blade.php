@@ -514,6 +514,13 @@
             }, 1000);
         });
 
+        $(document).on('shown.bs.popover', function (e) {
+            setTimeout(function () {
+                $(e.target).popover('hide');
+                $(".popover").popover("hide");
+            }, 5000);
+        });
+
         setInterval(() => {
             var email = localStorage.getItem("email");
             if(email == 'terverifikasi'){
