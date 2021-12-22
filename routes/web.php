@@ -52,6 +52,8 @@ Route::middleware('checkauth')->group(function(){
 
             Route::get('service/register', [ServiceController::class, 'index']);
 
+            Route::get('users/change/{level}', [UserController::class, 'userChange']);
+            Route::get('users/level', [UserController::class, 'userLevel']);
             Route::get('users/code/activate', [UserController::class, 'activate']);
             Route::get('users/activate/verify', [UserController::class, 'activateVerify']);
             Route::delete('users/permanent/{id}', [UserController::class, 'permanent']);

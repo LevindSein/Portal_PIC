@@ -1,4 +1,3 @@
-
 <a class="dropdown-item {{ (request()->is('production/manage/bills*')) ? 'bg-info text-white' : '' }}" href="{{url('production/manage/bills')}}">
     <i class="fas fa-fw fa-file-invoice mr-1"></i>
     <span>Data Tagihan</span>

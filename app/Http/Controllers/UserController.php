@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Session;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -32,8 +33,13 @@ class UserController extends Controller
         //level : 1 = Super Admin, 2 = Admin, 3 = Nasabah
         if(request()->ajax())
         {
-            $level = $request->lev;
+            $level = 3;
+            if(Session::get('userLevel')){
+                $level = Session::get('userLevel');
+            }
+
             $active = $request->data;
+            Session::put('userActive', $active);
 
             if(Auth::user()->level > 1){
                 $level = 3;
@@ -88,6 +94,23 @@ class UserController extends Controller
                 ->make(true);
         }
         return view('portal.user.index');
+    }
+
+    public function userLevel(){
+        if(Session::get('userLevel')){
+            $level = Session::get('userLevel');
+        }
+        else{
+            Session::put('userLevel', 3);
+            $level = 3;
+        }
+
+        return response()->json(['success' => $level]);
+    }
+
+    public function userChange($level){
+        Session::put('userLevel', $level);
+        return response()->json(['success' => $level]);
     }
 
     /**

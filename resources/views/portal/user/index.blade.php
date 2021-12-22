@@ -15,23 +15,7 @@ Pengguna
             <span>Tambah Data</span>
         </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item home" href="javascript:void(0)">
-            <i class="fas fa-fw fa-home mr-1 ml-1 text-success"></i>
-            <span class="text-success">Data Pengguna</span>
-        </a>
-        <a class="dropdown-item deleted" href="javascript:void(0)">
-            <i class="fas fa-fw fa-trash mr-1 ml-1 text-danger"></i>
-            <span class="text-danger">Data Penghapusan</span>
-        </a>
-        <a class="dropdown-item registered" href="javascript:void(0)">
-            <i class="fas fa-fw fa-user mr-1 ml-1 text-info"></i>
-            <span class="text-info">Data Pendaftar</span>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item activation" href="javascript:void(0)">
-            <i class="fad fa-fw fa-barcode-read fa-swap-opacity mr-1 ml-1"></i>
-            <span>Aktivasi Pendaftaran</span>
-        </a>
+        @include('portal.user.button')
     </div>
 </div>
 @endsection
@@ -485,97 +469,81 @@ Pengguna
 
 @section('content-js')
 <script>
-    $("#chooseGroup").click(function(){
-        if($("#chooseGroup").val() == 'chooseAll'){
-            $("#chooseGroup")
-                .html('<i class="fas fa-sm fa-eraser"></i> Hapus Semua Blok')
-                .val("deleteAll")
-                .addClass("text-danger")
-                .removeClass("text-info");
-            $.ajax({
-                url: "/production/users/choose/group/all",
-                type: "GET",
-                cache:false,
-                beforeSend:function(){
-                    $.blockUI({
-                        message: '<i class="fad fa-spin fa-spinner text-white"></i>',
-                        baseZ: 9999,
-                        overlayCSS: {
-                            backgroundColor: '#000',
-                            opacity: 0.5,
-                            cursor: 'wait'
-                        },
-                        css: {
-                            border: 0,
-                            padding: 0,
-                            backgroundColor: 'transparent'
-                        }
-                    });
-                    $("#group").val(null).html("").trigger("change");
-                },
-                success:function(data){
-                    if(data.success){
-                        var group = data.success;
-                        $.each( group, function( i, val ) {
-                            var option = $('<option></option>').attr('value', val.name).text(val.name).prop('selected', true);
-                            $('#group').append(option).trigger('change');
-                        });
-                    }
-                },
-                error:function(data){
-                    console.log(data);
-                },
-                complete:function(data){
-                    $.unblockUI();
+    $(document).ready(function(){
+        userLevel();
+    });
+
+    function userLevel(){
+        $.ajax({
+            url: "/production/users/level",
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#category").val(data.success);
                 }
-            });
-        }
-        else{
-            $("#chooseGroup")
-                .html('<i class="fas fa-sm fa-hand-pointer"></i> Pilih Semua Blok')
-                .val("chooseAll")
-                .removeClass("text-danger")
-                .addClass("text-info");
-            $("#group").val(null).html("").trigger("change");
-        }
+            }
+        });
+    }
+
+    $("#category").on('change', function(e){
+        e.preventDefault();
+        $.ajax({
+            url: "/production/users/change/" + $("#category").val(),
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    dtableReload('');
+                }
+            }
+        });
     });
 
     var id;
 
     if(getUrlParameter('data') !== false)
-        init(getUrlParameter('data'), 3);
+        init(getUrlParameter('data'));
     else
-        init(1, 3);
+        init(1);
 
     $(".registered").click(function(){
-        init(2, 3);
+        init(2);
     });
 
     $(".home").click(function(){
-        init(1, 3);
+        init(1);
     });
 
     $(".deleted").click(function(){
-        init(0, 3);
+        init(0);
     });
 
-    function init(active, level){
-        $("#category").prop('selectedIndex',0)
+    function init(active){
         if(active == 2){
             $(".page-title").text("Data Pendaftar");
+            $(".registered").addClass("bg-info text-white");
+            $(".home").removeClass("bg-info text-white");
+            $(".deleted").removeClass("bg-info text-white");
             $('#warning-deleted').hide();
         }
         else if(active == 1){
             $(".page-title").text("Pengguna Aktif");
+            $(".registered").removeClass("bg-info text-white");
+            $(".home").addClass("bg-info text-white");
+            $(".deleted").removeClass("bg-info text-white");
             $('#warning-deleted').hide();
         }
         else{
             $(".page-title").text("Data Penghapusan");
+            $(".registered").removeClass("bg-info text-white");
+            $(".home").removeClass("bg-info text-white");
+            $(".deleted").addClass("bg-info text-white");
             $('#warning-deleted').show();
         }
 
-        window.history.replaceState(null, null, "?data=" + active + "&lev=" + level);
-        dtable = dtableInit("/production/users?data=" + active + "&lev=" + level);
+        window.history.replaceState(null, null, "?data=" + active);
+        dtable = dtableInit("/production/users?data=" + active);
     }
 
     var iti;
@@ -757,46 +725,12 @@ Pengguna
         }
     });
 
-    $('[type=tel]').on('change', function(e) {
-        $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
-    });
-
-    $('[type=tel]').on('keypress', function(e) {
-        keys = ['0','1','2','3','4','5','6','7','8','9']
-        return keys.indexOf(e.key) > -1
-    });
-
-    $("#email").on('input', function() {
-        this.value = this.value.replace(/\s/g, '');
-    });
-    $("#phone").on("input", function() {
-        if (/^0/.test(this.value)) {
-            this.value = this.value.replace(/^0/, "");
-        }
-    });
-
-    $("#name").on("input", function(){
-        this.value = this.value.replace(/[^0-9a-zA-Z/\s.,]+$/g, '');
-        this.value = this.value.replace(/\s\s+/g, ' ');
-    });
-
-    $("#btn_copy").click( function(){;
-        navigator.clipboard.writeText($("#newPassword").text());
-        $('#resetModal').modal('hide');
-
-        toastr.options = {
-            "closeButton": true,
-            "preventDuplicates": true,
-        };
-        toastr.success("Password copied.");
-    });
-
     $('#category').on('change', function() {
-        dtable = dtableInit("/production/users?data=" + getUrlParameter('data') + "&lev=" + this.value);
+        dtable = dtableInit("/production/users?data=" + getUrlParameter('data'));
     });
 
     function initForm(){
-        $("#group").val(null).html("").trigger("change").prop("required",false);
+        $("#group").val("").html("").trigger("change").prop("required",false);
     }
 
     $(".add").click( function(){
@@ -1145,8 +1079,8 @@ Pengguna
                         var selectedLevel = $('#level').val();
                         $("#category").val(selectedLevel).change();
                         $(".page-title").text("Pengguna Aktif");
-                        window.history.replaceState(null, null, "?data=1&lev=" + selectedLevel);
-                        dtable = dtableInit("/production/users?data=1&lev=" + selectedLevel);
+                        window.history.replaceState(null, null, "?data=1");
+                        dtable = dtableInit("/production/users?data=1");
                         $('#warning-deleted').hide();
                     }
 
@@ -1272,6 +1206,61 @@ Pengguna
         $(".popover").popover("hide");
     }
 
+    $("#chooseGroup").click(function(){
+        if($("#chooseGroup").val() == 'chooseAll'){
+            $("#chooseGroup")
+                .html('<i class="fas fa-sm fa-eraser"></i> Hapus Semua Blok')
+                .val("deleteAll")
+                .addClass("text-danger")
+                .removeClass("text-info");
+            $.ajax({
+                url: "/production/users/choose/group/all",
+                type: "GET",
+                cache:false,
+                beforeSend:function(){
+                    $.blockUI({
+                        message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                        baseZ: 9999,
+                        overlayCSS: {
+                            backgroundColor: '#000',
+                            opacity: 0.5,
+                            cursor: 'wait'
+                        },
+                        css: {
+                            border: 0,
+                            padding: 0,
+                            backgroundColor: 'transparent'
+                        }
+                    });
+                    $("#group").val(null).html("").trigger("change");
+                },
+                success:function(data){
+                    if(data.success){
+                        var group = data.success;
+                        $.each( group, function( i, val ) {
+                            var option = $('<option></option>').attr('value', val.name).text(val.name).prop('selected', true);
+                            $('#group').append(option).trigger('change');
+                        });
+                    }
+                },
+                error:function(data){
+                    console.log(data);
+                },
+                complete:function(data){
+                    $.unblockUI();
+                }
+            });
+        }
+        else{
+            $("#chooseGroup")
+                .html('<i class="fas fa-sm fa-hand-pointer"></i> Pilih Semua Blok')
+                .val("chooseAll")
+                .removeClass("text-danger")
+                .addClass("text-info");
+            $("#group").val(null).html("").trigger("change");
+        }
+    });
+
     function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
@@ -1320,5 +1309,39 @@ Pengguna
             }
         });
     }
+
+    $('[type=tel]').on('change', function(e) {
+        $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
+    });
+
+    $('[type=tel]').on('keypress', function(e) {
+        keys = ['0','1','2','3','4','5','6','7','8','9']
+        return keys.indexOf(e.key) > -1
+    });
+
+    $("#email").on('input', function() {
+        this.value = this.value.replace(/\s/g, '');
+    });
+    $("#phone").on("input", function() {
+        if (/^0/.test(this.value)) {
+            this.value = this.value.replace(/^0/, "");
+        }
+    });
+
+    $("#name").on("input", function(){
+        this.value = this.value.replace(/[^0-9a-zA-Z/\s.,]+$/g, '');
+        this.value = this.value.replace(/\s\s+/g, ' ');
+    });
+
+    $("#btn_copy").click( function(){;
+        navigator.clipboard.writeText($("#newPassword").text());
+        $('#resetModal').modal('hide');
+
+        toastr.options = {
+            "closeButton": true,
+            "preventDuplicates": true,
+        };
+        toastr.success("Password copied.");
+    });
 </script>
 @endsection
