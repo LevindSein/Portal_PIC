@@ -47,7 +47,7 @@ Kelola Tagihan
                                             data-html="true"
                                             data-content="Arahkan kursor
                                             <i class='fad fa-swap-opacity fa-mouse-pointer'></i><br>
-                                            ke icon fasilitas <i class='fas fa-bolt' style='color:#fd7e14;'></i>
+                                            ke ikon fasilitas <i class='fas fa-bolt' style='color:#fd7e14;'></i>
                                             <i class='fas fa-tint' style='color:#36b9cc;'></i>
                                             <i class='fas fa-lock' style='color:#e74a3b;'></i>
                                             <i class='fas fa-leaf' style='color:#1cc88a;'></i>

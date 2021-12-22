@@ -111,9 +111,9 @@
                                     <div class=""><img src="{{asset(Auth::user()->photo)}}?{{$rand}}" alt="user" class="img-circle"
                                             width="60"></div>
                                     <div class="ml-2">
-                                        <h4 class="text-dark mb-0">{{Auth::user()->name}}</h4>
-                                        <p class="text-dark mb-0">{{Auth::user()->email}}</p>
-                                        <p class="text-dark mb-0">{{Auth::user()->telephone}}</p>
+                                        <h4 class="text-dark mb-0">{{(strlen(Auth::user()->name) > 15) ? str_pad(substr(Auth::user()->name, 0, 14), 18, '.') : Auth::user()->name}}</h4>
+                                        <p class="text-dark mb-0">{{(strlen(Auth::user()->email) > 25) ? str_pad(substr(Auth::user()->email, 0, 21), 25, '.') : Auth::user()->email}}</p>
+                                        <p class="text-dark mb-0">{{\App\Models\User::level(Auth::user()->level)}}</p>
                                     </div>
                                 </div>
                                 <a class="dropdown-item" href="{{url('profile')}}">
@@ -147,22 +147,22 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li class="p-15 mt-1">
-                            <a href="javascript:void(0)" class="btn btn-block create-btn text-white no-block d-flex align-items-center">
-                                <i class="fas fa-check-square"></i>
-                                <span class="hide-menu ml-1">&nbsp;Bayar&nbsp;Tagihan</span>
+                            <a href="javascript:void(0)" class="btn btn-block btn-success text-white no-block d-flex align-items-center" style="height: 45px;">
+                                <i class="fas fa-wallet mr-1"></i>
+                                <span class="hide-menu ml-1">Bayar&nbsp;Tagihan</span>
                             </a>
                         </li>
                         @if(Auth::user()->level != 3)
                         <li class="sidebar-item {{ (request()->is('production/dashboard*')) ? 'bg-light' : '' }}">
                             <a class="sidebar-link waves-effect waves-dark {{ (request()->is('production/dashboard*')) ? 'active' : '' }}" href="{{(request()->is('production/dashboard*')) ? 'javascript:void(0)' : url('production/dashboard')}}" aria-expanded="false">
                                 <i class="mdi mdi-view-dashboard mr-1 text-info"></i>
-                                <span class="hide-menu">Dashboard</span>
+                                <span class="hide-menu"><b>Dashboard</b></span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                                 <i class="fad fa-user-headset mr-1 text-info"></i>
-                                <span class="hide-menu">Layanan</span>
+                                <span class="hide-menu"><b>Layanan</b></span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
@@ -182,19 +182,19 @@
                         <li class="sidebar-item {{ (request()->is('production/users*')) ? 'bg-light' : '' }}">
                             <a class="sidebar-link waves-effect waves-dark {{ (request()->is('production/users*')) ? 'active' : '' }}" href="{{(request()->is('production/users*')) ? 'javascript:void(0)' : url('production/users')}}" aria-expanded="false">
                                 <i class="fas fa-users mr-1 text-info"></i>
-                                <span class="hide-menu">Pengguna</span>
+                                <span class="hide-menu"><b>Pengguna</b></span>
                             </a>
                         </li>
                         <li class="sidebar-item {{ (request()->is('production/point*')) ? 'bg-light' : '' }}">
                             <a class="sidebar-link waves-effect waves-dark {{ (request()->is('production/point*')) ? 'active' : '' }}" href="{{(request()->is('production/point*')) ? 'javascript:void(0)' : url('production/point/stores')}}" aria-expanded="false">
                                 <i class="fas fa-building mr-1 text-info"></i>
-                                <span class="hide-menu">Tempat&nbsp;Usaha</span>
+                                <span class="hide-menu"><b>Tempat&nbsp;Usaha</b></span>
                             </a>
                         </li>
                         <li class="sidebar-item {{ (request()->is('production/prices*')) ? 'bg-light' : '' }}">
                             <a class="sidebar-link has-arrow waves-effect waves-dark {{ (request()->is('production/prices*')) ? 'active' : '' }}" href="javascript:void(0)" aria-expanded="false">
                                 <i class="far fa-pi mr-1 text-info"></i>
-                                <span class="hide-menu">Rumusan&nbsp;Tarif</span>
+                                <span class="hide-menu"><b>Rumusan&nbsp;Tarif</b></span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level {{ (request()->is('production/prices*')) ? 'in' : '' }}">
                                 <li class="sidebar-item">
@@ -238,19 +238,19 @@
                         <li class="sidebar-item {{ (request()->is('production/manage*')) ? 'bg-light' : '' }}">
                             <a class="sidebar-link waves-effect waves-dark {{ (request()->is('production/manage*')) ? 'active' : '' }}" href="{{(request()->is('production/manage*')) ? 'javascript:void(0)' : url('production/manage/bills')}}" aria-expanded="false">
                                 <i class="fad fa-file-invoice mr-1 text-info"></i>
-                                <span class="hide-menu">Kelola&nbsp;Tagihan</span>
+                                <span class="hide-menu"><b>Kelola&nbsp;Tagihan</b></span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark" href="{{url('#')}}" aria-expanded="false">
                                 <i class="far fa-rocket-launch mr-1 text-info"></i>
-                                <span class="hide-menu">Potensi</span>
+                                <span class="hide-menu"><b>Potensi</b></span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                                 <i class="fad fa-book mr-1 text-info"></i>
-                                <span class="hide-menu">Laporan</span>
+                                <span class="hide-menu"><b>Laporan</b></span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item">
@@ -270,13 +270,13 @@
                         <li class="sidebar-item {{ (request()->is('production/histories*')) ? 'bg-light' : '' }}">
                             <a class="sidebar-link waves-effect waves-dark {{ (request()->is('production/histories*')) ? 'active' : '' }}" href="{{(request()->is('production/histories*')) ? 'javascript:void(0)' : url('production/histories')}}" aria-expanded="false">
                                 <i class="fad fa-clock mr-1 text-info"></i>
-                                <span class="hide-menu">Riwayat&nbsp;Login</span>
+                                <span class="hide-menu"><b>Riwayat&nbsp;Login</b></span>
                             </a>
                         </li>
                         <li class="sidebar-item {{ (request()->is('production/changelogs*')) ? 'bg-light' : '' }}">
                             <a class="sidebar-link waves-effect waves-dark {{ (request()->is('production/changelogs*')) ? 'active' : '' }}" href="{{(request()->is('production/changelogs*')) ? 'javascript:void(0)' : url('production/changelogs')}}" aria-expanded="false">
                                 <i class="fas fa-info mr-1 text-info"></i>
-                                <span class="hide-menu">Changelog</span>
+                                <span class="hide-menu"><b>Changelog</b></span>
                             </a>
                         </li>
                         @endif
