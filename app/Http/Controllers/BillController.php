@@ -741,7 +741,477 @@ class BillController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->ajax()){
+            try{
+                $data = Bill::findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            $data->stt_publish = 0;
+            if($request->stt_publish){
+                $data->stt_publish = 1;
+            }
+
+            $los = $this->multipleSelect($request->los);
+            sort($los, SORT_NATURAL);
+
+            $no_los = json_decode(Group::where('name', $request->group)->first()->data)->data;
+            foreach($los as $l){
+                $valid['nomorLos'] = $l;
+                Validator::make($valid, [
+                    'nomorLos' => 'required|in:'.$no_los,
+                ])->validate();
+            }
+
+            $jml_los = count($los);
+            $data->jml_los = $jml_los;
+            $data->no_los = implode(',', $los);
+
+            if($request->pengguna){
+                $data->name = User::find($request->pengguna)->name;
+            }
+
+            $sub_tagihan = 0;
+            $den_tagihan = 0;
+            $dis_tagihan = 0;
+            $ttl_tagihan = 0;
+            $sel_tagihan = 0;
+
+            //Listrik
+            if($request->fas_listrik){
+                $tarif_id = $request->plistrik;
+
+                $valid['tarifListrik'] = $tarif_id;
+                Validator::make($valid, [
+                    'tarifListrik' => 'required|exists:App\Models\PListrik,id',
+                ])->validate();
+
+                $tarif = PListrik::find($tarif_id);
+                $tarif_data = json_decode($tarif->data);
+
+                $daya = str_replace('.','',$request->dayalistrik);
+                $awal = str_replace('.','',$request->awlistrik);
+                $akhir = str_replace('.','',$request->aklistrik);
+                $digit = $request->inputlistrik0;
+
+                $valid['dayaListrik'] = $daya;
+                $valid['awalMeterListrik'] = $awal;
+                $valid['akhirMeterListrik'] = $akhir;
+                Validator::make($valid, [
+                    'dayaListrik' => 'required|numeric|lte:999999999',
+                    'awalMeterListrik' => 'required|numeric|lte:999999999',
+                    'akhirMeterListrik' => 'required|numeric|lte:999999999',
+                ])->validate();
+
+                if($request->checklistrik0){
+                    if($digit < strlen($awal)){
+                        $digit = strlen($awal);
+                        return response()->json(['info' => "Alat Listrik minimal $digit digit."]);
+                    }
+                    $digit = str_repeat("9",$digit);
+                    $pakai = PListrik::pakai($awal, $digit + $akhir);
+                    $akhir_temp = $digit + $akhir;
+                }
+                else{
+                    if($awal > $akhir){
+                        return response()->json(['info' => "Akhir Meter harus lebih besar dari Awal Meter."]);
+                    }
+                    $pakai = PListrik::pakai($awal, $akhir);
+                    $akhir_temp = $akhir;
+                }
+
+                $tarif_nama = $tarif->name;
+                $standar = PListrik::standar($tarif_data->standar, $daya);
+                $blok1 = PListrik::blok1($tarif_data->blok1, $standar);
+                $blok2 = PListrik::blok2($tarif_data->blok2, $pakai, $standar);
+                $beban = PListrik::beban($tarif_data->beban, $daya);
+                $pju = PListrik::pju($tarif_data->pju, $blok1 + $blok2 + $beban);
+                $ppn = PListrik::ppn($tarif_data->ppn, $blok1 + $blok2 + $beban + $pju);
+                $sub = PListrik::tagihan($tarif_id, $awal, $akhir_temp, $daya);
+
+                $diskon = 0;
+                if($request->dlistrik){
+                    $valid['diskonListrik'] = $request->dlistrik;
+                    Validator::make($valid, [
+                        'diskonListrik' => 'required|numeric|lte:100',
+                    ])->validate();
+
+                    $diskon = round((str_replace('.','',$request->dlistrik) / 100) * $sub);
+                }
+
+                $denda = 0;
+                if($request->denlistrik){
+                    $diff = $request->denlistrik;
+                    $valid['dendaListrik'] = $request->denlistrik;
+                    Validator::make($valid, [
+                        'dendaListrik' => 'required|numeric|lte:999999999',
+                    ])->validate();
+
+                    if($daya > 4400){
+                        $denda = ceil($diff * ($tarif_data->denda2 / 100) * $sub);
+                    }
+                    else{
+                        $denda = $diff * $tarif_data->denda1;
+                    }
+                }
+
+                $total = $sub - $diskon + $denda;
+
+                $data->b_listrik = json_encode([
+                    'tarif_id' => $tarif_id,
+                    'tarif_nama' => $tarif_nama,
+                    'daya' => $daya,
+                    'awal' => $awal,
+                    'akhir' => $akhir,
+                    'reset' => $digit,
+                    'pakai' => $pakai,
+                    'blok1' => $blok1,
+                    'blok2' => $blok2,
+                    'beban' => $beban,
+                    'pju' => $pju,
+                    'ppn' => $ppn,
+                    'sub_tagihan' => $sub,
+                    'denda' => $denda,
+                    'denda_bulan' => $request->denlistrik,
+                    'diskon' => $diskon,
+                    'diskon_persen' => $request->dlistrik,
+                    'ttl_tagihan' => $total,
+                    'rea_tagihan' => 0,
+                    'sel_tagihan' => $total,
+                ]);
+
+                $sub_tagihan += $sub;
+                $den_tagihan += $denda;
+                $dis_tagihan += $diskon;
+                $ttl_tagihan += $total;
+                $sel_tagihan += $total;
+            }
+            else{
+                $data->code_tlistrik = NULL;
+                $data->b_listrik = NULL;
+            }
+
+            //Air Bersih
+            if($request->fas_airbersih){
+                $tarif_id = $request->pairbersih;
+
+                $valid['tarifAirBersih'] = $tarif_id;
+                Validator::make($valid, [
+                    'tarifAirBersih' => 'required|exists:App\Models\PAirBersih,id',
+                ])->validate();
+
+                $tarif = PAirBersih::find($tarif_id);
+                $tarif_data = json_decode($tarif->data);
+
+                $awal = str_replace('.','',$request->awairbersih);
+                $akhir = str_replace('.','',$request->akairbersih);
+                $digit = $request->inputairbersih0;
+
+                $valid['awalMeterAirBersih'] = $awal;
+                $valid['akhirMeterAirBersih'] = $akhir;
+                Validator::make($valid, [
+                    'awalMeterAirBersih' => 'required|numeric|lte:999999999',
+                    'akhirMeterAirBersih' => 'required|numeric|lte:999999999',
+                ])->validate();
+
+                if($request->checkairbersih0){
+                    if($digit < strlen($awal)){
+                        $digit = strlen($awal);
+                        return response()->json(['info' => "Alat Air Bersih minimal $digit digit."]);
+                    }
+                    $digit = str_repeat("9",$digit);
+                    $pakai = PAirBersih::pakai($awal, $digit + $akhir);
+                    $akhir_temp = $digit + $akhir;
+                }
+                else{
+                    if($awal > $akhir){
+                        return response()->json(['info' => "Akhir Meter harus lebih besar dari Awal Meter."]);
+                    }
+                    $pakai = PAirBersih::pakai($awal, $akhir);
+                    $akhir_temp = $akhir;
+                }
+
+                $tarif_nama = $tarif->name;
+                $bayar = PAirBersih::bayar($pakai, $tarif_data->tarif1, $tarif_data->tarif2);
+                $pemeliharaan = PAirBersih::pemeliharaan($tarif_data->pemeliharaan);
+                $beban = PAirBersih::beban($tarif_data->beban);
+                $arkot = PAirBersih::arkot($tarif_data->airkotor, $bayar);
+                $ppn = PAirBersih::ppn($tarif_data->ppn, $bayar + $pemeliharaan + $beban + $arkot);
+                $sub = PAirBersih::tagihan($tarif_id, $awal, $akhir_temp);
+
+                $diskon = 0;
+                if($request->dairbersih){
+                    $valid['diskonAirBersih'] = $request->dairbersih;
+                    Validator::make($valid, [
+                        'diskonAirBersih' => 'required|numeric|lte:100',
+                    ])->validate();
+
+                    $diskon = round((str_replace('.','',$request->dairbersih) / 100) * $sub);
+                }
+
+
+                $denda = 0;
+                if($request->denairbersih){
+                    $diff = $request->denairbersih;
+                    $valid['dendaAirBersih'] = $diff;
+                    Validator::make($valid, [
+                        'dendaAirBersih' => 'required|numeric|lte:999999999',
+                    ])->validate();
+
+                    $denda = $diff * $tarif_data->denda;
+                }
+
+                $total = $sub - $diskon + $denda;
+
+                $data->b_airbersih = json_encode([
+                    'tarif_id' => $tarif_id,
+                    'tarif_nama' => $tarif_nama,
+                    'awal' => $awal,
+                    'akhir' => $akhir,
+                    'reset' => $digit,
+                    'pakai' => $pakai,
+                    'bayar' => $bayar,
+                    'pemeliharaan' => $pemeliharaan,
+                    'beban' => $beban,
+                    'arkot' => $arkot,
+                    'ppn' => $ppn,
+                    'sub_tagihan' => $sub,
+                    'denda' => $denda,
+                    'denda_bulan' => $request->denairbersih,
+                    'diskon' => $diskon,
+                    'diskon_persen' => $request->dairbersih,
+                    'ttl_tagihan' => $total,
+                    'rea_tagihan' => 0,
+                    'sel_tagihan' => $total,
+                ]);
+
+                $sub_tagihan += $sub;
+                $den_tagihan += $denda;
+                $dis_tagihan += $diskon;
+                $ttl_tagihan += $total;
+                $sel_tagihan += $total;
+            }
+            else{
+                $data->code_tairbersih = NULL;
+                $data->b_airbersih = NULL;
+            }
+
+            //Keamanan IPK
+            if($request->fas_keamananipk){
+                $tarif_id = $request->pkeamananipk;
+
+                $valid['tarifKeamananIpk'] = $tarif_id;
+                Validator::make($valid, [
+                    'tarifKeamananIpk' => 'required|exists:App\Models\PKeamananIpk,id',
+                ])->validate();
+
+                $tarif = PKeamananIpk::find($tarif_id);
+                $tarif_data = json_decode($tarif->data);
+
+                $tarif_nama = $tarif->name;
+
+                $sub = PKeamananIpk::tagihan($tarif_id, $jml_los);
+
+                $diskon = 0;
+                if($request->dkeamananipk){
+                    $diskon = str_replace('.','',$request->dkeamananipk);
+
+                    if($diskon > $sub){
+                        return response()->json(['info' => "Diskon Keamanan IPK maksimal $sub."]);
+                    }
+                }
+
+                $total = $sub - $diskon;
+
+                $keamanan = round(($tarif_data->keamanan / 100) * $total);
+                $ipk = $total - $keamanan;
+
+                $data->b_keamananipk = json_encode([
+                    'tarif_id' => $tarif_id,
+                    'tarif_nama' => $tarif_nama,
+                    'price' => $tarif->price,
+                    'sub_tagihan' => $sub,
+                    'diskon' => $diskon,
+                    'keamanan' => $keamanan,
+                    'ipk' => $ipk,
+                    'ttl_tagihan' => $total,
+                    'rea_tagihan' => 0,
+                    'sel_tagihan' => $total,
+                ]);
+
+                $sub_tagihan += $sub;
+                $dis_tagihan += $diskon;
+                $ttl_tagihan += $total;
+                $sel_tagihan += $total;
+            }
+            else{
+                $data->b_keamananipk = NULL;
+            }
+
+            //Kebersihan
+            if($request->fas_kebersihan){
+                $tarif_id = $request->pkebersihan;
+
+                $valid['tarifKebersihan'] = $tarif_id;
+                Validator::make($valid, [
+                    'tarifKebersihan' => 'required|exists:App\Models\PKebersihan,id',
+                ])->validate();
+
+                $tarif = PKebersihan::find($tarif_id);
+
+                $tarif_nama = $tarif->name;
+
+                $sub = PKebersihan::tagihan($tarif_id, $jml_los);
+
+                $diskon = 0;
+                if($request->dkebersihan){
+                    $diskon = str_replace('.','',$request->dkebersihan);
+
+                    if($diskon > $sub){
+                        return response()->json(['info' => "Diskon Kebersihan maksimal $sub."]);
+                    }
+                }
+
+                $total = $sub - $diskon;
+
+                $data->b_kebersihan = json_encode([
+                    'tarif_id' => $tarif_id,
+                    'tarif_nama' => $tarif_nama,
+                    'price' => $tarif->price,
+                    'sub_tagihan' => $sub,
+                    'diskon' => $diskon,
+                    'ttl_tagihan' => $total,
+                    'rea_tagihan' => 0,
+                    'sel_tagihan' => $total,
+                ]);
+
+                $sub_tagihan += $sub;
+                $dis_tagihan += $diskon;
+                $ttl_tagihan += $total;
+                $sel_tagihan += $total;
+            }
+            else{
+                $data->b_kebersihan = NULL;
+            }
+
+            //Air Kotor
+            if($request->fas_airkotor){
+                $tarif_id = $request->pairkotor;
+
+                $valid['tarifAirKotor'] = $tarif_id;
+                Validator::make($valid, [
+                    'tarifAirKotor' => 'required|exists:App\Models\PAirKotor,id',
+                ])->validate();
+
+                $tarif = PAirKotor::find($tarif_id);
+
+                $tarif_nama = $tarif->name;
+
+                $sub = PAirKotor::tagihan($tarif_id);
+
+                $diskon = 0;
+                if($request->dairkotor){
+                    $diskon = str_replace('.','',$request->dairkotor);
+
+                    if($diskon > $sub){
+                        return response()->json(['info' => "Diskon Kebersihan maksimal $sub."]);
+                    }
+                }
+
+                $total = $sub - $diskon;
+
+                $data->b_airkotor = json_encode([
+                    'tarif_id' => $tarif_id,
+                    'tarif_nama' => $tarif_nama,
+                    'price' => $tarif->price,
+                    'sub_tagihan' => $sub,
+                    'diskon' => $diskon,
+                    'ttl_tagihan' => $total,
+                    'rea_tagihan' => 0,
+                    'sel_tagihan' => $total,
+                ]);
+
+                $sub_tagihan += $sub;
+                $dis_tagihan += $diskon;
+                $ttl_tagihan += $total;
+                $sel_tagihan += $total;
+            }
+            else{
+                $data->b_airkotor = NULL;
+            }
+
+            //Lainnya
+            if($request->plain){
+                $plain = $request->plain;
+                $prices = array();
+                for($i = 0; $i < count($plain); $i++){
+                    $tarif_id = $request->plain[$i];
+
+                    $valid['tarifLain'] = $tarif_id;
+                    Validator::make($valid, [
+                        'tarifLain' => 'required|exists:App\Models\PLain,id',
+                    ])->validate();
+
+                    $tarif = PLain::find($tarif_id);
+
+                    $tarif_nama = $tarif->name;
+
+                    $sub = PLain::tagihan($tarif_id, $jml_los);
+
+                    $total = $sub;
+
+                    $prices[$i] = [
+                        'tarif_id' => $tarif_id,
+                        'tarif_nama' => $tarif_nama,
+                        'price' => $tarif->price,
+                        'satuan_id' => $tarif->satuan,
+                        'satuan_nama' => PLain::satuan($tarif->satuan),
+                        'sub_tagihan' => $total,
+                        'ttl_tagihan' => $total,
+                        'rea_tagihan' => 0,
+                        'sel_tagihan' => $total,
+                    ];
+
+                    $sub_tagihan += $sub;
+                    $ttl_tagihan += $total;
+                    $sel_tagihan += $total;
+                }
+
+                $data->b_lain = json_encode($prices);
+            }
+            else{
+                $data->b_lain = NULL;
+            }
+
+            $data->b_tagihan = json_encode([
+                'sub_tagihan' => $sub_tagihan,
+                'denda' => $den_tagihan,
+                'diskon' => $dis_tagihan,
+                'ttl_tagihan' => $ttl_tagihan,
+                'rea_tagihan' => 0,
+                'sel_tagihan' => $sel_tagihan,
+            ]);
+
+            $data->data = json_encode([
+                'user_update' => Auth::user()->id,
+                'username_update' => Auth::user()->name,
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+
+            $kontrol = $data->nicename;
+
+            try{
+                $data->save();
+            }
+            catch(\Exception $e){
+                return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
+            }
+
+            $searchKey = str_replace('-','',$kontrol);
+
+            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
+        }
     }
 
     /**

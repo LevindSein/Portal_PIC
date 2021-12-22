@@ -834,14 +834,16 @@ Kelola Tagihan
                 if(data.success){
                     var period = new Option(data.show.period.nicename, data.show.period.id, false, false);
                     $('#periode').append(period).trigger('change');
-                    $('#periode').prop("disabled", true);
+                    $('#periode').select2({disabled:'readonly'});
 
                     var kontrol = new Option(data.show.kd_kontrol, data.show.kd_kontrol, false, false);
                     $('#kontrol').append(kontrol).trigger('change');
-                    $('#kontrol').prop("disabled", true);
+                    $('#kontrol').select2({disabled:'readonly'});
 
                     $("#group").val(data.show.group);
 
+                    $("#los").val("").html("").prop("disabled", false);
+                    select2custom("#los", "/search/" + data.show.group + "/los", "-- Cari Nomor Los --");
                     var los = data.show.no_los.split(',');
                     $.each( los, function( i, val ) {
                         var option = $('<option></option>').attr('value', val).text(val).prop('selected', true);
