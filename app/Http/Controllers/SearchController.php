@@ -109,32 +109,11 @@ class SearchController extends Controller
                 }
 
                 if($data->tlistrik->id){
-                    $denda = PListrik::find($data->plistrik->id);
-                    $denda = json_decode($denda->data);
-                    if($data->tlistrik->power > 4400){
-                        $denda = $denda->denda2 / 100;
-
-                        $tagihan = PListrik::tagihan($data->plistrik->id, $data->tlistrik->meter, $data->tlistrik->meter, $data->tlistrik->power);
-
-                        if(array_key_exists('listrik', $desc->diskon)){
-                            $tagihan = round($tagihan - ($tagihan * ($desc->diskon->listrik / 100)));
-                        }
-
-                        $denda = round($denda * $tagihan);
-
-                        $data['denlistrik'] = $denda * $diff;
-                    }
-                    else{
-                        $denda = $denda->denda1;
-                        $data['denlistrik'] = $denda * $diff;
-                    }
+                    $data['denlistrik'] = $diff;
                 }
 
                 if($data->tairbersih->id){
-                    $denda = PAirBersih::find($data->pairbersih->id);
-                    $denda = json_decode($denda->data);
-                    $denda = $denda->denda;
-                    $data['denairbersih'] = $denda * $diff;
+                    $data['denairbersih'] = $diff;
                 }
             }
 

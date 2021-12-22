@@ -74,7 +74,6 @@ Route::middleware('checkauth')->group(function(){
             Route::post('manage/bills/publish/{id}', [BillController::class, 'publish']);
             Route::get('manage/bills/period/{id}', [BillController::class, 'periodChange']);
             Route::get('manage/bills/period', [BillController::class, 'period']);
-            Route::get('manage/bills/refresh', [BillController::class, 'refresh']);
             Route::resource('manage/bills', BillController::class);
 
             Route::resource('manage/dayoff', DayOffController::class);

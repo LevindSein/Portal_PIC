@@ -312,7 +312,7 @@ class StoreController extends Controller
 
                     $price = PLain::find($plain[$i]);
                     $prices[$i] = [
-                        'id' => $price->id,
+                        'id' => "$price->id",
                         'name' => $price->name,
                         'price' => $price->price,
                         'satuan_id' => $price->satuan,
@@ -667,7 +667,7 @@ class StoreController extends Controller
 
                     $price = PLain::find($plain[$i]);
                     $prices[$i] = [
-                        'id' => $price->id,
+                        'id' => "$price->id",
                         'name' => $price->name,
                         'price' => $price->price,
                         'satuan_id' => $price->satuan,

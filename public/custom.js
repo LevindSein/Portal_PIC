@@ -37,6 +37,7 @@ $(".number").on('input', function (e) {
 $('.percent').on('input', function (e) {
     if ($(this).val() > 100) $(this).val($(this).val().replace($(this).val(), 100));
 });
+
 $('.hour').on('input', function (e) {
     if ($(this).val() > 24) $(this).val($(this).val().replace($(this).val(), 24));
 });

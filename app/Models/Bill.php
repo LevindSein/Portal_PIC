@@ -22,6 +22,8 @@ class Bill extends Model
         'group',
         'no_los',
         'jml_los',
+        'code_tlistrik',
+        'code_tairbersih',
         'b_listrik',
         'b_airbersih',
         'b_keamananipk',
@@ -33,4 +35,9 @@ class Bill extends Model
         'active',
         'nonactive'
     ];
+
+    public function period()
+    {
+        return $this->belongsTo(Period::class, 'id_period');
+    }
 }

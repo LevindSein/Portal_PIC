@@ -166,6 +166,7 @@ Kelola Tagihan
                                         <label class="custom-control-label" for="stt_publish">Publish Tagihan</label>
                                     </div>
                                 </div>
+                                <p class="text-danger">Pastikan data tagihan benar sebelum di publish.</p>
                             </div>
                         </div>
                         <div class="col-lg-6 col-xlg-6">
@@ -221,15 +222,12 @@ Kelola Tagihan
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="d-flex justify-content-between">
-                                            <label>Denda <span class="text-danger">*</span></label>
-                                            <a id="hitlistrik" type="button" class="text-info" href="javascript:void(0)"><i class="fas fa-sm fa-calculator"></i> Hitung</a>
-                                        </div>
+                                        <label>Denda</label>
                                         <div class="input-group">
+                                            <input maxlength="11" type="text" id="denlistrik" name="denlistrik" autocomplete="off" placeholder="Ketikkan dalam angka 0-12" class="number form-control form-control-line">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text">Rp.</span>
+                                                <span class="input-group-text">Bulan</span>
                                             </div>
-                                            <input maxlength="15" type="text" id="denlistrik" name="denlistrik" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -281,12 +279,12 @@ Kelola Tagihan
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Denda <span class="text-danger">*</span></label>
+                                        <label>Denda</label>
                                         <div class="input-group">
+                                            <input maxlength="11" type="text" id="denairbersih" name="denairbersih" autocomplete="off" placeholder="Ketikkan dalam angka 0-12" class="number form-control form-control-line">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text">Rp.</span>
+                                                <span class="input-group-text">Bulan</span>
                                             </div>
-                                            <input maxlength="15" type="text" id="denairbersih" name="denairbersih" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -535,7 +533,7 @@ Kelola Tagihan
     }
 
     $("#periode, #kontrol").on('change', function(){
-        if($("#periode").val() && $("#kontrol").val()){
+        if($("#periode").val() && $("#kontrol").val() && $("#billFormValue").val() == 'add'){
             $.ajax({
                 url: "/search/bill?periode=" + $("#periode").val() + "&kontrol=" + $("#kontrol").val(),
                 type: "GET",
@@ -544,8 +542,7 @@ Kelola Tagihan
                     if(data.success){
                         $("#group").val(data.show.group);
 
-                        $("#los").prop("disabled", false);
-                        $("#los").val("").html("");
+                        $("#los").val("").html("").prop("disabled", false);
                         select2custom("#los", "/search/" + data.show.group + "/los", "-- Cari Nomor Los --");
                         var los = data.show.no_los;
                         $.each( los, function( i, val ) {
@@ -553,8 +550,7 @@ Kelola Tagihan
                             $('#los').append(option).trigger('change');
                         });
 
-                        $("#pengguna").prop("disabled", false);
-                        $("#pengguna").val("").html("");
+                        $("#pengguna").val("").html("").prop("disabled", false);
                         select2user("#pengguna", "/search/users", "-- Cari Pengguna Tagihan --");
                         if(data.show.pengguna.id){
                             var pengguna = new Option(data.show.pengguna.name + ' (' + data.show.pengguna.ktp + ')', data.show.pengguna.id, false, false);
@@ -615,54 +611,7 @@ Kelola Tagihan
                                 $("#dlistrik").val(Number(data.show.data.diskon.listrik).toLocaleString('id-ID'));
                             }
 
-                            $("#denlistrik").val(Number(data.show.denlistrik).toLocaleString('id-ID'));
-
-                            $("#hitlistrik").on('click', function(e){
-                                e.preventDefault();
-                                $("#denlistrik").val('');
-
-                                var checked = 0;
-                                if($("#checklistrik0").is(":checked")){
-                                    checked = 1;
-                                }
-                                $.ajax({
-                                    url: "/production/manage/bills/refresh"
-                                        + '?price=' + data.show.plistrik.id
-                                        + '&diff=' + data.show.diff
-                                        + '&checked=' + checked
-                                        + '&digit=' + $("#inputlistrik0").val()
-                                        + '&awal=' + $("#awlistrik").val()
-                                        + '&akhir=' + $("#aklistrik").val()
-                                        + '&diskon=' + $("#dlistrik").val()
-                                        + '&daya=' + $("#dayalistrik").val(),
-                                    type: "GET",
-                                    cache:false,
-                                    success:function(result){
-                                        if(result.success){
-                                            $("#denlistrik").val(Number(result.success).toLocaleString('id-ID'));
-                                        }
-
-                                        if(result.info){
-                                            toastr.options = {
-                                                "closeButton": true,
-                                                "preventDuplicates": true,
-                                            };
-                                            toastr.info(result.info);
-                                        }
-                                    },
-                                    error:function(result){
-                                        toastr.options = {
-                                            "closeButton": true,
-                                            "preventDuplicates": true,
-                                        };
-                                        toastr.error("Fetching data failed.");
-                                        console.log(result);
-                                    }
-                                });
-                            });
-                        }
-                        else if(!data.show.id_tlistrik){
-                            $("#fas_listrik").attr('disabled', true);
+                            $("#denlistrik").val(data.show.denlistrik);
                         }
 
                         if(data.show.fas_airbersih){
@@ -685,9 +634,6 @@ Kelola Tagihan
                             }
 
                             $("#denairbersih").val(Number(data.show.denairbersih).toLocaleString('id-ID'));
-                        }
-                        else if(!data.show.id_tairbersih){
-                            $("#fas_airbersih").attr('disabled', true);
                         }
 
                         if(data.show.fas_keamananipk){
@@ -786,20 +732,20 @@ Kelola Tagihan
     });
 
     function initForm(){
-        $("#periode").val("").html("");
+        $("#periode").val("").html("").prop("disabled", false);
         select2period("#periode", "/search/period", "-- Cari Periode Tagihan --");
 
-        $("#kontrol").val("").html("");
+        $("#kontrol").val("").html("").prop("disabled", false);
         select2kontrol("#kontrol", "/search/kontrol", "-- Cari Kode Kontrol --");
 
         $("#group").val("").prop("readonly", true);
 
-        $("#los").prop("disabled", true).val("").html("");
+        $("#los").val("").html("").prop("disabled", true);
         $("#los").select2({
             placeholder: "(Sesuai Blok Tempat yang terisi)"
         });
 
-        $("#pengguna").prop("disabled", true).val("").html("");
+        $("#pengguna").val("").html("").prop("required", true).prop("disabled", true);
         $("#pengguna").select2({
             placeholder: "(Kode Kontrol harus terisi)"
         });
@@ -867,6 +813,244 @@ Kelola Tagihan
         ok_btn_before = "Menyimpan...";
         ok_btn_completed = "Simpan";
         ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+    });
+
+    $(document).on('click', '.edit', function(){
+        id = $(this).attr('id');
+        name = $(this).attr('nama');
+        $("#billForm")[0].reset();
+        $('.titles').text('Edit Tagihan ' + name);
+        $("#billFormValue").val('update');
+
+        initForm();
+
+        $("#stt_publish").prop('checked', false);
+
+        $.ajax({
+            url: "/production/manage/bills/" + id + "/edit",
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    var period = new Option(data.show.period.nicename, data.show.period.id, false, false);
+                    $('#periode').append(period).trigger('change');
+                    $('#periode').prop("disabled", true);
+
+                    var kontrol = new Option(data.show.kd_kontrol, data.show.kd_kontrol, false, false);
+                    $('#kontrol').append(kontrol).trigger('change');
+                    $('#kontrol').prop("disabled", true);
+
+                    $("#group").val(data.show.group);
+
+                    var los = data.show.no_los.split(',');
+                    $.each( los, function( i, val ) {
+                        var option = $('<option></option>').attr('value', val).text(val).prop('selected', true);
+                        $('#los').append(option).trigger('change');
+                    });
+
+                    $("#pengguna").prop("required", false).prop("disabled", false);
+                    select2user("#pengguna", "/search/users", data.show.name);
+
+                    fasListrik("hide");
+                    $("#fas_listrik").prop("checked", false).attr('disabled', false);
+                    $('#plistrik').val("").html("");
+                    $("#dayalistrik").val('');
+                    $("#awlistrik").val('');
+                    $("#aklistrik").val('');
+                    $("#dlistrik").val('');
+
+                    fasAirBersih("hide");
+                    $("#fas_airbersih").prop("checked", false).attr('disabled', false);
+                    $('#pairbersih').val("").html("");
+                    $("#awairbersih").val('');
+                    $("#akairbersih").val('');
+                    $("#dairbersih").val('');
+
+                    fasKeamananIpk("hide");
+                    $("#fas_keamananipk").prop("checked", false).attr("disabled", false);
+                    $('#pkeamananipk').val("").html("");
+                    $("#dkeamananipk").val('');
+
+                    fasKebersihan("hide");
+                    $("#fas_kebersihan").prop("checked", false).attr("disabled", false);
+                    $('#pkebersihan').val("").html("");
+                    $("#dkebersihan").val('');
+
+                    fasAirKotor("hide");
+                    $("#fas_airkotor").prop("checked", false).attr("disabled", false);
+                    $('#pairkotor').val("").html("");
+                    $("#dairkotor").val('');
+
+                    lain = 0;
+                    plain = 1;
+                    $('div[name="divlain"]').remove();
+
+                    if(data.show.b_listrik){
+                        $("#fas_listrik").prop("checked", true);
+                        fasListrik('show');
+
+                        var plistrik = new Option(
+                            data.show.b_listrik.tarif_nama,
+                            data.show.b_listrik.tarif_id,
+                            false,
+                            false
+                        );
+                        $('#plistrik').append(plistrik).trigger('change');
+
+                        $("#dayalistrik").val(Number(data.show.b_listrik.daya).toLocaleString('id-ID'));
+                        $("#awlistrik").val(Number(data.show.b_listrik.awal).toLocaleString('id-ID'));
+                        $("#aklistrik").val(Number(data.show.b_listrik.akhir).toLocaleString('id-ID'));
+
+                        if(data.show.b_listrik.reset){
+                            $("#checklistrik0").prop("checked", true);
+                            listrik0("show");
+                            var digit = data.show.b_listrik.reset.length;
+                            $("#inputlistrik0").val(digit);
+                        }
+
+                        if(data.show.b_listrik.diskon){
+                            $("#dlistrik").val(Number(data.show.b_listrik.diskon_persen).toLocaleString('id-ID'));
+                        }
+
+                        $("#denlistrik").val(data.show.b_listrik.denda_bulan);
+                    }
+
+                    if(data.show.b_airbersih){
+                        $("#fas_airbersih").prop("checked", true);
+                        fasAirBersih('show');
+
+                        var pairbersih = new Option(
+                            data.show.b_airbersih.tarif_nama,
+                            data.show.b_airbersih.tarif_id,
+                            false,
+                            false
+                        );
+                        $('#pairbersih').append(pairbersih).trigger('change');
+
+                        $("#awairbersih").val(Number(data.show.b_airbersih.awal).toLocaleString('id-ID'));
+                        $("#akairbersih").val(Number(data.show.b_airbersih.akhir).toLocaleString('id-ID'));
+
+                        if(data.show.b_airbersih.reset){
+                            $("#checkairbersih0").prop("checked", true);
+                            airbersih0("show");
+                            var digit = data.show.b_airbersih.reset.length;
+                            $("#inputairbersih0").val(digit);
+                        }
+
+                        if(data.show.b_airbersih.diskon){
+                            $("#dairbersih").val(Number(data.show.b_airbersih.diskon_persen).toLocaleString('id-ID'));
+                        }
+
+                        $("#denairbersih").val(data.show.b_airbersih.denda_bulan);
+                    }
+
+                    if(data.show.b_keamananipk){
+                        $("#fas_keamananipk").prop("checked", true);
+                        fasKeamananIpk('show');
+
+                        var pkeamananipk = new Option(
+                            data.show.b_keamananipk.tarif_nama + ' - ' + Number(data.show.b_keamananipk.price).toLocaleString('id-ID') + ' per-Los',
+                            data.show.b_keamananipk.tarif_id,
+                            false,
+                            false
+                        );
+                        $('#pkeamananipk').append(pkeamananipk).trigger('change');
+
+                        if(data.show.b_keamananipk.diskon){
+                            $("#dkeamananipk").val(Number(data.show.b_keamananipk.diskon).toLocaleString('id-ID'));
+                        }
+                    }
+
+                    if(data.show.b_kebersihan){
+                        $("#fas_kebersihan").prop("checked", true);
+                        fasKebersihan('show');
+
+                        var pkebersihan = new Option(
+                            data.show.b_kebersihan.tarif_nama + ' - ' + Number(data.show.b_kebersihan.price).toLocaleString('id-ID') + ' per-Los',
+                            data.show.b_kebersihan.tarif_id,
+                            false,
+                            false
+                        );
+                        $('#pkebersihan').append(pkebersihan).trigger('change');
+
+                        if(data.show.b_kebersihan.diskon){
+                            $("#dkebersihan").val(Number(data.show.b_kebersihan.diskon).toLocaleString('id-ID'));
+                        }
+                    }
+
+                    if(data.show.b_airkotor){
+                        $("#fas_airkotor").prop("checked", true);
+                        fasAirKotor('show');
+
+                        var pairkotor = new Option(
+                            data.show.b_airkotor.tarif_nama + ' - ' + Number(data.show.b_airkotor.price).toLocaleString('id-ID') + ' per-Kontrol',
+                            data.show.b_airkotor.tarif_id,
+                            false,
+                            false
+                        );
+                        $('#pairkotor').append(pairkotor).trigger('change');
+
+                        if(data.show.b_airkotor.diskon){
+                            $("#dairkotor").val(Number(data.show.b_airkotor.diskon).toLocaleString('id-ID'));
+                        }
+                    }
+
+                    $("#divLainAdd").attr('disabled', false);
+                    if(data.show.b_lain){
+                        $.each( data.show.b_lain, function( i, val ) {
+                            $('#divLainAdd').trigger('click');
+                            $('#plain' + plain).val("").html("");
+                            var plainOpt = new Option(
+                                val.tarif_nama + ' - ' + Number(val.price).toLocaleString('id-ID') + ' ' + val.satuan_nama,
+                                val.tarif_id,
+                                false,
+                                false
+                            );
+                            $('#plain' + (i+1)).append(plainOpt).trigger('change');
+                        });
+                    }
+                }
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#billModal').modal('show');
+            }
+        });
     });
 
     $(document).on('click', '.publish', function(){

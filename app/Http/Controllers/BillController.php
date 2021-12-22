@@ -185,53 +185,6 @@ class BillController extends Controller
         return response()->json(['success' => $id]);
     }
 
-    public function refresh(Request $request){
-        $price = $request->price;
-        $checked = $request->checked;
-        $digit = str_replace('.','',$request->digit);
-        $awal = str_replace('.','',$request->awal);
-        $akhir = str_replace('.','',$request->akhir);
-        $daya = str_replace('.','',$request->daya);
-
-        $diff = $request->diff;
-
-        if($checked){
-            if($digit < strlen($awal)){
-                $digit = strlen($awal);
-                return response()->json(['info' => "Alat Listrik minimal $digit digit."]);
-            }
-
-            $digit = str_repeat("9", $digit);
-            $akhir = $digit + $akhir;
-        }
-        else{
-            if($awal > $akhir){
-                return response()->json(['info' => "Akhir Meter harus lebih besar dari Awal Meter."]);
-            }
-        }
-
-        $data = 0;
-        $denda = PListrik::find($price);
-        $denda = json_decode($denda->data);
-
-        if($daya > 4400){
-            $denda = $denda->denda2 / 100;
-
-            $tagihan = PListrik::tagihan($price, $awal, $akhir, $daya);
-
-            $denda = ceil($denda * $tagihan);
-
-            $data = $denda * $diff;
-        }
-        else{
-            $denda = $denda->denda1;
-
-            $data = $denda * $diff;
-        }
-
-        return response()->json(['success' => $data]);
-    }
-
     public function multipleSelect($data){
         $temp = array();
         for($i = 0; $i < count($data); $i++){
@@ -335,6 +288,9 @@ class BillController extends Controller
                 ])->validate();
 
                 $kontrol = Store::where('kd_kontrol', $request->kontrol)->select('id_tlistrik')->first();
+                if($kontrol->id_tlistrik){
+                    $data['code_tlistrik'] = TListrik::find($kontrol->id_tlistrik)->code;
+                }
 
                 if($request->checklistrik0){
                     if($digit < strlen($awal)){
@@ -372,19 +328,27 @@ class BillController extends Controller
                     $diskon = round((str_replace('.','',$request->dlistrik) / 100) * $sub);
                 }
 
-                $denda = str_replace('.','',$request->denlistrik);
+                $denda = 0;
+                if($request->denlistrik){
+                    $diff = $request->denlistrik;
+                    $valid['dendaListrik'] = $request->denlistrik;
+                    Validator::make($valid, [
+                        'dendaListrik' => 'required|numeric|lte:999999999',
+                    ])->validate();
 
-                $valid['dendaListrik'] = $denda;
-                Validator::make($valid, [
-                    'dendaListrik' => 'required|numeric|lte:999999999',
-                ])->validate();
+                    if($daya > 4400){
+                        $denda = ceil($diff * ($tarif_data->denda2 / 100) * $sub);
+                    }
+                    else{
+                        $denda = $diff * $tarif_data->denda1;
+                    }
+                }
 
                 $total = $sub - $diskon + $denda;
 
                 $data['b_listrik'] = json_encode([
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
-                    'alat_id' => $kontrol->id_tlistrik,
                     'daya' => $daya,
                     'awal' => $awal,
                     'akhir' => $akhir,
@@ -397,7 +361,9 @@ class BillController extends Controller
                     'ppn' => $ppn,
                     'sub_tagihan' => $sub,
                     'denda' => $denda,
+                    'denda_bulan' => $request->denlistrik,
                     'diskon' => $diskon,
+                    'diskon_persen' => $request->dlistrik,
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
@@ -434,6 +400,9 @@ class BillController extends Controller
                 ])->validate();
 
                 $kontrol = Store::where('kd_kontrol', $request->kontrol)->select('id_tairbersih')->first();
+                if($kontrol->id_tairbersih){
+                    $data['code_tairbersih'] = TAirBersih::find($kontrol->id_tairbersih)->code;
+                }
 
                 if($request->checkairbersih0){
                     if($digit < strlen($awal)){
@@ -470,18 +439,23 @@ class BillController extends Controller
                     $diskon = round((str_replace('.','',$request->dairbersih) / 100) * $sub);
                 }
 
-                $denda = str_replace('.','',$request->denairbersih);
-                $valid['dendaAirBersih'] = $denda;
-                Validator::make($valid, [
-                    'dendaAirBersih' => 'required|numeric|lte:999999999',
-                ])->validate();
+
+                $denda = 0;
+                if($request->denairbersih){
+                    $diff = $request->denairbersih;
+                    $valid['dendaAirBersih'] = $diff;
+                    Validator::make($valid, [
+                        'dendaAirBersih' => 'required|numeric|lte:999999999',
+                    ])->validate();
+
+                    $denda = $diff * $tarif_data->denda;
+                }
 
                 $total = $sub - $diskon + $denda;
 
                 $data['b_airbersih'] = json_encode([
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
-                    'alat_id' => $kontrol->id_tairbersih,
                     'awal' => $awal,
                     'akhir' => $akhir,
                     'reset' => $digit,
@@ -493,7 +467,9 @@ class BillController extends Controller
                     'ppn' => $ppn,
                     'sub_tagihan' => $sub,
                     'denda' => $denda,
+                    'denda_bulan' => $request->denairbersih,
                     'diskon' => $diskon,
+                    'diskon_persen' => $request->dairbersih,
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
@@ -539,6 +515,7 @@ class BillController extends Controller
                 $data['b_keamananipk'] = json_encode([
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
+                    'price' => $tarif->price,
                     'sub_tagihan' => $sub,
                     'diskon' => $diskon,
                     'keamanan' => $keamanan,
@@ -583,6 +560,7 @@ class BillController extends Controller
                 $data['b_kebersihan'] = json_encode([
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
+                    'price' => $tarif->price,
                     'sub_tagihan' => $sub,
                     'diskon' => $diskon,
                     'ttl_tagihan' => $total,
@@ -625,6 +603,7 @@ class BillController extends Controller
                 $data['b_airkotor'] = json_encode([
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
+                    'price' => $tarif->price,
                     'sub_tagihan' => $sub,
                     'diskon' => $diskon,
                     'ttl_tagihan' => $total,
@@ -661,6 +640,9 @@ class BillController extends Controller
                     $prices[$i] = [
                         'tarif_id' => $tarif_id,
                         'tarif_nama' => $tarif_nama,
+                        'price' => $tarif->price,
+                        'satuan_id' => $tarif->satuan,
+                        'satuan_nama' => PLain::satuan($tarif->satuan),
                         'sub_tagihan' => $total,
                         'ttl_tagihan' => $total,
                         'rea_tagihan' => 0,
@@ -727,7 +709,27 @@ class BillController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(request()->ajax()){
+            try{
+                $data = Bill::with([
+                    'period:id,nicename',
+                ])->findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            $data['b_listrik'] = json_decode($data->b_listrik);
+            $data['b_airbersih'] = json_decode($data->b_airbersih);
+            $data['b_keamananipk'] = json_decode($data->b_keamananipk);
+            $data['b_kebersihan'] = json_decode($data->b_kebersihan);
+            $data['b_airkotor'] = json_decode($data->b_airkotor);
+            $data['b_lain'] = json_decode($data->b_lain);
+
+            return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**

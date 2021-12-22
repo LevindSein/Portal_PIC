@@ -1051,7 +1051,7 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            if(!is_null(Store::where('fas_lain', $id)->first())){
+            if(!is_null(Store::whereJsonContains('fas_lain', [['id' => $id]])->first())){
                 return response()->json(['error' => "Price currently use."]);
             }
 
