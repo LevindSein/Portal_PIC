@@ -179,11 +179,22 @@ class BillController extends Controller
                 $json = json_decode($data->b_tagihan);
                 return number_format($json->ttl_tagihan);
             })
+            ->editColumn('name', function($data){
+                $name = $data->name;
+                if(strlen($name) > 15) {
+                    $name = substr($name, 0, 11);
+                    $name = str_pad($name,  15, ".");
+                    return "<span data-toggle='tooltip' title='$data->name'>$name</span>";
+                }
+                else{
+                    return $name;
+                }
+            })
             ->filterColumn('nicename', function ($query, $keyword) {
                 $keywords = trim($keyword);
                 $query->whereRaw("CONCAT(kd_kontrol, nicename) like ?", ["%{$keywords}%"]);
             })
-            ->rawColumns(['action', 'publish','fasilitas'])
+            ->rawColumns(['action', 'publish', 'fasilitas', 'name'])
             ->make(true);
         }
         return view('portal.manage.bill.index');

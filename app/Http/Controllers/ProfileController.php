@@ -100,9 +100,9 @@ class ProfileController extends Controller
             $user->npwp = $npwp;
             $user->address = $address;
 
-            if (Hash::check(sha1(md5(hash('gost',$password))), $user->password)) {
+            if (Hash::check(sha1(md5($password)), $user->password)) {
                 if(!is_null($passwordNew)){
-                    $user->password = Hash::make(sha1(md5(hash('gost',$passwordNew))));
+                    $user->password = Hash::make(sha1(md5($passwordNew)));
                     try{
                         $user->save();
                     } catch(\Exception $e){

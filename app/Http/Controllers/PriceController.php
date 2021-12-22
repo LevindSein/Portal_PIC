@@ -35,9 +35,17 @@ class PriceController extends Controller
                 return $button;
             })
             ->editColumn('name', function($data){
-                return substr($data->name,0,30);
+                $name = $data->name;
+                if(strlen($name) > 15) {
+                    $name = substr($name, 0, 11);
+                    $name = str_pad($name,  15, ".");
+                    return "<span data-toggle='tooltip' title='$data->name'>$name</span>";
+                }
+                else{
+                    return $name;
+                }
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'name'])
             ->make(true);
         }
         return view('portal.price.listrik.index');
@@ -230,7 +238,18 @@ class PriceController extends Controller
             ->editColumn('name', function($data){
                 return substr($data->name,0,30);
             })
-            ->rawColumns(['action'])
+            ->editColumn('name', function($data){
+                $name = $data->name;
+                if(strlen($name) > 15) {
+                    $name = substr($name, 0, 11);
+                    $name = str_pad($name,  15, ".");
+                    return "<span data-toggle='tooltip' title='$data->name'>$name</span>";
+                }
+                else{
+                    return $name;
+                }
+            })
+            ->rawColumns(['action', 'name'])
             ->make(true);
         }
         return view('portal.price.air-bersih.index');
@@ -419,12 +438,20 @@ class PriceController extends Controller
                 return $button;
             })
             ->editColumn('name', function($data){
-                return substr($data->name,0,30);
+                $name = $data->name;
+                if(strlen($name) > 15) {
+                    $name = substr($name, 0, 11);
+                    $name = str_pad($name,  15, ".");
+                    return "<span data-toggle='tooltip' title='$data->name'>$name</span>";
+                }
+                else{
+                    return $name;
+                }
             })
             ->editColumn('price', function($data){
                 return number_format($data->price,0,'','.');
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'name'])
             ->make(true);
         }
         return view('portal.price.keamanan-ipk.index');
@@ -589,12 +616,20 @@ class PriceController extends Controller
                 return $button;
             })
             ->editColumn('name', function($data){
-                return substr($data->name,0,30);
+                $name = $data->name;
+                if(strlen($name) > 15) {
+                    $name = substr($name, 0, 11);
+                    $name = str_pad($name,  15, ".");
+                    return "<span data-toggle='tooltip' title='$data->name'>$name</span>";
+                }
+                else{
+                    return $name;
+                }
             })
             ->editColumn('price', function($data){
                 return number_format($data->price,0,'','.');
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'name'])
             ->make(true);
         }
         return view('portal.price.kebersihan.index');
@@ -751,12 +786,20 @@ class PriceController extends Controller
                 return $button;
             })
             ->editColumn('name', function($data){
-                return substr($data->name,0,30);
+                $name = $data->name;
+                if(strlen($name) > 15) {
+                    $name = substr($name, 0, 11);
+                    $name = str_pad($name,  15, ".");
+                    return "<span data-toggle='tooltip' title='$data->name'>$name</span>";
+                }
+                else{
+                    return $name;
+                }
             })
             ->editColumn('price', function($data){
                 return number_format($data->price,0,'','.');
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'name'])
             ->make(true);
         }
         return view('portal.price.air-kotor.index');
@@ -913,12 +956,20 @@ class PriceController extends Controller
                 return $button;
             })
             ->editColumn('name', function($data){
-                return substr($data->name,0,30);
+                $name = $data->name;
+                if(strlen($name) > 15) {
+                    $name = substr($name, 0, 11);
+                    $name = str_pad($name,  15, ".");
+                    return "<span data-toggle='tooltip' title='$data->name'>$name</span>";
+                }
+                else{
+                    return $name;
+                }
             })
             ->editColumn('price', function($data){
                 return number_format($data->price,0,'','.');
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'name'])
             ->make(true);
         }
         return view('portal.price.lain.index');

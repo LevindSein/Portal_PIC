@@ -78,11 +78,23 @@ class StoreController extends Controller
             ->editColumn('jml_los', function($data){
                 return number_format($data->jml_los);
             })
+            ->editColumn('pengguna.name', function($data){
+                $name = $data->pengguna->name;
+                if(strlen($name) > 15) {
+                    $name = substr($name, 0, 11);
+                    $name = str_pad($name,  15, ".");
+                    $nama = $data->pengguna->name;
+                    return "<span data-toggle='tooltip' title='$nama'>$name</span>";
+                }
+                else{
+                    return $name;
+                }
+            })
             ->filterColumn('nicename', function ($query, $keyword) {
                 $keywords = trim($keyword);
                 $query->whereRaw("CONCAT(kd_kontrol, nicename) like ?", ["%{$keywords}%"]);
             })
-            ->rawColumns(['action','kd_kontrol','fasilitas'])
+            ->rawColumns(['action', 'fasilitas', 'kd_kontrol', 'pengguna.name'])
             ->make(true);
         }
         return view('portal.point.store.index');

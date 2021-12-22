@@ -45,9 +45,17 @@ class ChangeLogController extends Controller
             })
             ->editColumn('data', function($data){
                 $data = json_decode($data->data);
-                return substr($data->title,0,30);
+                $name = $data->title;
+                if(strlen($name) > 30) {
+                    $name = substr($name, 0, 26);
+                    $name = str_pad($name,  30, ".");
+                    return "<span data-toggle='tooltip' title='$data->title'>$name</span>";
+                }
+                else{
+                    return $name;
+                }
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'data'])
             ->make(true);
         }
         return view('portal.changelog.index');

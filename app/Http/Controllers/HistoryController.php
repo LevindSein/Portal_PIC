@@ -29,8 +29,16 @@ class HistoryController extends Controller
                     'timestamp' => $data->created_at->timestamp
                 ];
             })
-            ->editColumn('name', function ($data){
-                return substr($data->name, 0, 15);
+            ->editColumn('name', function($data){
+                $name = $data->name;
+                if(strlen($name) > 15) {
+                    $name = substr($name, 0, 11);
+                    $name = str_pad($name,  15, ".");
+                    return "<span data-toggle='tooltip' title='$data->name'>$name</span>";
+                }
+                else{
+                    return $name;
+                }
             })
             ->editColumn('level', function ($data){
                 return User::level($data->level);
@@ -47,7 +55,7 @@ class HistoryController extends Controller
                 $button = '<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.substr($data->name, 0, 15).'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                 return $button;
             })
-            ->rawColumns(['action','status'])
+            ->rawColumns(['name', 'status', 'action'])
             ->make(true);
         }
         return view('portal.history.index');

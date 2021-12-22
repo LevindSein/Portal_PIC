@@ -62,7 +62,15 @@ class UserController extends Controller
                     return $button;
                 })
                 ->editColumn('name', function($data){
-                    return substr($data->name, 0, 15);
+                    $name = $data->name;
+                    if(strlen($name) > 15) {
+                        $name = substr($name, 0, 11);
+                        $name = str_pad($name,  15, ".");
+                        return "<span data-toggle='tooltip' title='$data->name'>$name</span>";
+                    }
+                    else{
+                        return $name;
+                    }
                 })
                 ->editColumn('active', function($data){
                     if($data->active == 0){
@@ -76,7 +84,7 @@ class UserController extends Controller
                     }
                     return $button;
                 })
-                ->rawColumns(['action','active'])
+                ->rawColumns(['action','active', 'name'])
                 ->make(true);
         }
         return view('portal.user.index');
