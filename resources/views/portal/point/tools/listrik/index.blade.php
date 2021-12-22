@@ -127,11 +127,11 @@ Alat Listrik
         "serverSide": true,
         "ajax": "/production/point/tools/listrik",
         "columns": [
-            { data: 'code', name: 'code', class : 'text-center' },
-            { data: 'name', name: 'name', class : 'text-center' },
-            { data: 'power', name: 'power', class : 'text-center' },
-            { data: 'meter', name: 'meter', class : 'text-center' },
-            { data: 'action', name: 'action', class : 'text-center' },
+            { data: 'code', name: 'code', class : 'text-center align-middle' },
+            { data: 'name', name: 'name', class : 'text-center align-middle' },
+            { data: 'power', name: 'power', class : 'text-center align-middle' },
+            { data: 'meter', name: 'meter', class : 'text-center align-middle' },
+            { data: 'action', name: 'action', class : 'text-center align-middle' },
         ],
         "stateSave": true,
         "deferRender": true,
@@ -169,6 +169,10 @@ Alat Listrik
         dtable.ajax.reload(function(){
             console.log("Refresh Automatic")
         }, false);
+
+        $(".tooltip").tooltip("hide");
+
+        $(".popover").popover("hide");
     }
 
     $(".add").click( function(){

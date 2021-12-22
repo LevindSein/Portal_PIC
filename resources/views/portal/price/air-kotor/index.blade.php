@@ -127,9 +127,9 @@ Tarif Air Kotor
         "serverSide": true,
         "ajax": "/production/prices/airkotor",
         "columns": [
-            { data: 'name', name: 'name', class : 'text-center' },
-            { data: 'price', name: 'price', class : 'text-center' },
-            { data: 'action', name: 'action', class : 'text-center' },
+            { data: 'name', name: 'name', class : 'text-center align-middle' },
+            { data: 'price', name: 'price', class : 'text-center align-middle' },
+            { data: 'action', name: 'action', class : 'text-center align-middle' },
         ],
         "stateSave": true,
         "deferRender": true,
@@ -167,6 +167,10 @@ Tarif Air Kotor
         dtable.ajax.reload(function(){
             console.log("Refresh Automatic")
         }, false);
+
+        $(".tooltip").tooltip("hide");
+
+        $(".popover").popover("hide");
     }
 
     $(".add").click( function(){

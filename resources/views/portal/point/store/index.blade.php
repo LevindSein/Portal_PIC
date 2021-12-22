@@ -677,11 +677,11 @@ Data Tempat
         "serverSide": true,
         "ajax": "/production/point/stores",
         "columns": [
-            { data: 'kd_kontrol', name: 'nicename', class : 'text-center'  },
-            { data: 'pengguna.name', name: 'pengguna.name', class : 'text-center' },
-            { data: 'jml_los', name: 'jml_los', class : 'text-center' },
-            { data: 'fasilitas', name: 'fasilitas', class : 'text-center' },
-            { data: 'action', name: 'action', class : 'text-center' },
+            { data: 'kd_kontrol', name: 'nicename', class : 'text-center align-middle'  },
+            { data: 'pengguna.name', name: 'pengguna.name', class : 'text-center align-middle' },
+            { data: 'jml_los', name: 'jml_los', class : 'text-center align-middle' },
+            { data: 'fasilitas', name: 'fasilitas', class : 'text-center align-middle' },
+            { data: 'action', name: 'action', class : 'text-center align-middle' },
         ],
         "stateSave": true,
         "deferRender": true,
@@ -737,6 +737,10 @@ Data Tempat
         dtable.ajax.reload(function(){
             console.log("Refresh Automatic")
         }, false);
+
+        $(".tooltip").tooltip("hide");
+
+        $(".popover").popover("hide");
     }
 
     $(".add").click( function(){

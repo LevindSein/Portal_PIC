@@ -121,8 +121,8 @@ Blok Tempat
         "serverSide": true,
         "ajax": "/production/point/groups",
         "columns": [
-            { data: 'name', name: 'name', class : 'text-center' },
-            { data: 'action', name: 'action', class : 'text-center' },
+            { data: 'name', name: 'name', class : 'text-center align-middle' },
+            { data: 'action', name: 'action', class : 'text-center align-middle' },
         ],
         "stateSave": true,
         "deferRender": true,
@@ -160,6 +160,10 @@ Blok Tempat
         dtable.ajax.reload(function(){
             console.log("Refresh Automatic")
         }, false);
+
+        $(".tooltip").tooltip("hide");
+
+        $(".popover").popover("hide");
     }
 
     $(".add").click( function(){

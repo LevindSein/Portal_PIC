@@ -1225,10 +1225,10 @@ Pengguna
             "serverSide": true,
             "ajax": url,
             "columns": [
-                { data: 'uid', name: 'uid', class : 'text-center' },
-                { data: 'name', name: 'name', class : 'text-center' },
-                { data: 'active', name: 'active', class : 'text-center' },
-                { data: 'action', name: 'action', class : 'text-center' },
+                { data: 'uid', name: 'uid', class : 'text-center align-middle' },
+                { data: 'name', name: 'name', class : 'text-center align-middle' },
+                { data: 'active', name: 'active', class : 'text-center align-middle' },
+                { data: 'action', name: 'action', class : 'text-center align-middle' },
             ],
             "stateSave": true,
             "deferRender": true,
@@ -1266,6 +1266,10 @@ Pengguna
         dtable.ajax.reload(function(){
             console.log("Refresh Automatic")
         }, false);
+
+        $(".tooltip").tooltip("hide");
+
+        $(".popover").popover("hide");
     }
 
     function getUrlParameter(sParam) {

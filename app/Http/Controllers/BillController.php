@@ -69,25 +69,36 @@ class BillController extends Controller
             );
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '';
+                if($data->stt_publish == 1){
+                    $button = '<a type="button" data-toggle="tooltip" title="Tambah Tagihan" name="tambah" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="tambah"><i class="fas fa-plus" style="color:#4e73df;"></i></a>';
+                }
+                else{
+                    $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+                }
+
+                if($data->stt_lunas == 0){
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                }
+
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                return $button;
+            })
+            ->addColumn('publish', function($data){
                 if($data->stt_publish == 1){
                     if($data->stt_bayar == 1){
                         if($data->stt_lunas == 1){
-                            $button .= '<span style="color:#36bea6;">Lunas</span>';
+                            $button = '<span style="color:#36bea6;">Lunas</span>';
                         }
                         else{
-                            $button .= '<span style="color:#e74a3b;">Belum Lunas</span>';
+                            $button = '<span style="color:#e74a3b;">Dibayar</span>';
                         }
                     }
                     else{
-                        $button .= '<a type="button" data-toggle="tooltip" title="Unpublish" name="unpublish" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="unpublish"><i class="fas fa-undo" style="color:#e74a3b;"></i></a>';
+                        $button = '<button id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="unpublish btn btn-sm btn-rounded btn-danger">Unpublish</button>';
                     }
                 }
                 else{
-                    $button .= '<a type="button" data-toggle="tooltip" title="Publish" name="publish" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="publish"><i class="fas fa-check" style="color:#36bea6;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
+                    $button = '<button id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="publish btn btn-sm btn-rounded btn-success">Publish</button>';
                 }
                 return $button;
             })
@@ -99,8 +110,11 @@ class BillController extends Controller
                     $awal = number_format($json->awal, 0, '', '.');
                     $akhir = number_format($json->akhir, 0, '', '.');
                     $pakai = number_format($json->pakai, 0, '', '.');
+                    $subtotal = number_format($json->sub_tagihan, 0, '', '.');
+                    $diskon = number_format($json->diskon, 0, '', '.');
+                    $denda = number_format($json->denda, 0, '', '.');
                     $tagihan = number_format($json->ttl_tagihan, 0, '', '.');
-                    $listrik = "<a type='button' data-container='body' data-trigger='click' data-toggle='popover' data-html='true' title='Listrik' data-content='Daya: $daya<br>Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br>Tagihan: $tagihan' class='mr-1'><i class='fas fa-bolt' style='color:#fd7e14;'></i></a>";
+                    $listrik = "<a type='button' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Listrik' data-content='Daya: $daya<br>Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br>Subtotal: $subtotal<br>Diskon: $diskon<br>Denda: $denda<br><b>Tagihan: $tagihan</b>' class='mr-1'><i class='fas fa-bolt' style='color:#fd7e14;'></i></a>";
                 }
 
                 $airbersih = '';
@@ -109,42 +123,54 @@ class BillController extends Controller
                     $awal = number_format($json->awal, 0, '', '.');
                     $akhir = number_format($json->akhir, 0, '', '.');
                     $pakai = number_format($json->pakai, 0, '', '.');
+                    $subtotal = number_format($json->sub_tagihan, 0, '', '.');
+                    $diskon = number_format($json->diskon, 0, '', '.');
+                    $denda = number_format($json->denda, 0, '', '.');
                     $tagihan = number_format($json->ttl_tagihan, 0, '', '.');
-                    $airbersih = "<a type='button' data-container='body' data-trigger='click' data-toggle='popover' data-html='true' title='Air Bersih' data-content='Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br>Tagihan: $tagihan' class='mr-1'><i class='fas fa-tint' style='color:#36b9cc;'></i></a>";
+                    $airbersih = "<a type='button' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Air Bersih' data-content='Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br>Subtotal: $subtotal<br>Diskon: $diskon<br>Denda: $denda<br><b>Tagihan: $tagihan</b>' class='mr-1'><i class='fas fa-tint' style='color:#36b9cc;'></i></a>";
                 }
 
                 $keamananipk = '';
                 if($data->b_keamananipk){
                     $json = json_decode($data->b_keamananipk);
                     $jml_los = number_format($data->jml_los, 0, '', '.');
+                    $subtotal = number_format($json->sub_tagihan, 0, '', '.');
+                    $diskon = number_format($json->diskon, 0, '', '.');
                     $tagihan = number_format($json->ttl_tagihan, 0, '', '.');
-                    $keamananipk = "<a type='button' data-container='body' data-trigger='click' data-toggle='popover' data-html='true' title='Keamanan IPK' data-content='Jml Los: $jml_los<br>Tagihan: $tagihan' class='mr-1'><i class='fas fa-lock' style='color:#e74a3b;'></i></a>";
+                    $keamananipk = "<a type='button' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Keamanan IPK' data-content='Jml Los: $jml_los<br>Subtotal: $subtotal<br>Diskon: $diskon<br><b>Tagihan: $tagihan</b>' class='mr-1'><i class='fas fa-lock' style='color:#e74a3b;'></i></a>";
                 }
 
                 $kebersihan = '';
                 if($data->b_kebersihan){
                     $json = json_decode($data->b_kebersihan);
                     $jml_los = number_format($data->jml_los, 0, '', '.');
+                    $subtotal = number_format($json->sub_tagihan, 0, '', '.');
+                    $diskon = number_format($json->diskon, 0, '', '.');
                     $tagihan = number_format($json->ttl_tagihan, 0, '', '.');
-                    $kebersihan = "<a type='button' data-container='body' data-trigger='click' data-toggle='popover' data-html='true' title='Kebersihan' data-content='Jml Los: $jml_los<br>Tagihan: $tagihan' class='mr-1'><i class='fas fa-leaf' style='color:#1cc88a;'></i></a>";
+                    $kebersihan = "<a type='button' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Kebersihan' data-content='Jml Los: $jml_los<br>Subtotal: $subtotal<br>Diskon: $diskon<br><b>Tagihan: $tagihan</b>' class='mr-1'><i class='fas fa-leaf' style='color:#1cc88a;'></i></a>";
                 }
 
                 $airkotor = '';
                 if($data->b_airkotor){
                     $json = json_decode($data->b_airkotor);
+                    $subtotal = number_format($json->sub_tagihan, 0, '', '.');
+                    $diskon = number_format($json->diskon, 0, '', '.');
                     $tagihan = number_format($json->ttl_tagihan, 0, '', '.');
-                    $airkotor = "<a type='button' data-container='body' data-trigger='click' data-toggle='popover' data-html='true' title='Air Kotor' data-content='Tagihan: $tagihan' class='mr-1'><i class='fad fa-burn' style='color:#000000;'></i></a>";
+                    $airkotor = "<a type='button' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Air Kotor' data-content='Subtotal: $subtotal<br>Diskon: $diskon<br><b>Tagihan: $tagihan</b>' class='mr-1'><i class='fad fa-burn' style='color:#000000;'></i></a>";
                 }
 
                 $lain = '';
                 if($data->b_lain){
                     $json = json_decode($data->b_lain);
                     $tagihan = 0;
-                    foreach($json as $d => $ttl){
-                        $tagihan += $ttl->ttl_tagihan;
+                    $fasilitas = '';
+                    foreach($json as $d => $b){
+                        $fasilitas .= $b->tarif_nama.": ".number_format($b->ttl_tagihan, 0, '', '.')."<br>";
+                        $tagihan += $b->ttl_tagihan;
                     }
+                    $fasilitas = rtrim($fasilitas, '<br>');
                     $tagihan = number_format($tagihan, 0, '', '.');
-                    $lain = "<a type='button' data-container='body' data-trigger='click' data-toggle='popover' data-html='true' title='Lainnya' data-content='Tagihan: $tagihan' class='mr-1'><i class='fas fa-chart-pie' style='color:#c5793a;'></i></a>";
+                    $lain = "<a type='button' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Lainnya' data-content='$fasilitas<br><b>Tagihan: $tagihan</b>' class='mr-1'><i class='fas fa-chart-pie' style='color:#c5793a;'></i></a>";
                 }
 
                 return $listrik.$airbersih.$keamananipk.$kebersihan.$airkotor.$lain;
@@ -157,7 +183,7 @@ class BillController extends Controller
                 $keywords = trim($keyword);
                 $query->whereRaw("CONCAT(kd_kontrol, nicename) like ?", ["%{$keywords}%"]);
             })
-            ->rawColumns(['action', 'fasilitas'])
+            ->rawColumns(['action', 'publish','fasilitas'])
             ->make(true);
         }
         return view('portal.manage.bill.index');
@@ -229,7 +255,9 @@ class BillController extends Controller
                 $data['stt_publish'] = 1;
             }
 
+            //REVIEW ULANG
             $data['stt_bayar'] = 0;
+            //END REVIEW ULANG
             $data['stt_lunas'] = 0;
 
             $data['name'] = User::find($request->pengguna)->name;

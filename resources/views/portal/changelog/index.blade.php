@@ -110,9 +110,9 @@ Daftar Log Perubahan
         "serverSide": true,
         "ajax": "/production/changelogs",
         "columns": [
-            { data: { '_': 'updated_at.display', 'sort': 'updated_at.timestamp' }, name: 'updated_at', class : 'text-center'  },
-            { data: 'data', name: 'data', class : 'text-center' },
-            { data: 'action', name: 'action', class : 'text-center' },
+            { data: { '_': 'updated_at.display', 'sort': 'updated_at.timestamp' }, name: 'updated_at', class : 'text-center align-middle'  },
+            { data: 'data', name: 'data', class : 'text-center align-middle' },
+            { data: 'action', name: 'action', class : 'text-center align-middle' },
         ],
         "stateSave": true,
         "deferRender": true,
@@ -159,6 +159,10 @@ Daftar Log Perubahan
         dtable.ajax.reload(function(){
             console.log("Refresh Automatic")
         }, false);
+
+        $(".tooltip").tooltip("hide");
+
+        $(".popover").popover("hide");
     }
 
     $(".add").click( function(){

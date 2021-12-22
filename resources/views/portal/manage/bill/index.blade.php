@@ -35,9 +35,31 @@ Kelola Tagihan
                             <tr>
                                 <th>Kontrol</th>
                                 <th>Nama</th>
-                                <th>Fasilitas</th>
+                                <th>
+                                    Fasilitas
+                                    <sup>
+                                        <i class="far fa-question-circle"
+                                            style="color:#5b5b5b;"
+                                            data-container="body"
+                                            data-trigger="hover"
+                                            title="Fasilitas"
+                                            data-toggle="popover"
+                                            data-html="true"
+                                            data-content="Arahkan kursor
+                                            <i class='fad fa-swap-opacity fa-mouse-pointer'></i><br>
+                                            ke icon fasilitas <i class='fas fa-bolt' style='color:#fd7e14;'></i>
+                                            <i class='fas fa-tint' style='color:#36b9cc;'></i>
+                                            <i class='fas fa-lock' style='color:#e74a3b;'></i>
+                                            <i class='fas fa-leaf' style='color:#1cc88a;'></i>
+                                            <i class='fad fa-burn' style='color:#000000;'></i>
+                                            <i class='fas fa-chart-pie' style='color:#c5793a;'></i><br>
+                                            untuk melihat detail tagihan.">
+                                        </i>
+                                    </sup>
+                                </th>
                                 <th>Tagihan</th>
                                 <th>Action</th>
+                                <th>Publish</th>
                             </tr>
                         </thead>
                     </table>
@@ -472,11 +494,12 @@ Kelola Tagihan
         "serverSide": true,
         "ajax": "/production/manage/bills",
         "columns": [
-            { data: 'kd_kontrol', name: 'nicename', class : 'text-center' },
-            { data: 'name', name: 'name', class : 'text-center' },
-            { data: 'fasilitas', name: 'fasilitas', class : 'text-center' },
-            { data: 'b_tagihan', name: 'b_tagihan', class : 'text-center' },
-            { data: 'action', name: 'action', class : 'text-center' },
+            { data: 'kd_kontrol', name: 'nicename', class : 'text-center align-middle' },
+            { data: 'name', name: 'name', class : 'text-center align-middle' },
+            { data: 'fasilitas', name: 'fasilitas', class : 'text-center align-middle' },
+            { data: 'b_tagihan', name: 'b_tagihan', class : 'text-center align-middle' },
+            { data: 'action', name: 'action', class : 'text-center align-middle' },
+            { data: 'publish', name: 'publish', class : 'text-center align-middle' },
         ],
         "stateSave": true,
         "deferRender": true,
@@ -484,8 +507,8 @@ Kelola Tagihan
         "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
         "order": [[ 0, "asc" ]],
         "aoColumnDefs": [
-            { "bSortable": false, "aTargets": [2,3,4] },
-            { "bSearchable": false, "aTargets": [2,4] }
+            { "bSortable": false, "aTargets": [2,3,4,5] },
+            { "bSearchable": false, "aTargets": [2,4,5] }
         ],
         "scrollY": "50vh",
         "scrollX": true,
@@ -530,6 +553,10 @@ Kelola Tagihan
         dtable.ajax.reload(function(){
             console.log("Refresh Automatic")
         }, false);
+
+        $(".tooltip").tooltip("hide");
+
+        $(".popover").popover("hide");
     }
 
     $("#periode, #kontrol").on('change', function(){
