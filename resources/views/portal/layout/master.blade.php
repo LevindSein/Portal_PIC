@@ -147,7 +147,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li class="p-15 mt-1">
-                            <a href="javascript:void(0)" class="btn btn-block btn-success text-white no-block d-flex align-items-center" style="height: 45px;">
+                            <a href="javascript:void(0)" class="btn btn-block btn-info text-white no-block d-flex align-items-center" style="height: 45px;">
                                 <i class="fas fa-wallet mr-1"></i>
                                 <span class="hide-menu ml-1">Bayar&nbsp;Tagihan</span>
                             </a>
@@ -548,12 +548,12 @@
                         toastr.success(data.success);
                     }
 
-                    if(data.info){
+                    if(data.error){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.info(data.info);
+                        toastr.error(data.error);
                     }
 
                     if(data.warning){
@@ -564,12 +564,12 @@
                         toastr.warning(data.warning);
                     }
 
-                    if(data.error){
+                    if(data.info){
                         toastr.options = {
                             "closeButton": true,
                             "preventDuplicates": true,
                         };
-                        toastr.error(data.error);
+                        toastr.info(data.info);
                     }
 
                     if(data.description){

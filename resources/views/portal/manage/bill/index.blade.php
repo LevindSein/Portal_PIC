@@ -71,6 +71,54 @@ Kelola Tagihan
 @endsection
 
 @section('content-modal')
+<div id="showModal" class="modal fade" role="dialog" tabIndex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-xl dialog-modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title titles"></h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body-xl">
+                <div class="row">
+                    <div class="col-lg-6 col-xlg-6">
+                        <small class="text-muted pt-4 db">Kode Tagihan</small>
+                        <h4 id="showCode" class='text-danger'></h4>
+                        <small class="text-muted pt-4 db">Periode</small>
+                        <h6 id="showPeriod"></h6>
+                        <small class="text-muted pt-4 db">Kontrol</small>
+                        <h6 id="showKontrol"></h6>
+                        <small class="text-muted pt-4 db">Blok</small>
+                        <h6 id="showBlok"></h6>
+                        <small class="text-muted pt-4 db">Nomor Los</small>
+                        <h6 id="showLos"></h6>
+                        <small class="text-muted pt-4 db">Jumlah Los</small>
+                        <h6 id="showJumlah"></h6>
+                        <small class="text-muted pt-4 db">Pengguna</small>
+                        <h6 id="showPengguna"></h6>
+                        <small class="text-muted pt-4 db">Dibuat oleh</small>
+                        <h6 id="showCreate"></h6>
+                        <small class="text-muted pt-4 db">Diperbaharui oleh</small>
+                        <h6 id="showEdit"></h6>
+                        <small class="text-muted pt-4 db">Status Publish</small>
+                        <h6 id="showPublish"></h6>
+                        <small class="text-muted pt-4 db">Status Bayar</small>
+                        <h6 id="showBayar"></h6>
+                        <small class="text-muted pt-4 db">Status Lunas</small>
+                        <h6 id="showLunas"></h6>
+                    </div>
+                    <div class="col-lg-6 col-xlg-6">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="deleteModal" class="modal fade" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -198,6 +246,7 @@ Kelola Tagihan
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="fas_listrik" name="fas_listrik">
                                         <label class="custom-control-label text-warning" for="fas_listrik">Listrik</label>
+                                        <small class="text-success" id="lunas_listrik">(Lunas)</small>
                                     </div>
                                 </div>
                                 <div id="divlistrik" style="padding-left: 2rem;">
@@ -226,12 +275,6 @@ Kelola Tagihan
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" id="checklistrik0" name="checklistrik0">
                                             <label class="custom-control-label" for="checklistrik0">Meter kembali ke Nol <span id="labellistrik0" class="text-danger">*</span></label>
-                                            <div class="input-group" id="gruplistrik0">
-                                                <input maxlength="1" type="text" id="inputlistrik0" name="inputlistrik0" autocomplete="off" placeholder="Digit Alat Meter (1-9)" class="number form-control form-control-line">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Digit</span>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -264,6 +307,7 @@ Kelola Tagihan
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="fas_airbersih" name="fas_airbersih">
                                         <label class="custom-control-label text-info" for="fas_airbersih">Air Bersih</label>
+                                        <small class="text-success" id="lunas_airbersih">(Lunas)</small>
                                     </div>
                                 </div>
                                 <div id="divairbersih" style="padding-left: 2rem;">
@@ -283,12 +327,6 @@ Kelola Tagihan
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" id="checkairbersih0" name="checkairbersih0">
                                             <label class="custom-control-label" for="checkairbersih0">Meter kembali ke Nol <span id="labelairbersih0" class="text-danger">*</span></label>
-                                            <div class="input-group" id="grupairbersih0">
-                                                <input maxlength="1" type="text" id="inputairbersih0" name="inputairbersih0" autocomplete="off" placeholder="Digit Alat Meter (1-9)" class="number form-control form-control-line">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Digit</span>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -321,6 +359,7 @@ Kelola Tagihan
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="fas_keamananipk" name="fas_keamananipk">
                                         <label class="custom-control-label text-danger" for="fas_keamananipk">Keamanan IPK</label>
+                                        <small class="text-success" id="lunas_keamananipk">(Lunas)</small>
                                     </div>
                                 </div>
                                 <div id="divkeamananipk" style="padding-left: 2rem;">
@@ -354,6 +393,7 @@ Kelola Tagihan
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="fas_kebersihan" name="fas_kebersihan">
                                         <label class="custom-control-label text-success" for="fas_kebersihan">Kebersihan</label>
+                                        <small class="text-success" id="lunas_kebersihan">(Lunas)</small>
                                     </div>
                                 </div>
                                 <div id="divkebersihan" style="padding-left: 2rem;">
@@ -387,6 +427,7 @@ Kelola Tagihan
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="fas_airkotor" name="fas_airkotor">
                                         <label class="custom-control-label text-dark" for="fas_airkotor">Air Kotor</label>
+                                        <small class="text-success" id="lunas_airkotor">(Lunas)</small>
                                     </div>
                                 </div>
                                 <div id="divairkotor" style="padding-left: 2rem;">
@@ -416,6 +457,8 @@ Kelola Tagihan
                             {{-- End Air Kotor --}}
                             {{-- Lainnya --}}
                             <div>
+                                <div class="form-group" id="lunas_lain"></div>
+
                                 <div id="divlainNew"></div>
 
                                 <div class="form-group">
@@ -758,6 +801,28 @@ Kelola Tagihan
         }
     });
 
+    $("#awlistrik, #aklistrik").on('input', function(){
+        var awal = Number($("#awlistrik").val().replace(/\./g, ''));
+        var akhir = Number($("#aklistrik").val().replace(/\./g, ''));
+        if(akhir < awal){
+            $("#checklistrik0").prop("checked", true);
+        }
+        else{
+            $("#checklistrik0").prop("checked", false);
+        }
+    })
+
+    $("#awairbersih, #akairbersih").on('input', function(){
+        var awal = Number($("#awairbersih").val().replace(/\./g, ''));
+        var akhir = Number($("#akairbersih").val().replace(/\./g, ''));
+        if(akhir < awal){
+            $("#checkairbersih0").prop("checked", true);
+        }
+        else{
+            $("#checkairbersih0").prop("checked", false);
+        }
+    })
+
     function initForm(){
         $("#periode").val("").html("").prop("disabled", false);
         select2period("#periode", "/search/period", "-- Cari Periode Tagihan --");
@@ -778,7 +843,7 @@ Kelola Tagihan
         });
 
         fasListrik("hide");
-        listrik0("hide");
+        $("#lunas_listrik").hide();
         $("#fas_listrik").prop("checked", false).attr('disabled', true);
         select2idname("#plistrik", "/search/price/listrik", "-- Cari Tarif Listrik --");
         $("#plistrik").val("").html("");
@@ -786,7 +851,7 @@ Kelola Tagihan
         $("#dlistrik").val("").html("");
 
         fasAirBersih("hide");
-        airbersih0("hide");
+        $("#lunas_airbersih").hide();
         $("#fas_airbersih").prop("checked", false).attr('disabled', true);
         select2idname("#pairbersih", "/search/price/airbersih", "-- Cari Tarif Air Bersih --");
         $("#pairbersih").val("").html("");
@@ -794,22 +859,26 @@ Kelola Tagihan
         $("#dairbersih").val("").html("");
 
         fasKeamananIpk("hide");
+        $("#lunas_keamananipk").hide();
         $("#fas_keamananipk").prop("checked", false).attr('disabled', true);
         select2idprice("#pkeamananipk", "/search/price/keamananipk", "-- Cari Tarif Keamanan IPK --", "per-Los");
         $("#dkeamananipk").val("").html("");
 
         fasKebersihan("hide");
+        $("#lunas_kebersihan").hide();
         $("#fas_kebersihan").prop("checked", false).attr('disabled', true);
         select2idprice("#pkebersihan", "/search/price/kebersihan", "-- Cari Tarif Kebersihan --", "per-Los");
         $("#dkebersihan").val("").html("");
 
         fasAirKotor("hide");
+        $("#lunas_airkotor").hide();
         $("#fas_airkotor").prop("checked", false).attr('disabled', true);
         select2idprice("#pairkotor", "/search/price/airkotor", "-- Cari Tarif Air Kotor --", "per-Kontrol");
         $("#dairkotor").val("").html("");
 
         lain = 0;
         plain = 1;
+        $("#lunas_lain").html('');
         $('div[name="divlain"]').remove();
         $("#divLainAdd").attr('disabled', true);
     }
@@ -851,8 +920,6 @@ Kelola Tagihan
 
         initForm();
 
-        $("#stt_publish").prop('checked', false);
-
         $.ajax({
             url: "/production/manage/bills/" + id + "/edit",
             type: "GET",
@@ -879,6 +946,13 @@ Kelola Tagihan
 
                     $("#pengguna").prop("required", false).prop("disabled", false);
                     select2user("#pengguna", "/search/users", data.show.name);
+
+                    if(data.show.stt_publish){
+                        $("#stt_publish").prop('checked', true);
+                    }
+                    else{
+                        $("#stt_publish").prop('checked', false);
+                    }
 
                     fasListrik("hide");
                     $("#fas_listrik").prop("checked", false).attr('disabled', false);
@@ -915,137 +989,177 @@ Kelola Tagihan
                     $('div[name="divlain"]').remove();
 
                     if(data.show.b_listrik){
-                        $("#fas_listrik").prop("checked", true);
-                        fasListrik('show');
-
-                        var plistrik = new Option(
-                            data.show.b_listrik.tarif_nama,
-                            data.show.b_listrik.tarif_id,
-                            false,
-                            false
-                        );
-                        $('#plistrik').append(plistrik).trigger('change');
-
-                        $("#dayalistrik").val(Number(data.show.b_listrik.daya).toLocaleString('id-ID'));
-                        $("#awlistrik").val(Number(data.show.b_listrik.awal).toLocaleString('id-ID'));
-                        $("#aklistrik").val(Number(data.show.b_listrik.akhir).toLocaleString('id-ID'));
-
-                        if(data.show.b_listrik.reset){
-                            $("#checklistrik0").prop("checked", true);
-                            listrik0("show");
-                            var digit = data.show.b_listrik.reset.length;
-                            $("#inputlistrik0").val(digit);
+                        if(data.show.b_listrik.lunas){
+                            fasListrik("hide");
+                            $("#lunas_listrik").show();
+                            $("#fas_listrik").prop("checked", true).attr('disabled', true);
                         }
+                        else{
+                            $("#fas_listrik").prop("checked", true);
+                            fasListrik('show');
 
-                        if(data.show.b_listrik.diskon){
-                            $("#dlistrik").val(Number(data.show.b_listrik.diskon_persen).toLocaleString('id-ID'));
+                            var plistrik = new Option(
+                                data.show.b_listrik.tarif_nama,
+                                data.show.b_listrik.tarif_id,
+                                false,
+                                false
+                            );
+                            $('#plistrik').append(plistrik).trigger('change');
+
+                            $("#dayalistrik").val(Number(data.show.b_listrik.daya).toLocaleString('id-ID'));
+                            $("#awlistrik").val(Number(data.show.b_listrik.awal).toLocaleString('id-ID'));
+                            $("#aklistrik").val(Number(data.show.b_listrik.akhir).toLocaleString('id-ID'));
+
+                            if(data.show.b_listrik.reset){
+                                $("#checklistrik0").prop("checked", true);
+                            }
+
+                            if(data.show.b_listrik.diskon){
+                                $("#dlistrik").val(Number(data.show.b_listrik.diskon_persen).toLocaleString('id-ID'));
+                            }
+
+                            $("#denlistrik").val(data.show.b_listrik.denda_bulan);
                         }
-
-                        $("#denlistrik").val(data.show.b_listrik.denda_bulan);
                     }
 
                     if(data.show.b_airbersih){
-                        $("#fas_airbersih").prop("checked", true);
-                        fasAirBersih('show');
-
-                        var pairbersih = new Option(
-                            data.show.b_airbersih.tarif_nama,
-                            data.show.b_airbersih.tarif_id,
-                            false,
-                            false
-                        );
-                        $('#pairbersih').append(pairbersih).trigger('change');
-
-                        $("#awairbersih").val(Number(data.show.b_airbersih.awal).toLocaleString('id-ID'));
-                        $("#akairbersih").val(Number(data.show.b_airbersih.akhir).toLocaleString('id-ID'));
-
-                        if(data.show.b_airbersih.reset){
-                            $("#checkairbersih0").prop("checked", true);
-                            airbersih0("show");
-                            var digit = data.show.b_airbersih.reset.length;
-                            $("#inputairbersih0").val(digit);
+                        if(data.show.b_airbersih.lunas){
+                            fasAirBersih("hide");
+                            $("#lunas_airbersih").show();
+                            $("#fas_airbersih").prop("checked", true).attr('disabled', true);
                         }
+                        else{
+                            $("#fas_airbersih").prop("checked", true);
+                            fasAirBersih('show');
 
-                        if(data.show.b_airbersih.diskon){
-                            $("#dairbersih").val(Number(data.show.b_airbersih.diskon_persen).toLocaleString('id-ID'));
+                            var pairbersih = new Option(
+                                data.show.b_airbersih.tarif_nama,
+                                data.show.b_airbersih.tarif_id,
+                                false,
+                                false
+                            );
+                            $('#pairbersih').append(pairbersih).trigger('change');
+
+                            $("#awairbersih").val(Number(data.show.b_airbersih.awal).toLocaleString('id-ID'));
+                            $("#akairbersih").val(Number(data.show.b_airbersih.akhir).toLocaleString('id-ID'));
+
+                            if(data.show.b_airbersih.reset){
+                                $("#checkairbersih0").prop("checked", true);
+                            }
+
+                            if(data.show.b_airbersih.diskon){
+                                $("#dairbersih").val(Number(data.show.b_airbersih.diskon_persen).toLocaleString('id-ID'));
+                            }
+
+                            $("#denairbersih").val(data.show.b_airbersih.denda_bulan);
                         }
-
-                        $("#denairbersih").val(data.show.b_airbersih.denda_bulan);
                     }
 
                     if(data.show.b_keamananipk){
-                        $("#fas_keamananipk").prop("checked", true);
-                        fasKeamananIpk('show');
+                        if(data.show.b_keamananipk.lunas){
+                            fasKeamananIpk("hide");
+                            $("#lunas_keamananipk").show();
+                            $("#fas_keamananipk").prop("checked", true).attr('disabled', true);
+                        }
+                        else{
+                            $("#fas_keamananipk").prop("checked", true);
+                            fasKeamananIpk('show');
 
-                        var pkeamananipk = new Option(
-                            data.show.b_keamananipk.tarif_nama + ' - ' + Number(data.show.b_keamananipk.price).toLocaleString('id-ID') + ' per-Los',
-                            data.show.b_keamananipk.tarif_id,
-                            false,
-                            false
-                        );
-                        $('#pkeamananipk').append(pkeamananipk).trigger('change');
+                            var pkeamananipk = new Option(
+                                data.show.b_keamananipk.tarif_nama + ' - ' + Number(data.show.b_keamananipk.price).toLocaleString('id-ID') + ' per-Los',
+                                data.show.b_keamananipk.tarif_id,
+                                false,
+                                false
+                            );
+                            $('#pkeamananipk').append(pkeamananipk).trigger('change');
 
-                        if(data.show.b_keamananipk.diskon){
-                            $("#dkeamananipk").val(Number(data.show.b_keamananipk.diskon).toLocaleString('id-ID'));
+                            if(data.show.b_keamananipk.diskon){
+                                $("#dkeamananipk").val(Number(data.show.b_keamananipk.diskon).toLocaleString('id-ID'));
+                            }
                         }
                     }
 
                     if(data.show.b_kebersihan){
-                        $("#fas_kebersihan").prop("checked", true);
-                        fasKebersihan('show');
+                        if(data.show.b_kebersihan.lunas){
+                            fasKebersihan("hide");
+                            $("#lunas_kebersihan").show();
+                            $("#fas_kebersihan").prop("checked", true).attr('disabled', true);
+                        }
+                        else{
+                            $("#fas_kebersihan").prop("checked", true);
+                            fasKebersihan('show');
 
-                        var pkebersihan = new Option(
-                            data.show.b_kebersihan.tarif_nama + ' - ' + Number(data.show.b_kebersihan.price).toLocaleString('id-ID') + ' per-Los',
-                            data.show.b_kebersihan.tarif_id,
-                            false,
-                            false
-                        );
-                        $('#pkebersihan').append(pkebersihan).trigger('change');
+                            var pkebersihan = new Option(
+                                data.show.b_kebersihan.tarif_nama + ' - ' + Number(data.show.b_kebersihan.price).toLocaleString('id-ID') + ' per-Los',
+                                data.show.b_kebersihan.tarif_id,
+                                false,
+                                false
+                            );
+                            $('#pkebersihan').append(pkebersihan).trigger('change');
 
-                        if(data.show.b_kebersihan.diskon){
-                            $("#dkebersihan").val(Number(data.show.b_kebersihan.diskon).toLocaleString('id-ID'));
+                            if(data.show.b_kebersihan.diskon){
+                                $("#dkebersihan").val(Number(data.show.b_kebersihan.diskon).toLocaleString('id-ID'));
+                            }
                         }
                     }
 
                     if(data.show.b_airkotor){
-                        $("#fas_airkotor").prop("checked", true);
-                        fasAirKotor('show');
+                        if(data.show.b_airkotor.lunas){
+                            fasAirKotor("hide");
+                            $("#lunas_airkotor").show();
+                            $("#fas_airkotor").prop("checked", true).attr('disabled', true);
+                        }
+                        else{
+                            $("#fas_airkotor").prop("checked", true);
+                            fasAirKotor('show');
 
-                        var pairkotor = new Option(
-                            data.show.b_airkotor.tarif_nama + ' - ' + Number(data.show.b_airkotor.price).toLocaleString('id-ID') + ' per-Kontrol',
-                            data.show.b_airkotor.tarif_id,
-                            false,
-                            false
-                        );
-                        $('#pairkotor').append(pairkotor).trigger('change');
+                            var pairkotor = new Option(
+                                data.show.b_airkotor.tarif_nama + ' - ' + Number(data.show.b_airkotor.price).toLocaleString('id-ID') + ' per-Kontrol',
+                                data.show.b_airkotor.tarif_id,
+                                false,
+                                false
+                            );
+                            $('#pairkotor').append(pairkotor).trigger('change');
 
-                        if(data.show.b_airkotor.diskon){
-                            $("#dairkotor").val(Number(data.show.b_airkotor.diskon).toLocaleString('id-ID'));
+                            if(data.show.b_airkotor.diskon){
+                                $("#dairkotor").val(Number(data.show.b_airkotor.diskon).toLocaleString('id-ID'));
+                            }
                         }
                     }
 
                     $("#divLainAdd").attr('disabled', false);
                     if(data.show.b_lain){
                         $.each( data.show.b_lain, function( i, val ) {
-                            $('#divLainAdd').trigger('click');
-                            $('#plain' + plain).val("").html("");
-                            var plainOpt = new Option(
-                                val.tarif_nama + ' - ' + Number(val.price).toLocaleString('id-ID') + ' ' + val.satuan_nama,
-                                val.tarif_id,
-                                false,
-                                false
-                            );
-                            $('#plain' + (i+1)).append(plainOpt).trigger('change');
+                            if(val.lunas){
+                                var html = '';
+                                html += '<div>';
+                                html += '<label>' + val.tarif_nama + '</label> <span>: ' + Number(val.price).toLocaleString('id-ID') + ' ' + val.satuan_nama + '</span> <small class="text-success">(Lunas)</small>';
+                                html += '</div>';
+
+                                $('#lunas_lain').append(html);
+                            }
+                            else{
+                                $('#divLainAdd').trigger('click');
+                                $('#plain' + plain).val("").html("");
+                                var plainOpt = new Option(
+                                    val.tarif_nama + ' - ' + Number(val.price).toLocaleString('id-ID') + ' ' + val.satuan_nama,
+                                    val.tarif_id,
+                                    false,
+                                    false
+                                );
+                                $('#plain' + (i+1)).append(plainOpt).trigger('change');
+                            }
+                            lain++;
                         });
                     }
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -1056,12 +1170,12 @@ Kelola Tagihan
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){
@@ -1137,6 +1251,73 @@ Kelola Tagihan
         $('#deleteModal').modal('show');
     });
 
+    $(document).on('click', '.details', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Tagihan ' + nama);
+
+        $.ajax({
+            url: "/production/manage/bills/" + id,
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#showCode").text(data.show.code);
+                    $("#showPeriod").text(data.show.period.nicename);
+                    $("#showKontrol").text(data.show.kd_kontrol);
+                    $("#showBlok").text(data.show.group);
+                    $("#showLos").text(data.show.no_los);
+                    $("#showJumlah").text(data.show.jml_los);
+                    $("#showPengguna").text(data.show.name);
+                    $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
+                    $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
+                    $("#showPublish").html(data.show.stt_publish + "<br>pada " + data.show.publish);
+                    $("#showBayar").html(data.show.stt_bayar);
+                    $("#showLunas").html(data.show.stt_lunas);
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#showModal').modal('show');
+            }
+        });
+    });
+
     function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
         $.ajaxSetup({
             headers: {
@@ -1176,12 +1357,12 @@ Kelola Tagihan
                     period();
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -1192,12 +1373,12 @@ Kelola Tagihan
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){
@@ -1267,32 +1448,6 @@ Kelola Tagihan
     }
     $('#fas_listrik').click(checkFasListrik).each(checkFasListrik);
 
-    function listrik0(data){
-        if(data == 'show'){
-            $("#gruplistrik0").show();
-            $("#labellistrik0").show();
-            var digit = $("#awlistrik").val().replace(/\./g, '').length;
-            $("#inputlistrik0").val(digit);
-            $("#inputlistrik0").prop("required", true);
-        }
-        else{
-            $("#gruplistrik0").hide();
-            $("#labellistrik0").hide();
-            $("#inputlistrik0").val('');
-            $("#inputlistrik0").prop("required", false);
-        }
-    }
-
-    function checkListrik0(){
-        if($("#checklistrik0").is(":checked")){
-            listrik0("show");
-        }
-        else{
-            listrik0("hide");
-        }
-    }
-    $('#checklistrik0').click(checkListrik0).each(checkListrik0);
-
     function fasAirBersih(data){
         if(data == 'show'){
             $("#divairbersih").show();
@@ -1321,32 +1476,6 @@ Kelola Tagihan
         }
     }
     $('#fas_airbersih').click(checkFasAirBersih).each(checkFasAirBersih);
-
-    function airbersih0(data){
-        if(data == 'show'){
-            $("#grupairbersih0").show();
-            $("#labelairbersih0").show();
-            var digit = $("#awairbersih").val().replace(/\./g, '').length;
-            $("#inputairbersih0").val(digit);
-            $("#inputairbersih0").prop("required", true);
-        }
-        else{
-            $("#grupairbersih0").hide();
-            $("#labelairbersih0").hide();
-            $("#inputairbersih0").val('');
-            $("#inputairbersih0").prop("required", false);
-        }
-    }
-
-    function checkAirBersih0(){
-        if($("#checkairbersih0").is(":checked")){
-            airbersih0("show");
-        }
-        else{
-            airbersih0("hide");
-        }
-    }
-    $('#checkairbersih0').click(checkAirBersih0).each(checkAirBersih0);
 
     function fasKeamananIpk(data){
         if(data == 'show'){

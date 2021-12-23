@@ -279,12 +279,12 @@ Tarif Air Bersih
                     $("#ppn").val(data.show.data.ppn);
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -295,12 +295,12 @@ Tarif Air Bersih
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){
@@ -409,12 +409,12 @@ Tarif Air Bersih
                     dtableReload(data.searchKey);
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -425,12 +425,12 @@ Tarif Air Bersih
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){
@@ -490,12 +490,12 @@ Tarif Air Bersih
                     $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -506,12 +506,12 @@ Tarif Air Bersih
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){

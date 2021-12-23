@@ -600,12 +600,12 @@ Pengguna
                     console.log(data.result.time);
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -616,12 +616,12 @@ Pengguna
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){
@@ -670,12 +670,12 @@ Pengguna
                                 }, 2000);
                             }
 
-                            if(data.info){
+                            if(data.error){
                                 toastr.options = {
                                     "closeButton": true,
                                     "preventDuplicates": true,
                                 };
-                                toastr.info(data.info);
+                                toastr.error(data.error);
                             }
 
                             if(data.warning){
@@ -686,12 +686,12 @@ Pengguna
                                 toastr.warning(data.warning);
                             }
 
-                            if(data.error){
+                            if(data.info){
                                 toastr.options = {
                                     "closeButton": true,
                                     "preventDuplicates": true,
                                 };
-                                toastr.error(data.error);
+                                toastr.info(data.info);
                             }
 
                             if(data.description){
@@ -817,12 +817,12 @@ Pengguna
                     }
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -833,12 +833,12 @@ Pengguna
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){
@@ -937,12 +937,12 @@ Pengguna
                     (data.user.address) ? $("#showAddress").html(data.user.address) : $("#showAddress").html("&mdash;");
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -953,12 +953,12 @@ Pengguna
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){
@@ -1087,12 +1087,12 @@ Pengguna
                     dtableReload(data.searchKey);
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -1103,12 +1103,12 @@ Pengguna
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){

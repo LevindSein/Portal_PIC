@@ -52,6 +52,7 @@ class BillController extends Controller
             ->whereIn('active', [1,2])
             ->select(
                 'id',
+                'code',
                 'stt_publish',
                 'stt_bayar',
                 'stt_lunas',
@@ -69,12 +70,7 @@ class BillController extends Controller
             );
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                if($data->stt_publish == 1){
-                    $button = '<a type="button" data-toggle="tooltip" title="Tambah Tagihan" name="tambah" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="tambah"><i class="fas fa-plus" style="color:#4e73df;"></i></a>';
-                }
-                else{
-                    $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                }
+                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
 
                 if($data->stt_lunas == 0){
                     $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
@@ -85,21 +81,16 @@ class BillController extends Controller
             })
             ->addColumn('publish', function($data){
                 if($data->stt_publish == 1){
-                    if($data->stt_bayar == 1){
-                        if($data->stt_lunas == 1){
-                            $button = '<span style="color:#36bea6;">Lunas</span>';
-                        }
-                        else{
-                            $button = '<span style="color:#e74a3b;">Dibayar</span>';
-                        }
-                    }
-                    else{
-                        $button = '<button id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="unpublish btn btn-sm btn-rounded btn-danger">Unpublish</button>';
-                    }
+                    $button = '<button id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="unpublish btn btn-sm btn-rounded btn-danger">Unpublish</button>';
                 }
                 else{
                     $button = '<button id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="publish btn btn-sm btn-rounded btn-success">Publish</button>';
                 }
+
+                if($data->stt_lunas == 1){
+                    $button = '<span style="color:#36bea6;">Lunas</span>';
+                }
+
                 return $button;
             })
             ->addColumn('fasilitas', function($data){
@@ -192,7 +183,7 @@ class BillController extends Controller
             })
             ->filterColumn('nicename', function ($query, $keyword) {
                 $keywords = trim($keyword);
-                $query->whereRaw("CONCAT(kd_kontrol, nicename) like ?", ["%{$keywords}%"]);
+                $query->whereRaw("CONCAT(kd_kontrol, nicename, code) like ?", ["%{$keywords}%"]);
             })
             ->rawColumns(['action', 'publish', 'fasilitas', 'name'])
             ->make(true);
@@ -265,10 +256,10 @@ class BillController extends Controller
             if($request->stt_publish){
                 $data['stt_publish'] = 1;
             }
+            $publish = Carbon::now()->toDateTimeString();
+            $publish_by = Auth::user()->name;
 
-            //REVIEW ULANG
             $data['stt_bayar'] = 0;
-            //END REVIEW ULANG
             $data['stt_lunas'] = 0;
 
             $data['name'] = User::find($request->pengguna)->name;
@@ -315,7 +306,6 @@ class BillController extends Controller
                 $daya = str_replace('.','',$request->dayalistrik);
                 $awal = str_replace('.','',$request->awlistrik);
                 $akhir = str_replace('.','',$request->aklistrik);
-                $digit = $request->inputlistrik0;
 
                 $valid['dayaListrik'] = $daya;
                 $valid['awalMeterListrik'] = $awal;
@@ -332,17 +322,16 @@ class BillController extends Controller
                 }
 
                 if($request->checklistrik0){
-                    if($digit < strlen($awal)){
-                        $digit = strlen($awal);
-                        return response()->json(['info' => "Alat Listrik minimal $digit digit."]);
-                    }
-                    $digit = str_repeat("9",$digit);
+                    $digit = str_repeat("9",strlen($awal));
                     $pakai = PListrik::pakai($awal, $digit + $akhir);
                     $akhir_temp = $digit + $akhir;
                 }
                 else{
                     if($awal > $akhir){
-                        return response()->json(['info' => "Akhir Meter harus lebih besar dari Awal Meter."]);
+                        return response()->json([
+                            'info' => "Anda dapat mengaktifkan Meter kembali ke Nol.",
+                            'warning' => "Akhir Listrik harus lebih besar dari Awal Listrik."
+                        ]);
                     }
                     $pakai = PListrik::pakai($awal, $akhir);
                     $akhir_temp = $akhir;
@@ -386,6 +375,7 @@ class BillController extends Controller
                 $total = $sub - $diskon + $denda;
 
                 $data['b_listrik'] = json_encode([
+                    'lunas' => 0,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'daya' => $daya,
@@ -398,6 +388,7 @@ class BillController extends Controller
                     'beban' => $beban,
                     'pju' => $pju,
                     'ppn' => $ppn,
+                    'jml_los' => $jml_los,
                     'sub_tagihan' => $sub,
                     'denda' => $denda,
                     'denda_bulan' => $request->denlistrik,
@@ -429,7 +420,6 @@ class BillController extends Controller
 
                 $awal = str_replace('.','',$request->awairbersih);
                 $akhir = str_replace('.','',$request->akairbersih);
-                $digit = $request->inputairbersih0;
 
                 $valid['awalMeterAirBersih'] = $awal;
                 $valid['akhirMeterAirBersih'] = $akhir;
@@ -444,17 +434,16 @@ class BillController extends Controller
                 }
 
                 if($request->checkairbersih0){
-                    if($digit < strlen($awal)){
-                        $digit = strlen($awal);
-                        return response()->json(['info' => "Alat Air Bersih minimal $digit digit."]);
-                    }
-                    $digit = str_repeat("9",$digit);
+                    $digit = str_repeat("9",strlen($awal));
                     $pakai = PAirBersih::pakai($awal, $digit + $akhir);
                     $akhir_temp = $digit + $akhir;
                 }
                 else{
                     if($awal > $akhir){
-                        return response()->json(['info' => "Akhir Meter harus lebih besar dari Awal Meter."]);
+                        return response()->json([
+                            'info' => "Anda dapat mengaktifkan Meter kembali ke Nol.",
+                            'warning' => "Akhir Air Bersih harus lebih besar dari Awal Air Bersih."
+                        ]);
                     }
                     $pakai = PAirBersih::pakai($awal, $akhir);
                     $akhir_temp = $akhir;
@@ -493,6 +482,7 @@ class BillController extends Controller
                 $total = $sub - $diskon + $denda;
 
                 $data['b_airbersih'] = json_encode([
+                    'lunas' => 0,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'awal' => $awal,
@@ -504,6 +494,7 @@ class BillController extends Controller
                     'beban' => $beban,
                     'arkot' => $arkot,
                     'ppn' => $ppn,
+                    'jml_los' => $jml_los,
                     'sub_tagihan' => $sub,
                     'denda' => $denda,
                     'denda_bulan' => $request->denairbersih,
@@ -552,9 +543,11 @@ class BillController extends Controller
                 $ipk = $total - $keamanan;
 
                 $data['b_keamananipk'] = json_encode([
+                    'lunas' => 0,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'price' => $tarif->price,
+                    'jml_los' => $jml_los,
                     'sub_tagihan' => $sub,
                     'diskon' => $diskon,
                     'keamanan' => $keamanan,
@@ -597,9 +590,11 @@ class BillController extends Controller
                 $total = $sub - $diskon;
 
                 $data['b_kebersihan'] = json_encode([
+                    'lunas' => 0,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'price' => $tarif->price,
+                    'jml_los' => $jml_los,
                     'sub_tagihan' => $sub,
                     'diskon' => $diskon,
                     'ttl_tagihan' => $total,
@@ -640,9 +635,11 @@ class BillController extends Controller
                 $total = $sub - $diskon;
 
                 $data['b_airkotor'] = json_encode([
+                    'lunas' => 0,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'price' => $tarif->price,
+                    'jml_los' => $jml_los,
                     'sub_tagihan' => $sub,
                     'diskon' => $diskon,
                     'ttl_tagihan' => $total,
@@ -677,9 +674,11 @@ class BillController extends Controller
                     $total = $sub;
 
                     $prices[$i] = [
+                        'lunas' => 0,
                         'tarif_id' => $tarif_id,
                         'tarif_nama' => $tarif_nama,
                         'price' => $tarif->price,
+                        'jml_los' => $jml_los,
                         'satuan_id' => $tarif->satuan,
                         'satuan_nama' => PLain::satuan($tarif->satuan),
                         'sub_tagihan' => $total,
@@ -697,6 +696,7 @@ class BillController extends Controller
             }
 
             $data['b_tagihan'] = json_encode([
+                'lunas' => 0,
                 'sub_tagihan' => $sub_tagihan,
                 'denda' => $den_tagihan,
                 'diskon' => $dis_tagihan,
@@ -706,6 +706,9 @@ class BillController extends Controller
             ]);
 
             $data['data'] = json_encode([
+                'lunas' => 0,
+                'publish' => $publish,
+                'publish_by' => $publish_by,
                 'user_create' => Auth::user()->id,
                 'username_create' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
@@ -737,7 +740,32 @@ class BillController extends Controller
      */
     public function show($id)
     {
-        //
+        if(request()->ajax()){
+            try{
+                $data = Bill::with([
+                    'period:id,nicename',
+                ])
+                ->findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            $explode = explode(',', $data->no_los);
+            $implode = implode(', ', $explode);
+            $data['no_los'] = rtrim($implode, ', ');
+
+            $json = json_decode($data->data);
+            $data['data'] = $json;
+            $data['publish'] = $json->publish;
+            $data['stt_publish'] = Bill::publish($data->stt_publish);
+            $data['stt_bayar'] = Bill::bayar($data->stt_bayar);
+            $data['stt_lunas'] = Bill::lunas($data->stt_lunas);
+
+            return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**
@@ -780,6 +808,7 @@ class BillController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //REVIEW ULANG
         if($request->ajax()){
             try{
                 $data = Bill::findOrFail($id);
@@ -791,6 +820,8 @@ class BillController extends Controller
             if($request->stt_publish){
                 $data->stt_publish = 1;
             }
+            $publish = Carbon::now()->toDateTimeString();
+            $publish_by = Auth::user()->name;
 
             $los = $this->multipleSelect($request->los);
             sort($los, SORT_NATURAL);
@@ -817,6 +848,8 @@ class BillController extends Controller
             $ttl_tagihan = 0;
             $sel_tagihan = 0;
 
+            $lunas = 1;
+
             //Listrik
             if($request->fas_listrik){
                 $tarif_id = $request->plistrik;
@@ -832,7 +865,6 @@ class BillController extends Controller
                 $daya = str_replace('.','',$request->dayalistrik);
                 $awal = str_replace('.','',$request->awlistrik);
                 $akhir = str_replace('.','',$request->aklistrik);
-                $digit = $request->inputlistrik0;
 
                 $valid['dayaListrik'] = $daya;
                 $valid['awalMeterListrik'] = $awal;
@@ -844,17 +876,16 @@ class BillController extends Controller
                 ])->validate();
 
                 if($request->checklistrik0){
-                    if($digit < strlen($awal)){
-                        $digit = strlen($awal);
-                        return response()->json(['info' => "Alat Listrik minimal $digit digit."]);
-                    }
-                    $digit = str_repeat("9",$digit);
+                    $digit = str_repeat("9",strlen($awal));
                     $pakai = PListrik::pakai($awal, $digit + $akhir);
                     $akhir_temp = $digit + $akhir;
                 }
                 else{
                     if($awal > $akhir){
-                        return response()->json(['info' => "Akhir Meter harus lebih besar dari Awal Meter."]);
+                        return response()->json([
+                            'info' => "Anda dapat mengaktifkan Meter kembali ke Nol.",
+                            'warning' => "Akhir Listrik harus lebih besar dari Awal Listrik."
+                        ]);
                     }
                     $pakai = PListrik::pakai($awal, $akhir);
                     $akhir_temp = $akhir;
@@ -945,7 +976,6 @@ class BillController extends Controller
 
                 $awal = str_replace('.','',$request->awairbersih);
                 $akhir = str_replace('.','',$request->akairbersih);
-                $digit = $request->inputairbersih0;
 
                 $valid['awalMeterAirBersih'] = $awal;
                 $valid['akhirMeterAirBersih'] = $akhir;
@@ -955,17 +985,16 @@ class BillController extends Controller
                 ])->validate();
 
                 if($request->checkairbersih0){
-                    if($digit < strlen($awal)){
-                        $digit = strlen($awal);
-                        return response()->json(['info' => "Alat Air Bersih minimal $digit digit."]);
-                    }
-                    $digit = str_repeat("9",$digit);
+                    $digit = str_repeat("9",strlen($awal));
                     $pakai = PAirBersih::pakai($awal, $digit + $akhir);
                     $akhir_temp = $digit + $akhir;
                 }
                 else{
                     if($awal > $akhir){
-                        return response()->json(['info' => "Akhir Meter harus lebih besar dari Awal Meter."]);
+                        return response()->json([
+                            'info' => "Anda dapat mengaktifkan Meter kembali ke Nol.",
+                            'warning' => "Akhir Air Bersih harus lebih besar dari Awal Air Bersih."
+                        ]);
                     }
                     $pakai = PAirBersih::pakai($awal, $akhir);
                     $akhir_temp = $akhir;
@@ -1223,20 +1252,25 @@ class BillController extends Controller
                 $data->b_lain = NULL;
             }
 
-            $data->b_tagihan = json_encode([
-                'sub_tagihan' => $sub_tagihan,
-                'denda' => $den_tagihan,
-                'diskon' => $dis_tagihan,
-                'ttl_tagihan' => $ttl_tagihan,
-                'rea_tagihan' => 0,
-                'sel_tagihan' => $sel_tagihan,
-            ]);
+            $json = json_decode($data->b_tagihan);
+            $json->lunas = $lunas;
+            $json->sub_tagihan = $sub_tagihan;
+            $json->denda = $den_tagihan;
+            $json->diskon = $dis_tagihan;
+            $json->ttl_tagihan = $ttl_tagihan;
+            $json->rea_tagihan = 0;
+            $json->sel_tagihan = $sel_tagihan;
+            $data->b_tagihan = json_encode($json);
 
-            $data->data = json_encode([
-                'user_update' => Auth::user()->id,
-                'username_update' => Auth::user()->name,
-                'updated_at' => Carbon::now()->toDateTimeString(),
-            ]);
+            $json = json_decode($data->data);
+            $json->lunas = $lunas;
+            $json->publish = $publish;
+            $json->publish_by = $publish_by;
+            $json->user_update = Auth::user()->id;
+            $json->username_update = Auth::user()->name;
+            $json->updated_at = Carbon::now()->toDateTimeString();
+            $json = json_encode($json);
+            $data->data = $json;
 
             $kontrol = $data->nicename;
 
@@ -1251,6 +1285,7 @@ class BillController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
+        //END REVIEW ULANG
     }
 
     /**
@@ -1265,30 +1300,32 @@ class BillController extends Controller
     }
 
     public function publish($id){
-        $tagihan = Bill::select('id', 'stt_publish', 'stt_bayar')->find($id);
+        $tagihan = Bill::select('id', 'stt_publish', 'data')->find($id);
 
         $stt_publish = $tagihan->stt_publish;
-        $stt_bayar = $tagihan->stt_bayar;
+        $json = json_decode($tagihan->data);
 
-        if($stt_bayar == 1){
-            return response()->json(['error' => 'Data failed to unpublish.', 'info' => 'Tagihan sudah dibayar.']);
+        if($stt_publish == 1){
+            $tagihan->stt_publish = 0;
+            $update = 'Data Unpublished.';
         }
         else{
-            if($stt_publish == 1){
-                $tagihan->stt_publish = 0;
-            }
-            else{
-                $tagihan->stt_publish = 1;
-            }
-
-            try{
-                $tagihan->save();
-            }
-            catch(\Exception $e){
-                return response()->json(['error' => 'Data failed to save.', 'description' => $e]);
-            }
-
-            return response()->json(['success' => 'Data updated.']);
+            $tagihan->stt_publish = 1;
+            $update = 'Data Published.';
         }
+
+        $json->publish = Carbon::now()->toDateTimeString();
+        $json = json_encode($json);
+
+        $tagihan->data = $json;
+
+        try{
+            $tagihan->save();
+        }
+        catch(\Exception $e){
+            return response()->json(['error' => 'Data failed to save.', 'description' => $e]);
+        }
+
+        return response()->json(['success' => $update]);
     }
 }

@@ -195,12 +195,12 @@ Blok Tempat
                     }
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -211,12 +211,12 @@ Blok Tempat
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){
@@ -325,12 +325,12 @@ Blok Tempat
                     dtableReload(data.searchKey);
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -341,12 +341,12 @@ Blok Tempat
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2021 at 05:47 PM
+-- Generation Time: Dec 22, 2021 at 08:53 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -37,6 +37,13 @@ CREATE TABLE `activation_code` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `activation_code`
+--
+
+INSERT INTO `activation_code` (`id`, `code`, `available`, `submit`, `user_id`, `updated_at`, `created_at`) VALUES
+(1, '423393', '2021-12-22 19:11:20', 0, 1598, '2021-12-22 19:06:20', '2021-12-22 19:06:20');
+
 -- --------------------------------------------------------
 
 --
@@ -45,27 +52,39 @@ CREATE TABLE `activation_code` (
 
 CREATE TABLE `bills` (
   `id` int(11) NOT NULL,
-  `code` varchar(8) DEFAULT NULL,
+  `code` varchar(10) DEFAULT NULL,
   `id_period` int(11) DEFAULT NULL,
   `stt_publish` tinyint(1) DEFAULT NULL,
   `stt_bayar` tinyint(1) DEFAULT NULL,
   `stt_lunas` tinyint(1) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `kd_kontrol` varchar(20) DEFAULT NULL,
+  `nicename` varchar(50) DEFAULT NULL,
   `group` varchar(10) DEFAULT NULL,
   `no_los` text DEFAULT NULL,
   `jml_los` tinyint(4) DEFAULT NULL,
-  `b_listrik` longtext DEFAULT NULL,
-  `b_airbersih` longtext DEFAULT NULL,
-  `b_keamananipk` longtext DEFAULT NULL,
-  `b_kebersihan` longtext DEFAULT NULL,
-  `b_airkotor` longtext DEFAULT NULL,
-  `b_lain` longtext DEFAULT NULL,
-  `b_tagihan` longtext DEFAULT NULL,
-  `data` longtext DEFAULT NULL,
+  `code_tlistrik` varchar(8) DEFAULT NULL,
+  `code_tairbersih` varchar(8) DEFAULT NULL,
+  `b_listrik` text DEFAULT NULL,
+  `b_airbersih` text DEFAULT NULL,
+  `b_keamananipk` text DEFAULT NULL,
+  `b_kebersihan` text DEFAULT NULL,
+  `b_airkotor` text DEFAULT NULL,
+  `b_lain` text DEFAULT NULL,
+  `b_tagihan` text DEFAULT NULL,
+  `data` text DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
+  `nonactive` mediumtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bills`
+--
+
+INSERT INTO `bills` (`id`, `code`, `id_period`, `stt_publish`, `stt_bayar`, `stt_lunas`, `name`, `kd_kontrol`, `nicename`, `group`, `no_los`, `jml_los`, `code_tlistrik`, `code_tairbersih`, `b_listrik`, `b_airbersih`, `b_keamananipk`, `b_kebersihan`, `b_airkotor`, `b_lain`, `b_tagihan`, `data`, `active`, `nonactive`, `updated_at`, `created_at`) VALUES
+(2, '5422759610', 3, 1, 0, 0, 'MASTER', 'A-1-001', 'A1001', 'A-1', '1', 1, 'ML38428', 'MA97824', '{\"tarif_id\":\"1\",\"tarif_nama\":\"Tarif 1\",\"daya\":\"10500\",\"awal\":\"9899\",\"akhir\":\"9899\",\"reset\":null,\"pakai\":0,\"blok1\":0,\"blok2\":0,\"beban\":525000,\"pju\":94500,\"ppn\":61950,\"sub_tagihan\":681450,\"denda\":20444,\"denda_bulan\":\"1\",\"diskon\":34073,\"diskon_persen\":\"5\",\"ttl_tagihan\":667821,\"rea_tagihan\":0,\"sel_tagihan\":667821}', '{\"tarif_id\":\"1\",\"tarif_nama\":\"Tarif 1\",\"awal\":\"25\",\"akhir\":\"25\",\"reset\":null,\"pakai\":0,\"bayar\":0,\"pemeliharaan\":\"15000\",\"beban\":\"25000\",\"arkot\":0,\"ppn\":4000,\"sub_tagihan\":44000,\"denda\":50000,\"denda_bulan\":\"1\",\"diskon\":4400,\"diskon_persen\":\"10\",\"ttl_tagihan\":89600,\"rea_tagihan\":0,\"sel_tagihan\":89600}', '{\"tarif_id\":\"2\",\"tarif_nama\":\"Trf-2\",\"price\":165000,\"sub_tagihan\":165000,\"diskon\":\"20100\",\"keamanan\":79695,\"ipk\":65205,\"ttl_tagihan\":144900,\"rea_tagihan\":0,\"sel_tagihan\":144900}', '{\"tarif_id\":\"5\",\"tarif_nama\":\"Trf-5\",\"price\":155000,\"sub_tagihan\":155000,\"diskon\":\"10200\",\"ttl_tagihan\":144800,\"rea_tagihan\":0,\"sel_tagihan\":144800}', '{\"tarif_id\":\"1\",\"tarif_nama\":\"Trf-1\",\"price\":250000,\"sub_tagihan\":250000,\"diskon\":\"10000\",\"ttl_tagihan\":240000,\"rea_tagihan\":0,\"sel_tagihan\":240000}', '[{\"tarif_id\":\"8\",\"tarif_nama\":\"Parkir\",\"price\":20000,\"satuan_id\":2,\"satuan_nama\":\"per-Los\",\"sub_tagihan\":20000,\"ttl_tagihan\":20000,\"rea_tagihan\":0,\"sel_tagihan\":20000},{\"tarif_id\":\"7\",\"tarif_nama\":\"Preman\",\"price\":10000,\"satuan_id\":1,\"satuan_nama\":\"per-Kontrol\",\"sub_tagihan\":10000,\"ttl_tagihan\":10000,\"rea_tagihan\":0,\"sel_tagihan\":10000}]', '{\"sub_tagihan\":1325450,\"denda\":70444,\"diskon\":78773,\"ttl_tagihan\":1317121,\"rea_tagihan\":0,\"sel_tagihan\":1317121}', '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-22 23:15:23\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-22 23:15:23\"}', 1, NULL, '2021-12-22 16:15:23', '2021-12-22 16:15:23');
 
 -- --------------------------------------------------------
 
@@ -93,7 +112,7 @@ INSERT INTO `change_logs` (`id`, `data`, `updated_at`, `created_at`) VALUES
 (6, '{\"title\":\"Peningkatan Sistem\",\"data\":\"Tambah Laporan Tunggakan, Replacing View Data Usaha, Tambah Generate Laporan Pendapatan, Fixing Bug Form Pendataan Tagihan Baru, Fixing Bug Datatable Scroll Horizontal, Fixing Bug Mobile View\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-22 14:45:58\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-07  14:48:06\"}', '2021-04-22 07:48:06', '2021-04-22 07:45:58'),
 (7, '{\"title\":\"Peningkatan Sistem\",\"data\":\"Improve Sistem, Notifikasi, Fixing Database, Show Detail Data Usaha\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-27 13:32:34\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-28  05:34:30\"}', '2021-04-27 22:34:30', '2021-04-27 06:32:34'),
 (8, '{\"title\":\"Peningkatan Sistem\",\"data\":\"Add Profile Settiings, Add Kotak Saran, Fixing Layout & some bugs\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-28 05:34:10\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-28  05:34:20\"}', '2021-04-27 22:34:20', '2021-04-27 22:34:10'),
-(9, '{\"title\":\"Keuangan Details\",\"data\":\"Done\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-05-29 13:36:14\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-05-29  13:36:14\"}', '2021-05-29 06:36:14', '2021-05-29 06:36:14');
+(9, '{\"title\":\"Keuangan Details\",\"data\":\"Done\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-05-29 13:36:14\",\"user_update\":1598,\"username_update\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-23 00:53:51\"}', '2021-12-22 17:53:51', '2021-05-29 06:36:14');
 
 -- --------------------------------------------------------
 
@@ -104,7 +123,7 @@ INSERT INTO `change_logs` (`id`, `data`, `updated_at`, `created_at`) VALUES
 CREATE TABLE `commodities` (
   `id` bigint(20) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `data` longtext DEFAULT NULL,
+  `data` text DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -397,6 +416,54 @@ CREATE TABLE `data_login` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `data_login`
+--
+
+INSERT INTO `data_login` (`id`, `uid`, `name`, `level`, `active`, `platform`, `status`, `updated_at`, `created_at`) VALUES
+(1, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 16:52:11', '2021-12-13 16:52:11'),
+(2, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 16:52:26', '2021-12-13 16:52:26'),
+(3, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 16:57:05', '2021-12-13 16:57:05'),
+(4, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 16:57:20', '2021-12-13 16:57:20'),
+(5, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 17:01:45', '2021-12-13 17:01:45'),
+(6, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 17:05:43', '2021-12-13 17:05:43'),
+(7, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 17:05:53', '2021-12-13 17:05:53'),
+(8, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 22:14:23', '2021-12-13 22:14:23'),
+(9, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-14 07:01:15', '2021-12-14 07:01:15'),
+(10, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-14 10:16:16', '2021-12-14 10:16:16'),
+(11, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-14 23:38:42', '2021-12-14 23:38:42'),
+(12, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-16 06:15:21', '2021-12-16 06:15:21'),
+(13, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-16 13:53:57', '2021-12-16 13:53:57'),
+(14, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-16 14:02:28', '2021-12-16 14:02:28'),
+(15, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-16 16:25:12', '2021-12-16 16:25:12'),
+(16, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-17 05:33:21', '2021-12-17 05:33:21'),
+(17, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 06:01:24', '2021-12-20 06:01:24'),
+(18, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 06:29:43', '2021-12-20 06:29:43'),
+(19, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 07:08:22', '2021-12-20 07:08:22'),
+(20, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 07:28:05', '2021-12-20 07:28:05'),
+(21, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 07:56:47', '2021-12-20 07:56:47'),
+(22, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:01:28', '2021-12-20 08:01:28'),
+(23, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:19:39', '2021-12-20 08:19:39'),
+(24, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:28:01', '2021-12-20 08:28:01'),
+(25, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:30:13', '2021-12-20 08:30:13'),
+(26, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:32:07', '2021-12-20 08:32:07'),
+(27, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:49:09', '2021-12-20 08:49:09'),
+(28, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:51:24', '2021-12-20 08:51:24'),
+(29, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:52:54', '2021-12-20 08:52:54'),
+(30, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:54:56', '2021-12-20 08:54:56'),
+(31, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 10:51:47', '2021-12-20 10:51:47'),
+(32, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 23:12:36', '2021-12-20 23:12:36'),
+(33, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-21 07:17:13', '2021-12-21 07:17:13'),
+(34, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-21 11:39:28', '2021-12-21 11:39:28'),
+(35, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 06:22:48', '2021-12-22 06:22:48'),
+(36, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 15:47:46', '2021-12-22 15:47:46'),
+(37, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 15:50:00', '2021-12-22 15:50:00'),
+(38, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 17:54:10', '2021-12-22 17:54:10'),
+(39, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 18:24:16', '2021-12-22 18:24:16'),
+(40, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 18:35:09', '2021-12-22 18:35:09'),
+(41, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 18:38:56', '2021-12-22 18:38:56'),
+(42, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 18:39:52', '2021-12-22 18:39:52');
+
 -- --------------------------------------------------------
 
 --
@@ -406,7 +473,7 @@ CREATE TABLE `data_login` (
 CREATE TABLE `day_off` (
   `id` int(11) NOT NULL,
   `date` date DEFAULT NULL,
-  `data` longtext DEFAULT NULL,
+  `data` text DEFAULT NULL,
   `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -416,8 +483,8 @@ CREATE TABLE `day_off` (
 --
 
 INSERT INTO `day_off` (`id`, `date`, `data`, `updated_at`, `created_at`) VALUES
-(1, '2020-03-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(2, '2020-11-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(1, '2022-01-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
+(2, '2022-01-16', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
 (4, '2022-04-15', '{\"desc\":\"Wafat Isa Al\'Masih\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
 (5, '2022-05-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
 (6, '2023-01-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
@@ -466,7 +533,7 @@ CREATE TABLE `failed_jobs` (
 CREATE TABLE `groups` (
   `id` int(11) NOT NULL,
   `name` varchar(10) DEFAULT NULL,
-  `data` longtext DEFAULT NULL,
+  `data` text DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -527,6 +594,15 @@ CREATE TABLE `jobs` (
   `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `jobs`
+--
+
+INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `available_at`, `created_at`) VALUES
+(1, 'default', '{\"uuid\":\"2a8bd9dd-ee6d-4e48-977b-02fafa690d60\",\"displayName\":\"App\\\\Jobs\\\\UserEmailJob\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\UserEmailJob\",\"command\":\"O:21:\\\"App\\\\Jobs\\\\UserEmailJob\\\":11:{s:10:\\\"\\u0000*\\u0000details\\\";a:11:{s:6:\\\"sender\\\";s:27:\\\"Master Didi Kempot dari PIC\\\";s:6:\\\"header\\\";s:65:\\\"Harap hubungi Bagian Pelayanan Pedagang apabila ingin re-aktivasi\\\";s:7:\\\"subject\\\";s:24:\\\"Akun telah dinonaktifkan\\\";s:4:\\\"name\\\";s:13:\\\"Fahni Amsyari\\\";s:4:\\\"role\\\";s:7:\\\"Nasabah\\\";s:4:\\\"type\\\";s:11:\\\"nonaktivasi\\\";s:7:\\\"regards\\\";s:35:\\\"Sampai Jumpa Kembali (PIC BDG Team)\\\";s:9:\\\"timestamp\\\";s:19:\\\"2021-12-23 01:42:47\\\";s:5:\\\"limit\\\";s:19:\\\"2022-01-22 01:42:47\\\";s:5:\\\"email\\\";s:26:\\\"fahniamsyari1999@gmail.com\\\";s:5:\\\"value\\\";s:7:\\\"destroy\\\";}s:3:\\\"job\\\";N;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}}\"}}', 0, NULL, 1640198568, 1640198568),
+(2, 'default', '{\"uuid\":\"df0bcb20-1d5b-4af3-a29c-5eefc7e2e6ba\",\"displayName\":\"App\\\\Jobs\\\\UserEmailJob\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\UserEmailJob\",\"command\":\"O:21:\\\"App\\\\Jobs\\\\UserEmailJob\\\":11:{s:10:\\\"\\u0000*\\u0000details\\\";a:11:{s:6:\\\"sender\\\";s:27:\\\"Master Didi Kempot dari PIC\\\";s:6:\\\"header\\\";s:65:\\\"Harap hubungi Bagian Pelayanan Pedagang apabila ingin re-aktivasi\\\";s:7:\\\"subject\\\";s:24:\\\"Akun telah dinonaktifkan\\\";s:4:\\\"name\\\";s:13:\\\"Fahni Amsyari\\\";s:4:\\\"role\\\";s:7:\\\"Nasabah\\\";s:4:\\\"type\\\";s:11:\\\"nonaktivasi\\\";s:7:\\\"regards\\\";s:35:\\\"Sampai Jumpa Kembali (PIC BDG Team)\\\";s:9:\\\"timestamp\\\";s:19:\\\"2021-12-23 01:43:30\\\";s:5:\\\"limit\\\";s:19:\\\"2022-01-22 01:43:30\\\";s:5:\\\"email\\\";s:26:\\\"fahniamsyari1999@gmail.com\\\";s:5:\\\"value\\\";s:7:\\\"destroy\\\";}s:3:\\\"job\\\";N;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}}\"}}', 0, NULL, 1640198610, 1640198610),
+(3, 'default', '{\"uuid\":\"62d2bef0-b630-4505-bae4-274aa9ceeef3\",\"displayName\":\"App\\\\Jobs\\\\UserEmailJob\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\UserEmailJob\",\"command\":\"O:21:\\\"App\\\\Jobs\\\\UserEmailJob\\\":11:{s:10:\\\"\\u0000*\\u0000details\\\";a:11:{s:6:\\\"sender\\\";s:27:\\\"Master Didi Kempot dari PIC\\\";s:6:\\\"header\\\";s:65:\\\"Harap hubungi Bagian Pelayanan Pedagang apabila ingin re-aktivasi\\\";s:7:\\\"subject\\\";s:24:\\\"Akun telah dinonaktifkan\\\";s:4:\\\"name\\\";s:13:\\\"Fahni Amsyari\\\";s:4:\\\"role\\\";s:11:\\\"Organisator\\\";s:4:\\\"type\\\";s:11:\\\"nonaktivasi\\\";s:7:\\\"regards\\\";s:35:\\\"Sampai Jumpa Kembali (PIC BDG Team)\\\";s:9:\\\"timestamp\\\";s:19:\\\"2021-12-23 01:43:46\\\";s:5:\\\"limit\\\";s:19:\\\"2022-01-22 01:43:46\\\";s:5:\\\"email\\\";s:27:\\\"fahniamsyari19991@gmail.com\\\";s:5:\\\"value\\\";s:7:\\\"destroy\\\";}s:3:\\\"job\\\";N;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}}\"}}', 0, NULL, 1640198626, 1640198626);
+
 -- --------------------------------------------------------
 
 --
@@ -550,7 +626,8 @@ CREATE TABLE `period` (
 --
 
 INSERT INTO `period` (`id`, `name`, `nicename`, `new_period`, `due_date`, `faktur`, `surat`, `updated_at`, `created_at`) VALUES
-(1, '2021-12', 'Desember 2021', '2021-12-23', '2022-01-15', 0, 0, '2021-12-13 16:47:18', '2021-12-13 16:47:18');
+(2, '2021-11', 'November 2021', '2021-11-23', '2021-11-15', 0, 0, '2021-12-14 00:10:04', '2021-12-14 00:10:04'),
+(3, '2021-12', 'Desember 2021', '2021-12-23', '2021-12-15', 0, 0, '2021-12-15 09:07:19', '2021-12-15 09:07:19');
 
 -- --------------------------------------------------------
 
@@ -561,7 +638,7 @@ INSERT INTO `period` (`id`, `name`, `nicename`, `new_period`, `due_date`, `faktu
 CREATE TABLE `p_airbersih` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `data` longtext DEFAULT NULL,
+  `data` text DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -583,7 +660,7 @@ CREATE TABLE `p_airkotor` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
-  `data` longtext DEFAULT NULL,
+  `data` text DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -606,7 +683,7 @@ CREATE TABLE `p_keamananipk` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
-  `data` longtext DEFAULT NULL,
+  `data` text DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -616,7 +693,7 @@ CREATE TABLE `p_keamananipk` (
 --
 
 INSERT INTO `p_keamananipk` (`id`, `name`, `price`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Trf-1', 120000, '{\"keamanan\":\"67\",\"ipk\":\"33\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:19:53\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:21:38\"}', '2021-12-09 17:21:38', '2021-12-09 17:19:53'),
+(1, 'Trf-1', 120000, '{\"keamanan\":\"67\",\"ipk\":\"33\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:19:53\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-15 22:50:35\"}', '2021-12-15 15:50:35', '2021-12-09 17:19:53'),
 (2, 'Trf-2', 165000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:20:10\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:21:47\"}', '2021-12-09 17:21:47', '2021-12-09 17:20:10'),
 (3, 'Trf-3', 145000, '{\"keamanan\":\"74\",\"ipk\":\"26\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:20:39\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:21:57\"}', '2021-12-09 17:21:57', '2021-12-09 17:20:39'),
 (4, 'Trf-4', 130000, '{\"keamanan\":\"85\",\"ipk\":\"15\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:20:55\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:22:05\"}', '2021-12-09 17:22:05', '2021-12-09 17:20:55'),
@@ -634,7 +711,7 @@ CREATE TABLE `p_kebersihan` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
-  `data` longtext DEFAULT NULL,
+  `data` text DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -665,10 +742,18 @@ CREATE TABLE `p_lain` (
   `name` varchar(255) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   `satuan` tinyint(1) DEFAULT NULL,
-  `data` longtext DEFAULT NULL,
+  `data` text DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `p_lain`
+--
+
+INSERT INTO `p_lain` (`id`, `name`, `price`, `satuan`, `data`, `updated_at`, `created_at`) VALUES
+(7, 'Preman', 10000, 1, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-22 17:36:50\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-22 17:36:50\"}', '2021-12-22 10:36:50', '2021-12-22 10:36:50'),
+(8, 'Parkir', 20000, 2, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-22 17:37:01\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-22 17:37:10\"}', '2021-12-22 10:37:10', '2021-12-22 10:37:01');
 
 -- --------------------------------------------------------
 
@@ -679,7 +764,7 @@ CREATE TABLE `p_lain` (
 CREATE TABLE `p_listrik` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `data` longtext DEFAULT NULL,
+  `data` text DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -689,7 +774,7 @@ CREATE TABLE `p_listrik` (
 --
 
 INSERT INTO `p_listrik` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', '{\"beban\":\"50\",\"blok1\":\"0\",\"blok2\":\"2404\",\"standar\":\"0\",\"pju\":\"18\",\"denda1\":\"50000\",\"denda2\":\"3\",\"ppn\":\"10\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 16:22:48\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 16:23:01\"}', '2021-12-02 09:23:01', '2021-12-02 09:22:48');
+(1, 'Tarif 1', '{\"beban\":\"50\",\"blok1\":\"0\",\"blok2\":\"2404\",\"standar\":\"0\",\"pju\":\"18\",\"denda1\":\"50000\",\"denda2\":\"3\",\"ppn\":\"10\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 16:22:48\",\"user_update\":1598,\"username_update\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-23 00:49:10\"}', '2021-12-22 17:49:10', '2021-12-02 09:22:48');
 
 -- --------------------------------------------------------
 
@@ -717,11 +802,18 @@ CREATE TABLE `stores` (
   `fas_keamananipk` int(11) DEFAULT NULL,
   `fas_kebersihan` int(11) DEFAULT NULL,
   `fas_airkotor` int(11) DEFAULT NULL,
-  `fas_lain` longtext DEFAULT NULL,
-  `data` longtext DEFAULT NULL,
+  `fas_lain` text DEFAULT NULL,
+  `data` mediumtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stores`
+--
+
+INSERT INTO `stores` (`id`, `kd_kontrol`, `nicename`, `group`, `no_los`, `jml_los`, `id_pengguna`, `id_pemilik`, `komoditi`, `status`, `ket`, `info`, `id_tlistrik`, `id_tairbersih`, `fas_listrik`, `fas_airbersih`, `fas_keamananipk`, `fas_kebersihan`, `fas_airkotor`, `fas_lain`, `data`, `updated_at`, `created_at`) VALUES
+(7, 'A-1-001', 'A1001', 'A-1', '1', 1, 1598, 1598, NULL, 1, NULL, NULL, 1, 1, 1, 1, 2, 5, 1, '[{\"id\":\"8\",\"name\":\"Parkir\",\"price\":20000,\"satuan_id\":2,\"satuan_name\":\"per-Los\"},{\"id\":\"7\",\"name\":\"Preman\",\"price\":10000,\"satuan_id\":1,\"satuan_name\":\"per-Kontrol\"}]', '{\"diskon\":{\"listrik\":\"5\",\"airbersih\":\"10\",\"keamananipk\":\"20100\",\"kebersihan\":\"10200\",\"airkotor\":\"10000\"},\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-22 17:38:15\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-22 17:41:14\"}', '2021-12-22 10:41:14', '2021-12-22 10:38:15');
 
 -- --------------------------------------------------------
 
@@ -735,10 +827,17 @@ CREATE TABLE `t_airbersih` (
   `name` varchar(255) DEFAULT NULL,
   `meter` int(11) DEFAULT NULL,
   `stt_available` tinyint(1) DEFAULT NULL,
-  `data` longtext DEFAULT NULL,
+  `data` text DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `t_airbersih`
+--
+
+INSERT INTO `t_airbersih` (`id`, `code`, `name`, `meter`, `stt_available`, `data`, `updated_at`, `created_at`) VALUES
+(1, 'MA97824', 'SAHG', 25, 0, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-15 15:08:08\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-22 17:26:46\"}', '2021-12-22 10:38:15', '2021-12-15 08:08:08');
 
 -- --------------------------------------------------------
 
@@ -753,10 +852,17 @@ CREATE TABLE `t_listrik` (
   `meter` int(11) DEFAULT NULL,
   `power` int(11) DEFAULT NULL,
   `stt_available` tinyint(1) DEFAULT NULL,
-  `data` longtext DEFAULT NULL,
+  `data` text DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `t_listrik`
+--
+
+INSERT INTO `t_listrik` (`id`, `code`, `name`, `meter`, `power`, `stt_available`, `data`, `updated_at`, `created_at`) VALUES
+(1, 'ML38428', '65656', 9899, 10500, 0, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-13 23:49:21\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-22 17:26:46\"}', '2021-12-22 10:38:15', '2021-12-13 16:49:21');
 
 -- --------------------------------------------------------
 
@@ -777,12 +883,12 @@ CREATE TABLE `users` (
   `member` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ktp` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `npwp` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `authority` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `authority` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `active` tinyint(1) DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nonactive` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nonactive` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `activation_code` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `available` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -794,7 +900,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `uid`, `photo`, `level`, `country_id`, `phone`, `email`, `email_verified_at`, `member`, `ktp`, `npwp`, `address`, `authority`, `active`, `password`, `remember_token`, `nonactive`, `activation_code`, `available`, `created_at`, `updated_at`) VALUES
-(1598, 'MASTER', 'super_admin', 'storage/users/user.jpg', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-12-10 20:44:18', 'BP3C11111111', '1111111111111111', NULL, 'Dibawah langit berpijak pada bumi', NULL, 1, '$argon2id$v=19$m=1024,t=2,p=2$WTE0UHoyU0pGYlpIWDVOQQ$NY7eX/314e3aQ0go2uo27M2pvtPsRnuAbdp8yznkA1s', NULL, NULL, NULL, '2021-12-12 20:43:52', '2021-12-10 20:43:52', '2021-12-10 20:43:52');
+(1598, 'Master Didi Kempot', 'super_admin', 'storage/users/user.jpg', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-12-10 20:44:18', 'BP3C11111111', '1111111111111111', NULL, 'Dibawah langit berpijak pada bumi', NULL, 1, '$argon2id$v=19$m=1024,t=2,p=2$WTE0UHoyU0pGYlpIWDVOQQ$NY7eX/314e3aQ0go2uo27M2pvtPsRnuAbdp8yznkA1s', NULL, NULL, NULL, '2021-12-12 20:43:52', '2021-12-10 20:43:52', '2021-12-22 17:40:46');
 
 -- --------------------------------------------------------
 
@@ -816,7 +922,7 @@ CREATE TABLE `visitors` (
 --
 
 INSERT INTO `visitors` (`id`, `visit_per_day`, `day_count`, `visit_on_day`, `updated_at`, `created_at`) VALUES
-(2, 0, 1, 0, '2021-12-13 16:47:39', '2021-12-13 16:47:39');
+(1, 1, 2, 68, '2021-12-22 18:39:52', '2021-12-13 17:05:43');
 
 --
 -- Indexes for dumped tables
@@ -834,7 +940,8 @@ ALTER TABLE `activation_code`
 --
 ALTER TABLE `bills`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `code` (`code`);
+  ADD UNIQUE KEY `code` (`code`),
+  ADD KEY `fk_period` (`id_period`);
 
 --
 -- Indexes for table `change_logs`
@@ -892,7 +999,8 @@ ALTER TABLE `jobs`
 -- Indexes for table `period`
 --
 ALTER TABLE `period`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `p_airbersih`
@@ -995,13 +1103,13 @@ ALTER TABLE `visitors`
 -- AUTO_INCREMENT for table `activation_code`
 --
 ALTER TABLE `activation_code`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `change_logs`
@@ -1025,7 +1133,7 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `data_login`
 --
 ALTER TABLE `data_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `day_off`
@@ -1049,13 +1157,13 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `period`
 --
 ALTER TABLE `period`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `p_airbersih`
@@ -1085,7 +1193,7 @@ ALTER TABLE `p_kebersihan`
 -- AUTO_INCREMENT for table `p_lain`
 --
 ALTER TABLE `p_lain`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `p_listrik`
@@ -1097,35 +1205,41 @@ ALTER TABLE `p_listrik`
 -- AUTO_INCREMENT for table `stores`
 --
 ALTER TABLE `stores`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `t_airbersih`
 --
 ALTER TABLE `t_airbersih`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `t_listrik`
 --
 ALTER TABLE `t_listrik`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1599;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1601;
 
 --
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `bills`
+--
+ALTER TABLE `bills`
+  ADD CONSTRAINT `fk_period` FOREIGN KEY (`id_period`) REFERENCES `period` (`id`);
 
 --
 -- Constraints for table `stores`

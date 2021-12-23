@@ -285,12 +285,12 @@ Tarif Listrik
                     $("#ppn").val(data.show.data.ppn);
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -301,12 +301,12 @@ Tarif Listrik
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){
@@ -415,12 +415,12 @@ Tarif Listrik
                     dtableReload(data.searchKey);
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -431,12 +431,12 @@ Tarif Listrik
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){
@@ -497,12 +497,12 @@ Tarif Listrik
                     $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                 }
 
-                if(data.info){
+                if(data.error){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.info(data.info);
+                    toastr.error(data.error);
                 }
 
                 if(data.warning){
@@ -513,12 +513,12 @@ Tarif Listrik
                     toastr.warning(data.warning);
                 }
 
-                if(data.error){
+                if(data.info){
                     toastr.options = {
                         "closeButton": true,
                         "preventDuplicates": true,
                     };
-                    toastr.error(data.error);
+                    toastr.info(data.info);
                 }
 
                 if(data.description){

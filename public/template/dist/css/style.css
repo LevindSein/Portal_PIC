@@ -2690,6 +2690,46 @@ fieldset:disabled a.btn {
     pointer-events: none;
 }
 
+
+.btn-gold {
+    color: #212529;
+    background-color: #c4a35a;
+    border-color: #c4a35a;
+}
+
+.btn-gold:hover {
+    color: #212529;
+    background-color: #a3884c;
+    border-color: #a3884c;
+}
+
+.btn-gold:focus,
+.btn-gold.focus {
+    box-shadow: 0 0 0 0.2rem rgba(204, 160, 73, 0.5);
+}
+
+.btn-gold.disabled,
+.btn-gold:disabled {
+    color: #212529;
+    background-color: #c7b07f;
+    border-color: #c7b07f;
+}
+
+.btn-gold:not(:disabled):not(.disabled):active,
+.btn-gold:not(:disabled):not(.disabled).active,
+.show>.btn-gold.dropdown-toggle {
+    color: #212529;
+    background-color: #c7b07f;
+    border-color: #c7b07f;
+}
+
+.btn-gold:not(:disabled):not(.disabled):active:focus,
+.btn-gold:not(:disabled):not(.disabled).active:focus,
+.show>.btn-gold.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(204, 160, 73, 0.5);
+}
+
+
 .btn-primary {
     color: #fff;
     background-color: #7460ee;

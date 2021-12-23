@@ -40,4 +40,40 @@ class Bill extends Model
     {
         return $this->belongsTo(Period::class, 'id_period');
     }
+
+    public static function publish($data){
+        if($data == 1){
+            return '<span class="text-success">Published</span>';
+        }
+        else if($data == 0){
+            return '<span class="text-danger">Unpublished</span>';
+        }
+        else{
+            return $data;
+        }
+    }
+
+    public static function bayar($data){
+        if($data == 1){
+            return '<span class="text-success">Dibayar</span>';
+        }
+        else if($data == 0){
+            return '<span class="text-danger">Belum Terbayar</span>';
+        }
+        else{
+            return $data;
+        }
+    }
+
+    public static function lunas($data){
+        if($data == 1){
+            return '<span class="text-success">Lunas</span>';
+        }
+        else if($data == 0){
+            return '<span class="text-danger">Belum Lunas</span>';
+        }
+        else{
+            return $data;
+        }
+    }
 }
