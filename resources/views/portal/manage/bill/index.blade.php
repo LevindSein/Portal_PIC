@@ -289,7 +289,7 @@ Kelola Tagihan
                                     <div class="form-group">
                                         <label>Denda</label>
                                         <div class="input-group">
-                                            <input maxlength="11" type="text" id="denlistrik" name="denlistrik" autocomplete="off" placeholder="Ketikkan dalam angka 0-12" class="number form-control form-control-line">
+                                            <input maxlength="5" type="text" id="denlistrik" name="denlistrik" autocomplete="off" placeholder="Ketikkan dalam angka 0-12" class="number form-control form-control-line">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Bulan</span>
                                             </div>
@@ -341,7 +341,7 @@ Kelola Tagihan
                                     <div class="form-group">
                                         <label>Denda</label>
                                         <div class="input-group">
-                                            <input maxlength="11" type="text" id="denairbersih" name="denairbersih" autocomplete="off" placeholder="Ketikkan dalam angka 0-12" class="number form-control form-control-line">
+                                            <input maxlength="5" type="text" id="denairbersih" name="denairbersih" autocomplete="off" placeholder="Ketikkan dalam angka 0-12" class="number form-control form-control-line">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Bulan</span>
                                             </div>
@@ -657,10 +657,6 @@ Kelola Tagihan
                         $('#pairkotor').val("").html("");
                         $("#dairkotor").val('');
 
-                        lain = 0;
-                        plain = 1;
-                        $('div[name="divlain"]').remove();
-
                         if(data.show.fas_listrik){
                             $("#fas_listrik").prop("checked", true).attr('disabled', false);
                             fasListrik('show');
@@ -757,19 +753,21 @@ Kelola Tagihan
                             }
                         }
 
+                        lain = 0;
+                        plain = 1;
+                        $('div[name="divlain"]').remove();
                         $("#divLainAdd").attr('disabled', false);
                         if(data.show.fas_lain){
                             var json = $.parseJSON(data.show.fas_lain);
                             $.each( json, function( i, val ) {
                                 $('#divLainAdd').trigger('click');
-                                $('#plain' + plain).val("").html("");
                                 var plainOpt = new Option(
                                     val.name + ' - ' + Number(val.price).toLocaleString('id-ID') + ' ' + val.satuan_name,
                                     val.id,
                                     false,
                                     false
                                 );
-                                $('#plain' + (i+1)).append(plainOpt).trigger('change');
+                                $('#plain' + (plain-1)).append(plainOpt).trigger('change');
                             });
                         }
                     }
@@ -984,10 +982,6 @@ Kelola Tagihan
                     $('#pairkotor').val("").html("");
                     $("#dairkotor").val('');
 
-                    lain = 0;
-                    plain = 1;
-                    $('div[name="divlain"]').remove();
-
                     if(data.show.b_listrik){
                         if(data.show.b_listrik.lunas){
                             fasListrik("hide");
@@ -1127,29 +1121,29 @@ Kelola Tagihan
                         }
                     }
 
+                    $('div[name="divlain"]').remove();
                     $("#divLainAdd").attr('disabled', false);
                     if(data.show.b_lain){
                         $.each( data.show.b_lain, function( i, val ) {
-                            if(val.lunas){
-                                var html = '';
-                                html += '<div>';
-                                html += '<label>' + val.tarif_nama + '</label> <span>: ' + Number(val.price).toLocaleString('id-ID') + ' ' + val.satuan_nama + '</span> <small class="text-success">(Lunas)</small>';
-                                html += '</div>';
-
-                                $('#lunas_lain').append(html);
-                            }
-                            else{
-                                $('#divLainAdd').trigger('click');
-                                $('#plain' + plain).val("").html("");
+                            $('#divLainAdd').trigger('click');
+                            if(val.lunas == 0){
                                 var plainOpt = new Option(
                                     val.tarif_nama + ' - ' + Number(val.price).toLocaleString('id-ID') + ' ' + val.satuan_nama,
                                     val.tarif_id,
                                     false,
                                     false
                                 );
-                                $('#plain' + (i+1)).append(plainOpt).trigger('change');
+                                $('#plain' + (plain-1)).append(plainOpt).trigger('change');
                             }
-                            lain++;
+                            else{
+                                var html = '';
+                                html += '<div>';
+                                html += '<label>' + val.tarif_nama + '</label> <span>: ' + Number(val.price).toLocaleString('id-ID') + ' ' + val.satuan_nama + '</span> <small class="text-success">(Lunas)</small>';
+                                html += '</div>';
+                                $('#lunas_lain').append(html);
+
+                                $('#plain' + (plain-1)).closest("[name='divlain']").remove();
+                            }
                         });
                     }
                 }
@@ -1271,7 +1265,7 @@ Kelola Tagihan
                     $("#showPengguna").text(data.show.name);
                     $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
                     $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
-                    $("#showPublish").html(data.show.stt_publish + "<br>pada " + data.show.publish);
+                    $("#showPublish").html(data.show.stt_publish + "<br>pada " + data.show.publish + "<br>oleh " + data.show.data.publish_by);
                     $("#showBayar").html(data.show.stt_bayar);
                     $("#showLunas").html(data.show.stt_lunas);
                 }

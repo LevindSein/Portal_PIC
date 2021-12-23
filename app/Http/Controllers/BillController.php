@@ -306,6 +306,7 @@ class BillController extends Controller
                 $daya = str_replace('.','',$request->dayalistrik);
                 $awal = str_replace('.','',$request->awlistrik);
                 $akhir = str_replace('.','',$request->aklistrik);
+                $digit = null;
 
                 $valid['dayaListrik'] = $daya;
                 $valid['awalMeterListrik'] = $awal;
@@ -317,7 +318,7 @@ class BillController extends Controller
                 ])->validate();
 
                 $kontrol = Store::where('kd_kontrol', $request->kontrol)->select('id_tlistrik')->first();
-                if($kontrol->id_tlistrik){
+                if($kontrol){
                     $data['code_tlistrik'] = TListrik::find($kontrol->id_tlistrik)->code;
                 }
 
@@ -361,7 +362,7 @@ class BillController extends Controller
                     $diff = $request->denlistrik;
                     $valid['dendaListrik'] = $request->denlistrik;
                     Validator::make($valid, [
-                        'dendaListrik' => 'required|numeric|lte:999999999',
+                        'dendaListrik' => 'required|numeric|lte:9999',
                     ])->validate();
 
                     if($daya > 4400){
@@ -420,6 +421,7 @@ class BillController extends Controller
 
                 $awal = str_replace('.','',$request->awairbersih);
                 $akhir = str_replace('.','',$request->akairbersih);
+                $digit = null;
 
                 $valid['awalMeterAirBersih'] = $awal;
                 $valid['akhirMeterAirBersih'] = $akhir;
@@ -429,7 +431,7 @@ class BillController extends Controller
                 ])->validate();
 
                 $kontrol = Store::where('kd_kontrol', $request->kontrol)->select('id_tairbersih')->first();
-                if($kontrol->id_tairbersih){
+                if($kontrol){
                     $data['code_tairbersih'] = TAirBersih::find($kontrol->id_tairbersih)->code;
                 }
 
@@ -473,7 +475,7 @@ class BillController extends Controller
                     $diff = $request->denairbersih;
                     $valid['dendaAirBersih'] = $diff;
                     Validator::make($valid, [
-                        'dendaAirBersih' => 'required|numeric|lte:999999999',
+                        'dendaAirBersih' => 'required|numeric|lte:9999',
                     ])->validate();
 
                     $denda = $diff * $tarif_data->denda;
@@ -808,7 +810,6 @@ class BillController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //REVIEW ULANG
         if($request->ajax()){
             try{
                 $data = Bill::findOrFail($id);
@@ -846,12 +847,15 @@ class BillController extends Controller
             $den_tagihan = 0;
             $dis_tagihan = 0;
             $ttl_tagihan = 0;
+            $rea_tagihan = 0;
             $sel_tagihan = 0;
 
             $lunas = 1;
 
             //Listrik
             if($request->fas_listrik){
+                $lunas *= 0;
+
                 $tarif_id = $request->plistrik;
 
                 $valid['tarifListrik'] = $tarif_id;
@@ -865,6 +869,7 @@ class BillController extends Controller
                 $daya = str_replace('.','',$request->dayalistrik);
                 $awal = str_replace('.','',$request->awlistrik);
                 $akhir = str_replace('.','',$request->aklistrik);
+                $digit = null;
 
                 $valid['dayaListrik'] = $daya;
                 $valid['awalMeterListrik'] = $awal;
@@ -874,6 +879,11 @@ class BillController extends Controller
                     'awalMeterListrik' => 'required|numeric|lte:999999999',
                     'akhirMeterListrik' => 'required|numeric|lte:999999999',
                 ])->validate();
+
+                $kontrol = Store::where('kd_kontrol', $data->kd_kontrol)->select('id_tlistrik')->first();
+                if($kontrol){
+                    $data->code_tlistrik = TListrik::find($kontrol->id_tlistrik)->code;
+                }
 
                 if($request->checklistrik0){
                     $digit = str_repeat("9",strlen($awal));
@@ -915,7 +925,7 @@ class BillController extends Controller
                     $diff = $request->denlistrik;
                     $valid['dendaListrik'] = $request->denlistrik;
                     Validator::make($valid, [
-                        'dendaListrik' => 'required|numeric|lte:999999999',
+                        'dendaListrik' => 'required|numeric|lte:9999',
                     ])->validate();
 
                     if($daya > 4400){
@@ -929,6 +939,7 @@ class BillController extends Controller
                 $total = $sub - $diskon + $denda;
 
                 $data->b_listrik = json_encode([
+                    'lunas' => 0,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'daya' => $daya,
@@ -941,6 +952,7 @@ class BillController extends Controller
                     'beban' => $beban,
                     'pju' => $pju,
                     'ppn' => $ppn,
+                    'jml_los' => $jml_los,
                     'sub_tagihan' => $sub,
                     'denda' => $denda,
                     'denda_bulan' => $request->denlistrik,
@@ -955,15 +967,37 @@ class BillController extends Controller
                 $den_tagihan += $denda;
                 $dis_tagihan += $diskon;
                 $ttl_tagihan += $total;
+                $rea_tagihan += 0;
                 $sel_tagihan += $total;
             }
             else{
-                $data->code_tlistrik = NULL;
-                $data->b_listrik = NULL;
+                if($data->b_listrik){
+                    $json = json_decode($data->b_listrik);
+                    if($json->lunas == 1){
+                        $lunas *= 1;
+
+                        $sub_tagihan += $json->sub_tagihan;
+                        $den_tagihan += $json->denda;
+                        $dis_tagihan += $json->diskon;
+                        $ttl_tagihan += $json->ttl_tagihan;
+                        $rea_tagihan += $json->rea_tagihan;
+                        $sel_tagihan += $json->sel_tagihan;
+                    }
+                    else{
+                        $data->code_tlistrik = NULL;
+                        $data->b_listrik = NULL;
+                    }
+                }
+                else{
+                    $data->code_tlistrik = NULL;
+                    $data->b_listrik = NULL;
+                }
             }
 
             //Air Bersih
             if($request->fas_airbersih){
+                $lunas *= 0;
+
                 $tarif_id = $request->pairbersih;
 
                 $valid['tarifAirBersih'] = $tarif_id;
@@ -976,6 +1010,7 @@ class BillController extends Controller
 
                 $awal = str_replace('.','',$request->awairbersih);
                 $akhir = str_replace('.','',$request->akairbersih);
+                $digit = null;
 
                 $valid['awalMeterAirBersih'] = $awal;
                 $valid['akhirMeterAirBersih'] = $akhir;
@@ -983,6 +1018,11 @@ class BillController extends Controller
                     'awalMeterAirBersih' => 'required|numeric|lte:999999999',
                     'akhirMeterAirBersih' => 'required|numeric|lte:999999999',
                 ])->validate();
+
+                $kontrol = Store::where('kd_kontrol', $data->kd_kontrol)->select('id_tairbersih')->first();
+                if($kontrol){
+                    $data->code_tairbersih = TAirBersih::find($kontrol->id_tairbersih)->code;
+                }
 
                 if($request->checkairbersih0){
                     $digit = str_repeat("9",strlen($awal));
@@ -1024,7 +1064,7 @@ class BillController extends Controller
                     $diff = $request->denairbersih;
                     $valid['dendaAirBersih'] = $diff;
                     Validator::make($valid, [
-                        'dendaAirBersih' => 'required|numeric|lte:999999999',
+                        'dendaAirBersih' => 'required|numeric|lte:9999',
                     ])->validate();
 
                     $denda = $diff * $tarif_data->denda;
@@ -1033,6 +1073,7 @@ class BillController extends Controller
                 $total = $sub - $diskon + $denda;
 
                 $data->b_airbersih = json_encode([
+                    'lunas' => 0,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'awal' => $awal,
@@ -1044,6 +1085,7 @@ class BillController extends Controller
                     'beban' => $beban,
                     'arkot' => $arkot,
                     'ppn' => $ppn,
+                    'jml_los' => $jml_los,
                     'sub_tagihan' => $sub,
                     'denda' => $denda,
                     'denda_bulan' => $request->denairbersih,
@@ -1058,15 +1100,37 @@ class BillController extends Controller
                 $den_tagihan += $denda;
                 $dis_tagihan += $diskon;
                 $ttl_tagihan += $total;
+                $rea_tagihan += 0;
                 $sel_tagihan += $total;
             }
             else{
-                $data->code_tairbersih = NULL;
-                $data->b_airbersih = NULL;
+                if($data->b_airbersih){
+                    $json = json_decode($data->b_airbersih);
+                    if($json->lunas == 1){
+                        $lunas *= 1;
+
+                        $sub_tagihan += $json->sub_tagihan;
+                        $den_tagihan += $json->denda;
+                        $dis_tagihan += $json->diskon;
+                        $ttl_tagihan += $json->ttl_tagihan;
+                        $rea_tagihan += $json->rea_tagihan;
+                        $sel_tagihan += $json->sel_tagihan;
+                    }
+                    else{
+                        $data->code_tairbersih = NULL;
+                        $data->b_airbersih = NULL;
+                    }
+                }
+                else{
+                    $data->code_tairbersih = NULL;
+                    $data->b_airbersih = NULL;
+                }
             }
 
             //Keamanan IPK
             if($request->fas_keamananipk){
+                $lunas *= 0;
+
                 $tarif_id = $request->pkeamananipk;
 
                 $valid['tarifKeamananIpk'] = $tarif_id;
@@ -1096,9 +1160,11 @@ class BillController extends Controller
                 $ipk = $total - $keamanan;
 
                 $data->b_keamananipk = json_encode([
+                    'lunas' => 0,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'price' => $tarif->price,
+                    'jml_los' => $jml_los,
                     'sub_tagihan' => $sub,
                     'diskon' => $diskon,
                     'keamanan' => $keamanan,
@@ -1111,14 +1177,34 @@ class BillController extends Controller
                 $sub_tagihan += $sub;
                 $dis_tagihan += $diskon;
                 $ttl_tagihan += $total;
+                $rea_tagihan += 0;
                 $sel_tagihan += $total;
             }
             else{
-                $data->b_keamananipk = NULL;
+                if($data->b_keamananipk){
+                    $json = json_decode($data->b_keamananipk);
+                    if($json->lunas == 1){
+                        $lunas *= 1;
+
+                        $sub_tagihan += $json->sub_tagihan;
+                        $dis_tagihan += $json->diskon;
+                        $ttl_tagihan += $json->ttl_tagihan;
+                        $rea_tagihan += $json->rea_tagihan;
+                        $sel_tagihan += $json->sel_tagihan;
+                    }
+                    else{
+                        $data->b_keamananipk = NULL;
+                    }
+                }
+                else{
+                    $data->b_keamananipk = NULL;
+                }
             }
 
             //Kebersihan
             if($request->fas_kebersihan){
+                $lunas *= 0;
+
                 $tarif_id = $request->pkebersihan;
 
                 $valid['tarifKebersihan'] = $tarif_id;
@@ -1144,9 +1230,11 @@ class BillController extends Controller
                 $total = $sub - $diskon;
 
                 $data->b_kebersihan = json_encode([
+                    'lunas' => 0,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'price' => $tarif->price,
+                    'jml_los' => $jml_los,
                     'sub_tagihan' => $sub,
                     'diskon' => $diskon,
                     'ttl_tagihan' => $total,
@@ -1157,14 +1245,34 @@ class BillController extends Controller
                 $sub_tagihan += $sub;
                 $dis_tagihan += $diskon;
                 $ttl_tagihan += $total;
+                $rea_tagihan += 0;
                 $sel_tagihan += $total;
             }
             else{
-                $data->b_kebersihan = NULL;
+                if($data->b_kebersihan){
+                    $json = json_decode($data->b_kebersihan);
+                    if($json->lunas == 1){
+                        $lunas *= 1;
+
+                        $sub_tagihan += $json->sub_tagihan;
+                        $dis_tagihan += $json->diskon;
+                        $ttl_tagihan += $json->ttl_tagihan;
+                        $rea_tagihan += $json->rea_tagihan;
+                        $sel_tagihan += $json->sel_tagihan;
+                    }
+                    else{
+                        $data->b_kebersihan = NULL;
+                    }
+                }
+                else{
+                    $data->b_kebersihan = NULL;
+                }
             }
 
             //Air Kotor
             if($request->fas_airkotor){
+                $lunas *= 0;
+
                 $tarif_id = $request->pairkotor;
 
                 $valid['tarifAirKotor'] = $tarif_id;
@@ -1190,9 +1298,11 @@ class BillController extends Controller
                 $total = $sub - $diskon;
 
                 $data->b_airkotor = json_encode([
+                    'lunas' => 0,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'price' => $tarif->price,
+                    'jml_los' => $jml_los,
                     'sub_tagihan' => $sub,
                     'diskon' => $diskon,
                     'ttl_tagihan' => $total,
@@ -1203,17 +1313,38 @@ class BillController extends Controller
                 $sub_tagihan += $sub;
                 $dis_tagihan += $diskon;
                 $ttl_tagihan += $total;
+                $rea_tagihan += 0;
                 $sel_tagihan += $total;
             }
             else{
-                $data->b_airkotor = NULL;
+                if($data->b_airkotor){
+                    $json = json_decode($data->b_airkotor);
+                    if($json->lunas == 1){
+                        $lunas *= 1;
+
+                        $sub_tagihan += $json->sub_tagihan;
+                        $dis_tagihan += $json->diskon;
+                        $ttl_tagihan += $json->ttl_tagihan;
+                        $rea_tagihan += $json->rea_tagihan;
+                        $sel_tagihan += $json->sel_tagihan;
+                    }
+                    else{
+                        $data->b_airkotor = NULL;
+                    }
+                }
+                else{
+                    $data->b_airkotor = NULL;
+                }
             }
 
             //Lainnya
             if($request->plain){
                 $plain = $request->plain;
                 $prices = array();
+
                 for($i = 0; $i < count($plain); $i++){
+                    $lunas *= 0;
+
                     $tarif_id = $request->plain[$i];
 
                     $valid['tarifLain'] = $tarif_id;
@@ -1230,9 +1361,11 @@ class BillController extends Controller
                     $total = $sub;
 
                     $prices[$i] = [
+                        'lunas' => 0,
                         'tarif_id' => $tarif_id,
                         'tarif_nama' => $tarif_nama,
                         'price' => $tarif->price,
+                        'jml_los' => $jml_los,
                         'satuan_id' => $tarif->satuan,
                         'satuan_nama' => PLain::satuan($tarif->satuan),
                         'sub_tagihan' => $total,
@@ -1240,16 +1373,67 @@ class BillController extends Controller
                         'rea_tagihan' => 0,
                         'sel_tagihan' => $total,
                     ];
+                }
 
-                    $sub_tagihan += $sub;
-                    $ttl_tagihan += $total;
-                    $sel_tagihan += $total;
+                if($data->b_lain){
+                    $json = json_decode($data->b_lain);
+                    $lunas_lain = array();
+                    foreach ($json as $d => $b) {
+                        if($b->lunas == 1){
+                            $lunas_lain[$d] = $json[$d];
+                        }
+                    }
+
+                    $prices = array_merge($lunas_lain, $prices);
                 }
 
                 $data->b_lain = json_encode($prices);
+
+                $json = json_decode($data->b_lain);
+                foreach ($json as $d => $b) {
+                    $lunas *= $b->lunas;
+
+                    $sub_tagihan += $b->sub_tagihan;
+                    $ttl_tagihan += $b->ttl_tagihan;
+                    $rea_tagihan += $b->rea_tagihan;
+                    $sel_tagihan += $b->sel_tagihan;
+                }
             }
             else{
-                $data->b_lain = NULL;
+                if($data->b_lain){
+                    $json = json_decode($data->b_lain);
+                    foreach ($json as $d => $b) {
+                        if($b->lunas == 1){
+                            $lunas *= 1;
+
+                            $sub_tagihan += $b->sub_tagihan;
+                            $ttl_tagihan += $b->ttl_tagihan;
+                            $rea_tagihan += $b->rea_tagihan;
+                            $sel_tagihan += $b->sel_tagihan;
+                        }
+                        else{
+                            unset($json[$d]);
+                        }
+                    }
+                    $json = array_values($json);
+                    $data->b_lain = json_encode($json);
+
+                    if(empty($json)){
+                        $data->b_lain = NULL;
+                    }
+                }
+                else{
+                    $data->b_lain = NULL;
+                }
+            }
+
+            if($lunas == 1){
+                $data->stt_lunas = 1;
+                $data->stt_bayar = 1;
+                $data->stt_publish = 1;
+            }
+            else{
+                $data->stt_lunas = 0;
             }
 
             $json = json_decode($data->b_tagihan);
@@ -1258,7 +1442,7 @@ class BillController extends Controller
             $json->denda = $den_tagihan;
             $json->diskon = $dis_tagihan;
             $json->ttl_tagihan = $ttl_tagihan;
-            $json->rea_tagihan = 0;
+            $json->rea_tagihan = $rea_tagihan;
             $json->sel_tagihan = $sel_tagihan;
             $data->b_tagihan = json_encode($json);
 
@@ -1285,7 +1469,6 @@ class BillController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        //END REVIEW ULANG
     }
 
     /**
