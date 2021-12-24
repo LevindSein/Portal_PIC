@@ -10,14 +10,12 @@
         <link rel="stylesheet" href="{{asset('vendor/fontawesome/css/all.min.css')}}" type="text/css">
         <link rel="stylesheet" href="{{asset('vendor/fontawesomepro/css/all.min.css')}}" type="text/css">
 
-        {{-- jQuery 3.60 --}}
-        <script src="{{asset('portal/home/login/jquery.min.js')}}"></script>
-
         {{-- Toastr --}}
         <link rel="stylesheet" type="text/css" href="{{asset('vendor/toastr/toastr.min.css')}}">
-        <script src="{{asset('vendor/toastr/toastr.min.js')}}"></script>
 
         <title>Home | Portal PIC</title>
+
+        @laravelPWA
     </head>
     <body>
         <div class="container">
@@ -79,6 +77,11 @@
             </div>
         </div>
 
+        {{-- jQuery 3.60 --}}
+        <script src="{{asset('portal/home/login/jquery.min.js')}}"></script>
+
+        <script src="{{asset('vendor/toastr/toastr.min.js')}}"></script>
+
         <script src="{{asset('portal/home/login/app.js')}}"></script>
         <script src="{{asset('custom.js')}}"></script>
         <script src="{{asset('vendor/block-ui/jquery.blockUI.js')}}"></script>
@@ -87,6 +90,25 @@
             $(document).ready(function(){
                 $("#uid").focus();
             });
+
+            // let installPromptEvent;
+
+            // window.addEventListener('beforeinstallprompt', (event) => {
+            //     // Prevent Chrome <= 67 from automatically showing the prompt
+            //     event.preventDefault();
+            //     // Stash the event so it can be triggered later.
+            //     installPromptEvent = event;
+            //     // Update the install UI to notify the user app can be installed
+            //     document.querySelector('#install-button').disabled = false;
+            // });
+            // btnInstall.addEventListener('click', () => {
+            //     // Update the install UI to remove the install button
+            //     document.querySelector('#install-button').disabled = true;
+            //     // Show the modal add to home screen dialog
+            //     installPromptEvent.prompt();
+            //     // Wait for the user to respond to the prompt
+            //     installPromptEvent.userChoice.then(handleInstall);
+            // });
 
             $('#passwordRegShow').on('click touchstart', function(e){
                 e.preventDefault();

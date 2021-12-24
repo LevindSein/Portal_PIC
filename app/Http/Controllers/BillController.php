@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\Group;
 use App\Models\Bill;
-use App\Models\IndoDate;
 use App\Models\Period;
 use App\Models\Identity;
 use App\Models\PListrik;

@@ -27,6 +27,8 @@
 
     {{-- Toastr --}}
     <link rel="stylesheet" type="text/css" href="{{asset('vendor/toastr/toastr.min.css')}}">
+
+    @laravelPWA
 </head>
 
 <body>
@@ -490,44 +492,13 @@
         //     // until we're a second into the minute to make the checks easier
         //     setTimeout(notifyForThisMinute, (61 - new Date().getSeconds()) * 1000);
         // }
-
-        $(document).ready(function(){
-            // $.fn.dataTable.ext.errMode = 'none';
-            // $('#dtable').on('error.dt', function(e, settings, techNote, message) {
-            //     console.log( 'An error has been reported by DataTables: ', message);
-            // })
+        $(document).ready(function() {
+            $.fn.dataTable.ext.errMode = 'none';
+            $('#dtable').on('error.dt', function(e, settings, techNote, message) {
+                alert("Datatable system error.");
+                console.log( 'An error has been reported by DataTables: ', message);
+            });
         });
-
-        $(".sidebartoggler").click(function(){
-            var adjust = setInterval(() => {
-                var adjust = $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
-            }, 10);
-            setTimeout(() => {
-                clearInterval(adjust);
-            }, 1000);
-        });
-
-        // $(document).on('shown.bs.tooltip', function (e) {
-        //     setTimeout(function () {
-        //         $(e.target).tooltip('hide');
-        //         $(".tooltip").tooltip("hide");
-        //     }, 3000);
-        // });
-
-        // $(document).on('shown.bs.popover', function (e) {
-        //     setTimeout(function () {
-        //         $(e.target).popover('hide');
-        //         $(".popover").popover("hide");
-        //     }, 5000);
-        // });
-
-        setInterval(() => {
-            var email = localStorage.getItem("email");
-            if(email == 'terverifikasi'){
-                localStorage.setItem("email", null);
-                location.reload();
-            }
-        }, 60000);
 
         $("#emailResend").click( function(e){
             e.preventDefault();

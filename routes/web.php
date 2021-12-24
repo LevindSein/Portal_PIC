@@ -185,3 +185,15 @@ Route::get('search/price/lain',[SearchController::class, 'plain']);
 
 Route::get('scan/qr/{type}/{data}',[ScanController::class, 'scanQr']);
 Route::post('scan/qr/register',[ScanController::class, 'scanQrRegister']);
+
+Route::get('tester', function(){
+    return 200;
+});
+
+Route::get('/offline', function () {
+    return view('vendor.laravelpwa.offline');
+});
+
+Route::get('payment', function(){
+    return 'Payment';
+});
