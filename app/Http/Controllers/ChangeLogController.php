@@ -110,9 +110,6 @@ class ChangeLogController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -134,9 +131,6 @@ class ChangeLogController extends Controller
 
             return response()->json(['success' => 'Fetching data success.', 'changelog' => $data]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -157,9 +151,6 @@ class ChangeLogController extends Controller
             $data = json_decode($data->data);
 
             return response()->json(['success' => 'Data deleted.', 'changelog' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -205,9 +196,6 @@ class ChangeLogController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -232,9 +220,6 @@ class ChangeLogController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 }

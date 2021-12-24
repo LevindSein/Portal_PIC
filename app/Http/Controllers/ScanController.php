@@ -30,7 +30,7 @@ class ScanController extends Controller
         }
         else{
             $user = User::where('member', $member)->first();
-            if(!is_null($user)){
+            if($user){
                 if($type == 'register'){
                     $nama = $user->name;
                     return redirect('register')->with([
@@ -65,9 +65,9 @@ class ScanController extends Controller
 
         if($now < $available){
             $code = ActivationCode::where([['code', $activation],['submit',0]])->first();
-            if(!is_null($code) && $now < $code->available){
+            if($code && $now < $code->available){
                 $user = User::where('member',$member)->first();
-                if(!is_null($user)){
+                if($user){
                     $user->activation_code = $activation;
 
                     try{

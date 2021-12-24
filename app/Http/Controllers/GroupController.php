@@ -64,7 +64,7 @@ class GroupController extends Controller
 
             $group = strtoupper($request->blok);
             $los = null;
-            if(!is_null($request->los)){
+            if($request->los){
                 $los = rtrim(strtoupper($request->los), ',');
                 $los = explode(',', $los);
                 $los = array_unique($los);
@@ -94,9 +94,6 @@ class GroupController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -114,12 +111,12 @@ class GroupController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            if(!is_null($data->data)){
+            if($data->data){
                 $json = json_decode($data->data);
 
                 $count = 0;
                 $long_data = '';
-                if(!is_null($json->data)){
+                if($json->data){
                     $explode = explode(',', $json->data);
                     $count = count($explode);
                     $long_data = implode(', ', $explode);
@@ -134,9 +131,6 @@ class GroupController extends Controller
                 $data['los'] = null;
 
             return response()->json(['success' => 'Fetching data success.', 'group' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -155,7 +149,7 @@ class GroupController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            if(!is_null($data->data)){
+            if($data->data){
                 $json = json_decode($data->data);
 
                 $data['los'] = $json;
@@ -164,9 +158,6 @@ class GroupController extends Controller
                 $data['los'] = null;
 
             return response()->json(['success' => 'Fetching data success.', 'group' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -195,7 +186,7 @@ class GroupController extends Controller
             $group = strtoupper($request->blok);
 
             $los = null;
-            if(!is_null($request->los)){
+            if($request->los){
                 $los = rtrim(strtoupper($request->los), ',');
                 $los = explode(',', $los);
                 $los = array_unique($los);
@@ -204,7 +195,7 @@ class GroupController extends Controller
             }
 
             $data->name = $group;
-            if(!is_null($data->data)){
+            if($data->data){
                 $json = json_decode($data->data);
                 $json->data = $los;
                 $json->user_update = Auth::user()->id;
@@ -253,9 +244,6 @@ class GroupController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey, 'info' => $i . " Data Tempat terpengaruh."]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -273,7 +261,7 @@ class GroupController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            if(!is_null(Store::where('group', $data->name)->first())){
+            if(Store::where('group', $data->name)->first()){
                 return response()->json(['error' => "Group currently use."]);
             }
 
@@ -284,9 +272,6 @@ class GroupController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 }

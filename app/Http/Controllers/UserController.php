@@ -158,7 +158,7 @@ class UserController extends Controller
 
             $country = $request->country;
             $country = Country::where('iso', $country)->first();
-            if(!is_null($country)){
+            if($country){
                 $country = $country->id;
             }
             else{
@@ -218,9 +218,6 @@ class UserController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -242,7 +239,7 @@ class UserController extends Controller
             $user['active'] = User::active($user->active);
 
             $country = Country::find($user->country_id);
-            if(!is_null($country)){
+            if($country){
                 $user['phone'] = $country->phonecode.$user->phone;
             }
             else{
@@ -258,9 +255,6 @@ class UserController extends Controller
             $user['update'] = Carbon::parse($user->updated_at)->toDateTimeString();
 
             return response()->json(['success' => 'Fetching data success.', 'user' => $user]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -280,7 +274,7 @@ class UserController extends Controller
             }
 
             $country = Country::find($user->country_id);
-            if(!is_null($country)){
+            if($country){
                 $user['iso'] = $country->iso;
             }
             else{
@@ -293,9 +287,6 @@ class UserController extends Controller
             }
 
             return response()->json(['success' => 'Fetching data success.', 'user' => $user]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -341,7 +332,7 @@ class UserController extends Controller
 
             $country = $request->country;
             $country = Country::where('iso', $country)->first();
-            if(!is_null($country)){
+            if($country){
                 $country = $country->id;
             }
             else{
@@ -370,9 +361,6 @@ class UserController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function authorityCheck($request){
@@ -399,7 +387,7 @@ class UserController extends Controller
         $kelola = NULL;
 
         for($i=0; $i<count($pilihanKelola); $i++){
-            if(!is_null($request->kelola)){
+            if($request->kelola){
                 if(in_array($pilihanKelola[$i],$request->kelola)){
                     $kelola[$pilihanKelola[$i]] = true;
                 }
@@ -449,7 +437,7 @@ class UserController extends Controller
                 return response()->json(['error' => 'Data currently.']);
             }
 
-            if(!is_null($user->nonactive)){
+            if($user->nonactive){
                 $json = json_decode($user->nonactive, true);
 
                 $history = count($json);
@@ -495,7 +483,7 @@ class UserController extends Controller
             $user->active = 0;
             $user->nonactive = $nonactive;
 
-            if(!is_null($user->email)){
+            if($user->email){
                 try{
                     $details = [
                         'sender' => Auth::user()->name." dari PIC",
@@ -524,9 +512,6 @@ class UserController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -559,9 +544,6 @@ class UserController extends Controller
 
             return response()->json(['success' => 'Data deleted.']);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function restore($id)
@@ -573,7 +555,7 @@ class UserController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            if(!is_null($user->nonactive)){
+            if($user->nonactive){
                 $json = json_decode($user->nonactive, true);
 
                 $history = count($json);
@@ -636,9 +618,6 @@ class UserController extends Controller
 
             return response()->json(['success' => 'Data restored.']);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function reset($id)
@@ -662,9 +641,6 @@ class UserController extends Controller
 
             return response()->json(['success' => 'Password resetted.', 'pass' => $pass]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function activate(){
@@ -676,7 +652,7 @@ class UserController extends Controller
                 ['available', '>', $now],
             ])->first();
 
-            if(!is_null($code)){
+            if($code){
                 $data = $code;
 
                 //disini baca waktu
@@ -708,9 +684,6 @@ class UserController extends Controller
 
             return response()->json(['success' => 'Activation code success.', 'result' => $data]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function activateVerify(){
@@ -725,7 +698,7 @@ class UserController extends Controller
                 ['available', '>', $now],
             ])->first();
 
-            if(!is_null($code)){
+            if($code){
                 $data = User::where('activation_code', $code->code)->first();
 
                 $data = Crypt::encrypt($data->id);

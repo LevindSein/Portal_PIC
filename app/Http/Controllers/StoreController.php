@@ -163,7 +163,7 @@ class StoreController extends Controller
             $data['status'] = $request->status;
             $data['ket'] = $request->ket;
 
-            if(!is_null($request->commodity)){
+            if($request->commodity){
                 $commodity = $this->multipleSelect($request->commodity);
                 $commodities = array();
                 for($i = 0; $i < count($commodity); $i++){
@@ -206,7 +206,7 @@ class StoreController extends Controller
                 $data['id_tlistrik'] = $request->tlistrik;
                 $data['fas_listrik'] = $request->plistrik;
 
-                if(!is_null($request->dlistrik)){
+                if($request->dlistrik){
                     $diskon['listrik'] = str_replace('.','',$request->dlistrik);
                 }
             }
@@ -230,7 +230,7 @@ class StoreController extends Controller
                 $data['id_tairbersih'] = $request->tairbersih;
                 $data['fas_airbersih'] = $request->pairbersih;
 
-                if(!is_null($request->dairbersih)){
+                if($request->dairbersih){
                     $diskon['airbersih'] = str_replace('.','',$request->dairbersih);
                 }
             }
@@ -244,7 +244,7 @@ class StoreController extends Controller
                 ])->validate();
 
                 $price = PKeamananIpk::find($request->pkeamananipk);
-                if(!is_null($request->dkeamananipk)){
+                if($request->dkeamananipk){
                     $max_disc = $price->price * $jml_los;
 
                     $valid['diskonKeamananIpk'] = str_replace('.','',$request->dkeamananipk);
@@ -256,7 +256,7 @@ class StoreController extends Controller
 
                 $data['fas_keamananipk'] = $request->pkeamananipk;
 
-                if(!is_null($request->dkeamananipk)){
+                if($request->dkeamananipk){
                     $diskon['keamananipk'] = str_replace('.','',$request->dkeamananipk);
                 }
             }
@@ -270,7 +270,7 @@ class StoreController extends Controller
                 ])->validate();
 
                 $price = PKebersihan::find($request->pkebersihan);
-                if(!is_null($request->dkebersihan)){
+                if($request->dkebersihan){
                     $max_disc = $price->price * $jml_los;
 
                     $valid['diskonKebersihan'] = str_replace('.','',$request->dkebersihan);
@@ -282,7 +282,7 @@ class StoreController extends Controller
 
                 $data['fas_kebersihan'] = $request->pkebersihan;
 
-                if(!is_null($request->dkebersihan)){
+                if($request->dkebersihan){
                     $diskon['kebersihan'] = str_replace('.','',$request->dkebersihan);
                 }
             }
@@ -296,7 +296,7 @@ class StoreController extends Controller
                 ])->validate();
 
                 $price = PAirKotor::find($request->pairkotor);
-                if(!is_null($request->dairkotor)){
+                if($request->dairkotor){
                     $valid['diskonAirKotor'] = str_replace('.','',$request->dairkotor);
 
                     Validator::make($valid, [
@@ -306,7 +306,7 @@ class StoreController extends Controller
 
                 $data['fas_airkotor'] = $request->pairkotor;
 
-                if(!is_null($request->dairkotor)){
+                if($request->dairkotor){
                     $diskon['airkotor'] = str_replace('.','',$request->dairkotor);
                 }
             }
@@ -355,9 +355,6 @@ class StoreController extends Controller
             $searchKey = str_replace('-','',$request->kontrol);
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -417,9 +414,6 @@ class StoreController extends Controller
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -452,9 +446,6 @@ class StoreController extends Controller
             $data['no_los'] = explode(',', $data->no_los);
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -518,7 +509,7 @@ class StoreController extends Controller
             $data->status = $request->status;
             $data->ket = $request->ket;
 
-            if(!is_null($request->commodity)){
+            if($request->commodity){
                 $commodity = $this->multipleSelect($request->commodity);
                 $commodities = array();
                 for($i = 0; $i < count($commodity); $i++){
@@ -561,7 +552,7 @@ class StoreController extends Controller
                 $data->id_tlistrik = $request->tlistrik;
                 $data->fas_listrik = $request->plistrik;
 
-                if(!is_null($request->dlistrik)){
+                if($request->dlistrik){
                     $diskon['listrik'] = str_replace('.','',$request->dlistrik);
                 }
             }
@@ -585,7 +576,7 @@ class StoreController extends Controller
                 $data->id_tairbersih = $request->tairbersih;
                 $data->fas_airbersih = $request->pairbersih;
 
-                if(!is_null($request->dairbersih)){
+                if($request->dairbersih){
                     $diskon['airbersih'] = str_replace('.','',$request->dairbersih);
                 }
             }
@@ -599,7 +590,7 @@ class StoreController extends Controller
                 ])->validate();
 
                 $price = PKeamananIpk::find($request->pkeamananipk);
-                if(!is_null($request->dkeamananipk)){
+                if($request->dkeamananipk){
                     $max_disc = $price->price * $jml_los;
 
                     $valid['diskonKeamananIpk'] = str_replace('.','',$request->dkeamananipk);
@@ -611,7 +602,7 @@ class StoreController extends Controller
 
                 $data->fas_keamananipk = $request->pkeamananipk;
 
-                if(!is_null($request->dkeamananipk)){
+                if($request->dkeamananipk){
                     $diskon['keamananipk'] = str_replace('.','',$request->dkeamananipk);
                 }
             }
@@ -625,7 +616,7 @@ class StoreController extends Controller
                 ])->validate();
 
                 $price = PKebersihan::find($request->pkebersihan);
-                if(!is_null($request->dkebersihan)){
+                if($request->dkebersihan){
                     $max_disc = $price->price * $jml_los;
 
                     $valid['diskonKebersihan'] = str_replace('.','',$request->dkebersihan);
@@ -637,7 +628,7 @@ class StoreController extends Controller
 
                 $data->fas_kebersihan = $request->pkebersihan;
 
-                if(!is_null($request->dkebersihan)){
+                if($request->dkebersihan){
                     $diskon['kebersihan'] = str_replace('.','',$request->dkebersihan);
                 }
             }
@@ -651,7 +642,7 @@ class StoreController extends Controller
                 ])->validate();
 
                 $price = PAirKotor::find($request->pairkotor);
-                if(!is_null($request->dairkotor)){
+                if($request->dairkotor){
                     $valid['diskonAirKotor'] = str_replace('.','',$request->dairkotor);
 
                     Validator::make($valid, [
@@ -661,7 +652,7 @@ class StoreController extends Controller
 
                 $data->fas_airkotor = $request->pairkotor;
 
-                if(!is_null($request->dairkotor)){
+                if($request->dairkotor){
                     $diskon['airkotor'] = str_replace('.','',$request->dairkotor);
                 }
             }
@@ -711,9 +702,6 @@ class StoreController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -731,7 +719,7 @@ class StoreController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            if(!is_null($data->fas_listrik)){
+            if($data->fas_listrik){
                 try{
                     $tools = TListrik::findOrFail($data->id_tlistrik);
                 } catch(ModelNotFoundException $e){
@@ -756,7 +744,7 @@ class StoreController extends Controller
                 }
             }
 
-            if(!is_null($data->fas_airbersih)){
+            if($data->fas_airbersih){
                 try{
                     $tools = TAirBersih::findOrFail($data->id_tairbersih);
                 } catch(ModelNotFoundException $e){
@@ -788,9 +776,6 @@ class StoreController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 }

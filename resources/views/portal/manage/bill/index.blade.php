@@ -84,7 +84,7 @@ Kelola Tagihan
                 <div class="row">
                     <div class="col-lg-6 col-xlg-6">
                         <small class="text-muted pt-4 db">Kode Tagihan</small>
-                        <h4 id="showCode" class='text-info'></h4>
+                        <h4 id="showCode"></h4>
                         <small class="text-muted pt-4 db">Periode</small>
                         <h6 id="showPeriod"></h6>
                         <small class="text-muted pt-4 db">Kontrol</small>

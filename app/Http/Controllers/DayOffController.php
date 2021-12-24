@@ -85,9 +85,6 @@ class DayOffController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -110,9 +107,6 @@ class DayOffController extends Controller
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -133,9 +127,6 @@ class DayOffController extends Controller
             $data['data'] = json_decode($data->data);
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -182,9 +173,6 @@ class DayOffController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -209,9 +197,6 @@ class DayOffController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 }

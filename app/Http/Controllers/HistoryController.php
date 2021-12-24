@@ -110,9 +110,6 @@ class HistoryController extends Controller
 
             return response()->json(['success' => 'Fetching data success.', 'user' => $data]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**

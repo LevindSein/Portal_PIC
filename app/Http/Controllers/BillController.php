@@ -198,9 +198,6 @@ class BillController extends Controller
 
             return response()->json(['success' => $period]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function periodChange($id){
@@ -825,9 +822,6 @@ class BillController extends Controller
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -855,9 +849,6 @@ class BillController extends Controller
             $data['b_lain'] = json_decode($data->b_lain);
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 

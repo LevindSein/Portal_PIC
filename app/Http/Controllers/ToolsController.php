@@ -91,9 +91,6 @@ class ToolsController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function listrikEdit($id){
@@ -107,9 +104,6 @@ class ToolsController extends Controller
             //
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -152,9 +146,6 @@ class ToolsController extends Controller
 
             return response()->json(['success' => 'Data saved.']);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function listrikShow($id){
@@ -166,7 +157,7 @@ class ToolsController extends Controller
             }
 
             $kontrol = Store::where('id_tlistrik', $id)->select('kd_kontrol')->first();
-            if(!is_null($kontrol)){
+            if($kontrol){
                 $data['kontrol'] = $kontrol->kd_kontrol;
             }
             else{
@@ -177,9 +168,6 @@ class ToolsController extends Controller
             $data['data'] = $json;
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -202,9 +190,6 @@ class ToolsController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -274,9 +259,6 @@ class ToolsController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function airbersihEdit($id){
@@ -290,9 +272,6 @@ class ToolsController extends Controller
             //
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -332,9 +311,6 @@ class ToolsController extends Controller
 
             return response()->json(['success' => 'Data saved.']);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function airbersihShow($id){
@@ -346,7 +322,7 @@ class ToolsController extends Controller
             }
 
             $kontrol = Store::where('id_tairbersih', $id)->select('kd_kontrol')->first();
-            if(!is_null($kontrol)){
+            if($kontrol){
                 $data['kontrol'] = $kontrol->kd_kontrol;
             }
             else{
@@ -357,9 +333,6 @@ class ToolsController extends Controller
             $data['data'] = $json;
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -382,9 +355,6 @@ class ToolsController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 }

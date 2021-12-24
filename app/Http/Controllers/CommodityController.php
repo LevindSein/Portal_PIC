@@ -86,9 +86,6 @@ class CommodityController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -110,9 +107,6 @@ class CommodityController extends Controller
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -131,9 +125,6 @@ class CommodityController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -177,9 +168,6 @@ class CommodityController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -204,9 +192,6 @@ class CommodityController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 }

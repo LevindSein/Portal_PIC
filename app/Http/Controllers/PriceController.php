@@ -100,9 +100,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function listrikEdit($id){
@@ -116,9 +113,6 @@ class PriceController extends Controller
             $data['data'] = json_decode($data->data);
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -177,9 +171,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function listrikShow($id){
@@ -194,9 +185,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function listrikDestroy($id){
@@ -207,7 +195,7 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            if(!is_null(Store::where('fas_listrik', $id)->first())){
+            if(Store::where('fas_listrik', $id)->first()){
                 return response()->json(['error' => "Price currently use."]);
             }
 
@@ -218,9 +206,6 @@ class PriceController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -303,9 +288,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function airbersihEdit($id){
@@ -319,9 +301,6 @@ class PriceController extends Controller
             $data['data'] = json_decode($data->data);
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -379,9 +358,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function airbersihShow($id){
@@ -396,9 +372,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function airbersihDestroy($id){
@@ -409,7 +382,7 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            if(!is_null(Store::where('fas_airbersih', $id)->first())){
+            if(Store::where('fas_airbersih', $id)->first()){
                 return response()->json(['error' => "Price currently use."]);
             }
 
@@ -420,9 +393,6 @@ class PriceController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -493,9 +463,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function keamananipkEdit($id){
@@ -509,9 +476,6 @@ class PriceController extends Controller
             $data['data'] = json_decode($data->data);
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -557,9 +521,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function keamananipkShow($id){
@@ -574,9 +535,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function keamananipkDestroy($id){
@@ -587,7 +545,7 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            if(!is_null(Store::where('fas_keamananipk', $id)->first())){
+            if(Store::where('fas_keamananipk', $id)->first()){
                 return response()->json(['error' => "Price currently use."]);
             }
 
@@ -598,9 +556,6 @@ class PriceController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -667,9 +622,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function kebersihanEdit($id){
@@ -683,9 +635,6 @@ class PriceController extends Controller
             $data['data'] = json_decode($data->data);
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -727,9 +676,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function kebersihanShow($id){
@@ -744,9 +690,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function kebersihanDestroy($id){
@@ -757,7 +700,7 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            if(!is_null(Store::where('fas_kebersihan', $id)->first())){
+            if(Store::where('fas_kebersihan', $id)->first()){
                 return response()->json(['error' => "Price currently use."]);
             }
 
@@ -768,9 +711,6 @@ class PriceController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -837,9 +777,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function airkotorEdit($id){
@@ -853,9 +790,6 @@ class PriceController extends Controller
             $data['data'] = json_decode($data->data);
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -897,9 +831,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function airkotorShow($id){
@@ -914,9 +845,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function airkotorDestroy($id){
@@ -927,7 +855,7 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            if(!is_null(Store::where('fas_airkotor', $id)->first())){
+            if(Store::where('fas_airkotor', $id)->first()){
                 return response()->json(['error' => "Price currently use."]);
             }
 
@@ -938,9 +866,6 @@ class PriceController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -1009,9 +934,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function lainEdit($id){
@@ -1025,9 +947,6 @@ class PriceController extends Controller
             $data['data'] = json_decode($data->data);
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
-        }
-        else{
-            abort(404);
         }
     }
 
@@ -1071,9 +990,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function lainShow($id){
@@ -1089,9 +1005,6 @@ class PriceController extends Controller
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
-        else{
-            abort(404);
-        }
     }
 
     public function lainDestroy($id){
@@ -1102,7 +1015,7 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            if(!is_null(Store::whereJsonContains('fas_lain', [['id' => $id]])->first())){
+            if(Store::whereJsonContains('fas_lain', [['id' => $id]])->first()){
                 return response()->json(['error' => "Price currently use."]);
             }
 
@@ -1113,9 +1026,6 @@ class PriceController extends Controller
             }
 
             return response()->json(['success' => 'Data deleted.']);
-        }
-        else{
-            abort(404);
         }
     }
 }

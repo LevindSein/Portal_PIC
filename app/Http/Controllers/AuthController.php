@@ -133,7 +133,7 @@ class AuthController extends Controller
                     $exist = User::where('uid', $uid)->first();
                 }
 
-                if(!is_null($exist)){
+                if($exist){
                     return response()->json(['error' => "Password incorrect."]);
                 }
                 else{
@@ -141,9 +141,6 @@ class AuthController extends Controller
                     return response()->json(['error' => "Account not found."]);
                 }
             };
-        }
-        else{
-            abort(404);
         }
     }
 

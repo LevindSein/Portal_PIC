@@ -49,9 +49,6 @@ class EmailController extends Controller
                 return response()->json(['success' => "Please check your email."]);
             }
         }
-        else{
-            abort(404);
-        }
     }
 
     public function verifyResend($level, $active, $member){
@@ -73,7 +70,7 @@ class EmailController extends Controller
         else{
             $user = User::where('member', $member)->first();
 
-            if(!is_null($user)){
+            if($user){
                 if($user->level == $level && $user->active == $active){
                     $user->email_verified_at = Carbon::now()->toDateTimeString();
                     $user->save();
@@ -108,7 +105,7 @@ class EmailController extends Controller
         else{
             $user = User::where("member", $member)->first();
 
-            if(!is_null($user)){
+            if($user){
                 if($user->level == $level){
                     $user->email_verified_at = Carbon::now()->toDateTimeString();
                     $user->save();
@@ -139,7 +136,7 @@ class EmailController extends Controller
 
                 $user = User::where('email', $email)->first();
 
-                if(!is_null($user)){
+                if($user){
                     try{
                         $lock = Cache::lock('forgot', 90);
                         $details = [
@@ -195,7 +192,7 @@ class EmailController extends Controller
                 else{
                     $user = User::where('member', $member)->first();
 
-                    if(!is_null($user)){
+                    if($user){
                         $user->password = Hash::make(sha1(md5(hash('gost', $password))));
                         $user->save();
                     }
@@ -206,9 +203,6 @@ class EmailController extends Controller
 
                 return response()->json(['success' => 'Password has been changed.', 'description' => 'success']);
             }
-        }
-        else{
-            abort(404);
         }
     }
 

@@ -64,7 +64,7 @@ class ProfileController extends Controller
 
             $country = $request->country;
             $country = Country::where('iso', $country)->first();
-            if(!is_null($country)){
+            if($country){
                 $country = $country->id;
             }
             else{
@@ -101,7 +101,7 @@ class ProfileController extends Controller
             $user->address = $address;
 
             if (Hash::check(sha1(md5($password)), $user->password)) {
-                if(!is_null($passwordNew)){
+                if($passwordNew){
                     $user->password = Hash::make(sha1(md5($passwordNew)));
                     try{
                         $user->save();
@@ -122,9 +122,6 @@ class ProfileController extends Controller
             }
 
             return response()->json(['success' => 'Data saved.', 'description' => 'success']);
-        }
-        else{
-            abort(404);
         }
     }
 
