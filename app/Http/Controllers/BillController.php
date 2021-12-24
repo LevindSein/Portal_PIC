@@ -556,7 +556,9 @@ class BillController extends Controller
                     'sub_tagihan' => $sub,
                     'diskon' => $diskon,
                     'keamanan' => $keamanan,
+                    'keamanan_persen' => $tarif_data->keamanan,
                     'ipk' => $ipk,
+                    'ipk_persen' => $tarif_data->ipk,
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
@@ -804,15 +806,18 @@ class BillController extends Controller
             if($data->b_lain){
                 $json = json_decode($data->b_lain);
                 $data['b_lain'] = $json;
+                $lunas = 1;
                 $total = 0;
                 $realisasi = 0;
                 $selisih = 0;
                 foreach ($json as $d => $b) {
+                    $lunas *= $b->lunas;
                     $b->lunas = Bill::lunas($b->lunas);
                     $total += $b->ttl_tagihan;
                     $realisasi += $b->rea_tagihan;
                     $selisih += $b->sel_tagihan;
                 }
+                $data['lunas_lain'] = Bill::lunas($lunas);
                 $data['total_lain'] = $total;
                 $data['realisasi_lain'] = $realisasi;
                 $data['selisih_lain'] = $selisih;
@@ -1232,7 +1237,9 @@ class BillController extends Controller
                     'sub_tagihan' => $sub,
                     'diskon' => $diskon,
                     'keamanan' => $keamanan,
+                    'keamanan_persen' => $tarif_data->keamanan,
                     'ipk' => $ipk,
+                    'ipk_persen' => $tarif_data->ipk,
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
