@@ -84,7 +84,7 @@ Kelola Tagihan
                 <div class="row">
                     <div class="col-lg-6 col-xlg-6">
                         <small class="text-muted pt-4 db">Kode Tagihan</small>
-                        <h4 id="showCode" class='text-danger'></h4>
+                        <h4 id="showCode" class='text-info'></h4>
                         <small class="text-muted pt-4 db">Periode</small>
                         <h6 id="showPeriod"></h6>
                         <small class="text-muted pt-4 db">Kontrol</small>
@@ -97,101 +97,30 @@ Kelola Tagihan
                         <h6 id="showJumlah"></h6>
                         <small class="text-muted pt-4 db">Pengguna</small>
                         <h6 id="showPengguna"></h6>
+                        <small class="text-muted pt-4 db">Status Lunas</small>
+                        <h6 id="showLunas"></h6>
+                        <small class="text-muted pt-4 db">Total Tagihan</small>
+                        <h6 class="text-info" id="showTotal"></h6>
+                        <small class="text-muted pt-4 db">Realisasi Tagihan</small>
+                        <h6 class="text-success" id="showRealisasi"></h6>
+                        <small class="text-muted pt-4 db">Selisih Tagihan</small>
+                        <h6 class="text-danger" id="showSelisih"></h6>
+                        <small class="text-muted pt-4 db">Status Publish</small>
+                        <h6 id="showPublish"></h6>
                         <small class="text-muted pt-4 db">Dibuat oleh</small>
                         <h6 id="showCreate"></h6>
                         <small class="text-muted pt-4 db">Diperbaharui oleh</small>
                         <h6 id="showEdit"></h6>
-                        <small class="text-muted pt-4 db">Status Publish</small>
-                        <h6 id="showPublish"></h6>
-                        <small class="text-muted pt-4 db">Status Bayar</small>
-                        <h6 id="showBayar"></h6>
-                        <small class="text-muted pt-4 db">Status Lunas</small>
-                        <h6 id="showLunas"></h6>
                     </div>
                     <div class="col-lg-6 col-xlg-6">
+                        <h3 class="text-center">Tagihan</h3>
+                        <div id="showFasilitas"></div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
             </div>
-        </div>
-    </div>
-</div>
-
-<div id="deleteModal" class="modal fade" role="dialog" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title titles"></h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">x</span>
-                </button>
-            </div>
-            <form id="deleteForm">
-                <div class="modal-body">
-                    <p>Pilih tagihan yang ingin dihapus, kemudian klik "Hapus" untuk menghapus data tagihan yang telah dipilih.</p>
-
-                    <div class="row">
-                        <div class="col-lg-6 col-xlg-6">
-                            <div>
-                                <div class="form-group form-check form-check-inline">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="dellistrik" name="dellistrik" checked>
-                                        <label class="custom-control-label" for="dellistrik">Listrik</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="form-group form-check form-check-inline">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="delairbersih" name="delairbersih" checked>
-                                        <label class="custom-control-label" for="delairbersih">Air Bersih</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="form-group form-check form-check-inline">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="delkeamananipk" name="delkeamananipk" checked>
-                                        <label class="custom-control-label" for="delkeamananipk">Keamanan IPK</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-xlg-6">
-                            <div>
-                                <div class="form-group form-check form-check-inline">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="delkebersihan" name="delkebersihan" checked>
-                                        <label class="custom-control-label" for="delkebersihan">Kebersihan</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="form-group form-check form-check-inline">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="delairkotor" name="delairkotor" checked>
-                                        <label class="custom-control-label" for="delairkotor">Air Kotor</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="form-group form-check form-check-inline">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="dellain" name="dellain" checked>
-                                        <label class="custom-control-label" for="dellain">Lainnya</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Hapus</button>
-                    <button type="button" class="btn btn-light" data-dismiss="modal">Batal</button>
-                </div>
-            </form>
         </div>
     </div>
 </div>
@@ -289,7 +218,7 @@ Kelola Tagihan
                                     <div class="form-group">
                                         <label>Denda</label>
                                         <div class="input-group">
-                                            <input maxlength="5" type="text" id="denlistrik" name="denlistrik" autocomplete="off" placeholder="Ketikkan dalam angka 0-12" class="number form-control form-control-line">
+                                            <input maxlength="5" type="text" id="denlistrik" name="denlistrik" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Bulan</span>
                                             </div>
@@ -341,7 +270,7 @@ Kelola Tagihan
                                     <div class="form-group">
                                         <label>Denda</label>
                                         <div class="input-group">
-                                            <input maxlength="5" type="text" id="denairbersih" name="denairbersih" autocomplete="off" placeholder="Ketikkan dalam angka 0-12" class="number form-control form-control-line">
+                                            <input maxlength="5" type="text" id="denairbersih" name="denairbersih" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Bulan</span>
                                             </div>
@@ -914,6 +843,7 @@ Kelola Tagihan
         name = $(this).attr('nama');
         $("#billForm")[0].reset();
         $('.titles').text('Edit Tagihan ' + name);
+        $("#titleTagihan").text('Edit Tagihan Fasilitas');
         $("#billFormValue").val('update');
 
         initForm();
@@ -1194,7 +1124,7 @@ Kelola Tagihan
         id = $(this).attr('id');
         nama = $(this).attr('nama');
         $('.titles').text('Publish ' + nama + ' ?');
-        $('.bodies').text('Pilih "Publish" di bawah ini jika anda yakin untuk publish tagihan.');
+        $('.bodies').text('Pilih "Publish" di bawah ini jika anda yakin untuk publish tagihan. Dengan publish tagihan, maka tagihan akan ada pada menu pembayaran dan tagihan akan dikirim ke nasabah terkait.');
         $('#ok_button').removeClass().addClass('btn btn-success').text('Publish');
         $('#confirmValue').val('publish');
         $('#confirmModal').modal('show');
@@ -1235,20 +1165,12 @@ Kelola Tagihan
         ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
     });
 
-    $(document).on('click', '.delete', function(){
-        id = $(this).attr('id');
-        nama = $(this).attr('nama');
-        $('.titles').text('Hapus Tagihan ' + nama + ' ?');
-
-        $("#deleteForm")[0].reset();
-
-        $('#deleteModal').modal('show');
-    });
-
     $(document).on('click', '.details', function(){
         id = $(this).attr('id');
         nama = $(this).attr('nama');
         $('.titles').text('Tagihan ' + nama);
+
+        $("#showFasilitas").html('');
 
         $.ajax({
             url: "/production/manage/bills/" + id,
@@ -1263,11 +1185,332 @@ Kelola Tagihan
                     $("#showLos").text(data.show.no_los);
                     $("#showJumlah").text(data.show.jml_los);
                     $("#showPengguna").text(data.show.name);
+                    $("#showTotal").text('Rp. ' + Number(data.show.b_tagihan.ttl_tagihan).toLocaleString('id-ID'));
+                    $("#showRealisasi").text('Rp. ' + Number(data.show.b_tagihan.rea_tagihan).toLocaleString('id-ID'));
+                    $("#showSelisih").text('Rp. ' + Number(data.show.b_tagihan.sel_tagihan).toLocaleString('id-ID'));
                     $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
                     $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
                     $("#showPublish").html(data.show.stt_publish + "<br>pada " + data.show.publish + "<br>oleh " + data.show.data.publish_by);
-                    $("#showBayar").html(data.show.stt_bayar);
                     $("#showLunas").html(data.show.stt_lunas);
+
+                    var html = '';
+
+                    if(data.show.b_listrik){
+                        html += '<div class="form-group">';
+                        html += '<h5><i class="fas fa-bolt" style="color:#fd7e14;"></i> Listrik</h5>';
+                        html += '<small class="text-muted pt-4 db">Status</small>';
+                        html += '<h6>' + data.show.b_listrik.lunas + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Total Tagihan</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_listrik.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '<div id="acc_listrik">';
+                        html += '<div id="head_listrik" class="text-center">';
+                        html += '<h5>';
+                        html += '<button class="btn btn-link collapsed text-info" data-toggle="collapse" data-target="#col_listrik" aria-expanded="false" aria-controls="col_listrik">';
+                        html += 'Klik, selengkapnya tagihan Listrik';
+                        html += '</button>';
+                        html += '</h5>';
+                        html += '</div>';
+                        html += '<div id="col_listrik" class="collapse" aria-labelledby="head_listrik" data-parent="#acc_listrik">';
+                        html += '<div class="row text-center text-md-left">';
+                        html += '<div class="col-lg-6 col-xlg-6">';
+                        html += '<small class="text-muted pt-4 db">Tarif</small>';
+                        html += '<h6>' + data.show.b_listrik.tarif_nama + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Alat Meter</small>';
+                        html += (data.show.code_tlistrik) ? '<h6>' + data.show.code_tlistrik + '</h6>' : '<h6>?</h6>';
+                        html += '<small class="text-muted pt-4 db">Daya</small>';
+                        html += '<h6>' + Number(data.show.b_listrik.daya).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Awal</small>';
+                        html += '<h6>' + Number(data.show.b_listrik.awal).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Akhir</small>';
+                        html += '<h6>' + Number(data.show.b_listrik.akhir).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Reset</small>';
+                        html += (data.show.b_listrik.reset) ? '<h6>Ya</h6>' : '<h6>Tidak</h6>';
+                        html += '<small class="text-muted pt-4 db">Pakai</small>';
+                        html += '<h6>' + Number(data.show.b_listrik.pakai).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Blok 1</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_listrik.blok1).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Blok 2</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_listrik.blok2).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '<div class="col-lg-6 col-xlg-6">';
+                        html += '<small class="text-muted pt-4 db">Beban</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_listrik.beban).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">PJU</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_listrik.pju).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">PPN</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_listrik.ppn).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Subtotal</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_listrik.sub_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Denda</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_listrik.denda).toLocaleString('id-ID') + ' (' + Number(data.show.b_listrik.denda_bulan).toLocaleString('id-ID') + ' Bln)</h6>';
+                        html += '<small class="text-muted pt-4 db">Diskon</small>';
+                        html += (data.show.b_listrik.diskon) ? '<h6>Rp. ' + Number(data.show.b_listrik.diskon).toLocaleString('id-ID') + ' (' + data.show.b_listrik.diskon_persen + ' %)</h6>' : '<h6>0</h6>';
+                        html += '<small class="text-muted pt-4 db">Total</small>';
+                        html += '<h6 class="text-info">Rp. ' + Number(data.show.b_listrik.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Realisasi</small>';
+                        html += '<h6 class="text-success">Rp. ' + Number(data.show.b_listrik.rea_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Selisih</small>';
+                        html += '<h6 class="text-danger">Rp. ' + Number(data.show.b_listrik.sel_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<hr>';
+                    }
+
+                    if(data.show.b_airbersih){
+                        html += '<div class="form-group">';
+                        html += '<h5><i class="fas fa-tint" style="color:#36b9cc;""></i> Air Bersih</h5>';
+                        html += '<small class="text-muted pt-4 db">Status</small>';
+                        html += '<h6>' + data.show.b_airbersih.lunas + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Total Tagihan</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_airbersih.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '<div id="acc_airbersih">';
+                        html += '<div id="head_airbersih" class="text-center">';
+                        html += '<h5>';
+                        html += '<button class="btn btn-link collapsed text-info" data-toggle="collapse" data-target="#col_airbersih" aria-expanded="false" aria-controls="col_airbersih">';
+                        html += 'Klik, selengkapnya tagihan Air Bersih';
+                        html += '</button>';
+                        html += '</h5>';
+                        html += '</div>';
+                        html += '<div id="col_airbersih" class="collapse" aria-labelledby="head_airbersih" data-parent="#acc_airbersih">';
+                        html += '<div class="row text-center text-md-left">';
+                        html += '<div class="col-lg-6 col-xlg-6">';
+                        html += '<small class="text-muted pt-4 db">Tarif</small>';
+                        html += '<h6>' + data.show.b_airbersih.tarif_nama + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Alat Meter</small>';
+                        html += (data.show.code_tairbersih) ? '<h6>' + data.show.code_tairbersih + '</h6>' : '<h6>?</h6>';
+                        html += '<small class="text-muted pt-4 db">Awal</small>';
+                        html += '<h6>' + Number(data.show.b_airbersih.awal).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Akhir</small>';
+                        html += '<h6>' + Number(data.show.b_airbersih.akhir).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Reset</small>';
+                        html += (data.show.b_airbersih.reset) ? '<h6>Ya</h6>' : '<h6>Tidak</h6>';
+                        html += '<small class="text-muted pt-4 db">Pakai</small>';
+                        html += '<h6>' + Number(data.show.b_airbersih.pakai).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Pembayaran</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_airbersih.bayar).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Pemeliharaan</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_airbersih.pemeliharaan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Beban</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_airbersih.beban).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '<div class="col-lg-6 col-xlg-6">';
+                        html += '<small class="text-muted pt-4 db">Air Kotor</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_airbersih.arkot).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">PPN</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_airbersih.ppn).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Subtotal</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_airbersih.sub_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Denda</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_airbersih.denda).toLocaleString('id-ID') + ' (' + Number(data.show.b_airbersih.denda_bulan).toLocaleString('id-ID') + ' Bln)</h6>';
+                        html += '<small class="text-muted pt-4 db">Diskon</small>';
+                        html += (data.show.b_airbersih.diskon) ? '<h6>Rp. ' + Number(data.show.b_airbersih.diskon).toLocaleString('id-ID') + ' (' + data.show.b_airbersih.diskon_persen + ' %)</h6>' : '<h6>0</h6>';
+                        html += '<small class="text-muted pt-4 db">Total</small>';
+                        html += '<h6 class="text-info">Rp. ' + Number(data.show.b_airbersih.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Realisasi</small>';
+                        html += '<h6 class="text-success">Rp. ' + Number(data.show.b_airbersih.rea_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Selisih</small>';
+                        html += '<h6 class="text-danger">Rp. ' + Number(data.show.b_airbersih.sel_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<hr>';
+                    }
+
+                    if(data.show.b_keamananipk){
+                        html += '<div class="form-group">';
+                        html += '<h5><i class="fas fa-lock" style="color:#e74a3b;"></i> Keamanan IPK</h5>';
+                        html += '<small class="text-muted pt-4 db">Status</small>';
+                        html += '<h6>' + data.show.b_keamananipk.lunas + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Total Tagihan</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_keamananipk.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '<div id="acc_keamananipk">';
+                        html += '<div id="head_keamananipk" class="text-center">';
+                        html += '<h5>';
+                        html += '<button class="btn btn-link collapsed text-info" data-toggle="collapse" data-target="#col_keamananipk" aria-expanded="false" aria-controls="col_keamananipk">';
+                        html += 'Klik, selengkapnya tagihan Keamanan IPK';
+                        html += '</button>';
+                        html += '</h5>';
+                        html += '</div>';
+                        html += '<div id="col_keamananipk" class="collapse" aria-labelledby="head_keamananipk" data-parent="#acc_keamananipk">';
+                        html += '<div class="row text-center text-md-left">';
+                        html += '<div class="col-lg-6 col-xlg-6">';
+                        html += '<small class="text-muted pt-4 db">Tarif</small>';
+                        html += '<h6>' + data.show.b_keamananipk.tarif_nama + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Tarif</small>';
+                        html += '<h6>' + Number(data.show.b_keamananipk.price).toLocaleString('id-ID') + ' per-Los</h6>';
+                        html += '<small class="text-muted pt-4 db">Jumlah Los</small>';
+                        html += '<h6>' + Number(data.show.b_keamananipk.jml_los).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Subtotal</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_keamananipk.sub_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Diskon</small>';
+                        html += (data.show.b_keamananipk.diskon) ? '<h6>Rp. ' + Number(data.show.b_keamananipk.diskon).toLocaleString('id-ID') + '</h6>' : '<h6>0</h6>';
+                        html += '</div>';
+                        html += '<div class="col-lg-6 col-xlg-6">';
+                        html += '<small class="text-muted pt-4 db">Keamanan</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_keamananipk.keamanan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">IPK</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_keamananipk.ipk).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Total</small>';
+                        html += '<h6 class="text-info">Rp. ' + Number(data.show.b_keamananipk.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Realisasi</small>';
+                        html += '<h6 class="text-success">Rp. ' + Number(data.show.b_keamananipk.rea_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Selisih</small>';
+                        html += '<h6 class="text-danger">Rp. ' + Number(data.show.b_keamananipk.sel_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<hr>';
+                    }
+
+                    if(data.show.b_kebersihan){
+                        html += '<div class="form-group">';
+                        html += '<h5><i class="fas fa-leaf" style="color:#1cc88a;"></i> Kebersihan</h5>';
+                        html += '<small class="text-muted pt-4 db">Status</small>';
+                        html += '<h6>' + data.show.b_kebersihan.lunas + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Total Tagihan</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_kebersihan.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '<div id="acc_kebersihan">';
+                        html += '<div id="head_kebersihan" class="text-center">';
+                        html += '<h5>';
+                        html += '<button class="btn btn-link collapsed text-info" data-toggle="collapse" data-target="#col_kebersihan" aria-expanded="false" aria-controls="col_kebersihan">';
+                        html += 'Klik, selengkapnya tagihan Kebersihan';
+                        html += '</button>';
+                        html += '</h5>';
+                        html += '</div>';
+                        html += '<div id="col_kebersihan" class="collapse" aria-labelledby="head_kebersihan" data-parent="#acc_kebersihan">';
+                        html += '<div class="row text-center text-md-left">';
+                        html += '<div class="col-lg-6 col-xlg-6">';
+                        html += '<small class="text-muted pt-4 db">Tarif</small>';
+                        html += '<h6>' + data.show.b_kebersihan.tarif_nama + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Tarif</small>';
+                        html += '<h6>' + Number(data.show.b_kebersihan.price).toLocaleString('id-ID') + ' per-Los</h6>';
+                        html += '<small class="text-muted pt-4 db">Jumlah Los</small>';
+                        html += '<h6>' + Number(data.show.b_kebersihan.jml_los).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Subtotal</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_kebersihan.sub_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '<div class="col-lg-6 col-xlg-6">';
+                        html += '<small class="text-muted pt-4 db">Diskon</small>';
+                        html += (data.show.b_kebersihan.diskon) ? '<h6>Rp. ' + Number(data.show.b_kebersihan.diskon).toLocaleString('id-ID') + '</h6>' : '<h6>0</h6>';
+                        html += '<small class="text-muted pt-4 db">Total</small>';
+                        html += '<h6 class="text-info">Rp. ' + Number(data.show.b_kebersihan.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Realisasi</small>';
+                        html += '<h6 class="text-success">Rp. ' + Number(data.show.b_kebersihan.rea_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Selisih</small>';
+                        html += '<h6 class="text-danger">Rp. ' + Number(data.show.b_kebersihan.sel_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<hr>';
+                    }
+
+                    if(data.show.b_airkotor){
+                        html += '<div class="form-group">';
+                        html += '<h5><i class="fad fa-burn" style="color:#000000;"></i> Air Kotor</h5>';
+                        html += '<small class="text-muted pt-4 db">Status</small>';
+                        html += '<h6>' + data.show.b_airkotor.lunas + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Total Tagihan</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_airkotor.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '<div id="acc_airkotor">';
+                        html += '<div id="head_airkotor" class="text-center">';
+                        html += '<h5>';
+                        html += '<button class="btn btn-link collapsed text-info" data-toggle="collapse" data-target="#col_airkotor" aria-expanded="false" aria-controls="col_airkotor">';
+                        html += 'Klik, selengkapnya tagihan Air Kotor';
+                        html += '</button>';
+                        html += '</h5>';
+                        html += '</div>';
+                        html += '<div id="col_airkotor" class="collapse" aria-labelledby="head_airkotor" data-parent="#acc_airkotor">';
+                        html += '<div class="row text-center text-md-left">';
+                        html += '<div class="col-lg-6 col-xlg-6">';
+                        html += '<small class="text-muted pt-4 db">Tarif</small>';
+                        html += '<h6>' + data.show.b_airkotor.tarif_nama + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Tarif</small>';
+                        html += '<h6>' + Number(data.show.b_airkotor.price).toLocaleString('id-ID') + ' per-Kontrol</h6>';
+                        html += '<small class="text-muted pt-4 db">Subtotal</small>';
+                        html += '<h6>Rp. ' + Number(data.show.b_airkotor.sub_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Diskon</small>';
+                        html += (data.show.b_airkotor.diskon) ? '<h6>Rp. ' + Number(data.show.b_airkotor.diskon).toLocaleString('id-ID') + '</h6>' : '<h6>0</h6>';
+                        html += '</div>';
+                        html += '<div class="col-lg-6 col-xlg-6">';
+                        html += '<small class="text-muted pt-4 db">Total</small>';
+                        html += '<h6 class="text-info">Rp. ' + Number(data.show.b_airkotor.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Realisasi</small>';
+                        html += '<h6 class="text-success">Rp. ' + Number(data.show.b_airkotor.rea_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Selisih</small>';
+                        html += '<h6 class="text-danger">Rp. ' + Number(data.show.b_airkotor.sel_tagihan).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<hr>';
+                    }
+
+                    if(data.show.b_lain){
+                        html += '<div class="form-group">';
+                        html += '<h5><i class="fas fa-chart-pie" style="color:#c5793a;"></i> Lainnya</h5>';
+                        html += '<small class="text-muted pt-4 db">Total Tagihan</small>';
+                        html += '<h6 class="text-info">Rp. ' + Number(data.show.total_lain).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Realisasi Tagihan</small>';
+                        html += '<h6 class="text-success">Rp. ' + Number(data.show.realisasi_lain).toLocaleString('id-ID') + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Selisih Tagihan</small>';
+                        html += '<h6 class="text-danger">Rp. ' + Number(data.show.selisih_lain).toLocaleString('id-ID') + '</h6>';
+                        html += '</div>';
+                        html += '<div id="acc_lain">';
+                        html += '<div id="head_lain" class="text-center">';
+                        html += '<h5>';
+                        html += '<button class="btn btn-link collapsed text-info" data-toggle="collapse" data-target="#col_lain" aria-expanded="false" aria-controls="col_lain">';
+                        html += 'Klik, selengkapnya tagihan Lainnya';
+                        html += '</button>';
+                        html += '</h5>';
+                        html += '</div>';
+                        html += '<div id="col_lain" class="collapse" aria-labelledby="head_lain" data-parent="#acc_lain">';
+
+                        $.each(data.show.b_lain, function(i, val){
+                            html += '<div class="row text-center text-md-left">';
+                            html += '<div class="col-lg-6 col-xlg-6">';
+                            html += '<small class="text-muted pt-4 db">Tarif</small>';
+                            html += '<h6>' + val.tarif_nama + '</h6>';
+                            html += '<small class="text-muted pt-4 db">Tarif</small>';
+                            html += '<h6>' + Number(val.price).toLocaleString('id-ID') + ' ' + val.satuan_nama + '</h6>';
+                            html += '<small class="text-muted pt-4 db">Jumlah Los</small>';
+                            html += '<h6>' + val.jml_los + '</h6>';
+                            html += '</div>';
+                            html += '<div class="col-lg-6 col-xlg-6">';
+                            html += '<small class="text-muted pt-4 db">Total</small>';
+                            html += '<h6 class="text-info">Rp. ' + Number(val.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
+                            html += '<small class="text-muted pt-4 db">Realisasi</small>';
+                            html += '<h6 class="text-success">Rp. ' + Number(val.rea_tagihan).toLocaleString('id-ID') + '</h6>';
+                            html += '<small class="text-muted pt-4 db">Selisih</small>';
+                            html += '<h6 class="text-danger">Rp. ' + Number(val.sel_tagihan).toLocaleString('id-ID') + '</h6>';
+                            html += '</div>';
+                            html += '</div>';
+                            html += '<hr>';
+                        });
+
+                        html += '</div>';
+                        html += '</div>';
+                    }
+
+                    if(html){
+                        $("#showFasilitas").append(html);
+                    }
+                    else {
+                        html += '<div class="form-group mt-4 text-center">';
+                        html += '<img src="/img/sad.png" class="rounded-circle" width="180" />';
+                        html += '<h4>Tidak memiliki tagihan apapun</h4>'
+                        html += '</div>';
+                        $("#showFasilitas").append(html);
+                    }
                 }
 
                 if(data.error){
@@ -1418,7 +1661,6 @@ Kelola Tagihan
             $("#dayalistrik").prop("required", true);
             $("#awlistrik").prop("required", true);
             $("#aklistrik").prop("required", true);
-            $("#denlistrik").prop("required", true);
             $("#fas_listrik").prop("checked", true);
         }
         else{
@@ -1427,7 +1669,6 @@ Kelola Tagihan
             $("#dayalistrik").prop("required", false);
             $("#awlistrik").prop("required", false);
             $("#aklistrik").prop("required", false);
-            $("#denlistrik").prop("required", false);
             $("#fas_listrik").prop("checked", false);
         }
     }
@@ -1448,7 +1689,6 @@ Kelola Tagihan
             $("#pairbersih").prop("required", true);
             $("#awairbersih").prop("required", true);
             $("#akairbersih").prop("required", true);
-            $("#denairbersih").prop("required", true);
             $("#fas_airbersih").prop("checked", true);
         }
         else{
@@ -1456,7 +1696,6 @@ Kelola Tagihan
             $("#pairbersih").prop("required", false);
             $("#awairbersih").prop("required", false);
             $("#akairbersih").prop("required", false);
-            $("#denairbersih").prop("required", false);
             $("#fas_airbersih").prop("checked", false);
         }
     }

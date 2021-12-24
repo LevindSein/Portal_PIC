@@ -14,7 +14,6 @@ class Bill extends Model
         'code',
         'id_period',
         'stt_publish',
-        'stt_bayar',
         'stt_lunas',
         'name',
         'kd_kontrol',
@@ -47,18 +46,6 @@ class Bill extends Model
         }
         else if($data == 0){
             return '<span class="text-danger">Unpublished</span>';
-        }
-        else{
-            return $data;
-        }
-    }
-
-    public static function bayar($data){
-        if($data == 1){
-            return '<span class="text-success">Dibayar</span>';
-        }
-        else if($data == 0){
-            return '<span class="text-danger">Belum Terbayar</span>';
         }
         else{
             return $data;

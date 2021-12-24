@@ -54,7 +54,6 @@ class BillController extends Controller
                 'id',
                 'code',
                 'stt_publish',
-                'stt_bayar',
                 'stt_lunas',
                 'kd_kontrol',
                 'name',
@@ -70,11 +69,7 @@ class BillController extends Controller
             );
             return DataTables::of($data)
             ->addColumn('action', function($data){
-                $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-
-                if($data->stt_lunas == 0){
-                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
-                }
+                $button = '<a type="button" data-toggle="tooltip" title="Edit / Delete" name="edit" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
 
                 $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                 return $button;
@@ -259,7 +254,6 @@ class BillController extends Controller
             $publish = Carbon::now()->toDateTimeString();
             $publish_by = Auth::user()->name;
 
-            $data['stt_bayar'] = 0;
             $data['stt_lunas'] = 0;
 
             $data['name'] = User::find($request->pengguna)->name;
@@ -318,8 +312,11 @@ class BillController extends Controller
                 ])->validate();
 
                 $kontrol = Store::where('kd_kontrol', $request->kontrol)->select('id_tlistrik')->first();
-                if($kontrol){
+                if($kontrol->id_tlistrik){
                     $data['code_tlistrik'] = TListrik::find($kontrol->id_tlistrik)->code;
+                }
+                else{
+                    $data['code_tlistrik'] = NULL;
                 }
 
                 if($request->checklistrik0){
@@ -431,8 +428,11 @@ class BillController extends Controller
                 ])->validate();
 
                 $kontrol = Store::where('kd_kontrol', $request->kontrol)->select('id_tairbersih')->first();
-                if($kontrol){
+                if($kontrol->id_tairbersih){
                     $data['code_tairbersih'] = TAirBersih::find($kontrol->id_tairbersih)->code;
+                }
+                else{
+                    $data['code_tairbersih'] = NULL;
                 }
 
                 if($request->checkairbersih0){
@@ -760,8 +760,56 @@ class BillController extends Controller
             $data['data'] = $json;
             $data['publish'] = $json->publish;
             $data['stt_publish'] = Bill::publish($data->stt_publish);
-            $data['stt_bayar'] = Bill::bayar($data->stt_bayar);
             $data['stt_lunas'] = Bill::lunas($data->stt_lunas);
+
+            $json = json_decode($data->b_tagihan);
+            $data['b_tagihan'] = $json;
+
+            if($data->b_listrik){
+                $json = json_decode($data->b_listrik);
+                $data['b_listrik'] = $json;
+                $data['b_listrik']->lunas = Bill::lunas($json->lunas);
+            }
+
+            if($data->b_airbersih){
+                $json = json_decode($data->b_airbersih);
+                $data['b_airbersih'] = $json;
+                $data['b_airbersih']->lunas = Bill::lunas($json->lunas);
+            }
+
+            if($data->b_keamananipk){
+                $json = json_decode($data->b_keamananipk);
+                $data['b_keamananipk'] = $json;
+                $data['b_keamananipk']->lunas = Bill::lunas($json->lunas);
+            }
+
+            if($data->b_kebersihan){
+                $json = json_decode($data->b_kebersihan);
+                $data['b_kebersihan'] = $json;
+                $data['b_kebersihan']->lunas = Bill::lunas($json->lunas);
+            }
+
+            if($data->b_airkotor){
+                $json = json_decode($data->b_airkotor);
+                $data['b_airkotor'] = $json;
+                $data['b_airkotor']->lunas = Bill::lunas($json->lunas);
+            }
+
+            if($data->b_lain){
+                $json = json_decode($data->b_lain);
+                $data['b_lain'] = $json;
+                $total = 0;
+                $realisasi = 0;
+                $selisih = 0;
+                foreach ($json as $d => $b) {
+                    $total += $b->ttl_tagihan;
+                    $realisasi += $b->rea_tagihan;
+                    $selisih += $b->sel_tagihan;
+                }
+                $data['total_lain'] = $total;
+                $data['realisasi_lain'] = $realisasi;
+                $data['selisih_lain'] = $selisih;
+            }
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
@@ -881,8 +929,11 @@ class BillController extends Controller
                 ])->validate();
 
                 $kontrol = Store::where('kd_kontrol', $data->kd_kontrol)->select('id_tlistrik')->first();
-                if($kontrol){
+                if($kontrol->id_tlistrik){
                     $data->code_tlistrik = TListrik::find($kontrol->id_tlistrik)->code;
+                }
+                else{
+                    $data->code_tlistrik = NULL;
                 }
 
                 if($request->checklistrik0){
@@ -1020,8 +1071,11 @@ class BillController extends Controller
                 ])->validate();
 
                 $kontrol = Store::where('kd_kontrol', $data->kd_kontrol)->select('id_tairbersih')->first();
-                if($kontrol){
+                if($kontrol->id_tairbersih){
                     $data->code_tairbersih = TAirBersih::find($kontrol->id_tairbersih)->code;
+                }
+                else{
+                    $data->code_tairbersih = NULL;
                 }
 
                 if($request->checkairbersih0){
@@ -1429,7 +1483,6 @@ class BillController extends Controller
 
             if($lunas == 1){
                 $data->stt_lunas = 1;
-                $data->stt_bayar = 1;
                 $data->stt_publish = 1;
             }
             else{
@@ -1456,8 +1509,6 @@ class BillController extends Controller
             $json = json_encode($json);
             $data->data = $json;
 
-            $kontrol = $data->nicename;
-
             try{
                 $data->save();
             }
@@ -1465,9 +1516,7 @@ class BillController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
-            $searchKey = str_replace('-','',$kontrol);
-
-            return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
+            return response()->json(['success' => 'Data saved.']);
         }
     }
 
