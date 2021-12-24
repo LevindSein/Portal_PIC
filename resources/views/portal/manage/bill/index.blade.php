@@ -1200,6 +1200,7 @@ Kelola Tagihan
                         html += '<h5><i class="fas fa-bolt" style="color:#fd7e14;"></i> Listrik</h5>';
                         html += '<small class="text-muted pt-4 db">Status</small>';
                         html += '<h6>' + data.show.b_listrik.lunas + '</h6>';
+                        html += (data.show.b_listrik.kasir) ? '<h6>' + data.show.b_listrik.kasir + '</h6>' : '';
                         html += '<small class="text-muted pt-4 db">Total Tagihan</small>';
                         html += '<h6>Rp. ' + Number(data.show.b_listrik.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
                         html += '</div>';
@@ -1264,6 +1265,7 @@ Kelola Tagihan
                         html += '<h5><i class="fas fa-tint" style="color:#36b9cc;""></i> Air Bersih</h5>';
                         html += '<small class="text-muted pt-4 db">Status</small>';
                         html += '<h6>' + data.show.b_airbersih.lunas + '</h6>';
+                        html += (data.show.b_airbersih.kasir) ? '<h6>' + data.show.b_airbersih.kasir + '</h6>' : '';
                         html += '<small class="text-muted pt-4 db">Total Tagihan</small>';
                         html += '<h6>Rp. ' + Number(data.show.b_airbersih.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
                         html += '</div>';
@@ -1326,6 +1328,7 @@ Kelola Tagihan
                         html += '<h5><i class="fas fa-lock" style="color:#e74a3b;"></i> Keamanan IPK</h5>';
                         html += '<small class="text-muted pt-4 db">Status</small>';
                         html += '<h6>' + data.show.b_keamananipk.lunas + '</h6>';
+                        html += (data.show.b_keamananipk.kasir) ? '<h6>' + data.show.b_keamananipk.kasir + '</h6>' : '';
                         html += '<small class="text-muted pt-4 db">Total Tagihan</small>';
                         html += '<h6>Rp. ' + Number(data.show.b_keamananipk.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
                         html += '</div>';
@@ -1374,6 +1377,7 @@ Kelola Tagihan
                         html += '<h5><i class="fas fa-leaf" style="color:#1cc88a;"></i> Kebersihan</h5>';
                         html += '<small class="text-muted pt-4 db">Status</small>';
                         html += '<h6>' + data.show.b_kebersihan.lunas + '</h6>';
+                        html += (data.show.b_kebersihan.kasir) ? '<h6>' + data.show.b_kebersihan.kasir + '</h6>' : '';
                         html += '<small class="text-muted pt-4 db">Total Tagihan</small>';
                         html += '<h6>Rp. ' + Number(data.show.b_kebersihan.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
                         html += '</div>';
@@ -1418,6 +1422,7 @@ Kelola Tagihan
                         html += '<h5><i class="fad fa-burn" style="color:#000000;"></i> Air Kotor</h5>';
                         html += '<small class="text-muted pt-4 db">Status</small>';
                         html += '<h6>' + data.show.b_airkotor.lunas + '</h6>';
+                        html += (data.show.b_airkotor.kasir) ? '<h6>' + data.show.b_airkotor.kasir + '</h6>' : '';
                         html += '<small class="text-muted pt-4 db">Total Tagihan</small>';
                         html += '<h6>Rp. ' + Number(data.show.b_airkotor.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
                         html += '</div>';
@@ -1478,6 +1483,9 @@ Kelola Tagihan
                         $.each(data.show.b_lain, function(i, val){
                             html += '<div class="row text-center text-md-left">';
                             html += '<div class="col-lg-6 col-xlg-6">';
+                            html += '<small class="text-muted pt-4 db">Status</small>';
+                            html += '<h6>' + val.lunas + '</h6>';
+                            html += (val.kasir) ? '<h6>' + val.kasir + '</h6>' : '';
                             html += '<small class="text-muted pt-4 db">Tarif</small>';
                             html += '<h6>' + val.tarif_nama + '</h6>';
                             html += '<small class="text-muted pt-4 db">Tarif</small>';
@@ -1486,6 +1494,8 @@ Kelola Tagihan
                             html += '<h6>' + val.jml_los + '</h6>';
                             html += '</div>';
                             html += '<div class="col-lg-6 col-xlg-6">';
+                            html += '<small class="text-muted pt-4 db">Subtotal</small>';
+                            html += '<h6>Rp. ' + Number(val.sub_tagihan).toLocaleString('id-ID') + '</h6>';
                             html += '<small class="text-muted pt-4 db">Total</small>';
                             html += '<h6 class="text-info">Rp. ' + Number(val.ttl_tagihan).toLocaleString('id-ID') + '</h6>';
                             html += '<small class="text-muted pt-4 db">Realisasi</small>';

@@ -374,6 +374,7 @@ class BillController extends Controller
 
                 $data['b_listrik'] = json_encode([
                     'lunas' => 0,
+                    'kasir' => null,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'daya' => $daya,
@@ -485,6 +486,7 @@ class BillController extends Controller
 
                 $data['b_airbersih'] = json_encode([
                     'lunas' => 0,
+                    'kasir' => null,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'awal' => $awal,
@@ -546,6 +548,7 @@ class BillController extends Controller
 
                 $data['b_keamananipk'] = json_encode([
                     'lunas' => 0,
+                    'kasir' => null,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'price' => $tarif->price,
@@ -593,6 +596,7 @@ class BillController extends Controller
 
                 $data['b_kebersihan'] = json_encode([
                     'lunas' => 0,
+                    'kasir' => null,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'price' => $tarif->price,
@@ -638,6 +642,7 @@ class BillController extends Controller
 
                 $data['b_airkotor'] = json_encode([
                     'lunas' => 0,
+                    'kasir' => null,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'price' => $tarif->price,
@@ -677,6 +682,7 @@ class BillController extends Controller
 
                     $prices[$i] = [
                         'lunas' => 0,
+                        'kasir' => null,
                         'tarif_id' => $tarif_id,
                         'tarif_nama' => $tarif_nama,
                         'price' => $tarif->price,
@@ -802,6 +808,7 @@ class BillController extends Controller
                 $realisasi = 0;
                 $selisih = 0;
                 foreach ($json as $d => $b) {
+                    $b->lunas = Bill::lunas($b->lunas);
                     $total += $b->ttl_tagihan;
                     $realisasi += $b->rea_tagihan;
                     $selisih += $b->sel_tagihan;
@@ -991,6 +998,7 @@ class BillController extends Controller
 
                 $data->b_listrik = json_encode([
                     'lunas' => 0,
+                    'kasir' => null,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'daya' => $daya,
@@ -1128,6 +1136,7 @@ class BillController extends Controller
 
                 $data->b_airbersih = json_encode([
                     'lunas' => 0,
+                    'kasir' => null,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'awal' => $awal,
@@ -1215,6 +1224,7 @@ class BillController extends Controller
 
                 $data->b_keamananipk = json_encode([
                     'lunas' => 0,
+                    'kasir' => null,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'price' => $tarif->price,
@@ -1285,6 +1295,7 @@ class BillController extends Controller
 
                 $data->b_kebersihan = json_encode([
                     'lunas' => 0,
+                    'kasir' => null,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'price' => $tarif->price,
@@ -1353,6 +1364,7 @@ class BillController extends Controller
 
                 $data->b_airkotor = json_encode([
                     'lunas' => 0,
+                    'kasir' => null,
                     'tarif_id' => $tarif_id,
                     'tarif_nama' => $tarif_nama,
                     'price' => $tarif->price,
@@ -1416,6 +1428,7 @@ class BillController extends Controller
 
                     $prices[$i] = [
                         'lunas' => 0,
+                        'kasir' => null,
                         'tarif_id' => $tarif_id,
                         'tarif_nama' => $tarif_nama,
                         'price' => $tarif->price,
