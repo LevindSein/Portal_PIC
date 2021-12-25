@@ -31,8 +31,7 @@ class Bill extends Model
         'b_lain',
         'b_tagihan',
         'data',
-        'active',
-        'nonactive'
+        'deleted'
     ];
 
     public function period()

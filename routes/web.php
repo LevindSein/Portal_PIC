@@ -190,10 +190,6 @@ Route::get('tester', function(){
     return 200;
 });
 
-Route::get('/offline', function () {
-    return view('vendor.laravelpwa.offline');
-});
-
 Route::get('payment', function(){
     return 'Payment';
 });

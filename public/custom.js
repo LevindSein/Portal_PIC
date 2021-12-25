@@ -9,13 +9,13 @@ $(document).ready(function() {
         if(localStorage.getItem('scrollPosition') !== null)
             window.scrollTo(0, localStorage.getItem('scrollPosition'));
     },false);
-
-    var myScreenOrientation = window.screen.orientation;
-    myScreenOrientation.lock("portrait").then(
-        success => console.log(success),
-        failure => console.log(failure)
-    );
 });
+
+var myScreenOrientation = window.screen.orientation;
+myScreenOrientation.lock("portrait").then(
+    success => console.log(success),
+    failure => console.log(failure)
+);
 
 //Fullscreen
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {

@@ -158,15 +158,13 @@ Kelola Tagihan
                                 <label>Pengguna Tempat <span class="text-danger">*</span></label>
                                 <select id="pengguna" name="pengguna" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                             </div>
-                            <div>
-                                <div class="form-group form-check form-check-inline">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="stt_publish" name="stt_publish" checked>
-                                        <label class="custom-control-label" for="stt_publish">Publish Tagihan</label>
-                                    </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="stt_publish" name="stt_publish" checked>
+                                    <label class="custom-control-label" for="stt_publish">Publish Tagihan</label>
                                 </div>
-                                <p class="text-danger">Pastikan data tagihan benar sebelum di publish.</p>
                             </div>
+                            <p class="text-danger">Pastikan data tagihan benar sebelum di publish.</p>
                         </div>
                         <div class="col-lg-6 col-xlg-6">
                             <h4 class="text-center" id="titleTagihan"></h4>

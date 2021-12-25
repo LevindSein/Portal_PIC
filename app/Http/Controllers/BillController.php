@@ -48,7 +48,6 @@ class BillController extends Controller
             }
 
             $data = Bill::where('id_period', $id_period)
-            ->whereIn('active', [1,2])
             ->select(
                 'id',
                 'code',
@@ -272,8 +271,6 @@ class BillController extends Controller
             $jml_los = count($los);
             $data['jml_los'] = $jml_los;
             $data['no_los'] = implode(',', $los);
-
-            $data['active'] = 1;
 
             $sub_tagihan = 0;
             $den_tagihan = 0;
@@ -902,6 +899,13 @@ class BillController extends Controller
 
             $lunas = 1;
 
+            if($data->deleted){
+                $delete = json_decode($data->deleted);
+            }
+            else{
+                $delete = json_decode("{}");
+            }
+
             //Listrik
             if($request->fas_listrik){
                 $lunas *= 0;
@@ -1026,6 +1030,8 @@ class BillController extends Controller
             }
             else{
                 if($data->b_listrik){
+                    $listrik = json_decode($data->b_listrik);
+
                     $json = json_decode($data->b_listrik);
                     if($json->lunas == 1){
                         $lunas *= 1;
@@ -1040,6 +1046,11 @@ class BillController extends Controller
                     else{
                         $data->code_tlistrik = NULL;
                         $data->b_listrik = NULL;
+
+                        $delete->listrik = $listrik;
+                        $deleted = json_encode($delete);
+
+                        $data->deleted = $deleted;
                     }
                 }
                 else{
@@ -1163,6 +1174,8 @@ class BillController extends Controller
             }
             else{
                 if($data->b_airbersih){
+                    $airbersih = json_decode($data->b_airbersih);
+
                     $json = json_decode($data->b_airbersih);
                     if($json->lunas == 1){
                         $lunas *= 1;
@@ -1177,6 +1190,11 @@ class BillController extends Controller
                     else{
                         $data->code_tairbersih = NULL;
                         $data->b_airbersih = NULL;
+
+                        $delete->airbersih = $airbersih;
+                        $deleted = json_encode($delete);
+
+                        $data->deleted = $deleted;
                     }
                 }
                 else{
