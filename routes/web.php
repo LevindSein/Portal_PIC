@@ -74,7 +74,6 @@ Route::middleware('checkauth')->group(function(){
             Route::resource('changelogs', ChangeLogController::class);
 
             Route::get('manage/deleted', [BillController::class, 'deleted']);
-
             Route::post('manage/bills/publish/{id}', [BillController::class, 'publish']);
             Route::get('manage/bills/period/{id}', [BillController::class, 'periodChange']);
             Route::get('manage/bills/period', [BillController::class, 'period']);

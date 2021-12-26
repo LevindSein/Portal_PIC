@@ -47,8 +47,10 @@ class BillController extends Controller
                 $id_period = Period::latest('name')->select('id')->first()->id;
             }
 
-            $data = Bill::where('id_period', $id_period)
-            ->whereIn('active', [1,2])
+            $data = Bill::where([
+                ['id_period', $id_period],
+                ['active', 1]
+            ])
             ->select(
                 'id',
                 'code',
@@ -71,8 +73,8 @@ class BillController extends Controller
             ->addColumn('action', function($data){
                 $button = '<a type="button" data-toggle="tooltip" title="Edit / Delete" name="edit" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
 
-                //Aktif : 1 = aktif, 2 = Sub Tagihan 0, 0 = Nonaktif
-                if($data->active == 2){
+                //Aktif : 1 = aktif, 0 = Sub Tagihan 0
+                if($data->active == 0){
                     $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="delete" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="delete"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
                 }
 
@@ -731,7 +733,7 @@ class BillController extends Controller
             ]);
 
             if($sub_tagihan == 0){
-                $active = 2;
+                $active = 0;
             }
 
             $data['active'] = $active;
@@ -1577,7 +1579,7 @@ class BillController extends Controller
             $data->data = $json;
 
             if($sub_tagihan == 0){
-                $active = 2;
+                $active = 0;
             }
 
             $data->active = $active;
@@ -1649,6 +1651,44 @@ class BillController extends Controller
     }
 
     public function deleted(){
+        if(request()->ajax()){
+            $id_period = Session::get('period');
+            $valid['period'] = $id_period;
+            $validator = Validator::make($valid, [
+                'period' => 'exists:App\Models\Period,id'
+            ]);
+
+            if($validator->fails()){
+                $id_period = Period::latest('name')->select('id')->first()->id;
+            }
+
+            $data = Bill::where([
+                ['id_period', $id_period],
+                ['deleted', '!=', NULL]
+            ]);
+            return DataTables::of($data)
+            ->addColumn('action', function($data){
+                $button = '<a type="button" data-toggle="tooltip" title="Restore" name="restore" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="restore"><i class="fas fa-undo" style="color:#4e73df;"></i></a>';
+                return $button;
+            })
+            ->editColumn('name', function($data){
+                $name = $data->name;
+                if(strlen($name) > 15) {
+                    $name = substr($name, 0, 11);
+                    $name = str_pad($name,  15, ".");
+                    return "<span data-toggle='tooltip' title='$data->name'>$name</span>";
+                }
+                else{
+                    return $name;
+                }
+            })
+            ->filterColumn('nicename', function ($query, $keyword) {
+                $keywords = trim($keyword);
+                $query->whereRaw("CONCAT(kd_kontrol, nicename, code) like ?", ["%{$keywords}%"]);
+            })
+            ->rawColumns(['action', 'name'])
+            ->make(true);
+        }
         Session::put('lastPlace', 'manage/deleted');
         return view('portal.manage.deleted.index');
     }
