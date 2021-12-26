@@ -1698,6 +1698,66 @@ class BillController extends Controller
         return view('portal.manage.deleted.index');
     }
 
+    public function deletedShow($id){
+        if(request()->ajax()){
+            try{
+                $data = Bill::select(
+                    'id',
+                    'id_period',
+                    'code',
+                    'kd_kontrol',
+                    'b_listrik',
+                    'b_airbersih',
+                    'b_keamananipk',
+                    'b_kebersihan',
+                    'b_airkotor',
+                    'b_lain',
+                    'deleted',
+                )
+                ->with([
+                    'period:id,nicename'
+                ])
+                ->findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            $json = json_decode($data->deleted);
+
+            if(array_key_exists('listrik', $json)){
+                if(is_null($data->b_listrik)){
+
+                }
+            }
+
+            if(array_key_exists('airbersih', $json)){
+                if(is_null($data->b_airbersih)){
+
+                }
+            }
+
+            if(array_key_exists('keamananipk', $json)){
+                if(is_null($data->b_keamananipk)){
+
+                }
+            }
+
+            if(array_key_exists('kebersihan', $json)){
+                if(is_null($data->b_kebersihan)){
+
+                }
+            }
+
+            if(array_key_exists('airkotor', $json)){
+                if(is_null($data->b_airkotor)){
+
+                }
+            }
+
+            return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
+        }
+    }
+
     public function check($id){
         if(request()->ajax()){
             $show = '';

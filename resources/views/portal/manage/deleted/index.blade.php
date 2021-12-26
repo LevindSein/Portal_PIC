@@ -42,6 +42,31 @@ Penghapusan Tagihan
 @endsection
 
 @section('content-modal')
+<div id="showModal" class="modal fade" role="dialog" tabIndex="-1">
+    <div class="modal-dialog modal-dialog-centered modal dialog-modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title titles"></h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <small class="text-muted pt-4 db">Kode Tagihan</small>
+                <h4 id="showCode"></h4>
+                <small class="text-muted pt-4 db">Periode</small>
+                <h6 id="showPeriod"></h6>
+                <small class="text-muted pt-4 db">Kontrol</small>
+                <h6 id="showKontrol"></h6>
+                <h3 class="text-center">Tagihan</h3>
+                <div id="showFasilitas"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('content-js')
@@ -153,6 +178,67 @@ Penghapusan Tagihan
 
         $(".popover").popover("hide");
     }
+
+    $(document).on('click', '.details', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Penghapusan tagihan ' + nama);
+
+        $("#showFasilitas").html('');
+
+        $.ajax({
+            url: "/production/manage/deleted/" + id,
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#showCode").text(data.show.code);
+                    $("#showPeriod").text(data.show.period.nicename);
+                    $("#showKontrol").text(data.show.kd_kontrol);
+
+                }
+
+                if(data.error){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error(data.error);
+                }
+
+                if(data.warning){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.warning(data.warning);
+                }
+
+                if(data.info){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.info(data.info);
+                }
+
+                if(data.description){
+                    console.log(data.description);
+                }
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching data failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#showModal').modal('show');
+            }
+        });
+    });
 
     $(document).on('click', '.restore', function(){
         id = $(this).attr('id');

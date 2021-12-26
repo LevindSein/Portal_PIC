@@ -73,6 +73,7 @@ Route::middleware('checkauth')->group(function(){
 
             Route::resource('changelogs', ChangeLogController::class);
 
+            Route::get('manage/deleted/{id}', [BillController::class, 'deletedShow']);
             Route::get('manage/deleted', [BillController::class, 'deleted']);
             Route::get('manage/deleted/{id}/check', [BillController::class, 'check']);
             Route::post('manage/deleted/{id}', [BillController::class, 'restore']);
