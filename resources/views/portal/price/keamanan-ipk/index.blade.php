@@ -292,9 +292,9 @@ Tarif Keamanan IPK
     $(document).on('click', '.delete', function(){
         id = $(this).attr('id');
         nama = $(this).attr('nama');
-        $('.titles').text('Hapus data ' + nama + ' ?');
-        $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data tarif.');
-        $('#ok_button').removeClass().addClass('btn btn-danger').text('Hapus');
+        $('.titles').text('Hapus permanen data ' + nama + ' ?');
+        $('.bodies').html('Pilih <b>Permanen</b> di bawah ini jika anda yakin untuk menghapus data tarif.');
+        $('#ok_button').removeClass().addClass('btn btn-danger').text('Permanen');
         $('#confirmValue').val('delete');
         $('#confirmModal').modal('show');
     });

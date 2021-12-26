@@ -240,9 +240,9 @@ Libur Tagihan
     $(document).on('click', '.delete', function(){
         id = $(this).attr('id');
         name = $(this).attr('nama');
-        $('.titles').text('Hapus data ' + name + '?');
-        $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data hari libur.');
-        $('#ok_button').removeClass().addClass('btn btn-danger').text('Hapus');
+        $('.titles').text('Hapus permanen data ' + name + '?');
+        $('.bodies').html('Pilih <b>Permanen</b> di bawah ini jika anda yakin untuk menghapus data hari libur tagihan.');
+        $('#ok_button').removeClass().addClass('btn btn-danger').text('Permanen');
         $('#confirmValue').val('delete');
         $('#confirmModal').modal('show');
     });

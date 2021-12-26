@@ -26,7 +26,7 @@ class ToolsController extends Controller
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->code.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.$data->code.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="delete" id="'.$data->id.'" nama="'.$data->code.'" class="delete"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
                 $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->code.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
 
                 return $button;
@@ -201,7 +201,7 @@ class ToolsController extends Controller
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '<a type="button" data-toggle="tooltip" title="Edit" name="edit" id="'.$data->id.'" nama="'.$data->code.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
-                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete" name="delete" id="'.$data->id.'" nama="'.$data->code.'" class="delete"><i class="fas fa-trash" style="color:#e74a3b;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="delete" id="'.$data->id.'" nama="'.$data->code.'" class="delete"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
                 $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->code.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
 
                 return $button;

@@ -31,6 +31,7 @@ class Bill extends Model
         'b_lain',
         'b_tagihan',
         'data',
+        'active',
         'deleted'
     ];
 

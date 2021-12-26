@@ -1138,6 +1138,16 @@ Kelola Tagihan
         $('#confirmModal').modal('show');
     });
 
+    $(document).on('click', '.delete', function(){
+        id = $(this).attr('id');
+        name = $(this).attr('nama');
+        $('.titles').text('Hapus permanen data ' + name + '?');
+        $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data tagihan.');
+        $('#ok_button').removeClass().addClass('btn btn-danger').text('Hapus');
+        $('#confirmValue').val('delete');
+        $('#confirmModal').modal('show');
+    });
+
     $('#confirmForm').submit(function(e){
         e.preventDefault();
         var token = $("meta[name='csrf-token']").attr("content");
@@ -1158,6 +1168,12 @@ Kelola Tagihan
             type = "POST";
             ok_btn_before = "Unpublishing...";
             ok_btn_completed = "Unpublish";
+        }
+        else if(value == 'delete'){
+            url = "/production/manage/bills/" + id;
+            type = "DELETE";
+            ok_btn_before = "Menghapus...";
+            ok_btn_completed = "Hapus";
         }
 
         ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);

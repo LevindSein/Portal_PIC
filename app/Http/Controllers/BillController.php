@@ -48,6 +48,7 @@ class BillController extends Controller
             }
 
             $data = Bill::where('id_period', $id_period)
+            ->whereIn('active', [1,2])
             ->select(
                 'id',
                 'code',
@@ -64,10 +65,16 @@ class BillController extends Controller
                 'b_airkotor',
                 'b_lain',
                 'b_tagihan',
+                'active'
             );
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '<a type="button" data-toggle="tooltip" title="Edit / Delete" name="edit" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="edit"><i class="fas fa-edit" style="color:#4e73df;"></i></a>';
+
+                //Aktif : 1 = aktif, 2 = Sub Tagihan 0, 0 = Nonaktif
+                if($data->active == 2){
+                    $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Delete Permanent" name="delete" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="delete"><i class="fas fa-trash-alt" style="color:#e74a3b;"></i></a>';
+                }
 
                 $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                 return $button;
@@ -272,6 +279,8 @@ class BillController extends Controller
             $jml_los = count($los);
             $data['jml_los'] = $jml_los;
             $data['no_los'] = implode(',', $los);
+
+            $active = 1;
 
             $sub_tagihan = 0;
             $den_tagihan = 0;
@@ -721,6 +730,12 @@ class BillController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
+            if($sub_tagihan == 0){
+                $active = 2;
+            }
+
+            $data['active'] = $active;
+
             try{
                 Bill::create($data);
             }
@@ -899,6 +914,8 @@ class BillController extends Controller
             $sel_tagihan = 0;
 
             $lunas = 1;
+
+            $active = 1;
 
             if($data->deleted){
                 $delete = json_decode($data->deleted);
@@ -1559,6 +1576,12 @@ class BillController extends Controller
             $json = json_encode($json);
             $data->data = $json;
 
+            if($sub_tagihan == 0){
+                $active = 2;
+            }
+
+            $data->active = $active;
+
             try{
                 $data->save();
             }
@@ -1578,7 +1601,21 @@ class BillController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(request()->ajax()){
+            try{
+                $data = Bill::findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            try{
+                $data->delete();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Data failed to delete.", 'description' => $e]);
+            }
+
+            return response()->json(['success' => 'Data deleted.']);
+        }
     }
 
     public function publish($id){
@@ -1609,5 +1646,10 @@ class BillController extends Controller
         }
 
         return response()->json(['success' => $update]);
+    }
+
+    public function deleted(){
+        Session::put('lastPlace', 'manage/deleted');
+        return view('portal.manage.deleted.index');
     }
 }

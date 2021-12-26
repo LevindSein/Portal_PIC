@@ -238,9 +238,9 @@ Daftar Log Perubahan
 
     $(document).on('click', '.delete', function(){
         id = $(this).attr('id');
-        $('.titles').text('Hapus data Log Perubahan ?');
-        $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data log perubahan.');
-        $('#ok_button').removeClass().addClass('btn btn-danger').text('Hapus');
+        $('.titles').text('Hapus permanen data Log Perubahan ?');
+        $('.bodies').html('Pilih <b>Permanen</b> di bawah ini jika anda yakin untuk menghapus data log perubahan.');
+        $('#ok_button').removeClass().addClass('btn btn-danger').text('Permanen');
         $('#confirmValue').val('delete');
         $('#confirmModal').modal('show');
     });

@@ -220,9 +220,9 @@ Daftar Komoditi
 
     $(document).on('click', '.delete', function(){
         id = $(this).attr('id');
-        $('.titles').text('Hapus data komoditi ?');
-        $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data komoditi.');
-        $('#ok_button').removeClass().addClass('btn btn-danger').text('Hapus');
+        $('.titles').text('Hapus permanen data komoditi ?');
+        $('.bodies').html('Pilih <b>Permanen</b> di bawah ini jika anda yakin untuk menghapus data komoditi.');
+        $('#ok_button').removeClass().addClass('btn btn-danger').text('Permanen');
         $('#confirmValue').val('delete');
         $('#confirmModal').modal('show');
     });
