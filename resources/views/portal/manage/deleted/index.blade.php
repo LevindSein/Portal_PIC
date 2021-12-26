@@ -158,10 +158,31 @@ Penghapusan Tagihan
         id = $(this).attr('id');
         nama = $(this).attr('nama');
         $('.titles').text('Restore data penghapusan ' + nama + ' ke Tagihan Aktif?');
-        $('.bodies').html('Pilih <b>Restore</b> di bawah ini jika anda yakin untuk memulihkan tagihan. Data yang akan dipulihkan adalah semua data yang <b>belum dibayar</b>.');
-        $('#ok_button').removeClass().addClass('btn btn-info').text('Restore');
-        $('#confirmValue').val('restore');
-        $('#confirmModal').modal('show');
+        $.ajax({
+            url: '/production/manage/deleted/' + id + '/check',
+            type: 'GET',
+            cache:false,
+            success:function(data){
+                $('.bodies').html(
+                    'Pilih <b>Restore</b> di bawah ini jika anda yakin untuk memulihkan tagihan. Data yang akan dipulihkan adalah semua data yang <b>belum lunas</b> dan <b>tagihan yang sedang aktif tidak akan terpengaruh.</b><br>' +
+                    'Tagihan yang akan dipulihkan, yaitu :<br>' +
+                    data.show
+                );
+            },
+            error:function(data){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                };
+                toastr.error("Fetching darta failed.");
+                console.log(data);
+            },
+            complete:function(){
+                $('#ok_button').removeClass().addClass('btn btn-info').text('Restore');
+                $('#confirmValue').val('restore');
+                $('#confirmModal').modal('show');
+            }
+        });
     });
 
     $('#confirmForm').submit(function(e){

@@ -1698,6 +1698,70 @@ class BillController extends Controller
         return view('portal.manage.deleted.index');
     }
 
+    public function check($id){
+        if(request()->ajax()){
+            $show = '';
+            try{
+                $data = Bill::select(
+                    'id',
+                    'b_listrik',
+                    'b_airbersih',
+                    'b_keamananipk',
+                    'b_kebersihan',
+                    'b_airkotor',
+                    'b_lain',
+                    'deleted'
+                )
+                ->findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            $json = json_decode($data->deleted);
+
+            $i = 1;
+
+            if(array_key_exists('listrik', $json)){
+                if(is_null($data->b_listrik)){
+                    $show .= $i . '. <b>Listrik</b> (Rp. ' . number_format($json->listrik->ttl_tagihan, 0, '', '.') . ')<br>';
+                    $i++;
+                }
+            }
+
+            if(array_key_exists('airbersih', $json)){
+                if(is_null($data->b_airbersih)){
+                    $show .= $i . '. <b>Air Bersih</b> (Rp. ' . number_format($json->airbersih->ttl_tagihan, 0, '', '.') . ')<br>';
+                    $i++;
+                }
+            }
+
+            if(array_key_exists('keamananipk', $json)){
+                if(is_null($data->b_keamananipk)){
+                    $show .= $i . '. <b>Keamanan IPK</b> (Rp. ' . number_format($json->keamananipk->ttl_tagihan, 0, '', '.') . ')<br>';
+                    $i++;
+                }
+            }
+
+            if(array_key_exists('kebersihan', $json)){
+                if(is_null($data->b_kebersihan)){
+                    $show .= $i . '. <b>Kebersihan</b> (Rp. ' . number_format($json->kebersihan->ttl_tagihan, 0, '', '.') . ')<br>';
+                    $i++;
+                }
+            }
+
+            if(array_key_exists('airkotor', $json)){
+                if(is_null($data->b_airkotor)){
+                    $show .= $i . '. <b>Air Kotor</b> (Rp. ' . number_format($json->airkotor->ttl_tagihan, 0, '', '.') . ')<br>';
+                    $i++;
+                }
+            }
+
+            $show = rtrim($show, ', ');
+
+            return response()->json(['success' => 'Fetching data success.', 'show' => $show]);
+        }
+    }
+
     public function restore($id){
         if(request()->ajax()){
             try{
