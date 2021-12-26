@@ -233,7 +233,7 @@ form.sign-in-form {
     width: 130px;
     height: 41px;
     font-weight: 600;
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 .right-panel .image,
@@ -336,7 +336,7 @@ form.sign-in-form {
     }
 
     .panel p {
-        font-size: 0.7rem;
+        font-size: 1rem;
         padding: 0.5rem 0;
     }
 

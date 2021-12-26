@@ -33,7 +33,12 @@ class AuthController extends Controller
                 DataLogin::success();
                 if($user->level == 1 || $user->level == 2){
                     $name = Auth::user()->name;
-                    return redirect('production/dashboard')->with('success',"Welcome $name.");
+                    if(Session::get('lastPlace')){
+                        return redirect('production/' . Session::get('lastPlace'))->with('success',"Selamat Datang $name.");
+                    }
+                    else{
+                        return redirect('production/dashboard')->with('success',"Selamat Datang $name.");
+                    }
                 }
                 else if($user->level == 3){
                     return "Dashboard Nasabah";

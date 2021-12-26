@@ -11,12 +11,6 @@ $(document).ready(function() {
     },false);
 });
 
-var myScreenOrientation = window.screen.orientation;
-myScreenOrientation.lock("portrait").then(
-    success => console.log(success),
-    failure => console.log(failure)
-);
-
 //Fullscreen
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
     window.scrollTo(0,0); // reset in case prev not scrolled

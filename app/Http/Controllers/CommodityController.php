@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -37,6 +38,7 @@ class CommodityController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
+        Session::put('lastPlace', 'point/commodities');
         return view('portal.point.commodity.index');
     }
 

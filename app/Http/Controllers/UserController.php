@@ -93,6 +93,7 @@ class UserController extends Controller
                 ->rawColumns(['action','active', 'name'])
                 ->make(true);
         }
+        Session::put('lastPlace', 'users');
         return view('portal.user.index');
     }
 

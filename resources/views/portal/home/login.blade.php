@@ -7,8 +7,8 @@
 
         {{-- CSS for this page --}}
         <link rel="stylesheet" href="{{asset('portal/home/login/style.css')}}"/>
-        <link rel="stylesheet" href="{{asset('vendor/fontawesome/css/all.min.css')}}" type="text/css">
-        <link rel="stylesheet" href="{{asset('vendor/fontawesomepro/css/all.min.css')}}" type="text/css">
+        <link rel="stylesheet" href="{{asset('vendor/fontawesome/css/all.min.css')}}">
+        <link rel="stylesheet" href="{{asset('vendor/fontawesomepro/css/all.min.css')}}">
 
         {{-- Toastr --}}
         <link rel="stylesheet" type="text/css" href="{{asset('vendor/toastr/toastr.min.css')}}">
@@ -193,11 +193,6 @@
                                 "preventDuplicates": true,
                             };
                             toastr.warning(data.warning);
-                            if(data.description){
-                                setTimeout(function() {
-                                    location.href = "/profile";
-                                }, 1000);
-                            }
                         }
 
                         if(data.error){

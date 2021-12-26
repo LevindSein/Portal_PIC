@@ -5,23 +5,25 @@ return [
     'manifest' => [
         'name' => 'PIC Bandung',
         'short_name' => 'PIC Bandung',
+        'description' => 'Portal Pasar Induk Caringin Bandung',
         'start_url' => '/',
         'background_color' => '#FFFFFF',
         'theme_color' => '#26495C',
         'display' => 'standalone',
         'orientation'=> 'portrait',
         'status_bar'=> 'black',
+        'scope' => '.',
         'icons' => [
             '72x72' => [
-                'path' => '/images/icons/icon-72x72.png',
+                'path' => '/images/icons/maskable_icon_x72.png',
                 'purpose' => 'any'
             ],
             '96x96' => [
-                'path' => '/images/icons/icon-96x96.png',
+                'path' => '/images/icons/maskable_icon_x96.png',
                 'purpose' => 'any'
             ],
             '128x128' => [
-                'path' => '/images/icons/icon-128x128.png',
+                'path' => '/images/icons/maskable_icon_x128.png',
                 'purpose' => 'any'
             ],
             '144x144' => [
@@ -33,15 +35,15 @@ return [
                 'purpose' => 'any'
             ],
             '192x192' => [
-                'path' => '/images/icons/icon-192x192.png',
+                'path' => '/images/icons/maskable_icon_x192.png',
                 'purpose' => 'any'
             ],
             '384x384' => [
-                'path' => '/images/icons/icon-384x384.png',
+                'path' => '/images/icons/maskable_icon_x384.png',
                 'purpose' => 'any'
             ],
             '512x512' => [
-                'path' => '/images/icons/icon-512x512.png',
+                'path' => '/images/icons/maskable_icon_x512.png',
                 'purpose' => 'any'
             ],
         ],
@@ -64,10 +66,10 @@ return [
                 'description' => 'Pembayaran Tagihan',
                 'url' => '/payment',
                 'icons' => [
-                    "src" => "/images/icons/check-mark.png",
-                    'sizes' => '192x192',
-                    "purpose" => "any",
-                    "type" => "image/png"
+                    "src" => "/images/icons/wallet-192x192.png",
+                    "type" => "image/png",
+                    "sizes" => "192x192",
+                    "purpose" => 'any'
                 ]
             ]
         ],

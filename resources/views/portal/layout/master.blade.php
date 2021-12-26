@@ -7,7 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/favicon.png')}}">
     <title>@yield('content-title') | Portal PIC</title>
 
     {{-- Select2 --}}
@@ -118,7 +117,7 @@
                                         <p class="text-dark mb-0">{{\App\Models\User::level(Auth::user()->level)}}</p>
                                     </div>
                                 </div>
-                                <a class="dropdown-item" href="{{url('profile')}}">
+                                <a class="dropdown-item" href="{{url('production/profile')}}">
                                     <i class="fas fa-user mr-1 ml-1"></i>
                                     <span>Profil</span>
                                 </a>
@@ -546,7 +545,7 @@
                     if(data.description){
                         console.log(data.description);
                         setTimeout(function() {
-                            location.href = "/profile";
+                            location.href = "/production/profile";
                         }, 1000);
                     }
                 },

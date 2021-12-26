@@ -181,6 +181,7 @@ class BillController extends Controller
             ->rawColumns(['action', 'publish', 'fasilitas', 'name'])
             ->make(true);
         }
+        Session::put('lastPlace', 'manage/bills');
         return view('portal.manage.bill.index');
     }
 
@@ -1261,6 +1262,8 @@ class BillController extends Controller
             }
             else{
                 if($data->b_keamananipk){
+                    $keamananipk = json_decode($data->b_keamananipk);
+
                     $json = json_decode($data->b_keamananipk);
                     if($json->lunas == 1){
                         $lunas *= 1;
@@ -1273,6 +1276,11 @@ class BillController extends Controller
                     }
                     else{
                         $data->b_keamananipk = NULL;
+
+                        $delete->keamananipk = $keamananipk;
+                        $deleted = json_encode($delete);
+
+                        $data->deleted = $deleted;
                     }
                 }
                 else{
@@ -1330,6 +1338,8 @@ class BillController extends Controller
             }
             else{
                 if($data->b_kebersihan){
+                    $kebersihan = json_decode($data->b_kebersihan);
+
                     $json = json_decode($data->b_kebersihan);
                     if($json->lunas == 1){
                         $lunas *= 1;
@@ -1342,6 +1352,11 @@ class BillController extends Controller
                     }
                     else{
                         $data->b_kebersihan = NULL;
+
+                        $delete->kebersihan = $kebersihan;
+                        $deleted = json_encode($delete);
+
+                        $data->deleted = $deleted;
                     }
                 }
                 else{
@@ -1399,6 +1414,8 @@ class BillController extends Controller
             }
             else{
                 if($data->b_airkotor){
+                    $airkotor = json_decode($data->b_airkotor);
+
                     $json = json_decode($data->b_airkotor);
                     if($json->lunas == 1){
                         $lunas *= 1;
@@ -1411,6 +1428,11 @@ class BillController extends Controller
                     }
                     else{
                         $data->b_airkotor = NULL;
+
+                        $delete->airkotor = $airkotor;
+                        $deleted = json_encode($delete);
+
+                        $data->deleted = $deleted;
                     }
                 }
                 else{

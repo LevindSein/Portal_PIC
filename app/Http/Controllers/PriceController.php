@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -48,6 +49,7 @@ class PriceController extends Controller
             ->rawColumns(['action', 'name'])
             ->make(true);
         }
+        Session::put('lastPlace', 'prices/listrik');
         return view('portal.price.listrik.index');
     }
 
@@ -237,6 +239,7 @@ class PriceController extends Controller
             ->rawColumns(['action', 'name'])
             ->make(true);
         }
+        Session::put('lastPlace', 'prices/airbersih');
         return view('portal.price.air-bersih.index');
     }
 
@@ -424,6 +427,7 @@ class PriceController extends Controller
             ->rawColumns(['action', 'name'])
             ->make(true);
         }
+        Session::put('lastPlace', 'prices/keamananipk');
         return view('portal.price.keamanan-ipk.index');
     }
 
@@ -587,6 +591,7 @@ class PriceController extends Controller
             ->rawColumns(['action', 'name'])
             ->make(true);
         }
+        Session::put('lastPlace', 'prices/kebersihan');
         return view('portal.price.kebersihan.index');
     }
 
@@ -742,6 +747,7 @@ class PriceController extends Controller
             ->rawColumns(['action', 'name'])
             ->make(true);
         }
+        Session::put('lastPlace', 'prices/airkotor');
         return view('portal.price.air-kotor.index');
     }
 
@@ -897,6 +903,7 @@ class PriceController extends Controller
             ->rawColumns(['action', 'name'])
             ->make(true);
         }
+        Session::put('lastPlace', 'prices/lain');
         return view('portal.price.lain.index');
     }
 

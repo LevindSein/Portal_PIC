@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\DataLogin;
 use App\Models\User;
@@ -58,6 +59,7 @@ class HistoryController extends Controller
             ->rawColumns(['name', 'status', 'action'])
             ->make(true);
         }
+        Session::put('lastPlace', 'histories');
         return view('portal.history.index');
     }
 

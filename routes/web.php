@@ -46,8 +46,8 @@ Route::resource('login', AuthController::class);
 //Login Authenticated
 Route::middleware('checkauth')->group(function(){
     //Access for Level 1 & 2
-    Route::middleware('oneauth')->group(function(){
-        Route::prefix('production')->group(function(){
+    Route::prefix('production')->group(function(){
+        Route::middleware('oneauth')->group(function(){
             Route::get('dashboard', [DashboardController::class, 'index']);
 
             Route::get('service/register', [ServiceController::class, 'index']);
@@ -136,12 +136,12 @@ Route::middleware('checkauth')->group(function(){
             Route::get('point/tools/airbersih/{id}', [ToolsController::class, 'airbersihShow']);
             Route::delete('point/tools/airbersih/{id}', [ToolsController::class, 'airbersihDestroy']);
         });
+
+        Route::post('profile/picture', [ProfileController::class, 'picture']);
+        Route::resource('profile', ProfileController::class);
     });
 
     Route::get('email/verify/resend', [EmailController::class, 'resend']);
-
-    Route::post('profile/picture', [ProfileController::class, 'picture']);
-    Route::resource('profile', ProfileController::class);
 
     Route::get('search/countries',[SearchController::class, 'country']);
 

@@ -299,7 +299,7 @@ Profil
         });
 
         $.ajax({
-            url: "/profile",
+            url: "/production/profile",
             type: "POST",
             cache: false,
             data: $(this).serialize(),

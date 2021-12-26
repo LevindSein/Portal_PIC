@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -35,6 +36,7 @@ class GroupController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
+        Session::put('lastPrice', 'point/groups');
         return view('portal.point.group.index');
     }
 

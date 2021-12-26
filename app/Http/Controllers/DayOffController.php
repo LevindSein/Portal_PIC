@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\DayOff;
 use App\Models\IndoDate;
@@ -36,6 +37,7 @@ class DayOffController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
+        Session::put('lastPlace', 'manage/dayoff');
         return view('portal.manage.day-off.index');
     }
 

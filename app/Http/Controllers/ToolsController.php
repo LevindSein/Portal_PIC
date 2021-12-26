@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -48,6 +49,7 @@ class ToolsController extends Controller
             ->rawColumns(['action', 'code'])
             ->make(true);
         }
+        Session::put('lastPlace', 'point/tools/listrik');
         return view('portal.point.tools.listrik.index');
     }
 
@@ -219,6 +221,7 @@ class ToolsController extends Controller
             ->rawColumns(['action', 'code'])
             ->make(true);
         }
+        Session::put('lastPlace', 'point/tools/airbersih');
         return view('portal.point.tools.air-bersih.index');
     }
 
