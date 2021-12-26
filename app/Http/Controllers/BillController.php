@@ -47,10 +47,8 @@ class BillController extends Controller
                 $id_period = Period::latest('name')->select('id')->first()->id;
             }
 
-            $data = Bill::where([
-                ['id_period', $id_period],
-                ['active', 1]
-            ])
+            $data = Bill::where('id_period', $id_period)
+            ->whereIn('active', [0,1])
             ->select(
                 'id',
                 'code',
@@ -721,7 +719,6 @@ class BillController extends Controller
             ]);
 
             $data['data'] = json_encode([
-                'lunas' => 0,
                 'publish' => $publish,
                 'publish_by' => $publish_by,
                 'user_create' => Auth::user()->id,
@@ -1552,7 +1549,6 @@ class BillController extends Controller
 
             if($lunas == 1){
                 $data->stt_lunas = 1;
-                $data->stt_publish = 1;
             }
             else{
                 $data->stt_lunas = 0;
@@ -1569,7 +1565,6 @@ class BillController extends Controller
             $data->b_tagihan = json_encode($json);
 
             $json = json_decode($data->data);
-            $json->lunas = $lunas;
             $json->publish = $publish;
             $json->publish_by = $publish_by;
             $json->user_update = Auth::user()->id;
@@ -1665,10 +1660,20 @@ class BillController extends Controller
             $data = Bill::where([
                 ['id_period', $id_period],
                 ['deleted', '!=', NULL]
-            ]);
+            ])
+            ->select(
+                'id',
+                'code',
+                'id_period',
+                'kd_kontrol',
+                'name',
+                'nicename',
+                'deleted',
+            );
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '<a type="button" data-toggle="tooltip" title="Restore" name="restore" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="restore"><i class="fas fa-undo" style="color:#4e73df;"></i></a>';
+                $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" nama="'.$data->kd_kontrol.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                 return $button;
             })
             ->editColumn('name', function($data){
@@ -1691,5 +1696,154 @@ class BillController extends Controller
         }
         Session::put('lastPlace', 'manage/deleted');
         return view('portal.manage.deleted.index');
+    }
+
+    public function restore($id){
+        if(request()->ajax()){
+            try{
+                $data = Bill::select(
+                    'id',
+                    'b_listrik',
+                    'b_airbersih',
+                    'b_keamananipk',
+                    'b_kebersihan',
+                    'b_airkotor',
+                    'b_lain',
+                    'b_tagihan',
+                    'deleted',
+                )
+                ->findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            $tagihan = json_decode($data->b_tagihan);
+
+            $sub_tagihan = $tagihan->sub_tagihan;
+            $den_tagihan = $tagihan->denda;
+            $dis_tagihan = $tagihan->diskon;
+            $ttl_tagihan = $tagihan->ttl_tagihan;
+            $rea_tagihan = $tagihan->rea_tagihan;
+            $sel_tagihan = $tagihan->sel_tagihan;
+
+            $lunas = 1;
+            //Cek Lunas dan Hitung Tagihan ulang
+
+            $json = json_decode($data->deleted);
+
+            if(array_key_exists('listrik', $json)){
+                if(is_null($data->b_listrik)){
+                    $lunas *= 0;
+
+                    $listrik = json_encode($json->listrik);
+                    $data->b_listrik = $listrik;
+
+                    $listrik = json_decode($listrik);
+
+                    $sub_tagihan += $listrik->sub_tagihan;
+                    $den_tagihan += $listrik->denda;
+                    $dis_tagihan += $listrik->diskon;
+                    $ttl_tagihan += $listrik->ttl_tagihan;
+                    $rea_tagihan += $listrik->rea_tagihan;
+                    $sel_tagihan += $listrik->sel_tagihan;
+                }
+            }
+
+            if(array_key_exists('airbersih', $json)){
+                if(is_null($data->b_airbersih)){
+                    $lunas *= 0;
+
+                    $airbersih = json_encode($json->airbersih);
+                    $data->b_airbersih = $airbersih;
+
+                    $airbersih = json_decode($airbersih);
+
+                    $sub_tagihan += $airbersih->sub_tagihan;
+                    $den_tagihan += $airbersih->denda;
+                    $dis_tagihan += $airbersih->diskon;
+                    $ttl_tagihan += $airbersih->ttl_tagihan;
+                    $rea_tagihan += $airbersih->rea_tagihan;
+                    $sel_tagihan += $airbersih->sel_tagihan;
+                }
+            }
+
+            if(array_key_exists('keamananipk', $json)){
+                if(is_null($data->b_keamananipk)){
+                    $lunas *= 0;
+
+                    $keamananipk = json_encode($json->keamananipk);
+                    $data->b_keamananipk = $keamananipk;
+
+                    $keamananipk = json_decode($keamananipk);
+
+                    $sub_tagihan += $keamananipk->sub_tagihan;
+                    $dis_tagihan += $keamananipk->diskon;
+                    $ttl_tagihan += $keamananipk->ttl_tagihan;
+                    $rea_tagihan += $keamananipk->rea_tagihan;
+                    $sel_tagihan += $keamananipk->sel_tagihan;
+                }
+            }
+
+            if(array_key_exists('kebersihan', $json)){
+                if(is_null($data->b_kebersihan)){
+                    $lunas *= 0;
+
+                    $kebersihan = json_encode($json->kebersihan);
+                    $data->b_kebersihan = $kebersihan;
+
+                    $kebersihan = json_decode($kebersihan);
+
+                    $sub_tagihan += $kebersihan->sub_tagihan;
+                    $dis_tagihan += $kebersihan->diskon;
+                    $ttl_tagihan += $kebersihan->ttl_tagihan;
+                    $rea_tagihan += $kebersihan->rea_tagihan;
+                    $sel_tagihan += $kebersihan->sel_tagihan;
+                }
+            }
+
+            if(array_key_exists('airkotor', $json)){
+                if(is_null($data->b_airkotor)){
+                    $lunas *= 0;
+
+                    $airkotor = json_encode($json->airkotor);
+                    $data->b_airkotor = $airkotor;
+
+                    $airkotor = json_decode($airkotor);
+
+                    $sub_tagihan += $airkotor->sub_tagihan;
+                    $dis_tagihan += $airkotor->diskon;
+                    $ttl_tagihan += $airkotor->ttl_tagihan;
+                    $rea_tagihan += $airkotor->rea_tagihan;
+                    $sel_tagihan += $airkotor->sel_tagihan;
+                }
+            }
+
+            if($lunas == 1){
+                $data->stt_lunas = 1;
+            }
+            else{
+                $data->stt_lunas = 0;
+            }
+
+            $tagihan->lunas = $lunas;
+            $tagihan->sub_tagihan = $sub_tagihan;
+            $tagihan->denda = $den_tagihan;
+            $tagihan->diskon = $dis_tagihan;
+            $tagihan->ttl_tagihan = $ttl_tagihan;
+            $tagihan->rea_tagihan = $rea_tagihan;
+            $tagihan->sel_tagihan = $sel_tagihan;
+            $data->b_tagihan = json_encode($tagihan);
+
+            $data->deleted = NULL;
+
+            try{
+                $data->save();
+            }
+            catch(\Exception $e){
+                return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
+            }
+
+            return response()->json(['success' => 'Data restored.']);
+        }
     }
 }

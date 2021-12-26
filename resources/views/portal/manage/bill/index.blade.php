@@ -1122,7 +1122,7 @@ Kelola Tagihan
         id = $(this).attr('id');
         nama = $(this).attr('nama');
         $('.titles').text('Publish ' + nama + ' ?');
-        $('.bodies').text('Pilih "Publish" di bawah ini jika anda yakin untuk publish tagihan. Dengan publish tagihan, maka tagihan akan ada pada menu pembayaran dan tagihan akan dikirim ke nasabah terkait.');
+        $('.bodies').html('Pilih <b>Publish</b> di bawah ini jika anda yakin untuk publish tagihan. Dengan publish tagihan, maka tagihan akan ada pada menu pembayaran dan tagihan akan dikirim ke nasabah terkait.');
         $('#ok_button').removeClass().addClass('btn btn-success').text('Publish');
         $('#confirmValue').val('publish');
         $('#confirmModal').modal('show');
@@ -1132,7 +1132,7 @@ Kelola Tagihan
         id = $(this).attr('id');
         nama = $(this).attr('nama');
         $('.titles').text('Unpublish ' + nama + ' ?');
-        $('.bodies').text('Pilih "Unpublish" di bawah ini jika anda yakin untuk unpublish tagihan.');
+        $('.bodies').html('Pilih <b>Unpublish</b> di bawah ini jika anda yakin untuk unpublish tagihan.');
         $('#ok_button').removeClass().addClass('btn btn-danger').text('Unpublish');
         $('#confirmValue').val('unpublish');
         $('#confirmModal').modal('show');
@@ -1142,7 +1142,7 @@ Kelola Tagihan
         id = $(this).attr('id');
         name = $(this).attr('nama');
         $('.titles').text('Hapus permanen data ' + name + '?');
-        $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data tagihan.');
+        $('.bodies').html('Pilih <b>Hapus</b> di bawah ini jika anda yakin untuk menghapus data tagihan.');
         $('#ok_button').removeClass().addClass('btn btn-danger').text('Hapus');
         $('#confirmValue').val('delete');
         $('#confirmModal').modal('show');

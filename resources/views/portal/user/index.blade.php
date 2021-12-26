@@ -863,7 +863,7 @@ Pengguna
         id = $(this).attr('id');
         nama = $(this).attr('nama');
         $('.titles').text('Reset Password ' + nama + ' ?');
-        $('.bodies').text('Pilih "Reset" di bawah ini jika anda yakin untuk me-reset password user.');
+        $('.bodies').html('Pilih <b>Reset</b> di bawah ini jika anda yakin untuk me-reset password user.');
         $('#ok_button').removeClass().addClass('btn btn-danger').text('Reset');
         $('#confirmValue').val('reset');
         $('#confirmModal').modal('show');
@@ -873,7 +873,7 @@ Pengguna
         id = $(this).attr('id');
         nama = $(this).attr('nama');
         $('.titles').text('Hapus data ' + nama + ' ?');
-        $('.bodies').text('Pilih "Hapus" di bawah ini jika anda yakin untuk menghapus data user.');
+        $('.bodies').html('Pilih <b>Hapus</b> di bawah ini jika anda yakin untuk menghapus data user.');
         $('#ok_button').removeClass().addClass('btn btn-danger').text('Hapus');
         $('#confirmValue').val('delete');
         $('#confirmModal').modal('show');
@@ -888,7 +888,7 @@ Pengguna
         id = $(this).attr('id');
         nama = $(this).attr('nama');
         $('.titles').text('Hapus permanen data ' + nama + ' ?');
-        $('.bodies').text('Pilih "Permanen" di bawah ini jika anda yakin untuk menghapus data user secara permanen.');
+        $('.bodies').html('Pilih <b>Permanen</b> di bawah ini jika anda yakin untuk menghapus data user secara permanen.');
         $('#ok_button').removeClass().addClass('btn btn-danger').text('Permanen');
         $('#confirmValue').val('deletePermanently');
         $('#confirmModal').modal('show');
@@ -898,7 +898,7 @@ Pengguna
         id = $(this).attr('id');
         nama = $(this).attr('nama');
         $('.titles').text('Pulihkan data ' + nama + ' ?');
-        $('.bodies').text('Pilih "Restore" di bawah ini jika anda yakin untuk memulihkan data user.');
+        $('.bodies').html('Pilih <b>Restore</b> di bawah ini jika anda yakin untuk memulihkan data user.');
         $('#ok_button').removeClass().addClass('btn btn-info').text('Restore');
         $('#confirmValue').val('restore');
         $('#confirmModal').modal('show');
