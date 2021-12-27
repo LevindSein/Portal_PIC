@@ -64,7 +64,7 @@ return [
                 'name' => 'Bayar Tagihan',
                 'short_name' => 'Bayar',
                 'description' => 'Pembayaran Tagihan',
-                'url' => '/payment',
+                'url' => '/payment/noauth',
                 'icons' => [
                     "src" => "/images/icons/wallet-192x192.png",
                     "type" => "image/png",

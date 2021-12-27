@@ -20,6 +20,7 @@ use App\Http\Controllers\DayOffController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\CommodityController;
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,10 @@ Route::get('logout', [AuthController::class, 'logout']);
 Route::get('register', [AuthController::class, 'register']);
 Route::post('register', [AuthController::class, 'registerStore']);
 Route::resource('login', AuthController::class);
+
+Route::get('payment/noauth', function(){
+    return 'Payment';
+});
 
 //Login Authenticated
 Route::middleware('checkauth')->group(function(){
@@ -139,6 +144,8 @@ Route::middleware('checkauth')->group(function(){
             Route::put('point/tools/airbersih/{id}', [ToolsController::class, 'airbersihUpdate']);
             Route::get('point/tools/airbersih/{id}', [ToolsController::class, 'airbersihShow']);
             Route::delete('point/tools/airbersih/{id}', [ToolsController::class, 'airbersihDestroy']);
+
+            Route::resource('payment', PaymentController::class);
         });
 
         Route::post('profile/picture', [ProfileController::class, 'picture']);
@@ -192,8 +199,4 @@ Route::post('scan/qr/register',[ScanController::class, 'scanQrRegister']);
 
 Route::get('tester', function(){
     return 200;
-});
-
-Route::get('payment', function(){
-    return 'Payment';
 });
