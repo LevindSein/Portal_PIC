@@ -58,7 +58,7 @@ Penghapusan Tagihan
                 <h6 id="showPeriod"></h6>
                 <small class="text-muted pt-4 db">Kontrol</small>
                 <h6 id="showKontrol"></h6>
-                <h3 class="text-center">Tagihan</h3>
+                <h3 class="text-center">Tagihan Terhapus</h3>
                 <div id="showFasilitas"></div>
             </div>
             <div class="modal-footer">

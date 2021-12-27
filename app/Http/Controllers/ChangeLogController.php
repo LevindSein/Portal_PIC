@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -24,14 +25,8 @@ class ChangeLogController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = ChangeLog::select('id','data','updated_at');
+            $data = ChangeLog::select('id','data','release_date');
             return DataTables::of($data)
-            ->editColumn('updated_at', function ($data) {
-                return [
-                    'display' => $data->updated_at->format('Y-m-d H:i:s'),
-                    'timestamp' => $data->updated_at->timestamp
-                ];
-            })
             ->addColumn('action', function($data){
                 $button = '';
                 if(Auth::user()->level == 1){
@@ -82,6 +77,12 @@ class ChangeLogController extends Controller
     public function store(Request $request)
     {
         if($request->ajax()){
+            $release = Carbon::parse($request->release)->format('d-m-Y H:i:s');
+            $valid['release'] = $release;
+            Validator::make($valid, [
+                'release' => 'required|date_format:d-m-Y H:i:s',
+            ])->validate();
+
             $request->validate([
                 'title' => 'required|max:100',
                 'data' => 'required',
@@ -93,13 +94,14 @@ class ChangeLogController extends Controller
             $json = json_encode([
                 'title' => $title,
                 'data' => $data,
-                'user_create' => Auth::user()->id,
-                'username_create' => Auth::user()->name,
+                'created_by_id' => Auth::user()->id,
+                'created_by_name' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
-                'user_update' => Auth::user()->id,
-                'username_update' => Auth::user()->name,
+                'updated_by_id' => Auth::user()->id,
+                'updated_by_name' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
+            $dataset['release_date'] = $release;
             $dataset['data'] = $json;
 
             try{
@@ -108,7 +110,7 @@ class ChangeLogController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
-            $searchKey = substr($request->title, 0, 10);
+            $searchKey = $release;
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
@@ -129,7 +131,9 @@ class ChangeLogController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
+            $release = $data->release_date;
             $data = json_decode($data->data);
+            $data->release = $release;
 
             return response()->json(['success' => 'Fetching data success.', 'changelog' => $data]);
         }
@@ -150,9 +154,13 @@ class ChangeLogController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
+            $date = Carbon::parse($data->release_date)->format('Y-m-d');
+            $time = Carbon::parse($data->release_date)->format('H:i:s');
+            $release = $date.'T'.$time;
             $data = json_decode($data->data);
+            $data->release = $release;
 
-            return response()->json(['success' => 'Data deleted.', 'changelog' => $data]);
+            return response()->json(['success' => 'Data deleted.', 'changelog' => $data, 'description' => $release]);
         }
     }
 
@@ -180,13 +188,16 @@ class ChangeLogController extends Controller
             $data = json_decode($dataset->data);
             $data->title = $request->title;
             $data->data = $request->data;
-            $data->user_update = Auth::user()->id;
-            $data->username_update = Auth::user()->name;
+            $data->release = $request->release;
+            $data->updated_by_id = Auth::user()->id;
+            $data->updated_by_name = Auth::user()->name;
             $data->updated_at = Carbon::now()->toDateTimeString();
 
             $data = json_encode($data);
 
             $dataset->data = $data;
+
+            $release = $dataset->release_date;
 
             try{
                 $dataset->save();
@@ -194,7 +205,7 @@ class ChangeLogController extends Controller
                 return response()->json(['error' => "Data failed to save.", 'description' => $e]);
             }
 
-            $searchKey = substr($request->title, 0, 10);
+            $searchKey = $release;
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }

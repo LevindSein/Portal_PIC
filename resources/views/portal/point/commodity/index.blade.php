@@ -372,8 +372,8 @@ Daftar Komoditi
             success:function(data){
                 if(data.success){
                     $("#showName").text(data.show.name);
-                    $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
-                    $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
+                    $("#showCreate").html(data.show.data.created_by_name + "<br>pada " + data.show.data.created_at);
+                    $("#showEdit").html(data.show.data.updated_by_name + "<br>pada " + data.show.data.updated_at);
                 }
 
                 if(data.error){

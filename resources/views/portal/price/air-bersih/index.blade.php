@@ -486,8 +486,8 @@ Tarif Air Bersih
                     $("#showAirKotor").text(data.show.data.airkotor + " %");
                     $("#showDenda").text("Rp. " + Number(data.show.data.denda).toLocaleString('id-ID'));
                     $("#showPpn").text(data.show.data.ppn + " %");
-                    $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
-                    $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
+                    $("#showCreate").html(data.show.data.created_by_name + "<br>pada " + data.show.data.created_at);
+                    $("#showEdit").html(data.show.data.updated_by_name + "<br>pada " + data.show.data.updated_at);
                 }
 
                 if(data.error){

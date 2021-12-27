@@ -396,8 +396,8 @@ Blok Tempat
                 if(data.success){
                     $("#showGroup").text(data.group.name);
 
-                    (data.group.los && data.group.los.username_create) ? $("#showCreate").html(data.group.los.username_create + "<br>pada " + data.group.los.created_at) : $("#showCreate").html("&mdash;");
-                    (data.group.los && data.group.los.username_update) ? $("#showEdit").html(data.group.los.username_update + "<br>pada " + data.group.los.updated_at) : $("#showEdit").html("&mdash;");
+                    (data.group.los && data.group.los.created_by_name) ? $("#showCreate").html(data.group.los.created_by_name + "<br>pada " + data.group.los.created_at) : $("#showCreate").html("&mdash;");
+                    (data.group.los && data.group.los.updated_by_name) ? $("#showEdit").html(data.group.los.updated_by_name + "<br>pada " + data.group.los.updated_at) : $("#showEdit").html("&mdash;");
                     (data.group.count) ? $("#showCount").html(data.group.count) : $("#showCount").html("&mdash;");
                     (data.group.long && data.group.long) ? $("#showData").html(data.group.long) : $("#showData").html("&mdash;");
                 }

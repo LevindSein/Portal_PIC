@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2021 at 08:53 PM
+-- Generation Time: Dec 27, 2021 at 08:57 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -37,13 +37,6 @@ CREATE TABLE `activation_code` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `activation_code`
---
-
-INSERT INTO `activation_code` (`id`, `code`, `available`, `submit`, `user_id`, `updated_at`, `created_at`) VALUES
-(1, '423393', '2021-12-22 19:11:20', 0, 1598, '2021-12-22 19:06:20', '2021-12-22 19:06:20');
-
 -- --------------------------------------------------------
 
 --
@@ -55,7 +48,6 @@ CREATE TABLE `bills` (
   `code` varchar(10) DEFAULT NULL,
   `id_period` int(11) DEFAULT NULL,
   `stt_publish` tinyint(1) DEFAULT NULL,
-  `stt_bayar` tinyint(1) DEFAULT NULL,
   `stt_lunas` tinyint(1) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `kd_kontrol` varchar(20) DEFAULT NULL,
@@ -74,17 +66,10 @@ CREATE TABLE `bills` (
   `b_tagihan` text DEFAULT NULL,
   `data` text DEFAULT NULL,
   `active` tinyint(1) DEFAULT NULL,
-  `nonactive` mediumtext DEFAULT NULL,
+  `deleted` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `bills`
---
-
-INSERT INTO `bills` (`id`, `code`, `id_period`, `stt_publish`, `stt_bayar`, `stt_lunas`, `name`, `kd_kontrol`, `nicename`, `group`, `no_los`, `jml_los`, `code_tlistrik`, `code_tairbersih`, `b_listrik`, `b_airbersih`, `b_keamananipk`, `b_kebersihan`, `b_airkotor`, `b_lain`, `b_tagihan`, `data`, `active`, `nonactive`, `updated_at`, `created_at`) VALUES
-(2, '5422759610', 3, 1, 0, 0, 'MASTER', 'A-1-001', 'A1001', 'A-1', '1', 1, 'ML38428', 'MA97824', '{\"tarif_id\":\"1\",\"tarif_nama\":\"Tarif 1\",\"daya\":\"10500\",\"awal\":\"9899\",\"akhir\":\"9899\",\"reset\":null,\"pakai\":0,\"blok1\":0,\"blok2\":0,\"beban\":525000,\"pju\":94500,\"ppn\":61950,\"sub_tagihan\":681450,\"denda\":20444,\"denda_bulan\":\"1\",\"diskon\":34073,\"diskon_persen\":\"5\",\"ttl_tagihan\":667821,\"rea_tagihan\":0,\"sel_tagihan\":667821}', '{\"tarif_id\":\"1\",\"tarif_nama\":\"Tarif 1\",\"awal\":\"25\",\"akhir\":\"25\",\"reset\":null,\"pakai\":0,\"bayar\":0,\"pemeliharaan\":\"15000\",\"beban\":\"25000\",\"arkot\":0,\"ppn\":4000,\"sub_tagihan\":44000,\"denda\":50000,\"denda_bulan\":\"1\",\"diskon\":4400,\"diskon_persen\":\"10\",\"ttl_tagihan\":89600,\"rea_tagihan\":0,\"sel_tagihan\":89600}', '{\"tarif_id\":\"2\",\"tarif_nama\":\"Trf-2\",\"price\":165000,\"sub_tagihan\":165000,\"diskon\":\"20100\",\"keamanan\":79695,\"ipk\":65205,\"ttl_tagihan\":144900,\"rea_tagihan\":0,\"sel_tagihan\":144900}', '{\"tarif_id\":\"5\",\"tarif_nama\":\"Trf-5\",\"price\":155000,\"sub_tagihan\":155000,\"diskon\":\"10200\",\"ttl_tagihan\":144800,\"rea_tagihan\":0,\"sel_tagihan\":144800}', '{\"tarif_id\":\"1\",\"tarif_nama\":\"Trf-1\",\"price\":250000,\"sub_tagihan\":250000,\"diskon\":\"10000\",\"ttl_tagihan\":240000,\"rea_tagihan\":0,\"sel_tagihan\":240000}', '[{\"tarif_id\":\"8\",\"tarif_nama\":\"Parkir\",\"price\":20000,\"satuan_id\":2,\"satuan_nama\":\"per-Los\",\"sub_tagihan\":20000,\"ttl_tagihan\":20000,\"rea_tagihan\":0,\"sel_tagihan\":20000},{\"tarif_id\":\"7\",\"tarif_nama\":\"Preman\",\"price\":10000,\"satuan_id\":1,\"satuan_nama\":\"per-Kontrol\",\"sub_tagihan\":10000,\"ttl_tagihan\":10000,\"rea_tagihan\":0,\"sel_tagihan\":10000}]', '{\"sub_tagihan\":1325450,\"denda\":70444,\"diskon\":78773,\"ttl_tagihan\":1317121,\"rea_tagihan\":0,\"sel_tagihan\":1317121}', '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-22 23:15:23\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-22 23:15:23\"}', 1, NULL, '2021-12-22 16:15:23', '2021-12-22 16:15:23');
 
 -- --------------------------------------------------------
 
@@ -94,6 +79,7 @@ INSERT INTO `bills` (`id`, `code`, `id_period`, `stt_publish`, `stt_bayar`, `stt
 
 CREATE TABLE `change_logs` (
   `id` bigint(20) NOT NULL,
+  `release_date` varchar(20) DEFAULT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -103,16 +89,13 @@ CREATE TABLE `change_logs` (
 -- Dumping data for table `change_logs`
 --
 
-INSERT INTO `change_logs` (`id`, `data`, `updated_at`, `created_at`) VALUES
-(1, '{\"title\":\"Update Caringin V2\",\"data\":\"Peningkatan Sistem Admin dan Kasir, dari sisi Tagihan dan berbagai fitur yang lain.\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-04-04 14:18:35', '2021-04-04 14:18:35'),
-(2, '{\"title\":\"Bugs Fixed\",\"data\":\"Fixing Bug Tabel Tagihan, Menambahkan Tooltips pada Total Tagihan dan Tombol Sistem.\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-07 10:08:04\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-07  10:08:04\"}', '2021-04-07 03:08:04', '2021-04-07 03:08:04'),
-(3, '{\"title\":\"Bugs Fixed\",\"data\":\"Fixing Bug Pencarian Periode Tagihan, Home Tagihan, dan Checking Report Tagihan.\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-07 10:29:29\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-07  12:28:42\"}', '2021-04-07 05:28:42', '2021-04-07 05:28:29'),
-(4, '{\"title\":\"Keuangan Already\",\"data\":\"Done.\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-07 15:41:37\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-08  00:51:11\"}', '2021-04-07 17:51:11', '2021-04-07 08:41:37'),
-(5, '{\"title\":\"Peningkatan Sistem\",\"data\":\"Improvement sistem kasir pada bagian pencetakan struk tagihan susulan dan notifikasi konfirmasi transaksi\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-07 16:17:00\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-07  16:17:11\"}', '2021-04-07 09:17:00', '2021-04-07 09:17:00'),
-(6, '{\"title\":\"Peningkatan Sistem\",\"data\":\"Tambah Laporan Tunggakan, Replacing View Data Usaha, Tambah Generate Laporan Pendapatan, Fixing Bug Form Pendataan Tagihan Baru, Fixing Bug Datatable Scroll Horizontal, Fixing Bug Mobile View\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-22 14:45:58\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-07  14:48:06\"}', '2021-04-22 07:48:06', '2021-04-22 07:45:58'),
-(7, '{\"title\":\"Peningkatan Sistem\",\"data\":\"Improve Sistem, Notifikasi, Fixing Database, Show Detail Data Usaha\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-27 13:32:34\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-28  05:34:30\"}', '2021-04-27 22:34:30', '2021-04-27 06:32:34'),
-(8, '{\"title\":\"Peningkatan Sistem\",\"data\":\"Add Profile Settiings, Add Kotak Saran, Fixing Layout & some bugs\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-04-28 05:34:10\",\"user_update\":1598,\"username_update\":\"Super Admin\",\"updated_at\":\"2021-04-28  05:34:20\"}', '2021-04-27 22:34:20', '2021-04-27 22:34:10'),
-(9, '{\"title\":\"Keuangan Details\",\"data\":\"Done\",\"user_create\":1598,\"username_create\":\"Super Admin\",\"created_at\":\"2021-05-29 13:36:14\",\"user_update\":1598,\"username_update\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-23 00:53:51\"}', '2021-12-22 17:53:51', '2021-05-29 06:36:14');
+INSERT INTO `change_logs` (`id`, `release_date`, `data`, `updated_at`, `created_at`) VALUES
+(1, '29-05-2021 14:14:29', '{\"title\":\"Add Feature\",\"data\":\"Tambah Detail Keuangan\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:15:07\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:22:21\",\"release\":\"2021-05-29T14:14:29\"}', '2021-12-27 07:22:21', '2021-12-27 07:15:07'),
+(2, '28-04-2021 14:15:23', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah Profile Settings.\\r\\n2. Tambah Kotak Saran\\r\\n3. Fixing Bugs\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:16:16\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:16:16\"}', '2021-12-27 07:16:16', '2021-12-27 07:16:16'),
+(3, '27-04-2021 14:16:52', '{\"title\":\"Improve System\",\"data\":\"1. Perbaikan Arsiektur Database\\r\\n2. Detail Data Usaha\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:17:44\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:17:44\"}', '2021-12-27 07:17:44', '2021-12-27 07:17:44'),
+(4, '22-04-2021 14:18:03', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah laporan tunggakan\\r\\n2. Tambah generate laporan\\r\\n3. fixing bugs\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:19:02\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:19:02\"}', '2021-12-27 07:19:02', '2021-12-27 07:19:02'),
+(5, '07-04-2021 14:19:15', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah cetak struk susulan kasir\\r\\n2. notifikasi pembayaran kasir\\r\\n3. keuangan selesai.\\r\\n4. fixing bugs kelola tagihan\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:20:06\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:21:07\",\"release\":\"2021-04-07T14:19:15\"}', '2021-12-27 07:21:07', '2021-12-27 07:20:06'),
+(6, '04-04-2021 14:21:14', '{\"title\":\"Update Caringin Version 2.0.1\",\"data\":\"1. Improve System\\r\\n2. Improve UI\\/UX\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:21:46\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:21:46\"}', '2021-12-27 07:21:46', '2021-12-27 07:21:46');
 
 -- --------------------------------------------------------
 
@@ -127,15 +110,6 @@ CREATE TABLE `commodities` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `commodities`
---
-
-INSERT INTO `commodities` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Sandang', '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:48\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:48\"}', '2021-12-07 12:16:48', '2021-12-07 12:16:48'),
-(2, 'Pangan', '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:53\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:53\"}', '2021-12-07 12:16:53', '2021-12-07 12:16:53'),
-(3, 'Papan', '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-07 19:16:59\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-07 19:16:59\"}', '2021-12-07 12:16:59', '2021-12-07 12:16:59');
 
 -- --------------------------------------------------------
 
@@ -416,54 +390,6 @@ CREATE TABLE `data_login` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `data_login`
---
-
-INSERT INTO `data_login` (`id`, `uid`, `name`, `level`, `active`, `platform`, `status`, `updated_at`, `created_at`) VALUES
-(1, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 16:52:11', '2021-12-13 16:52:11'),
-(2, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 16:52:26', '2021-12-13 16:52:26'),
-(3, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 16:57:05', '2021-12-13 16:57:05'),
-(4, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 16:57:20', '2021-12-13 16:57:20'),
-(5, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 17:01:45', '2021-12-13 17:01:45'),
-(6, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 17:05:43', '2021-12-13 17:05:43'),
-(7, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 17:05:53', '2021-12-13 17:05:53'),
-(8, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.93 127.0.0.1', 1, '2021-12-13 22:14:23', '2021-12-13 22:14:23'),
-(9, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-14 07:01:15', '2021-12-14 07:01:15'),
-(10, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-14 10:16:16', '2021-12-14 10:16:16'),
-(11, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-14 23:38:42', '2021-12-14 23:38:42'),
-(12, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-16 06:15:21', '2021-12-16 06:15:21'),
-(13, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-16 13:53:57', '2021-12-16 13:53:57'),
-(14, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-16 14:02:28', '2021-12-16 14:02:28'),
-(15, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-16 16:25:12', '2021-12-16 16:25:12'),
-(16, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-17 05:33:21', '2021-12-17 05:33:21'),
-(17, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 06:01:24', '2021-12-20 06:01:24'),
-(18, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 06:29:43', '2021-12-20 06:29:43'),
-(19, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 07:08:22', '2021-12-20 07:08:22'),
-(20, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 07:28:05', '2021-12-20 07:28:05'),
-(21, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 07:56:47', '2021-12-20 07:56:47'),
-(22, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:01:28', '2021-12-20 08:01:28'),
-(23, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:19:39', '2021-12-20 08:19:39'),
-(24, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:28:01', '2021-12-20 08:28:01'),
-(25, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:30:13', '2021-12-20 08:30:13'),
-(26, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:32:07', '2021-12-20 08:32:07'),
-(27, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:49:09', '2021-12-20 08:49:09'),
-(28, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:51:24', '2021-12-20 08:51:24'),
-(29, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:52:54', '2021-12-20 08:52:54'),
-(30, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 08:54:56', '2021-12-20 08:54:56'),
-(31, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 10:51:47', '2021-12-20 10:51:47'),
-(32, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-20 23:12:36', '2021-12-20 23:12:36'),
-(33, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-21 07:17:13', '2021-12-21 07:17:13'),
-(34, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-21 11:39:28', '2021-12-21 11:39:28'),
-(35, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 06:22:48', '2021-12-22 06:22:48'),
-(36, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 15:47:46', '2021-12-22 15:47:46'),
-(37, 'super_admin', 'MASTER', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 15:50:00', '2021-12-22 15:50:00'),
-(38, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 17:54:10', '2021-12-22 17:54:10'),
-(39, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 18:24:16', '2021-12-22 18:24:16'),
-(40, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 18:35:09', '2021-12-22 18:35:09'),
-(41, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 18:38:56', '2021-12-22 18:38:56'),
-(42, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2021-12-22 18:39:52', '2021-12-22 18:39:52');
-
 -- --------------------------------------------------------
 
 --
@@ -483,30 +409,8 @@ CREATE TABLE `day_off` (
 --
 
 INSERT INTO `day_off` (`id`, `date`, `data`, `updated_at`, `created_at`) VALUES
-(1, '2022-01-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(2, '2022-01-16', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(4, '2022-04-15', '{\"desc\":\"Wafat Isa Al\'Masih\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(5, '2022-05-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(6, '2023-01-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(7, '2023-10-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(8, '2024-09-15', '{\"desc\":\"Maulid Nabi Muhammad SAW\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(9, '2024-12-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(10, '2025-06-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(11, '2026-02-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(12, '2026-03-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(13, '2026-11-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(14, '2027-08-15', '{\"desc\":\"Maulid Nabi Muhammad SAW\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(15, '2028-10-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(16, '2029-02-15', '{\"desc\":\"Hari Raya Idul Fitri 1450 H\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(17, '2029-03-15', '{\"desc\":\"Hari Raya Nyepi\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(18, '2029-04-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(19, '2029-05-15', '{\"desc\":\"Tahun Baru Hijriyah\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(20, '2029-07-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(21, '2030-09-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(22, '2030-12-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '0000-00-00 00:00:00'),
-(23, '2021-08-15', '{\"desc\":\"Hari Minggu\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '2021-08-16 00:14:17'),
-(24, '2021-07-15', '{\"desc\":\"Listrik Padam Di Sore Hari\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '2021-08-16 13:13:07'),
-(25, '2021-06-15', '{\"desc\":\"Handle\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-06 09:49:18\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-06 09:49:18\"}', '2021-12-06 09:49:18', '2021-08-16 16:29:21');
+(1, '2022-04-15', '{\"desc\":\"Libur Nasional Wafat Isa Al Masih\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:41:16\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:41:16\"}', '2021-12-27 14:41:16', '2021-12-27 14:41:16'),
+(2, '2022-05-15', '{\"desc\":\"Hari Minggu\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:44:14\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:44:14\"}', '2021-12-27 14:44:14', '2021-12-27 14:44:14');
 
 -- --------------------------------------------------------
 
@@ -543,31 +447,31 @@ CREATE TABLE `groups` (
 --
 
 INSERT INTO `groups` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'A-1', '{\"data\":\"1,2,3,3A,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,43A\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 02:02:04\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:40:40\"}', '2021-12-02 22:40:40', '2020-11-16 04:06:27'),
-(2, 'A-2', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 17:58:33\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:40:44\"}', '2021-12-02 22:40:44', '2020-11-16 04:06:27'),
-(3, 'B-1', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,32A,33,33A,34,35,36,37,38,39,40,41,42\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 18:10:47\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:40:48\"}', '2021-12-02 22:40:48', '2020-11-16 04:06:27'),
-(4, 'B-2', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 18:15:51\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 18:20:13\"}', '2021-12-02 11:20:13', '2020-11-16 04:06:27'),
-(5, 'B-3', '{\"data\":\"1,2,3,4,5,6,7,8,9,10\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 18:21:51\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:40:52\"}', '2021-12-02 22:40:52', '2020-11-16 04:06:27'),
-(6, 'B-4', '{\"data\":\"1,2,3,4,5,6,7,8,9,10\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 18:22:39\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:40:55\"}', '2021-12-02 22:40:55', '2020-11-16 04:06:27'),
-(7, 'C-1', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,21A,22,23,24,25,26,27,27A,27B,27C,28,29,30,31,32,33,34,35\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 18:27:33\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:41:01\"}', '2021-12-02 22:41:01', '2020-11-16 04:06:27'),
-(8, 'D-1', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 18:30:52\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:41:05\"}', '2021-12-02 22:41:05', '2020-11-16 04:06:27'),
-(10, 'E-0', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47A,47B,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 19:06:43\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:41:10\"}', '2021-12-02 22:41:10', '2020-11-16 04:06:27'),
-(11, 'E-1', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 19:44:22\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:41:13\"}', '2021-12-02 22:41:13', '2020-11-16 04:06:27'),
-(12, 'E-2', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37A,37B,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 20:22:09\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:42:02\"}', '2021-12-02 22:42:02', '2020-11-16 04:06:27'),
-(13, 'E-3', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 20:27:01\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:41:59\"}', '2021-12-02 22:41:59', '2020-11-16 04:06:27'),
-(14, 'E-4', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 20:37:14\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:41:56\"}', '2021-12-02 22:41:56', '2020-11-16 04:06:27'),
-(15, 'E-5', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 20:39:15\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:41:52\"}', '2021-12-02 22:41:52', '2020-11-16 04:06:27'),
-(16, 'E-6', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 20:41:09\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:41:48\"}', '2021-12-02 22:41:48', '2020-11-16 04:06:27'),
-(17, 'E-7', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 20:43:25\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:41:36\"}', '2021-12-02 22:41:36', '2020-11-16 04:06:27'),
-(18, 'E-8', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 20:44:34\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:41:29\"}', '2021-12-02 22:41:29', '2020-11-16 04:06:27'),
-(19, 'E-9', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 20:45:22\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:41:26\"}', '2021-12-02 22:41:26', '2020-11-16 04:06:27'),
-(20, 'E10', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 20:45:55\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:41:23\"}', '2021-12-02 22:41:23', '2020-11-16 04:06:27'),
-(22, 'F-0', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 21:00:56\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:41:19\"}', '2021-12-02 22:41:19', '2020-11-16 04:06:27'),
-(23, 'F-1', '{\"data\":\"88\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 21:01:21\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:42:10\"}', '2021-12-02 22:42:10', '2020-11-16 04:06:27'),
-(24, 'FIB', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 21:04:20\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:42:14\"}', '2021-12-02 22:42:14', '2020-11-16 04:06:27'),
-(25, 'H-1', '{\"data\":\"1,2,3,4,5,6,7,8,8A,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26A,26B,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114A,114B,115,116,117,118,119,120,121,122,123,124,125,126,127,128\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 21:08:55\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:42:24\"}', '2021-12-02 22:42:24', '2020-11-16 04:06:27'),
-(26, 'H-2', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 21:09:53\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:42:27\"}', '2021-12-02 22:42:27', '2020-11-16 04:06:27'),
-(27, 'K5', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 21:10:40\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:42:31\"}', '2021-12-02 22:42:31', '2020-11-16 04:06:27'),
+(1, 'A-1', '{\"data\":\"1,2,3,3A,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,43A\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:13:23\"}', '2021-12-27 07:13:23', '2020-11-16 04:06:27'),
+(2, 'A-2', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:40:44', '2020-11-16 04:06:27'),
+(3, 'B-1', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,32A,33,33A,34,35,36,37,38,39,40,41,42\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:40:48', '2020-11-16 04:06:27'),
+(4, 'B-2', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 11:20:13', '2020-11-16 04:06:27'),
+(5, 'B-3', '{\"data\":\"1,2,3,4,5,6,7,8,9,10\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:40:52', '2020-11-16 04:06:27'),
+(6, 'B-4', '{\"data\":\"1,2,3,4,5,6,7,8,9,10\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:40:55', '2020-11-16 04:06:27'),
+(7, 'C-1', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,21A,22,23,24,25,26,27,27A,27B,27C,28,29,30,31,32,33,34,35\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:41:01', '2020-11-16 04:06:27'),
+(8, 'D-1', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:41:05', '2020-11-16 04:06:27'),
+(9, 'E-0', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47A,47B,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:41:10', '2020-11-16 04:06:27'),
+(10, 'E-1', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:41:13', '2020-11-16 04:06:27'),
+(11, 'E-2', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37A,37B,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:42:02', '2020-11-16 04:06:27'),
+(12, 'E-3', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:41:59', '2020-11-16 04:06:27'),
+(13, 'E-4', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:41:56', '2020-11-16 04:06:27'),
+(14, 'E-5', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:41:52', '2020-11-16 04:06:27'),
+(15, 'E-6', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:41:48', '2020-11-16 04:06:27'),
+(16, 'E-7', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:41:36', '2020-11-16 04:06:27'),
+(17, 'E-8', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:41:29', '2020-11-16 04:06:27'),
+(18, 'E-9', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:41:26', '2020-11-16 04:06:27'),
+(19, 'E10', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:41:23', '2020-11-16 04:06:27'),
+(20, 'F-0', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,346,347,348,349,350,351,352,353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:41:19', '2020-11-16 04:06:27'),
+(21, 'F-1', '{\"data\":\"88\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:42:10', '2020-11-16 04:06:27'),
+(22, 'FIB', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:42:14', '2020-11-16 04:06:27'),
+(23, 'H-1', '{\"data\":\"1,2,3,4,5,6,7,8,8A,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26A,26B,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114A,114B,115,116,117,118,119,120,121,122,123,124,125,126,127,128\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:42:24', '2020-11-16 04:06:27'),
+(24, 'H-2', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:42:27', '2020-11-16 04:06:27'),
+(25, 'K5', '{\"data\":\"1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-04-04 21:18:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-04-04  21:18:35\"}', '2021-12-02 22:42:31', '2020-11-16 04:06:27'),
 (28, 'L-0', '{\"data\":null,\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-03 05:42:35\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:42:35\"}', '2021-12-02 22:42:35', '2020-11-16 04:06:27'),
 (29, 'M-1', '{\"data\":null,\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-03 05:42:39\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:42:39\"}', '2021-12-02 22:42:39', '2020-11-16 04:06:27'),
 (30, 'MCK', '{\"data\":null,\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-03 05:42:52\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-03 05:42:52\"}', '2021-12-02 22:42:52', '2020-11-16 04:06:27'),
@@ -594,15 +498,6 @@ CREATE TABLE `jobs` (
   `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `jobs`
---
-
-INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `available_at`, `created_at`) VALUES
-(1, 'default', '{\"uuid\":\"2a8bd9dd-ee6d-4e48-977b-02fafa690d60\",\"displayName\":\"App\\\\Jobs\\\\UserEmailJob\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\UserEmailJob\",\"command\":\"O:21:\\\"App\\\\Jobs\\\\UserEmailJob\\\":11:{s:10:\\\"\\u0000*\\u0000details\\\";a:11:{s:6:\\\"sender\\\";s:27:\\\"Master Didi Kempot dari PIC\\\";s:6:\\\"header\\\";s:65:\\\"Harap hubungi Bagian Pelayanan Pedagang apabila ingin re-aktivasi\\\";s:7:\\\"subject\\\";s:24:\\\"Akun telah dinonaktifkan\\\";s:4:\\\"name\\\";s:13:\\\"Fahni Amsyari\\\";s:4:\\\"role\\\";s:7:\\\"Nasabah\\\";s:4:\\\"type\\\";s:11:\\\"nonaktivasi\\\";s:7:\\\"regards\\\";s:35:\\\"Sampai Jumpa Kembali (PIC BDG Team)\\\";s:9:\\\"timestamp\\\";s:19:\\\"2021-12-23 01:42:47\\\";s:5:\\\"limit\\\";s:19:\\\"2022-01-22 01:42:47\\\";s:5:\\\"email\\\";s:26:\\\"fahniamsyari1999@gmail.com\\\";s:5:\\\"value\\\";s:7:\\\"destroy\\\";}s:3:\\\"job\\\";N;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}}\"}}', 0, NULL, 1640198568, 1640198568),
-(2, 'default', '{\"uuid\":\"df0bcb20-1d5b-4af3-a29c-5eefc7e2e6ba\",\"displayName\":\"App\\\\Jobs\\\\UserEmailJob\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\UserEmailJob\",\"command\":\"O:21:\\\"App\\\\Jobs\\\\UserEmailJob\\\":11:{s:10:\\\"\\u0000*\\u0000details\\\";a:11:{s:6:\\\"sender\\\";s:27:\\\"Master Didi Kempot dari PIC\\\";s:6:\\\"header\\\";s:65:\\\"Harap hubungi Bagian Pelayanan Pedagang apabila ingin re-aktivasi\\\";s:7:\\\"subject\\\";s:24:\\\"Akun telah dinonaktifkan\\\";s:4:\\\"name\\\";s:13:\\\"Fahni Amsyari\\\";s:4:\\\"role\\\";s:7:\\\"Nasabah\\\";s:4:\\\"type\\\";s:11:\\\"nonaktivasi\\\";s:7:\\\"regards\\\";s:35:\\\"Sampai Jumpa Kembali (PIC BDG Team)\\\";s:9:\\\"timestamp\\\";s:19:\\\"2021-12-23 01:43:30\\\";s:5:\\\"limit\\\";s:19:\\\"2022-01-22 01:43:30\\\";s:5:\\\"email\\\";s:26:\\\"fahniamsyari1999@gmail.com\\\";s:5:\\\"value\\\";s:7:\\\"destroy\\\";}s:3:\\\"job\\\";N;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}}\"}}', 0, NULL, 1640198610, 1640198610),
-(3, 'default', '{\"uuid\":\"62d2bef0-b630-4505-bae4-274aa9ceeef3\",\"displayName\":\"App\\\\Jobs\\\\UserEmailJob\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"App\\\\Jobs\\\\UserEmailJob\",\"command\":\"O:21:\\\"App\\\\Jobs\\\\UserEmailJob\\\":11:{s:10:\\\"\\u0000*\\u0000details\\\";a:11:{s:6:\\\"sender\\\";s:27:\\\"Master Didi Kempot dari PIC\\\";s:6:\\\"header\\\";s:65:\\\"Harap hubungi Bagian Pelayanan Pedagang apabila ingin re-aktivasi\\\";s:7:\\\"subject\\\";s:24:\\\"Akun telah dinonaktifkan\\\";s:4:\\\"name\\\";s:13:\\\"Fahni Amsyari\\\";s:4:\\\"role\\\";s:11:\\\"Organisator\\\";s:4:\\\"type\\\";s:11:\\\"nonaktivasi\\\";s:7:\\\"regards\\\";s:35:\\\"Sampai Jumpa Kembali (PIC BDG Team)\\\";s:9:\\\"timestamp\\\";s:19:\\\"2021-12-23 01:43:46\\\";s:5:\\\"limit\\\";s:19:\\\"2022-01-22 01:43:46\\\";s:5:\\\"email\\\";s:27:\\\"fahniamsyari19991@gmail.com\\\";s:5:\\\"value\\\";s:7:\\\"destroy\\\";}s:3:\\\"job\\\";N;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}}\"}}', 0, NULL, 1640198626, 1640198626);
-
 -- --------------------------------------------------------
 
 --
@@ -620,14 +515,6 @@ CREATE TABLE `period` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `period`
---
-
-INSERT INTO `period` (`id`, `name`, `nicename`, `new_period`, `due_date`, `faktur`, `surat`, `updated_at`, `created_at`) VALUES
-(2, '2021-11', 'November 2021', '2021-11-23', '2021-11-15', 0, 0, '2021-12-14 00:10:04', '2021-12-14 00:10:04'),
-(3, '2021-12', 'Desember 2021', '2021-12-23', '2021-12-15', 0, 0, '2021-12-15 09:07:19', '2021-12-15 09:07:19');
 
 -- --------------------------------------------------------
 
@@ -648,7 +535,7 @@ CREATE TABLE `p_airbersih` (
 --
 
 INSERT INTO `p_airbersih` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', '{\"tarif1\":\"7000\",\"tarif2\":\"8500\",\"pemeliharaan\":\"15000\",\"beban\":\"25000\",\"airkotor\":\"30\",\"denda\":\"50000\",\"ppn\":\"10\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 16:14:12\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-02 16:19:09\"}', '2021-12-02 09:19:09', '2021-12-02 09:14:12');
+(1, 'Tarif 1', '{\"tarif1\":\"7000\",\"tarif2\":\"8500\",\"pemeliharaan\":\"15000\",\"beban\":\"25000\",\"airkotor\":\"30\",\"denda\":\"50000\",\"ppn\":\"10\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:49:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:49:11\"}', '2021-12-27 07:49:11', '2021-12-27 07:49:11');
 
 -- --------------------------------------------------------
 
@@ -670,8 +557,8 @@ CREATE TABLE `p_airkotor` (
 --
 
 INSERT INTO `p_airkotor` (`id`, `name`, `price`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Trf-1', 250000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:26:12\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:26:12\"}', '2021-12-09 17:26:12', '2021-12-09 17:26:12'),
-(2, 'Trf-2', 3000000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:26:23\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:26:23\"}', '2021-12-09 17:26:23', '2021-12-09 17:26:23');
+(1, 'Tarif 1', 250000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:55:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:55:35\"}', '2021-12-27 07:55:35', '2021-12-27 07:55:35'),
+(2, 'Tarif 2', 3000000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:55:44\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:55:44\"}', '2021-12-27 07:55:44', '2021-12-27 07:55:44');
 
 -- --------------------------------------------------------
 
@@ -693,13 +580,13 @@ CREATE TABLE `p_keamananipk` (
 --
 
 INSERT INTO `p_keamananipk` (`id`, `name`, `price`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Trf-1', 120000, '{\"keamanan\":\"67\",\"ipk\":\"33\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:19:53\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-15 22:50:35\"}', '2021-12-15 15:50:35', '2021-12-09 17:19:53'),
-(2, 'Trf-2', 165000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:20:10\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:21:47\"}', '2021-12-09 17:21:47', '2021-12-09 17:20:10'),
-(3, 'Trf-3', 145000, '{\"keamanan\":\"74\",\"ipk\":\"26\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:20:39\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:21:57\"}', '2021-12-09 17:21:57', '2021-12-09 17:20:39'),
-(4, 'Trf-4', 130000, '{\"keamanan\":\"85\",\"ipk\":\"15\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:20:55\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:22:05\"}', '2021-12-09 17:22:05', '2021-12-09 17:20:55'),
-(5, 'Trf-5', 200000, '{\"keamanan\":\"73\",\"ipk\":\"27\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:22:22\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:22:22\"}', '2021-12-09 17:22:22', '2021-12-09 17:22:22'),
-(6, 'Trf-6', 500000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:22:37\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:22:37\"}', '2021-12-09 17:22:37', '2021-12-09 17:22:37'),
-(7, 'Trf-7', 265000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:22:52\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:22:52\"}', '2021-12-09 17:22:52', '2021-12-09 17:22:52');
+(1, 'Tarif 1', 120000, '{\"keamanan\":\"67\",\"ipk\":\"33\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:49:41\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:49:41\"}', '2021-12-27 07:49:41', '2021-12-27 07:49:41'),
+(2, 'Tarif 2', 130000, '{\"keamanan\":\"85\",\"ipk\":\"15\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:49:53\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:49:53\"}', '2021-12-27 07:49:53', '2021-12-27 07:49:53'),
+(3, 'Tarif 3', 145000, '{\"keamanan\":\"74\",\"ipk\":\"26\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:50:10\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:50:10\"}', '2021-12-27 07:50:10', '2021-12-27 07:50:10'),
+(4, 'Tarif 4', 165000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:50:31\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:50:31\"}', '2021-12-27 07:50:31', '2021-12-27 07:50:31'),
+(5, 'Tarif 5', 200000, '{\"keamanan\":\"73\",\"ipk\":\"27\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:50:55\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:50:55\"}', '2021-12-27 07:50:55', '2021-12-27 07:50:55'),
+(6, 'Tarif 6', 500000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:51:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:51:11\"}', '2021-12-27 07:51:11', '2021-12-27 07:51:11'),
+(7, 'Tarif 7', 265000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:51:31\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:51:31\"}', '2021-12-27 07:51:31', '2021-12-27 07:51:31');
 
 -- --------------------------------------------------------
 
@@ -721,15 +608,15 @@ CREATE TABLE `p_kebersihan` (
 --
 
 INSERT INTO `p_kebersihan` (`id`, `name`, `price`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Trf-1', 120000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:23:27\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:23:27\"}', '2021-12-09 17:23:27', '2021-12-09 17:23:27'),
-(2, 'Trf-2', 130000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:23:39\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:23:39\"}', '2021-12-09 17:23:39', '2021-12-09 17:23:39'),
-(3, 'Trf-3', 140000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:23:48\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:23:48\"}', '2021-12-09 17:23:48', '2021-12-09 17:23:48'),
-(4, 'Trf-4', 150000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:23:56\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:23:56\"}', '2021-12-09 17:23:56', '2021-12-09 17:23:56'),
-(5, 'Trf-5', 155000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:24:09\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:24:09\"}', '2021-12-09 17:24:09', '2021-12-09 17:24:09'),
-(6, 'Trf-6', 156000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:24:19\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:24:19\"}', '2021-12-09 17:24:19', '2021-12-09 17:24:19'),
-(7, 'Trf-7', 195000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:24:32\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:24:32\"}', '2021-12-09 17:24:32', '2021-12-09 17:24:32'),
-(8, 'Trf-8', 235000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:24:39\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:24:39\"}', '2021-12-09 17:24:39', '2021-12-09 17:24:39'),
-(9, 'Trf-9', 780000, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-10 00:24:51\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-10 00:24:51\"}', '2021-12-09 17:24:51', '2021-12-09 17:24:51');
+(1, 'Tarif 1', 120000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:53:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:53:11\"}', '2021-12-27 07:53:11', '2021-12-27 07:53:11'),
+(2, 'Tarif 2', 130000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:53:26\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:53:26\"}', '2021-12-27 07:53:26', '2021-12-27 07:53:26'),
+(3, 'Tarif 3', 140000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:53:36\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:53:36\"}', '2021-12-27 07:53:36', '2021-12-27 07:53:36'),
+(4, 'Tarif 4', 150000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:53:44\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:53:44\"}', '2021-12-27 07:53:44', '2021-12-27 07:53:44'),
+(5, 'Tarif 5', 155000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:53:52\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:53:52\"}', '2021-12-27 07:53:52', '2021-12-27 07:53:52'),
+(6, 'Tarif 6', 156000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:54:04\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:54:04\"}', '2021-12-27 07:54:04', '2021-12-27 07:54:04'),
+(7, 'Tarif 7', 195000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:54:22\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:54:22\"}', '2021-12-27 07:54:22', '2021-12-27 07:54:22'),
+(8, 'Tarif 8', 235000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:54:43\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:54:43\"}', '2021-12-27 07:54:43', '2021-12-27 07:54:43'),
+(9, 'Tarif 9', 780000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:54:58\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:54:58\"}', '2021-12-27 07:54:58', '2021-12-27 07:54:58');
 
 -- --------------------------------------------------------
 
@@ -746,14 +633,6 @@ CREATE TABLE `p_lain` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `p_lain`
---
-
-INSERT INTO `p_lain` (`id`, `name`, `price`, `satuan`, `data`, `updated_at`, `created_at`) VALUES
-(7, 'Preman', 10000, 1, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-22 17:36:50\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-22 17:36:50\"}', '2021-12-22 10:36:50', '2021-12-22 10:36:50'),
-(8, 'Parkir', 20000, 2, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-22 17:37:01\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-22 17:37:10\"}', '2021-12-22 10:37:10', '2021-12-22 10:37:01');
 
 -- --------------------------------------------------------
 
@@ -774,7 +653,7 @@ CREATE TABLE `p_listrik` (
 --
 
 INSERT INTO `p_listrik` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', '{\"beban\":\"50\",\"blok1\":\"0\",\"blok2\":\"2404\",\"standar\":\"0\",\"pju\":\"18\",\"denda1\":\"50000\",\"denda2\":\"3\",\"ppn\":\"10\",\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-02 16:22:48\",\"user_update\":1598,\"username_update\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-23 00:49:10\"}', '2021-12-22 17:49:10', '2021-12-02 09:22:48');
+(1, 'Tarif 1', '{\"beban\":\"50\",\"blok1\":\"0\",\"blok2\":\"2404\",\"standar\":\"0\",\"pju\":\"18\",\"denda1\":\"50000\",\"denda2\":\"3\",\"ppn\":\"10\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:48:32\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:48:32\"}', '2021-12-27 07:48:32', '2021-12-27 07:48:32');
 
 -- --------------------------------------------------------
 
@@ -808,13 +687,6 @@ CREATE TABLE `stores` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `stores`
---
-
-INSERT INTO `stores` (`id`, `kd_kontrol`, `nicename`, `group`, `no_los`, `jml_los`, `id_pengguna`, `id_pemilik`, `komoditi`, `status`, `ket`, `info`, `id_tlistrik`, `id_tairbersih`, `fas_listrik`, `fas_airbersih`, `fas_keamananipk`, `fas_kebersihan`, `fas_airkotor`, `fas_lain`, `data`, `updated_at`, `created_at`) VALUES
-(7, 'A-1-001', 'A1001', 'A-1', '1', 1, 1598, 1598, NULL, 1, NULL, NULL, 1, 1, 1, 1, 2, 5, 1, '[{\"id\":\"8\",\"name\":\"Parkir\",\"price\":20000,\"satuan_id\":2,\"satuan_name\":\"per-Los\"},{\"id\":\"7\",\"name\":\"Preman\",\"price\":10000,\"satuan_id\":1,\"satuan_name\":\"per-Kontrol\"}]', '{\"diskon\":{\"listrik\":\"5\",\"airbersih\":\"10\",\"keamananipk\":\"20100\",\"kebersihan\":\"10200\",\"airkotor\":\"10000\"},\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-22 17:38:15\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-22 17:41:14\"}', '2021-12-22 10:41:14', '2021-12-22 10:38:15');
-
 -- --------------------------------------------------------
 
 --
@@ -831,13 +703,6 @@ CREATE TABLE `t_airbersih` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `t_airbersih`
---
-
-INSERT INTO `t_airbersih` (`id`, `code`, `name`, `meter`, `stt_available`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'MA97824', 'SAHG', 25, 0, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-15 15:08:08\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-22 17:26:46\"}', '2021-12-22 10:38:15', '2021-12-15 08:08:08');
 
 -- --------------------------------------------------------
 
@@ -856,13 +721,6 @@ CREATE TABLE `t_listrik` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `t_listrik`
---
-
-INSERT INTO `t_listrik` (`id`, `code`, `name`, `meter`, `power`, `stt_available`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'ML38428', '65656', 9899, 10500, 0, '{\"user_create\":1598,\"username_create\":\"MASTER\",\"created_at\":\"2021-12-13 23:49:21\",\"user_update\":1598,\"username_update\":\"MASTER\",\"updated_at\":\"2021-12-22 17:26:46\"}', '2021-12-22 10:38:15', '2021-12-13 16:49:21');
 
 -- --------------------------------------------------------
 
@@ -916,13 +774,6 @@ CREATE TABLE `visitors` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `visitors`
---
-
-INSERT INTO `visitors` (`id`, `visit_per_day`, `day_count`, `visit_on_day`, `updated_at`, `created_at`) VALUES
-(1, 1, 2, 68, '2021-12-22 18:39:52', '2021-12-13 17:05:43');
 
 --
 -- Indexes for dumped tables
@@ -1103,25 +954,25 @@ ALTER TABLE `visitors`
 -- AUTO_INCREMENT for table `activation_code`
 --
 ALTER TABLE `activation_code`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `change_logs`
 --
 ALTER TABLE `change_logs`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `commodities`
 --
 ALTER TABLE `commodities`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `countries`
@@ -1133,13 +984,13 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `data_login`
 --
 ALTER TABLE `data_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `day_off`
 --
 ALTER TABLE `day_off`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1157,13 +1008,13 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `period`
 --
 ALTER TABLE `period`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `p_airbersih`
@@ -1193,7 +1044,7 @@ ALTER TABLE `p_kebersihan`
 -- AUTO_INCREMENT for table `p_lain`
 --
 ALTER TABLE `p_lain`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `p_listrik`
@@ -1205,31 +1056,31 @@ ALTER TABLE `p_listrik`
 -- AUTO_INCREMENT for table `stores`
 --
 ALTER TABLE `stores`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `t_airbersih`
 --
 ALTER TABLE `t_airbersih`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `t_listrik`
 --
 ALTER TABLE `t_listrik`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1601;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1602;
 
 --
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

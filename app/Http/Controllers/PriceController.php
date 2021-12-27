@@ -82,11 +82,11 @@ class PriceController extends Controller
                 'denda1' => str_replace('.','',$request->denda1),
                 'denda2' => $request->denda2,
                 'ppn' => $request->ppn,
-                'user_create' => Auth::user()->id,
-                'username_create' => Auth::user()->name,
+                'created_by_id' => Auth::user()->id,
+                'created_by_name' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
-                'user_update' => Auth::user()->id,
-                'username_update' => Auth::user()->name,
+                'updated_by_id' => Auth::user()->id,
+                'updated_by_name' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
             $dataset['data'] = $json;
@@ -154,8 +154,8 @@ class PriceController extends Controller
             $json->denda1 = str_replace('.','',$request->denda1);
             $json->denda2 = $request->denda2;
             $json->ppn = $request->ppn;
-            $json->user_update = Auth::user()->id;
-            $json->username_update = Auth::user()->name;
+            $json->updated_by_id = Auth::user()->id;
+            $json->updated_by_name = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
 
             $json = json_encode($json);
@@ -271,11 +271,11 @@ class PriceController extends Controller
                 'airkotor' => $request->airkotor,
                 'denda' => str_replace('.','',$request->denda),
                 'ppn' => $request->ppn,
-                'user_create' => Auth::user()->id,
-                'username_create' => Auth::user()->name,
+                'created_by_id' => Auth::user()->id,
+                'created_by_name' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
-                'user_update' => Auth::user()->id,
-                'username_update' => Auth::user()->name,
+                'updated_by_id' => Auth::user()->id,
+                'updated_by_name' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
             $dataset['data'] = $json;
@@ -342,8 +342,8 @@ class PriceController extends Controller
             $json->airkotor = $request->airkotor;
             $json->denda = str_replace('.','',$request->denda);
             $json->ppn = $request->ppn;
-            $json->user_update = Auth::user()->id;
-            $json->username_update = Auth::user()->name;
+            $json->updated_by_id = Auth::user()->id;
+            $json->updated_by_name = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
 
             $json = json_encode($json);
@@ -446,11 +446,11 @@ class PriceController extends Controller
             $json = json_encode([
                 'keamanan' => $request->keamanan,
                 'ipk' => $request->ipk,
-                'user_create' => Auth::user()->id,
-                'username_create' => Auth::user()->name,
+                'created_by_id' => Auth::user()->id,
+                'created_by_name' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
-                'user_update' => Auth::user()->id,
-                'username_update' => Auth::user()->name,
+                'updated_by_id' => Auth::user()->id,
+                'updated_by_name' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
             $dataset['name'] = $request->name;
@@ -505,8 +505,8 @@ class PriceController extends Controller
 
             $json->keamanan = $request->keamanan;
             $json->ipk = $request->ipk;
-            $json->user_update = Auth::user()->id;
-            $json->username_update = Auth::user()->name;
+            $json->updated_by_id = Auth::user()->id;
+            $json->updated_by_name = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
 
             $json = json_encode($json);
@@ -606,11 +606,11 @@ class PriceController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'user_create' => Auth::user()->id,
-                'username_create' => Auth::user()->name,
+                'created_by_id' => Auth::user()->id,
+                'created_by_name' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
-                'user_update' => Auth::user()->id,
-                'username_update' => Auth::user()->name,
+                'updated_by_id' => Auth::user()->id,
+                'updated_by_name' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
             $dataset['name'] = $request->name;
@@ -661,8 +661,8 @@ class PriceController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->user_update = Auth::user()->id;
-            $json->username_update = Auth::user()->name;
+            $json->updated_by_id = Auth::user()->id;
+            $json->updated_by_name = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
 
             $json = json_encode($json);
@@ -762,11 +762,11 @@ class PriceController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'user_create' => Auth::user()->id,
-                'username_create' => Auth::user()->name,
+                'created_by_id' => Auth::user()->id,
+                'created_by_name' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
-                'user_update' => Auth::user()->id,
-                'username_update' => Auth::user()->name,
+                'updated_by_id' => Auth::user()->id,
+                'updated_by_name' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
             $dataset['name'] = $request->name;
@@ -817,8 +817,8 @@ class PriceController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->user_update = Auth::user()->id;
-            $json->username_update = Auth::user()->name;
+            $json->updated_by_id = Auth::user()->id;
+            $json->updated_by_name = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
 
             $json = json_encode($json);
@@ -919,11 +919,11 @@ class PriceController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'user_create' => Auth::user()->id,
-                'username_create' => Auth::user()->name,
+                'created_by_id' => Auth::user()->id,
+                'created_by_name' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
-                'user_update' => Auth::user()->id,
-                'username_update' => Auth::user()->name,
+                'updated_by_id' => Auth::user()->id,
+                'updated_by_name' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
             $dataset['name'] = $request->name;
@@ -976,8 +976,8 @@ class PriceController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->user_update = Auth::user()->id;
-            $json->username_update = Auth::user()->name;
+            $json->updated_by_id = Auth::user()->id;
+            $json->updated_by_name = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
 
             $json = json_encode($json);

@@ -118,7 +118,7 @@ Libur Tagihan
         "deferRender": true,
         "pageLength": 10,
         "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
-        "order": [[ 0, "desc" ]],
+        "order": [[ 0, "asc" ]],
         "aoColumnDefs": [
             { "bSortable": false, "aTargets": [2] },
             { "bSearchable": false, "aTargets": [2] }
@@ -393,8 +393,8 @@ Libur Tagihan
                 if(data.success){
                     $("#showDate").text(data.show.date);
                     $("#showDesc").html(data.show.data.desc);
-                    $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
-                    $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
+                    $("#showCreate").html(data.show.data.created_by_name + "<br>pada " + data.show.data.created_at);
+                    $("#showEdit").html(data.show.data.updated_by_name + "<br>pada " + data.show.data.updated_at);
                 }
 
                 if(data.error){

@@ -409,8 +409,8 @@ Alat Listrik
                     (data.show.kontrol && !data.show.stt_available)
                         ? $("#showAvailable").html("<a class='text-danger' href='/production/point/stores?s=" + data.show.kontrol + "'>Digunakan&nbsp;" + data.show.kontrol + "&nbsp;<sup><i class='fas fa-external-link'></i></sup></a>")
                         : $("#showAvailable").html("<span class='text-success'>Tersedia</span>");
-                    $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
-                    $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
+                    $("#showCreate").html(data.show.data.created_by_name + "<br>pada " + data.show.data.created_at);
+                    $("#showEdit").html(data.show.data.updated_by_name + "<br>pada " + data.show.data.updated_at);
                 }
 
                 if(data.info){

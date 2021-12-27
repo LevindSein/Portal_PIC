@@ -1202,8 +1202,8 @@ Kelola Tagihan
                     $("#showTotal").text('Rp. ' + Number(data.show.b_tagihan.ttl_tagihan).toLocaleString('id-ID'));
                     $("#showRealisasi").text('Rp. ' + Number(data.show.b_tagihan.rea_tagihan).toLocaleString('id-ID'));
                     $("#showSelisih").text('Rp. ' + Number(data.show.b_tagihan.sel_tagihan).toLocaleString('id-ID'));
-                    $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
-                    $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
+                    $("#showCreate").html(data.show.data.created_by_name + "<br>pada " + data.show.data.created_at);
+                    $("#showEdit").html(data.show.data.updated_by_name + "<br>pada " + data.show.data.updated_at);
                     $("#showPublish").html(data.show.stt_publish + "<br>pada " + data.show.publish + "<br>oleh " + data.show.data.publish_by);
                     $("#showLunas").html(data.show.stt_lunas);
 

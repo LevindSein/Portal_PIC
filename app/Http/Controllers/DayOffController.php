@@ -32,9 +32,18 @@ class DayOffController extends Controller
                 return $button;
             })
             ->editColumn('data', function($data){
-                return json_decode($data->data)->desc;
+                $data = json_decode($data->data);
+                $name = $data->desc;
+                if(strlen($name) > 30) {
+                    $name = substr($name, 0, 26);
+                    $name = str_pad($name,  30, ".");
+                    return "<span data-toggle='tooltip' title='$data->desc'>$name</span>";
+                }
+                else{
+                    return $name;
+                }
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'data'])
             ->make(true);
         }
         Session::put('lastPlace', 'manage/dayoff');
@@ -68,11 +77,11 @@ class DayOffController extends Controller
             $dataset['date'] = $request->date;
             $json = json_encode([
                 'desc' => $request->desc,
-                'user_create' => Auth::user()->id,
-                'username_create' => Auth::user()->name,
+                'created_by_id' => Auth::user()->id,
+                'created_by_name' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
-                'user_update' => Auth::user()->id,
-                'username_update' => Auth::user()->name,
+                'updated_by_id' => Auth::user()->id,
+                'updated_by_name' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
             $dataset['data'] = $json;
@@ -156,8 +165,8 @@ class DayOffController extends Controller
             $json = json_decode($data->data);
 
             $json->desc = $request->desc;
-            $json->user_update = Auth::user()->id;
-            $json->username_update = Auth::user()->name;
+            $json->updated_by_id = Auth::user()->id;
+            $json->updated_by_name = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
 
             $json = json_encode($json);

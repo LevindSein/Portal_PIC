@@ -29,7 +29,7 @@ Daftar Log Perubahan
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Time</th>
+                                <th>Release</th>
                                 <th>Data</th>
                                 <th>Action</th>
                             </tr>
@@ -47,6 +47,8 @@ Daftar Log Perubahan
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
+                <small class="text-muted pt-4 db">Release</small>
+                <h6 id="showRelease"></h6>
                 <small class="text-muted pt-4 db">Judul</small>
                 <h6 id="showTitle"></h6>
                 <small class="text-muted pt-4 db">Dibuat oleh</small>
@@ -74,6 +76,10 @@ Daftar Log Perubahan
             </div>
             <form id="logForm">
                 <div class="modal-body">
+                    <div class="form-group">
+                        <label>Release Time <span class="text-danger">*</span></label>
+                        <input required type="datetime-local" step="1" id="release" name="release" autocomplete="off" class="form-control form-control-line">
+                    </div>
                     <div class="form-group">
                         <label>Judul <span class="text-danger">*</span></label>
                         <input required type="text" id="title" name="title" autocomplete="off" maxlength="100" placeholder="Ketikkan judul perubahan" class="form-control form-control-line">
@@ -110,7 +116,7 @@ Daftar Log Perubahan
         "serverSide": true,
         "ajax": "/production/changelogs",
         "columns": [
-            { data: { '_': 'updated_at.display', 'sort': 'updated_at.timestamp' }, name: 'updated_at', class : 'text-center align-middle'  },
+            { data: 'release_date', name: 'release_date', class : 'text-center align-middle'  },
             { data: 'data', name: 'data', class : 'text-center align-middle' },
             { data: 'action', name: 'action', class : 'text-center align-middle' },
         ],
@@ -187,6 +193,7 @@ Daftar Log Perubahan
             cache:false,
             success:function(data){
                 if(data.success){
+                    $("#release").val(data.changelog.release);
                     $("#title").val(data.changelog.title);
                     $("#data").val(data.changelog.data);
                 }
@@ -389,10 +396,11 @@ Daftar Log Perubahan
             cache:false,
             success:function(data){
                 if(data.success){
+                    $("#showRelease").text(data.changelog.release);
                     $("#showTitle").text(data.changelog.title);
-                    $("#showCreate").html(data.changelog.username_create + "<br>pada " + data.changelog.created_at);
-                    $("#showEdit").html(data.changelog.username_update + "<br>pada " + data.changelog.updated_at);
-                    $("#showData").html(data.changelog.data);
+                    $("#showCreate").html(data.changelog.created_by_name + "<br>pada " + data.changelog.created_at);
+                    $("#showEdit").html(data.changelog.updated_by_name + "<br>pada " + data.changelog.updated_at);
+                    $("#showData").html(data.changelog.data.replace(/\r\n/g, '<br>'));
                 }
                 if(data.error){
                     toastr.options = {

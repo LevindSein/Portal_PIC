@@ -721,11 +721,11 @@ class BillController extends Controller
             $data['data'] = json_encode([
                 'publish' => $publish,
                 'publish_by' => $publish_by,
-                'user_create' => Auth::user()->id,
-                'username_create' => Auth::user()->name,
+                'created_by_id' => Auth::user()->id,
+                'created_by_name' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
-                'user_update' => Auth::user()->id,
-                'username_update' => Auth::user()->name,
+                'updated_by_id' => Auth::user()->id,
+                'updated_by_name' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
@@ -1047,8 +1047,6 @@ class BillController extends Controller
             }
             else{
                 if($data->b_listrik){
-                    $listrik = json_decode($data->b_listrik);
-
                     $json = json_decode($data->b_listrik);
                     if($json->lunas == 1){
                         $lunas *= 1;
@@ -1061,11 +1059,15 @@ class BillController extends Controller
                         $sel_tagihan += $json->sel_tagihan;
                     }
                     else{
-                        $data->code_tlistrik = NULL;
-                        $data->b_listrik = NULL;
+                        $listrik = json_decode($data->b_listrik);
+                        $listrik->deleted_by_id = Auth::user()->id;
+                        $listrik->deleted_by_name = Auth::user()->name;
 
                         $delete->listrik = $listrik;
                         $deleted = json_encode($delete);
+
+                        $data->code_tlistrik = NULL;
+                        $data->b_listrik = NULL;
 
                         $data->deleted = $deleted;
                     }
@@ -1191,8 +1193,6 @@ class BillController extends Controller
             }
             else{
                 if($data->b_airbersih){
-                    $airbersih = json_decode($data->b_airbersih);
-
                     $json = json_decode($data->b_airbersih);
                     if($json->lunas == 1){
                         $lunas *= 1;
@@ -1205,11 +1205,15 @@ class BillController extends Controller
                         $sel_tagihan += $json->sel_tagihan;
                     }
                     else{
-                        $data->code_tairbersih = NULL;
-                        $data->b_airbersih = NULL;
+                        $airbersih = json_decode($data->b_airbersih);
+                        $airbersih->deleted_by_id = Auth::user()->id;
+                        $airbersih->deleted_by_name = Auth::user()->name;
 
                         $delete->airbersih = $airbersih;
                         $deleted = json_encode($delete);
+
+                        $data->code_tairbersih = NULL;
+                        $data->b_airbersih = NULL;
 
                         $data->deleted = $deleted;
                     }
@@ -1278,8 +1282,6 @@ class BillController extends Controller
             }
             else{
                 if($data->b_keamananipk){
-                    $keamananipk = json_decode($data->b_keamananipk);
-
                     $json = json_decode($data->b_keamananipk);
                     if($json->lunas == 1){
                         $lunas *= 1;
@@ -1291,10 +1293,15 @@ class BillController extends Controller
                         $sel_tagihan += $json->sel_tagihan;
                     }
                     else{
-                        $data->b_keamananipk = NULL;
+                        $keamananipk = json_decode($data->b_keamananipk);
+
+                        $keamananipk->deleted_by_id = Auth::user()->id;
+                        $keamananipk->deleted_by_name = Auth::user()->name;
 
                         $delete->keamananipk = $keamananipk;
                         $deleted = json_encode($delete);
+
+                        $data->b_keamananipk = NULL;
 
                         $data->deleted = $deleted;
                     }
@@ -1354,8 +1361,6 @@ class BillController extends Controller
             }
             else{
                 if($data->b_kebersihan){
-                    $kebersihan = json_decode($data->b_kebersihan);
-
                     $json = json_decode($data->b_kebersihan);
                     if($json->lunas == 1){
                         $lunas *= 1;
@@ -1367,10 +1372,14 @@ class BillController extends Controller
                         $sel_tagihan += $json->sel_tagihan;
                     }
                     else{
-                        $data->b_kebersihan = NULL;
+                        $kebersihan = json_decode($data->b_kebersihan);
+                        $kebersihan->deleted_by_id = Auth::user()->id;
+                        $kebersihan->deleted_by_name = Auth::user()->name;
 
                         $delete->kebersihan = $kebersihan;
                         $deleted = json_encode($delete);
+
+                        $data->b_kebersihan = NULL;
 
                         $data->deleted = $deleted;
                     }
@@ -1430,8 +1439,6 @@ class BillController extends Controller
             }
             else{
                 if($data->b_airkotor){
-                    $airkotor = json_decode($data->b_airkotor);
-
                     $json = json_decode($data->b_airkotor);
                     if($json->lunas == 1){
                         $lunas *= 1;
@@ -1443,10 +1450,14 @@ class BillController extends Controller
                         $sel_tagihan += $json->sel_tagihan;
                     }
                     else{
-                        $data->b_airkotor = NULL;
+                        $airkotor = json_decode($data->b_airkotor);
+                        $airkotor->deleted_by_id = Auth::user()->id;
+                        $airkotor->deleted_by_name = Auth::user()->name;
 
                         $delete->airkotor = $airkotor;
                         $deleted = json_encode($delete);
+
+                        $data->b_airkotor = NULL;
 
                         $data->deleted = $deleted;
                     }
@@ -1567,8 +1578,8 @@ class BillController extends Controller
             $json = json_decode($data->data);
             $json->publish = $publish;
             $json->publish_by = $publish_by;
-            $json->user_update = Auth::user()->id;
-            $json->username_update = Auth::user()->name;
+            $json->updated_by_id = Auth::user()->id;
+            $json->updated_by_name = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
             $json = json_encode($json);
             $data->data = $json;

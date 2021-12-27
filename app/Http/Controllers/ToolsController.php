@@ -66,11 +66,11 @@ class ToolsController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'user_create' => Auth::user()->id,
-                'username_create' => Auth::user()->name,
+                'created_by_id' => Auth::user()->id,
+                'created_by_name' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
-                'user_update' => Auth::user()->id,
-                'username_update' => Auth::user()->name,
+                'updated_by_id' => Auth::user()->id,
+                'updated_by_name' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
@@ -129,8 +129,8 @@ class ToolsController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->user_update = Auth::user()->id;
-            $json->username_update = Auth::user()->name;
+            $json->updated_by_id = Auth::user()->id;
+            $json->updated_by_name = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
 
             $json = json_encode($json);
@@ -236,11 +236,11 @@ class ToolsController extends Controller
             ])->validate();
 
             $json = json_encode([
-                'user_create' => Auth::user()->id,
-                'username_create' => Auth::user()->name,
+                'created_by_id' => Auth::user()->id,
+                'created_by_name' => Auth::user()->name,
                 'created_at' => Carbon::now()->toDateTimeString(),
-                'user_update' => Auth::user()->id,
-                'username_update' => Auth::user()->name,
+                'updated_by_id' => Auth::user()->id,
+                'updated_by_name' => Auth::user()->name,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
@@ -296,8 +296,8 @@ class ToolsController extends Controller
 
             $json = json_decode($data->data);
 
-            $json->user_update = Auth::user()->id;
-            $json->username_update = Auth::user()->name;
+            $json->updated_by_id = Auth::user()->id;
+            $json->updated_by_name = Auth::user()->name;
             $json->updated_at = Carbon::now()->toDateTimeString();
 
             $json = json_encode($json);

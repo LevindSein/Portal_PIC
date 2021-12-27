@@ -83,6 +83,10 @@ Data Tempat
                         <h6 id="showKet"></h6>
                         <small class="text-muted pt-4 db">Info Tambahan</small>
                         <h6 id="showInfo"></h6>
+                        <small class="text-muted pt-4 db">Dibuat oleh</small>
+                        <h6 id="showCreate"></h6>
+                        <small class="text-muted pt-4 db">Diperbaharui oleh</small>
+                        <h6 id="showEdit"></h6>
                         <hr>
                     </div>
                     <div class="col-lg-6 col-xlg-6">
@@ -1262,6 +1266,9 @@ Data Tempat
 
                     (data.show.ket) ? $("#showKet").text(data.show.ket) : $("#showKet").text("-");
                     (data.show.info) ? $("#showInfo").text(data.show.info) : $("#showInfo").text("-");
+
+                    $("#showCreate").html(data.show.data.created_by_name + "<br>pada " + data.show.data.created_at);
+                    $("#showEdit").html(data.show.data.updated_by_name + "<br>pada " + data.show.data.updated_at);
 
                     var html = '';
 

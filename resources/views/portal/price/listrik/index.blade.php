@@ -493,8 +493,8 @@ Tarif Listrik
                     $("#showDenda1").text("Rp. " + Number(data.show.data.denda1).toLocaleString('id-ID'));
                     $("#showDenda2").text(data.show.data.denda2 + " %");
                     $("#showPpn").text(data.show.data.ppn + " %");
-                    $("#showCreate").html(data.show.data.username_create + "<br>pada " + data.show.data.created_at);
-                    $("#showEdit").html(data.show.data.username_update + "<br>pada " + data.show.data.updated_at);
+                    $("#showCreate").html(data.show.data.created_by_name + "<br>pada " + data.show.data.created_at);
+                    $("#showEdit").html(data.show.data.updated_by_name + "<br>pada " + data.show.data.updated_at);
                 }
 
                 if(data.error){
