@@ -399,6 +399,9 @@ class BillController extends Controller
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
+                    'restored_by_id' => NULL,
+                    'restored_by_name' => NULL,
+                    'restored_time' => NULL
                 ]);
 
                 $sub_tagihan += $sub;
@@ -1012,6 +1015,17 @@ class BillController extends Controller
 
                 $total = $sub - $diskon + $denda;
 
+                $restored_by_id = NULL;
+                $restored_by_name = NULL;
+                $restored_time = NULL;
+
+                if($data->b_listrik){
+                    $listrik = json_decode($data->b_listrik);
+                    $restored_by_id = $listrik->restored_by_id;
+                    $restored_by_name = $listrik->restored_by_name;
+                    $restored_time = $listrik->restored_time;
+                }
+
                 $data->b_listrik = json_encode([
                     'lunas' => 0,
                     'kasir' => null,
@@ -1036,6 +1050,9 @@ class BillController extends Controller
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
+                    'restored_by_id' => $restored_by_id,
+                    'restored_by_name' => $restored_by_name,
+                    'restored_time' => $restored_time
                 ]);
 
                 $sub_tagihan += $sub;
@@ -1060,8 +1077,15 @@ class BillController extends Controller
                     }
                     else{
                         $listrik = json_decode($data->b_listrik);
+
+                        unset($listrik->restored_by_id);
+                        unset($listrik->restored_by_name);
+                        unset($listrik->restored_time);
+                        $listrik->code_tlistrik = $data->code_tlistrik;
+
                         $listrik->deleted_by_id = Auth::user()->id;
                         $listrik->deleted_by_name = Auth::user()->name;
+                        $listrik->deleted_time = Carbon::now()->toDateTimeString();
 
                         $delete->listrik = $listrik;
                         $deleted = json_encode($delete);
@@ -1159,6 +1183,17 @@ class BillController extends Controller
 
                 $total = $sub - $diskon + $denda;
 
+                $restored_by_id = NULL;
+                $restored_by_name = NULL;
+                $restored_time = NULL;
+
+                if($data->b_airbersih){
+                    $airbersih = json_decode($data->b_airbersih);
+                    $restored_by_id = $airbersih->restored_by_id;
+                    $restored_by_name = $airbersih->restored_by_name;
+                    $restored_time = $airbersih->restored_time;
+                }
+
                 $data->b_airbersih = json_encode([
                     'lunas' => 0,
                     'kasir' => null,
@@ -1182,6 +1217,9 @@ class BillController extends Controller
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
+                    'restored_by_id' => $restored_by_id,
+                    'restored_by_name' => $restored_by_name,
+                    'restored_time' => $restored_time
                 ]);
 
                 $sub_tagihan += $sub;
@@ -1206,8 +1244,15 @@ class BillController extends Controller
                     }
                     else{
                         $airbersih = json_decode($data->b_airbersih);
+
+                        unset($airbersih->restored_by_id);
+                        unset($airbersih->restored_by_name);
+                        unset($airbersih->restored_time);
+                        $airbersih->code_tairbersih = $data->code_tairbersih;
+
                         $airbersih->deleted_by_id = Auth::user()->id;
                         $airbersih->deleted_by_name = Auth::user()->name;
+                        $airbersih->deleted_time = Carbon::now()->toDateTimeString();
 
                         $delete->airbersih = $airbersih;
                         $deleted = json_encode($delete);
@@ -1256,6 +1301,17 @@ class BillController extends Controller
                 $keamanan = round(($tarif_data->keamanan / 100) * $total);
                 $ipk = $total - $keamanan;
 
+                $restored_by_id = NULL;
+                $restored_by_name = NULL;
+                $restored_time = NULL;
+
+                if($data->b_keamananipk){
+                    $keamananipk = json_decode($data->b_keamananipk);
+                    $restored_by_id = $keamananipk->restored_by_id;
+                    $restored_by_name = $keamananipk->restored_by_name;
+                    $restored_time = $keamananipk->restored_time;
+                }
+
                 $data->b_keamananipk = json_encode([
                     'lunas' => 0,
                     'kasir' => null,
@@ -1272,6 +1328,9 @@ class BillController extends Controller
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
+                    'restored_by_id' => $restored_by_id,
+                    'restored_by_name' => $restored_by_name,
+                    'restored_time' => $restored_time
                 ]);
 
                 $sub_tagihan += $sub;
@@ -1295,8 +1354,13 @@ class BillController extends Controller
                     else{
                         $keamananipk = json_decode($data->b_keamananipk);
 
+                        unset($keamananipk->restored_by_id);
+                        unset($keamananipk->restored_by_name);
+                        unset($keamananipk->restored_time);
+
                         $keamananipk->deleted_by_id = Auth::user()->id;
                         $keamananipk->deleted_by_name = Auth::user()->name;
+                        $keamananipk->deleted_time = Carbon::now()->toDateTimeString();
 
                         $delete->keamananipk = $keamananipk;
                         $deleted = json_encode($delete);
@@ -1339,6 +1403,17 @@ class BillController extends Controller
 
                 $total = $sub - $diskon;
 
+                $restored_by_id = NULL;
+                $restored_by_name = NULL;
+                $restored_time = NULL;
+
+                if($data->b_kebersihan){
+                    $kebersihan = json_decode($data->b_kebersihan);
+                    $restored_by_id = $kebersihan->restored_by_id;
+                    $restored_by_name = $kebersihan->restored_by_name;
+                    $restored_time = $kebersihan->restored_time;
+                }
+
                 $data->b_kebersihan = json_encode([
                     'lunas' => 0,
                     'kasir' => null,
@@ -1351,6 +1426,9 @@ class BillController extends Controller
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
+                    'restored_by_id' => $restored_by_id,
+                    'restored_by_name' => $restored_by_name,
+                    'restored_time' => $restored_time
                 ]);
 
                 $sub_tagihan += $sub;
@@ -1373,8 +1451,14 @@ class BillController extends Controller
                     }
                     else{
                         $kebersihan = json_decode($data->b_kebersihan);
+
+                        unset($kebersihan->restored_by_id);
+                        unset($kebersihan->restored_by_name);
+                        unset($kebersihan->restored_time);
+
                         $kebersihan->deleted_by_id = Auth::user()->id;
                         $kebersihan->deleted_by_name = Auth::user()->name;
+                        $kebersihan->deleted_time = Carbon::now()->toDateTimeString();
 
                         $delete->kebersihan = $kebersihan;
                         $deleted = json_encode($delete);
@@ -1417,6 +1501,17 @@ class BillController extends Controller
 
                 $total = $sub - $diskon;
 
+                $restored_by_id = NULL;
+                $restored_by_name = NULL;
+                $restored_time = NULL;
+
+                if($data->b_airkotor){
+                    $airkotor = json_decode($data->b_airkotor);
+                    $restored_by_id = $airkotor->restored_by_id;
+                    $restored_by_name = $airkotor->restored_by_name;
+                    $restored_time = $airkotor->restored_time;
+                }
+
                 $data->b_airkotor = json_encode([
                     'lunas' => 0,
                     'kasir' => null,
@@ -1429,6 +1524,9 @@ class BillController extends Controller
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
+                    'restored_by_id' => $restored_by_id,
+                    'restored_by_name' => $restored_by_name,
+                    'restored_time' => $restored_time
                 ]);
 
                 $sub_tagihan += $sub;
@@ -1451,8 +1549,14 @@ class BillController extends Controller
                     }
                     else{
                         $airkotor = json_decode($data->b_airkotor);
+
+                        unset($airkotor->restored_by_id);
+                        unset($airkotor->restored_by_name);
+                        unset($airkotor->restored_time);
+
                         $airkotor->deleted_by_id = Auth::user()->id;
                         $airkotor->deleted_by_name = Auth::user()->name;
+                        $airkotor->deleted_time = Carbon::now()->toDateTimeString();
 
                         $delete->airkotor = $airkotor;
                         $deleted = json_encode($delete);
@@ -1735,35 +1839,58 @@ class BillController extends Controller
 
             $json = json_decode($data->deleted);
 
+            $show = [];
+
             if(array_key_exists('listrik', $json)){
                 if(is_null($data->b_listrik)){
-
+                    $show['del_listrik']['daya'] = number_format($json->listrik->daya, 0, '', '.');
+                    $show['del_listrik']['awal'] = number_format($json->listrik->awal, 0, '', '.');
+                    $show['del_listrik']['akhir'] = number_format($json->listrik->akhir, 0, '', '.');
+                    $show['del_listrik']['pakai'] = number_format($json->listrik->pakai, 0, '', '.');
+                    $show['del_listrik']['ttl_tagihan'] = number_format($json->listrik->ttl_tagihan, 0, '', '.');
+                    $show['del_listrik']['name'] = $json->listrik->deleted_by_name;
+                    $show['del_listrik']['time'] = $json->listrik->deleted_time;
                 }
             }
 
             if(array_key_exists('airbersih', $json)){
                 if(is_null($data->b_airbersih)){
-
+                    $show['del_airbersih']['awal'] = number_format($json->airbersih->awal, 0, '', '.');
+                    $show['del_airbersih']['akhir'] = number_format($json->airbersih->akhir, 0, '', '.');
+                    $show['del_airbersih']['pakai'] = number_format($json->airbersih->pakai, 0, '', '.');
+                    $show['del_airbersih']['ttl_tagihan'] = number_format($json->airbersih->ttl_tagihan, 0, '', '.');
+                    $show['del_airbersih']['name'] = $json->airbersih->deleted_by_name;
+                    $show['del_airbersih']['time'] = $json->airbersih->deleted_time;
                 }
             }
 
             if(array_key_exists('keamananipk', $json)){
                 if(is_null($data->b_keamananipk)){
-
+                    $show['del_keamananipk']['jml_los'] = number_format($json->keamananipk->jml_los, 0, '', '.');
+                    $show['del_keamananipk']['ttl_tagihan'] = number_format($json->keamananipk->ttl_tagihan, 0, '', '.');
+                    $show['del_keamananipk']['name'] = $json->keamananipk->deleted_by_name;
+                    $show['del_keamananipk']['time'] = $json->keamananipk->deleted_time;
                 }
             }
 
             if(array_key_exists('kebersihan', $json)){
                 if(is_null($data->b_kebersihan)){
-
+                    $show['del_kebersihan']['jml_los'] = number_format($json->kebersihan->jml_los, 0, '', '.');
+                    $show['del_kebersihan']['ttl_tagihan'] = number_format($json->kebersihan->ttl_tagihan, 0, '', '.');
+                    $show['del_kebersihan']['name'] = $json->kebersihan->deleted_by_name;
+                    $show['del_kebersihan']['time'] = $json->kebersihan->deleted_time;
                 }
             }
 
             if(array_key_exists('airkotor', $json)){
                 if(is_null($data->b_airkotor)){
-
+                    $show['del_airkotor']['ttl_tagihan'] = number_format($json->airkotor->ttl_tagihan, 0, '', '.');
+                    $show['del_airkotor']['name'] = $json->airkotor->deleted_by_name;
+                    $show['del_airkotor']['time'] = $json->airkotor->deleted_time;
                 }
             }
+
+            $data['details'] = $show;
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
@@ -1845,6 +1972,7 @@ class BillController extends Controller
                     'b_airkotor',
                     'b_lain',
                     'b_tagihan',
+                    'active',
                     'deleted',
                 )
                 ->findOrFail($id);
@@ -1870,6 +1998,15 @@ class BillController extends Controller
                 if(is_null($data->b_listrik)){
                     $lunas *= 0;
 
+                    $data->code_tlistrik = $json->listrik->code_tlistrik;
+                    unset($json->listrik->deleted_by_id);
+                    unset($json->listrik->deleted_by_name);
+                    unset($json->listrik->deleted_time);
+                    unset($json->listrik->code_tlistrik);
+                    $json->listrik->restored_by_id = Auth::user()->id;
+                    $json->listrik->restored_by_name = Auth::user()->name;
+                    $json->listrik->restored_time = Carbon::now()->toDateTimeString();
+
                     $listrik = json_encode($json->listrik);
                     $data->b_listrik = $listrik;
 
@@ -1887,6 +2024,15 @@ class BillController extends Controller
             if(array_key_exists('airbersih', $json)){
                 if(is_null($data->b_airbersih)){
                     $lunas *= 0;
+
+                    $data->code_tairbersih = $json->airbersih->code_tairbersih;
+                    unset($json->airbersih->deleted_by_id);
+                    unset($json->airbersih->deleted_by_name);
+                    unset($json->airbersih->deleted_time);
+                    unset($json->airbersih->code_tairbersih);
+                    $json->airbersih->restored_by_id = Auth::user()->id;
+                    $json->airbersih->restored_by_name = Auth::user()->name;
+                    $json->airbersih->restored_time = Carbon::now()->toDateTimeString();
 
                     $airbersih = json_encode($json->airbersih);
                     $data->b_airbersih = $airbersih;
@@ -1906,6 +2052,13 @@ class BillController extends Controller
                 if(is_null($data->b_keamananipk)){
                     $lunas *= 0;
 
+                    unset($json->keamananipk->deleted_by_id);
+                    unset($json->keamananipk->deleted_by_name);
+                    unset($json->keamananipk->deleted_time);
+                    $json->keamananipk->restored_by_id = Auth::user()->id;
+                    $json->keamananipk->restored_by_name = Auth::user()->name;
+                    $json->keamananipk->restored_time = Carbon::now()->toDateTimeString();
+
                     $keamananipk = json_encode($json->keamananipk);
                     $data->b_keamananipk = $keamananipk;
 
@@ -1923,6 +2076,13 @@ class BillController extends Controller
                 if(is_null($data->b_kebersihan)){
                     $lunas *= 0;
 
+                    unset($json->kebersihan->deleted_by_id);
+                    unset($json->kebersihan->deleted_by_name);
+                    unset($json->kebersihan->deleted_time);
+                    $json->kebersihan->restored_by_id = Auth::user()->id;
+                    $json->kebersihan->restored_by_name = Auth::user()->name;
+                    $json->kebersihan->restored_time = Carbon::now()->toDateTimeString();
+
                     $kebersihan = json_encode($json->kebersihan);
                     $data->b_kebersihan = $kebersihan;
 
@@ -1939,6 +2099,13 @@ class BillController extends Controller
             if(array_key_exists('airkotor', $json)){
                 if(is_null($data->b_airkotor)){
                     $lunas *= 0;
+
+                    unset($json->airkotor->deleted_by_id);
+                    unset($json->airkotor->deleted_by_name);
+                    unset($json->airkotor->deleted_time);
+                    $json->airkotor->restored_by_id = Auth::user()->id;
+                    $json->airkotor->restored_by_name = Auth::user()->name;
+                    $json->airkotor->restored_time = Carbon::now()->toDateTimeString();
 
                     $airkotor = json_encode($json->airkotor);
                     $data->b_airkotor = $airkotor;
@@ -1969,6 +2136,7 @@ class BillController extends Controller
             $tagihan->sel_tagihan = $sel_tagihan;
             $data->b_tagihan = json_encode($tagihan);
 
+            $data->active = 1;
             $data->deleted = NULL;
 
             try{

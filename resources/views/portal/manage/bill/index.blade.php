@@ -1272,6 +1272,12 @@ Kelola Tagihan
                         html += '<h6 class="text-danger">Rp. ' + Number(data.show.b_listrik.sel_tagihan).toLocaleString('id-ID') + '</h6>';
                         html += '</div>';
                         html += '</div>';
+                        if(data.show.b_listrik.restored_by_name){
+                            html += '<div class="form-group text-center">';
+                            html += '<p>Dipulihkan : ' + data.show.b_listrik.restored_by_name + '</p>';
+                            html += '<p>' + data.show.b_listrik.restored_time + '</p>';
+                            html += '</div>';
+                        }
                         html += '</div>';
                         html += '<div id="head_listrik" class="text-center">';
                         html += '<h5>';
@@ -1345,6 +1351,12 @@ Kelola Tagihan
                         html += '<h6 class="text-danger">Rp. ' + Number(data.show.b_airbersih.sel_tagihan).toLocaleString('id-ID') + '</h6>';
                         html += '</div>';
                         html += '</div>';
+                        if(data.show.b_airbersih.restored_by_name){
+                            html += '<div class="form-group text-center">';
+                            html += '<p>Dipulihkan : ' + data.show.b_airbersih.restored_by_name + '</p>';
+                            html += '<p>' + data.show.b_airbersih.restored_time + '</p>';
+                            html += '</div>';
+                        }
                         html += '</div>';
                         html += '<div id="head_airbersih" class="text-center">';
                         html += '<h5>';
@@ -1404,6 +1416,12 @@ Kelola Tagihan
                         html += '<h6 class="text-danger">Rp. ' + Number(data.show.b_keamananipk.sel_tagihan).toLocaleString('id-ID') + '</h6>';
                         html += '</div>';
                         html += '</div>';
+                        if(data.show.b_keamananipk.restored_by_name){
+                            html += '<div class="form-group text-center">';
+                            html += '<p>Dipulihkan : ' + data.show.b_keamananipk.restored_by_name + '</p>';
+                            html += '<p>' + data.show.b_keamananipk.restored_time + '</p>';
+                            html += '</div>';
+                        }
                         html += '</div>';
                         html += '<div id="head_keamananipk" class="text-center">';
                         html += '<h5>';
@@ -1459,6 +1477,12 @@ Kelola Tagihan
                         html += '<h6 class="text-danger">Rp. ' + Number(data.show.b_kebersihan.sel_tagihan).toLocaleString('id-ID') + '</h6>';
                         html += '</div>';
                         html += '</div>';
+                        if(data.show.b_kebersihan.restored_by_name){
+                            html += '<div class="form-group text-center">';
+                            html += '<p>Dipulihkan : ' + data.show.b_kebersihan.restored_by_name + '</p>';
+                            html += '<p>' + data.show.b_kebersihan.restored_time + '</p>';
+                            html += '</div>';
+                        }
                         html += '</div>';
                         html += '<div id="head_kebersihan" class="text-center">';
                         html += '<h5>';
@@ -1512,6 +1536,12 @@ Kelola Tagihan
                         html += '<h6 class="text-danger">Rp. ' + Number(data.show.b_airkotor.sel_tagihan).toLocaleString('id-ID') + '</h6>';
                         html += '</div>';
                         html += '</div>';
+                        if(data.show.b_airkotor.restored_by_name){
+                            html += '<div class="form-group text-center">';
+                            html += '<p>Dipulihkan : ' + data.show.b_airkotor.restored_by_name + '</p>';
+                            html += '<p>' + data.show.b_airkotor.restored_time + '</p>';
+                            html += '</div>';
+                        }
                         html += '</div>';
                         html += '<div id="head_airkotor" class="text-center">';
                         html += '<h5>';

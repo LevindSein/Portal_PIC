@@ -558,6 +558,16 @@ class StoreController extends Controller
                     $diskon['listrik'] = str_replace('.','',$request->dlistrik);
                 }
             }
+            else{
+                if($data->fas_listrik){
+                    $tools = TListrik::find($data->id_tlistrik);
+                    $tools->stt_available = 1;
+                    $tools->save();
+                }
+
+                $data->fas_listrik = NULL;
+                $data->id_tlistrik = NULL;
+            }
 
             //Air Bersih
             if($request->fas_airbersih){
@@ -581,6 +591,16 @@ class StoreController extends Controller
                 if($request->dairbersih){
                     $diskon['airbersih'] = str_replace('.','',$request->dairbersih);
                 }
+            }
+            else{
+                if($data->fas_airbersih){
+                    $tools = TAirBersih::find($data->id_tairbersih);
+                    $tools->stt_available = 1;
+                    $tools->save();
+                }
+
+                $data->fas_airbersih = NULL;
+                $data->id_tairbersih = NULL;
             }
 
             //Keamanan IPK
@@ -608,6 +628,9 @@ class StoreController extends Controller
                     $diskon['keamananipk'] = str_replace('.','',$request->dkeamananipk);
                 }
             }
+            else{
+                $data->fas_keamananipk = NULL;
+            }
 
             //Kebersihan
             if($request->fas_kebersihan){
@@ -634,6 +657,9 @@ class StoreController extends Controller
                     $diskon['kebersihan'] = str_replace('.','',$request->dkebersihan);
                 }
             }
+            else{
+                $data->fas_kebersihan = NULL;
+            }
 
             //Air Kotor
             if($request->fas_airkotor){
@@ -658,6 +684,9 @@ class StoreController extends Controller
                     $diskon['airkotor'] = str_replace('.','',$request->dairkotor);
                 }
             }
+            else{
+                $data->fas_airkotor = NULL;
+            }
 
             //Lainnya
             if($request->plain){
@@ -681,6 +710,9 @@ class StoreController extends Controller
                 }
 
                 $data->fas_lain = json_encode($prices);
+            }
+            else{
+                $data->fas_lain = NULL;
             }
 
             $json = json_decode($data->data);
@@ -728,16 +760,7 @@ class StoreController extends Controller
                     return response()->json(['error' => 'Data Tools Listrik not found','description' => $e]);
                 }
 
-                $json = json_decode($tools->data);
-
-                $json->updated_by_id = Auth::user()->id;
-                $json->updated_by_name = Auth::user()->name;
-                $json->updated_at = Carbon::now()->toDateTimeString();
-
-                $json = json_encode($json);
-
                 $tools->stt_available = 1;
-                $tools->data = $json;
 
                 try{
                     $tools->save();
@@ -753,16 +776,7 @@ class StoreController extends Controller
                     return response()->json(['error' => 'Data Tools Air Bersih not found','description' => $e]);
                 }
 
-                $json = json_decode($tools->data);
-
-                $json->updated_by_id = Auth::user()->id;
-                $json->updated_by_name = Auth::user()->name;
-                $json->updated_at = Carbon::now()->toDateTimeString();
-
-                $json = json_encode($json);
-
                 $tools->stt_available = 1;
-                $tools->data = $json;
 
                 try{
                     $tools->save();

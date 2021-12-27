@@ -51,7 +51,7 @@ Penghapusan Tagihan
                     <span aria-hidden="true">x</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body-xl">
                 <small class="text-muted pt-4 db">Kode Tagihan</small>
                 <h4 id="showCode"></h4>
                 <small class="text-muted pt-4 db">Periode</small>
@@ -196,6 +196,96 @@ Penghapusan Tagihan
                     $("#showPeriod").text(data.show.period.nicename);
                     $("#showKontrol").text(data.show.kd_kontrol);
 
+                    var html = '';
+
+                    if(data.show.details.del_listrik){
+                        html += '<div class="form-group">';
+                        html += '<h5><i class="fas fa-bolt" style="color:#fd7e14;"></i> Listrik</h5>';
+                        html += '<small class="text-muted pt-4 db">Daya</small>';
+                        html += '<h6>' + data.show.details.del_listrik.daya + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Awal</small>';
+                        html += '<h6>' + data.show.details.del_listrik.awal + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Akhir</small>';
+                        html += '<h6>' + data.show.details.del_listrik.akhir + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Pakai</small>';
+                        html += '<h6>' + data.show.details.del_listrik.pakai + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Tagihan</small>';
+                        html += '<h6 class="text-info">Rp. ' + data.show.details.del_listrik.ttl_tagihan + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Dihapus oleh</small>';
+                        html += '<h6>' + data.show.details.del_listrik.name + '</h6>';
+                        html += '<h6>' + data.show.details.del_listrik.time + '</h6>';
+                        html += '</div>';
+                        html += '<hr>';
+                    }
+
+                    if(data.show.details.del_airbersih){
+                        html += '<div class="form-group">';
+                        html += '<h5><i class="fas fa-tint" style="color:#36b9cc;""></i> Air Bersih</h5>';
+                        html += '<small class="text-muted pt-4 db">Awal</small>';
+                        html += '<h6>' + data.show.details.del_airbersih.awal + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Akhir</small>';
+                        html += '<h6>' + data.show.details.del_airbersih.akhir + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Pakai</small>';
+                        html += '<h6>' + data.show.details.del_airbersih.pakai + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Tagihan</small>';
+                        html += '<h6 class="text-info">Rp. ' + data.show.details.del_airbersih.ttl_tagihan + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Dihapus oleh</small>';
+                        html += '<h6>' + data.show.details.del_airbersih.name + '</h6>';
+                        html += '<h6>' + data.show.details.del_airbersih.time + '</h6>';
+                        html += '</div>';
+                        html += '<hr>';
+                    }
+
+                    if(data.show.details.del_keamananipk){
+                        html += '<div class="form-group">';
+                        html += '<h5><i class="fas fa-lock" style="color:#e74a3b;"></i> Keamanan IPK</h5>';
+                        html += '<small class="text-muted pt-4 db">Jml_Los</small>';
+                        html += '<h6>' + data.show.details.del_keamananipk.jml_los + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Tagihan</small>';
+                        html += '<h6 class="text-info">Rp. ' + data.show.details.del_keamananipk.ttl_tagihan + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Dihapus oleh</small>';
+                        html += '<h6>' + data.show.details.del_keamananipk.name + '</h6>';
+                        html += '<h6>' + data.show.details.del_keamananipk.time + '</h6>';
+                        html += '</div>';
+                        html += '<hr>';
+                    }
+
+                    if(data.show.details.del_kebersihan){
+                        html += '<div class="form-group">';
+                        html += '<h5><i class="fas fa-leaf" style="color:#1cc88a;"></i> Kebersihan</h5>';
+                        html += '<small class="text-muted pt-4 db">Jml_Los</small>';
+                        html += '<h6>' + data.show.details.del_kebersihan.jml_los + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Tagihan</small>';
+                        html += '<h6 class="text-info">Rp. ' + data.show.details.del_kebersihan.ttl_tagihan + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Dihapus oleh</small>';
+                        html += '<h6>' + data.show.details.del_kebersihan.name + '</h6>';
+                        html += '<h6>' + data.show.details.del_kebersihan.time + '</h6>';
+                        html += '</div>';
+                        html += '<hr>';
+                    }
+
+                    if(data.show.details.del_airkotor){
+                        html += '<div class="form-group">';
+                        html += '<h5><i class="fad fa-burn" style="color:#000000;"></i> Air Kotor</h5>';
+                        html += '<small class="text-muted pt-4 db">Tagihan</small>';
+                        html += '<h6 class="text-info">Rp. ' + data.show.details.del_airkotor.ttl_tagihan + '</h6>';
+                        html += '<small class="text-muted pt-4 db">Dihapus oleh</small>';
+                        html += '<h6>' + data.show.details.del_airkotor.name + '</h6>';
+                        html += '<h6>' + data.show.details.del_airkotor.time + '</h6>';
+                        html += '</div>';
+                        html += '<hr>';
+                    }
+
+                    if(html){
+                        $("#showFasilitas").append(html);
+                    }
+                    else {
+                        html += '<div class="form-group mt-4 text-center">';
+                        html += '<img src="/img/sad.png" class="rounded-circle" width="180" />';
+                        html += '<h4>Tidak memiliki tagihan terhapus</h4>'
+                        html += '</div>';
+                        $("#showFasilitas").append(html);
+                    }
                 }
 
                 if(data.error){
