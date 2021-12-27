@@ -139,29 +139,107 @@ Kelola Tagihan
                     <div class="row">
                         <div class="col-lg-6 col-xlg-6">
                             <div class="form-group">
-                                <label>Periode Tagihan <span class="text-danger">*</span></label>
+                                <label>Periode Tagihan <span class="text-danger">*</span>
+                                    <sup>
+                                        <i class="far fa-question-circle"
+                                            style="color:#5b5b5b;"
+                                            data-container="body"
+                                            data-trigger="hover"
+                                            title="Periode Tagihan"
+                                            data-toggle="popover"
+                                            data-html="true"
+                                            data-content="Pilih periode tagihan yang tersedia. Note: <b>Mengedit</b> tagihan tidak dapat mengubah periode tagihan yang telah dipilih.">
+                                        </i>
+                                    </sup>
+                                </label>
                                 <select required id="periode" name="periode" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                             </div>
                             <div class="form-group">
-                                <label>Kode Kontrol <span class="text-danger">*</span></label>
+                                <label>Kode Kontrol <span class="text-danger">*</span>
+                                    <sup>
+                                        <a href='{{url("production/point/stores")}}' target="_blank">
+                                            <i class="far fa-question-circle"
+                                                style="color:#5b5b5b;"
+                                                data-container="body"
+                                                data-trigger="hover"
+                                                title="Kode Kontrol"
+                                                data-toggle="popover"
+                                                data-html="true"
+                                                data-content="Pilih kode kontrol yang tersedia. Note: <b>Mengedit</b> tagihan tidak dapat mengubah kode kontrol yang telah dipilih. <br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola Kontrol yang tersedia">
+                                            </i>
+                                        </a>
+                                    </sup>
+                                </label>
                                 <select required id="kontrol" name="kontrol" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                             </div>
                             <div class="form-group">
-                                <label>Blok Tempat <span class="text-danger">*</span></label>
+                                <label>Blok Tempat <span class="text-danger">*</span>
+                                    <sup>
+                                        <i class="far fa-question-circle"
+                                            style="color:#5b5b5b;"
+                                            data-container="body"
+                                            data-trigger="hover"
+                                            title="Blok Tempat / Grup Tempat"
+                                            data-toggle="popover"
+                                            data-html="true"
+                                            data-content="Akan terisi secara otomatis sesuai kode kontrol yang dipilih.">
+                                        </i>
+                                    </sup>
+                                </label>
                                 <input id="group" name="group" class="form-control form-control-line" placeholder="(Sesuai Kode Kontrol yang terisi)"/>
                             </div>
                             <div class="form-group">
-                                <label>Nomor Los <span class="text-danger">*</span></label>
+                                <label>Nomor Los <span class="text-danger">*</span>
+                                    <sup>
+                                        <a href='{{url("production/point/groups")}}' target="_blank">
+                                            <i class="far fa-question-circle"
+                                                style="color:#5b5b5b;"
+                                                data-container="body"
+                                                data-trigger="hover"
+                                                title="Nomor Los"
+                                                data-toggle="popover"
+                                                data-html="true"
+                                                data-content="Nomor petunjuk lokasi tempat usaha, Anda dapat mengisinya setelah Blok Tempat terisi. Ini akan menghitung otomatis tagihan yang berjenis <b>per-Los</b>.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola Nomor Los pada Blok tempat">
+                                            </i>
+                                        </a>
+                                    </sup>
+                                </label>
                                 <select required id="los" name="los[]" class="select2 form-control form-control-line" style="width: 100%;" multiple></select>
                             </div>
                             <div class="form-group">
-                                <label>Pengguna Tempat <span class="text-danger">*</span></label>
+                                <label>Pengguna Tempat <span class="text-danger">*</span>
+                                    <sup>
+                                        <a href='{{url("production/users")}}' target="_blank">
+                                            <i class="far fa-question-circle"
+                                                style="color:#5b5b5b;"
+                                                data-container="body"
+                                                data-trigger="hover"
+                                                title="Pengguna Tempat"
+                                                data-toggle="popover"
+                                                data-html="true"
+                                                data-content="Pengguna yang bertanggung jawab atas tagihan yang dibebankan.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola Pengguna yang tersedia.">
+                                            </i>
+                                        </a>
+                                    </sup>
+                                </label>
                                 <select id="pengguna" name="pengguna" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="stt_publish" name="stt_publish" checked>
-                                    <label class="custom-control-label" for="stt_publish">Publish Tagihan</label>
+                                    <label class="custom-control-label" for="stt_publish">Publish Tagihan
+                                        <sup>
+                                            <i class="far fa-question-circle"
+                                                style="color:#5b5b5b;"
+                                                data-container="body"
+                                                data-trigger="hover"
+                                                title="Publish Tagihan"
+                                                data-toggle="popover"
+                                                data-html="true"
+                                                data-content="Mengirim tagihan ke kasir untuk dibayar dan mengirim notifikasi ke pengguna tempat untuk melakukan pembayaran tagihan.">
+                                            </i>
+                                        </sup>
+                                    </label>
                                 </div>
                             </div>
                             <p class="text-danger">Pastikan data tagihan benar sebelum di publish.</p>
@@ -172,17 +250,55 @@ Kelola Tagihan
                                 <div class="form-group form-check form-check-inline">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="fas_listrik" name="fas_listrik">
-                                        <label class="custom-control-label text-warning" for="fas_listrik">Listrik</label>
+                                        <label class="custom-control-label text-warning" for="fas_listrik">Listrik
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Tagihan Listrik"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="<b>Aktif</b> : Apabila periode tagihan dan kode kontrol sudah terisi dan atau tagihan belum lunas.<br><b>Tambah</b> : Aktifkan kolom.<br><b>Hapus</b> : Hilangkan centang.<br><b>Lunas</b> : Data tidak dapat diedit.<br><b>Dapat memulihkan</b> : Apabila anda menghapus tagihan.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <small class="text-success" id="lunas_listrik">(Lunas)</small>
                                     </div>
                                 </div>
                                 <div id="divlistrik" style="padding-left: 2rem;">
                                     <div class="form-group">
-                                        <label>Pilih Tarif <span class="text-danger">*</span></label>
+                                        <label>Pilih Tarif <span class="text-danger">*</span>
+                                            <sup>
+                                                <a href='{{url("production/prices/listrik")}}' target="_blank">
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Tarif Listrik"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="Pilih tarif listrik yang tersedia.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola Tarif.">
+                                                    </i>
+                                                </a>
+                                            </sup>
+                                        </label>
                                         <select id="plistrik" name="plistrik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Daya Listrik <span class="text-danger">*</span></label>
+                                        <label>Daya Listrik <span class="text-danger">*</span>
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Daya Listrik"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Ketikkan besaran daya listrik.<br><b>Isi Manual</b> : Apabila tempat usaha tidak terdeteksi memiliki alat meter listrik.<br><b>Isi Otomatis</b> : Apabila tempat usaha terdeteksi memiliki alat meter.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <input maxlength="11" type="text" id="dayalistrik" name="dayalistrik" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                             <div class="input-group-prepend">
@@ -191,21 +307,69 @@ Kelola Tagihan
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Awal Meter <span class="text-danger">*</span></label>
+                                        <label>Awal Meter <span class="text-danger">*</span>
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Awal Meter Listrik"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Ketikkan posisi angka meteran terdahulu.<br><b>Isi Manual</b> : Apabila tempat usaha tidak terdeteksi memiliki alat meter.<br><b>Isi Otomatis</b> : Apabila tempat usaha terdeteksi memiliki alat meter.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <input maxlength="11" type="text" id="awlistrik" name="awlistrik" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                     </div>
                                     <div class="form-group">
-                                        <label>Akhir Meter <span class="text-danger">*</span></label>
+                                        <label>Akhir Meter <span class="text-danger">*</span>
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Akhir Meter Listrik"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Ketikkan posisi angka meteran terbaru.<br><b>Isi Manual</b> : Apabila tempat usaha tidak terdeteksi memiliki alat meter.<br><b>Isi Otomatis</b> : Apabila tempat usaha terdeteksi memiliki alat meter.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <input maxlength="11" type="text" id="aklistrik" name="aklistrik" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                     </div>
                                     <div class="form-group form-check form-check-inline">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" id="checklistrik0" name="checklistrik0">
-                                            <label class="custom-control-label" for="checklistrik0">Meter kembali ke Nol <span id="labellistrik0" class="text-danger">*</span></label>
+                                            <label class="custom-control-label" for="checklistrik0">Meter kembali ke Nol <span id="labellistrik0" class="text-danger">*</span>
+                                                <sup>
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Reset Meteran"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="<b>Manual</b> : Apabila sistem tidak mendeteksi meteran mengalami reset.<br><b>Otomatis</b> : Apabila akhir meter lebih kecil daripada awal meter.">
+                                                    </i>
+                                                </sup>
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Diskon</label>
+                                        <label>Diskon
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Diskon Tagihan Listrik"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Isi dengan angka <b>0-100</b> % Tagihan.<br><b>Manual</b> : Apabila anda ingin menambahkan diskon tagihan.<br><b>Otomatis</b> : Apabila sistem mendeteksi tempat usaha mendapat regulasi terkait diskon tagihan.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <input maxlength="3" type="text" id="dlistrik" name="dlistrik" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
                                             <div class="input-group-prepend">
@@ -214,7 +378,19 @@ Kelola Tagihan
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Denda</label>
+                                        <label>Denda
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Denda Tagihan Listrik"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="isi dengan banyaknya periode tagihan yang menunggak.<br><b>Manual</b> : Apabila anda ingin menambahkan denda tagihan.<br><b>Otomatis</b> : Apabila sistem mendeteksi tagihan mengalami jatuh tempo.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <input maxlength="5" type="text" id="denlistrik" name="denlistrik" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                             <div class="input-group-prepend">
@@ -233,31 +409,105 @@ Kelola Tagihan
                                 <div class="form-group form-check form-check-inline">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="fas_airbersih" name="fas_airbersih">
-                                        <label class="custom-control-label text-info" for="fas_airbersih">Air Bersih</label>
+                                        <label class="custom-control-label text-info" for="fas_airbersih">Air Bersih
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Tagihan Air Bersih"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="<b>Aktif</b> : Apabila periode tagihan dan kode kontrol sudah terisi dan atau tagihan belum lunas.<br><b>Tambah</b> : Aktifkan kolom.<br><b>Hapus</b> : Hilangkan centang.<br><b>Lunas</b> : Data tidak dapat diedit.<br><b>Dapat memulihkan</b> : Apabila anda menghapus tagihan.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <small class="text-success" id="lunas_airbersih">(Lunas)</small>
                                     </div>
                                 </div>
                                 <div id="divairbersih" style="padding-left: 2rem;">
                                     <div class="form-group">
-                                        <label>Pilih Tarif <span class="text-danger">*</span></label>
+                                        <label>Pilih Tarif <span class="text-danger">*</span>
+                                            <sup>
+                                                <a href='{{url("production/prices/airbersih")}}' target="_blank">
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Tarif Air Bersih"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="Pilih tarif air bersih yang tersedia.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola Tarif.">
+                                                    </i>
+                                                </a>
+                                            </sup>
+                                        </label>
                                         <select id="pairbersih" name="pairbersih" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Awal Meter <span class="text-danger">*</span></label>
+                                        <label>Awal Meter <span class="text-danger">*</span>
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Awal Meter Air Bersih"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Ketikkan posisi angka meteran terdahulu.<br><b>Isi Manual</b> : Apabila tempat usaha tidak terdeteksi memiliki alat meter.<br><b>Isi Otomatis</b> : Apabila tempat usaha terdeteksi memiliki alat meter.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <input maxlength="11" type="text" id="awairbersih" name="awairbersih" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                     </div>
                                     <div class="form-group">
-                                        <label>Akhir Meter <span class="text-danger">*</span></label>
+                                        <label>Akhir Meter <span class="text-danger">*</span>
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Akhir Meter Air Bersih"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Ketikkan posisi angka meteran terbaru.<br><b>Isi Manual</b> : Apabila tempat usaha tidak terdeteksi memiliki alat meter.<br><b>Isi Otomatis</b> : Apabila tempat usaha terdeteksi memiliki alat meter.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <input maxlength="11" type="text" id="akairbersih" name="akairbersih" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                     </div>
                                     <div class="form-group form-check form-check-inline">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" id="checkairbersih0" name="checkairbersih0">
-                                            <label class="custom-control-label" for="checkairbersih0">Meter kembali ke Nol <span id="labelairbersih0" class="text-danger">*</span></label>
+                                            <label class="custom-control-label" for="checkairbersih0">Meter kembali ke Nol <span id="labelairbersih0" class="text-danger">*</span>
+                                                <sup>
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Reset Meteran"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="<b>Manual</b> : Apabila sistem tidak mendeteksi meteran mengalami reset.<br><b>Otomatis</b> : Apabila akhir meter lebih kecil daripada awal meter.">
+                                                    </i>
+                                                </sup>
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Diskon</label>
+                                        <label>Diskon
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Diskon Tagihan Air Bersih"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Isi dengan angka <b>0-100</b> % Tagihan.<br><b>Manual</b> : Apabila anda ingin menambahkan diskon tagihan.<br><b>Otomatis</b> : Apabila sistem mendeteksi tempat usaha mendapat regulasi terkait diskon tagihan.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <input maxlength="3" type="text" id="dairbersih" name="dairbersih" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
                                             <div class="input-group-prepend">
@@ -266,7 +516,19 @@ Kelola Tagihan
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Denda</label>
+                                        <label>Denda
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Denda Tagihan Air Bersih"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="isi dengan banyaknya periode tagihan yang menunggak.<br><b>Manual</b> : Apabila anda ingin menambahkan denda tagihan.<br><b>Otomatis</b> : Apabila sistem mendeteksi tagihan mengalami jatuh tempo.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <input maxlength="5" type="text" id="denairbersih" name="denairbersih" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                             <div class="input-group-prepend">
@@ -285,19 +547,57 @@ Kelola Tagihan
                                 <div class="form-group form-check form-check-inline">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="fas_keamananipk" name="fas_keamananipk">
-                                        <label class="custom-control-label text-danger" for="fas_keamananipk">Keamanan IPK</label>
+                                        <label class="custom-control-label text-danger" for="fas_keamananipk">Keamanan IPK
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Tagihan Keamanan IPK"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="<b>Aktif</b> : Apabila periode tagihan dan kode kontrol sudah terisi dan atau tagihan belum lunas.<br><b>Tambah</b> : Aktifkan kolom.<br><b>Hapus</b> : Hilangkan centang.<br><b>Lunas</b> : Data tidak dapat diedit.<br><b>Dapat memulihkan</b> : Apabila anda menghapus tagihan.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <small class="text-success" id="lunas_keamananipk">(Lunas)</small>
                                     </div>
                                 </div>
                                 <div id="divkeamananipk" style="padding-left: 2rem;">
                                     <div class="form-group">
-                                        <label>Pilih Tarif <span class="text-danger">*</span></label>
+                                        <label>Pilih Tarif <span class="text-danger">*</span>
+                                            <sup>
+                                                <a href='{{url("production/prices/keamananipk")}}' target="_blank">
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Tarif Keamanan IPK"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="Pilih tarif keamanan ipk yang tersedia.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola Tarif.">
+                                                    </i>
+                                                </a>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <select id="pkeamananipk" name="pkeamananipk" class="select2 form-control form-control-line" style="width: 100%"></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Diskon</label>
+                                        <label>Diskon
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Diskon Tagihan Keamanan IPK"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Isi dengan nominal tertentu.<br><b>Manual</b> : Apabila anda ingin menambahkan diskon tagihan.<br><b>Otomatis</b> : Apabila sistem mendeteksi tempat usaha mendapat regulasi terkait diskon tagihan.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp.</span>
@@ -319,19 +619,57 @@ Kelola Tagihan
                                 <div class="form-group form-check form-check-inline">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="fas_kebersihan" name="fas_kebersihan">
-                                        <label class="custom-control-label text-success" for="fas_kebersihan">Kebersihan</label>
+                                        <label class="custom-control-label text-success" for="fas_kebersihan">Kebersihan
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Tagihan Kebersihan"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="<b>Aktif</b> : Apabila periode tagihan dan kode kontrol sudah terisi dan atau tagihan belum lunas.<br><b>Tambah</b> : Aktifkan kolom.<br><b>Hapus</b> : Hilangkan centang.<br><b>Lunas</b> : Data tidak dapat diedit.<br><b>Dapat memulihkan</b> : Apabila anda menghapus tagihan.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <small class="text-success" id="lunas_kebersihan">(Lunas)</small>
                                     </div>
                                 </div>
                                 <div id="divkebersihan" style="padding-left: 2rem;">
                                     <div class="form-group">
-                                        <label>Pilih Tarif <span class="text-danger">*</span></label>
+                                        <label>Pilih Tarif <span class="text-danger">*</span>
+                                            <sup>
+                                                <a href='{{url("production/prices/kebersihan")}}' target="_blank">
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Tarif Kebersihan"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="Pilih tarif kebersihan yang tersedia.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola Tarif.">
+                                                    </i>
+                                                </a>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <select id="pkebersihan" name="pkebersihan" class="select2 form-control form-control-line" style="width: 100%"></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Diskon</label>
+                                        <label>Diskon
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Diskon Tagihan Kebersihan"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Isi dengan nominal tertentu.<br><b>Manual</b> : Apabila anda ingin menambahkan diskon tagihan.<br><b>Otomatis</b> : Apabila sistem mendeteksi tempat usaha mendapat regulasi terkait diskon tagihan.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp.</span>
@@ -353,19 +691,57 @@ Kelola Tagihan
                                 <div class="form-group form-check form-check-inline">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="fas_airkotor" name="fas_airkotor">
-                                        <label class="custom-control-label text-dark" for="fas_airkotor">Air Kotor</label>
+                                        <label class="custom-control-label text-dark" for="fas_airkotor">Air Kotor
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Tagihan Air Kotor"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="<b>Aktif</b> : Apabila periode tagihan dan kode kontrol sudah terisi dan atau tagihan belum lunas.<br><b>Tambah</b> : Aktifkan kolom.<br><b>Hapus</b> : Hilangkan centang.<br><b>Lunas</b> : Data tidak dapat diedit.<br><b>Dapat memulihkan</b> : Apabila anda menghapus tagihan.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <small class="text-success" id="lunas_airkotor">(Lunas)</small>
                                     </div>
                                 </div>
                                 <div id="divairkotor" style="padding-left: 2rem;">
                                     <div class="form-group">
-                                        <label>Pilih Tarif <span class="text-danger">*</span></label>
+                                        <label>Pilih Tarif <span class="text-danger">*</span>
+                                            <sup>
+                                                <a href='{{url("production/prices/airkotor")}}' target="_blank">
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Tarif Air Kotor"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="Pilih tarif air kotor yang tersedia.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola Tarif.">
+                                                    </i>
+                                                </a>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <select id="pairkotor" name="pairkotor" class="select2 form-control form-control-line" style="width: 100%"></select>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Diskon</label>
+                                        <label>Diskon
+                                            <sup>
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Diskon Tagihan Air Kotor"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Isi dengan nominal tertentu.<br><b>Manual</b> : Apabila anda ingin menambahkan diskon tagihan.<br><b>Otomatis</b> : Apabila sistem mendeteksi tempat usaha mendapat regulasi terkait diskon tagihan.">
+                                                </i>
+                                            </sup>
+                                        </label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Rp.</span>
@@ -389,7 +765,20 @@ Kelola Tagihan
                                 <div id="divlainNew"></div>
 
                                 <div class="form-group">
-                                    <button id="divLainAdd" class="btn btn-sm btn-rounded btn-info"><i class="fas fa-fw fa-plus mr-1"></i>Fasilitas Lainnya</button>
+                                    <button id="divLainAdd" class="btn btn-sm btn-rounded btn-info"><i class="fas fa-fw fa-plus mr-1"></i>Tagihan Lainnya</button>
+                                    <sup>
+                                        <a href='{{url("production/prices/lain")}}' target="_blank">
+                                            <i class="far fa-question-circle"
+                                                style="color:#5b5b5b;"
+                                                data-container="body"
+                                                data-trigger="hover"
+                                                title="Tagihan Lainnya"
+                                                data-toggle="popover"
+                                                data-html="true"
+                                                data-content="Pilih tarif lainnya yang tersedia.<br><b>Aktif</b> : Apabila periode tagihan dan kode kontrol sudah terisi dan atau tagihan belum lunas.<br><b>Tidak dapat memulihkan</b> : Apabila anda menghapus tagihan.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola Tarif.">
+                                            </i>
+                                        </a>
+                                    </sup>
                                 </div>
                             </div>
                             {{-- End Lainnya --}}
