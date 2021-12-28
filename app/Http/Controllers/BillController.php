@@ -513,6 +513,9 @@ class BillController extends Controller
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
+                    'restored_by_id' => NULL,
+                    'restored_by_name' => NULL,
+                    'restored_time' => NULL
                 ]);
 
                 $sub_tagihan += $sub;
@@ -568,6 +571,9 @@ class BillController extends Controller
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
+                    'restored_by_id' => NULL,
+                    'restored_by_name' => NULL,
+                    'restored_time' => NULL
                 ]);
 
                 $sub_tagihan += $sub;
@@ -614,6 +620,9 @@ class BillController extends Controller
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
+                    'restored_by_id' => NULL,
+                    'restored_by_name' => NULL,
+                    'restored_time' => NULL
                 ]);
 
                 $sub_tagihan += $sub;
@@ -660,6 +669,9 @@ class BillController extends Controller
                     'ttl_tagihan' => $total,
                     'rea_tagihan' => 0,
                     'sel_tagihan' => $total,
+                    'restored_by_id' => NULL,
+                    'restored_by_name' => NULL,
+                    'restored_time' => NULL
                 ]);
 
                 $sub_tagihan += $sub;

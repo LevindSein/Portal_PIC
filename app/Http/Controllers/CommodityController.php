@@ -32,9 +32,6 @@ class CommodityController extends Controller
                 $button .= '&nbsp;&nbsp;<a type="button" data-toggle="tooltip" title="Show Details" name="show" id="'.$data->id.'" class="details"><i class="fas fa-info-circle" style="color:#36bea6;"></i></a>';
                 return $button;
             })
-            ->editColumn('name', function($data){
-                return substr($data->name,0,30);
-            })
             ->rawColumns(['action'])
             ->make(true);
         }
@@ -62,7 +59,7 @@ class CommodityController extends Controller
     {
         if($request->ajax()){
             $request->validate([
-                'name' => 'required|max:100',
+                'name' => 'required|max:20',
             ]);
 
             $name = $request->name;
@@ -141,7 +138,7 @@ class CommodityController extends Controller
     {
         if($request->ajax()){
             $request->validate([
-                'name' => 'required|max:100',
+                'name' => 'required|max:20',
             ]);
 
             try{

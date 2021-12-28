@@ -73,7 +73,7 @@ Daftar Komoditi
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Nama Komoditi <span class="text-danger">*</span></label>
-                        <input required type="text" id="name" name="name" autocomplete="off" maxlength="100" placeholder="Ketikkan komoditi disini" class="form-control form-control-line">
+                        <input required type="text" id="name" name="name" autocomplete="off" maxlength="20" placeholder="Ketikkan komoditi disini" class="form-control form-control-line">
                     </div>
                     <div class="form-group">
                         <p>(<label class="text-danger">*</label>) wajib diisi.</p>

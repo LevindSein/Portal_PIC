@@ -103,8 +103,6 @@ class ToolsController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            //
-
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
     }
@@ -271,8 +269,6 @@ class ToolsController extends Controller
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
-
-            //
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }

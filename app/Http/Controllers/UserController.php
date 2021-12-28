@@ -425,7 +425,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) //Review Ulang
+    public function destroy($id)
     {
         if(request()->ajax()){
             try{
@@ -516,7 +516,7 @@ class UserController extends Controller
         }
     }
 
-    public function permanent($id) //Review Ulang
+    public function permanent($id)
     {
         if(request()->ajax()){
             try{
