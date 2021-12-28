@@ -54,7 +54,7 @@ class PaymentController extends Controller
             ->rawColumns(['action', 'pengguna'])
             ->make(true);
         }
-        Session::put('lastPlace', 'production/payment');
+        Session::put('lastPlace', 'payment');
         return view('portal.payment.index');
     }
 

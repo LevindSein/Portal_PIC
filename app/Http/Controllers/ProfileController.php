@@ -135,7 +135,7 @@ class ProfileController extends Controller
         try{
             $user = User::find(Auth::user()->id);
         }catch(ModelNotFoundException $e){
-            return redirect('profile')->with('error', "Data not found.");
+            return redirect('production/profile')->with('error', "Data not found.");
         }
 
         if($request->hasFile('pictureInput')){
@@ -161,13 +161,13 @@ class ProfileController extends Controller
             try{
                 $user->save();
             } catch(\Exception $e){
-                return redirect('profile')->with('error', 'Profile picture failed to change.');
+                return redirect('production/profile')->with('error', 'Profile picture failed to change.');
             }
 
-            return redirect('profile')->with('success', 'Profile picture changed.');
+            return redirect('production/profile')->with('success', 'Profile picture changed.');
         }
         else{
-            return redirect('profile')->with('error', 'File not detected.');
+            return redirect('production/profile')->with('error', 'File not detected.');
         }
     }
 

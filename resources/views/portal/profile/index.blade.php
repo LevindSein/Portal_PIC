@@ -176,7 +176,7 @@ Profil
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <form action="{{url('profile/picture')}}" method="post" enctype="multipart/form-data">
+                <form action="{{url('production/profile/picture')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <div class="col-md-12">
