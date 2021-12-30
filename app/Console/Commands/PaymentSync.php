@@ -73,7 +73,7 @@ class PaymentSync extends Command
             $tagihan = 0;
             foreach($data as $j){
                 $ids_tagihan .= $j->id . ",";
-                $tagihan += json_decode($j->b_tagihan)->ttl_tagihan;
+                $tagihan += json_decode($j->b_tagihan)->sel_tagihan;
                 $pengguna = $j->name;
             }
             $ids_tagihan = rtrim($ids_tagihan, ',');
