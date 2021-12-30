@@ -1220,9 +1220,7 @@ Kelola Tagihan
             type = "PUT";
         }
         dataset = $(this).serialize();
-        ok_btn_before = "Menyimpan...";
-        ok_btn_completed = "Simpan";
-        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        ajaxForm(url, type, value, dataset);
     });
 
     $(document).on('click', '.edit', function(){
@@ -1549,23 +1547,17 @@ Kelola Tagihan
         if(value == 'publish'){
             url = "/production/manage/bills/publish/" + id;
             type = "POST";
-            ok_btn_before = "Publishing...";
-            ok_btn_completed = "Publish";
         }
         else if(value == 'unpublish'){
             url = "/production/manage/bills/publish/" + id;
             type = "POST";
-            ok_btn_before = "Unpublishing...";
-            ok_btn_completed = "Unpublish";
         }
         else if(value == 'delete'){
             url = "/production/manage/bills/" + id;
             type = "DELETE";
-            ok_btn_before = "Menghapus...";
-            ok_btn_completed = "Hapus";
         }
 
-        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        ajaxForm(url, type, value, dataset);
     });
 
     $(document).on('click', '.details', function(){
@@ -2068,7 +2060,7 @@ Kelola Tagihan
         });
     });
 
-    function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
+    function ajaxForm(url, type, value, dataset){
         $.ajaxSetup({
             headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

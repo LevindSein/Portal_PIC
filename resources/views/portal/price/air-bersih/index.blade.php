@@ -346,11 +346,9 @@ Tarif Air Bersih
         if(value == 'delete'){
             url = "/production/prices/airbersih/" + id;
             type = "DELETE";
-            ok_btn_before = "Menghapus...";
-            ok_btn_completed = "Hapus";
         }
 
-        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        ajaxForm(url, type, value, dataset);
     });
 
     $('#priceForm').submit(function(e){
@@ -366,12 +364,10 @@ Tarif Air Bersih
             type = "PUT";
         }
         dataset = $(this).serialize();
-        ok_btn_before = "Menyimpan...";
-        ok_btn_completed = "Simpan";
-        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        ajaxForm(url, type, value, dataset);
     });
 
-    function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
+    function ajaxForm(url, type, value, dataset){
         $.ajaxSetup({
             headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

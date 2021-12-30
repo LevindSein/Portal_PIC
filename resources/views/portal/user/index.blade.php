@@ -993,9 +993,7 @@ Pengguna
             type = "PUT";
         }
         dataset = $(this).serialize();
-        ok_btn_before = "Menyimpan...";
-        ok_btn_completed = "Simpan";
-        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        ajaxForm(url, type, value, dataset);
     });
 
     $('#confirmForm').submit(function(e){
@@ -1010,32 +1008,24 @@ Pengguna
         if(value == 'delete'){
             url = "/production/users/" + id;
             type = "DELETE";
-            ok_btn_before = "Menghapus...";
-            ok_btn_completed = "Hapus";
         }
         else if(value == 'deletePermanently'){
             url = "/production/users/permanent/" + id;
             type = "DELETE";
-            ok_btn_before = "Menghapus...";
-            ok_btn_completed = "Permanen";
         }
         else if(value == 'restore'){
             url = "/production/users/restore/" + id;
             type = "POST";
-            ok_btn_before = "Memulihkan...";
-            ok_btn_completed = "Restore";
         }
         else if(value == 'reset'){
             url = "/production/users/reset/" + id;
             type = "POST";
-            ok_btn_before = "Resetting...";
-            ok_btn_completed = "Reset";
         }
 
-        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        ajaxForm(url, type, value, dataset);
     });
 
-    function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
+    function ajaxForm(url, type, value, dataset){
         $.ajaxSetup({
             headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

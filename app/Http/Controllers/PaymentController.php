@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\Bill;
-use App\Models\Group;
 use App\Models\Payment;
 
 use DataTables;
@@ -76,7 +75,9 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->ajax()){
+            return response()->json(['success' => 'Payment successful']);
+        }
     }
 
     /**

@@ -270,11 +270,9 @@ Alat Listrik
         if(value == 'delete'){
             url = "/production/point/tools/listrik/" + id;
             type = "DELETE";
-            ok_btn_before = "Menghapus...";
-            ok_btn_completed = "Hapus";
         }
 
-        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        ajaxForm(url, type, value, dataset);
     });
 
     $('#toolsForm').submit(function(e){
@@ -290,12 +288,10 @@ Alat Listrik
             type = "PUT";
         }
         dataset = $(this).serialize();
-        ok_btn_before = "Menyimpan...";
-        ok_btn_completed = "Simpan";
-        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        ajaxForm(url, type, value, dataset);
     });
 
-    function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
+    function ajaxForm(url, type, value, dataset){
         $.ajaxSetup({
             headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

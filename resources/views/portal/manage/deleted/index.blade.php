@@ -373,14 +373,12 @@ Penghapusan Tagihan
         if(value == 'restore'){
             url = "/production/manage/deleted/" + id;
             type = "POST";
-            ok_btn_before = "Restoring...";
-            ok_btn_completed = "Restore";
         }
 
-        ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed);
+        ajaxForm(url, type, value, dataset);
     });
 
-    function ajaxForm(url, type, value, dataset, ok_btn_before, ok_btn_completed){
+    function ajaxForm(url, type, value, dataset){
         $.ajaxSetup({
             headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
