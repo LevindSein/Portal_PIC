@@ -66,13 +66,14 @@ Bayar Tagihan
                         <label class="font-weight-normal"><sup><i class="fas fa-mouse-pointer text-dark"></i></sup> Klik pada angka tagihan untuk melihat detail.</label>
                     </div>
                     <hr>
-                    <div id="bayar_summary">
-                        <div class="form-group" id="divlistrik"></div>
-                        <div class="form-group" id="divairbersih"></div>
-                        <div class="form-group" id="divkeamananipk"></div>
-                        <div class="form-group" id="divkebersihan"></div>
-                        <div class="form-group" id="divairkotor"></div>
+                    <input type="hidden" id="paymentId" name="paymentId">
+                    <div class="form-group">
+                        <input readonly type="text" class="form-control form-control-line" id="kontrol" name="kontrol">
                     </div>
+                    <div class="form-group">
+                        <input readonly type="text" class="form-control form-control-line" id="pengguna" name="pengguna">
+                    </div>
+                    <div id="bayar_summary"></div>
                 </div>
                 <div class="modal-footer-custom">
                     <div class="form-group">
@@ -420,6 +421,10 @@ Bayar Tagihan
             cache:false,
             success:function(data){
                 if(data.success){
+                    $("#paymentId").val(id);
+                    $("#kontrol").val(data.show.kd_kontrol);
+                    $("#pengguna").val(data.show.pengguna);
+
                     ttl_tagihan = data.show.ttl_tagihan;
 
                     if (data.show.listrik.length === 0) {
@@ -438,7 +443,7 @@ Bayar Tagihan
                         html += '<div class="d-flex justify-content-between">';
                         html += '<div class="form-group">';
                         html += '<div class="custom-control custom-checkbox">';
-                        html += '<input type="checkbox" class="custom-control-input bulanlistrik" index="' + i + '" id="bulanlistrik' + i + '" name="bulanlistrik[]" checked>';
+                        html += '<input type="checkbox" class="custom-control-input bulanlistrik" value="' + val.id + '" index="' + i + '" id="bulanlistrik' + i + '" name="bulanlistrik[]" checked>';
                         html += '<label class="custom-control-label" for="bulanlistrik' + i + '">' + val.period + '</label>';
                         html += '</div>';
                         html += '</div>';
@@ -485,7 +490,7 @@ Bayar Tagihan
                         html += '<div class="d-flex justify-content-between">';
                         html += '<div class="form-group">';
                         html += '<div class="custom-control custom-checkbox">';
-                        html += '<input type="checkbox" class="custom-control-input bulanairbersih" index="' + i + '" id="bulanairbersih' + i + '" name="bulanairbersih[]" checked>';
+                        html += '<input type="checkbox" class="custom-control-input bulanairbersih" value="' + val.id + '" index="' + i + '" id="bulanairbersih' + i + '" name="bulanairbersih[]" checked>';
                         html += '<label class="custom-control-label" for="bulanairbersih' + i + '">' + val.period + '</label>';
                         html += '</div>';
                         html += '</div>';
@@ -531,7 +536,7 @@ Bayar Tagihan
                         html += '<div class="d-flex justify-content-between">';
                         html += '<div class="form-group">';
                         html += '<div class="custom-control custom-checkbox">';
-                        html += '<input type="checkbox" class="custom-control-input bulankeamananipk" index="' + i + '" id="bulankeamananipk' + i + '" name="bulankeamananipk[]" checked>';
+                        html += '<input type="checkbox" class="custom-control-input bulankeamananipk" value="' + val.id + '" index="' + i + '" id="bulankeamananipk' + i + '" name="bulankeamananipk[]" checked>';
                         html += '<label class="custom-control-label" for="bulankeamananipk' + i + '">' + val.period + '</label>';
                         html += '</div>';
                         html += '</div>';
@@ -576,7 +581,7 @@ Bayar Tagihan
                         html += '<div class="d-flex justify-content-between">';
                         html += '<div class="form-group">';
                         html += '<div class="custom-control custom-checkbox">';
-                        html += '<input type="checkbox" class="custom-control-input bulankebersihan" index="' + i + '" id="bulankebersihan' + i + '" name="bulankebersihan[]" checked>';
+                        html += '<input type="checkbox" class="custom-control-input bulankebersihan" value="' + val.id + '" index="' + i + '" id="bulankebersihan' + i + '" name="bulankebersihan[]" checked>';
                         html += '<label class="custom-control-label" for="bulankebersihan' + i + '">' + val.period + '</label>';
                         html += '</div>';
                         html += '</div>';
@@ -621,7 +626,7 @@ Bayar Tagihan
                         html += '<div class="d-flex justify-content-between">';
                         html += '<div class="form-group">';
                         html += '<div class="custom-control custom-checkbox">';
-                        html += '<input type="checkbox" class="custom-control-input bulanairkotor" index="' + i + '" id="bulanairkotor' + i + '" name="bulanairkotor[]" checked>';
+                        html += '<input type="checkbox" class="custom-control-input bulanairkotor" value="' + val.id + '" index="' + i + '" id="bulanairkotor' + i + '" name="bulanairkotor[]" checked>';
                         html += '<label class="custom-control-label" for="bulanairkotor' + i + '">' + val.period + '</label>';
                         html += '</div>';
                         html += '</div>';
@@ -666,7 +671,7 @@ Bayar Tagihan
                         html += '<div class="d-flex justify-content-between">';
                         html += '<div class="form-group">';
                         html += '<div class="custom-control custom-checkbox">';
-                        html += '<input type="checkbox" class="custom-control-input bulanlain" index="' + i + '" id="bulanlain' + i + '" name="bulanlain[]" checked>';
+                        html += '<input type="checkbox" class="custom-control-input bulanlain" value="' + val.id + '" index="' + i + '" id="bulanlain' + i + '" name="bulanlain[]" checked>';
                         html += '<label class="custom-control-label" for="bulanlain' + i + '">' + val.period + '</label>';
                         html += '</div>';
                         html += '</div>';

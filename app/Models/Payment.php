@@ -25,7 +25,6 @@ class Payment extends Model
 
     public static function syncAll(){
         $success = 0;
-        $updated = 0;
         $error = 0;
 
         $group = Bill::select('kd_kontrol')
@@ -35,49 +34,37 @@ class Payment extends Model
         ])
         ->groupBy('kd_kontrol')
         ->get();
-        foreach($group as $i){
-            $store = Store::select('info')->where('kd_kontrol', $i->kd_kontrol)->first();
-            $info = '';
-            if($store){
-                $info = $store->info;
-            }
 
-            $data = Bill::select('id', 'name', 'b_tagihan')
-            ->where([
-                ['kd_kontrol', $i->kd_kontrol],
-                ['stt_publish', 1],
-                ['stt_lunas', 0]
-            ])
-            ->orderBy('id','asc')
-            ->get();
 
-            $ids_tagihan = '';
-            $pengguna = '';
-            $tagihan = 0;
-            foreach($data as $j){
-                $ids_tagihan .= $j->id . ",";
-                $tagihan += json_decode($j->b_tagihan)->sel_tagihan;
-                $pengguna = $j->name;
-            }
-            $ids_tagihan = rtrim($ids_tagihan, ',');
+        self::truncate();
 
-            $payment = self::where('kd_kontrol', $i->kd_kontrol)->first();
-            if($payment){
-                try{
-                    $payment->kd_kontrol = $i->kd_kontrol;
-                    $payment->nicename = str_replace('-', '', $i->kd_kontrol);
-                    $payment->pengguna = $pengguna;
-                    $payment->info= $info;
-                    $payment->ids_tagihan= $ids_tagihan;
-                    $payment->tagihan= $tagihan;
+        if(count($group) > 0){
+            foreach($group as $i){
+                $data = Bill::select('id', 'name', 'b_tagihan')
+                ->where([
+                    ['kd_kontrol', $i->kd_kontrol],
+                    ['stt_publish', 1],
+                    ['stt_lunas', 0]
+                ])
+                ->orderBy('id','asc')
+                ->get();
 
-                    $payment->save();
-                    $updated++;
-                } catch (\Exception $e){
-                    $error++;
+                $ids_tagihan = NULL;
+                $pengguna = NULL;
+                $tagihan = 0;
+                foreach($data as $j){
+                    $ids_tagihan .= $j->id . ",";
+                    $tagihan += json_decode($j->b_tagihan)->sel_tagihan;
+                    $pengguna = $j->name;
                 }
-            }
-            else{
+                $ids_tagihan = rtrim($ids_tagihan, ',');
+
+                $store = Store::select('info')->where('kd_kontrol', $i->kd_kontrol)->first();
+                $info = NULL;
+                if($store){
+                    $info = $store->info;
+                }
+
                 $dataset = [
                     'kd_kontrol' => $i->kd_kontrol,
                     'nicename' => str_replace('-', '', $i->kd_kontrol),
@@ -96,6 +83,64 @@ class Payment extends Model
             }
         }
 
-        \Log::info("Payment sync all with create : " . $success . ", updated : " . $updated . ", and error : " . $error);
+        \Log::info("Payment sync all with success : " . $success . ", and error : " . $error);
+    }
+
+    public static function syncByKontrol($kontrol){
+        $data = Bill::select('id', 'name', 'b_tagihan')
+        ->where([
+            ['kd_kontrol', $kontrol],
+            ['stt_publish', 1],
+            ['stt_lunas', 0]
+        ])
+        ->orderBy('id','asc')
+        ->get();
+
+        $ids_tagihan = NULL;
+        $pengguna = NULL;
+        $tagihan = 0;
+        foreach($data as $j){
+            $ids_tagihan .= $j->id . ",";
+            $tagihan += json_decode($j->b_tagihan)->sel_tagihan;
+            $pengguna = $j->name;
+        }
+        $ids_tagihan = rtrim($ids_tagihan, ',');
+
+        $store = Store::select('info')->where('kd_kontrol', $kontrol)->first();
+        $info = NULL;
+        if($store){
+            $info = $store->info;
+        }
+
+        $payment = self::where('kd_kontrol', $kontrol)->first();
+        if($payment){
+            if(count($data) == 0){
+                $payment->delete();
+            }
+            else{
+                $payment->kd_kontrol = $kontrol;
+                $payment->nicename = str_replace('-', '', $kontrol);
+                $payment->pengguna = $pengguna;
+                $payment->info= $info;
+                $payment->ids_tagihan= $ids_tagihan;
+                $payment->tagihan= $tagihan;
+
+                $payment->save();
+            }
+        }
+        else{
+            if(count($data) > 0){
+                $dataset = [
+                    'kd_kontrol' => $kontrol,
+                    'nicename' => str_replace('-', '', $kontrol),
+                    'pengguna' => $pengguna,
+                    'info' => $info,
+                    'ids_tagihan' => $ids_tagihan,
+                    'tagihan' => $tagihan,
+                ];
+
+                self::create($dataset);
+            }
+        }
     }
 }

@@ -24,6 +24,7 @@ use App\Models\User;
 use App\Models\Store;
 use App\Models\TListrik;
 use App\Models\TAirBersih;
+use App\Models\Payment;
 use DataTables;
 use Carbon\Carbon;
 
@@ -250,10 +251,11 @@ class BillController extends Controller
             $period = $request->periode;
             $data['id_period'] = $period;
 
-            $data['stt_publish'] = 0;
+            $stt_publish = 0;
             if($request->stt_publish){
-                $data['stt_publish'] = 1;
+                $stt_publish = 1;
             }
+            $data['stt_publish'] = $stt_publish;
             $publish = Carbon::now()->toDateTimeString();
             $publish_by = Auth::user()->name;
 
@@ -757,6 +759,10 @@ class BillController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
+            if($stt_publish == 1){
+                Payment::syncByKontrol($request->kontrol);
+            }
+
             Session::put('period', $period);
 
             $searchKey = str_replace('-','',$request->kontrol);
@@ -894,10 +900,13 @@ class BillController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data->stt_publish = 0;
+            $kd_kontrol = $data->kd_kontrol;
+
+            $stt_publish = 0;
             if($request->stt_publish){
-                $data->stt_publish = 1;
+                $stt_publish = 1;
             }
+            $data->stt_publish = $stt_publish;
             $publish = Carbon::now()->toDateTimeString();
             $publish_by = Auth::user()->name;
 
@@ -1713,6 +1722,8 @@ class BillController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
+            Payment::syncByKontrol($kd_kontrol);
+
             return response()->json(['success' => 'Data saved.']);
         }
     }
@@ -1732,18 +1743,24 @@ class BillController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
+            $kontrol = $data->kd_kontrol;
+
             try{
                 $data->delete();
             } catch(\Exception $e){
                 return response()->json(['error' => "Data failed to delete.", 'description' => $e]);
             }
 
+            Payment::syncByKontrol($kontrol);
+
             return response()->json(['success' => 'Data deleted.']);
         }
     }
 
     public function publish($id){
-        $tagihan = Bill::select('id', 'stt_publish', 'data')->find($id);
+        $tagihan = Bill::select('id', 'kd_kontrol', 'stt_publish', 'data')->find($id);
+
+        $kontrol = $tagihan->kd_kontrol;
 
         $stt_publish = $tagihan->stt_publish;
         $json = json_decode($tagihan->data);
@@ -1768,6 +1785,8 @@ class BillController extends Controller
         catch(\Exception $e){
             return response()->json(['error' => 'Data failed to save.', 'description' => $e]);
         }
+
+        Payment::syncByKontrol($kontrol);
 
         return response()->json(['success' => $update]);
     }
@@ -1977,6 +1996,7 @@ class BillController extends Controller
             try{
                 $data = Bill::select(
                     'id',
+                    'kd_kontrol',
                     'b_listrik',
                     'b_airbersih',
                     'b_keamananipk',
@@ -1991,6 +2011,8 @@ class BillController extends Controller
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
+
+            $kontrol = $data->kd_kontrol;
 
             $tagihan = json_decode($data->b_tagihan);
 
@@ -2157,6 +2179,8 @@ class BillController extends Controller
             catch(\Exception $e){
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
+
+            Payment::syncByKontrol($kontrol);
 
             return response()->json(['success' => 'Data restored.']);
         }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+use App\Models\Payment;
 use App\Models\Group;
 use App\Models\Store;
 use App\Models\Commodity;
@@ -158,6 +159,7 @@ class StoreController extends Controller
 
             $data['kd_kontrol'] = strtoupper($request->kontrol);
             $data['nicename'] = str_replace('-','',$request->kontrol);
+            $kd_kontrol = strtoupper($request->kontrol);
 
             $data['id_pengguna'] = $request->pengguna;
             $data['id_pemilik'] = $request->pemilik;
@@ -354,6 +356,8 @@ class StoreController extends Controller
                 return response()->json(['error' => 'Data failed to create.', 'description' => $e]);
             }
 
+            Payment::syncByKontrol($kd_kontrol);
+
             $searchKey = str_replace('-','',$request->kontrol);
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
@@ -504,6 +508,7 @@ class StoreController extends Controller
 
             $data->kd_kontrol = strtoupper($request->kontrol);
             $data->nicename = str_replace('-','',$request->kontrol);
+            $kd_kontrol = strtoupper($request->kontrol);
 
             $data->id_pengguna = $request->pengguna;
             $data->id_pemilik = $request->pemilik;
@@ -731,6 +736,8 @@ class StoreController extends Controller
             } catch(\Exception $e){
                 return response()->json(['error' => "Data failed to save.", 'description' => $e]);
             }
+
+            Payment::syncByKontrol($kd_kontrol);
 
             $searchKey = str_replace('-','',$request->kontrol);
 
