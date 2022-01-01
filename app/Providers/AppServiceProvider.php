@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Jenssegers\Agent\Agent;
+use App\Models\Period;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,5 +34,15 @@ class AppServiceProvider extends ServiceProvider
 
         $agent = new Agent();
         View::share('agent', $agent);
+
+        //Initialize Period
+        $data = Period::exists();
+
+        if(!$data){
+            \Artisan::call('period:new');
+
+            \Artisan::call('period:dayoff');
+        }
+        //End Initialize period
     }
 }

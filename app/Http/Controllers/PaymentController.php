@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\Bill;
 use App\Models\Payment;
+use App\Models\Income;
 
 use DataTables;
 use Carbon\Carbon;
@@ -84,6 +85,10 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         if($request->ajax()){
+            $code = Income::make('code');
+            $faktur = Income::make('faktur');
+            $period = Income::make('period');
+
             if($request->bayarlistrik){
                 $ids = $request->bulanlistrik;
                 if($ids){
@@ -99,6 +104,7 @@ class PaymentController extends Controller
                             $json = json_decode($bill->b_listrik);
                             $json->lunas = 1;
                             $json->kasir = Auth::user()->name;
+                            $json->code = $code;
                             $json->rea_tagihan += $json->sel_tagihan;
                             $json->sel_tagihan = 0;
                             $bill->b_listrik = json_encode($json);
@@ -123,6 +129,7 @@ class PaymentController extends Controller
                             $json = json_decode($bill->b_airbersih);
                             $json->lunas = 1;
                             $json->kasir = Auth::user()->name;
+                            $json->code = $code;
                             $json->rea_tagihan += $json->sel_tagihan;
                             $json->sel_tagihan = 0;
                             $bill->b_airbersih = json_encode($json);
@@ -147,6 +154,7 @@ class PaymentController extends Controller
                             $json = json_decode($bill->b_keamananipk);
                             $json->lunas = 1;
                             $json->kasir = Auth::user()->name;
+                            $json->code = $code;
                             $json->rea_tagihan += $json->sel_tagihan;
                             $json->sel_tagihan = 0;
                             $bill->b_keamananipk = json_encode($json);
@@ -171,6 +179,7 @@ class PaymentController extends Controller
                             $json = json_decode($bill->b_kebersihan);
                             $json->lunas = 1;
                             $json->kasir = Auth::user()->name;
+                            $json->code = $code;
                             $json->rea_tagihan += $json->sel_tagihan;
                             $json->sel_tagihan = 0;
                             $bill->b_kebersihan = json_encode($json);
@@ -195,6 +204,7 @@ class PaymentController extends Controller
                             $json = json_decode($bill->b_airkotor);
                             $json->lunas = 1;
                             $json->kasir = Auth::user()->name;
+                            $json->code = $code;
                             $json->rea_tagihan += $json->sel_tagihan;
                             $json->sel_tagihan = 0;
                             $bill->b_airkotor = json_encode($json);
@@ -221,6 +231,7 @@ class PaymentController extends Controller
                                 if($val->lunas == 0){
                                     $val->lunas = 1;
                                     $val->kasir = Auth::user()->name;
+                                    $val->code = $code;
                                     $val->rea_tagihan += $val->sel_tagihan;
                                     $val->sel_tagihan = 0;
                                 }
@@ -245,6 +256,12 @@ class PaymentController extends Controller
             }
 
             Payment::syncByKontrol($request->kontrol);
+
+            Income::create([
+                'code' => $code,
+                'faktur' => $faktur,
+                'id_period' => $period,
+            ]);
 
             return response()->json(['success' => 'Payment successful']);
         }

@@ -20,16 +20,6 @@ class CheckAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        //Initialize Period
-        $data = Period::exists();
-
-        if(!$data){
-            \Artisan::call('period:new');
-
-            \Artisan::call('period:dayoff');
-        }
-        //End Initialize period
-
         //Auth Check
         if(Auth::check()){
             $response = $next($request);
