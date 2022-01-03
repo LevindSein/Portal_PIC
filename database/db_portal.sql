@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2021 at 08:57 AM
+-- Generation Time: Jan 03, 2022 at 04:43 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -71,6 +71,14 @@ CREATE TABLE `bills` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `bills`
+--
+
+INSERT INTO `bills` (`id`, `code`, `id_period`, `stt_publish`, `stt_lunas`, `name`, `kd_kontrol`, `nicename`, `group`, `no_los`, `jml_los`, `code_tlistrik`, `code_tairbersih`, `b_listrik`, `b_airbersih`, `b_keamananipk`, `b_kebersihan`, `b_airkotor`, `b_lain`, `b_tagihan`, `data`, `active`, `deleted`, `updated_at`, `created_at`) VALUES
+(1, '6874971429', 2, 1, 1, 'Master Didi Kempot', 'A-1-001', 'A1001', 'A-1', '1', 1, NULL, NULL, '{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"PKSQZCLMXF\",\"tarif_id\":\"1\",\"tarif_nama\":\"Tarif 1\",\"daya\":\"900\",\"awal\":\"1300\",\"akhir\":\"1500\",\"reset\":null,\"pakai\":200,\"blok1\":0,\"blok2\":480800,\"beban\":45000,\"pju\":94644,\"ppn\":62045,\"jml_los\":1,\"sub_tagihan\":682489,\"denda\":0,\"denda_bulan\":null,\"diskon\":0,\"diskon_persen\":null,\"ttl_tagihan\":682489,\"rea_tagihan\":682489,\"sel_tagihan\":0,\"restored_by_id\":null,\"restored_by_name\":null,\"restored_time\":null}', NULL, NULL, NULL, NULL, NULL, '{\"lunas\":1,\"sub_tagihan\":682489,\"denda\":0,\"diskon\":0,\"ttl_tagihan\":682489,\"rea_tagihan\":682489,\"sel_tagihan\":0}', '{\"publish\":\"2022-01-03 22:25:46\",\"publish_by\":\"Master Didi Kempot\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2022-01-03 22:25:46\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2022-01-03 22:25:46\"}', 1, NULL, '2022-01-03 15:29:19', '2022-01-03 15:25:46'),
+(2, '7331580106', 1, 1, 1, 'Master Didi Kempot', 'A-1-001', 'A1001', 'A-1', '1', 1, NULL, NULL, '{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"PKSQZCLMXF\",\"tarif_id\":\"1\",\"tarif_nama\":\"Tarif 1\",\"daya\":\"900\",\"awal\":\"1200\",\"akhir\":\"1300\",\"reset\":null,\"pakai\":100,\"blok1\":0,\"blok2\":240400,\"beban\":45000,\"pju\":51372,\"ppn\":33678,\"jml_los\":1,\"sub_tagihan\":370450,\"denda\":0,\"denda_bulan\":null,\"diskon\":0,\"diskon_persen\":null,\"ttl_tagihan\":370450,\"rea_tagihan\":370450,\"sel_tagihan\":0,\"restored_by_id\":null,\"restored_by_name\":null,\"restored_time\":null}', NULL, NULL, NULL, NULL, '[{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"WSANDUHYLW\",\"tarif_id\":\"2\",\"tarif_nama\":\"Parkir\",\"price\":2000,\"jml_los\":1,\"satuan_id\":2,\"satuan_nama\":\"per-Los\",\"sub_tagihan\":2000,\"ttl_tagihan\":2000,\"rea_tagihan\":2000,\"sel_tagihan\":0},{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"WSANDUHYLW\",\"tarif_id\":\"1\",\"tarif_nama\":\"Preman\",\"price\":100000,\"jml_los\":1,\"satuan_id\":1,\"satuan_nama\":\"per-Kontrol\",\"sub_tagihan\":100000,\"ttl_tagihan\":100000,\"rea_tagihan\":100000,\"sel_tagihan\":0}]', '{\"lunas\":1,\"sub_tagihan\":472450,\"denda\":0,\"diskon\":0,\"ttl_tagihan\":472450,\"rea_tagihan\":472450,\"sel_tagihan\":0}', '{\"publish\":\"2022-01-03 22:29:33\",\"publish_by\":\"Master Didi Kempot\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2022-01-03 22:26:15\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2022-01-03 22:29:33\"}', 1, NULL, '2022-01-03 15:43:16', '2022-01-03 15:26:15');
+
 -- --------------------------------------------------------
 
 --
@@ -90,7 +98,7 @@ CREATE TABLE `change_logs` (
 --
 
 INSERT INTO `change_logs` (`id`, `release_date`, `data`, `updated_at`, `created_at`) VALUES
-(1, '29-05-2021 14:14:29', '{\"title\":\"Add Feature\",\"data\":\"Tambah Detail Keuangan\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:15:07\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:22:21\",\"release\":\"2021-05-29T14:14:29\"}', '2021-12-27 07:22:21', '2021-12-27 07:15:07'),
+(1, '29-05-2021 14:14:29', '{\"title\":\"Add Feature\",\"data\":\"Tambah Detail Keuangan\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:15:07\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2022-01-03 19:20:10\",\"release\":\"2021-05-29T14:14:29\"}', '2022-01-03 12:20:10', '2021-12-27 07:15:07'),
 (2, '28-04-2021 14:15:23', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah Profile Settings.\\r\\n2. Tambah Kotak Saran\\r\\n3. Fixing Bugs\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:16:16\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:16:16\"}', '2021-12-27 07:16:16', '2021-12-27 07:16:16'),
 (3, '27-04-2021 14:16:52', '{\"title\":\"Improve System\",\"data\":\"1. Perbaikan Arsiektur Database\\r\\n2. Detail Data Usaha\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:17:44\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:17:44\"}', '2021-12-27 07:17:44', '2021-12-27 07:17:44'),
 (4, '22-04-2021 14:18:03', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah laporan tunggakan\\r\\n2. Tambah generate laporan\\r\\n3. fixing bugs\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:19:02\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:19:02\"}', '2021-12-27 07:19:02', '2021-12-27 07:19:02'),
@@ -390,6 +398,14 @@ CREATE TABLE `data_login` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `data_login`
+--
+
+INSERT INTO `data_login` (`id`, `uid`, `name`, `level`, `active`, `platform`, `status`, `updated_at`, `created_at`) VALUES
+(1, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-03 10:05:12', '2022-01-03 10:05:12'),
+(2, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-03 11:16:56', '2022-01-03 11:16:56');
+
 -- --------------------------------------------------------
 
 --
@@ -485,6 +501,37 @@ INSERT INTO `groups` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `income`
+--
+
+CREATE TABLE `income` (
+  `id` int(11) NOT NULL,
+  `code` varchar(10) DEFAULT NULL,
+  `faktur` varchar(20) DEFAULT NULL,
+  `id_period` int(11) DEFAULT NULL,
+  `kd_kontrol` varchar(20) DEFAULT NULL,
+  `nicename` varchar(20) DEFAULT NULL,
+  `pengguna` varchar(255) DEFAULT NULL,
+  `info` text DEFAULT NULL,
+  `ids_tagihan` text DEFAULT NULL,
+  `tagihan` int(11) DEFAULT NULL,
+  `active` tinyint(4) DEFAULT NULL,
+  `cetak` int(11) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `income`
+--
+
+INSERT INTO `income` (`id`, `code`, `faktur`, `id_period`, `kd_kontrol`, `nicename`, `pengguna`, `info`, `ids_tagihan`, `tagihan`, `active`, `cetak`, `updated_at`, `created_at`) VALUES
+(5, 'PKSQZCLMXF', '0010/2022/01/03', 2, 'A-1-001', 'A1001', 'Master Didi Kempot', NULL, '1,2', 1052939, 1, 0, '2022-01-03 16:38:53', '2022-01-02 16:29:19'),
+(8, 'WSANDUHYLW', '0013/2022/01/03', 2, 'A-1-001', 'A1001', 'Master Didi Kempot', NULL, '2', 102000, 1, 0, '2022-01-03 15:43:16', '2022-01-03 15:43:16');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `jobs`
 --
 
@@ -501,6 +548,24 @@ CREATE TABLE `jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `payment`
+--
+
+CREATE TABLE `payment` (
+  `id` int(11) NOT NULL,
+  `kd_kontrol` varchar(20) DEFAULT NULL,
+  `nicename` varchar(20) DEFAULT NULL,
+  `pengguna` varchar(255) DEFAULT NULL,
+  `info` text DEFAULT NULL,
+  `ids_tagihan` text DEFAULT NULL,
+  `tagihan` int(11) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `period`
 --
 
@@ -510,11 +575,20 @@ CREATE TABLE `period` (
   `nicename` varchar(20) DEFAULT NULL,
   `new_period` date DEFAULT NULL,
   `due_date` date DEFAULT NULL,
+  `year` varchar(4) DEFAULT NULL,
   `faktur` int(11) NOT NULL DEFAULT 0,
   `surat` int(11) NOT NULL DEFAULT 0,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `period`
+--
+
+INSERT INTO `period` (`id`, `name`, `nicename`, `new_period`, `due_date`, `year`, `faktur`, `surat`, `updated_at`, `created_at`) VALUES
+(1, '2021-12', 'Desember 2021', '2021-12-23', '2021-12-15', '2021', 0, 0, '2022-01-01 12:00:35', '2022-01-01 12:00:35'),
+(2, '2022-01', 'Januari 2022', '2022-01-23', '2022-01-15', '2022', 13, 0, '2022-01-03 15:43:16', '2022-01-03 11:17:18');
 
 -- --------------------------------------------------------
 
@@ -634,6 +708,14 @@ CREATE TABLE `p_lain` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `p_lain`
+--
+
+INSERT INTO `p_lain` (`id`, `name`, `price`, `satuan`, `data`, `updated_at`, `created_at`) VALUES
+(1, 'Preman', 100000, 1, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 15:01:26\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 15:01:26\"}', '2021-12-27 08:01:26', '2021-12-27 08:01:26'),
+(2, 'Parkir', 2000, 2, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 15:01:39\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 15:01:39\"}', '2021-12-27 08:01:39', '2021-12-27 08:01:39');
+
 -- --------------------------------------------------------
 
 --
@@ -664,7 +746,7 @@ INSERT INTO `p_listrik` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUE
 CREATE TABLE `stores` (
   `id` bigint(20) NOT NULL,
   `kd_kontrol` varchar(20) DEFAULT NULL,
-  `nicename` varchar(50) DEFAULT NULL,
+  `nicename` varchar(20) DEFAULT NULL,
   `group` varchar(10) DEFAULT NULL,
   `no_los` text DEFAULT NULL,
   `jml_los` tinyint(4) DEFAULT NULL,
@@ -687,6 +769,17 @@ CREATE TABLE `stores` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `stores`
+--
+
+INSERT INTO `stores` (`id`, `kd_kontrol`, `nicename`, `group`, `no_los`, `jml_los`, `id_pengguna`, `id_pemilik`, `komoditi`, `status`, `ket`, `info`, `id_tlistrik`, `id_tairbersih`, `fas_listrik`, `fas_airbersih`, `fas_keamananipk`, `fas_kebersihan`, `fas_airkotor`, `fas_lain`, `data`, `updated_at`, `created_at`) VALUES
+(2, 'A-1-001', 'A1001', 'A-1', '1', 1, 1598, 1598, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"diskon\":[],\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-28 14:22:04\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-31 17:17:13\"}', '2021-12-31 10:17:13', '2021-12-28 07:22:04'),
+(3, 'A-1-002', 'A1002', 'A-1', '2', 1, 1598, 1598, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"diskon\":[],\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-28 14:22:21\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-28 14:22:21\"}', '2021-12-28 07:22:21', '2021-12-28 07:22:21'),
+(4, 'A-1-003', 'A1003', 'A-1', '3,3A', 2, 1598, 1598, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"diskon\":[],\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-28 14:22:41\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-28 14:22:41\"}', '2021-12-28 07:22:41', '2021-12-28 07:22:41'),
+(5, 'A-1-005', 'A1005', 'A-1', '5', 1, 1598, 1598, NULL, 1, NULL, 'Depan Toko', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"diskon\":[],\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-28 14:22:59\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-28 14:42:53\"}', '2021-12-28 07:42:53', '2021-12-28 07:22:59'),
+(7, 'A-1-015', 'A1015', 'A-1', '15', 1, NULL, NULL, NULL, 1, NULL, 'hjhjhhjh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"diskon\":[],\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-31 17:37:49\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-31 17:37:49\"}', '2021-12-31 10:37:49', '2021-12-31 10:37:49');
+
 -- --------------------------------------------------------
 
 --
@@ -703,6 +796,13 @@ CREATE TABLE `t_airbersih` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `t_airbersih`
+--
+
+INSERT INTO `t_airbersih` (`id`, `code`, `name`, `meter`, `stt_available`, `data`, `updated_at`, `created_at`) VALUES
+(1, 'MA48718', 'AER', 21, 1, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 15:02:45\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 15:02:45\"}', '2021-12-27 09:00:39', '2021-12-27 08:02:45');
 
 -- --------------------------------------------------------
 
@@ -721,6 +821,13 @@ CREATE TABLE `t_listrik` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `t_listrik`
+--
+
+INSERT INTO `t_listrik` (`id`, `code`, `name`, `meter`, `power`, `stt_available`, `data`, `updated_at`, `created_at`) VALUES
+(1, 'ML69981', 'LISTRE', 9899, 10500, 1, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 15:02:21\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 15:02:21\"}', '2021-12-27 08:57:07', '2021-12-27 08:02:21');
 
 -- --------------------------------------------------------
 
@@ -758,7 +865,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `uid`, `photo`, `level`, `country_id`, `phone`, `email`, `email_verified_at`, `member`, `ktp`, `npwp`, `address`, `authority`, `active`, `password`, `remember_token`, `nonactive`, `activation_code`, `available`, `created_at`, `updated_at`) VALUES
-(1598, 'Master Didi Kempot', 'super_admin', 'storage/users/user.jpg', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-12-10 20:44:18', 'BP3C11111111', '1111111111111111', NULL, 'Dibawah langit berpijak pada bumi', NULL, 1, '$argon2id$v=19$m=1024,t=2,p=2$WTE0UHoyU0pGYlpIWDVOQQ$NY7eX/314e3aQ0go2uo27M2pvtPsRnuAbdp8yznkA1s', NULL, NULL, NULL, '2021-12-12 20:43:52', '2021-12-10 20:43:52', '2021-12-22 17:40:46');
+(1598, 'Master Didi Kempot', 'super_admin', 'storage/users/1598.png', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-12-10 20:44:18', 'BP3C11111111', '1111111111111111', NULL, 'Dibawah langit berpijak pada bumi', NULL, 1, '$argon2id$v=19$m=1024,t=2,p=2$WTE0UHoyU0pGYlpIWDVOQQ$NY7eX/314e3aQ0go2uo27M2pvtPsRnuAbdp8yznkA1s', NULL, NULL, NULL, '2021-12-12 20:43:52', '2021-12-10 20:43:52', '2021-12-28 16:24:25');
 
 -- --------------------------------------------------------
 
@@ -774,6 +881,13 @@ CREATE TABLE `visitors` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `visitors`
+--
+
+INSERT INTO `visitors` (`id`, `visit_per_day`, `day_count`, `visit_on_day`, `updated_at`, `created_at`) VALUES
+(1, 0, 0, 35, '2022-01-03 11:16:56', '2021-12-27 08:00:06');
 
 --
 -- Indexes for dumped tables
@@ -840,11 +954,24 @@ ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `income`
+--
+ALTER TABLE `income`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_period1` (`id_period`);
+
+--
 -- Indexes for table `jobs`
 --
 ALTER TABLE `jobs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `jobs_queue_index` (`queue`);
+
+--
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `period`
@@ -960,7 +1087,7 @@ ALTER TABLE `activation_code`
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `change_logs`
@@ -984,7 +1111,7 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `data_login`
 --
 ALTER TABLE `data_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `day_off`
@@ -1005,16 +1132,28 @@ ALTER TABLE `groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
+-- AUTO_INCREMENT for table `income`
+--
+ALTER TABLE `income`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `period`
 --
 ALTER TABLE `period`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `p_airbersih`
@@ -1044,7 +1183,7 @@ ALTER TABLE `p_kebersihan`
 -- AUTO_INCREMENT for table `p_lain`
 --
 ALTER TABLE `p_lain`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `p_listrik`
@@ -1056,19 +1195,19 @@ ALTER TABLE `p_listrik`
 -- AUTO_INCREMENT for table `stores`
 --
 ALTER TABLE `stores`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `t_airbersih`
 --
 ALTER TABLE `t_airbersih`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `t_listrik`
 --
 ALTER TABLE `t_listrik`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1080,7 +1219,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -1091,6 +1230,12 @@ ALTER TABLE `visitors`
 --
 ALTER TABLE `bills`
   ADD CONSTRAINT `fk_period` FOREIGN KEY (`id_period`) REFERENCES `period` (`id`);
+
+--
+-- Constraints for table `income`
+--
+ALTER TABLE `income`
+  ADD CONSTRAINT `fk_period1` FOREIGN KEY (`id_period`) REFERENCES `period` (`id`);
 
 --
 -- Constraints for table `stores`

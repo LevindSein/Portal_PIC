@@ -32,7 +32,10 @@ class PaymentController extends Controller
                 $level = Session::get('paymentLevel');
             }
 
-            if($level == 2 || $level == 3){
+            if($level == 3){
+                $data = Income::whereIn('active', [0,1]);
+            }
+            else if($level == 2){
                 $data = Income::where('active', 1);
             }
             else{
