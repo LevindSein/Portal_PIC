@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('queue:run')->everyMinute()->withoutOverlapping();
+        $schedule->command('payment:restore')->everyFiveMinutes();
         $schedule->command('visitor:run')->daily();
         $schedule->command('period:new')->daily();
         $schedule->command('period:dayoff')->dailyAt('00:15');

@@ -20,6 +20,14 @@ Bayar Tagihan
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <div class="form-group col-md-3" style="padding: 0;">
+                    <label for="kategori">Pilih Kategori</label>
+                    <select class="form-control" id="category" name="category">
+                        <option value="1">Pembayaran Utama</option>
+                        <option value="2">Restore Pembayaran</option>
+                        <option value="3">Cetak Bukti Pembayaran</option>
+                    </select>
+                </div>
                 <div class="table-responsive">
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
@@ -73,6 +81,9 @@ Bayar Tagihan
                     <div class="form-group">
                         <input readonly type="text" class="form-control form-control-line" id="pengguna" name="pengguna">
                     </div>
+                    <div class="form-group text-center">
+                        <h4>Tagihan</h4>
+                    </div>
                     <div id="bayar_summary"></div>
                 </div>
                 <div class="modal-footer-custom">
@@ -93,6 +104,20 @@ Bayar Tagihan
 
 @section('content-js')
 <script>
+    // $("#category").on('change', function(e){
+    //     e.preventDefault();
+    //     $.ajax({
+    //         url: "/production/users/change/" + $("#category").val(),
+    //         type: "GET",
+    //         cache:false,
+    //         success:function(data){
+    //             if(data.success){
+    //                 dtableReload('');
+    //             }
+    //         }
+    //     });
+    // });
+
     var dtable = $('#dtable').DataTable({
         "language": {
             paginate: {

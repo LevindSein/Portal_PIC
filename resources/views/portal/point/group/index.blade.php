@@ -5,16 +5,14 @@ Blok Tempat
 @endsection
 
 @section('content-button')
+<button type="button" class="btn btn-success add" data-toggle="tooltip" data-placement="left" title="Tambah Data">
+    <i class="fas fa-fw fa-plus"></i>
+</button>
 <div class="btn-group">
     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Menu
     </button>
     <div class="dropdown-menu animated fadeIn mr-3">
-        <a class="dropdown-item add" href="javascript:void(0)">
-            <i class="fas fa-fw fa-plus mr-1"></i>
-            <span>Blok Tempat</span>
-        </a>
-        <div class="dropdown-divider"></div>
         @include('portal.point.button')
     </div>
 </div>
@@ -46,7 +44,7 @@ Blok Tempat
 <div id="showModal" class="modal fade" role="dialog" tabIndex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-body">
+            <div class="modal-body-xl">
                 <small class="text-muted pt-4 db">Blok</small>
                 <h4 id="showGroup"></h4>
                 <small class="text-muted pt-4 db">Dibuat oleh</small>
@@ -75,7 +73,7 @@ Blok Tempat
                 </button>
             </div>
             <form id="groupForm">
-                <div class="modal-body">
+                <div class="modal-body-xl">
                     <div class="form-group">
                         <label>Nama Blok <span class="text-danger">*</span></label>
                         <input required type="text" id="blok" name="blok" autocomplete="off" maxlength="10" placeholder="Contoh: A-1" class="form-control form-control-line" style="text-transform: uppercase">

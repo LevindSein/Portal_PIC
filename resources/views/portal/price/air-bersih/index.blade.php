@@ -5,17 +5,9 @@ Tarif Air Bersih
 @endsection
 
 @section('content-button')
-<div class="btn-group">
-    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Menu
-    </button>
-    <div class="dropdown-menu animated fadeIn mr-3">
-        <a class="dropdown-item add" href="javascript:void(0)">
-            <i class="fas fa-fw fa-plus mr-1 ml-1"></i>
-            <span>Tambah Data</span>
-        </a>
-    </div>
-</div>
+<button type="button" class="btn btn-success add" data-toggle="tooltip" data-placement="left" title="Tambah Data">
+    <i class="fas fa-fw fa-plus"></i>
+</button>
 @endsection
 
 @section('content-body')

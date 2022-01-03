@@ -20,7 +20,7 @@ Penghapusan Tagihan
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="form-group col-md-3 col-sm-12" style="padding: 0;">
+                <div class="form-group col-md-3" style="padding: 0;">
                     <label for="period">Periode Tagihan</label>
                     <select class="select2 form-control" id="period" name="period"></select>
                 </div>

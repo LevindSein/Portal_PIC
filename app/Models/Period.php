@@ -15,6 +15,7 @@ class Period extends Model
         'nicename',
         'new_period',
         'due_date',
+        'year',
         'faktur',
         'surat'
     ];

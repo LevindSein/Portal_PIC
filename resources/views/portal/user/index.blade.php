@@ -5,16 +5,14 @@ Pengguna
 @endsection
 
 @section('content-button')
+<button type="button" class="btn btn-success add" data-toggle="tooltip" data-placement="left" title="Tambah Data">
+    <i class="fas fa-fw fa-plus"></i>
+</button>
 <div class="btn-group">
     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Menu
     </button>
     <div class="dropdown-menu animated fadeIn mr-3">
-        <a class="dropdown-item add" href="javascript:void(0)">
-            <i class="fas fa-fw fa-plus mr-1 ml-1"></i>
-            <span>Tambah Data</span>
-        </a>
-        <div class="dropdown-divider"></div>
         @include('portal.user.button')
     </div>
 </div>
@@ -26,7 +24,7 @@ Pengguna
         <div class="card">
             <div class="card-body">
                 <p id="warning-deleted" class="text-danger">*) Data Penghapusan akan terhapus secara permanen oleh sistem saat 30 hari sejak akun yang terkait dihapus.</p>
-                <div class="form-group col-md-2 col-sm-2" style="padding: 0;">
+                <div class="form-group col-md-2" style="padding: 0;">
                     <label for="kategori">Pilih Kategori</label>
                     <select class="form-control" id="category" name="category">
                         <option value="3">Nasabah</option>

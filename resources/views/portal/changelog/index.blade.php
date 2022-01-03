@@ -6,17 +6,9 @@ Daftar Log Perubahan
 
 @section('content-button')
 @if(Auth::user()->level == 1)
-<div class="btn-group">
-    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Menu
-    </button>
-    <div class="dropdown-menu animated fadeIn mr-3">
-        <a class="dropdown-item add" href="javascript:void(0)">
-            <i class="fas fa-fw fa-plus mr-1 ml-1"></i>
-            <span>Tambah Data</span>
-        </a>
-    </div>
-</div>
+<button type="button" class="btn btn-success add" data-toggle="tooltip" data-placement="left" title="Tambah Data">
+    <i class="fas fa-fw fa-plus"></i>
+</button>
 @endif
 @endsection
 
@@ -46,7 +38,7 @@ Daftar Log Perubahan
 <div id="showModal" class="modal fade" role="dialog" tabIndex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-body">
+            <div class="modal-body-xl">
                 <small class="text-muted pt-4 db">Release</small>
                 <h6 id="showRelease"></h6>
                 <small class="text-muted pt-4 db">Judul</small>
@@ -75,7 +67,7 @@ Daftar Log Perubahan
                 </button>
             </div>
             <form id="logForm">
-                <div class="modal-body">
+                <div class="modal-body-xl">
                     <div class="form-group">
                         <label>Release Time <span class="text-danger">*</span></label>
                         <input required type="datetime-local" step="1" id="release" name="release" autocomplete="off" class="form-control form-control-line">

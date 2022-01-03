@@ -37,7 +37,6 @@ class AppServiceProvider extends ServiceProvider
 
         //Initialize Period
         $data = Period::exists();
-
         if(!$data){
             \Artisan::call('period:new');
 

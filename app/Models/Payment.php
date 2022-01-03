@@ -19,7 +19,6 @@ class Payment extends Model
         'pengguna',
         'info',
         'tagihan',
-        'data_master',
         'ids_tagihan'
     ];
 

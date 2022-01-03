@@ -5,16 +5,14 @@ Kelola Tagihan
 @endsection
 
 @section('content-button')
+<button type="button" class="btn btn-success add" data-toggle="tooltip" data-placement="left" title="Tambah Data">
+    <i class="fas fa-fw fa-plus"></i>
+</button>
 <div class="btn-group">
     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Menu
     </button>
     <div class="dropdown-menu animated fadeIn mr-3">
-        <a class="dropdown-item add" href="javascript:void(0)">
-            <i class="fas fa-fw fa-plus mr-1 ml-1"></i>
-            <span>Tagihan</span>
-        </a>
-        <div class="dropdown-divider"></div>
         @include('portal.manage.button')
     </div>
 </div>
@@ -25,7 +23,7 @@ Kelola Tagihan
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="form-group col-md-3 col-sm-12" style="padding: 0;">
+                <div class="form-group col-md-3" style="padding: 0;">
                     <label for="period">Periode Tagihan</label>
                     <select class="select2 form-control" id="period" name="period"></select>
                 </div>

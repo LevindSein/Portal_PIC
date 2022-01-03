@@ -89,6 +89,10 @@ class PaymentController extends Controller
             $faktur = Income::make('faktur');
             $period = Income::make('period');
 
+            $tagihan = 0;
+            $i = 0;
+            $ids_tagihan = [];
+
             if($request->bayarlistrik){
                 $ids = $request->bulanlistrik;
                 if($ids){
@@ -106,6 +110,11 @@ class PaymentController extends Controller
                             $json->kasir = Auth::user()->name;
                             $json->code = $code;
                             $json->rea_tagihan += $json->sel_tagihan;
+
+                            $tagihan += $json->sel_tagihan;
+                            $ids_tagihan[$i] = $decrypted;
+                            $i++;
+
                             $json->sel_tagihan = 0;
                             $bill->b_listrik = json_encode($json);
                             $bill->save();
@@ -131,6 +140,11 @@ class PaymentController extends Controller
                             $json->kasir = Auth::user()->name;
                             $json->code = $code;
                             $json->rea_tagihan += $json->sel_tagihan;
+
+                            $tagihan += $json->sel_tagihan;
+                            $ids_tagihan[$i] = $decrypted;
+                            $i++;
+
                             $json->sel_tagihan = 0;
                             $bill->b_airbersih = json_encode($json);
                             $bill->save();
@@ -156,6 +170,11 @@ class PaymentController extends Controller
                             $json->kasir = Auth::user()->name;
                             $json->code = $code;
                             $json->rea_tagihan += $json->sel_tagihan;
+
+                            $tagihan += $json->sel_tagihan;
+                            $ids_tagihan[$i] = $decrypted;
+                            $i++;
+
                             $json->sel_tagihan = 0;
                             $bill->b_keamananipk = json_encode($json);
                             $bill->save();
@@ -181,6 +200,11 @@ class PaymentController extends Controller
                             $json->kasir = Auth::user()->name;
                             $json->code = $code;
                             $json->rea_tagihan += $json->sel_tagihan;
+
+                            $tagihan += $json->sel_tagihan;
+                            $ids_tagihan[$i] = $decrypted;
+                            $i++;
+
                             $json->sel_tagihan = 0;
                             $bill->b_kebersihan = json_encode($json);
                             $bill->save();
@@ -206,6 +230,11 @@ class PaymentController extends Controller
                             $json->kasir = Auth::user()->name;
                             $json->code = $code;
                             $json->rea_tagihan += $json->sel_tagihan;
+
+                            $tagihan += $json->sel_tagihan;
+                            $ids_tagihan[$i] = $decrypted;
+                            $i++;
+
                             $json->sel_tagihan = 0;
                             $bill->b_airkotor = json_encode($json);
                             $bill->save();
@@ -227,17 +256,25 @@ class PaymentController extends Controller
                         $bill = Bill::find($decrypted);
                         if($bill->b_lain){
                             $json = json_decode($bill->b_lain);
+                            $sel_tagihan = 0;
                             foreach ($json as $i => $val) {
                                 if($val->lunas == 0){
                                     $val->lunas = 1;
                                     $val->kasir = Auth::user()->name;
                                     $val->code = $code;
                                     $val->rea_tagihan += $val->sel_tagihan;
+
+                                    $sel_tagihan += $val->sel_tagihan;
+
                                     $val->sel_tagihan = 0;
                                 }
                             }
                             $bill->b_lain = json_encode($json);
                             $bill->save();
+
+                            $tagihan += $sel_tagihan;
+                            $ids_tagihan[$i] = $decrypted;
+                            $i++;
                         }
                     }
                 }
@@ -249,19 +286,29 @@ class PaymentController extends Controller
                 return response()->json(['error' => 'Decryption payment failed.']);
             }
 
-            $sync = Payment::find($decrypted);
-            $sync = explode(',', $sync->ids_tagihan);
+            $payment = Payment::find($decrypted);
+            $sync = explode(',', $payment->ids_tagihan);
             foreach($sync as $s){
                 Bill::syncById($s);
             }
 
-            Payment::syncByKontrol($request->kontrol);
+            $ids_tagihan = array_unique($ids_tagihan, SORT_NUMERIC);
+            $ids_tagihan = implode(',', $ids_tagihan);
 
             Income::create([
                 'code' => $code,
                 'faktur' => $faktur,
                 'id_period' => $period,
+                'kd_kontrol' => $payment->kd_kontrol,
+                'nicename' => $payment->nicename,
+                'pengguna' => $payment->pengguna,
+                'info' => $payment->info,
+                'ids_tagihan' => $ids_tagihan,
+                'tagihan' => $tagihan,
+                'active' => 1,
             ]);
+
+            Payment::syncByKontrol($request->kontrol);
 
             return response()->json(['success' => 'Payment successful']);
         }

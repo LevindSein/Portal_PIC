@@ -17,7 +17,13 @@ class Income extends Model
         'code',
         'faktur',
         'id_period',
-        'data'
+        'kd_kontrol',
+        'nicename',
+        'pengguna',
+        'info',
+        'tagihan',
+        'ids_tagihan',
+        'active',
     ];
 
     public static function make($type){

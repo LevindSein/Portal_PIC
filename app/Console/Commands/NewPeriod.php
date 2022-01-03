@@ -54,6 +54,7 @@ class NewPeriod extends Command
                     'nicename' => IndoDate::bulan(Carbon::parse($period)->addMonth(1)->format('Y-m'), ' '),
                     'new_period' => Carbon::parse($period)->addMonth(1)->format('Y-m-23'),
                     'due_date' => Carbon::parse($period)->addMonth(1)->format('Y-m-15'),
+                    'year' => Carbon::parse($period)->addMonth(1)->format('Y'),
                 ]);
             }
         }
@@ -65,6 +66,7 @@ class NewPeriod extends Command
                     'nicename' => IndoDate::bulan(Carbon::now()->addMonth(1)->format('Y-m'), ' '),
                     'new_period' => Carbon::now()->addMonth(1)->format('Y-m-23'),
                     'due_date' => Carbon::now()->addMonth(1)->format('Y-m-15'),
+                    'year' => Carbon::now()->addMonth(1)->format('Y'),
                 ]);
             }
             else{
@@ -73,6 +75,7 @@ class NewPeriod extends Command
                     'nicename' => IndoDate::bulan(Carbon::now()->format('Y-m'), ' '),
                     'new_period' => Carbon::now()->format('Y-m-23'),
                     'due_date' => Carbon::now()->format('Y-m-15'),
+                    'year' => Carbon::now()->format('Y'),
                 ]);
             }
         }
