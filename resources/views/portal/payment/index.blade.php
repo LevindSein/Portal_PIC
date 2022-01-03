@@ -34,6 +34,7 @@ Bayar Tagihan
                             <tr>
                                 <th>Kontrol</th>
                                 <th>Pengguna</th>
+                                <th>Info</th>
                                 <th>Tagihan</th>
                                 <th>Action</th>
                             </tr>
@@ -104,19 +105,34 @@ Bayar Tagihan
 
 @section('content-js')
 <script>
-    // $("#category").on('change', function(e){
-    //     e.preventDefault();
-    //     $.ajax({
-    //         url: "/production/users/change/" + $("#category").val(),
-    //         type: "GET",
-    //         cache:false,
-    //         success:function(data){
-    //             if(data.success){
-    //                 dtableReload('');
-    //             }
-    //         }
-    //     });
-    // });
+    paymentLevel();
+
+    function paymentLevel(){
+        $.ajax({
+            url: "/production/payment/level",
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    $("#category").val(data.success);
+                }
+            }
+        });
+    }
+
+    $("#category").on('change', function(e){
+        e.preventDefault();
+        $.ajax({
+            url: "/production/payment/change/" + $("#category").val(),
+            type: "GET",
+            cache:false,
+            success:function(data){
+                if(data.success){
+                    dtableReload('');
+                }
+            }
+        });
+    });
 
     var dtable = $('#dtable').DataTable({
         "language": {
@@ -128,8 +144,9 @@ Bayar Tagihan
         "serverSide": true,
         "ajax": "/production/payment",
         "columns": [
-            { data: 'kd_kontrol', name: 'nicename', class : 'text-center align-middle' },
+            { data: 'kd_kontrol', name: 'kd_kontrol', class : 'text-center align-middle' },
             { data: 'pengguna', name: 'pengguna', class : 'text-center align-middle' },
+            { data: 'info', name: 'info', class : 'text-center align-middle' },
             { data: 'tagihan', name: 'tagihan', class : 'text-center align-middle' },
             { data: 'action', name: 'action', class : 'text-center align-middle' },
         ],
@@ -139,8 +156,8 @@ Bayar Tagihan
         "aLengthMenu": [[5,10,25,50,100], [5,10,25,50,100]],
         "order": [[ 0, "asc" ]],
         "aoColumnDefs": [
-            { "bSortable": false, "aTargets": [3] },
-            { "bSearchable": false, "aTargets": [3] }
+            { "bSortable": false, "aTargets": [4] },
+            { "bSearchable": false, "aTargets": [4] }
         ],
         "scrollY": "50vh",
         "scrollX": true,
@@ -159,11 +176,15 @@ Bayar Tagihan
     });
 
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        dtable.column( 1 ).visible( false, false );
+        for ( var i=1 ; i<3 ; i++ ) {
+            dtable.column( i ).visible( false, false );
+        }
         dtable.columns.adjust().draw( false );
     }
     else{
-        dtable.column( 1 ).visible( true, false );
+        for ( var i=1 ; i<3 ; i++ ) {
+            dtable.column( i ).visible( true, false );
+        }
         dtable.columns.adjust().draw( false );
     }
 
@@ -180,6 +201,33 @@ Bayar Tagihan
 
         $(".popover").popover("hide");
     }
+
+    $(document).on('click', '.restore', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Restore pembayaran ' + nama + ' ?');
+        $('.bodies').html('Pilih <b>Restore</b> di bawah ini jika anda yakin untuk memulihkan pembayaran. Data yang akan dipulihkan adalah semua data dengan kode transaksi <b>' + nama + '</b>.');
+        $('#ok_button').removeClass().addClass('btn btn-info').text('Restore');
+        $('#confirmValue').val('restore');
+        $('#confirmModal').modal('show');
+    });
+
+    $('#confirmForm').submit(function(e){
+        e.preventDefault();
+        var token = $("meta[name='csrf-token']").attr("content");
+        var value = $('#confirmValue').val();
+        dataset = {
+            'id' : id,
+            '_token' : token,
+        }
+
+        if(value == 'restore'){
+            url = "/production/payment/restore/" + id;
+            type = "POST";
+        }
+
+        ajaxForm(url, type, value, dataset);
+    });
 
     $('#bayarForm').submit(function(e){
         e.preventDefault();

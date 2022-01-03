@@ -24,6 +24,7 @@ class Income extends Model
         'tagihan',
         'ids_tagihan',
         'active',
+        'cetak',
     ];
 
     public static function make($type){

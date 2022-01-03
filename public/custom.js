@@ -9,6 +9,8 @@ $(document).ready(function() {
         if(localStorage.getItem('scrollPosition') !== null)
             window.scrollTo(0, localStorage.getItem('scrollPosition'));
     },false);
+
+    $('[data-toggle=tooltip]').tooltip({ trigger: "hover" });
 });
 
 //Fullscreen

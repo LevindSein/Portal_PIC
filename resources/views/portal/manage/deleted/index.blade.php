@@ -350,7 +350,7 @@ Penghapusan Tagihan
                     "closeButton": true,
                     "preventDuplicates": true,
                 };
-                toastr.error("Fetching darta failed.");
+                toastr.error("Fetching data failed.");
                 console.log(data);
             },
             complete:function(){

@@ -27,19 +27,39 @@ class PaymentController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = Payment::select('id','kd_kontrol','nicename','pengguna','info','ids_tagihan','tagihan');
+            $level = 1;
+            if(Session::get('paymentLevel')){
+                $level = Session::get('paymentLevel');
+            }
+
+            if($level == 2 || $level == 3){
+                $data = Income::where('active', 1);
+            }
+            else{
+                $data = Payment::select('id','kd_kontrol','nicename','pengguna','info','ids_tagihan','tagihan');
+            }
+
             return DataTables::of($data)
-            ->addColumn('action', function($data){
-                $button = '<button nama="'.$data->kd_kontrol.'" id="'.Crypt::encrypt($data->id).'" class="btn btn-sm btn-rounded btn-success bayar">Bayar</button>';
-                return $button;
-            })
-            ->editColumn('kd_kontrol', function($data){
-                if($data->info){
-                    return "<span data-toggle='tooltip' title='$data->kd_kontrol : $data->info'>$data->kd_kontrol</span>";
+            ->addColumn('action', function($data) use ($level){
+                if($level == 3){
+                    $button = '<button nama="'.$data->kd_kontrol." ".$data->code.'" id="'.Crypt::encrypt($data->id).'" class="btn btn-sm btn-rounded btn-danger cetak">Cetak</button>';
+                }
+                else if($level == 2){
+                    $button = '<button nama="'.$data->kd_kontrol." ".$data->code.'" id="'.Crypt::encrypt($data->id).'" class="btn btn-sm btn-rounded btn-info restore">Restore</button>';
                 }
                 else{
-                    return "<span data-toggle='tooltip' title='$data->kd_kontrol'>$data->kd_kontrol</span>";
+                    $button = '<button nama="'.$data->kd_kontrol.'" id="'.Crypt::encrypt($data->id).'" class="btn btn-sm btn-rounded btn-success bayar">Bayar</button>';
                 }
+                return $button;
+            })
+            ->editColumn('kd_kontrol', function($data) use ($level){
+                if($level == 2 || $level == 3){
+                    $button = "<span>$data->kd_kontrol<br>$data->code</span>";
+                }
+                else{
+                    $button = $data->kd_kontrol;
+                }
+                return $button;
             })
             ->editColumn('pengguna', function($data){
                 $name = $data->pengguna;
@@ -52,18 +72,46 @@ class PaymentController extends Controller
                     return $name;
                 }
             })
+            ->editColumn('info', function($data){
+                $name = $data->info;
+                if(strlen($name) > 20) {
+                    $name = substr($name, 0, 16);
+                    $name = str_pad($name,  20, ".");
+                    return "<span data-toggle='tooltip' title='$data->info'>$name</span>";
+                }
+                else{
+                    return $name;
+                }
+            })
             ->editColumn('tagihan', function($data){
                 return number_format($data->tagihan, 0, '', '.');
             })
-            ->filterColumn('nicename', function ($query, $keyword) {
+            ->filterColumn('kd_kontrol', function ($data, $keyword) use ($level) {
                 $keywords = trim($keyword);
-                $query->whereRaw("CONCAT(kd_kontrol, nicename, info) like ?", ["%{$keywords}%"]);
+                if($level == 2 || $level == 3){
+                    $data->whereRaw("CONCAT(code, kd_kontrol, nicename) like ?", ["%{$keywords}%"]);
+                }
+                else{
+                    $data->whereRaw("CONCAT(kd_kontrol, nicename) like ?", ["%{$keywords}%"]);
+                }
             })
-            ->rawColumns(['action', 'kd_kontrol', 'pengguna'])
+            ->rawColumns(['action', 'kd_kontrol', 'pengguna', 'info'])
             ->make(true);
         }
         Session::put('lastPlace', 'payment');
         return view('portal.payment.index');
+    }
+
+    public function paymentLevel(){
+        Session::put('paymentLevel', 1);
+        $level = 1;
+
+        return response()->json(['success' => $level]);
+    }
+
+    public function paymentChange($level){
+        Session::put('paymentLevel', $level);
+        return response()->json(['success' => $level]);
     }
 
     /**
@@ -306,6 +354,7 @@ class PaymentController extends Controller
                 'ids_tagihan' => $ids_tagihan,
                 'tagihan' => $tagihan,
                 'active' => 1,
+                'cetak' => 0,
             ]);
 
             Payment::syncByKontrol($request->kontrol);
@@ -509,6 +558,118 @@ class PaymentController extends Controller
             $data['ttl_tagihan'] = $data->tagihan;
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
+        }
+    }
+
+    public function restore($id){
+        if(request()->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => 'Failed to decrypt.', 'description' => $e]);
+            }
+
+            $data = Income::find($decrypted);
+
+            $code = $data->code;
+
+            $kontrol = $data->kd_kontrol;
+
+            $ids = $data->ids_tagihan;
+            $ids = explode(',', $ids);
+            foreach($ids as $id){
+                $bill = Bill::find($id);
+
+                if($bill->b_listrik){
+                    $json = json_decode($bill->b_listrik);
+                    if($code == $json->code){
+                        $json->lunas = 0;
+                        $json->kasir = null;
+                        $json->code = null;
+                        $json->sel_tagihan = $json->rea_tagihan;
+                        $json->rea_tagihan = 0;
+
+                        $bill->b_listrik = json_encode($json);
+                    }
+                }
+
+                if($bill->b_airbersih){
+                    $json = json_decode($bill->b_airbersih);
+                    if($code == $json->code){
+                        $json->lunas = 0;
+                        $json->kasir = null;
+                        $json->code = null;
+                        $json->sel_tagihan = $json->rea_tagihan;
+                        $json->rea_tagihan = 0;
+
+                        $bill->b_airbersih = json_encode($json);
+                    }
+                }
+
+                if($bill->b_keamananipk){
+                    $json = json_decode($bill->b_keamananipk);
+                    if($code == $json->code){
+                        $json->lunas = 0;
+                        $json->kasir = null;
+                        $json->code = null;
+                        $json->sel_tagihan = $json->rea_tagihan;
+                        $json->rea_tagihan = 0;
+
+                        $bill->b_keamananipk = json_encode($json);
+                    }
+                }
+
+                if($bill->b_kebersihan){
+                    $json = json_decode($bill->b_kebersihan);
+                    if($code == $json->code){
+                        $json->lunas = 0;
+                        $json->kasir = null;
+                        $json->code = null;
+                        $json->sel_tagihan = $json->rea_tagihan;
+                        $json->rea_tagihan = 0;
+
+                        $bill->b_kebersihan = json_encode($json);
+                    }
+                }
+
+                if($bill->b_airkotor){
+                    $json = json_decode($bill->b_airkotor);
+                    if($code == $json->code){
+                        $json->lunas = 0;
+                        $json->kasir = null;
+                        $json->code = null;
+                        $json->sel_tagihan = $json->rea_tagihan;
+                        $json->rea_tagihan = 0;
+
+                        $bill->b_airkotor = json_encode($json);
+                    }
+                }
+
+                if($bill->b_lain){
+                    $json = json_decode($bill->b_lain);
+                    foreach ($json as $i => $val) {
+                        if($code == $val->code){
+                            $val->lunas = 0;
+                            $val->kasir = null;
+                            $val->code = null;
+                            $val->sel_tagihan = $val->rea_tagihan;
+                            $val->rea_tagihan = 0;
+                        }
+                    }
+
+                    $bill->b_lain = json_encode($json);
+                }
+
+                $bill->save();
+
+                Bill::syncById($id);
+            }
+
+            Payment::syncByKontrol($kontrol);
+
+            $data->delete();
+
+            return response()->json(['success' => 'Data restored.']);
         }
     }
 }
