@@ -16,6 +16,7 @@ class Payment extends Model
     protected $fillable = [
         'kd_kontrol',
         'nicename',
+        'no_los',
         'pengguna',
         'info',
         'tagihan',
@@ -39,7 +40,7 @@ class Payment extends Model
 
         if(count($group) > 0){
             foreach($group as $i){
-                $data = Bill::select('id', 'name', 'b_tagihan')
+                $data = Bill::select('id', 'name', 'no_los', 'b_tagihan')
                 ->where([
                     ['kd_kontrol', $i->kd_kontrol],
                     ['stt_publish', 1],
@@ -51,10 +52,13 @@ class Payment extends Model
                 $ids_tagihan = NULL;
                 $pengguna = NULL;
                 $tagihan = 0;
+                $no_los = '';
                 foreach($data as $j){
                     $ids_tagihan .= $j->id . ",";
                     $tagihan += json_decode($j->b_tagihan)->sel_tagihan;
                     $pengguna = $j->name;
+
+                    $no_los = $j->no_los;
                 }
                 $ids_tagihan = rtrim($ids_tagihan, ',');
 
@@ -67,6 +71,7 @@ class Payment extends Model
                 $dataset = [
                     'kd_kontrol' => $i->kd_kontrol,
                     'nicename' => str_replace('-', '', $i->kd_kontrol),
+                    'no_los' => $no_los,
                     'pengguna' => $pengguna,
                     'info' => $info,
                     'ids_tagihan' => $ids_tagihan,
@@ -86,7 +91,7 @@ class Payment extends Model
     }
 
     public static function syncByKontrol($kontrol){
-        $data = Bill::select('id', 'name', 'b_tagihan')
+        $data = Bill::select('id', 'name', 'no_los', 'b_tagihan')
         ->where([
             ['kd_kontrol', $kontrol],
             ['stt_publish', 1],
@@ -98,10 +103,13 @@ class Payment extends Model
         $ids_tagihan = NULL;
         $pengguna = NULL;
         $tagihan = 0;
+        $no_los = '';
         foreach($data as $j){
             $ids_tagihan .= $j->id . ",";
             $tagihan += json_decode($j->b_tagihan)->sel_tagihan;
             $pengguna = $j->name;
+
+            $no_los = $j->no_los;
         }
         $ids_tagihan = rtrim($ids_tagihan, ',');
 
@@ -119,6 +127,7 @@ class Payment extends Model
             else{
                 $payment->kd_kontrol = $kontrol;
                 $payment->nicename = str_replace('-', '', $kontrol);
+                $payment->no_los = $no_los;
                 $payment->pengguna = $pengguna;
                 $payment->info= $info;
                 $payment->ids_tagihan= $ids_tagihan;
@@ -132,6 +141,7 @@ class Payment extends Model
                 $dataset = [
                     'kd_kontrol' => $kontrol,
                     'nicename' => str_replace('-', '', $kontrol),
+                    'no_los' => $no_los,
                     'pengguna' => $pengguna,
                     'info' => $info,
                     'ids_tagihan' => $ids_tagihan,

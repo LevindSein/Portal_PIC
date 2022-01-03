@@ -13,6 +13,12 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Bill;
 use App\Models\Payment;
 use App\Models\Income;
+use App\Models\Receipt70mm;
+
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\PrintConnectors\RawbtPrintConnector;
+use Mike42\Escpos\CapabilityProfile;
+use Mike42\Escpos\EscposImage;
 
 use DataTables;
 use Carbon\Carbon;
@@ -346,23 +352,128 @@ class PaymentController extends Controller
             $ids_tagihan = array_unique($ids_tagihan, SORT_NUMERIC);
             $ids_tagihan = implode(',', $ids_tagihan);
 
+
+            $print = json_encode([
+                'kd_kontrol' => $payment->kd_kontrol,
+                'no_los' => $payment->no_los,
+                'pengguna' => $payment->pengguna,
+                'info' => $payment->info,
+                'code' => $code,
+                'faktur' => $faktur,
+                'bayar' => Carbon::now()->format('d-m-Y H:i:s'),
+                'kasir' => Auth::user()->name,
+             ]);
+
             Income::create([
                 'code' => $code,
                 'faktur' => $faktur,
                 'id_period' => $period,
                 'kd_kontrol' => $payment->kd_kontrol,
                 'nicename' => $payment->nicename,
+                'no_los' => $payment->no_los,
                 'pengguna' => $payment->pengguna,
                 'info' => $payment->info,
                 'ids_tagihan' => $ids_tagihan,
                 'tagihan' => $tagihan,
                 'active' => 1,
                 'cetak' => 0,
+                'data' => $print
             ]);
+
+            $print = Crypt::encrypt($print);
 
             Payment::syncByKontrol($request->kontrol);
 
-            return response()->json(['success' => 'Payment successful']);
+            return response()->json([
+                'success' => 'Payment successful',
+                'print' => $print
+            ]);
+        }
+    }
+
+    public function receipt($data){
+        try {
+            $decrypted = Crypt::decrypt($data);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return response()->json(['error' => 'Failed to decrypting receipt.']);
+        }
+
+        $data = json_decode($decrypted);
+
+        $dirfile = storage_path('app/public/logo_struk.png');
+        $logo = EscposImage::load($dirfile,false);
+
+        $profile   = CapabilityProfile::load("POS-5890");
+        $connector = new RawbtPrintConnector();
+        $printer   = new Printer($connector,$profile);
+        $i = 1;
+
+        $nama = (strlen($data->pengguna) > 30) ? str_pad(substr($data->pengguna, 0, 26),  30, ".") : $data->pengguna;
+        $kontrol = (strlen($data->kd_kontrol) > 30) ? str_pad(substr($data->kd_kontrol, 0, 26),  30, ".") : $data->kd_kontrol;
+        $info = (strlen($data->info) > 30) ? str_pad(substr($data->info, 0, 26),  30, ".") : $data->info;
+        $kasir = (strlen($data->kasir) > 25) ? str_pad(substr($data->kasir, 0, 21),  25, ".") : $data->kasir;
+        if(strlen($data->no_los) > 30){
+            $no_los = substr($data->no_los, 0, 28);
+            $no_los = substr($no_los, 0, strrpos($no_los, ','));
+            $no_los = $no_los . "," . "...";
+        } else {
+            $no_los = $data->no_los;
+        }
+
+
+        try{
+            //Header
+            $printer -> setJustification(Printer::JUSTIFY_CENTER);
+            $printer -> bitImageColumnFormat($logo, Printer::IMG_DOUBLE_WIDTH | Printer::IMG_DOUBLE_HEIGHT);
+            $printer -> setJustification(Printer::JUSTIFY_LEFT);
+            $printer -> setEmphasis(true);
+            $printer -> text("Nama    : $nama\n");
+            $printer -> text("Kontrol : $kontrol\n");
+            $printer -> text("Los     : $no_los\n");
+            if($data->info){
+                $printer -> text("Info    : $info\n");
+            }
+            $printer -> text("Code    : $data->code\n");
+            $printer -> setEmphasis(false);
+            $printer -> feed();
+            $printer -> setFont(Printer::FONT_B);
+            //End Header
+
+            //Content
+            $printer -> setJustification(Printer::JUSTIFY_CENTER);
+            $printer -> setEmphasis(true);
+            $printer -> text("Items           JAN 2021             Rp.");
+            $printer -> setEmphasis(false);
+            $printer -> feed();
+            $printer -> text("----------------------------------------");
+            $printer -> feed();
+            $printer -> text(new Receipt70mm("1. Listrik","3.143.283"));
+            $printer -> setJustification(Printer::JUSTIFY_LEFT);
+            $printer -> text(new Receipt70mm("Daya","900",false));
+            $printer -> text(new Receipt70mm("Awal","1.300",false));
+            $printer -> text(new Receipt70mm("Akhir","1.500",false));
+            $printer -> text(new Receipt70mm("Pakai","200",false));
+            $printer -> feed();
+            //End Content
+
+            //Footer
+            $printer -> setJustification(Printer::JUSTIFY_CENTER);
+            $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
+            $printer -> text(new Receipt70mm("Total","3.143.283",true,true));
+            $printer -> selectPrintMode();
+            $printer -> setFont(Printer::FONT_B);
+            $printer -> text("----------------------------------------\n");
+            $printer -> text("Nomor : $data->faktur\n");
+            $printer -> text("Dibayar pada $data->bayar\n");
+            $printer -> text("Harap simpan tanda terima ini\nsebagai bukti pembayaran yang sah.\nTerimakasih.\nPembayaran sudah termasuk PPN\n");
+            $printer -> text("Ksr : $kasir\n");
+            $printer -> feed();
+            $printer -> cut();
+            //End Footer
+        }catch(\Exception $e){
+            return response()->json(['error' => 'Receipt failed to print.']);
+        }finally{
+            $printer->close();
         }
     }
 

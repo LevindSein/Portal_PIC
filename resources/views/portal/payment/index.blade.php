@@ -303,6 +303,11 @@ Bayar Tagihan
                 if(data.description){
                     console.log(data.description);
                 }
+
+                //Print Struk Pembayaran
+                if(data.print){
+                    ajax_print('/production/payment/receipt/' + data.print);
+                }
             },
             error:function(data){
                 if (data.status == 422) {
@@ -334,6 +339,52 @@ Bayar Tagihan
                 $.unblockUI();
             }
         });
+    }
+
+    //Print Via Bluetooth atau USB
+    function ajax_print(url) {
+        $.get(url, function (data) {
+            var ua = navigator.userAgent.toLowerCase();
+            var isAndroid = ua.indexOf("android") > -1;
+            if(isAndroid) {
+                android_print(data);
+            }else{
+                pc_print(data);
+            }
+        }).fail(function (data) {
+            console.log(data);
+        });
+    }
+
+    function pc_print(data){
+        var socket = new WebSocket("ws://127.0.0.1:40213/");
+        socket.bufferType = "arraybuffer";
+        socket.onerror = function(error) {
+            toastr.options = {
+                "closeButton": true,
+                "preventDuplicates": true,
+            };
+            toastr.warning("Printer not ready.");
+            console.log(error);
+        };
+        socket.onopen = function() {
+            socket.send(data);
+            socket.close(1000, "Work complete");
+            toastr.options = {
+                "closeButton": true,
+                "preventDuplicates": true,
+            };
+            toastr.info("Receipt sent into print jobs.");
+        };
+    }
+
+    function android_print(data){
+        window.location.href = data;
+        toastr.options = {
+            "closeButton": true,
+            "preventDuplicates": true,
+        };
+        toastr.info("Receipt sent into print jobs.");
     }
 
     function totalBayar(){

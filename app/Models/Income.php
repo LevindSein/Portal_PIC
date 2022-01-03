@@ -19,12 +19,14 @@ class Income extends Model
         'id_period',
         'kd_kontrol',
         'nicename',
+        'no_los',
         'pengguna',
         'info',
         'tagihan',
         'ids_tagihan',
         'active',
         'cetak',
+        'data'
     ];
 
     public static function make($type){
