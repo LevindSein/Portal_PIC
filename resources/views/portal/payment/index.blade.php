@@ -212,6 +212,16 @@ Bayar Tagihan
         $('#confirmModal').modal('show');
     });
 
+    $(document).on('click', '.cetak', function(){
+        id = $(this).attr('id');
+        nama = $(this).attr('nama');
+        $('.titles').text('Cetak Bukti Pembayaran');
+        $('.bodies').html('Pilih <b>Cetak</b> di bawah ini jika anda yakin untuk mencetak bukti pembayaran atas nama <b>' + nama + '</b>.');
+        $('#ok_button').removeClass().addClass('btn btn-danger').text('Cetak');
+        $('#confirmValue').val('cetak');
+        $('#confirmModal').modal('show');
+    });
+
     $('#confirmForm').submit(function(e){
         e.preventDefault();
         var token = $("meta[name='csrf-token']").attr("content");
@@ -224,9 +234,31 @@ Bayar Tagihan
         if(value == 'restore'){
             url = "/production/payment/restore/" + id;
             type = "POST";
+
+            ajaxForm(url, type, value, dataset);
         }
 
-        ajaxForm(url, type, value, dataset);
+        if(value == 'cetak'){
+            $.blockUI({
+                message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                baseZ: 9999,
+                overlayCSS: {
+                    backgroundColor: '#000',
+                    opacity: 0.5,
+                    cursor: 'wait'
+                },
+                css: {
+                    border: 0,
+                    padding: 0,
+                    backgroundColor: 'transparent'
+                }
+            });
+            ajaxPrint('/production/payment/receipt/reprint/' + id);
+            setTimeout(() => {
+                $('#confirmModal').modal('hide');
+                $.unblockUI();
+            }, 2000);
+        }
     });
 
     $('#bayarForm').submit(function(e){
@@ -306,7 +338,7 @@ Bayar Tagihan
 
                 //Print Struk Pembayaran
                 if(data.print){
-                    ajax_print('/production/payment/receipt/' + data.print);
+                    ajaxPrint('/production/payment/receipt/' + data.print);
                 }
             },
             error:function(data){
@@ -342,7 +374,7 @@ Bayar Tagihan
     }
 
     //Print Via Bluetooth atau USB
-    function ajax_print(url) {
+    function ajaxPrint(url) {
         $.get(url, function (data) {
             var ua = navigator.userAgent.toLowerCase();
             var isAndroid = ua.indexOf("android") > -1;

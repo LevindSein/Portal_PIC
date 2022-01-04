@@ -472,7 +472,22 @@ class PaymentController extends Controller
         }
 
         $data = json_decode($decrypted);
+        $this->print($data, 'print', '');
+    }
 
+    public function reprintReceipt($id){
+        try {
+            $decrypted = Crypt::decrypt($id);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return response()->json(['error' => 'Failed to decrypting receipt.']);
+        }
+
+        $data = Income::find($decrypted);
+        $data = json_decode($data->data);
+        $this->print($data, 'reprint', $decrypted);
+    }
+
+    public function print($data, $type, $id){
         $dirfile = storage_path('app/public/logo_struk.png');
         $logo = EscposImage::load($dirfile,false);
 
@@ -643,6 +658,16 @@ class PaymentController extends Controller
             $printer -> text("Nomor : $data->faktur".PHP_EOL);
             $printer -> text("Dibayar pada $data->bayar".PHP_EOL);
             $printer -> text("Harap simpan tanda terima ini".PHP_EOL."sebagai bukti pembayaran yang sah.".PHP_EOL."Terimakasih.".PHP_EOL."Pembayaran sudah termasuk PPN".PHP_EOL);
+
+            if($type == 'reprint'){
+                $income = Income::find($id);
+                $cetak = $income->cetak + 1;
+                $income->update([
+                    'cetak' => $cetak
+                ]);
+                $printer -> text("Duplikasi ke-$cetak".PHP_EOL);
+            }
+
             $printer -> text("Ksr : $kasir".PHP_EOL);
             $printer -> text("https://picbdg.com".PHP_EOL);
             $printer -> feed();
@@ -957,7 +982,9 @@ class PaymentController extends Controller
                 Bill::syncById($id);
             }
 
+            //Review Ulang
             Payment::syncByKontrol($kontrol);
+            //End Review Ulang
 
             $data->delete();
 

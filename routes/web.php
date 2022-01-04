@@ -145,6 +145,7 @@ Route::middleware('checkauth')->group(function(){
             Route::get('point/tools/airbersih/{id}', [ToolsController::class, 'airbersihShow']);
             Route::delete('point/tools/airbersih/{id}', [ToolsController::class, 'airbersihDestroy']);
 
+            Route::get('payment/receipt/reprint/{id}', [PaymentController::class, 'reprintReceipt']);
             Route::get('payment/receipt/{data}', [PaymentController::class, 'receipt']);
             Route::post('payment/restore/{id}', [PaymentController::class, 'restore']);
             Route::get('payment/level', [PaymentController::class, 'paymentLevel']);
