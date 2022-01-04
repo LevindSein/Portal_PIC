@@ -28,6 +28,7 @@ Bayar Tagihan
                         <option value="3">Cetak Bukti Pembayaran</option>
                     </select>
                 </div>
+                <p id="showWarning" class="text-danger">*) Data yang dapat di-<b>restore</b> adalah data pembayaran <b>24 jam terakhir</b> sejak transaksi. Jika telah melewati batas waktu, silakan hubungi Admin.</p>
                 <div class="table-responsive">
                     <table id="dtable" class="table table-striped table-bordered display nowrap" style="width:100%">
                         <thead>
@@ -106,6 +107,7 @@ Bayar Tagihan
 @section('content-js')
 <script>
     paymentLevel();
+    $("#showWarning").hide();
 
     function paymentLevel(){
         $.ajax({
@@ -132,6 +134,13 @@ Bayar Tagihan
                 }
             }
         });
+
+        if($("#category").val() == 2){
+            $("#showWarning").show();
+        }
+        else{
+            $("#showWarning").hide();
+        }
     });
 
     var dtable = $('#dtable').DataTable({
