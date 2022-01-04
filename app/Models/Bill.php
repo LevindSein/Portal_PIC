@@ -11,7 +11,6 @@ class Bill extends Model
 
     protected $table = 'bills';
     protected $fillable = [
-        'code',
         'id_period',
         'stt_publish',
         'stt_lunas',

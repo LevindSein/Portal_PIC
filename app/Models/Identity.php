@@ -46,12 +46,4 @@ class Identity extends Model
         else
             return $data;
     }
-
-    public static function billCode(){
-        $data = mt_rand(1000000001, 9999999999);
-        if(Bill::where('code', $data)->exists())
-            return self::billCode();
-        else
-            return $data;
-    }
 }

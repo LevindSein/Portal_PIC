@@ -39,12 +39,15 @@ class PaymentController extends Controller
             }
 
             if($level == 3){
-                $data = Income::whereIn('active', [0,1]);
+                //Cetak Pembayaran
+                $data = Income::whereIn('active', [0,1])->orderBy('id','desc');
             }
             else if($level == 2){
-                $data = Income::where('active', 1);
+                //Restore Pembayaran
+                $data = Income::where('active', 1)->orderBy('id','desc');
             }
             else{
+                //Pembayaran Utama
                 $data = Payment::select('id','kd_kontrol','nicename','pengguna','info','ids_tagihan','tagihan');
             }
 
@@ -150,6 +153,9 @@ class PaymentController extends Controller
             $i = 0;
             $ids_tagihan = [];
 
+            $fasilitas = 0;
+
+            $listrik = null;
             if($request->bayarlistrik){
                 $ids = $request->bulanlistrik;
                 if($ids){
@@ -160,7 +166,7 @@ class PaymentController extends Controller
                             return response()->json(['error' => 'Decryption payment failed.']);
                         }
 
-                        $bill = Bill::find($decrypted);
+                        $bill = Bill::with(['period:id,nicename'])->find($decrypted);
                         if($bill->b_listrik){
                             $json = json_decode($bill->b_listrik);
                             $json->lunas = 1;
@@ -172,14 +178,27 @@ class PaymentController extends Controller
                             $ids_tagihan[$i] = $decrypted;
                             $i++;
 
+                            $listrik[] = [
+                                'bulan' => $bill->period->nicename,
+                                'daya' => $json->daya,
+                                'awal' => $json->awal,
+                                'akhir' => $json->akhir,
+                                'pakai' => $json->pakai,
+                                'denda' => $json->denda,
+                                'tagihan' => $json->sel_tagihan
+                            ];
+
                             $json->sel_tagihan = 0;
                             $bill->b_listrik = json_encode($json);
                             $bill->save();
                         }
                     }
+
+                    $fasilitas++;
                 }
             }
 
+            $airbersih = null;
             if($request->bayarairbersih){
                 $ids = $request->bulanairbersih;
                 if($ids){
@@ -190,7 +209,7 @@ class PaymentController extends Controller
                             return response()->json(['error' => 'Decryption payment failed.']);
                         }
 
-                        $bill = Bill::find($decrypted);
+                        $bill = Bill::with(['period:id,nicename'])->find($decrypted);
                         if($bill->b_airbersih){
                             $json = json_decode($bill->b_airbersih);
                             $json->lunas = 1;
@@ -202,14 +221,26 @@ class PaymentController extends Controller
                             $ids_tagihan[$i] = $decrypted;
                             $i++;
 
+                            $airbersih[] = [
+                                'bulan' => $bill->period->nicename,
+                                'awal' => $json->awal,
+                                'akhir' => $json->akhir,
+                                'pakai' => $json->pakai,
+                                'denda' => $json->denda,
+                                'tagihan' => $json->sel_tagihan
+                            ];
+
                             $json->sel_tagihan = 0;
                             $bill->b_airbersih = json_encode($json);
                             $bill->save();
                         }
                     }
+
+                    $fasilitas++;
                 }
             }
 
+            $keamananipk = null;
             if($request->bayarkeamananipk){
                 $ids = $request->bulankeamananipk;
                 if($ids){
@@ -220,7 +251,7 @@ class PaymentController extends Controller
                             return response()->json(['error' => 'Decryption payment failed.']);
                         }
 
-                        $bill = Bill::find($decrypted);
+                        $bill = Bill::with(['period:id,nicename'])->find($decrypted);
                         if($bill->b_keamananipk){
                             $json = json_decode($bill->b_keamananipk);
                             $json->lunas = 1;
@@ -232,14 +263,22 @@ class PaymentController extends Controller
                             $ids_tagihan[$i] = $decrypted;
                             $i++;
 
+                            $keamananipk[] = [
+                                'bulan' => $bill->period->nicename,
+                                'tagihan' => $json->sel_tagihan
+                            ];
+
                             $json->sel_tagihan = 0;
                             $bill->b_keamananipk = json_encode($json);
                             $bill->save();
                         }
                     }
+
+                    $fasilitas++;
                 }
             }
 
+            $kebersihan = null;
             if($request->bayarkebersihan){
                 $ids = $request->bulankebersihan;
                 if($ids){
@@ -250,7 +289,7 @@ class PaymentController extends Controller
                             return response()->json(['error' => 'Decryption payment failed.']);
                         }
 
-                        $bill = Bill::find($decrypted);
+                        $bill = Bill::with(['period:id,nicename'])->find($decrypted);
                         if($bill->b_kebersihan){
                             $json = json_decode($bill->b_kebersihan);
                             $json->lunas = 1;
@@ -262,14 +301,22 @@ class PaymentController extends Controller
                             $ids_tagihan[$i] = $decrypted;
                             $i++;
 
+                            $kebersihan[] = [
+                                'bulan' => $bill->period->nicename,
+                                'tagihan' => $json->sel_tagihan
+                            ];
+
                             $json->sel_tagihan = 0;
                             $bill->b_kebersihan = json_encode($json);
                             $bill->save();
                         }
                     }
+
+                    $fasilitas++;
                 }
             }
 
+            $airkotor = null;
             if($request->bayarairkotor){
                 $ids = $request->bulanairkotor;
                 if($ids){
@@ -280,7 +327,7 @@ class PaymentController extends Controller
                             return response()->json(['error' => 'Decryption payment failed.']);
                         }
 
-                        $bill = Bill::find($decrypted);
+                        $bill = Bill::with(['period:id,nicename'])->find($decrypted);
                         if($bill->b_airkotor){
                             $json = json_decode($bill->b_airkotor);
                             $json->lunas = 1;
@@ -292,14 +339,22 @@ class PaymentController extends Controller
                             $ids_tagihan[$i] = $decrypted;
                             $i++;
 
+                            $airkotor[] = [
+                                'bulan' => $bill->period->nicename,
+                                'tagihan' => $json->sel_tagihan
+                            ];
+
                             $json->sel_tagihan = 0;
                             $bill->b_airkotor = json_encode($json);
                             $bill->save();
                         }
                     }
+
+                    $fasilitas++;
                 }
             }
 
+            $lain = null;
             if($request->bayarlain){
                 $ids = $request->bulanlain;
                 if($ids){
@@ -310,11 +365,11 @@ class PaymentController extends Controller
                             return response()->json(['error' => 'Decryption payment failed.']);
                         }
 
-                        $bill = Bill::find($decrypted);
+                        $bill = Bill::with(['period:id,nicename'])->find($decrypted);
                         if($bill->b_lain){
                             $json = json_decode($bill->b_lain);
                             $sel_tagihan = 0;
-                            foreach ($json as $i => $val) {
+                            foreach ($json as $j => $val) {
                                 if($val->lunas == 0){
                                     $val->lunas = 1;
                                     $val->kasir = Auth::user()->name;
@@ -326,15 +381,27 @@ class PaymentController extends Controller
                                     $val->sel_tagihan = 0;
                                 }
                             }
-                            $bill->b_lain = json_encode($json);
-                            $bill->save();
 
                             $tagihan += $sel_tagihan;
                             $ids_tagihan[$i] = $decrypted;
                             $i++;
+
+                            $lain[] = [
+                                'bulan' => $bill->period->nicename,
+                                'tagihan' => $sel_tagihan
+                            ];
+
+                            $bill->b_lain = json_encode($json);
+                            $bill->save();
                         }
                     }
+
+                    $fasilitas++;
                 }
+            }
+
+            if($fasilitas == 0){
+                return response()->json(['warning' => "Transaction suspended."]);
             }
 
             try {
@@ -349,9 +416,8 @@ class PaymentController extends Controller
                 Bill::syncById($s);
             }
 
-            $ids_tagihan = array_unique($ids_tagihan, SORT_NUMERIC);
+            $ids_tagihan = array_unique($ids_tagihan);
             $ids_tagihan = implode(',', $ids_tagihan);
-
 
             $print = json_encode([
                 'kd_kontrol' => $payment->kd_kontrol,
@@ -360,9 +426,16 @@ class PaymentController extends Controller
                 'info' => $payment->info,
                 'code' => $code,
                 'faktur' => $faktur,
+                'listrik' => $listrik,
+                'airbersih' => $airbersih,
+                'keamananipk' => $keamananipk,
+                'kebersihan' => $kebersihan,
+                'airkotor' => $airkotor,
+                'lain' => $lain,
+                'tagihan' => $tagihan,
                 'bayar' => Carbon::now()->format('d-m-Y H:i:s'),
                 'kasir' => Auth::user()->name,
-             ]);
+            ]);
 
             Income::create([
                 'code' => $code,
@@ -406,7 +479,6 @@ class PaymentController extends Controller
         $profile   = CapabilityProfile::load("POS-5890");
         $connector = new RawbtPrintConnector();
         $printer   = new Printer($connector,$profile);
-        $i = 1;
 
         $nama = (strlen($data->pengguna) > 30) ? str_pad(substr($data->pengguna, 0, 26),  30, ".") : $data->pengguna;
         $kontrol = (strlen($data->kd_kontrol) > 30) ? str_pad(substr($data->kd_kontrol, 0, 26),  30, ".") : $data->kd_kontrol;
@@ -416,57 +488,163 @@ class PaymentController extends Controller
             $no_los = substr($data->no_los, 0, 28);
             $no_los = substr($no_los, 0, strrpos($no_los, ','));
             $no_los = $no_los . "," . "...";
+            $no_los = substr($no_los, 0, 30);
         } else {
             $no_los = $data->no_los;
         }
-
 
         try{
             //Header
             $printer -> setJustification(Printer::JUSTIFY_CENTER);
             $printer -> bitImageColumnFormat($logo, Printer::IMG_DOUBLE_WIDTH | Printer::IMG_DOUBLE_HEIGHT);
-            $printer -> setJustification(Printer::JUSTIFY_LEFT);
             $printer -> setEmphasis(true);
-            $printer -> text("Nama    : $nama\n");
-            $printer -> text("Kontrol : $kontrol\n");
-            $printer -> text("Los     : $no_los\n");
+            $printer -> text(str_pad("Nama    : $nama", 40).PHP_EOL);
+            $printer -> text(str_pad("Kontrol : $kontrol", 40).PHP_EOL);
+            $printer -> text(str_pad("Los     : $no_los", 40).PHP_EOL);
             if($data->info){
-                $printer -> text("Info    : $info\n");
+                $printer -> text(str_pad("Info    : $info", 40).PHP_EOL);
             }
-            $printer -> text("Code    : $data->code\n");
+            $printer -> text(str_pad("Kode    : $data->code", 40).PHP_EOL);
             $printer -> setEmphasis(false);
             $printer -> feed();
             $printer -> setFont(Printer::FONT_B);
             //End Header
+            $i = 1;
 
             //Content
-            $printer -> setJustification(Printer::JUSTIFY_CENTER);
-            $printer -> setEmphasis(true);
-            $printer -> text("Items           JAN 2021             Rp.");
-            $printer -> setEmphasis(false);
-            $printer -> feed();
-            $printer -> text("----------------------------------------");
-            $printer -> feed();
-            $printer -> text(new Receipt70mm("1. Listrik","3.143.283"));
-            $printer -> setJustification(Printer::JUSTIFY_LEFT);
-            $printer -> text(new Receipt70mm("Daya","900",false));
-            $printer -> text(new Receipt70mm("Awal","1.300",false));
-            $printer -> text(new Receipt70mm("Akhir","1.500",false));
-            $printer -> text(new Receipt70mm("Pakai","200",false));
-            $printer -> feed();
+            if($data->listrik){
+                $printer -> setJustification(Printer::JUSTIFY_CENTER);
+                $printer -> setEmphasis(true);
+                $printer -> text("LISTRIK                                 ");
+                $printer -> setEmphasis(false);
+                $printer -> feed();
+                $printer -> textRaw(str_repeat(chr(196), 40).PHP_EOL);
+                $denda = 0;
+                foreach ($data->listrik as $j => $val) {
+                    $denda += $val->denda;
+                    $printer -> text(new Receipt70mm("$i. $val->bulan",number_format($val->tagihan - $val->denda, 0, '', '.')));
+
+                    if ($j === array_key_last($data->listrik)) {
+                        $printer -> setJustification(Printer::JUSTIFY_LEFT);
+                        $printer -> text(new Receipt70mm("Daya",number_format($val->daya, 0, '', '.'),false));
+                        $printer -> text(new Receipt70mm("Awal",number_format($val->awal, 0, '', '.'),false));
+                        $printer -> text(new Receipt70mm("Akhir",number_format($val->akhir, 0, '', '.'),false));
+                        $printer -> text(new Receipt70mm("Pakai",number_format($val->pakai, 0, '', '.'),false));
+                    }
+
+                    $i++;
+                }
+
+                if($denda > 0){
+                    $printer -> setJustification(Printer::JUSTIFY_CENTER);
+                    $printer -> text(new Receipt70mm("$i. Denda",number_format($denda, 0, '', '.')));
+                    $i++;
+                }
+
+                $printer -> feed();
+            }
+
+
+            if($data->airbersih){
+                $printer -> setJustification(Printer::JUSTIFY_CENTER);
+                $printer -> setEmphasis(true);
+                $printer -> text("AIR BERSIH                              ");
+                $printer -> setEmphasis(false);
+                $printer -> feed();
+                $printer -> textRaw(str_repeat(chr(196), 40).PHP_EOL);
+                $denda = 0;
+                foreach ($data->airbersih as $j => $val) {
+                    $denda += $val->denda;
+                    $printer -> text(new Receipt70mm("$i. $val->bulan",number_format($val->tagihan - $val->denda, 0, '', '.')));
+
+                    if ($j === array_key_last($data->airbersih)) {
+                        $printer -> setJustification(Printer::JUSTIFY_LEFT);
+                        $printer -> text(new Receipt70mm("Awal",number_format($val->awal, 0, '', '.'),false));
+                        $printer -> text(new Receipt70mm("Akhir",number_format($val->akhir, 0, '', '.'),false));
+                        $printer -> text(new Receipt70mm("Pakai",number_format($val->pakai, 0, '', '.'),false));
+                    }
+
+                    $i++;
+                }
+
+                if($denda > 0){
+                    $printer -> setJustification(Printer::JUSTIFY_CENTER);
+                    $printer -> text(new Receipt70mm("$i. Denda",number_format($denda, 0, '', '.')));
+                    $i++;
+                }
+
+                $printer -> feed();
+            }
+
+            if($data->keamananipk){
+                $printer -> setJustification(Printer::JUSTIFY_CENTER);
+                $printer -> setEmphasis(true);
+                $printer -> text("KEAMANAN IPK                            ");
+                $printer -> setEmphasis(false);
+                $printer -> feed();
+                $printer -> textRaw(str_repeat(chr(196), 40).PHP_EOL);
+                foreach ($data->keamananipk as $j => $val) {
+                    $printer -> text(new Receipt70mm("$i. $val->bulan",number_format($val->tagihan, 0, '', '.')));
+                    $i++;
+                }
+                $printer -> feed();
+            }
+
+            if($data->kebersihan){
+                $printer -> setJustification(Printer::JUSTIFY_CENTER);
+                $printer -> setEmphasis(true);
+                $printer -> text("KEBERSIHAN                              ");
+                $printer -> setEmphasis(false);
+                $printer -> feed();
+                $printer -> textRaw(str_repeat(chr(196), 40).PHP_EOL);
+                foreach ($data->kebersihan as $j => $val) {
+                    $printer -> text(new Receipt70mm("$i. $val->bulan",number_format($val->tagihan, 0, '', '.')));
+                    $i++;
+                }
+                $printer -> feed();
+            }
+
+            if($data->airkotor){
+                $printer -> setJustification(Printer::JUSTIFY_CENTER);
+                $printer -> setEmphasis(true);
+                $printer -> text("AIR KOTOR                               ");
+                $printer -> setEmphasis(false);
+                $printer -> feed();
+                $printer -> textRaw(str_repeat(chr(196), 40).PHP_EOL);
+                foreach ($data->airkotor as $j => $val) {
+                    $printer -> text(new Receipt70mm("$i. $val->bulan",number_format($val->tagihan, 0, '', '.')));
+                    $i++;
+                }
+                $printer -> feed();
+            }
+
+            if($data->lain){
+                $printer -> setJustification(Printer::JUSTIFY_CENTER);
+                $printer -> setEmphasis(true);
+                $printer -> text("LAINNYA                                 ");
+                $printer -> setEmphasis(false);
+                $printer -> feed();
+                $printer -> textRaw(str_repeat(chr(196), 40).PHP_EOL);
+                foreach ($data->lain as $j => $val) {
+                    $printer -> text(new Receipt70mm("$i. $val->bulan",number_format($val->tagihan, 0, '', '.')));
+                    $i++;
+                }
+                $printer -> feed();
+            }
             //End Content
 
             //Footer
             $printer -> setJustification(Printer::JUSTIFY_CENTER);
             $printer -> selectPrintMode(Printer::MODE_DOUBLE_WIDTH);
-            $printer -> text(new Receipt70mm("Total","3.143.283",true,true));
+            $printer -> text(new Receipt70mm("Total",number_format($data->tagihan, 0, '', '.'),true,true));
             $printer -> selectPrintMode();
             $printer -> setFont(Printer::FONT_B);
-            $printer -> text("----------------------------------------\n");
-            $printer -> text("Nomor : $data->faktur\n");
-            $printer -> text("Dibayar pada $data->bayar\n");
-            $printer -> text("Harap simpan tanda terima ini\nsebagai bukti pembayaran yang sah.\nTerimakasih.\nPembayaran sudah termasuk PPN\n");
-            $printer -> text("Ksr : $kasir\n");
+            $printer -> text(str_repeat('-', 40).PHP_EOL);
+            $printer -> text("Nomor : $data->faktur".PHP_EOL);
+            $printer -> text("Dibayar pada $data->bayar".PHP_EOL);
+            $printer -> text("Harap simpan tanda terima ini".PHP_EOL."sebagai bukti pembayaran yang sah.".PHP_EOL."Terimakasih.".PHP_EOL."Pembayaran sudah termasuk PPN".PHP_EOL);
+            $printer -> text("Ksr : $kasir".PHP_EOL);
+            $printer -> text("https://picbdg.com".PHP_EOL);
             $printer -> feed();
             $printer -> cut();
             //End Footer

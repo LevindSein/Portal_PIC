@@ -40,13 +40,14 @@ class Payment extends Model
 
         if(count($group) > 0){
             foreach($group as $i){
-                $data = Bill::select('id', 'name', 'no_los', 'b_tagihan')
+                $data = Bill::leftJoin('period', 'bills.id_period', '=', 'period.id')
+                ->select('bills.id as id', 'bills.name as name', 'period.name as period', 'bills.no_los as no_los', 'bills.b_tagihan as b_tagihan')
                 ->where([
                     ['kd_kontrol', $i->kd_kontrol],
                     ['stt_publish', 1],
                     ['stt_lunas', 0]
                 ])
-                ->orderBy('id','asc')
+                ->orderBy('period','asc')
                 ->get();
 
                 $ids_tagihan = NULL;
@@ -91,13 +92,14 @@ class Payment extends Model
     }
 
     public static function syncByKontrol($kontrol){
-        $data = Bill::select('id', 'name', 'no_los', 'b_tagihan')
+        $data = Bill::leftJoin('period', 'bills.id_period', '=', 'period.id')
+        ->select('bills.id as id', 'bills.name as name', 'period.name as period', 'bills.no_los as no_los', 'bills.b_tagihan as b_tagihan')
         ->where([
-            ['kd_kontrol', $kontrol],
-            ['stt_publish', 1],
-            ['stt_lunas', 0]
+            ['bills.kd_kontrol', $kontrol],
+            ['bills.stt_publish', 1],
+            ['bills.stt_lunas', 0]
         ])
-        ->orderBy('id','asc')
+        ->orderBy('period','asc')
         ->get();
 
         $ids_tagihan = NULL;

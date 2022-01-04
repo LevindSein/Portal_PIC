@@ -52,7 +52,6 @@ class BillController extends Controller
             ->whereIn('active', [0,1])
             ->select(
                 'id',
-                'code',
                 'stt_publish',
                 'stt_lunas',
                 'kd_kontrol',
@@ -184,7 +183,7 @@ class BillController extends Controller
             })
             ->filterColumn('nicename', function ($query, $keyword) {
                 $keywords = trim($keyword);
-                $query->whereRaw("CONCAT(kd_kontrol, nicename, code) like ?", ["%{$keywords}%"]);
+                $query->whereRaw("CONCAT(kd_kontrol, nicename) like ?", ["%{$keywords}%"]);
             })
             ->rawColumns(['action', 'publish', 'fasilitas', 'name'])
             ->make(true);
@@ -245,8 +244,6 @@ class BillController extends Controller
                 'kontrol' => 'required|exists:App\Models\Store,kd_kontrol',
                 'group' => 'required|exists:App\Models\Group,name'
             ]);
-
-            $data['code'] = Identity::billCode();
 
             $period = $request->periode;
             $data['id_period'] = $period;

@@ -81,8 +81,6 @@ Kelola Tagihan
             <div class="modal-body-xl">
                 <div class="row">
                     <div class="col-lg-6 col-xlg-6">
-                        <small class="text-muted pt-4 db">Kode Tagihan</small>
-                        <h4 id="showCode"></h4>
                         <small class="text-muted pt-4 db">Periode</small>
                         <h6 id="showPeriod"></h6>
                         <small class="text-muted pt-4 db">Kontrol</small>
@@ -1571,7 +1569,6 @@ Kelola Tagihan
             cache:false,
             success:function(data){
                 if(data.success){
-                    $("#showCode").text(data.show.code);
                     $("#showPeriod").text(data.show.period.nicename);
                     $("#showKontrol").text(data.show.kd_kontrol);
                     $("#showBlok").text(data.show.group);
