@@ -26,6 +26,7 @@ class Income extends Model
         'ids_tagihan',
         'active',
         'cetak',
+        'shift',
         'data'
     ];
 

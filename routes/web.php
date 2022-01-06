@@ -22,6 +22,8 @@ use App\Http\Controllers\CommodityController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\PaymentController;
 
+use Carbon\Carbon;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -167,6 +169,32 @@ Route::middleware('checkauth')->group(function(){
 
 Route::get('expired', function(){
     abort(404);
+});
+
+Route::get('shift/{type}', function($type){
+    if($type == 'get'){
+        if(Session::get('shift')){
+            $shift = Session::get('shift');
+        } else{
+            $time = Carbon::now();
+            if($time->format('Y-m-d H:i:s') < $time->format('Y-m-d 17:00:00')){
+                Session::put('shift', 1);
+                $shift = 1;
+            } else{
+                Session::put('shift', 2);
+                $shift = 2;
+            }
+        }
+    } else{
+        if(Session::get('shift') == 1){
+            Session::put('shift', 2);
+            $shift = 2;
+        } else{
+            Session::put('shift', 1);
+            $shift = 1;
+        }
+    }
+    return response()->json(['success' => $shift]);
 });
 
 Route::get('email/forgot', [EmailController::class, 'forgot']);

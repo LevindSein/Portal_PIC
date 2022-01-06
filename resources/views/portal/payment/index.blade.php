@@ -5,6 +5,9 @@ Bayar Tagihan
 @endsection
 
 @section('content-button')
+<button type="button" id="shift" class="btn btn-success btn-group">
+    <span class="d-none d-md-block">Shift&nbsp;</span><span id="shiftNumber">{{Session::get('shift')}}</span>
+</button>
 <div class="btn-group">
     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Menu
@@ -106,6 +109,28 @@ Bayar Tagihan
 
 @section('content-js')
 <script>
+    shift("/shift/get");
+    $('#shift').click(function(e){
+        e.preventDefault();
+        shift("/shift/change");
+    });
+
+    function shift(url){
+        $.ajax({
+            url: url,
+            type: "GET",
+            cache:false,
+            success:function(data){
+                $("#shiftNumber").text(data.success);
+                if(data.success == 2){
+                    $("#shift").removeClass("btn-success").addClass("btn-danger");
+                } else{
+                    $("#shift").removeClass("btn-danger").addClass("btn-success");
+                }
+            }
+        })
+    }
+
     paymentLevel();
     $("#showWarning").hide();
 

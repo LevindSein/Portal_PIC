@@ -450,6 +450,7 @@ class PaymentController extends Controller
                 'tagihan' => $tagihan,
                 'active' => 1,
                 'cetak' => 0,
+                'shift' => Session::get('shift'),
                 'data' => $print
             ]);
 
