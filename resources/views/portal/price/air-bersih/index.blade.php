@@ -41,7 +41,7 @@ Tarif Air Bersih
                     <span aria-hidden="true">x</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body-xl">
                 <small class="text-muted pt-4 db">Nama Tarif</small>
                 <h4 id="showName"></h4>
                 <small class="text-muted pt-4 db">Tarif 1</small>

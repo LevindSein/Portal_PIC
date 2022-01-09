@@ -193,7 +193,10 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data['data'] = json_decode($data->data);
+
+            $json = json_decode($data->data);
+            $data['rekmin'] = number_format($json->rekmin,2,',','.');
+            $data['data'] = $json;
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }

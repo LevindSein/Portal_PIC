@@ -339,11 +339,12 @@ class BillController extends Controller
 
                 $tarif_nama = $tarif->name;
                 $standar = PListrik::standar($tarif_data->standar, $daya);
-                $blok1 = PListrik::blok1($tarif_data->blok1, $standar);
-                $blok2 = PListrik::blok2($tarif_data->blok2, $pakai, $standar);
-                $beban = PListrik::beban($tarif_data->beban, $daya);
-                $pju = PListrik::pju($tarif_data->pju, $blok1 + $blok2 + $beban);
-                $ppn = PListrik::ppn($tarif_data->ppn, $blok1 + $blok2 + $beban + $pju);
+                $rekmin = PListrik::rekmin($tarif_data->rekmin, $tarif_data->standar, $pakai, $daya);
+                $blok1 = PListrik::blok1($tarif_data->blok1, $standar, $rekmin);
+                $blok2 = PListrik::blok2($tarif_data->blok2, $standar, $pakai, $rekmin);
+                $beban = PListrik::beban($tarif_data->beban, $daya, $rekmin);
+                $pju = PListrik::pju($tarif_data->pju, $blok1 + $blok2 + $beban + $rekmin);
+                $ppn = PListrik::ppn($tarif_data->ppn, $blok1 + $blok2 + $beban + $rekmin + $pju);
                 $sub = PListrik::tagihan($tarif_id, $awal, $akhir_temp, $daya);
 
                 $diskon = 0;
@@ -385,6 +386,7 @@ class BillController extends Controller
                     'akhir' => $akhir,
                     'reset' => $digit,
                     'pakai' => $pakai,
+                    'rekmin' => $rekmin,
                     'blok1' => $blok1,
                     'blok2' => $blok2,
                     'beban' => $beban,
@@ -1004,11 +1006,12 @@ class BillController extends Controller
 
                 $tarif_nama = $tarif->name;
                 $standar = PListrik::standar($tarif_data->standar, $daya);
-                $blok1 = PListrik::blok1($tarif_data->blok1, $standar);
-                $blok2 = PListrik::blok2($tarif_data->blok2, $pakai, $standar);
-                $beban = PListrik::beban($tarif_data->beban, $daya);
-                $pju = PListrik::pju($tarif_data->pju, $blok1 + $blok2 + $beban);
-                $ppn = PListrik::ppn($tarif_data->ppn, $blok1 + $blok2 + $beban + $pju);
+                $rekmin = PListrik::rekmin($tarif_data->rekmin, $standar, $pakai, $daya);
+                $blok1 = PListrik::blok1($tarif_data->blok1, $standar, $rekmin);
+                $blok2 = PListrik::blok2($tarif_data->blok2, $standar, $pakai, $rekmin);
+                $beban = PListrik::beban($tarif_data->beban, $daya, $rekmin);
+                $pju = PListrik::pju($tarif_data->pju, $blok1 + $blok2 + $beban + $rekmin);
+                $ppn = PListrik::ppn($tarif_data->ppn, $blok1 + $blok2 + $beban + $rekmin + $pju);
                 $sub = PListrik::tagihan($tarif_id, $awal, $akhir_temp, $daya);
 
                 $diskon = 0;
@@ -1061,6 +1064,7 @@ class BillController extends Controller
                     'akhir' => $akhir,
                     'reset' => $digit,
                     'pakai' => $pakai,
+                    'rekmin' => $rekmin,
                     'blok1' => $blok1,
                     'blok2' => $blok2,
                     'beban' => $beban,

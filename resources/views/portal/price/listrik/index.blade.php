@@ -41,7 +41,7 @@ Tarif Listrik
                     <span aria-hidden="true">x</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body-xl">
                 <small class="text-muted pt-4 db">Nama Tarif</small>
                 <h4 id="showName"></h4>
                 <small class="text-muted pt-4 db">Beban Daya</small>
@@ -52,6 +52,8 @@ Tarif Listrik
                 <h6 id="showBlok2"></h6>
                 <small class="text-muted pt-4 db">Standar Operasional</small>
                 <h6 id="showStandar"></h6>
+                <small class="text-muted pt-4 db">Rekening Minimal</small>
+                <h6 id="showRekmin"></h6>
                 <small class="text-muted pt-4 db">PJU</small>
                 <h6 id="showPju"></h6>
                 <small class="text-muted pt-4 db">Denda 1</small>
@@ -482,6 +484,7 @@ Tarif Listrik
                     $("#showBlok1").text("Rp. " + Number(data.show.data.blok1).toLocaleString('id-ID'));
                     $("#showBlok2").text("Rp. " + Number(data.show.data.blok2).toLocaleString('id-ID'));
                     $("#showStandar").html(data.show.data.standar + " <sup>Jam&nbsp;</sup>&frasl;<sub>&nbsp;Hari</sub>");
+                    $("#showRekmin").text(data.show.rekmin);
                     $("#showPju").text(data.show.data.pju + " %");
                     $("#showDenda1").text("Rp. " + Number(data.show.data.denda1).toLocaleString('id-ID'));
                     $("#showDenda2").text(data.show.data.denda2 + " %");

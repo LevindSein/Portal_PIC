@@ -23,13 +23,15 @@ class PListrik extends Model
 
         $standar = self::standar($tarif->standar, $daya);
 
-        $blok1 = self::blok1($tarif->blok1, $standar);
+        $rekmin = self::rekmin($tarif->rekmin, $standar, $pakai, $daya);
 
-        $blok2 = self::blok2($tarif->blok2, $pakai, $standar);
+        $blok1 = self::blok1($tarif->blok1, $standar, $rekmin);
 
-        $beban = self::beban($tarif->beban, $daya);
+        $blok2 = self::blok2($tarif->blok2, $standar, $pakai, $rekmin);
 
-        $sub = $blok1 + $blok2 + $beban;
+        $beban = self::beban($tarif->beban, $daya, $rekmin);
+
+        $sub = $blok1 + $blok2 + $beban + $rekmin;
 
         $pju = self::pju($tarif->pju, $sub);
 
@@ -47,19 +49,39 @@ class PListrik extends Model
     }
 
     public static function standar($standar, $daya){
-        return ceil(($standar * $daya) / 1000);
+        return round(($standar * $daya) / 1000);
     }
 
-    public static function blok1($blok1, $standar){
-        return $blok1 * $standar;
+    public static function rekmin($rekmin, $standar, $pakai, $daya){
+        if($pakai >= $standar){
+            return 0;
+        } else {
+            return round($rekmin * $daya);
+        }
     }
 
-    public static function blok2($blok2, $pakai, $standar){
-        return $blok2 * ($pakai - $standar);
+    public static function blok1($blok1, $standar, $rekmin){
+        if($rekmin > 0){
+            return 0;
+        } else {
+            return $blok1 * $standar;
+        }
     }
 
-    public static function beban($beban, $daya){
-        return $beban * $daya;
+    public static function blok2($blok2, $standar, $pakai, $rekmin){
+        if($rekmin > 0){
+            return 0;
+        } else {
+            return $blok2 * ($pakai - $standar);
+        }
+    }
+
+    public static function beban($beban, $daya, $rekmin){
+        if($rekmin > 0){
+            return 0;
+        } else {
+            return $beban * $daya;
+        }
     }
 
     public static function pju($pju, $sub){
@@ -67,6 +89,6 @@ class PListrik extends Model
     }
 
     public static function ppn($ppn, $total){
-        return ceil(($ppn / 100) * $total);
+        return round(($ppn / 100) * $total);
     }
 }
