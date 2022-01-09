@@ -268,6 +268,12 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark" href="{{url('#')}}" aria-expanded="false">
+                                <i class="far fa-dollar-sign mr-1 text-info"></i>
+                                <span class="hide-menu"><b>Keuangan</b></span>
+                            </a>
+                        </li>
                         <li class="sidebar-item {{ (request()->is('production/histories*')) ? 'bg-light' : '' }}">
                             <a class="sidebar-link waves-effect waves-dark {{ (request()->is('production/histories*')) ? 'active' : '' }}" href="{{url('production/histories')}}" aria-expanded="false">
                                 <i class="fad fa-clock mr-1 text-info"></i>
