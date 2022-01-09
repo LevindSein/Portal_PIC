@@ -81,12 +81,12 @@ Tarif Air Bersih
             </div>
             <form id="priceForm">
                 <div class="modal-body-xl">
-                    <div class="form-group">
-                        <label>Nama Tarif <span class="text-danger">*</span></label>
-                        <input required type="text" id="name" name="name" autocomplete="off" maxlength="100" placeholder="Contoh: Tarif 1" class="form-control form-control-line">
-                    </div>
                     <div class="row">
                         <div class="col-lg-6 col-xlg-6">
+                            <div class="form-group">
+                                <label>Nama Tarif <span class="text-danger">*</span></label>
+                                <input required type="text" id="name" name="name" autocomplete="off" maxlength="100" placeholder="Contoh: Tarif 1" class="form-control form-control-line">
+                            </div>
                             <div class="form-group">
                                 <label>Tarif 1 <span class="text-danger">*</span></label>
                                 <div class="input-group">
@@ -120,6 +120,8 @@ Tarif Air Bersih
                                     <input maxlength="11" required type="text" id="pemeliharaan" name="pemeliharaan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-lg-6 col-xlg-6">
                             <div class="form-group">
                                 <label>Beban <span class="text-danger">*</span></label>
                                 <div class="input-group">
@@ -129,8 +131,6 @@ Tarif Air Bersih
                                     <input maxlength="11" required type="text" id="beban" name="beban" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6 col-xlg-6">
                             <div class="form-group">
                                 <label>Air Kotor <span class="text-danger">*</span></label>
                                 <div class="input-group">

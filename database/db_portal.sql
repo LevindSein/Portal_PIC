@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2022 at 03:39 PM
+-- Generation Time: Jan 09, 2022 at 11:11 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -70,14 +70,6 @@ CREATE TABLE `bills` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `bills`
---
-
-INSERT INTO `bills` (`id`, `id_period`, `stt_publish`, `stt_lunas`, `name`, `kd_kontrol`, `nicename`, `group`, `no_los`, `jml_los`, `code_tlistrik`, `code_tairbersih`, `b_listrik`, `b_airbersih`, `b_keamananipk`, `b_kebersihan`, `b_airkotor`, `b_lain`, `b_tagihan`, `data`, `active`, `deleted`, `updated_at`, `created_at`) VALUES
-(1, 2, 1, 1, 'Master Didi Kempot', 'A-1-001', 'A1001', 'A-1', '1', 1, NULL, NULL, '{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"NTRQBBJXMA\",\"tarif_id\":\"1\",\"tarif_nama\":\"Tarif 1\",\"daya\":\"10500\",\"awal\":\"10\",\"akhir\":\"20\",\"reset\":null,\"pakai\":10,\"blok1\":0,\"blok2\":24040,\"beban\":525000,\"pju\":98828,\"ppn\":64787,\"jml_los\":1,\"sub_tagihan\":712655,\"denda\":0,\"denda_bulan\":null,\"diskon\":712655,\"diskon_persen\":\"100\",\"ttl_tagihan\":0,\"rea_tagihan\":0,\"sel_tagihan\":0,\"restored_by_id\":null,\"restored_by_name\":null,\"restored_time\":null}', '{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"NTRQBBJXMA\",\"tarif_id\":\"1\",\"tarif_nama\":\"Tarif 1\",\"awal\":\"90\",\"akhir\":\"101\",\"reset\":null,\"pakai\":11,\"bayar\":78500,\"pemeliharaan\":\"15000\",\"beban\":\"25000\",\"arkot\":23550,\"ppn\":14205,\"jml_los\":1,\"sub_tagihan\":156255,\"denda\":50000,\"denda_bulan\":\"1\",\"diskon\":0,\"diskon_persen\":null,\"ttl_tagihan\":206255,\"rea_tagihan\":206255,\"sel_tagihan\":0,\"restored_by_id\":null,\"restored_by_name\":null,\"restored_time\":null}', '{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"NTRQBBJXMA\",\"tarif_id\":\"5\",\"tarif_nama\":\"Tarif 5\",\"price\":200000,\"jml_los\":1,\"sub_tagihan\":200000,\"diskon\":0,\"keamanan\":146000,\"keamanan_persen\":\"73\",\"ipk\":54000,\"ipk_persen\":\"27\",\"ttl_tagihan\":200000,\"rea_tagihan\":200000,\"sel_tagihan\":0,\"restored_by_id\":null,\"restored_by_name\":null,\"restored_time\":null}', '{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"NTRQBBJXMA\",\"tarif_id\":\"4\",\"tarif_nama\":\"Tarif 4\",\"price\":150000,\"jml_los\":1,\"sub_tagihan\":150000,\"diskon\":0,\"ttl_tagihan\":150000,\"rea_tagihan\":150000,\"sel_tagihan\":0,\"restored_by_id\":null,\"restored_by_name\":null,\"restored_time\":null}', '{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"NTRQBBJXMA\",\"tarif_id\":\"2\",\"tarif_nama\":\"Tarif 2\",\"price\":3000000,\"jml_los\":1,\"sub_tagihan\":3000000,\"diskon\":0,\"ttl_tagihan\":3000000,\"rea_tagihan\":3000000,\"sel_tagihan\":0,\"restored_by_id\":null,\"restored_by_name\":null,\"restored_time\":null}', '[{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"NTRQBBJXMA\",\"tarif_id\":\"2\",\"tarif_nama\":\"Parkir\",\"price\":2000,\"jml_los\":1,\"satuan_id\":2,\"satuan_nama\":\"per-Los\",\"sub_tagihan\":2000,\"ttl_tagihan\":2000,\"rea_tagihan\":2000,\"sel_tagihan\":0}]', '{\"lunas\":1,\"sub_tagihan\":4220910,\"denda\":50000,\"diskon\":712655,\"ttl_tagihan\":3558255,\"rea_tagihan\":3558255,\"sel_tagihan\":0}', '{\"publish\":\"2022-01-04 20:19:53\",\"publish_by\":\"Master Didi Kempot\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2022-01-04 10:53:27\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2022-01-04 20:19:53\"}', 1, NULL, '2022-01-08 00:09:22', '2022-01-04 03:53:27'),
-(2, 1, 1, 1, 'Master Didi Kempot', 'A-1-001', 'A1001', 'A-1', '1', 1, NULL, NULL, '{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"NTRQBBJXMA\",\"tarif_id\":\"1\",\"tarif_nama\":\"Tarif 1\",\"daya\":\"1300\",\"awal\":\"200\",\"akhir\":\"300\",\"reset\":null,\"pakai\":100,\"blok1\":0,\"blok2\":240400,\"beban\":65000,\"pju\":54972,\"ppn\":36038,\"jml_los\":1,\"sub_tagihan\":396410,\"denda\":100000,\"denda_bulan\":\"2\",\"diskon\":0,\"diskon_persen\":null,\"ttl_tagihan\":496410,\"rea_tagihan\":496410,\"sel_tagihan\":0,\"restored_by_id\":null,\"restored_by_name\":null,\"restored_time\":null}', '{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"NTRQBBJXMA\",\"tarif_id\":\"1\",\"tarif_nama\":\"Tarif 1\",\"awal\":\"10\",\"akhir\":\"35\",\"reset\":null,\"pakai\":25,\"bayar\":197500,\"pemeliharaan\":\"15000\",\"beban\":\"25000\",\"arkot\":59250,\"ppn\":29675,\"jml_los\":1,\"sub_tagihan\":326425,\"denda\":100000,\"denda_bulan\":\"2\",\"diskon\":0,\"diskon_persen\":null,\"ttl_tagihan\":426425,\"rea_tagihan\":426425,\"sel_tagihan\":0,\"restored_by_id\":null,\"restored_by_name\":null,\"restored_time\":null}', '{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"NTRQBBJXMA\",\"tarif_id\":\"2\",\"tarif_nama\":\"Tarif 2\",\"price\":130000,\"jml_los\":1,\"sub_tagihan\":130000,\"diskon\":0,\"keamanan\":110500,\"keamanan_persen\":\"85\",\"ipk\":19500,\"ipk_persen\":\"15\",\"ttl_tagihan\":130000,\"rea_tagihan\":130000,\"sel_tagihan\":0,\"restored_by_id\":null,\"restored_by_name\":null,\"restored_time\":null}', '{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"NTRQBBJXMA\",\"tarif_id\":\"3\",\"tarif_nama\":\"Tarif 3\",\"price\":140000,\"jml_los\":1,\"sub_tagihan\":140000,\"diskon\":0,\"ttl_tagihan\":140000,\"rea_tagihan\":140000,\"sel_tagihan\":0,\"restored_by_id\":null,\"restored_by_name\":null,\"restored_time\":null}', '{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"NTRQBBJXMA\",\"tarif_id\":\"1\",\"tarif_nama\":\"Tarif 1\",\"price\":250000,\"jml_los\":1,\"sub_tagihan\":250000,\"diskon\":0,\"ttl_tagihan\":250000,\"rea_tagihan\":250000,\"sel_tagihan\":0,\"restored_by_id\":null,\"restored_by_name\":null,\"restored_time\":null}', '[{\"lunas\":1,\"kasir\":\"Master Didi Kempot\",\"code\":\"NTRQBBJXMA\",\"tarif_id\":\"1\",\"tarif_nama\":\"Preman\",\"price\":100000,\"jml_los\":1,\"satuan_id\":1,\"satuan_nama\":\"per-Kontrol\",\"sub_tagihan\":100000,\"ttl_tagihan\":100000,\"rea_tagihan\":100000,\"sel_tagihan\":0}]', '{\"lunas\":1,\"sub_tagihan\":1342835,\"denda\":200000,\"diskon\":0,\"ttl_tagihan\":1542835,\"rea_tagihan\":1542835,\"sel_tagihan\":0}', '{\"publish\":\"2022-01-04 19:34:34\",\"publish_by\":\"Master Didi Kempot\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2022-01-04 10:54:48\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2022-01-04 19:34:35\"}', 1, NULL, '2022-01-08 00:09:22', '2022-01-04 03:54:48');
-
 -- --------------------------------------------------------
 
 --
@@ -97,12 +89,12 @@ CREATE TABLE `change_logs` (
 --
 
 INSERT INTO `change_logs` (`id`, `release_date`, `data`, `updated_at`, `created_at`) VALUES
-(1, '29-05-2021 14:14:29', '{\"title\":\"Add Feature\",\"data\":\"Tambah Detail Keuangan\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:15:07\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2022-01-03 19:20:10\",\"release\":\"2021-05-29T14:14:29\"}', '2022-01-03 12:20:10', '2021-12-27 07:15:07'),
-(2, '28-04-2021 14:15:23', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah Profile Settings.\\r\\n2. Tambah Kotak Saran\\r\\n3. Fixing Bugs\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:16:16\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:16:16\"}', '2021-12-27 07:16:16', '2021-12-27 07:16:16'),
-(3, '27-04-2021 14:16:52', '{\"title\":\"Improve System\",\"data\":\"1. Perbaikan Arsiektur Database\\r\\n2. Detail Data Usaha\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:17:44\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:17:44\"}', '2021-12-27 07:17:44', '2021-12-27 07:17:44'),
-(4, '22-04-2021 14:18:03', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah laporan tunggakan\\r\\n2. Tambah generate laporan\\r\\n3. fixing bugs\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:19:02\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:19:02\"}', '2021-12-27 07:19:02', '2021-12-27 07:19:02'),
-(5, '07-04-2021 14:19:15', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah cetak struk susulan kasir\\r\\n2. notifikasi pembayaran kasir\\r\\n3. keuangan selesai.\\r\\n4. fixing bugs kelola tagihan\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:20:06\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:21:07\",\"release\":\"2021-04-07T14:19:15\"}', '2021-12-27 07:21:07', '2021-12-27 07:20:06'),
-(6, '04-04-2021 14:21:14', '{\"title\":\"Update Caringin Version 2.0.1\",\"data\":\"1. Improve System\\r\\n2. Improve UI\\/UX\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:21:46\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:21:46\"}', '2021-12-27 07:21:46', '2021-12-27 07:21:46');
+(1, '29-05-2021 14:14:29', '{\"title\":\"Add Feature\",\"data\":\"Tambah Detail Keuangan\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:15:07\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-03 19:20:10\",\"release\":\"2021-05-29T14:14:29\"}', '2022-01-03 12:20:10', '2021-12-27 07:15:07'),
+(2, '28-04-2021 14:15:23', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah Profile Settings.\\r\\n2. Tambah Kotak Saran\\r\\n3. Fixing Bugs\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:16:16\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:16:16\"}', '2021-12-27 07:16:16', '2021-12-27 07:16:16'),
+(3, '27-04-2021 14:16:52', '{\"title\":\"Improve System\",\"data\":\"1. Perbaikan Arsiektur Database\\r\\n2. Detail Data Usaha\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:17:44\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:17:44\"}', '2021-12-27 07:17:44', '2021-12-27 07:17:44'),
+(4, '22-04-2021 14:18:03', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah laporan tunggakan\\r\\n2. Tambah generate laporan\\r\\n3. fixing bugs\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:19:02\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:19:02\"}', '2021-12-27 07:19:02', '2021-12-27 07:19:02'),
+(5, '07-04-2021 14:19:15', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah cetak struk susulan kasir\\r\\n2. notifikasi pembayaran kasir\\r\\n3. keuangan selesai.\\r\\n4. fixing bugs kelola tagihan\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:20:06\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:21:07\",\"release\":\"2021-04-07T14:19:15\"}', '2021-12-27 07:21:07', '2021-12-27 07:20:06'),
+(6, '04-04-2021 14:21:14', '{\"title\":\"Update Caringin Version 2.0.1\",\"data\":\"1. Improve System\\r\\n2. Improve UI\\/UX\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:21:46\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:21:46\"}', '2021-12-27 07:21:46', '2021-12-27 07:21:46');
 
 -- --------------------------------------------------------
 
@@ -397,31 +389,6 @@ CREATE TABLE `data_login` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `data_login`
---
-
-INSERT INTO `data_login` (`id`, `uid`, `name`, `level`, `active`, `platform`, `status`, `updated_at`, `created_at`) VALUES
-(1, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-03 10:05:12', '2022-01-03 10:05:12'),
-(2, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-03 11:16:56', '2022-01-03 11:16:56'),
-(3, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-03 21:07:08', '2022-01-03 21:07:08'),
-(4, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-03 21:07:10', '2022-01-03 21:07:10'),
-(5, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-04 11:53:01', '2022-01-04 11:53:01'),
-(6, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-04 12:03:54', '2022-01-04 12:03:54'),
-(7, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-04 19:22:25', '2022-01-04 19:22:25'),
-(8, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-04 19:22:25', '2022-01-04 19:22:25'),
-(9, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-04 21:45:05', '2022-01-04 21:45:05'),
-(10, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-06 10:14:08', '2022-01-06 10:14:08'),
-(11, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-06 10:59:36', '2022-01-06 10:59:36'),
-(12, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-06 10:59:55', '2022-01-06 10:59:55'),
-(13, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-06 11:00:50', '2022-01-06 11:00:50'),
-(14, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-08 00:09:08', '2022-01-08 00:09:08'),
-(15, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-09 00:09:04', '2022-01-09 00:09:04'),
-(16, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-09 00:09:04', '2022-01-09 00:09:04'),
-(17, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-09 10:53:23', '2022-01-09 10:53:23'),
-(18, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-09 10:53:23', '2022-01-09 10:53:23'),
-(19, 'super_admin', 'Master Didi Kempot', 1, 1, 'Windows 10.0 Chrome 96.0.4664.110 127.0.0.1', 1, '2022-01-09 11:04:54', '2022-01-09 11:04:54');
-
 -- --------------------------------------------------------
 
 --
@@ -441,8 +408,8 @@ CREATE TABLE `day_off` (
 --
 
 INSERT INTO `day_off` (`id`, `date`, `data`, `updated_at`, `created_at`) VALUES
-(1, '2022-04-15', '{\"desc\":\"Libur Nasional Wafat Isa Al Masih\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:41:16\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:41:16\"}', '2021-12-27 14:41:16', '2021-12-27 14:41:16'),
-(2, '2022-05-15', '{\"desc\":\"Hari Minggu\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:44:14\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:44:14\"}', '2021-12-27 14:44:14', '2021-12-27 14:44:14');
+(1, '2022-04-15', '{\"desc\":\"Libur Nasional Wafat Isa Al Masih\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:41:16\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:41:16\"}', '2021-12-27 14:41:16', '2021-12-27 14:41:16'),
+(2, '2022-05-15', '{\"desc\":\"Hari Minggu\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:44:14\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:44:14\"}', '2021-12-27 14:44:14', '2021-12-27 14:44:14');
 
 -- --------------------------------------------------------
 
@@ -540,13 +507,6 @@ CREATE TABLE `income` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `income`
---
-
-INSERT INTO `income` (`id`, `code`, `faktur`, `id_period`, `kd_kontrol`, `nicename`, `no_los`, `pengguna`, `info`, `ids_tagihan`, `tagihan`, `active`, `cetak`, `shift`, `data`, `updated_at`, `created_at`) VALUES
-(83, 'NTRQBBJXMA', '0097/2022/01/08', 2, 'A-1-001', 'A1001', '1', 'Master Didi Kempot', NULL, '2,1', 5101090, 1, 0, 1, '{\"kd_kontrol\":\"A-1-001\",\"no_los\":\"1\",\"pengguna\":\"Master Didi Kempot\",\"info\":null,\"code\":\"NTRQBBJXMA\",\"faktur\":\"0097\\/2022\\/01\\/08\",\"listrik\":[{\"bulan\":\"Desember 2021\",\"daya\":\"1300\",\"awal\":\"200\",\"akhir\":\"300\",\"pakai\":100,\"denda\":100000,\"tagihan\":496410},{\"bulan\":\"Januari 2022\",\"daya\":\"10500\",\"awal\":\"10\",\"akhir\":\"20\",\"pakai\":10,\"denda\":0,\"tagihan\":0}],\"airbersih\":[{\"bulan\":\"Desember 2021\",\"awal\":\"10\",\"akhir\":\"35\",\"pakai\":25,\"denda\":100000,\"tagihan\":426425},{\"bulan\":\"Januari 2022\",\"awal\":\"90\",\"akhir\":\"101\",\"pakai\":11,\"denda\":50000,\"tagihan\":206255}],\"keamananipk\":[{\"bulan\":\"Desember 2021\",\"tagihan\":130000},{\"bulan\":\"Januari 2022\",\"tagihan\":200000}],\"kebersihan\":[{\"bulan\":\"Desember 2021\",\"tagihan\":140000},{\"bulan\":\"Januari 2022\",\"tagihan\":150000}],\"airkotor\":[{\"bulan\":\"Desember 2021\",\"tagihan\":250000},{\"bulan\":\"Januari 2022\",\"tagihan\":3000000}],\"lain\":[{\"bulan\":\"Desember 2021\",\"tagihan\":100000},{\"bulan\":\"Januari 2022\",\"tagihan\":2000}],\"tagihan\":5101090,\"bayar\":\"08-01-2022 07:09:22\",\"kasir\":\"Master Didi Kempot\"}', '2022-01-08 00:09:22', '2022-01-08 00:09:22');
-
 -- --------------------------------------------------------
 
 --
@@ -601,14 +561,6 @@ CREATE TABLE `period` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `period`
---
-
-INSERT INTO `period` (`id`, `name`, `nicename`, `new_period`, `due_date`, `year`, `faktur`, `surat`, `updated_at`, `created_at`) VALUES
-(1, '2021-12', 'Desember 2021', '2021-12-23', '2021-12-15', '2021', 0, 0, '2022-01-01 12:00:35', '2022-01-01 12:00:35'),
-(2, '2022-01', 'Januari 2022', '2022-01-23', '2022-01-15', '2022', 97, 0, '2022-01-08 00:09:22', '2022-01-03 11:17:18');
-
 -- --------------------------------------------------------
 
 --
@@ -628,7 +580,7 @@ CREATE TABLE `p_airbersih` (
 --
 
 INSERT INTO `p_airbersih` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', '{\"tarif1\":\"7000\",\"tarif2\":\"8500\",\"pemeliharaan\":\"15000\",\"beban\":\"25000\",\"airkotor\":\"30\",\"denda\":\"50000\",\"ppn\":\"10\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:49:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:49:11\"}', '2021-12-27 07:49:11', '2021-12-27 07:49:11');
+(1, 'Tarif 1', '{\"tarif1\":\"7000\",\"tarif2\":\"8500\",\"pemeliharaan\":\"15000\",\"beban\":\"25000\",\"airkotor\":\"30\",\"denda\":\"50000\",\"ppn\":\"10\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:49:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 04:52:40\"}', '2022-01-09 21:52:40', '2021-12-27 07:49:11');
 
 -- --------------------------------------------------------
 
@@ -650,8 +602,8 @@ CREATE TABLE `p_airkotor` (
 --
 
 INSERT INTO `p_airkotor` (`id`, `name`, `price`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', 250000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:55:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:55:35\"}', '2021-12-27 07:55:35', '2021-12-27 07:55:35'),
-(2, 'Tarif 2', 3000000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:55:44\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:55:44\"}', '2021-12-27 07:55:44', '2021-12-27 07:55:44');
+(1, 'Tarif 1', 250000, '{\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:55:35\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:55:35\"}', '2021-12-27 07:55:35', '2021-12-27 07:55:35'),
+(2, 'Tarif 2', 3000000, '{\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:55:44\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:55:44\"}', '2021-12-27 07:55:44', '2021-12-27 07:55:44');
 
 -- --------------------------------------------------------
 
@@ -673,13 +625,13 @@ CREATE TABLE `p_keamananipk` (
 --
 
 INSERT INTO `p_keamananipk` (`id`, `name`, `price`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', 120000, '{\"keamanan\":\"67\",\"ipk\":\"33\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:49:41\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:49:41\"}', '2021-12-27 07:49:41', '2021-12-27 07:49:41'),
-(2, 'Tarif 2', 130000, '{\"keamanan\":\"85\",\"ipk\":\"15\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:49:53\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:49:53\"}', '2021-12-27 07:49:53', '2021-12-27 07:49:53'),
-(3, 'Tarif 3', 145000, '{\"keamanan\":\"74\",\"ipk\":\"26\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:50:10\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:50:10\"}', '2021-12-27 07:50:10', '2021-12-27 07:50:10'),
-(4, 'Tarif 4', 165000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:50:31\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:50:31\"}', '2021-12-27 07:50:31', '2021-12-27 07:50:31'),
-(5, 'Tarif 5', 200000, '{\"keamanan\":\"73\",\"ipk\":\"27\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:50:55\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:50:55\"}', '2021-12-27 07:50:55', '2021-12-27 07:50:55'),
-(6, 'Tarif 6', 500000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:51:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:51:11\"}', '2021-12-27 07:51:11', '2021-12-27 07:51:11'),
-(7, 'Tarif 7', 265000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:51:31\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:51:31\"}', '2021-12-27 07:51:31', '2021-12-27 07:51:31');
+(1, 'Tarif 1', 120000, '{\"keamanan\":\"67\",\"ipk\":\"33\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:49:41\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 04:53:00\"}', '2022-01-09 21:53:00', '2021-12-27 07:49:41'),
+(2, 'Tarif 2', 130000, '{\"keamanan\":\"85\",\"ipk\":\"15\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:49:53\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:49:53\"}', '2021-12-27 07:49:53', '2021-12-27 07:49:53'),
+(3, 'Tarif 3', 145000, '{\"keamanan\":\"74\",\"ipk\":\"26\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:50:10\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:50:10\"}', '2021-12-27 07:50:10', '2021-12-27 07:50:10'),
+(4, 'Tarif 4', 165000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:50:31\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:50:31\"}', '2021-12-27 07:50:31', '2021-12-27 07:50:31'),
+(5, 'Tarif 5', 200000, '{\"keamanan\":\"73\",\"ipk\":\"27\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:50:55\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:50:55\"}', '2021-12-27 07:50:55', '2021-12-27 07:50:55'),
+(6, 'Tarif 6', 500000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:51:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:51:11\"}', '2021-12-27 07:51:11', '2021-12-27 07:51:11'),
+(7, 'Tarif 7', 265000, '{\"keamanan\":\"55\",\"ipk\":\"45\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:51:31\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:51:31\"}', '2021-12-27 07:51:31', '2021-12-27 07:51:31');
 
 -- --------------------------------------------------------
 
@@ -701,15 +653,15 @@ CREATE TABLE `p_kebersihan` (
 --
 
 INSERT INTO `p_kebersihan` (`id`, `name`, `price`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', 120000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:53:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:53:11\"}', '2021-12-27 07:53:11', '2021-12-27 07:53:11'),
-(2, 'Tarif 2', 130000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:53:26\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:53:26\"}', '2021-12-27 07:53:26', '2021-12-27 07:53:26'),
-(3, 'Tarif 3', 140000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:53:36\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:53:36\"}', '2021-12-27 07:53:36', '2021-12-27 07:53:36'),
-(4, 'Tarif 4', 150000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:53:44\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:53:44\"}', '2021-12-27 07:53:44', '2021-12-27 07:53:44'),
-(5, 'Tarif 5', 155000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:53:52\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:53:52\"}', '2021-12-27 07:53:52', '2021-12-27 07:53:52'),
-(6, 'Tarif 6', 156000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:54:04\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:54:04\"}', '2021-12-27 07:54:04', '2021-12-27 07:54:04'),
-(7, 'Tarif 7', 195000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:54:22\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:54:22\"}', '2021-12-27 07:54:22', '2021-12-27 07:54:22'),
-(8, 'Tarif 8', 235000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:54:43\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:54:43\"}', '2021-12-27 07:54:43', '2021-12-27 07:54:43'),
-(9, 'Tarif 9', 780000, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:54:58\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 14:54:58\"}', '2021-12-27 07:54:58', '2021-12-27 07:54:58');
+(1, 'Tarif 1', 120000, '{\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:53:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:53:11\"}', '2021-12-27 07:53:11', '2021-12-27 07:53:11'),
+(2, 'Tarif 2', 130000, '{\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:53:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:53:11\"}', '2021-12-27 07:53:26', '2021-12-27 07:53:26'),
+(3, 'Tarif 3', 140000, '{\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:53:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:53:11\"}', '2021-12-27 07:53:36', '2021-12-27 07:53:36'),
+(4, 'Tarif 4', 150000, '{\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:53:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:53:11\"}', '2021-12-27 07:53:44', '2021-12-27 07:53:44'),
+(5, 'Tarif 5', 155000, '{\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:53:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:53:11\"}', '2021-12-27 07:53:52', '2021-12-27 07:53:52'),
+(6, 'Tarif 6', 156000, '{\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:53:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:53:11\"}', '2021-12-27 07:54:04', '2021-12-27 07:54:04'),
+(7, 'Tarif 7', 195000, '{\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:53:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:53:11\"}', '2021-12-27 07:54:22', '2021-12-27 07:54:22'),
+(8, 'Tarif 8', 235000, '{\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:53:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:53:11\"}', '2021-12-27 07:54:43', '2021-12-27 07:54:43'),
+(9, 'Tarif 9', 780000, '{\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:53:11\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:53:11\"}', '2021-12-27 07:54:58', '2021-12-27 07:54:58');
 
 -- --------------------------------------------------------
 
@@ -726,14 +678,6 @@ CREATE TABLE `p_lain` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `p_lain`
---
-
-INSERT INTO `p_lain` (`id`, `name`, `price`, `satuan`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Preman', 100000, 1, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 15:01:26\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 15:01:26\"}', '2021-12-27 08:01:26', '2021-12-27 08:01:26'),
-(2, 'Parkir', 2000, 2, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 15:01:39\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 15:01:39\"}', '2021-12-27 08:01:39', '2021-12-27 08:01:39');
 
 -- --------------------------------------------------------
 
@@ -754,7 +698,8 @@ CREATE TABLE `p_listrik` (
 --
 
 INSERT INTO `p_listrik` (`id`, `name`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'Tarif 1', '{\"beban\":\"50\",\"blok1\":\"0\",\"blok2\":\"2404\",\"standar\":\"0\",\"pju\":\"18\",\"denda1\":\"50000\",\"denda2\":\"3\",\"ppn\":\"10\",\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 14:48:32\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2022-01-09 21:39:04\",\"rekmin\":\"0\"}', '2022-01-09 14:39:04', '2021-12-27 07:48:32');
+(1, 'Tarif 1', '{\"beban\":\"35\",\"blok1\":\"1336\",\"blok2\":\"2404\",\"standar\":\"18\",\"rekmin\":\"53.44\",\"pju\":\"10\",\"denda1\":\"50000\",\"denda2\":\"3\",\"ppn\":\"13\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2022-01-10 03:44:47\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 04:51:27\"}', '2022-01-09 21:51:27', '2022-01-09 20:44:47'),
+(2, 'Tarif 2', '{\"beban\":\"50\",\"blok1\":\"0\",\"blok2\":\"2404\",\"standar\":\"0\",\"pju\":\"18\",\"denda1\":\"50000\",\"denda2\":\"3\",\"ppn\":\"10\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:48:32\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 04:51:35\",\"rekmin\":\"0.00\"}', '2022-01-09 21:51:35', '2021-12-27 07:48:32');
 
 -- --------------------------------------------------------
 
@@ -788,17 +733,6 @@ CREATE TABLE `stores` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `stores`
---
-
-INSERT INTO `stores` (`id`, `kd_kontrol`, `nicename`, `group`, `no_los`, `jml_los`, `id_pengguna`, `id_pemilik`, `komoditi`, `status`, `ket`, `info`, `id_tlistrik`, `id_tairbersih`, `fas_listrik`, `fas_airbersih`, `fas_keamananipk`, `fas_kebersihan`, `fas_airkotor`, `fas_lain`, `data`, `updated_at`, `created_at`) VALUES
-(2, 'A-1-001', 'A1001', 'A-1', '1', 1, 1598, 1598, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"diskon\":[],\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-28 14:22:04\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-31 17:17:13\"}', '2021-12-31 10:17:13', '2021-12-28 07:22:04'),
-(3, 'A-1-002', 'A1002', 'A-1', '2', 1, 1598, 1598, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"diskon\":[],\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-28 14:22:21\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-28 14:22:21\"}', '2021-12-28 07:22:21', '2021-12-28 07:22:21'),
-(4, 'A-1-003', 'A1003', 'A-1', '3,3A', 2, 1598, 1598, NULL, 1, NULL, 'Tempat Bermain Poker dan Catur', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"diskon\":[],\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-28 14:22:41\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2022-01-04 04:16:48\"}', '2022-01-03 21:16:48', '2021-12-28 07:22:41'),
-(5, 'A-1-005', 'A1005', 'A-1', '5', 1, 1598, 1598, NULL, 1, NULL, 'Depan Toko', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"diskon\":[],\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-28 14:22:59\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-28 14:42:53\"}', '2021-12-28 07:42:53', '2021-12-28 07:22:59'),
-(7, 'A-1-015', 'A1015', 'A-1', '15', 1, NULL, NULL, NULL, 1, NULL, 'hjhjhhjh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"diskon\":[],\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-31 17:37:49\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-31 17:37:49\"}', '2021-12-31 10:37:49', '2021-12-31 10:37:49');
-
 -- --------------------------------------------------------
 
 --
@@ -815,13 +749,6 @@ CREATE TABLE `t_airbersih` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `t_airbersih`
---
-
-INSERT INTO `t_airbersih` (`id`, `code`, `name`, `meter`, `stt_available`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'MA48718', 'AER', 21, 1, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 15:02:45\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 15:02:45\"}', '2021-12-27 09:00:39', '2021-12-27 08:02:45');
 
 -- --------------------------------------------------------
 
@@ -840,13 +767,6 @@ CREATE TABLE `t_listrik` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `t_listrik`
---
-
-INSERT INTO `t_listrik` (`id`, `code`, `name`, `meter`, `power`, `stt_available`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'ML69981', 'LISTRE', 9899, 10500, 1, '{\"created_by_id\":1598,\"created_by_name\":\"Master Didi Kempot\",\"created_at\":\"2021-12-27 15:02:21\",\"updated_by_id\":1598,\"updated_by_name\":\"Master Didi Kempot\",\"updated_at\":\"2021-12-27 15:02:21\"}', '2021-12-27 08:57:07', '2021-12-27 08:02:21');
 
 -- --------------------------------------------------------
 
@@ -884,7 +804,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `uid`, `photo`, `level`, `country_id`, `phone`, `email`, `email_verified_at`, `member`, `ktp`, `npwp`, `address`, `authority`, `active`, `password`, `remember_token`, `nonactive`, `activation_code`, `available`, `created_at`, `updated_at`) VALUES
-(1598, 'Master Didi Kempot', 'super_admin', 'storage/users/1598.png', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-12-10 20:44:18', 'BP3C11111111', '1111111111111111', NULL, 'Dibawah langit berpijak pada bumi', NULL, 1, '$argon2id$v=19$m=1024,t=2,p=2$WTE0UHoyU0pGYlpIWDVOQQ$NY7eX/314e3aQ0go2uo27M2pvtPsRnuAbdp8yznkA1s', NULL, NULL, NULL, '2021-12-12 20:43:52', '2021-12-10 20:43:52', '2021-12-28 16:24:25');
+(1598, 'Super Admin', 'super_admin', 'storage/users/user.jpg', 1, 100, '895337845511', 'levindsein@gmail.com', '2021-12-10 20:44:18', 'BP3C11111111', '1111111111111111', NULL, 'Dibawah langit berpijak pada bumi', NULL, 1, '$argon2id$v=19$m=1024,t=2,p=2$WTE0UHoyU0pGYlpIWDVOQQ$NY7eX/314e3aQ0go2uo27M2pvtPsRnuAbdp8yznkA1s', NULL, NULL, NULL, '2021-12-12 20:43:52', '2021-12-10 20:43:52', '2022-01-09 21:50:22');
 
 -- --------------------------------------------------------
 
@@ -900,13 +820,6 @@ CREATE TABLE `visitors` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `visitors`
---
-
-INSERT INTO `visitors` (`id`, `visit_per_day`, `day_count`, `visit_on_day`, `updated_at`, `created_at`) VALUES
-(1, 0, 0, 61, '2022-01-09 11:04:54', '2021-12-27 08:00:06');
 
 --
 -- Indexes for dumped tables
@@ -1105,7 +1018,7 @@ ALTER TABLE `activation_code`
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `change_logs`
@@ -1129,7 +1042,7 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `data_login`
 --
 ALTER TABLE `data_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `day_off`
@@ -1165,13 +1078,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `period`
 --
 ALTER TABLE `period`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `p_airbersih`
@@ -1201,31 +1114,31 @@ ALTER TABLE `p_kebersihan`
 -- AUTO_INCREMENT for table `p_lain`
 --
 ALTER TABLE `p_lain`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `p_listrik`
 --
 ALTER TABLE `p_listrik`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `stores`
 --
 ALTER TABLE `stores`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `t_airbersih`
 --
 ALTER TABLE `t_airbersih`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `t_listrik`
 --
 ALTER TABLE `t_listrik`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1237,7 +1150,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

@@ -119,7 +119,7 @@ Pengguna
                     <span aria-hidden="true">x</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body-xl">
                 <div class="row">
                     <!-- Column -->
                     <div class="col-lg-5 col-xlg-5">
