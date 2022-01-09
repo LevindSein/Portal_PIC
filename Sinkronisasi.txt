@@ -1,0 +1,2 @@
+1. php artisan sync:period
+2. Delete Tagihan 2020 sampai November 2020

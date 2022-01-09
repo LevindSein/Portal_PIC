@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2022 at 11:11 PM
+-- Generation Time: Jan 10, 2022 at 12:17 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -94,7 +94,9 @@ INSERT INTO `change_logs` (`id`, `release_date`, `data`, `updated_at`, `created_
 (3, '27-04-2021 14:16:52', '{\"title\":\"Improve System\",\"data\":\"1. Perbaikan Arsiektur Database\\r\\n2. Detail Data Usaha\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:17:44\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:17:44\"}', '2021-12-27 07:17:44', '2021-12-27 07:17:44'),
 (4, '22-04-2021 14:18:03', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah laporan tunggakan\\r\\n2. Tambah generate laporan\\r\\n3. fixing bugs\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:19:02\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:19:02\"}', '2021-12-27 07:19:02', '2021-12-27 07:19:02'),
 (5, '07-04-2021 14:19:15', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah cetak struk susulan kasir\\r\\n2. notifikasi pembayaran kasir\\r\\n3. keuangan selesai.\\r\\n4. fixing bugs kelola tagihan\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:20:06\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:21:07\",\"release\":\"2021-04-07T14:19:15\"}', '2021-12-27 07:21:07', '2021-12-27 07:20:06'),
-(6, '04-04-2021 14:21:14', '{\"title\":\"Update Caringin Version 2.0.1\",\"data\":\"1. Improve System\\r\\n2. Improve UI\\/UX\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:21:46\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:21:46\"}', '2021-12-27 07:21:46', '2021-12-27 07:21:46');
+(6, '04-04-2021 14:21:14', '{\"title\":\"Update Caringin Version 2.0.1\",\"data\":\"1. Improve System\\r\\n2. Improve UI\\/UX\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:21:46\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:21:46\"}', '2021-12-27 07:21:46', '2021-12-27 07:21:46'),
+(7, '15-08-2021 06:10:53', '{\"title\":\"Kebijakan Denda\",\"data\":\"Bagi Tempat Usaha yang mengajukan keringanan di Bulan Agustus 2021 terhadap tagihan berjalannya mendapatkan dispensasi denda menjadi tanggal 16\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2022-01-10 06:12:27\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 06:12:27\"}', '2022-01-09 23:12:27', '2022-01-09 23:12:27'),
+(8, '23-03-2021 06:16:03', '{\"title\":\"Perubahan Tarif Listrik\",\"data\":\"Mulai periode pemakaian bulan Maret. Tagihan Listrik dikenakan tarif baru.\\r\\n\\r\\nTarif 1 => Tarif 2\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2022-01-10 06:17:31\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 06:17:31\"}', '2022-01-09 23:17:31', '2022-01-09 23:17:31');
 
 -- --------------------------------------------------------
 
@@ -561,6 +563,13 @@ CREATE TABLE `period` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `period`
+--
+
+INSERT INTO `period` (`id`, `name`, `nicename`, `new_period`, `due_date`, `year`, `faktur`, `surat`, `updated_at`, `created_at`) VALUES
+(1, '2022-01', 'Januari 2022', '2022-01-23', '2022-01-15', '2022', 0, 0, '2022-01-09 23:17:46', '2022-01-09 23:17:46');
+
 -- --------------------------------------------------------
 
 --
@@ -732,6 +741,13 @@ CREATE TABLE `stores` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stores`
+--
+
+INSERT INTO `stores` (`id`, `kd_kontrol`, `nicename`, `group`, `no_los`, `jml_los`, `id_pengguna`, `id_pemilik`, `komoditi`, `status`, `ket`, `info`, `id_tlistrik`, `id_tairbersih`, `fas_listrik`, `fas_airbersih`, `fas_keamananipk`, `fas_kebersihan`, `fas_airkotor`, `fas_lain`, `data`, `updated_at`, `created_at`) VALUES
+(1, 'A-1-001', 'A1001', 'A-1', '1', 1, 1598, 1598, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '{\"diskon\":[],\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2022-01-10 05:33:43\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 05:33:43\"}', '2022-01-09 22:33:43', '2022-01-09 22:33:43');
 
 -- --------------------------------------------------------
 
@@ -1024,7 +1040,7 @@ ALTER TABLE `bills`
 -- AUTO_INCREMENT for table `change_logs`
 --
 ALTER TABLE `change_logs`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `commodities`
@@ -1084,7 +1100,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `period`
 --
 ALTER TABLE `period`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `p_airbersih`
@@ -1126,7 +1142,7 @@ ALTER TABLE `p_listrik`
 -- AUTO_INCREMENT for table `stores`
 --
 ALTER TABLE `stores`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `t_airbersih`
