@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2022 at 12:17 AM
+-- Generation Time: Jan 10, 2022 at 12:39 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -79,6 +79,7 @@ CREATE TABLE `bills` (
 CREATE TABLE `change_logs` (
   `id` bigint(20) NOT NULL,
   `release_date` varchar(20) DEFAULT NULL,
+  `release_str` varchar(255) DEFAULT NULL,
   `data` longtext DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -88,15 +89,15 @@ CREATE TABLE `change_logs` (
 -- Dumping data for table `change_logs`
 --
 
-INSERT INTO `change_logs` (`id`, `release_date`, `data`, `updated_at`, `created_at`) VALUES
-(1, '29-05-2021 14:14:29', '{\"title\":\"Add Feature\",\"data\":\"Tambah Detail Keuangan\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:15:07\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-03 19:20:10\",\"release\":\"2021-05-29T14:14:29\"}', '2022-01-03 12:20:10', '2021-12-27 07:15:07'),
-(2, '28-04-2021 14:15:23', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah Profile Settings.\\r\\n2. Tambah Kotak Saran\\r\\n3. Fixing Bugs\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:16:16\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:16:16\"}', '2021-12-27 07:16:16', '2021-12-27 07:16:16'),
-(3, '27-04-2021 14:16:52', '{\"title\":\"Improve System\",\"data\":\"1. Perbaikan Arsiektur Database\\r\\n2. Detail Data Usaha\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:17:44\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:17:44\"}', '2021-12-27 07:17:44', '2021-12-27 07:17:44'),
-(4, '22-04-2021 14:18:03', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah laporan tunggakan\\r\\n2. Tambah generate laporan\\r\\n3. fixing bugs\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:19:02\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:19:02\"}', '2021-12-27 07:19:02', '2021-12-27 07:19:02'),
-(5, '07-04-2021 14:19:15', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah cetak struk susulan kasir\\r\\n2. notifikasi pembayaran kasir\\r\\n3. keuangan selesai.\\r\\n4. fixing bugs kelola tagihan\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:20:06\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:21:07\",\"release\":\"2021-04-07T14:19:15\"}', '2021-12-27 07:21:07', '2021-12-27 07:20:06'),
-(6, '04-04-2021 14:21:14', '{\"title\":\"Update Caringin Version 2.0.1\",\"data\":\"1. Improve System\\r\\n2. Improve UI\\/UX\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:21:46\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2021-12-27 14:21:46\"}', '2021-12-27 07:21:46', '2021-12-27 07:21:46'),
-(7, '15-08-2021 06:10:53', '{\"title\":\"Kebijakan Denda\",\"data\":\"Bagi Tempat Usaha yang mengajukan keringanan di Bulan Agustus 2021 terhadap tagihan berjalannya mendapatkan dispensasi denda menjadi tanggal 16\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2022-01-10 06:12:27\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 06:12:27\"}', '2022-01-09 23:12:27', '2022-01-09 23:12:27'),
-(8, '23-03-2021 06:16:03', '{\"title\":\"Perubahan Tarif Listrik\",\"data\":\"Mulai periode pemakaian bulan Maret. Tagihan Listrik dikenakan tarif baru.\\r\\n\\r\\nTarif 1 => Tarif 2\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2022-01-10 06:17:31\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 06:17:31\"}', '2022-01-09 23:17:31', '2022-01-09 23:17:31');
+INSERT INTO `change_logs` (`id`, `release_date`, `release_str`, `data`, `updated_at`, `created_at`) VALUES
+(1, '29-05-2021 14:14:29', '1622272469', '{\"title\":\"Add Feature\",\"data\":\"Tambah Detail Keuangan\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:15:07\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 06:31:54\",\"release\":\"2021-05-29T14:14:29\"}', '2022-01-09 23:31:54', '2021-12-27 07:15:07'),
+(2, '28-04-2021 14:15:23', '1619594123', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah Profile Settings.\\r\\n2. Tambah Kotak Saran\\r\\n3. Fixing Bugs\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:16:16\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 06:31:44\"}', '2022-01-09 23:31:44', '2021-12-27 07:16:16'),
+(3, '27-04-2021 14:16:52', '1619507812', '{\"title\":\"Improve System\",\"data\":\"1. Perbaikan Arsiektur Database\\r\\n2. Detail Data Usaha\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:17:44\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 06:31:29\"}', '2022-01-09 23:31:29', '2021-12-27 07:17:44'),
+(4, '22-04-2021 14:18:03', '1619075883', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah laporan tunggakan\\r\\n2. Tambah generate laporan\\r\\n3. fixing bugs\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:19:02\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 06:31:03\"}', '2022-01-09 23:31:03', '2021-12-27 07:19:02'),
+(5, '07-04-2021 14:19:15', '1617779955', '{\"title\":\"Add Feature\",\"data\":\"1. Tambah cetak struk susulan kasir\\r\\n2. notifikasi pembayaran kasir\\r\\n3. keuangan selesai.\\r\\n4. fixing bugs kelola tagihan\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:20:06\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 06:30:48\",\"release\":\"2021-04-07T14:19:15\"}', '2022-01-09 23:30:48', '2021-12-27 07:20:06'),
+(6, '04-04-2021 14:21:14', '1617520874', '{\"title\":\"Update Caringin Version 2.0.1\",\"data\":\"1. Improve System\\r\\n2. Improve UI\\/UX\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2021-12-27 14:21:46\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 06:30:34\"}', '2022-01-09 23:30:34', '2021-12-27 07:21:46'),
+(7, '15-08-2021 06:10:53', '1628982653', '{\"title\":\"Kebijakan Denda\",\"data\":\"Bagi Tempat Usaha yang mengajukan keringanan di Bulan Agustus 2021 terhadap tagihan berjalannya mendapatkan dispensasi denda menjadi tanggal 16\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2022-01-10 06:12:27\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 06:30:55\"}', '2022-01-09 23:30:55', '2022-01-09 23:12:27'),
+(8, '23-03-2021 06:16:03', '1616454963', '{\"title\":\"Perubahan Tarif Listrik\",\"data\":\"Mulai periode pemakaian bulan Maret. Tagihan Listrik dikenakan tarif baru.\\r\\n\\r\\nTarif 1 => Tarif 2\",\"created_by_id\":1598,\"created_by_name\":\"Super Admin\",\"created_at\":\"2022-01-10 06:17:31\",\"updated_by_id\":1598,\"updated_by_name\":\"Super Admin\",\"updated_at\":\"2022-01-10 06:31:13\"}', '2022-01-09 23:31:13', '2022-01-09 23:17:31');
 
 -- --------------------------------------------------------
 
@@ -562,13 +563,6 @@ CREATE TABLE `period` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `period`
---
-
-INSERT INTO `period` (`id`, `name`, `nicename`, `new_period`, `due_date`, `year`, `faktur`, `surat`, `updated_at`, `created_at`) VALUES
-(1, '2022-01', 'Januari 2022', '2022-01-23', '2022-01-15', '2022', 0, 0, '2022-01-09 23:17:46', '2022-01-09 23:17:46');
 
 -- --------------------------------------------------------
 
@@ -1100,7 +1094,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `period`
 --
 ALTER TABLE `period`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `p_airbersih`

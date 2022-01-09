@@ -108,7 +108,7 @@ Daftar Log Perubahan
         "serverSide": true,
         "ajax": "/production/changelogs",
         "columns": [
-            { data: 'release_date', name: 'release_date', class : 'text-center align-middle'  },
+            { data: 'release_date', name: 'release_str', class : 'text-center align-middle'  },
             { data: 'data', name: 'data', class : 'text-center align-middle' },
             { data: 'action', name: 'action', class : 'text-center align-middle' },
         ],

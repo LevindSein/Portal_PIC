@@ -25,7 +25,7 @@ class ChangeLogController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = ChangeLog::select('id','data','release_date');
+            $data = ChangeLog::select('id','release_date','release_str','data');
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '';
@@ -50,6 +50,10 @@ class ChangeLogController extends Controller
                 else{
                     return $name;
                 }
+            })
+            ->filterColumn('release_str', function ($query, $keyword) {
+                $keywords = trim($keyword);
+                $query->whereRaw("CONCAT(release_str, release_date) like ?", ["%{$keywords}%"]);
             })
             ->rawColumns(['action', 'data'])
             ->make(true);
@@ -102,6 +106,7 @@ class ChangeLogController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
             $dataset['release_date'] = $release;
+            $dataset['release_str'] = strtotime($release);
             $dataset['data'] = $json;
 
             try{
@@ -174,6 +179,12 @@ class ChangeLogController extends Controller
     public function update(Request $request, $id)
     {
         if($request->ajax()){
+            $release = Carbon::parse($request->release)->format('d-m-Y H:i:s');
+            $valid['release'] = $release;
+            Validator::make($valid, [
+                'release' => 'required|date_format:d-m-Y H:i:s',
+            ])->validate();
+
             $request->validate([
                 'title' => 'required|max:100',
                 'data' => 'required',
@@ -185,19 +196,18 @@ class ChangeLogController extends Controller
                 return response()->json(['error' => "Data not found.", 'description' => $e]);
             }
 
-            $data = json_decode($dataset->data);
-            $data->title = $request->title;
-            $data->data = $request->data;
-            $data->release = $request->release;
-            $data->updated_by_id = Auth::user()->id;
-            $data->updated_by_name = Auth::user()->name;
-            $data->updated_at = Carbon::now()->toDateTimeString();
+            $json = json_decode($dataset->data);
+            $json->title = $request->title;
+            $json->data = $request->data;
+            $json->updated_by_id = Auth::user()->id;
+            $json->updated_by_name = Auth::user()->name;
+            $json->updated_at = Carbon::now()->toDateTimeString();
 
-            $data = json_encode($data);
+            $data = json_encode($json);
 
+            $dataset->release_date = $release;
+            $dataset->release_str = strtotime($release);
             $dataset->data = $data;
-
-            $release = $dataset->release_date;
 
             try{
                 $dataset->save();

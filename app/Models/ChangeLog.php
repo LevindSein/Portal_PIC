@@ -12,6 +12,7 @@ class ChangeLog extends Model
     protected $table = 'change_logs';
     protected $fillable = [
         'release_date',
+        'release_str',
         'data',
     ];
 }
