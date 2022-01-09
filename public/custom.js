@@ -86,7 +86,7 @@ $(".float").on('input keydown', function (e) {
         if (
             (e.keyCode >= 48 && e.keyCode <= 57) ||
             (e.keyCode >= 96 && e.keyCode <= 105) ||
-            e.keyCode == 8 || e.keyCode == 188) {
+            e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 188) {
             $(this).val($(this).val().substring(0, $(this).val().indexOf(',') + 2));
         } else {
             e.preventDefault();

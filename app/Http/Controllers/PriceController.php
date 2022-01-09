@@ -59,6 +59,8 @@ class PriceController extends Controller
             $data['beban'] = str_replace('.','',$request->beban);
             $data['blok1'] = str_replace('.','',$request->blok1);
             $data['blok2'] = str_replace('.','',$request->blok2);
+            $rekmin = str_replace('.','',$request->rekmin);
+            $data['rekmin'] = str_replace(',','',$rekmin);
             $data['denda1'] = str_replace('.','',$request->denda1);
 
             Validator::make($data, [
@@ -67,6 +69,7 @@ class PriceController extends Controller
                 'blok1' => 'required|numeric|lte:999999999',
                 'blok2' => 'required|numeric|lte:999999999',
                 'standar' => 'required|numeric|lte:24',
+                'rekmin' => 'required|numeric|lte:99999999999',
                 'pju' => 'required|numeric|lte:100',
                 'denda1' => 'required|numeric|lte:999999999',
                 'denda2' => 'required|numeric|lte:100',
@@ -78,6 +81,7 @@ class PriceController extends Controller
                 'blok1' => str_replace('.','',$request->blok1),
                 'blok2' => str_replace('.','',$request->blok2),
                 'standar' => $request->standar,
+                'rekmin' => str_replace(['.',','], ['','.'], $request->rekmin),
                 'pju' => $request->pju,
                 'denda1' => str_replace('.','',$request->denda1),
                 'denda2' => $request->denda2,
@@ -112,7 +116,9 @@ class PriceController extends Controller
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
             }
 
-            $data['data'] = json_decode($data->data);
+            $json = json_decode($data->data);
+            $data['rekmin'] = number_format($json->rekmin,2,',','.');
+            $data['data'] = $json;
 
             return response()->json(['success' => 'Fetching data success.', 'show' => $data]);
         }
@@ -124,6 +130,8 @@ class PriceController extends Controller
             $data['beban'] = str_replace('.','',$request->beban);
             $data['blok1'] = str_replace('.','',$request->blok1);
             $data['blok2'] = str_replace('.','',$request->blok2);
+            $rekmin = str_replace('.','',$request->rekmin);
+            $data['rekmin'] = str_replace(',','',$rekmin);
             $data['denda1'] = str_replace('.','',$request->denda1);
 
             Validator::make($data, [
@@ -132,6 +140,7 @@ class PriceController extends Controller
                 'blok1' => 'required|numeric|lte:999999999',
                 'blok2' => 'required|numeric|lte:999999999',
                 'standar' => 'required|numeric|lte:24',
+                'rekmin' => 'required|numeric|lte:99999999999',
                 'pju' => 'required|numeric|lte:100',
                 'denda1' => 'required|numeric|lte:999999999',
                 'denda2' => 'required|numeric|lte:100',
@@ -150,6 +159,7 @@ class PriceController extends Controller
             $json->blok1 = str_replace('.','',$request->blok1);
             $json->blok2 = str_replace('.','',$request->blok2);
             $json->standar = $request->standar;
+            $json->rekmin = str_replace(['.',','], ['','.'], $request->rekmin);
             $json->pju = $request->pju;
             $json->denda1 = str_replace('.','',$request->denda1);
             $json->denda2 = $request->denda2;

@@ -274,7 +274,8 @@ Tarif Listrik
                     $("#beban").val(Number(data.show.data.beban).toLocaleString('id-ID'));
                     $("#blok1").val(Number(data.show.data.blok1).toLocaleString('id-ID'));
                     $("#blok2").val(Number(data.show.data.blok2).toLocaleString('id-ID'));
-                    $("#standar").val(data.show.data.standar);
+                    $("#standar").val(data.show.data.standar.toLocaleString('id-ID'));
+                    $("#rekmin").val(data.show.rekmin);
                     $("#pju").val(data.show.data.pju);
                     $("#denda1").val(Number(data.show.data.denda1).toLocaleString('id-ID'));
                     $("#denda2").val(data.show.data.denda2);
