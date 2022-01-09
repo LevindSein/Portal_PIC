@@ -42,7 +42,7 @@ setInterval(function(){
 
 $(".sidebartoggler").click(function(){
     var adjust = setInterval(() => {
-        var adjust = $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+        $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
     }, 10);
     setTimeout(() => {
         clearInterval(adjust);
@@ -57,10 +57,10 @@ setInterval(() => {
     }
 }, 60000);
 
-$(".number").on('input', function (e) {
-    if(e.which >= 37 && e.which <= 40) return;
+$(".number").on('input keydown', function (e) {
+    if(e.which >= 37 && e.which <= 40) e.preventDefault();
 
-    if (/^[0-9.,]+$/.test($(this).val())) {
+    if (/^[0-9\.]+$/.test($(this).val())) {
         $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
     }
     else {
@@ -74,4 +74,26 @@ $('.percent').on('input', function (e) {
 
 $('.hour').on('input', function (e) {
     if ($(this).val() > 24) $(this).val($(this).val().replace($(this).val(), 24));
+});
+
+$(".float").on('input keydown', function (e) {
+    if(e.which >= 37 && e.which <= 40) e.preventDefault();
+
+    if (/^[0-9\.]+$/.test($(this).val())) {
+        $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
+    }
+    else {
+        if (
+            (e.keyCode >= 48 && e.keyCode <= 57) ||
+            (e.keyCode >= 96 && e.keyCode <= 105) ||
+            e.keyCode == 8 || e.keyCode == 188) {
+            $(this).val($(this).val().substring(0, $(this).val().indexOf(',') + 2));
+        } else {
+            e.preventDefault();
+        }
+    }
+
+    if($(this).val().indexOf(',') !== -1 && e.keyCode == 188){
+        e.preventDefault();
+    }
 });
