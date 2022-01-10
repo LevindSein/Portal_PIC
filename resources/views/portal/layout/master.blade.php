@@ -517,34 +517,18 @@
                 success:function(data)
                 {
                     if(data.success){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
                         toastr.success(data.success);
                     }
 
                     if(data.error){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
                         toastr.error(data.error);
                     }
 
                     if(data.warning){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
                         toastr.warning(data.warning);
                     }
 
                     if(data.info){
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
                         toastr.info(data.info);
                     }
 
@@ -556,10 +540,6 @@
                     }
                 },
                 error:function(data){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error("System error.");
                     console.log(data);
                 },

@@ -150,18 +150,10 @@ Riwayat Login
                 }
 
                 if(data.error){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error(data.error);
                 }
 
                 if(data.warning){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.warning(data.warning);
                     if(data.description){
                         setTimeout(function() {
@@ -171,10 +163,6 @@ Riwayat Login
                 }
 
                 if(data.info){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.info(data.info);
                 }
 
@@ -183,10 +171,6 @@ Riwayat Login
                 }
             },
             error:function(data){
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                };
                 toastr.error("Failed to retrieve data.");
                 console.log(data);
             },

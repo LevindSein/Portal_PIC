@@ -171,35 +171,19 @@
                     success:function(data)
                     {
                         if(data.success){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
                             toastr.success(data.success);
                             location.href = "/login";
                         }
 
                         if(data.info){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
                             toastr.info(data.info);
                         }
 
                         if(data.warning){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
                             toastr.warning(data.warning);
                         }
 
                         if(data.error){
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
                             toastr.error(data.error);
                         }
 
@@ -212,18 +196,10 @@
                     error:function(data){
                         if (data.status == 422) {
                             $.each(data.responseJSON.errors, function (i, error) {
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
                                 toastr.error(error[0]);
                             });
                         }
                         else{
-                            toastr.options = {
-                                "closeButton": true,
-                                "preventDuplicates": true,
-                            };
                             toastr.error("System error.");
                             console.log(data);
                         }

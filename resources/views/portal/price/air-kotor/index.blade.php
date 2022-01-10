@@ -193,26 +193,14 @@ Tarif Air Kotor
                 }
 
                 if(data.error){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error(data.error);
                 }
 
                 if(data.warning){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.warning(data.warning);
                 }
 
                 if(data.info){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.info(data.info);
                 }
 
@@ -221,10 +209,6 @@ Tarif Air Kotor
                 }
             },
             error:function(data){
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                };
                 toastr.error("Fetching data failed.");
                 console.log(data);
             },
@@ -310,35 +294,19 @@ Tarif Air Kotor
             success:function(data)
             {
                 if(data.success){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.success(data.success);
                     dtableReload(data.searchKey);
                 }
 
                 if(data.error){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error(data.error);
                 }
 
                 if(data.warning){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.warning(data.warning);
                 }
 
                 if(data.info){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.info(data.info);
                 }
 
@@ -349,18 +317,10 @@ Tarif Air Kotor
             error:function(data){
                 if (data.status == 422) {
                     $.each(data.responseJSON.errors, function (i, error) {
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
                         toastr.error(error[0]);
                     });
                 }
                 else{
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error("System error.");
                 }
                 console.log(data);
@@ -394,26 +354,14 @@ Tarif Air Kotor
                 }
 
                 if(data.error){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error(data.error);
                 }
 
                 if(data.warning){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.warning(data.warning);
                 }
 
                 if(data.info){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.info(data.info);
                 }
 
@@ -422,10 +370,6 @@ Tarif Air Kotor
                 }
             },
             error:function(data){
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                };
                 toastr.error("Fetching data failed.");
                 console.log(data);
             },

@@ -599,26 +599,14 @@ Pengguna
                 }
 
                 if(data.error){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error(data.error);
                 }
 
                 if(data.warning){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.warning(data.warning);
                 }
 
                 if(data.info){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.info(data.info);
                 }
 
@@ -627,10 +615,6 @@ Pengguna
                 }
             },
             error:function(data){
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                };
                 toastr.error("Fetching data failed.");
                 console.log(data);
             },
@@ -642,10 +626,6 @@ Pengguna
                         cache:false,
                         success:function(data){
                             if(data.success){
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
                                 toastr.success(data.success);
                                 $.blockUI({
                                     message: '<i class="fad fa-spin fa-spinner text-white"></i>',
@@ -669,26 +649,14 @@ Pengguna
                             }
 
                             if(data.error){
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
                                 toastr.error(data.error);
                             }
 
                             if(data.warning){
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
                                 toastr.warning(data.warning);
                             }
 
                             if(data.info){
-                                toastr.options = {
-                                    "closeButton": true,
-                                    "preventDuplicates": true,
-                                };
                                 toastr.info(data.info);
                             }
 
@@ -816,26 +784,14 @@ Pengguna
                 }
 
                 if(data.error){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error(data.error);
                 }
 
                 if(data.warning){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.warning(data.warning);
                 }
 
                 if(data.info){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.info(data.info);
                 }
 
@@ -844,10 +800,6 @@ Pengguna
                 }
             },
             error:function(data){
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                };
                 toastr.error("Fetching data failed.");
                 console.log(data);
             },
@@ -936,26 +888,14 @@ Pengguna
                 }
 
                 if(data.error){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error(data.error);
                 }
 
                 if(data.warning){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.warning(data.warning);
                 }
 
                 if(data.info){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.info(data.info);
                 }
 
@@ -964,10 +904,6 @@ Pengguna
                 }
             },
             error:function(data){
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                };
                 toastr.error("Fetching data failed.");
                 console.log(data);
             },
@@ -1053,10 +989,6 @@ Pengguna
             success:function(data)
             {
                 if(data.success){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.success(data.success);
 
                     if(value == 'reset'){
@@ -1076,26 +1008,14 @@ Pengguna
                 }
 
                 if(data.error){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error(data.error);
                 }
 
                 if(data.warning){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.warning(data.warning);
                 }
 
                 if(data.info){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.info(data.info);
                 }
 
@@ -1106,18 +1026,10 @@ Pengguna
             error:function(data){
                 if (data.status == 422) {
                     $.each(data.responseJSON.errors, function (i, error) {
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
                         toastr.error(error[0]);
                     });
                 }
                 else{
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error("System error.");
                 }
                 console.log(data);
@@ -1325,10 +1237,6 @@ Pengguna
         navigator.clipboard.writeText($("#newPassword").text());
         $('#resetModal').modal('hide');
 
-        toastr.options = {
-            "closeButton": true,
-            "preventDuplicates": true,
-        };
         toastr.success("Password copied.");
     });
 </script>

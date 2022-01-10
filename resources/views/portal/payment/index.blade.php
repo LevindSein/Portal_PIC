@@ -334,35 +334,19 @@ Bayar Tagihan
             success:function(data)
             {
                 if(data.success){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.success(data.success);
                     dtableReload(data.searchKey);
                 }
 
                 if(data.error){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error(data.error);
                 }
 
                 if(data.warning){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.warning(data.warning);
                 }
 
                 if(data.info){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.info(data.info);
                 }
 
@@ -378,18 +362,10 @@ Bayar Tagihan
             error:function(data){
                 if (data.status == 422) {
                     $.each(data.responseJSON.errors, function (i, error) {
-                        toastr.options = {
-                            "closeButton": true,
-                            "preventDuplicates": true,
-                        };
                         toastr.error(error[0]);
                     });
                 }
                 else{
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error("System error.");
                 }
                 console.log(data);
@@ -426,30 +402,18 @@ Bayar Tagihan
         var socket = new WebSocket("ws://127.0.0.1:40213/");
         socket.bufferType = "arraybuffer";
         socket.onerror = function(error) {
-            toastr.options = {
-                "closeButton": true,
-                "preventDuplicates": true,
-            };
             toastr.warning("Printer not ready.");
             console.log(error);
         };
         socket.onopen = function() {
             socket.send(data);
             socket.close(1000, "Work complete");
-            toastr.options = {
-                "closeButton": true,
-                "preventDuplicates": true,
-            };
             toastr.info("Receipt sent into print jobs.");
         };
     }
 
     function android_print(data){
         window.location.href = data;
-        toastr.options = {
-            "closeButton": true,
-            "preventDuplicates": true,
-        };
         toastr.info("Receipt sent into print jobs.");
     }
 
@@ -896,26 +860,14 @@ Bayar Tagihan
                 }
 
                 if(data.error){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.error(data.error);
                 }
 
                 if(data.warning){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.warning(data.warning);
                 }
 
                 if(data.info){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
                     toastr.info(data.info);
                 }
 
@@ -924,10 +876,6 @@ Bayar Tagihan
                 }
             },
             error:function(data){
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                };
                 toastr.error("Fetching data failed.");
                 console.log(data);
             },
