@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2022 at 12:39 AM
+-- Generation Time: Jan 10, 2022 at 12:43 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -564,6 +564,13 @@ CREATE TABLE `period` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `period`
+--
+
+INSERT INTO `period` (`id`, `name`, `nicename`, `new_period`, `due_date`, `year`, `faktur`, `surat`, `updated_at`, `created_at`) VALUES
+(1, '2022-01', 'Januari 2022', '2022-01-23', '2022-01-15', '2022', 0, 0, '2022-01-09 23:39:08', '2022-01-09 23:39:08');
+
 -- --------------------------------------------------------
 
 --
@@ -832,6 +839,13 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `visitors`
+--
+
+INSERT INTO `visitors` (`id`, `visit_per_day`, `day_count`, `visit_on_day`, `updated_at`, `created_at`) VALUES
+(1, 0, 0, 3, '2022-01-09 23:42:47', '2022-01-09 23:39:46');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -1094,7 +1108,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `period`
 --
 ALTER TABLE `period`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `p_airbersih`
@@ -1160,7 +1174,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

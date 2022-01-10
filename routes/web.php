@@ -173,17 +173,13 @@ Route::get('expired', function(){
 
 Route::get('shift/{type}', function($type){
     if($type == 'get'){
-        if(Session::get('shift')){
-            $shift = Session::get('shift');
+        $time = Carbon::now();
+        if($time->format('Y-m-d H:i:s') < $time->format('Y-m-d 17:00:00')){
+            Session::put('shift', 1);
+            $shift = 1;
         } else{
-            $time = Carbon::now();
-            if($time->format('Y-m-d H:i:s') < $time->format('Y-m-d 17:00:00')){
-                Session::put('shift', 1);
-                $shift = 1;
-            } else{
-                Session::put('shift', 2);
-                $shift = 2;
-            }
+            Session::put('shift', 2);
+            $shift = 2;
         }
     } else{
         if(Session::get('shift') == 1){

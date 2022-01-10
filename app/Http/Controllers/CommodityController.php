@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\Commodity;
+use App\Models\Store;
 
 use DataTables;
 use Carbon\Carbon;
@@ -182,6 +183,10 @@ class CommodityController extends Controller
                 $data = Commodity::findOrFail($id);
             }catch(ModelNotFoundException $e){
                 return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            if(Store::whereJsonContains('komoditi', [['id' => $data->id]])->first()){
+                return response()->json(['error' => "Commodity currently use."]);
             }
 
             try{

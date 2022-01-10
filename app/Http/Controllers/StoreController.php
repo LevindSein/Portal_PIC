@@ -535,6 +535,9 @@ class StoreController extends Controller
 
                 $data->komoditi = json_encode($commodities);
             }
+            else{
+                $data->komoditi = NULL;
+            }
 
             $data->info = $request->info;
 

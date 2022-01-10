@@ -62,10 +62,10 @@ class PAirBersih extends Model
     }
 
     public static function arkot($arkot, $bayar){
-        return ($arkot / 100) * $bayar;
+        return round(($arkot / 100) * $bayar);
     }
 
     public static function ppn($ppn, $total){
-        return ($ppn / 100) * $total;
+        return round(($ppn / 100) * $total);
     }
 }
