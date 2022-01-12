@@ -213,7 +213,7 @@ Pengguna
                             <div class="form-group">
                                 <label>Handphone <span class="text-danger">*</span></label>
                                 <input type="hidden" id="country" name="country" />
-                                <input id="phone" name="phone" type="tel" autocomplete="off" minlength="8" maxlength="15" placeholder="878123xxxxx" class="form-control form-control-line">
+                                <input id="phone" name="phone" type="tel" required autocomplete="off" minlength="8" maxlength="15" placeholder="878123xxxxx" class="form-control form-control-line">
                             </div>
                         </div>
                         <div class="col-lg-6 col-xlg-6">

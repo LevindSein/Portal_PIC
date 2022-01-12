@@ -57,7 +57,7 @@ Route::middleware('checkauth')->group(function(){
         Route::middleware('oneauth')->group(function(){
             Route::get('dashboard', [DashboardController::class, 'index']);
 
-            Route::get('service/register', [ServiceController::class, 'index']);
+            Route::resource('service/register', ServiceController::class);
 
             Route::get('users/change/{level}', [UserController::class, 'userChange']);
             Route::get('users/level', [UserController::class, 'userLevel']);

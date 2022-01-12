@@ -107,7 +107,7 @@ Profil
                                 <label class="col-md-12">Handphone <span class="text-danger">*</span></label>
                                 <div class="col-md-12">
                                     <input type="hidden" id="country" name="country" />
-                                    <input id="phone" name="phone" type="tel" autocomplete="off" minlength="8" maxlength="15" placeholder="878123xxxxx" value="{{Auth::user()->phone}}" class="form-control form-control-line">
+                                    <input id="phone" name="phone" type="tel" required autocomplete="off" minlength="8" maxlength="15" placeholder="878123xxxxx" value="{{Auth::user()->phone}}" class="form-control form-control-line">
                                 </div>
                             </div>
                             <div class="form-group">

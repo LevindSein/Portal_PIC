@@ -644,6 +644,26 @@ class UserController extends Controller
         }
     }
 
+    public function activation($id){
+        if(request()->ajax()){
+            try{
+                $user = User::findOrFail($id);
+            }catch(ModelNotFoundException $e){
+                return response()->json(['error' => 'Data not found.', 'description' => $e]);
+            }
+
+            $user->active = 1;
+
+            try{
+                $user->save();
+            } catch(\Exception $e){
+                return response()->json(['error' => "Activation failed.", 'description' => $e]);
+            }
+
+            return response()->json(['success' => 'Activation success.']);
+        }
+    }
+
     public function activate(){
         if(request()->ajax()){
             $now = Carbon::now()->toDateTimeString();

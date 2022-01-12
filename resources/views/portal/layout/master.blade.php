@@ -160,14 +160,14 @@
                                 <span class="hide-menu"><b>Dashboard</b></span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <li class="sidebar-item {{ (request()->is('production/service*')) ? 'bg-light' : '' }}">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark {{ (request()->is('production/service*')) ? 'active' : '' }}" href="javascript:void(0)" aria-expanded="false">
                                 <i class="fad fa-user-headset mr-1 text-info"></i>
                                 <span class="hide-menu"><b>Layanan</b></span>
                             </a>
-                            <ul aria-expanded="false" class="collapse first-level">
+                            <ul aria-expanded="false" class="collapse first-level {{ (request()->is('production/service*')) ? 'in' : '' }}">
                                 <li class="sidebar-item">
-                                    <a href="{{url('#')}}" class="sidebar-link waves-effect waves-dark">
+                                    <a href="{{url('production/service/register')}}" class="sidebar-link waves-effect waves-dark {{ (request()->is('production/service/register*')) ? 'active' : '' }}">
                                         <i class="mdi mdi-adjust mr-1 text-success"></i>
                                         <span class="hide-menu">Registrasi</span>
                                     </a>
@@ -502,6 +502,13 @@
             $('#dtable').on('error.dt', function(e, settings, techNote, message) {
                 alert("Datatable system error.");
                 console.log( 'An error has been reported by DataTables: ', message);
+            });
+
+            // Hide Tooltip after clicked in 500 milliseconds
+            $(document).on('click', '[data-toggle="tooltip"]', function(){
+                setTimeout(() => {
+                    $(this).tooltip('hide');
+                }, 500);
             });
         });
 
