@@ -10,7 +10,7 @@ $(document).ready(function() {
             window.scrollTo(0, localStorage.getItem('scrollPosition'));
     },false);
 
-    $('[data-toggle=tooltip]').tooltip({ trigger: "hover" });
+    // $('[data-toggle=tooltip]').tooltip({ trigger: "hover" });
 });
 
 //Fullscreen

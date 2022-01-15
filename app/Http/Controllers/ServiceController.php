@@ -109,29 +109,27 @@ class ServiceController extends Controller
             $password = Identity::make('password');
             $data['password'] = Hash::make(sha1(md5($password)));
 
-            if(isset($request->checkEmail)){
-                try{
-                    $details = [
-                        'sender' => Auth::user()->name." dari PIC",
-                        'header' => "Harap Setting Profil & Password Anda setelah verifikasi",
-                        'subject' => "Email Verification",
-                        'name' => $name,
-                        'role' => User::level($level),
-                        'type' => "verifikasi",
-                        'uid' => $uid,
-                        'password' => $password,
-                        'button' => "Verifikasi",
-                        'url' => url('email/verify/'.$level.'/'.Crypt::encrypt($member . "+" . Carbon::now()->addDays(2)->toDateTimeString())),
-                        'regards' => "Selamat Berniaga (PIC BDG Team)",
-                        'email' => $email,
-                        'timestamp' => Carbon::now()->toDateTimeString(),
-                        'value' => 'store',
-                    ];
-                    dispatch(new \App\Jobs\UserEmailJob($details));
-                }
-                catch(\Exception $e){
-                    return response()->json(['error' => 'Email failed to send.', 'description' => $e]);
-                }
+            try{
+                $details = [
+                    'sender' => Auth::user()->name." dari PIC",
+                    'header' => "Harap Setting Profil & Password Anda setelah verifikasi",
+                    'subject' => "Email Verification",
+                    'name' => $name,
+                    'role' => User::level($level),
+                    'type' => "verifikasi",
+                    'uid' => $uid,
+                    'password' => $password,
+                    'button' => "Verifikasi",
+                    'url' => url('email/verify/'.$level.'/'.Crypt::encrypt($member . "+" . Carbon::now()->addDays(2)->toDateTimeString())),
+                    'regards' => "Selamat Berniaga (PIC BDG Team)",
+                    'email' => $email,
+                    'timestamp' => Carbon::now()->toDateTimeString(),
+                    'value' => 'store',
+                ];
+                dispatch(new \App\Jobs\UserEmailJob($details));
+            }
+            catch(\Exception $e){
+                return response()->json(['error' => 'Email failed to send.', 'description' => $e]);
             }
 
             try{

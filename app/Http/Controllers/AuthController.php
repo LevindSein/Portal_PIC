@@ -118,7 +118,7 @@ class AuthController extends Controller
                         Session::flush();
                         Session::put('_token', $temp);
                         Auth::logout();
-                        return response()->json(['error' => "Access denied."]);
+                        return response()->json(['error' => "Access denied. Nasabah Undermaintenance"]);
                     }
                 }
                 else{
