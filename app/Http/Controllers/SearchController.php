@@ -28,10 +28,13 @@ class SearchController extends Controller
     public function users(Request $request){
         $data = [];
         if($request->ajax()) {
-            $key = $request->q;
-            $data = User::select('id', 'name', 'ktp')
-            ->where('name', 'LIKE', '%'.$key.'%')
-            ->orWhere('ktp', 'LIKE', '%'.$key.'%')
+            $data = User::select('id', 'name', 'ktp', 'active')
+            ->where('active', 1)
+            ->where(function ($query) use ($request) {
+                $key = $request->q;
+                $query->where('name', 'LIKE', '%'.$key.'%')
+                      ->orWhere('ktp', 'LIKE', '%'.$key.'%');
+            })
             ->orderBy('name','asc')
             ->limit(5)
             ->get();
@@ -127,7 +130,10 @@ class SearchController extends Controller
         $data = [];
         if($request->ajax()) {
             $key = $request->q;
-            $data = Period::select('id', 'name','nicename')->where('nicename', 'LIKE', '%'.$key.'%')->orderBy('name','desc')->get();
+            $data = Period::select('id', 'name','nicename')
+            ->where('nicename', 'LIKE', '%'.$key.'%')
+            ->orderBy('name','desc')
+            ->get();
         }
         return response()->json($data);
     }
@@ -156,7 +162,10 @@ class SearchController extends Controller
         $data = [];
         if($request->ajax()) {
             $key = $request->q;
-            $data = Commodity::select('id', 'name')->where('name', 'LIKE', '%'.$key.'%')->orderBy('name','asc')->get();
+            $data = Commodity::select('id', 'name')
+            ->where('name', 'LIKE', '%'.$key.'%')
+            ->orderBy('name','asc')
+            ->get();
         }
         return response()->json($data);
     }

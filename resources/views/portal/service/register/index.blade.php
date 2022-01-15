@@ -13,7 +13,7 @@ Registrasi Pengguna
         <div class="card">
             <div class="card-body">
                 <form id="registerForm">
-                    <input type="hidden" name="userId" value="{{($data) ? $data->id : ''}}">
+                    <input type="hidden" id="userId" name="userId" value="{{($data) ? $data->id : ''}}">
                     <div class="row">
                         <div class="col-lg-6 col-xlg-6">
                             <div class="form-group">
@@ -74,7 +74,7 @@ Registrasi Pengguna
                             </div>
                         </div>
                     </div>
-                    <div id="div_tu_2">
+                    {{-- <div id="div_tu_2">
                         <div class="row">
                             <div class="col-lg-6 col-xlg-6">
                                 <div class="form-group">
@@ -152,7 +152,7 @@ Registrasi Pengguna
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-group text-center">
                         <input type="hidden" id="registerFormValue" value="{{($data) ? 'update' : 'add'}}"/>
                         <button type="submit" id="save_btn" class="btn btn-success">Simpan</button>
@@ -169,12 +169,27 @@ Registrasi Pengguna
 
 @section('content-js')
 <script>
+    var iti;
+    function initializeTel(init) {
+        iti = window.intlTelInput(document.querySelector("#phone"), {
+            initialCountry: init,
+            preferredCountries: ['id'],
+            formatOnDisplay: false,
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js"
+        });
+    }
+    initializeTel("id");
+
     init();
     level();
 
     function init(){
         $("#div_tu_2").hide();
         $("#tempatusaha").show();
+
+        iti.destroy();
+        initializeTel("id");
     }
 
     function tempatUsaha() {
@@ -213,6 +228,8 @@ Registrasi Pengguna
 
     $('#registerForm').submit(function(e){
         e.preventDefault();
+        var country = iti.getSelectedCountryData();
+        $("#country").val(country.iso2);
 
         value = $("#registerFormValue").val();
         if(value == 'add'){
@@ -220,7 +237,7 @@ Registrasi Pengguna
             type = "POST";
         }
         else if(value == 'update'){
-            url = "/production/service/register/" + $("#registerFormValue").val();
+            url = "/production/service/register/" + $("#userId").val();
             type = "PUT";
         }
         dataset = $(this).serialize();
@@ -293,17 +310,5 @@ Registrasi Pengguna
             }
         });
     }
-
-    var iti;
-    function initializeTel(init) {
-        iti = window.intlTelInput(document.querySelector("#phone"), {
-            initialCountry: init,
-            preferredCountries: ['id'],
-            formatOnDisplay: false,
-            separateDialCode: true,
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js"
-        });
-    }
-    initializeTel("id");
 </script>
 @endsection

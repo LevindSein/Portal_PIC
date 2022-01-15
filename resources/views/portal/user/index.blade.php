@@ -1210,15 +1210,6 @@ Pengguna
         });
     }
 
-    $('[type=tel]').on('change', function(e) {
-        $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
-    });
-
-    $('[type=tel]').on('keypress', function(e) {
-        keys = ['0','1','2','3','4','5','6','7','8','9']
-        return keys.indexOf(e.key) > -1
-    });
-
     $("#email").on('input', function() {
         this.value = this.value.replace(/\s/g, '');
     });

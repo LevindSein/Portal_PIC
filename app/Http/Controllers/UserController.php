@@ -150,7 +150,7 @@ class UserController extends Controller
             $data['name'] = $name;
             $level = $request->level;
             if(Auth::user()->level > 1 && $level != 3){
-                return response()->json(['error' => 'Something wrong.']);
+                return response()->json(['error' => 'Unknown level.']);
             }
             $data['level'] = $level;
             if($level == 2){
@@ -181,7 +181,7 @@ class UserController extends Controller
             $data['address'] = $request->address;
             $data['active'] = 1;
             $password = Identity::make('password');
-            $data['password'] = Hash::make(sha1(md5(hash('gost', $password))));
+            $data['password'] = Hash::make(sha1(md5($password)));
 
             if(isset($request->checkEmail)){
                 try{
@@ -321,7 +321,7 @@ class UserController extends Controller
             $user->name = $request->name;
             $level = $request->level;
             if(Auth::user()->level > 1 && $level != 3){
-                return response()->json(['error' => 'Something wrong.']);
+                return response()->json(['error' => 'Unknown level.']);
             }
             $user->level = $level;
             if($level == 2){
@@ -632,7 +632,7 @@ class UserController extends Controller
             $pass = str_shuffle('00112233445566778899');
             $pass = substr($pass,0,7);
 
-            $user->password = Hash::make(sha1(md5(hash('gost', $pass))));
+            $user->password = Hash::make(sha1(md5($pass)));
 
             try{
                 $user->save();
