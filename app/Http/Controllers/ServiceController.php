@@ -79,8 +79,9 @@ class ServiceController extends Controller
                 return response()->json(['error' => 'Unknown level.']);
             }
             $data['level'] = $level;
+
             if($level == 2){
-                $data['authority'] = $this->authorityCheck($request);
+                $data['authority'] = User::authorityCheck($request->authority, $request->kelola);
             }
 
             $country = $request->country;
@@ -141,17 +142,13 @@ class ServiceController extends Controller
 
             if($level == 3){
                 switch ($request->tempatusaha) {
-                    case '0':
-                        # code...
-                        break;
                     case '1':
-                        # code...
+                        # Pilih yang tersedia
                         break;
                     case '2':
-                        # code...
+                        # Buat Tempat Baru
                         break;
                     default:
-                        # code...
                         break;
                 }
             }
@@ -214,8 +211,9 @@ class ServiceController extends Controller
                 return response()->json(['error' => 'Unknown level.']);
             }
             $user->level = $level;
+
             if($level == 2){
-                $user->authority = $this->authorityCheck($request);
+                $user->authority = User::authorityCheck($request->authority, $request->kelola);
             }
             else{
                 $user->authority = NULL;

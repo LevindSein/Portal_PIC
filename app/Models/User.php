@@ -100,4 +100,55 @@ class User extends Authenticatable
     public function pemilik(){
         return $this->hasMany(Store::class, 'id_pemilik');
     }
+
+    public static function authorityCheck($reqAuthority, $reqKelola){
+        $pilihanKelola = array(
+            'registrasi',
+            'pedagang',
+            'tempatusaha',
+            'pembongkaran',
+            'tagihan',
+            'simulasi',
+            'pemakaian',
+            'pendapatan',
+            'tunggakan',
+            'datausaha',
+            'alatmeter',
+            'tarif',
+            'harilibur',
+        );
+
+        $kelola = NULL;
+
+        for($i=0; $i<count($pilihanKelola); $i++){
+            if($reqKelola){
+                if(in_array($pilihanKelola[$i],$reqKelola)){
+                    $kelola[$pilihanKelola[$i]] = true;
+                }
+                else{
+                    $kelola[$pilihanKelola[$i]] = false;
+                }
+            }
+        }
+
+        if(is_null($kelola))
+            $authority = [];
+        else{
+            $authority = $kelola;
+        }
+
+        $group = $reqAuthority;
+        $temp = [];
+        for($i = 0; $i < count($group); $i++){
+            $temp[$i] = $group[$i];
+        }
+        $group = $temp;
+
+        $authority = [
+            'group' => $group,
+            'authority' => $authority,
+        ];
+
+        return json_encode($authority);
+    }
 }

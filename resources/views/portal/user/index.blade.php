@@ -265,6 +265,172 @@ Pengguna
                         <div class="row">
                             <div class="col-lg-6 col-xlg-6">
                                 <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-xlg-6">
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="registrasi"
+                                                    value="registrasi">
+                                                <label class="form-control-label" for="registrasi">
+                                                    Layn.Registrasi
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="pedagang"
+                                                    value="pedagang">
+                                                <label class="form-control-label" for="pedagang">
+                                                    Layn.Pedagang
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="tempatusaha"
+                                                    value="tempatusaha">
+                                                <label class="form-control-label" for="tempatusaha">
+                                                    Layn.Tempat Usaha
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="pembongkaran"
+                                                    value="pembongkaran">
+                                                <label class="form-control-label" for="pembongkaran">
+                                                    Layn.Pembongkaran
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="pemakaian"
+                                                    value="pemakaian">
+                                                <label class="form-control-label" for="pemakaian">
+                                                    Lap.Pemakaian
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="pendapatan"
+                                                    value="pendapatan">
+                                                <label class="form-control-label" for="pendapatan">
+                                                    Lap.Pendapatan
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="tunggakan"
+                                                    value="tunggakan">
+                                                <label class="form-control-label" for="tunggakan">
+                                                    Lap.Tunggakan
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xlg-6">
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="tagihan"
+                                                    value="tagihan">
+                                                <label class="form-control-label" for="tagihan">
+                                                    Kelola Tagihan
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="simulasi"
+                                                    value="simulasi">
+                                                <label class="form-control-label" for="simulasi">
+                                                    Simulasi Tagihan
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="datausaha"
+                                                    value="datausaha">
+                                                <label class="form-control-label" for="datausaha">
+                                                    Data Usaha
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="alatmeter"
+                                                    value="alatmeter">
+                                                <label class="form-control-label" for="alatmeter">
+                                                    Alat Meter
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="tarif"
+                                                    value="tarif">
+                                                <label class="form-control-label" for="tarif">
+                                                    Tarif
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="harilibur"
+                                                    value="harilibur">
+                                                <label class="form-control-label" for="harilibur">
+                                                    Hari Libur
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-xlg-6">
+                                <div class="form-group">
                                     <div class="d-flex justify-content-between">
                                         <label>Otoritas <span class="text-danger">*</span>
                                             <sup>
@@ -281,167 +447,7 @@ Pengguna
                                         </label>
                                         <a id="chooseGroup" value="chooseAll" type="button" class="text-info" href="javascript:void(0)"></a>
                                     </div>
-                                    <select id="group" name="group[]" class="select2 form-control form-control-line" style="width: 100%;height: 36px;" multiple></select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-xlg-6">
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="kelola[]"
-                                            id="registrasi"
-                                            value="registrasi">
-                                        <label class="form-control-label" for="registrasi">
-                                            Layn.Registrasi
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="kelola[]"
-                                            id="pedagang"
-                                            value="pedagang">
-                                        <label class="form-control-label" for="pedagang">
-                                            Layn.Pedagang
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="kelola[]"
-                                            id="tempatusaha"
-                                            value="tempatusaha">
-                                        <label class="form-control-label" for="tempatusaha">
-                                            Layn.Tempat Usaha
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="kelola[]"
-                                            id="pembongkaran"
-                                            value="pembongkaran">
-                                        <label class="form-control-label" for="pembongkaran">
-                                            Layn.Pembongkaran
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="kelola[]"
-                                            id="tagihan"
-                                            value="tagihan">
-                                        <label class="form-control-label" for="tagihan">
-                                            Kelola Tagihan
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="kelola[]"
-                                            id="simulasi"
-                                            value="simulasi">
-                                        <label class="form-control-label" for="simulasi">
-                                            Simulasi Tagihan
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="kelola[]"
-                                            id="pemakaian"
-                                            value="pemakaian">
-                                        <label class="form-control-label" for="pemakaian">
-                                            Lap.Pemakaian
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="kelola[]"
-                                            id="pendapatan"
-                                            value="pendapatan">
-                                        <label class="form-control-label" for="pendapatan">
-                                            Lap.Pendapatan
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="kelola[]"
-                                            id="tunggakan"
-                                            value="tunggakan">
-                                        <label class="form-control-label" for="tunggakan">
-                                            Lap.Tunggakan
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="kelola[]"
-                                            id="datausaha"
-                                            value="datausaha">
-                                        <label class="form-control-label" for="datausaha">
-                                            Data Usaha
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="kelola[]"
-                                            id="alatmeter"
-                                            value="alatmeter">
-                                        <label class="form-control-label" for="alatmeter">
-                                            Alat Meter
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="kelola[]"
-                                            id="tarif"
-                                            value="tarif">
-                                        <label class="form-control-label" for="tarif">
-                                            Tarif
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="kelola[]"
-                                            id="harilibur"
-                                            value="harilibur">
-                                        <label class="form-control-label" for="harilibur">
-                                            Hari Libur
-                                        </label>
-                                    </div>
+                                    <select id="authority" name="authority[]" class="select2 form-control form-control-line" style="width: 100%;height: 36px;" multiple></select>
                                 </div>
                             </div>
                         </div>
@@ -682,12 +688,12 @@ Pengguna
         var level = $("#level").val();
         if(level == '2'){
             $("#authorityDiv").show();
-            select2custom("#group", "/search/groups", "-- Cari Blok Tempat --");
-            $("#group").prop("required",true);
+            select2custom("#authority", "/search/groups", "-- Cari Blok Tempat --");
+            $("#authority").prop("required",true);
         }
         else{
             $("#authorityDiv").hide();
-            $("#group").prop("required",false);
+            $("#authority").prop("required",false);
         }
     });
 
@@ -696,7 +702,7 @@ Pengguna
     });
 
     function initForm(){
-        $("#group").val("").html("").trigger("change").prop("required",false);
+        $("#authority").val("").html("").trigger("change").prop("required",false);
     }
 
     $(".add").click( function(){
@@ -730,7 +736,7 @@ Pengguna
 
         initForm();
 
-        if($("#group").val()){
+        if($("#authority").val()){
             $("#chooseGroup")
                 .html('<i class="fas fa-sm fa-eraser"></i> Hapus Semua Blok')
                 .val("deleteAll")
@@ -772,14 +778,14 @@ Pengguna
                             }
                         }
 
-                        var s1 = $("#group").select2();
+                        var s1 = $("#authority").select2();
                         var value = json.group;
                         value.forEach(function(e){
                             if(!s1.find('option:contains(' + e + ')').length)
                                 s1.append($('<option>').text(e));
                         });
                         s1.val(value).trigger("change");
-                        select2custom("#group", "/search/groups", "-- Cari Blok Tempat --");
+                        select2custom("#authority", "/search/groups", "-- Cari Blok Tempat --");
                     }
                 }
 
@@ -1132,14 +1138,14 @@ Pengguna
                             backgroundColor: 'transparent'
                         }
                     });
-                    $("#group").val(null).html("").trigger("change");
+                    $("#authority").val(null).html("").trigger("change");
                 },
                 success:function(data){
                     if(data.success){
                         var group = data.success;
                         $.each( group, function( i, val ) {
                             var option = $('<option></option>').attr('value', val.name).text(val.name).prop('selected', true);
-                            $('#group').append(option).trigger('change');
+                            $('#authority').append(option).trigger('change');
                         });
                     }
                 },
@@ -1157,7 +1163,7 @@ Pengguna
                 .val("chooseAll")
                 .removeClass("text-danger")
                 .addClass("text-info");
-            $("#group").val(null).html("").trigger("change");
+            $("#authority").val(null).html("").trigger("change");
         }
     });
 

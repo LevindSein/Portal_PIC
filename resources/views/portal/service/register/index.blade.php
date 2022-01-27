@@ -20,7 +20,9 @@ Registrasi Pengguna
                                 <label>Pilih Kategori <span class="text-danger">*</span></label>
                                 <select class="form-control" id="level" name="level">
                                     <option value="3" selected>Nasabah</option>
+                                    @if(Auth::user()->level == 1)
                                     <option value="2">Organisator</option>
+                                    @endif
                                 </select>
                             </div>
                             <div class="form-group">
@@ -53,52 +55,237 @@ Registrasi Pengguna
                         </div>
                     </div>
                     <hr>
-                    <div class="form-group" id="tempatusaha">
+                    <div class="form-group" id="authorityDiv">
+                        <div class="text-center form-group">
+                            <h4>Privileged :</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-xlg-6">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-xlg-6">
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="registrasi"
+                                                    value="registrasi">
+                                                <label class="form-control-label" for="registrasi">
+                                                    Layn.Registrasi
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="pedagang"
+                                                    value="pedagang">
+                                                <label class="form-control-label" for="pedagang">
+                                                    Layn.Pedagang
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="tempatusaha"
+                                                    value="tempatusaha">
+                                                <label class="form-control-label" for="tempatusaha">
+                                                    Layn.Tempat Usaha
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="pembongkaran"
+                                                    value="pembongkaran">
+                                                <label class="form-control-label" for="pembongkaran">
+                                                    Layn.Pembongkaran
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="pemakaian"
+                                                    value="pemakaian">
+                                                <label class="form-control-label" for="pemakaian">
+                                                    Lap.Pemakaian
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="pendapatan"
+                                                    value="pendapatan">
+                                                <label class="form-control-label" for="pendapatan">
+                                                    Lap.Pendapatan
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="tunggakan"
+                                                    value="tunggakan">
+                                                <label class="form-control-label" for="tunggakan">
+                                                    Lap.Tunggakan
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xlg-6">
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="tagihan"
+                                                    value="tagihan">
+                                                <label class="form-control-label" for="tagihan">
+                                                    Kelola Tagihan
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="simulasi"
+                                                    value="simulasi">
+                                                <label class="form-control-label" for="simulasi">
+                                                    Simulasi Tagihan
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="datausaha"
+                                                    value="datausaha">
+                                                <label class="form-control-label" for="datausaha">
+                                                    Data Usaha
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="alatmeter"
+                                                    value="alatmeter">
+                                                <label class="form-control-label" for="alatmeter">
+                                                    Alat Meter
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="tarif"
+                                                    value="tarif">
+                                                <label class="form-control-label" for="tarif">
+                                                    Tarif
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input
+                                                    checked
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    name="kelola[]"
+                                                    id="harilibur"
+                                                    value="harilibur">
+                                                <label class="form-control-label" for="harilibur">
+                                                    Hari Libur
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-xlg-6">
+                                <div class="form-group">
+                                    <div class="d-flex justify-content-between">
+                                        <label>Otoritas <span class="text-danger">*</span></label>
+                                        <a id="chooseGroup" value="chooseAll" type="button" class="text-info" href="javascript:void(0)"></a>
+                                    </div>
+                                    <select id="authority" name="authority[]" class="select2 form-control form-control-line" style="width: 100%;height: 36px;" multiple></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="tempatusahaDiv">
                         <label>Pilih Tempat Usaha <span class="text-danger">*</span></label>
                         <div class="form-check">
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" id="tu_0" name="tempatusaha" value="0" checked>
+                                <input type="radio" class="custom-control-input" id="tu_0" name="tempatusahaChoose" value="0" checked>
                                 <label class="custom-control-label" style="font-weight: 400;" for="tu_0">Tidak menggunakan</label>
                             </div>
                         </div>
                         <div class="form-check">
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" id="tu_1" name="tempatusaha" value="1">
+                                <input type="radio" class="custom-control-input" id="tu_1" name="tempatusahaChoose" value="1">
                                 <label class="custom-control-label" style="font-weight: 400;" for="tu_1">Pilih yang tersedia</label>
                             </div>
                         </div>
                         <div class="form-check">
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" id="tu_2" name="tempatusaha" value="2">
+                                <input type="radio" class="custom-control-input" id="tu_2" name="tempatusahaChoose" value="2">
                                 <label class="custom-control-label" style="font-weight: 400;" for="tu_2">Buat tempat baru</label>
                             </div>
                         </div>
                     </div>
-                    {{-- <div id="div_tu_2">
+                    <div id="div_tu_2">
                         <div class="row">
                             <div class="col-lg-6 col-xlg-6">
                                 <div class="form-group">
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="pemilik"
-                                            id="pemilik">
-                                        <label class="form-control-label" for="pemilik">
-                                            Pemilik Tempat
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input
-                                            checked
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            name="pengguna"
-                                            id="pengguna">
-                                        <label class="form-control-label" for="pengguna">
-                                            Pengguna Tempat
-                                        </label>
+                                    <label>Pilih Status Kepemilikan <span class="text-danger">*</span></label>
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input
+                                                checked
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                name="pemilik"
+                                                id="pemilik">
+                                            <label class="form-control-label" style="font-weight: 400;" for="pemilik">
+                                                Pemilik Tempat
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input
+                                                checked
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                name="pengguna"
+                                                id="pengguna">
+                                            <label class="form-control-label" style="font-weight: 400;" for="pengguna">
+                                                Pengguna Tempat
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -152,7 +339,7 @@ Registrasi Pengguna
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="form-group text-center">
                         <input type="hidden" id="registerFormValue" value="{{($data) ? 'update' : 'add'}}"/>
                         <button type="submit" id="save_btn" class="btn btn-success">Simpan</button>
@@ -186,7 +373,15 @@ Registrasi Pengguna
 
     function init(){
         $("#div_tu_2").hide();
-        $("#tempatusaha").show();
+        $("#tempatusahaDiv").show();
+
+        $("#authorityDiv").hide();
+        $("#authority").val("").html("").trigger("change").prop("required",false);
+        $("#chooseGroup")
+            .html('<i class="fas fa-sm fa-hand-pointer"></i> Pilih Semua Blok')
+            .val("chooseAll")
+            .removeClass("text-danger")
+            .addClass("text-info");
 
         iti.destroy();
         initializeTel("id");
@@ -198,15 +393,21 @@ Registrasi Pengguna
             $("#div_tu_2").show();
         }
     }
-    $('input[name="tempatusaha"]').click(tempatUsaha).each(tempatUsaha);
+    $('input[name="tempatusahaChoose"]').click(tempatUsaha).each(tempatUsaha);
 
     $("#level").on('change', function(){
         level();
     });
+
     function level() {
         init();
         if ($('#level').val() != 3) {
-            $("#tempatusaha").hide();
+            $("#tempatusahaDiv").hide();
+
+            if($('#level').val() == 2) {
+                $("#authorityDiv").show();
+                select2custom("#authority", "/search/groups", "-- Cari Blok Tempat --");
+            }
         }
     }
 
@@ -306,7 +507,88 @@ Registrasi Pengguna
                 console.log(data);
             },
             complete:function(data){
+                if(JSON.parse(data.responseText).success)
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
                 $.unblockUI();
+            }
+        });
+    }
+
+    $("#chooseGroup").click(function(){
+        if($("#chooseGroup").val() == 'chooseAll'){
+            $("#chooseGroup")
+                .html('<i class="fas fa-sm fa-eraser"></i> Hapus Semua Blok')
+                .val("deleteAll")
+                .addClass("text-danger")
+                .removeClass("text-info");
+            $.ajax({
+                url: "/production/users/choose/group/all",
+                type: "GET",
+                cache:false,
+                beforeSend:function(){
+                    $.blockUI({
+                        message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                        baseZ: 9999,
+                        overlayCSS: {
+                            backgroundColor: '#000',
+                            opacity: 0.5,
+                            cursor: 'wait'
+                        },
+                        css: {
+                            border: 0,
+                            padding: 0,
+                            backgroundColor: 'transparent'
+                        }
+                    });
+                    $("#authority").val(null).html("").trigger("change");
+                },
+                success:function(data){
+                    if(data.success){
+                        var group = data.success;
+                        $.each( group, function( i, val ) {
+                            var option = $('<option></option>').attr('value', val.name).text(val.name).prop('selected', true);
+                            $('#authority').append(option).trigger('change');
+                        });
+                    }
+                },
+                error:function(data){
+                    console.log(data);
+                },
+                complete:function(data){
+                    $.unblockUI();
+                }
+            });
+        }
+        else{
+            $("#chooseGroup")
+                .html('<i class="fas fa-sm fa-hand-pointer"></i> Pilih Semua Blok')
+                .val("chooseAll")
+                .removeClass("text-danger")
+                .addClass("text-info");
+            $("#authority").val(null).html("").trigger("change");
+        }
+    });
+
+    function select2custom(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.name,
+                                text: d.name
+                            }
+                        })
+                    };
+                },
             }
         });
     }

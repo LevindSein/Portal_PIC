@@ -154,7 +154,7 @@ class UserController extends Controller
             }
             $data['level'] = $level;
             if($level == 2){
-                $data['authority'] = $this->authorityCheck($request);
+                $data['authority'] = User::authorityCheck($request->authority, $request->kelola);
             }
 
             $country = $request->country;
@@ -325,7 +325,7 @@ class UserController extends Controller
             }
             $user->level = $level;
             if($level == 2){
-                $user->authority = $this->authorityCheck($request);
+                $user->authority = User::authorityCheck($request->authority, $request->kelola);
             }
             else{
                 $user->authority = NULL;
@@ -362,61 +362,6 @@ class UserController extends Controller
 
             return response()->json(['success' => 'Data saved.', 'searchKey' => $searchKey]);
         }
-    }
-
-    public function authorityCheck($request){
-        $request->validate([
-            'group' => 'required|array',
-        ]);
-
-        $pilihanKelola = array(
-            'registrasi',
-            'pedagang',
-            'tempatusaha',
-            'pembongkaran',
-            'tagihan',
-            'simulasi',
-            'pemakaian',
-            'pendapatan',
-            'tunggakan',
-            'datausaha',
-            'alatmeter',
-            'tarif',
-            'harilibur',
-        );
-
-        $kelola = NULL;
-
-        for($i=0; $i<count($pilihanKelola); $i++){
-            if($request->kelola){
-                if(in_array($pilihanKelola[$i],$request->kelola)){
-                    $kelola[$pilihanKelola[$i]] = true;
-                }
-                else{
-                    $kelola[$pilihanKelola[$i]] = false;
-                }
-            }
-        }
-
-        if(is_null($kelola))
-            $authority = [];
-        else{
-            $authority = $kelola;
-        }
-
-        $group = $request->group;
-        $temp = [];
-        for($i = 0; $i < count($group); $i++){
-            $temp[$i] = $group[$i];
-        }
-        $group = $temp;
-
-        $authority = [
-            'group' => $group,
-            'authority' => $authority,
-        ];
-
-        return json_encode($authority);
     }
 
     /**
