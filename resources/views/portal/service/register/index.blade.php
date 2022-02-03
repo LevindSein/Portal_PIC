@@ -354,55 +354,15 @@ Registrasi Pengguna
                                     </div>
                                     <div id="divlistrik" style="padding-left: 2rem;">
                                         <div class="form-group">
-                                            <label>Pilih Alat Meter <span class="text-danger">*</span>
-                                                <sup>
-                                                    <a href='{{url("production/point/tools/listrik")}}' target="_blank">
-                                                        <i class="far fa-question-circle"
-                                                            style="color:#5b5b5b;"
-                                                            data-container="body"
-                                                            data-trigger="hover"
-                                                            title="Alat Listrik"
-                                                            data-toggle="popover"
-                                                            data-html="true"
-                                                            data-content="Alat ukur penggunaan listrik bulanan untuk tempat usaha.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola alat listrik">
-                                                        </i>
-                                                    </a>
-                                                </sup>
-                                            </label>
+                                            <label>Pilih Alat Meter <span class="text-danger">*</span></label>
                                             <select id="tlistrik" name="tlistrik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Pilih Tarif <span class="text-danger">*</span>
-                                                <sup>
-                                                    <a href='{{url("production/prices/listrik")}}' target="_blank">
-                                                        <i class="far fa-question-circle"
-                                                            style="color:#5b5b5b;"
-                                                            data-container="body"
-                                                            data-trigger="hover"
-                                                            title="Tarif Listrik"
-                                                            data-toggle="popover"
-                                                            data-html="true"
-                                                            data-content="Tarif listrik yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif listrik">
-                                                        </i>
-                                                    </a>
-                                                </sup>
-                                            </label>
+                                            <label>Pilih Tarif <span class="text-danger">*</span></label>
                                             <select id="plistrik" name="plistrik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Diskon
-                                                <sup>
-                                                    <i class="far fa-question-circle"
-                                                        style="color:#5b5b5b;"
-                                                        data-container="body"
-                                                        data-trigger="hover"
-                                                        title="Ketikkan sesuatu"
-                                                        data-toggle="popover"
-                                                        data-html="true"
-                                                        data-content="<b>Opsional</b> : Potongan harga tagihan listrik yang dibebankan secara persentase.">
-                                                    </i>
-                                                </sup>
-                                            </label>
+                                            <label>Diskon</label>
                                             <div class="input-group">
                                                 <input maxlength="3" type="text" id="dlistrik" name="dlistrik" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
                                                 <div class="input-group-prepend">
@@ -426,55 +386,15 @@ Registrasi Pengguna
                                     </div>
                                     <div id="divairbersih" style="padding-left: 2rem;">
                                         <div class="form-group">
-                                            <label>Pilih Alat Meter <span class="text-danger">*</span>
-                                                <sup>
-                                                    <a href='{{url("production/point/tools/airbersih")}}' target="_blank">
-                                                        <i class="far fa-question-circle"
-                                                            style="color:#5b5b5b;"
-                                                            data-container="body"
-                                                            data-trigger="hover"
-                                                            title="Alat Air Bersih"
-                                                            data-toggle="popover"
-                                                            data-html="true"
-                                                            data-content="Alat ukur penggunaan air bersih bulanan untuk tempat usaha.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola alat air bersih">
-                                                        </i>
-                                                    </a>
-                                                </sup>
-                                            </label>
+                                            <label>Pilih Alat Meter <span class="text-danger">*</span></label>
                                             <select id="tairbersih" name="tairbersih" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Pilih Tarif <span class="text-danger">*</span>
-                                                <sup>
-                                                    <a href='{{url("production/prices/airbersih")}}' target="_blank">
-                                                        <i class="far fa-question-circle"
-                                                            style="color:#5b5b5b;"
-                                                            data-container="body"
-                                                            data-trigger="hover"
-                                                            title="Tarif Air Bersih"
-                                                            data-toggle="popover"
-                                                            data-html="true"
-                                                            data-content="Tarif air bersih yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif air bersih">
-                                                        </i>
-                                                    </a>
-                                                </sup>
-                                            </label>
+                                            <label>Pilih Tarif <span class="text-danger">*</span></label>
                                             <select id="pairbersih" name="pairbersih" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Diskon
-                                                <sup>
-                                                    <i class="far fa-question-circle"
-                                                        style="color:#5b5b5b;"
-                                                        data-container="body"
-                                                        data-trigger="hover"
-                                                        title="Ketikkan sesuatu"
-                                                        data-toggle="popover"
-                                                        data-html="true"
-                                                        data-content="<b>Opsional</b> : Potongan harga tagihan air bersih yang dibebankan secara persentase.">
-                                                    </i>
-                                                </sup>
-                                            </label>
+                                            <label>Diskon</label>
                                             <div class="input-group">
                                                 <input maxlength="3" type="text" id="dairbersih" name="dairbersih" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
                                                 <div class="input-group-prepend">
@@ -498,39 +418,13 @@ Registrasi Pengguna
                                     </div>
                                     <div id="divkeamananipk" style="padding-left: 2rem;">
                                         <div class="form-group">
-                                            <label>Pilih Tarif <span class="text-danger">*</span>
-                                                <sup>
-                                                    <a href='{{url("production/prices/keamananipk")}}' target="_blank">
-                                                        <i class="far fa-question-circle"
-                                                            style="color:#5b5b5b;"
-                                                            data-container="body"
-                                                            data-trigger="hover"
-                                                            title="Tarif Keamanan & IPK"
-                                                            data-toggle="popover"
-                                                            data-html="true"
-                                                            data-content="Tarif keamanan & ipk per-Nomor Los yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif keamanan ipk">
-                                                        </i>
-                                                    </a>
-                                                </sup>
-                                            </label>
+                                            <label>Pilih Tarif <span class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <select id="pkeamananipk" name="pkeamananipk" class="select2 form-control form-control-line" style="width: 100%"></select>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label>Diskon
-                                                <sup>
-                                                    <i class="far fa-question-circle"
-                                                        style="color:#5b5b5b;"
-                                                        data-container="body"
-                                                        data-trigger="hover"
-                                                        title="Ketikkan sesuatu"
-                                                        data-toggle="popover"
-                                                        data-html="true"
-                                                        data-content="<b>Opsional</b> : Potongan harga tagihan keamanan ipk yang dibebankan per-Tempat Usaha.">
-                                                    </i>
-                                                </sup>
-                                            </label>
+                                            <label>Diskon</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Rp.</span>
@@ -557,39 +451,13 @@ Registrasi Pengguna
                                     </div>
                                     <div id="divkebersihan" style="padding-left: 2rem;">
                                         <div class="form-group">
-                                            <label>Pilih Tarif <span class="text-danger">*</span>
-                                                <sup>
-                                                    <a href='{{url("production/prices/kebersihan")}}' target="_blank">
-                                                        <i class="far fa-question-circle"
-                                                            style="color:#5b5b5b;"
-                                                            data-container="body"
-                                                            data-trigger="hover"
-                                                            title="Tarif Kebersihan"
-                                                            data-toggle="popover"
-                                                            data-html="true"
-                                                            data-content="Tarif kebersihan per-Nomor Los yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif kebersihan">
-                                                        </i>
-                                                    </a>
-                                                </sup>
-                                            </label>
+                                            <label>Pilih Tarif <span class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <select id="pkebersihan" name="pkebersihan" class="select2 form-control form-control-line" style="width: 100%"></select>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label>Diskon
-                                                <sup>
-                                                    <i class="far fa-question-circle"
-                                                        style="color:#5b5b5b;"
-                                                        data-container="body"
-                                                        data-trigger="hover"
-                                                        title="Ketikkan sesuatu"
-                                                        data-toggle="popover"
-                                                        data-html="true"
-                                                        data-content="<b>Opsional</b> : Potongan harga tagihan kebersihan yang dibebankan per-Tempat Usaha.">
-                                                    </i>
-                                                </sup>
-                                            </label>
+                                            <label>Diskon</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Rp.</span>
@@ -616,39 +484,13 @@ Registrasi Pengguna
                                     </div>
                                     <div id="divairkotor" style="padding-left: 2rem;">
                                         <div class="form-group">
-                                            <label>Pilih Tarif <span class="text-danger">*</span>
-                                                <sup>
-                                                    <a href='{{url("production/prices/airkotor")}}' target="_blank">
-                                                        <i class="far fa-question-circle"
-                                                            style="color:#5b5b5b;"
-                                                            data-container="body"
-                                                            data-trigger="hover"
-                                                            title="Tarif Air Kotor"
-                                                            data-toggle="popover"
-                                                            data-html="true"
-                                                            data-content="Tarif air kotor yang dibebankan tempat usaha untuk setiap bulannya dikarenakan sesuatu yang kaitannya dengan air kotor.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif air kotor">
-                                                        </i>
-                                                    </a>
-                                                </sup>
-                                            </label>
+                                            <label>Pilih Tarif <span class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <select id="pairkotor" name="pairkotor" class="select2 form-control form-control-line" style="width: 100%"></select>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label>Diskon
-                                                <sup>
-                                                    <i class="far fa-question-circle"
-                                                        style="color:#5b5b5b;"
-                                                        data-container="body"
-                                                        data-trigger="hover"
-                                                        title="Ketikkan sesuatu"
-                                                        data-toggle="popover"
-                                                        data-html="true"
-                                                        data-content="<b>Opsional</b> : Potongan harga tagihan air kotor yang dibebankan per-Tempat Usaha.">
-                                                    </i>
-                                                </sup>
-                                            </label>
+                                            <label>Diskon</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Rp.</span>
@@ -694,7 +536,7 @@ Registrasi Pengguna
                     </div>
                     <div class="form-group">
                         <p>(<label class="text-danger">*</label>) wajib diisi.</p>
-                    </div>
+                    </div>x
                     <div class="form-group text-center">
                         <input type="hidden" id="registerFormValue" value="{{($data) ? 'update' : 'add'}}"/>
                         <button type="submit" id="save_btn" class="btn btn-success">Simpan</button>
