@@ -339,6 +339,361 @@ Registrasi Pengguna
                                 </div>
                             </div>
                         </div>
+                        <div class="text-center form-group">
+                            <h4>FASILITAS TEMPAT :</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-xlg-6">
+                                {{-- Listrik --}}
+                                <div>
+                                    <div class="form-group form-check form-check-inline">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="fas_listrik" name="fas_listrik">
+                                            <label class="custom-control-label" for="fas_listrik">Listrik</label>
+                                        </div>
+                                    </div>
+                                    <div id="divlistrik" style="padding-left: 2rem;">
+                                        <div class="form-group">
+                                            <label>Pilih Alat Meter <span class="text-danger">*</span>
+                                                <sup>
+                                                    <a href='{{url("production/point/tools/listrik")}}' target="_blank">
+                                                        <i class="far fa-question-circle"
+                                                            style="color:#5b5b5b;"
+                                                            data-container="body"
+                                                            data-trigger="hover"
+                                                            title="Alat Listrik"
+                                                            data-toggle="popover"
+                                                            data-html="true"
+                                                            data-content="Alat ukur penggunaan listrik bulanan untuk tempat usaha.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola alat listrik">
+                                                        </i>
+                                                    </a>
+                                                </sup>
+                                            </label>
+                                            <select id="tlistrik" name="tlistrik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Pilih Tarif <span class="text-danger">*</span>
+                                                <sup>
+                                                    <a href='{{url("production/prices/listrik")}}' target="_blank">
+                                                        <i class="far fa-question-circle"
+                                                            style="color:#5b5b5b;"
+                                                            data-container="body"
+                                                            data-trigger="hover"
+                                                            title="Tarif Listrik"
+                                                            data-toggle="popover"
+                                                            data-html="true"
+                                                            data-content="Tarif listrik yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif listrik">
+                                                        </i>
+                                                    </a>
+                                                </sup>
+                                            </label>
+                                            <select id="plistrik" name="plistrik" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Diskon
+                                                <sup>
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Ketikkan sesuatu"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="<b>Opsional</b> : Potongan harga tagihan listrik yang dibebankan secara persentase.">
+                                                    </i>
+                                                </sup>
+                                            </label>
+                                            <div class="input-group">
+                                                <input maxlength="3" type="text" id="dlistrik" name="dlistrik" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">% Tagihan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- End Listrik --}}
+                                {{-- Air Bersih --}}
+                                <div>
+                                    <div class="form-group form-check form-check-inline">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="fas_airbersih" name="fas_airbersih">
+                                            <label class="custom-control-label" for="fas_airbersih">Air Bersih</label>
+                                        </div>
+                                    </div>
+                                    <div id="divairbersih" style="padding-left: 2rem;">
+                                        <div class="form-group">
+                                            <label>Pilih Alat Meter <span class="text-danger">*</span>
+                                                <sup>
+                                                    <a href='{{url("production/point/tools/airbersih")}}' target="_blank">
+                                                        <i class="far fa-question-circle"
+                                                            style="color:#5b5b5b;"
+                                                            data-container="body"
+                                                            data-trigger="hover"
+                                                            title="Alat Air Bersih"
+                                                            data-toggle="popover"
+                                                            data-html="true"
+                                                            data-content="Alat ukur penggunaan air bersih bulanan untuk tempat usaha.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola alat air bersih">
+                                                        </i>
+                                                    </a>
+                                                </sup>
+                                            </label>
+                                            <select id="tairbersih" name="tairbersih" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Pilih Tarif <span class="text-danger">*</span>
+                                                <sup>
+                                                    <a href='{{url("production/prices/airbersih")}}' target="_blank">
+                                                        <i class="far fa-question-circle"
+                                                            style="color:#5b5b5b;"
+                                                            data-container="body"
+                                                            data-trigger="hover"
+                                                            title="Tarif Air Bersih"
+                                                            data-toggle="popover"
+                                                            data-html="true"
+                                                            data-content="Tarif air bersih yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif air bersih">
+                                                        </i>
+                                                    </a>
+                                                </sup>
+                                            </label>
+                                            <select id="pairbersih" name="pairbersih" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Diskon
+                                                <sup>
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Ketikkan sesuatu"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="<b>Opsional</b> : Potongan harga tagihan air bersih yang dibebankan secara persentase.">
+                                                    </i>
+                                                </sup>
+                                            </label>
+                                            <div class="input-group">
+                                                <input maxlength="3" type="text" id="dairbersih" name="dairbersih" autocomplete="off" placeholder="Ketikkan dalam angka 0-100" class="number percent form-control form-control-line">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">% Tagihan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- End Air Bersih --}}
+                                {{-- Keamanan IPK --}}
+                                <div>
+                                    <div class="form-group form-check form-check-inline">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="fas_keamananipk" name="fas_keamananipk">
+                                            <label class="custom-control-label" for="fas_keamananipk">Keamanan IPK</label>
+                                        </div>
+                                    </div>
+                                    <div id="divkeamananipk" style="padding-left: 2rem;">
+                                        <div class="form-group">
+                                            <label>Pilih Tarif <span class="text-danger">*</span>
+                                                <sup>
+                                                    <a href='{{url("production/prices/keamananipk")}}' target="_blank">
+                                                        <i class="far fa-question-circle"
+                                                            style="color:#5b5b5b;"
+                                                            data-container="body"
+                                                            data-trigger="hover"
+                                                            title="Tarif Keamanan & IPK"
+                                                            data-toggle="popover"
+                                                            data-html="true"
+                                                            data-content="Tarif keamanan & ipk per-Nomor Los yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif keamanan ipk">
+                                                        </i>
+                                                    </a>
+                                                </sup>
+                                            </label>
+                                            <div class="input-group">
+                                                <select id="pkeamananipk" name="pkeamananipk" class="select2 form-control form-control-line" style="width: 100%"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Diskon
+                                                <sup>
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Ketikkan sesuatu"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="<b>Opsional</b> : Potongan harga tagihan keamanan ipk yang dibebankan per-Tempat Usaha.">
+                                                    </i>
+                                                </sup>
+                                            </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Rp.</span>
+                                                </div>
+                                                <input maxlength="11" type="text" id="dkeamananipk" name="dkeamananipk" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">per-Kontrol</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- End Keamanan IPK --}}
+                                {{-- Kebersihan --}}
+                                <div>
+                                    <div class="form-group form-check form-check-inline">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="fas_kebersihan" name="fas_kebersihan">
+                                            <label class="custom-control-label" for="fas_kebersihan">Kebersihan</label>
+                                        </div>
+                                    </div>
+                                    <div id="divkebersihan" style="padding-left: 2rem;">
+                                        <div class="form-group">
+                                            <label>Pilih Tarif <span class="text-danger">*</span>
+                                                <sup>
+                                                    <a href='{{url("production/prices/kebersihan")}}' target="_blank">
+                                                        <i class="far fa-question-circle"
+                                                            style="color:#5b5b5b;"
+                                                            data-container="body"
+                                                            data-trigger="hover"
+                                                            title="Tarif Kebersihan"
+                                                            data-toggle="popover"
+                                                            data-html="true"
+                                                            data-content="Tarif kebersihan per-Nomor Los yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif kebersihan">
+                                                        </i>
+                                                    </a>
+                                                </sup>
+                                            </label>
+                                            <div class="input-group">
+                                                <select id="pkebersihan" name="pkebersihan" class="select2 form-control form-control-line" style="width: 100%"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Diskon
+                                                <sup>
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Ketikkan sesuatu"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="<b>Opsional</b> : Potongan harga tagihan kebersihan yang dibebankan per-Tempat Usaha.">
+                                                    </i>
+                                                </sup>
+                                            </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Rp.</span>
+                                                </div>
+                                                <input maxlength="11" type="text" id="dkebersihan" name="dkebersihan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">per-Kontrol</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- End Kebersihan --}}
+                                {{-- Air Kotor --}}
+                                <div>
+                                    <div class="form-group form-check form-check-inline">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="fas_airkotor" name="fas_airkotor">
+                                            <label class="custom-control-label" for="fas_airkotor">Air Kotor</label>
+                                        </div>
+                                    </div>
+                                    <div id="divairkotor" style="padding-left: 2rem;">
+                                        <div class="form-group">
+                                            <label>Pilih Tarif <span class="text-danger">*</span>
+                                                <sup>
+                                                    <a href='{{url("production/prices/airkotor")}}' target="_blank">
+                                                        <i class="far fa-question-circle"
+                                                            style="color:#5b5b5b;"
+                                                            data-container="body"
+                                                            data-trigger="hover"
+                                                            title="Tarif Air Kotor"
+                                                            data-toggle="popover"
+                                                            data-html="true"
+                                                            data-content="Tarif air kotor yang dibebankan tempat usaha untuk setiap bulannya dikarenakan sesuatu yang kaitannya dengan air kotor.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif air kotor">
+                                                        </i>
+                                                    </a>
+                                                </sup>
+                                            </label>
+                                            <div class="input-group">
+                                                <select id="pairkotor" name="pairkotor" class="select2 form-control form-control-line" style="width: 100%"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Diskon
+                                                <sup>
+                                                    <i class="far fa-question-circle"
+                                                        style="color:#5b5b5b;"
+                                                        data-container="body"
+                                                        data-trigger="hover"
+                                                        title="Ketikkan sesuatu"
+                                                        data-toggle="popover"
+                                                        data-html="true"
+                                                        data-content="<b>Opsional</b> : Potongan harga tagihan air kotor yang dibebankan per-Tempat Usaha.">
+                                                    </i>
+                                                </sup>
+                                            </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Rp.</span>
+                                                </div>
+                                                <input maxlength="11" type="text" id="dairkotor" name="dairkotor" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-line">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">per-Kontrol</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- End Air Kotor --}}
+                            </div>
+                            <div class="col-lg-6 col-xlg-6">
+                                {{-- Lainnya --}}
+                                <div>
+                                    <div id="divlainNew"></div>
+
+                                    <div class="form-group">
+                                        <button id="divLainAdd" class="btn btn-sm btn-rounded btn-info"><i class="fas fa-fw fa-plus mr-1"></i>Fasilitas Lainnya</button>
+                                        <sup>
+                                            <a href='{{url("production/prices/lain")}}' target="_blank">
+                                                <i class="far fa-question-circle"
+                                                    style="color:#5b5b5b;"
+                                                    data-container="body"
+                                                    data-trigger="hover"
+                                                    title="Tarif Fasilitas Lainnya"
+                                                    data-toggle="popover"
+                                                    data-html="true"
+                                                    data-content="Tambahkan tarif lainnya yang dibebankan tempat usaha untuk setiap bulannya.<br>Klik pada <i class='far fa-question-circle'></i> untuk mengelola tarif lainnya">
+                                                </i>
+                                            </a>
+                                        </sup>
+                                    </div>
+                                </div>
+                                {{-- End Lainnya --}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p>(<label class="text-danger">*</label>) wajib diisi.</p>
                     </div>
                     <div class="form-group text-center">
                         <input type="hidden" id="registerFormValue" value="{{($data) ? 'update' : 'add'}}"/>
@@ -357,6 +712,9 @@ Registrasi Pengguna
 @section('content-js')
 <script>
     var iti;
+    var lain = 0;
+    var plain = 1;
+
     function initializeTel(init) {
         iti = window.intlTelInput(document.querySelector("#phone"), {
             initialCountry: init,
@@ -385,6 +743,55 @@ Registrasi Pengguna
 
         iti.destroy();
         initializeTel("id");
+
+        $("#group").val("").html("");
+        select2custom("#group", "/search/groups", "-- Cari Blok Tempat --");
+
+        $("#los").val("").html("");
+        $("#los").select2({
+            placeholder: "(Pilih Blok Tempat terlebih dulu)"
+        }).prop("disabled", true);
+
+        $("#kontrol").prop("disabled", true).val("").html("");
+
+        $("#commodity").val("").html("");
+        select2idname("#commodity", "/search/commodities", "-- Cari Kategori Komoditi --");
+
+        $("#stt_aktif").prop("checked", true);
+        statusTempat();
+
+        $("#tlistrik").val("").html("");
+        select2tlistrik("#tlistrik", "/search/tools/listrik", "-- Cari Alat Listrik --");
+        $("#plistrik").val("").html("");
+        select2idname("#plistrik", "/search/price/listrik", "-- Cari Tarif Listrik --");
+        $("#dlistrik").val("").html("");
+        fasListrik("hide");
+
+        $("#tairbersih").val("").html("");
+        select2tairbersih("#tairbersih", "/search/tools/airbersih", "-- Cari Alat Air Bersih --");
+        $("#pairbersih").val("").html("");
+        select2idname("#pairbersih", "/search/price/airbersih", "-- Cari Tarif Air Bersih --");
+        $("#dairbersih").val("").html("");
+        fasAirBersih("hide");
+
+        $("#pkeamananipk").val("").html("");
+        select2idprice("#pkeamananipk", "/search/price/keamananipk", "-- Cari Tarif Keamanan IPK --", "per-Los");
+        $("#dkeamananipk").val("").html("");
+        fasKeamananIpk("hide");
+
+        $("#pkebersihan").val("").html("");
+        select2idprice("#pkebersihan", "/search/price/kebersihan", "-- Cari Tarif Kebersihan --", "per-Los");
+        $("#dkebersihan").val("").html("");
+        fasKebersihan("hide");
+
+        $("#pairkotor").val("").html("");
+        select2idprice("#pairkotor", "/search/price/airkotor", "-- Cari Tarif Air Kotor --", "per-Kontrol");
+        $("#dairkotor").val("").html("");
+        fasAirKotor("hide");
+
+        lain = 0;
+        plain = 1;
+        $('div[name="divlain"]').remove();
     }
 
     function tempatUsaha() {
@@ -397,6 +804,8 @@ Registrasi Pengguna
 
     $("#level").on('change', function(){
         level();
+        $('input[name="tempatusahaChoose"]').prop('checked', false);
+        $("#tu_0").prop("checked", true);
     });
 
     function level() {
@@ -516,6 +925,197 @@ Registrasi Pengguna
         });
     }
 
+    $("#divLainAdd").on('click', function (e) {
+        e.preventDefault();
+
+        var html = '';
+        html += '<div name="divlain" class="form-group">';
+        html += '<div class="d-flex justify-content-between">';
+        html += '<label>Pilih Tarif Fasilitas <span class="text-danger">*</span></label>';
+        html += '<a type="button" class="text-danger" href="javascript:void(0)" id="divlainRemove">';
+        html += 'Hapus <i class="fas fa-fw fa-eraser mr-1 ml-1"></i>';
+        html += '</a>';
+        html += '</div>';
+        html += '<select required id="plain'+ plain + '" name="plain[]" class="select2 form-control form-control-line" style="width: 100%"></select>';
+        html += '</div>';
+
+        if(lain < 10){
+            $('#divlainNew').append(html);
+            select2plain("#plain" + plain, "/search/price/lain", "-- Cari Tarif Fasilitas --");
+
+            $("#plain" + plain).on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik Tarif/Nama Tarif disini..');
+            });
+
+            plain++;
+            lain++;
+        }
+        else{
+            toastr.error("Telah mencapai maksimal.");
+        }
+    });
+    $(document).on('click', '#divlainRemove', function () {
+        lain--;
+        $(this).closest("[name='divlain']").remove();
+    });
+
+    //Nomor Los
+    $('#group').on("change", function(e) {
+        var group = $('#group').val();
+        $("#los").prop("disabled", false);
+        $("#los").val("").html("");
+        select2custom("#los", "/search/" + group + "/los", "-- Cari Nomor Los --");
+    });
+
+    //Kode Kontrol
+    $('#los').on('change', function(e) {
+        if($("#los").val() == ""){
+            $("#kontrol").prop("disabled", true).val("").html("");
+        }
+        else{
+            $("#kontrol").prop("disabled", false);
+
+            var dataset = {
+                'group' : $("#group").val(),
+                'los' : $("#los").val(),
+            };
+            $.ajax({
+                url: "/production/point/stores/generate/kontrol",
+                type: "GET",
+                cache: false,
+                data: dataset,
+                success:function(data)
+                {
+                    $("#kontrol").val(data.success);
+                    console.log(data.success);
+                },
+                error:function(data){
+                    toastr.error("System error.");
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    function fasListrik(data){
+        if(data == 'show'){
+            $("#divlistrik").show();
+            $("#tlistrik").prop("required", true);
+            $("#plistrik").prop("required", true);
+            $("#fas_listrik").prop("checked", true);
+        }
+        else{
+            $("#divlistrik").hide();
+            $("#tlistrik").prop("required", false);
+            $("#plistrik").prop("required", false);
+            $("#fas_listrik").prop("checked", false);
+        }
+    }
+
+    function checkFasListrik(){
+        if($("#fas_listrik").is(":checked")){
+            fasListrik("show");
+        }
+        else{
+            fasListrik("hide");
+        }
+    }
+    $('#fas_listrik').click(checkFasListrik).each(checkFasListrik);
+
+    function fasAirBersih(data){
+        if(data == 'show'){
+            $("#divairbersih").show();
+            $("#tairbersih").prop("required", true);
+            $("#pairbersih").prop("required", true);
+            $("#fas_airbersih").prop("checked", true);
+        }
+        else{
+            $("#divairbersih").hide();
+            $("#tairbersih").prop("required", false);
+            $("#pairbersih").prop("required", false);
+            $("#fas_airbersih").prop("checked", false);
+        }
+    }
+
+    function checkFasAirBersih(){
+        if($("#fas_airbersih").is(":checked")){
+            fasAirBersih("show");
+        }
+        else{
+            fasAirBersih("hide");
+        }
+    }
+    $('#fas_airbersih').click(checkFasAirBersih).each(checkFasAirBersih);
+
+    function fasKeamananIpk(data){
+        if(data == 'show'){
+            $("#divkeamananipk").show();
+            $("#pkeamananipk").prop("required", true);
+            $("#fas_keamananipk").prop("checked", true);
+        }
+        else{
+            $("#divkeamananipk").hide();
+            $("#pkeamananipk").prop("required", false);
+            $("#fas_keamananipk").prop("checked", false);
+        }
+    }
+
+    function checkFasKeamananIpk(){
+        if($("#fas_keamananipk").is(":checked")){
+            fasKeamananIpk("show");
+        }
+        else{
+            fasKeamananIpk("hide");
+        }
+    }
+    $('#fas_keamananipk').click(checkFasKeamananIpk).each(checkFasKeamananIpk);
+
+    function fasKebersihan(data){
+        if(data == 'show'){
+            $("#divkebersihan").show();
+            $("#pkebersihan").prop("required", true);
+            $("#fas_kebersihan").prop("checked", true);
+        }
+        else{
+            $("#divkebersihan").hide();
+            $("#pkebersihan").prop("required", false);
+            $("#fas_kebersihan").prop("checked", false);
+        }
+    }
+
+    function checkFasKebersihan(){
+        if($("#fas_kebersihan").is(":checked")){
+            fasKebersihan("show");
+        }
+        else{
+            fasKebersihan("hide");
+        }
+    }
+    $('#fas_kebersihan').click(checkFasKebersihan).each(checkFasKebersihan);
+
+    function fasAirKotor(data){
+        if(data == 'show'){
+            $("#divairkotor").show();
+            $("#pairkotor").prop("required", true);
+            $("#fas_airkotor").prop("checked", true);
+        }
+        else{
+            $("#divairkotor").hide();
+            $("#pairkotor").prop("required", false);
+            $("#fas_airkotor").prop("checked", false);
+        }
+    }
+
+    function checkFasAirKotor(){
+        if($("#fas_airkotor").is(":checked")){
+            fasAirKotor("show");
+        }
+        else{
+            fasAirKotor("hide");
+        }
+    }
+    $('#fas_airkotor').click(checkFasAirKotor).each(checkFasAirKotor);
+
     $("#chooseGroup").click(function(){
         if($("#chooseGroup").val() == 'chooseAll'){
             $("#chooseGroup")
@@ -592,5 +1192,145 @@ Registrasi Pengguna
             }
         });
     }
+
+    function select2user(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.id,
+                                text: d.name + ' (' + d.ktp + ')'
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2idname(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            maximumSelectionLength: 3,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.id,
+                                text: d.name
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2idprice(select2id, url, placeholder, satuan){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.id,
+                                text: d.name + ' - ' + Number(d.price).toLocaleString('id-ID') + ' ' + satuan
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2tlistrik(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.id,
+                                text: d.code + ' - (' + Number(d.meter).toLocaleString('id-ID') + ') - ' + d.power + ' Watt' + ' - ID: ' + d.name
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2tairbersih(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.id,
+                                text: d.code + ' - (' + Number(d.meter).toLocaleString('id-ID') + ') - ID: ' + d.name
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2plain(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.id,
+                                text: d.name + ' - ' + Number(d.price).toLocaleString('id-ID') + " " + satuanLain(d.satuan)
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+    function satuanLain(data){
+        return (data == 2) ? "per-Los" : "per-Kontrol";
+    }
+
+    $("#kontrol").on("input", function(){
+        this.value = this.value.replace(/[^0-9a-zA-Z/\-]+$/g, '');
+    });
 </script>
 @endsection
