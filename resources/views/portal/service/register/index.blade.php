@@ -267,37 +267,10 @@ Registrasi Pengguna
                     <div id="div_tu">
                         <div class="row">
                             <div class="col-lg-6 col-xlg-6">
-                                <div class="form-group">
-                                    <label>Pilih Status Kepemilikan <span class="text-danger">*</span></label>
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <input
-                                                checked
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                name="pemilik"
-                                                id="pemilik">
-                                            <label class="form-control-label" style="font-weight: 400;" for="pemilik">
-                                                Pemilik Tempat
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input
-                                                checked
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                name="pengguna"
-                                                id="pengguna">
-                                            <label class="form-control-label" style="font-weight: 400;" for="pengguna">
-                                                Pengguna Tempat
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div id="div_tu_1">
                                     <div class="form-group">
                                         <label>Pilih Kode Kontrol yang Tersedia <span class="text-danger">*</span></label>
-                                        <select required id="kd_kontrol" name="kd_kontrol" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                        <select id="kd_kontrol" name="kd_kontrol" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                                     </div>
                                     <div class="form-group" id="div_kd_kontrol_created">
                                         <p id="kd_kontrol_text"></p>
@@ -307,15 +280,30 @@ Registrasi Pengguna
                                 <div id="div_tu_2">
                                     <div class="form-group">
                                         <label>Blok Tempat <span class="text-danger">*</span></label>
-                                        <select required id="group" name="group" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                        <select id="group" name="group" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
                                     </div>
                                     <div class="form-group">
                                         <label>Nomor Los <span class="text-danger">*</span></label>
-                                        <select required id="los" name="los[]" class="select2 form-control form-control-line" style="width: 100%;" multiple></select>
+                                        <select id="los" name="los[]" class="select2 form-control form-control-line" style="width: 100%;" multiple></select>
                                     </div>
                                     <div class="form-group">
                                         <label>Kode Kontrol <span class="text-danger">*</span></label>
-                                        <input required type="text" id="kontrol" name="kontrol" autocomplete="off" maxlength="20" placeholder="Sesuaikan Blok & No.Los" class="form-control form-control-line" style="text-transform: uppercase">
+                                        <input type="text" id="kontrol" name="kontrol" autocomplete="off" maxlength="20" placeholder="Sesuaikan Blok & No.Los" class="form-control form-control-line" style="text-transform: uppercase">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Status Kepemilikan</label>
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                name="pemilik"
+                                                id="pemilik">
+                                            <label class="form-control-label" style="font-weight: 400;" for="pemilik">
+                                                Pemilik Tempat
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -608,18 +596,22 @@ Registrasi Pengguna
         iti.destroy();
         initializeTel("id");
 
+        $("#kd_kontrol").prop("required", false);
         $("#kd_kontrol").val("").html("");
         select2kontrol("#kd_kontrol", "/search/kontrol", "-- Cari Kode Kontrol --");
         $("#div_kd_kontrol_created").hide();
 
+        $("#group").prop("required", false);
         $("#group").val("").html("");
         select2custom("#group", "/search/groups", "-- Cari Blok Tempat --");
 
+        $("#los").prop("required", false);
         $("#los").val("").html("");
         $("#los").select2({
             placeholder: "(Pilih Blok Tempat terlebih dulu)"
         }).prop("disabled", true);
 
+        $("#kontrol").prop("required", false);
         $("#kontrol").prop("disabled", true).val("").html("");
 
         $("#commodity").val("").html("");
@@ -667,10 +659,16 @@ Registrasi Pengguna
         if($('#tu_1').is(':checked')){
             $("#div_tu").show();
             $("#div_tu_1").show();
+
+            $("#kd_kontrol").prop("required", true);
         }
         else if ($('#tu_2').is(':checked')) {
             $("#div_tu").show();
             $("#div_tu_2").show();
+
+            $("#group").prop("required", true);
+            $("#los").prop("required", true);
+            $("#kontrol").prop("required", true);
         }
     }
     $('input[name="tempatusahaChoose"]').click(tempatUsaha).each(tempatUsaha);

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -141,7 +142,7 @@ class ServiceController extends Controller
             }
 
             if($level == 3){
-                switch ($request->tempatusaha) {
+                switch ($request->tempatusahaChoose) {
                     case '1':
                         # Pilih yang tersedia
                         break;
