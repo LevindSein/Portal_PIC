@@ -261,4 +261,50 @@ class ServiceController extends Controller
     {
         //
     }
+
+    public function gKontrol(Request $request, $type){
+        if($type == 'kontrol'){
+            $group = $request->group;
+            $los = $this->multipleSelect($request->los);
+            sort($los, SORT_NATURAL);
+
+            $los = $los[0];
+            $data = Store::kontrol($group,$los);
+        }
+        else{
+            $kontrol = $request->kd_kontrol;
+
+            $store = Store::where([
+                ['kd_kontrol', $kontrol],
+                ['status', '!=', 0]
+            ])->select('kd_kontrol')->first();
+
+            $data['text'] = "Dibawah ini kode kontrol yang <b>terbentuk</b>. Sebelumnya kode kontrol <b>$kontrol</b> berstatus <b>nonaktif (tidak digunakan)</b>. Berikut adalah kode kontrol yang dijadikan identifikasi Tempat Usaha :";
+            if($store){
+                //Tambah Alfabet di Kode Kontrol, dan create Tempat Usaha
+                $data['text'] = "Dibawah ini kode kontrol yang <b>terbentuk</b>. Sebelumnya kode kontrol <b>$kontrol</b> telah <b>tersedia</b> dan <b>digunakan</b>. Berikut adalah kode kontrol yang dijadikan identifikasi Tempat Usaha :";
+
+                $suffix = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+                $i = 0;
+                do {
+                    if($suffix[$i] == 'Z'){
+                        return response()->json(['warning' => "Suffix kode kontrol telah mencapai maksimal. Silakan membuat Tempat Usaha Baru."]);
+                    }
+                    $kode = $kontrol.$suffix[$i];
+                    $i++;
+                } while(
+                    Store::where([
+                        ['kd_kontrol', $kode],
+                        ['status', '!=', 0]
+                    ])->select('kd_kontrol')->first()
+                );
+                $kontrol = $kode;
+            }
+
+            $data['kontrol'] = $kontrol;
+        }
+
+        return response()->json(['success' => $data]);
+    }
 }

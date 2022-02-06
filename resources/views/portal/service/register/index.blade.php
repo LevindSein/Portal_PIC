@@ -55,6 +55,8 @@ Registrasi Pengguna
                         </div>
                     </div>
                     <hr>
+
+                    {{-- Organisator --}}
                     <div class="form-group" id="authorityDiv">
                         <div class="text-center form-group">
                             <h4>Privileged :</h4>
@@ -237,6 +239,8 @@ Registrasi Pengguna
                             </div>
                         </div>
                     </div>
+                    {{-- End Organisator --}}
+
                     <div class="form-group" id="tempatusahaDiv">
                         <label>Pilih Tempat Usaha <span class="text-danger">*</span></label>
                         <div class="form-check">
@@ -258,7 +262,9 @@ Registrasi Pengguna
                             </div>
                         </div>
                     </div>
-                    <div id="div_tu_2">
+
+                    {{-- Tempat Usaha --}}
+                    <div id="div_tu">
                         <div class="row">
                             <div class="col-lg-6 col-xlg-6">
                                 <div class="form-group">
@@ -288,17 +294,29 @@ Registrasi Pengguna
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Blok Tempat <span class="text-danger">*</span></label>
-                                    <select required id="group" name="group" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                <div id="div_tu_1">
+                                    <div class="form-group">
+                                        <label>Pilih Kode Kontrol yang Tersedia <span class="text-danger">*</span></label>
+                                        <select required id="kd_kontrol" name="kd_kontrol" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                    </div>
+                                    <div class="form-group" id="div_kd_kontrol_created">
+                                        <p id="kd_kontrol_text"></p>
+                                        <h3 class="text-center"><b><span id="kd_kontrol_created"></span></b></h3>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Nomor Los <span class="text-danger">*</span></label>
-                                    <select required id="los" name="los[]" class="select2 form-control form-control-line" style="width: 100%;" multiple></select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Kode Kontrol <span class="text-danger">*</span></label>
-                                    <input required type="text" id="kontrol" name="kontrol" autocomplete="off" maxlength="20" placeholder="Sesuaikan Blok & No.Los" class="form-control form-control-line" style="text-transform: uppercase">
+                                <div id="div_tu_2">
+                                    <div class="form-group">
+                                        <label>Blok Tempat <span class="text-danger">*</span></label>
+                                        <select required id="group" name="group" class="select2 form-control form-control-line" style="width: 100%; height:36px;"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nomor Los <span class="text-danger">*</span></label>
+                                        <select required id="los" name="los[]" class="select2 form-control form-control-line" style="width: 100%;" multiple></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Kode Kontrol <span class="text-danger">*</span></label>
+                                        <input required type="text" id="kontrol" name="kontrol" autocomplete="off" maxlength="20" placeholder="Sesuaikan Blok & No.Los" class="form-control form-control-line" style="text-transform: uppercase">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-xlg-6">
@@ -534,9 +552,11 @@ Registrasi Pengguna
                             </div>
                         </div>
                     </div>
+                    {{-- End Tempat Usaha --}}
+
                     <div class="form-group">
                         <p>(<label class="text-danger">*</label>) wajib diisi.</p>
-                    </div>x
+                    </div>
                     <div class="form-group text-center">
                         <input type="hidden" id="registerFormValue" value="{{($data) ? 'update' : 'add'}}"/>
                         <button type="submit" id="save_btn" class="btn btn-success">Simpan</button>
@@ -572,6 +592,8 @@ Registrasi Pengguna
     level();
 
     function init(){
+        $("#div_tu").hide();
+        $("#div_tu_1").hide();
         $("#div_tu_2").hide();
         $("#tempatusahaDiv").show();
 
@@ -585,6 +607,10 @@ Registrasi Pengguna
 
         iti.destroy();
         initializeTel("id");
+
+        $("#kd_kontrol").val("").html("");
+        select2kontrol("#kd_kontrol", "/search/kontrol", "-- Cari Kode Kontrol --");
+        $("#div_kd_kontrol_created").hide();
 
         $("#group").val("").html("");
         select2custom("#group", "/search/groups", "-- Cari Blok Tempat --");
@@ -638,7 +664,12 @@ Registrasi Pengguna
 
     function tempatUsaha() {
         init();
-        if ($('#tu_2').is(':checked')) {
+        if($('#tu_1').is(':checked')){
+            $("#div_tu").show();
+            $("#div_tu_1").show();
+        }
+        else if ($('#tu_2').is(':checked')) {
+            $("#div_tu").show();
             $("#div_tu_2").show();
         }
     }
@@ -810,6 +841,41 @@ Registrasi Pengguna
     });
 
     //Kode Kontrol
+    $('#kd_kontrol').on('change', function(e) {
+        if($("#kd_kontrol").val() == ""){
+            $("#div_kd_kontrol_created").hide();
+        }
+        else{
+            var dataset = {
+                'kd_kontrol' : $("#kd_kontrol").val()
+            };
+            $.ajax({
+                url: "/production/service/register/generate/kd_kontrol",
+                type: "GET",
+                cache: false,
+                data: dataset,
+                success:function(data)
+                {
+                    if(data.warning){
+                        toastr.warning(data.warning);
+                        $("#tu_2").prop("checked", true);
+                        tempatUsaha();
+                    }
+                    else{
+                        $("#kd_kontrol_text").html(data.success.text);
+                        $("#kd_kontrol_created").text(data.success.kontrol);
+                    }
+                },
+                error:function(data){
+                    toastr.error("System error.");
+                    console.log(data);
+                }
+            });
+
+            $("#div_kd_kontrol_created").show();
+        }
+    });
+
     $('#los').on('change', function(e) {
         if($("#los").val() == ""){
             $("#kontrol").prop("disabled", true).val("").html("");
@@ -1027,6 +1093,28 @@ Registrasi Pengguna
                             return {
                                 id: d.name,
                                 text: d.name
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2kontrol(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.kd_kontrol,
+                                text: d.kd_kontrol
                             }
                         })
                     };
