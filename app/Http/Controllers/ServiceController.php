@@ -516,7 +516,7 @@ class ServiceController extends Controller
                 ['status', '!=', 0]
             ])->select('kd_kontrol')->first();
 
-            $data['text'] = "Dibawah ini kode kontrol yang <b>terbentuk</b>. Sebelumnya kode kontrol <b>$kontrol</b> berstatus <b>nonaktif (tidak digunakan)</b>. Berikut adalah kode kontrol yang dijadikan identifikasi Tempat Usaha :";
+            $data['text'] = '';
             if($store){
                 //Tambah Alfabet di Kode Kontrol, dan create Tempat Usaha
                 $data['text'] = "Dibawah ini kode kontrol yang <b>terbentuk</b>. Sebelumnya kode kontrol <b>$kontrol</b> telah <b>tersedia</b> dan <b>digunakan</b>. Berikut adalah kode kontrol yang dijadikan identifikasi Tempat Usaha :";
@@ -524,6 +524,7 @@ class ServiceController extends Controller
                 $suffix = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
                 $i = 0;
+                $kode = '';
                 do {
                     if($suffix[$i] == 'Z'){
                         return response()->json(['warning' => "Suffix kode kontrol telah mencapai maksimal. Silakan membuat Tempat Usaha Baru."]);
