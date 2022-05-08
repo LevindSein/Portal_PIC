@@ -1,4 +1,4 @@
-var staticCacheName = '3.0.1';
+var staticCacheName = "pwa-v" + new Date().getTime();
 var filesToCache = [
     '/images/icons/icon-72x72.png',
     '/images/icons/icon-96x96.png',

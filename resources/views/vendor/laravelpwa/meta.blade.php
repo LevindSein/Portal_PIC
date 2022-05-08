@@ -1,3 +1,21 @@
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="keyword" content="Pasar Induk, Bandung, Caringin, PIC, Pasar Induk Caringin Bandung"/>
+<meta name="author" content="Levind Sein"/>
+<meta name="description" content="Silakan Login ke Portal Pasar Induk Caringin Kota Bandung" />
+<meta property="og:site_name" content="Portal Pasar Induk Caringin Kota Bandung">
+<meta property="og:title" content="Portal Pasar Induk Caringin Kota Bandung" />
+<meta property="og:description" content="Silakan Login ke Portal Pasar Induk Caringin Kota Bandung" />
+<meta property="og:image" itemprop="image" content="{{asset('images/icons/icon-72x72.png')}}">
+<meta property="og:type" content="website" />
+
+{{-- CSRF --}}
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<meta name="google" content="notranslate">
+
 <!-- Web Application Manifest -->
 <link rel="manifest" href="{{ route('laravelpwa.manifest') }}">
 <!-- Chrome for Android theme color -->
@@ -30,6 +48,7 @@
 <meta name="msapplication-TileColor" content="{{ $config['background_color'] }}">
 <meta name="msapplication-TileImage" content="{{ data_get(end($config['icons']), 'src') }}">
 
+
 <script type="text/javascript">
     // Initialize the service worker
     if ('serviceWorker' in navigator) {
@@ -37,10 +56,10 @@
             scope: '.'
         }).then(function (registration) {
             // Registration was successful
-            // console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            // console.log('Laravel PWA: ServiceWorker registration successful with scope: ', registration.scope);
         }, function (err) {
             // registration failed :(
-            console.log('ServiceWorker registration failed: ', err);
+            console.log('Laravel PWA: ServiceWorker registration failed: ', err);
         });
     }
 </script>

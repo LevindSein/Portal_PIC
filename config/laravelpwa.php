@@ -3,27 +3,27 @@
 return [
     'name' => 'PIC Bandung',
     'manifest' => [
-        'name' => 'PIC Bandung',
+        'name' => env('APP_NAME', 'PIC Bandung'),
         'short_name' => 'PIC Bandung',
-        'description' => 'Portal Pasar Induk Caringin Bandung',
+        'description' => 'Portal Pasar Induk Caringin Kota Bandung',
         'start_url' => '/',
-        'background_color' => '#FFFFFF',
-        'theme_color' => '#26495C',
+        'background_color' => '#ffffff',
+        'theme_color' => '#000000',
         'display' => 'standalone',
         'orientation'=> 'portrait',
         'status_bar'=> 'black',
         'scope' => '.',
         'icons' => [
             '72x72' => [
-                'path' => '/images/icons/maskable_icon_x72.png',
+                'path' => '/images/icons/icon-72x72.png',
                 'purpose' => 'any'
             ],
             '96x96' => [
-                'path' => '/images/icons/maskable_icon_x96.png',
+                'path' => '/images/icons/icon-96x96.png',
                 'purpose' => 'any'
             ],
             '128x128' => [
-                'path' => '/images/icons/maskable_icon_x128.png',
+                'path' => '/images/icons/icon-128x128.png',
                 'purpose' => 'any'
             ],
             '144x144' => [
@@ -35,15 +35,15 @@ return [
                 'purpose' => 'any'
             ],
             '192x192' => [
-                'path' => '/images/icons/maskable_icon_x192.png',
+                'path' => '/images/icons/icon-192x192.png',
                 'purpose' => 'any'
             ],
             '384x384' => [
-                'path' => '/images/icons/maskable_icon_x384.png',
+                'path' => '/images/icons/icon-384x384.png',
                 'purpose' => 'any'
             ],
             '512x512' => [
-                'path' => '/images/icons/maskable_icon_x512.png',
+                'path' => '/images/icons/icon-512x512.png',
                 'purpose' => 'any'
             ],
         ],
@@ -58,20 +58,6 @@ return [
             '1668x2224' => '/images/icons/splash-1668x2224.png',
             '1668x2388' => '/images/icons/splash-1668x2388.png',
             '2048x2732' => '/images/icons/splash-2048x2732.png',
-        ],
-        'shortcuts' => [
-            [
-                'name' => 'Bayar Tagihan',
-                'short_name' => 'Bayar',
-                'description' => 'Pembayaran Tagihan',
-                'url' => '/payment/noauth',
-                'icons' => [
-                    "src" => "/images/icons/wallet-192x192.png",
-                    "type" => "image/png",
-                    "sizes" => "192x192",
-                    "purpose" => 'any'
-                ]
-            ]
         ],
         'custom' => []
     ]
