@@ -3,9 +3,6 @@
 return [
     // Demo Assets
     'resources' => [
-        'fonts' => [
-            'https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700'
-        ],
         'css' => [
             'assets/vendor/nucleo/css/nucleo.css',
             'assets/css/argon.css?v=1.1.0',
@@ -21,9 +18,10 @@ return [
             'assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js',
             'assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js',
             'assets/js/argon.js?v=1.1.0',
-            'custom.js',
             'assets/vendor/toastr/toastr.min.js',
-            'assets/vendor/block-ui/jquery.blockUI.js'
+            'assets/vendor/block-ui/jquery.blockUI.js',
+            'assets/vendor/datatables/datatables.bundle.js',
+            'custom.js',
         ],
     ],
 

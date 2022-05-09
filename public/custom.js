@@ -60,11 +60,11 @@ $(document).on('input change keydown', ".float", function (e) {
 });
 
 $(document).on('input change keydown', ".name", function(e) {
-    if (!((e.keyCode == 189) || (e.keyCode == 8) || (e.keyCode == 9) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57)) && !this.value.length){
+    if (!((e.keyCode == 16) || (e.keyCode == 189) || (e.keyCode == 8) || (e.keyCode == 9) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57)) && !this.value.length){
         e.preventDefault();
     }
     else {
-        $(this).val($(this).val().replace(/[^a-zA-Z0-9/\s\-.,]+$/g, ''));
+        $(this).val($(this).val().replace(/[^a-zA-Z0-9/\s\-_.,]+$/g, ''));
         $(this).val($(this).val().replace(/\s\s+/g, ' '));
     }
 });

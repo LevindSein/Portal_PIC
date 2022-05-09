@@ -45,4 +45,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function level(int $val) {
+        switch ($val) {
+            case 1:
+                return 'Super';
+                break;
+            case 2:
+                return 'Admin';
+                break;
+            case 3:
+                return 'Kasir';
+                break;
+            case 4:
+                return 'Keuangan';
+                break;
+            default:
+                return 'Manajer';
+                break;
+        }
+    }
 }

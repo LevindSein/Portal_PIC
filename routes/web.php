@@ -30,6 +30,7 @@ Route::resource('login', AuthController::class);
 Route::middleware('auth')->group(function(){
     Route::resource('dashboard', DashboardController::class);
 
+    Route::post('users/reset/{id}', [UserController::class, 'reset']);
     Route::resource('users', UserController::class);
 });
 

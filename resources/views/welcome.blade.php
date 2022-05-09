@@ -16,10 +16,8 @@
     <head>
         <title>Login @include('Layout.Partial._title')</title>
 
-        {{-- Font Theme Styles (used by all pages) --}}
-        @foreach(config('layout.resources.fonts') as $style)
-            <link href="{{ asset($style) }}" rel="stylesheet"/>
-        @endforeach
+        <!-- Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
 
         {{-- Global Theme Styles (used by all pages) --}}
         @foreach(config('layout.resources.css') as $style)

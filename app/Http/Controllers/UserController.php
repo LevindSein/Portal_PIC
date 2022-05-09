@@ -3,6 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+use App\Models\User;
+
+use DataTables;
 
 class UserController extends Controller
 {
@@ -11,10 +21,52 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if(request()->ajax()){
+            $level = $request->level;
 
+            $data = User::select('id','username','name','level')
+            ->where([
+                ['level', $level],
+                ['status', 1],
+                ['id', '!=', Auth::id()]
+            ]);
+            return DataTables::of($data)
+            ->addColumn('action', function($data){
+                $button = '';
+                if(Auth::user()->level == 1){
+                    $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
+                    $button .= '<a type="button" data-toggle="tooltip" title="Reset Password" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="reset btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-key-skeleton"></i></a>';
+                    $button .= '<a type="button" data-toggle="tooltip" title="Hapus" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
+                }
+                $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="detail btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-info"></i></a>';
+                return $button;
+            })
+            ->editColumn('username', function($data){
+                $name = $data->username;
+                if(strlen($name) > 15) {
+                    $name = substr($name, 0, 11);
+                    $name = str_pad($name,  15, ".");
+                }
+
+                return "<span data-toggle='tooltip' title='$data->username'>$name</span>";
+            })
+            ->editColumn('name', function($data){
+                $name = $data->name;
+                if(strlen($name) > 15) {
+                    $name = substr($name, 0, 11);
+                    $name = str_pad($name,  15, ".");
+                }
+
+                return "<span data-toggle='tooltip' title='$data->name'>$name</span>";
+            })
+            ->editColumn('level', function($data){
+                $button = '<span class="badge badge-md badge-success">' . User::level($data->level) . '</span>';
+                return $button;
+            })
+            ->rawColumns(['action', 'username', 'name', 'level'])
+            ->make(true);
         }
         return view('Users.index');
     }
@@ -48,7 +100,23 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        if(request()->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            try {
+                $data = User::findOrFail($decrypted);
+            } catch(ModelNotFoundException $err) {
+                return response()->json(['error' => "Data lost."]);
+            }
+
+            $data['level'] = User::level($data->level);
+
+            return response()->json(['success' => $data]);
+        }
     }
 
     /**
@@ -59,7 +127,21 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(request()->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            try {
+                $data = User::findOrFail($decrypted);
+            } catch(ModelNotFoundException $err) {
+                return response()->json(['error' => "Data lost."]);
+            }
+
+            return response()->json(['success' => $data]);
+        }
     }
 
     /**
@@ -82,6 +164,46 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(request()->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            try {
+                $data = User::findOrFail($decrypted);
+            } catch(ModelNotFoundException $err) {
+                return response()->json(['error' => "Data lost."]);
+            }
+
+            $data->status = 0;
+
+            $data->save();
+
+            return response()->json(['success' => "Pengguna berhasil dihapus."]);
+        }
+    }
+
+    public function reset($id){
+        if(request()->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            try {
+                $data = User::findOrFail($decrypted);
+            } catch(ModelNotFoundException $err) {
+                return response()->json(['error' => "Data lost."]);
+            }
+
+            $data->password = Hash::make(sha1(md5(hash('gost', '123456'))));
+
+            $data->save();
+
+            return response()->json(['success' => 'Password direset = <b>123456</b>.']);
+        }
     }
 }

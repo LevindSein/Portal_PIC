@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->tinyInteger('level'); //1 = Super, 2 = Admin, 3 = Kasir, 4 = Keuangan, 5 = Manager
+            $table->tinyInteger('level'); //1 = Super, 2 = Admin, 3 = Kasir, 4 = Keuangan, 5 = Manajer
             $table->json('otoritas')->nullable();
             $table->boolean('status')->default(1); //1 = Aktif, 0 = Nonaktif
             $table->datetime('updated_at')->useCurrent();

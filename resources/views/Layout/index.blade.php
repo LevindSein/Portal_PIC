@@ -16,10 +16,8 @@
     <head>
         <title>@yield('content-title') @include('Layout.Partial._title')</title>
 
-        {{-- Font Theme Styles (used by all pages) --}}
-        @foreach(config('layout.resources.fonts') as $style)
-            <link href="{{ asset($style) }}" rel="stylesheet"/>
-        @endforeach
+        <!-- Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
 
         {{-- Global Theme Styles (used by all pages) --}}
         @foreach(config('layout.resources.css') as $style)
@@ -266,14 +264,12 @@
                 <div class="container-fluid">
                     <div class="header-body">
                         <div class="row align-items-center py-4">
-                            <div class="col-lg-6 col-7">
+                            <div class="col-lg-8 col-5">
                                 <!-- Judul -->
                                 <h6 class="h2 text-white d-inline-block mb-0">@yield('content-title')</h6>
                             </div>
-                            <div class="col-lg-6 col-5 text-right" id="content-button">
-                                <!-- Button -->
-                                <a class="dropdown-toggle btn btn-sm btn-neutral" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options</a>
-                                <div class="dropdown-menu dropdown-menu-right">
+                            <div class="col-lg-4 col-7 text-right" id="content-button">
+                                <div class="d-flex align-items-center">
                                     @yield('content-button')
                                 </div>
                             </div>
@@ -285,7 +281,7 @@
             <div class="container-fluid mt--6">
                 <div class="row">
                     <div class="col-xl-12">
-                        <div class="card bg-default">
+                        <div class="card py-4 px-4">
                             @yield('content-body')
                         </div>
                     </div>
@@ -293,7 +289,6 @@
             </div>
         </div>
 
-        @yield('content-modal')
 
         <!-- Argon Scripts -->
         {{-- Global Theme JS Bundle (used by all pages)  --}}
@@ -301,7 +296,24 @@
         <script src="{{ asset($script) }}" type="text/javascript"></script>
         @endforeach
 
+        @yield('content-modal')
+
         <script>
+            $(document).ready(function() {
+                $.fn.dataTable.ext.errMode = 'none';
+                $('#dtable').on('error.dt', function(e, settings, techNote, message) {
+                    alert("Datatable system error.");
+                    console.log( 'An error has been reported by DataTables: ', message);
+                });
+
+                // Hide Tooltip after clicked in 500 milliseconds
+                $(document).on('click', '[data-toggle="tooltip"]', function(){
+                    setTimeout(() => {
+                        $(this).tooltip('hide');
+                    }, 500);
+                });
+            });
+
             $(window).on('load', function() {
                 $(".se-pre-con").fadeIn("slow").fadeOut("slow");
             });
