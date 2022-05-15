@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 
@@ -45,26 +47,29 @@ class AuthController extends Controller
     public function store(Request $request)
     {
         if($request->ajax()){
-            $request->validate([
-                'username' => 'required|max:100',
-                'password' => 'required|min:6',
-            ]);
+            $input['username'] = strtolower($request->username);
+            $input['password'] = $request->password;
 
-            $credentials['username'] = strtolower($request->username);
-            $credentials['password'] = sha1(md5(hash('gost', $request->password)));
+            Validator::make($input, [
+                'username' => 'required|max:100|exists:users,username',
+                'password' => 'required|min:6',
+            ])->validate();
+
+            $credentials['username'] = $input['username'];
+            $credentials['password'] = sha1(md5(hash('gost', $input['password'])));
+            $credentials['status']   = 1;
 
             if(Auth::attempt($credentials)) {
                 $user = Auth::user();
-                if (($user->level == (1 || 2 || 3 || 4 || 5)) && $user->status == 1){
+                if (($user->level == (1 || 2 || 3 || 4 || 5))){
                     return response()->json(['success' => "Akses Sukses."]);
                 }
-                else{
-                    $temp = Session::get("_token");
-                    Session::flush();
-                    Session::put('_token', $temp);
-                    Auth::logout();
-                    return response()->json(['error' => "Akses Gagal."]);
-                }
+
+                $temp = Session::get("_token");
+                Session::flush();
+                Session::put('_token', $temp);
+                Auth::logout();
+                return response()->json(['error' => "Akses Gagal."]);
             }
             else{
                 $temp = Session::get("_token");

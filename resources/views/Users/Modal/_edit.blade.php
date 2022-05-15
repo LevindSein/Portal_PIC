@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit</h5>
+                <h5 class="modal-title title">Edit</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -11,18 +11,17 @@
             <form id="edit-form">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Nama Pengguna <span class="text-danger">*</span></label>
+                        <small class="form-control-label">Nama Pengguna <span class="text-danger">*</span></small>
                         <input required type="text" id="edit-name" name="edit_name" autocomplete="off" maxlength="100" class="name form-control" placeholder="Masukkan Nama Pengguna" />
                     </div>
                     <div class="form-group">
-                        <label>Username (untuk Login) <span class="text-danger">*</span></label>
-                        <input disabled type="text" id="edit-username" name="edit_username" autocomplete="off" maxlength="100" class="name form-control" placeholder="Masukkan Nama Pengguna" style="text-transform: lowercase;"/>
-                    </div>
-                    <div class="form-group">
-                        <label>Level Pengguna <span class="text-danger">*</span></label>
+                        <small class="form-control-label">Level <span class="text-danger">*</span></small>
                         <select required class="form-control" id="edit-level" name="edit_level">
-                            <option value="2">Amil</option>
-                            <option value="1">Super Amil</option>
+                            <option value="2">Admin</option>
+                            <option value="1">Super</option>
+                            <option value="3">Kasir</option>
+                            <option value="4">Keuangan</option>
+                            <option value="5">Manajer</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -30,7 +29,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Batal</button>
+                    <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary font-weight-bold">Simpan</button>
                 </div>
             </form>
@@ -53,7 +52,7 @@ $(document).on('click', '.edit', function(e){
     edit_init();
 
     $.ajax({
-        url: "/production/users/" + id + "/edit",
+        url: "/users/" + id + "/edit",
         cache: false,
         method: "GET",
         dataType: "json",
@@ -77,7 +76,6 @@ $(document).on('click', '.edit', function(e){
         {
             if(data.success){
                 $("#edit-name").val(data.success.name);
-                $("#edit-username").val(data.success.username);
                 $("#edit-level").val(data.success.level);
             }
 
@@ -134,7 +132,7 @@ $('#edit-form').on('submit', function(e){
     });
 
     $.ajax({
-        url: "/production/users/" + id,
+        url: "/users/" + id,
         cache: false,
         method: "PUT",
         data: $(this).serialize(),

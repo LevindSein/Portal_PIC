@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use ESolution\DBEncryption\Traits\EncryptedAttribute;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -62,6 +64,26 @@ class User extends Authenticatable
                 break;
             default:
                 return 'Manajer';
+                break;
+        }
+    }
+
+    public static function badgeLevel(int $val) {
+        switch ($val) {
+            case 1:
+                return 'badge-success';
+                break;
+            case 2:
+                return 'badge-success';
+                break;
+            case 3:
+                return 'badge-info';
+                break;
+            case 4:
+                return 'badge-warning';
+                break;
+            default:
+                return 'badge-primary';
                 break;
         }
     }

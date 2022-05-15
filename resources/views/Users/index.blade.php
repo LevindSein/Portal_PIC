@@ -16,8 +16,8 @@ Users
 <!--end::Actions-->
 <!-- Button -->
 <div class="dropdown-menu dropdown-menu-right">
-    <a class="dropdown-item" href="javascript:void(0)">Tambah</a>
-    <a class="dropdown-item" href="javascript:void(0)">Data</a>
+    <a class="dropdown-item" id="add" href="javascript:void(0)">Tambah</a>
+    <a class="dropdown-item" id="generate" href="javascript:void(0)">Unduh Data Pengguna</a>
 </div>
 <a class="dropdown-toggle btn btn-sm btn-neutral" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options</a>
 @endsection

@@ -10,16 +10,16 @@
             </div>
             <div class="modal-body text-center">
                 <small class="text-muted pt-4 db">Nama</small>
-                <h6 id="showNama"></h6>
+                <h3 id="showNama"></h3>
                 <small class="text-muted pt-4 db">Username (untuk Login)</small>
-                <h6 id="showUsername"></h6>
+                <h3 id="showUsername"></h3>
                 <small class="text-muted pt-4 db">Status</small>
-                <h6 id="showStatus"></h6>
+                <h3 id="showStatus"></h3>
                 <small class="text-muted pt-4 db">Level</small>
-                <h6 id="showLevel"></h6>
+                <h3 id="showLevel"></h3>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Batal</button>
+                <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
             </div>
         </div>
     </div>
@@ -35,7 +35,7 @@ $(document).on('click', '.detail', function(e){
     id = $(this).attr("id");
 
     $.ajax({
-        url: "/production/users/" + id,
+        url: "/users/" + id,
         cache: false,
         method: "GET",
         dataType: "json",

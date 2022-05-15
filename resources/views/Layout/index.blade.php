@@ -351,7 +351,7 @@
                     success:function(data)
                     {
                         if(data.success){
-                            location.href = "/login";
+                            location.reload();
                         }
 
                         if(data.info){
@@ -380,23 +380,23 @@
                 });
             });
 
-            setInterval(() => {
-                $.ajax({
-                    url: '/check',
-                    cache: false,
-                    method: "GET",
-                    dataType: "json",
-                    success:function(data)
-                    {
-                        if(data.logout){
-                            location.href = '/login';
-                        }
-                    },
-                    error:function(data){
-                        console.log(data);
-                    }
-                });
-            }, 1000);
+            // setInterval(() => {
+            //     $.ajax({
+            //         url: '/check',
+            //         cache: false,
+            //         method: "GET",
+            //         dataType: "json",
+            //         success:function(data)
+            //         {
+            //             if(data.logout){
+            //                 location.href = '/login';
+            //             }
+            //         },
+            //         error:function(data){
+            //             console.log(data);
+            //         }
+            //     });
+            // }, 1000);
 
             $("#content-button").show();
         </script>

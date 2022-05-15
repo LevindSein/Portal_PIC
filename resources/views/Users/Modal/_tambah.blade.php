@@ -1,36 +1,39 @@
 <!--begin::Modal-->
 <div class="modal fade" id="tambah-modal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="tambah-modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah</h5>
+                <h5 class="modal-title title">Tambah</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
             <form id="tambah-form">
-                <div class="modal-body">
+                <div class="modal-body" style="height: 60vh;">
                     <div class="form-group">
-                        <label>Nama Pengguna <span class="text-danger">*</span></label>
+                        <small class="form-control-label">Nama Pengguna <span class="text-danger">*</span></small>
                         <input required type="text" id="tambah-name" name="tambah_name" autocomplete="off" maxlength="100" class="name form-control" placeholder="Masukkan Nama Pengguna" />
                     </div>
                     <div class="form-group">
-                        <label>Username (untuk Login) <span class="text-danger">*</span></label>
+                        <small class="form-control-label">Username (untuk Login) <span class="text-danger">*</span></small>
                         <input required type="text" id="tambah-username" name="tambah_username" autocomplete="off" maxlength="100" class="name form-control" placeholder="Masukkan Nama Pengguna" style="text-transform: lowercase;"/>
                     </div>
                     <div class="form-group">
-                        <label>Level Pengguna <span class="text-danger">*</span></label>
+                        <small class="form-control-label">Level <span class="text-danger">*</span></small>
                         <select required class="form-control" id="tambah-level" name="tambah_level">
-                            <option value="2">Amil</option>
-                            <option value="1">Super Amil</option>
+                            <option value="2">Admin</option>
+                            <option value="1">Super</option>
+                            <option value="3">Kasir</option>
+                            <option value="4">Keuangan</option>
+                            <option value="5">Manajer</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label><sup><span class="text-danger">*) Wajib diisi.</span></sup></label>
+                    <div class="text-center form-group">
+                        <strong>Pilih Pengelolaan :</strong>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Batal</button>
+                    <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary font-weight-bold">Simpan</button>
                 </div>
             </form>
@@ -84,7 +87,7 @@ $('#tambah-form').on('submit', function(e){
     });
 
     $.ajax({
-        url: "/production/users",
+        url: "/users",
         cache: false,
         method: "POST",
         data: $(this).serialize(),

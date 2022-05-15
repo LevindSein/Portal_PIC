@@ -62,7 +62,8 @@ class UserController extends Controller
                 return "<span data-toggle='tooltip' title='$data->name'>$name</span>";
             })
             ->editColumn('level', function($data){
-                $button = '<span class="badge badge-md badge-success">' . User::level($data->level) . '</span>';
+                $badge = User::badgeLevel($data->level);
+                $button = '<span class="badge badge-md '. $badge . '">' . User::level($data->level) . '</span>';
                 return $button;
             })
             ->rawColumns(['action', 'username', 'name', 'level'])
@@ -89,7 +90,29 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->ajax()){
+            //Validator
+            $input['username'] = strtolower($request->tambah_username);
+            $input['nama']     = $request->tambah_name;
+            $input['level']    = $request->tambah_level;
+
+            Validator::make($input, [
+                'username' => 'required|string|max:100|unique:users,username',
+                'nama'     => 'required|string|max:100',
+                'level'    => 'required|numeric|digits_between:1,5',
+            ])->validate();
+            //End Validator
+
+            User::insert([
+                'username' => $input['username'],
+                'name'     => $input['nama'],
+                'password' => Hash::make(sha1(md5(hash('gost', '123456')))),
+                'level'    => $input['level'],
+                'status'   => 1
+            ]);
+
+            return response()->json(['success' => 'Data berhasil ditambah.']);
+        }
     }
 
     /**
@@ -153,7 +176,36 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->ajax()){
+            //Validator
+            $input['nama']  = $request->edit_name;
+            $input['level'] = $request->edit_level;
+
+            Validator::make($input, [
+                'nama'     => 'required|string|max:100',
+                'level'    => 'required|numeric|digits_between:1,5',
+            ])->validate();
+            //End Validator
+
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            try {
+                $data = User::findOrFail($decrypted);
+            } catch(ModelNotFoundException $err) {
+                return response()->json(['error' => "Data lost."]);
+            }
+
+            $data->update([
+                'name'  => $input['nama'],
+                'level' => $input['level']
+            ]);
+
+            return response()->json(['success' => "Data berhasil disimpan."]);
+        }
     }
 
     /**

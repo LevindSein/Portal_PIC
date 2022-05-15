@@ -15,7 +15,7 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Batal</button>
+                    <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-danger font-weight-bold status">Nonaktifkan</button>
                 </div>
             </form>
