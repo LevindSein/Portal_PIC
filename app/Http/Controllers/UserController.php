@@ -192,6 +192,8 @@ class UserController extends Controller
                 return response()->json(['error' => "Data lost."]);
             }
 
+            $data['otoritas'] = json_decode($data->otoritas);
+
             return response()->json(['success' => $data]);
         }
     }
@@ -228,9 +230,34 @@ class UserController extends Controller
                 return response()->json(['error' => "Data lost."]);
             }
 
+            $otoritas = NULL;
+
+            if($input['level'] == 2){
+                $groups  = array();
+                $choosed = array();
+
+                if($request->groups){
+                    foreach ($request->groups as $g) {
+                        $groups[]  = Crypt::decrypt($g);
+                    }
+                }
+
+                if($request->choosed){
+                    foreach ($request->choosed as $c) {
+                        $choosed[] = Crypt::decrypt($c);
+                    }
+                }
+
+                $otoritas = json_encode([
+                    'groups'  => $groups,
+                    'choosed' => $choosed
+                ]);
+            }
+
             $data->update([
-                'name'  => $input['nama'],
-                'level' => $input['level']
+                'name'     => $input['nama'],
+                'level'    => $input['level'],
+                'otoritas' => $otoritas
             ]);
 
             return response()->json(['success' => "Data berhasil disimpan."]);

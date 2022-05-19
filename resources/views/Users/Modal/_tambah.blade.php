@@ -28,7 +28,7 @@
                             <option value="5">Manajer</option>
                         </select>
                     </div>
-                    <div id="kelola">
+                    <div id="tambah-kelola">
                         <div class="text-center form-group">
                             <strong>Pilih Pengelolaan :</strong>
                         </div>
@@ -41,9 +41,9 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         name="groups[]"
-                                        id="{{$g->name}}"
+                                        id="tambah-{{$g->name}}"
                                         value="{{Crypt::encrypt($g->name)}}">
-                                    <label class="form-control-label" for="{{$g->name}}">
+                                    <label class="form-control-label" for="tambah-{{$g->name}}">
                                         {{$g->name}}
                                     </label>
                                 </div>
@@ -56,9 +56,9 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         name="choosed[]"
-                                        id="registrasi"
+                                        id="tambah-registrasi"
                                         value="{{Crypt::encrypt('registrasi')}}">
-                                    <label class="form-control-label" for="registrasi">
+                                    <label class="form-control-label" for="tambah-registrasi">
                                         Registrasi
                                     </label>
                                 </div>
@@ -68,9 +68,9 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         name="choosed[]"
-                                        id="pedagang"
+                                        id="tambah-pedagang"
                                         value="{{Crypt::encrypt('pedagang')}}">
-                                    <label class="form-control-label" for="pedagang">
+                                    <label class="form-control-label" for="tambah-pedagang">
                                         Pedagang
                                     </label>
                                 </div>
@@ -80,9 +80,9 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         name="choosed[]"
-                                        id="tempatusaha"
+                                        id="tambah-tempatusaha"
                                         value="{{Crypt::encrypt('tempatusaha')}}">
-                                    <label class="form-control-label" for="tempatusaha">
+                                    <label class="form-control-label" for="tambah-tempatusaha">
                                         Tempat Usaha
                                     </label>
                                 </div>
@@ -92,9 +92,9 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         name="choosed[]"
-                                        id="pembongkaran"
+                                        id="tambah-pembongkaran"
                                         value="{{Crypt::encrypt('pembongkaran')}}">
-                                    <label class="form-control-label" for="pembongkaran">
+                                    <label class="form-control-label" for="tambah-pembongkaran">
                                         Pembongkaran
                                     </label>
                                 </div>
@@ -104,9 +104,9 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         name="choosed[]"
-                                        id="pembayaran"
+                                        id="tambah-pembayaran"
                                         value="{{Crypt::encrypt('pembayaran')}}">
-                                    <label class="form-control-label" for="pembayaran">
+                                    <label class="form-control-label" for="tambah-pembayaran">
                                         Kasir / Pembayaran
                                     </label>
                                 </div>
@@ -116,9 +116,9 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         name="choosed[]"
-                                        id="tagihan"
+                                        id="tambah-tagihan"
                                         value="{{Crypt::encrypt('tagihan')}}">
-                                    <label class="form-control-label" for="tagihan">
+                                    <label class="form-control-label" for="tambah-tagihan">
                                         Tagihan
                                     </label>
                                 </div>
@@ -128,9 +128,9 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         name="choosed[]"
-                                        id="publishing"
+                                        id="tambah-publishing"
                                         value="{{Crypt::encrypt('publishing')}}">
-                                    <label class="form-control-label" for="publishing">
+                                    <label class="form-control-label" for="tambah-publishing">
                                         Publishing
                                     </label>
                                 </div>
@@ -140,9 +140,9 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         name="choosed[]"
-                                        id="laporan"
+                                        id="tambah-laporan"
                                         value="{{Crypt::encrypt('laporan')}}">
-                                    <label class="form-control-label" for="laporan">
+                                    <label class="form-control-label" for="tambah-laporan">
                                         Laporan
                                     </label>
                                 </div>
@@ -152,9 +152,9 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         name="choosed[]"
-                                        id="tarif"
+                                        id="tambah-tarif"
                                         value="{{Crypt::encrypt('tarif')}}">
-                                    <label class="form-control-label" for="tarif">
+                                    <label class="form-control-label" for="tambah-tarif">
                                         Tarif
                                     </label>
                                 </div>
@@ -164,9 +164,9 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         name="choosed[]"
-                                        id="alatmeter"
+                                        id="tambah-alatmeter"
                                         value="{{Crypt::encrypt('alatmeter')}}">
-                                    <label class="form-control-label" for="alatmeter">
+                                    <label class="form-control-label" for="tambah-alatmeter">
                                         Alat Meter
                                     </label>
                                 </div>
@@ -176,9 +176,9 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         name="choosed[]"
-                                        id="simulasi"
+                                        id="tambah-simulasi"
                                         value="{{Crypt::encrypt('simulasi')}}">
-                                    <label class="form-control-label" for="simulasi">
+                                    <label class="form-control-label" for="tambah-simulasi">
                                         Simulasi Tagihan
                                     </label>
                                 </div>
@@ -188,14 +188,17 @@
                                         class="form-check-input"
                                         type="checkbox"
                                         name="choosed[]"
-                                        id="potensi"
+                                        id="tambah-potensi"
                                         value="{{Crypt::encrypt('potensi')}}">
-                                    <label class="form-control-label" for="potensi">
+                                    <label class="form-control-label" for="tambah-potensi">
                                         Potensi
                                     </label>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label><sup><span class="text-danger">*) Wajib diisi.</span></sup></label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -211,10 +214,11 @@
 <!--begin::Javascript-->
 <script>
 function tambah_init(){
+    $("#tambah-form")[0].reset();
     $("#tambah-name").val('');
     $("#tambah-username").prop("disabled", true).val('');
     $("#tambah-level").prop("selectedIndex", 0).val();
-    $("#kelola").show();
+    $("#tambah-kelola").show();
 }
 
 $("#add").click(function(){
@@ -240,10 +244,10 @@ $("#tambah-name").on('input change', function() {
 
 $("#tambah-level").on('change', function() {
     if($("#tambah-level").val() == 2){
-        $("#kelola").show();
+        $("#tambah-kelola").show();
     }
     else{
-        $("#kelola").hide();
+        $("#tambah-kelola").hide();
     }
 });
 
