@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('backup:run --only-db')->dailyAt('05:00');
         $schedule->command('backup:clean')->dailyAt('05:15');
+        $schedule->command('authentication-log:purge')->monthly();
     }
 
     /**
