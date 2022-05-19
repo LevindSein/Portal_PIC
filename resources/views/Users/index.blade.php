@@ -5,21 +5,7 @@ Users
 @endsection
 
 @section('content-button')
-<!--begin::Actions-->
-<select class="form-control form-control-sm mr-2" id="level" name="level">
-    <option value="1">Super</option>
-    <option value="2">Admin</option>
-    <option value="3">Kasir</option>
-    <option value="4">Keuangan</option>
-    <option value="5">Manajer</option>
-</select>
-<!--end::Actions-->
-<!-- Button -->
-<div class="dropdown-menu dropdown-menu-right">
-    <a class="dropdown-item" id="add" href="javascript:void(0)">Tambah</a>
-    <a class="dropdown-item" id="generate" href="javascript:void(0)">Unduh Data Pengguna</a>
-</div>
-<a class="dropdown-toggle btn btn-sm btn-neutral" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options</a>
+@include('Users.Partial._button')
 @endsection
 
 @section('content-body')
@@ -41,6 +27,8 @@ Users
 @include('Users.Modal._reset')
 @include('Users.Modal._hapus')
 @include('Users.Modal._rincian')
+@include('Users.Modal._print')
+@include('Users.Modal._excel')
 @endsection
 
 @section('content-js')

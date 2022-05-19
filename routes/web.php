@@ -30,6 +30,8 @@ Route::resource('login', AuthController::class);
 Route::middleware('auth')->group(function(){
     Route::resource('dashboard', DashboardController::class);
 
+    Route::get('users/excel', [UserController::class, 'excel']);
+    Route::get('users/print', [UserController::class, 'print']);
     Route::post('users/reset/{id}', [UserController::class, 'reset']);
     Route::resource('users', UserController::class);
 });

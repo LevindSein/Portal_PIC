@@ -11,12 +11,12 @@
             <form id="hapus-form">
                 <div class="modal-body">
                     <p>
-                        Tekan tombol <span class="text-danger">Nonaktifkan</span>, jika anda yakin untuk menonaktifkan pengguna.
+                        Tekan tombol <span class="text-danger">Hapus</span>, jika anda yakin untuk menghapus pengguna.
                     </p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold status">Nonaktifkan</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold status">Hapus</button>
                 </div>
             </form>
         </div>
@@ -33,7 +33,7 @@ $(document).on('click', '.delete', function(e){
     id = $(this).attr("id");
 
     $("#hapus-modal").modal("show");
-    $(".title").text("Nonaktifkan : " + $(this).attr("nama"));
+    $(".title").text("Hapus : " + $(this).attr("nama"));
 })
 
 $('#hapus-form').on('submit', function(e){
@@ -46,7 +46,7 @@ $('#hapus-form').on('submit', function(e){
     });
 
     $.ajax({
-        url: "/production/users/" + id,
+        url: "/users/" + id,
         cache: false,
         method: "DELETE",
         data: $(this).serialize(),

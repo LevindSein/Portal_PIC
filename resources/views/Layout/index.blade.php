@@ -380,23 +380,23 @@
                 });
             });
 
-            // setInterval(() => {
-            //     $.ajax({
-            //         url: '/check',
-            //         cache: false,
-            //         method: "GET",
-            //         dataType: "json",
-            //         success:function(data)
-            //         {
-            //             if(data.logout){
-            //                 location.href = '/login';
-            //             }
-            //         },
-            //         error:function(data){
-            //             console.log(data);
-            //         }
-            //     });
-            // }, 1000);
+            setTimeout(() => {
+                $.ajax({
+                    url: '/check',
+                    cache: false,
+                    method: "GET",
+                    dataType: "json",
+                    success:function(data)
+                    {
+                        if(data.logout){
+                            location.reload();
+                        }
+                    },
+                    error:function(data){
+                        console.log(data);
+                    }
+                });
+            }, 0);
 
             $("#content-button").show();
         </script>

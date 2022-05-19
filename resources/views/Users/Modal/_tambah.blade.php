@@ -128,6 +128,7 @@ $('#tambah-form').on('submit', function(e){
 
             if(data.debug){
                 console.log(data.debug);
+                $("#level").val(data.debug).change();
             }
         },
         error:function(data){

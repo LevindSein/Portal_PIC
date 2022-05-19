@@ -128,7 +128,7 @@
                     {
                         if(data.success){
                             toastr.success(data.success);
-                            location.href = "/login";
+                            location.reload();
                         }
 
                         if(data.info){

@@ -11,7 +11,11 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\User;
+use App\Exports\UserExport;
 
+use Carbon\Carbon;
+
+use Excel;
 use DataTables;
 
 class UserController extends Controller
@@ -37,8 +41,8 @@ class UserController extends Controller
                 $button = '';
                 if(Auth::user()->level == 1){
                     $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
-                    $button .= '<a type="button" data-toggle="tooltip" title="Reset Password" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="reset btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-key-skeleton"></i></a>';
                     $button .= '<a type="button" data-toggle="tooltip" title="Hapus" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
+                    $button .= '<a type="button" data-toggle="tooltip" title="Reset Password" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="reset btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-key-skeleton"></i></a>';
                 }
                 $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="detail btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-info"></i></a>';
                 return $button;
@@ -111,7 +115,7 @@ class UserController extends Controller
                 'status'   => 1
             ]);
 
-            return response()->json(['success' => 'Data berhasil ditambah.']);
+            return response()->json(['success' => 'Data berhasil ditambah.', 'debug' => $input['level']]);
         }
     }
 
@@ -257,5 +261,46 @@ class UserController extends Controller
 
             return response()->json(['success' => 'Password direset = <b>123456</b>.']);
         }
+    }
+
+    public function print(Request $request){
+        //Validator
+        $input['level']  = $request->level;
+
+        Validator::make($input, [
+            'level'    => 'required|in:1,2,3,4,5,all',
+        ])->validate();
+        //End Validator
+
+        if(is_numeric($input['level'])){
+            $level = User::level($input['level']);
+            $dataset = User::where([['level', $input['level']], ['status', 1]])->get();
+        } else {
+            $level = 'Semua';
+            $dataset = User::where('status', 1)->get();
+        }
+
+        return view('Users.Pages._print', [
+            'level' => $level,
+            'dataset' => $dataset
+        ]);
+    }
+
+    public function excel(Request $request){
+        //Validator
+        $input['level']  = $request->level;
+
+        Validator::make($input, [
+            'level'    => 'required|in:1,2,3,4,5,all',
+        ])->validate();
+        //End Validator
+
+        if(is_numeric($input['level'])){
+            $level = User::level($input['level']);
+        } else {
+            $level = 'Semua';
+        }
+
+        return Excel::download(new UserExport($input['level']), 'Data_Pengguna_('. $level . ')_' . Carbon::now() . '.xlsx');
     }
 }
