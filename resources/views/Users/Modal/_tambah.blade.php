@@ -28,8 +28,174 @@
                             <option value="5">Manajer</option>
                         </select>
                     </div>
-                    <div class="text-center form-group">
-                        <strong>Pilih Pengelolaan :</strong>
+                    <div id="kelola">
+                        <div class="text-center form-group">
+                            <strong>Pilih Pengelolaan :</strong>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-6">
+                                @foreach($groups as $g)
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="groups[]"
+                                        id="{{$g->name}}"
+                                        value="{{Crypt::encrypt($g->name)}}">
+                                    <label class="form-control-label" for="{{$g->name}}">
+                                        {{$g->name}}
+                                    </label>
+                                </div>
+                                @endforeach
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="choosed[]"
+                                        id="registrasi"
+                                        value="{{Crypt::encrypt('registrasi')}}">
+                                    <label class="form-control-label" for="registrasi">
+                                        Registrasi
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="choosed[]"
+                                        id="pedagang"
+                                        value="{{Crypt::encrypt('pedagang')}}">
+                                    <label class="form-control-label" for="pedagang">
+                                        Pedagang
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="choosed[]"
+                                        id="tempatusaha"
+                                        value="{{Crypt::encrypt('tempatusaha')}}">
+                                    <label class="form-control-label" for="tempatusaha">
+                                        Tempat Usaha
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="choosed[]"
+                                        id="pembongkaran"
+                                        value="{{Crypt::encrypt('pembongkaran')}}">
+                                    <label class="form-control-label" for="pembongkaran">
+                                        Pembongkaran
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="choosed[]"
+                                        id="pembayaran"
+                                        value="{{Crypt::encrypt('pembayaran')}}">
+                                    <label class="form-control-label" for="pembayaran">
+                                        Kasir / Pembayaran
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="choosed[]"
+                                        id="tagihan"
+                                        value="{{Crypt::encrypt('tagihan')}}">
+                                    <label class="form-control-label" for="tagihan">
+                                        Tagihan
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="choosed[]"
+                                        id="publishing"
+                                        value="{{Crypt::encrypt('publishing')}}">
+                                    <label class="form-control-label" for="publishing">
+                                        Publishing
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="choosed[]"
+                                        id="laporan"
+                                        value="{{Crypt::encrypt('laporan')}}">
+                                    <label class="form-control-label" for="laporan">
+                                        Laporan
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="choosed[]"
+                                        id="tarif"
+                                        value="{{Crypt::encrypt('tarif')}}">
+                                    <label class="form-control-label" for="tarif">
+                                        Tarif
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="choosed[]"
+                                        id="alatmeter"
+                                        value="{{Crypt::encrypt('alatmeter')}}">
+                                    <label class="form-control-label" for="alatmeter">
+                                        Alat Meter
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="choosed[]"
+                                        id="simulasi"
+                                        value="{{Crypt::encrypt('simulasi')}}">
+                                    <label class="form-control-label" for="simulasi">
+                                        Simulasi Tagihan
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        checked
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="choosed[]"
+                                        id="potensi"
+                                        value="{{Crypt::encrypt('potensi')}}">
+                                    <label class="form-control-label" for="potensi">
+                                        Potensi
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -47,6 +213,8 @@
 function tambah_init(){
     $("#tambah-name").val('');
     $("#tambah-username").prop("disabled", true).val('');
+    $("#tambah-level").prop("selectedIndex", 0).val();
+    $("#kelola").show();
 }
 
 $("#add").click(function(){
@@ -67,6 +235,15 @@ $("#tambah-name").on('input change', function() {
         $("#tambah-username").prop("disabled", false);
         var str = $("#tambah-name").val().replace(/\s/g, '').toLowerCase().substring(0,10);
         $("#tambah-username").val(str);
+    }
+});
+
+$("#tambah-level").on('change', function() {
+    if($("#tambah-level").val() == 2){
+        $("#kelola").show();
+    }
+    else{
+        $("#kelola").hide();
     }
 });
 

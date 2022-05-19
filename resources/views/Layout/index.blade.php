@@ -154,7 +154,7 @@
                                             <a href="javascript:void(0)" class="nav-link ml-3">Jatuh Tempo</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="javascript:void(0)" class="nav-link ml-3">Simulasi</a>
+                                            <a href="javascript:void(0)" class="nav-link ml-3">Simulasi Tagihan</a>
                                         </li>
                                     </ul>
                                 </div>

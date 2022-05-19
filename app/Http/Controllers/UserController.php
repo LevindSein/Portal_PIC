@@ -107,11 +107,36 @@ class UserController extends Controller
             ])->validate();
             //End Validator
 
+            $otoritas = NULL;
+
+            if($input['level'] == 2){
+                $groups  = array();
+                $choosed = array();
+
+                if($request->groups){
+                    foreach ($request->groups as $g) {
+                        $groups[]  = Crypt::decrypt($g);
+                    }
+                }
+
+                if($request->choosed){
+                    foreach ($request->choosed as $c) {
+                        $choosed[] = Crypt::decrypt($c);
+                    }
+                }
+
+                $otoritas = json_encode([
+                    'groups'  => $groups,
+                    'choosed' => $choosed
+                ]);
+            }
+
             User::insert([
                 'username' => $input['username'],
                 'name'     => $input['nama'],
                 'password' => Hash::make(sha1(md5(hash('gost', '123456')))),
                 'level'    => $input['level'],
+                'otoritas' => $otoritas,
                 'status'   => 1
             ]);
 
