@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PlaceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,10 +31,16 @@ Route::resource('login', AuthController::class);
 Route::middleware('auth')->group(function(){
     Route::resource('dashboard', DashboardController::class);
 
-    Route::get('users/excel', [UserController::class, 'excel']);
-    Route::get('users/print', [UserController::class, 'print']);
-    Route::post('users/reset/{id}', [UserController::class, 'reset']);
+    Route::prefix('users')->group(function () {
+        Route::get('excel', [UserController::class, 'excel']);
+        Route::get('print', [UserController::class, 'print']);
+        Route::post('reset/{id}', [UserController::class, 'reset']);
+    });
     Route::resource('users', UserController::class);
+
+    Route::prefix('services')->group(function () {
+        Route::resource('place', PlaceController::class);
+    });
 });
 
 Route::get('optimize', function(){

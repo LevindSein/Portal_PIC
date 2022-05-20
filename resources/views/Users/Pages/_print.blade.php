@@ -133,10 +133,10 @@
             <table class="tg">
                 <thead>
                     <tr>
-                        <th colspan="4" style="border-style:none;">
+                        <th colspan="5" style="border-style:none;">
                             <img style="max-width: 65%;" src="{{asset('images/logo.png')}}" />
                             <h2>Data Pengguna</h2>
-                            <h3>{{$level}}</h3>
+                            <h3 style="text-transform: uppercase">{{$level}}&nbsp;&mdash;&nbsp;{{$status}}</h3>
                         </th>
                     </tr>
                     <tr>
@@ -144,8 +144,10 @@
                         <th class="tg-r8fv">Username</th>
                         <th class="tg-r8fv">Nama</th>
                         <th class="tg-r8fv">Level</th>
+                        <th class="tg-r8fv">status</th>
                     </tr>
                 </thead>
+                @if($dataset->count() > 0)
                 <tbody>
                     <tr style="height: 10px">
                     </tr>
@@ -154,24 +156,37 @@
                     @endphp
                     @foreach ($dataset as $d)
                     <tr>
-                        <td class="tg-g25h" style="text-align:left; width: 10%;">{{$i}}</td>
-                        <td class="tg-g25h" style="text-align:left; width: 35%; white-space: normal;">{{$d->username}}</td>
-                        <td class="tg-g25h" style="text-align:left; width: 35%; white-space: normal;">{{$d->name}}</td>
-                        <td class="tg-g25h" style="text-align:left; width: 20%;">{{\App\Models\User::level($d->level)}}</td>
+                        <td class="tg-g25h">{{$i}}</td>
+                        <td class="tg-g25h" style="white-space: normal;">{{$d->username}}</td>
+                        <td class="tg-g25h" style="white-space: normal;">{{$d->name}}</td>
+                        <td class="tg-g25h">{{\App\Models\User::level($d->level)}}</td>
+                        <td class="tg-g25h">{{\App\Models\User::status($d->status)}}</td>
                     </tr>
                     @php
                         $i++;
                     @endphp
                     @endforeach
                 </tbody>
+                @else
+                <tbody>
+                    <tr style="height: 10px">
+                    </tr>
+                    <tr>
+                        <td class="tg-g25h" style="text-align: center;" colspan="5">No Data Available.</td>
+                    </tr>
+                </tbody>
+                @endif
                 <tfoot>
                     <tr>
-                        <th colspan="4" style="border-style:none;">
+                        <th colspan="5" style="border-style:none;">
                             <br><br>
                             <div style="text-align:right;">
                                 <b>Bandung, {{\Carbon\Carbon::now()}}</b>
                             </div>
-                            <br>
+                            <br><br><br>
+                            <div style="text-align:right;">
+                                <b>{{Auth::user()->name}}</b>
+                            </div>
                         </th>
                     </tr>
                 </tfoot>

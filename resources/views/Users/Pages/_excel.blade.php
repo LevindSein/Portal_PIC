@@ -5,7 +5,7 @@
                 <h2>Data Pengguna</h2>
             </th>
             <th colspan="4">
-                <h2>{{$level}}</h2>
+                <h2>{{$level}} - {{$status}}</h2>
             </th>
         </tr>
         <tr>
@@ -13,6 +13,7 @@
             <th>Username</th>
             <th>Nama</th>
             <th>Level</th>
+            <th>Status</th>
         </tr>
     </thead>
     <tbody>
@@ -25,6 +26,7 @@
             <td>{{$d->username}}</td>
             <td>{{$d->name}}</td>
             <td>{{\App\Models\User::level($d->level)}}</td>
+            <td>{{\App\Models\User::status($d->status)}}</td>
         </tr>
         @php
             $i++;

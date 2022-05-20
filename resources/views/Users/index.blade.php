@@ -33,7 +33,8 @@ Users
 
 @section('content-js')
 <script>
-    var url = "/users?level=" + $("#level").prop("selectedIndex", 0).val();
+    var status = 1;
+    var url = "/users?level=" + $("#level").prop("selectedIndex", 0).val() + "&status=" + status;
 
     var dtable = $('#dtable').DataTable({
         responsive : true,
@@ -77,7 +78,21 @@ Users
     });
 
     $(document).on('change', '#level', function(){
-        url = "/users?level=" + $("#level").val();
+        url = "/users?level=" + $("#level").val() + "&status=" + status;
+        dtable.ajax.url( url ).load();
+        dtableReload();
+    });
+
+    $(document).on('click', '#deleted', function(){
+        status = 0;
+        url = "/users?level=" + $("#level").val() + "&status=" + status;
+        dtable.ajax.url( url ).load();
+        dtableReload();
+    });
+
+    $(document).on('click', '#activated', function(){
+        status = 1
+        url = "/users?level=" + $("#level").val() + "&status=" + status;
         dtable.ajax.url( url ).load();
         dtableReload();
     });

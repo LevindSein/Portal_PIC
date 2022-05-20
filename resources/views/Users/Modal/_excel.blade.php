@@ -21,6 +21,14 @@
                             <option value="5">Manajer</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <small class="form-control-label">Status Pengguna</small>
+                        <select class="form-control" name="status">
+                            <option value="all">Semua</option>
+                            <option value="1">Aktif</option>
+                            <option value="0">Dihapus</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>

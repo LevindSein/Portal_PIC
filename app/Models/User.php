@@ -48,7 +48,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function level(int $val) {
+    public static function level($val) {
         switch ($val) {
             case 1:
                 return 'Super';
@@ -62,13 +62,19 @@ class User extends Authenticatable
             case 4:
                 return 'Keuangan';
                 break;
-            default:
+            case 5:
                 return 'Manajer';
+                break;
+            case 6:
+                return 'Nasabah';
+                break;
+            default:
+                return 'Semua';
                 break;
         }
     }
 
-    public static function badgeLevel(int $val) {
+    public static function badgeLevel($val) {
         switch ($val) {
             case 1:
                 return 'badge-success';
@@ -82,9 +88,27 @@ class User extends Authenticatable
             case 4:
                 return 'badge-warning';
                 break;
-            default:
+            case 5:
                 return 'badge-primary';
                 break;
+            case 6:
+                return 'badge-danger';
+                break;
+            default:
+                return 'badge-danger';
+                break;
+        }
+    }
+
+    public static function status($val) {
+        if(is_numeric($val)){
+            if($val == 1){
+                return 'Aktif';
+            } else {
+                return 'Nonaktif';
+            }
+        } else {
+            return 'Semua';
         }
     }
 }

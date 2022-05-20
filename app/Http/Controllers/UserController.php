@@ -29,11 +29,12 @@ class UserController extends Controller
     {
         if(request()->ajax()){
             $level = $request->level;
+            $status = $request->status;
 
-            $data = User::select('id','username','name','level')
+            $data = User::select('id', 'username', 'name', 'level', 'status')
             ->where([
                 ['level', $level],
-                ['status', 1],
+                ['status', $status],
                 ['id', '!=', Auth::id()]
             ]);
             return DataTables::of($data)
@@ -41,7 +42,11 @@ class UserController extends Controller
                 $button = '';
                 if(Auth::user()->level == 1){
                     $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
-                    $button .= '<a type="button" data-toggle="tooltip" title="Hapus" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
+                    if($data->status == 1){
+                        $button .= '<a type="button" data-toggle="tooltip" title="Hapus" status="1" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
+                    } else {
+                        $button .= '<a type="button" data-toggle="tooltip" title="Aktifkan" status="0" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-check"></i></a>';
+                    }
                     $button .= '<a type="button" data-toggle="tooltip" title="Reset Password" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="reset btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-key-skeleton"></i></a>';
                 }
                 $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="detail btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-info"></i></a>';
@@ -192,7 +197,9 @@ class UserController extends Controller
                 return response()->json(['error' => "Data lost."]);
             }
 
-            $data['otoritas'] = json_decode($data->otoritas);
+            if($data->otoritas){
+                $data['otoritas'] = json_decode($data->otoritas);
+            }
 
             return response()->json(['success' => $data]);
         }
@@ -285,11 +292,15 @@ class UserController extends Controller
                 return response()->json(['error' => "Data lost."]);
             }
 
-            $data->status = 0;
+            if($data->status == 1){
+                $data->status = 0;
+            } else {
+                $data->status = 1;
+            }
 
             $data->save();
 
-            return response()->json(['success' => "Pengguna berhasil dihapus."]);
+            return response()->json(['success' => "Status pengguna berhasil diubah."]);
         }
     }
 
@@ -318,22 +329,30 @@ class UserController extends Controller
     public function print(Request $request){
         //Validator
         $input['level']  = $request->level;
+        $input['status']  = $request->status;
 
         Validator::make($input, [
             'level'    => 'required|in:1,2,3,4,5,all',
+            'status'   => 'required|in:0,1,all',
         ])->validate();
         //End Validator
 
-        if(is_numeric($input['level'])){
-            $level = User::level($input['level']);
-            $dataset = User::where([['level', $input['level']], ['status', 1]])->get();
-        } else {
-            $level = 'Semua';
-            $dataset = User::where('status', 1)->get();
+        if(is_numeric($input['level']) && is_numeric($input['status'])){
+            $dataset = User::where([['level', $input['level']], ['status', $input['status']]])->get();
+        }
+        else if(is_numeric($input['level'])){
+            $dataset = User::where('level', $input['level'])->get();
+        }
+        else if(is_numeric($input['status'])){
+            $dataset = User::where('status', $input['status'])->get();
+        }
+        else {
+            $dataset = User::get();
         }
 
         return view('Users.Pages._print', [
-            'level' => $level,
+            'level'   => User::level($input['level']),
+            'status'  => User::status($input['status']),
             'dataset' => $dataset
         ]);
     }
@@ -341,18 +360,17 @@ class UserController extends Controller
     public function excel(Request $request){
         //Validator
         $input['level']  = $request->level;
+        $input['status']  = $request->status;
 
         Validator::make($input, [
             'level'    => 'required|in:1,2,3,4,5,all',
+            'status'   => 'required|in:0,1,all',
         ])->validate();
         //End Validator
 
-        if(is_numeric($input['level'])){
-            $level = User::level($input['level']);
-        } else {
-            $level = 'Semua';
-        }
+        $level  = User::level($input['level']);
+        $status = User::status($input['status']);
 
-        return Excel::download(new UserExport($input['level']), 'Data_Pengguna_('. $level . ')_' . Carbon::now() . '.xlsx');
+        return Excel::download(new UserExport($input['level'], $input['status']), 'Data_Pengguna_('. $level . '-' . $status . ')_' . Carbon::now() . '.xlsx');
     }
 }

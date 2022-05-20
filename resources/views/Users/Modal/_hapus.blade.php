@@ -11,12 +11,12 @@
             <form id="hapus-form">
                 <div class="modal-body">
                     <p>
-                        Tekan tombol <span class="text-danger">Hapus</span>, jika anda yakin untuk menghapus pengguna.
+                        Tekan tombol <span class="text-danger status"></span>, jika anda yakin untuk mengubah status pengguna.
                     </p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold status">Hapus</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold status"></button>
                 </div>
             </form>
         </div>
@@ -31,9 +31,17 @@ var id;
 $(document).on('click', '.delete', function(e){
     e.preventDefault();
     id = $(this).attr("id");
+    stt = $(this).attr("status");
 
     $("#hapus-modal").modal("show");
-    $(".title").text("Hapus : " + $(this).attr("nama"));
+
+    if(stt == 1){
+        $(".title").text("Hapus : " + $(this).attr("nama"));
+        $(".status").text("Hapus");
+    } else {
+        $(".title").text("Aktifkan : " + $(this).attr("nama"));
+        $(".status").text("Aktifkan");
+    }
 })
 
 $('#hapus-form').on('submit', function(e){

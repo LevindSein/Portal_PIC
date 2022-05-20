@@ -237,16 +237,18 @@ $(document).on('click', '.edit', function(e){
                 $("#edit-name").val(data.success.name);
                 $("#edit-level").val(data.success.level).change();
 
-                if(data.success.otoritas.groups){
-                    $.each(data.success.otoritas.groups, function (index, value){
-                        $("#edit-" + value).prop("checked", true);
-                    });
-                }
+                if(data.success.otoritas){
+                    if(data.success.otoritas.groups){
+                        $.each(data.success.otoritas.groups, function (index, value){
+                            $("#edit-" + value).prop("checked", true);
+                        });
+                    }
 
-                if(data.success.otoritas.choosed){
-                    $.each(data.success.otoritas.choosed, function (index, value){
-                        $("#edit-" + value).prop("checked", true);
-                    });
+                    if(data.success.otoritas.choosed){
+                        $.each(data.success.otoritas.choosed, function (index, value){
+                            $("#edit-" + value).prop("checked", true);
+                        });
+                    }
                 }
             }
 

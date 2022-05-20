@@ -85,11 +85,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('service*')) ? 'active' : '' }}" href="#navbar-layanan" data-toggle="collapse" role="button" aria-expanded="{{ (request()->is('service*')) ? 'true' : 'false' }}" aria-controls="navbar-layanan">
+                                <a class="nav-link {{ (request()->is('services*')) ? 'active' : '' }}" href="#navbar-layanan" data-toggle="collapse" role="button" aria-expanded="{{ (request()->is('services*')) ? 'true' : 'false' }}" aria-controls="navbar-layanan">
                                     <i class="fas fa-fw fa-user-headset text-primary mr-2"></i>
                                     <span class="nav-link-text">Layanan</span>
                                 </a>
-                                <div class="collapse {{ (request()->is('service*')) ? 'show' : '' }}" id="navbar-layanan">
+                                <div class="collapse {{ (request()->is('services*')) ? 'show' : '' }}" id="navbar-layanan">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
                                             <a href="javascript:void(0)" class="nav-link ml-3">Registrasi</a>
@@ -98,7 +98,7 @@
                                             <a href="javascript:void(0)" class="nav-link ml-3">Pedagang</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="javascript:void(0)" class="nav-link ml-3">Tempat Usaha</a>
+                                            <a href="{{url('services/place')}}" class="nav-link ml-3">Tempat Usaha</a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="javascript:void(0)" class="nav-link ml-3">Pembongkaran</a>
