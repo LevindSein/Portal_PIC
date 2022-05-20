@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\GroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,13 +23,11 @@ Route::get('/', function () {
     return redirect('login');
 });
 
-Route::get('check', [AuthController::class, 'check']);
-Route::post('logout', [AuthController::class, 'logout']);
-Route::resource('login', AuthController::class);
-
-
 //Login Authenticated
 Route::middleware('auth')->group(function(){
+    Route::post('settings', [AuthController::class, 'post_settings']);
+    Route::get('settings', [AuthController::class, 'get_settings']);
+
     Route::resource('dashboard', DashboardController::class);
 
     Route::prefix('users')->group(function () {
@@ -40,8 +39,13 @@ Route::middleware('auth')->group(function(){
 
     Route::prefix('services')->group(function () {
         Route::resource('place', PlaceController::class);
+        Route::resource('group', GroupController::class);
     });
 });
+
+Route::get('check', [AuthController::class, 'check']);
+Route::post('logout', [AuthController::class, 'logout']);
+Route::resource('login', AuthController::class);
 
 Route::get('optimize', function(){
     \Artisan::call('cache:clear');

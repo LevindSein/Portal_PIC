@@ -242,6 +242,10 @@ $("#tambah-name").on('input change', function() {
     }
 });
 
+$("#tambah-username").on('input change', function() {
+    $(this).val($(this).val().replace(/\s/g, '')).toLowerCase().substring(0,10);
+});
+
 $("#tambah-level").on('change', function() {
     if($("#tambah-level").val() == 2){
         $("#tambah-kelola").show();

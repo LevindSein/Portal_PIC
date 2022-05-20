@@ -143,4 +143,45 @@ class AuthController extends Controller
 
         return response()->json(['success' => '.']);
     }
+
+    public function get_settings(){
+        if(request()->ajax()){
+            $data = User::findOrFail(Auth::user()->id);
+
+            return response()->json(['success' => $data]);
+        }
+    }
+
+    public function post_settings(Request $request){
+        if(request()->ajax()){
+            //Validator
+            $input['nama']           = $request->setting_name;
+            $input['username']       = strtolower($request->setting_username);
+            $input['password']       = $request->setting_password;
+            $input['ganti_password'] = $request->setting_change;
+
+            Validator::make($input, [
+                'nama'           => 'required|string|max:100',
+                'username'       => 'required|string|max:100|unique:users,username,'.Auth::user()->id,
+                'password'       => 'required|min:6',
+                'ganti_password' => 'nullable|min:6',
+            ])->validate();
+            //End Validator
+
+            $data = User::findOrFail(Auth::user()->id);
+
+            $data->name = $input['nama'];
+            $data->username = $input['username'];
+
+            if(Hash::check(sha1(md5(hash('gost', $input['password']))), $data->password)){
+                if($input['ganti_password']){
+                    $data->password = Hash::make(sha1(md5(hash('gost', $input['ganti_password']))));
+                }
+                $data->save();
+                return response()->json(['success' => "Data berhasil disimpan."]);
+            }
+
+            return response()->json(['error' => "Data gagal disimpan."]);
+        }
+    }
 }

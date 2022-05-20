@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PlaceController extends Controller
+class GroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class PlaceController extends Controller
         if($request->ajax()){
 
         }
-        return view('Services.Place.index');
+        return view('Services.Group.index');
     }
 
     /**

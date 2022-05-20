@@ -238,11 +238,7 @@ class UserController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            try {
-                $data = User::findOrFail($decrypted);
-            } catch(ModelNotFoundException $err) {
-                return response()->json(['error' => "Data lost."]);
-            }
+            $data = User::findOrFail($decrypted);
 
             $otoritas = NULL;
 
