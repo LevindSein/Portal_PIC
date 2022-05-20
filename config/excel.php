@@ -68,7 +68,7 @@ return [
             'keywords'       => '',
             'category'       => '',
             'manager'        => '',
-            'company'        => '',
+            'company'        => 'PIC Bandung',
         ],
     ],
 

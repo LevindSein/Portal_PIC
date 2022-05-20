@@ -136,7 +136,7 @@
                         <th colspan="5" style="border-style:none;">
                             <img style="max-width: 65%;" src="{{asset('images/logo.png')}}" />
                             <h2>Data Pengguna</h2>
-                            <h3 style="text-transform: uppercase">{{$level}}&nbsp;&mdash;&nbsp;{{$status}}</h3>
+                            <h3 style="text-transform: uppercase">LVL:{{$level}}&nbsp;&mdash;&nbsp;STT:{{$status}}</h3>
                         </th>
                     </tr>
                     <tr>

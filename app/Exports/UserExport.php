@@ -4,29 +4,53 @@ namespace App\Exports;
 
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterSheet;
 
 use App\Models\User;
 
-class UserExport implements FromView
+class UserExport implements FromView, WithEvents
 {
     protected $level;
+    protected $status;
 
-    function __construct($level) {
-            $this->level = $level;
+    function __construct($level, $status) {
+        $this->level = $level;
+        $this->status = $status;
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
+                $event->sheet->getDelegate()->getColumnDimension('A')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('B')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('C')->setAutoSize(true);
+                $event->sheet->getDelegate()->getColumnDimension('D')->setWidth(10);
+                $event->sheet->getDelegate()->getColumnDimension('E')->setWidth(15);
+
+            },
+        ];
     }
 
     public function view(): View
     {
-        if(is_numeric($this->level)){
-            $level = User::level($this->level);
-            $dataset = User::where([['level', $this->level], ['status', 1]])->get();
-        } else {
-            $level = 'Semua';
-            $dataset = User::where('status', 1)->get();
+        if(is_numeric($this->level) && is_numeric($this->status)){
+            $dataset = User::where([['level', $this->level], ['status', $this->status]])->get();
+        }
+        else if(is_numeric($this->level)){
+            $dataset = User::where('level', $this->level)->get();
+        }
+        else if(is_numeric($this->status)){
+            $dataset = User::where('status', $this->status)->get();
+        }
+        else {
+            $dataset = User::get();
         }
 
         return view('Users.Pages._excel', [
-            'level' => $level,
+            'level'   => User::level($this->level),
+            'status'  => User::status($this->status),
             'dataset' => $dataset
         ]);
     }

@@ -26,7 +26,7 @@
                         <select class="form-control" name="status">
                             <option value="all">Semua</option>
                             <option value="1">Aktif</option>
-                            <option value="0">Dihapus</option>
+                            <option value="0">Nonaktif / Dihapus</option>
                         </select>
                     </div>
                 </div>
