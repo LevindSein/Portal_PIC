@@ -33,7 +33,9 @@ Users
 
 @section('content-js')
 <script>
-    var status = 1;
+    var status = 1, content_title = 'Users Aktif';
+    $(".content-title").text(content_title);
+
     var url = "/users?level=" + $("#level").prop("selectedIndex", 0).val() + "&status=" + status;
 
     var dtable = $('#dtable').DataTable({
@@ -85,6 +87,8 @@ Users
 
     $(document).on('click', '#deleted', function(){
         status = 0;
+        content_title = 'Users Nonaktif';
+        $(".content-title").text(content_title);
         url = "/users?level=" + $("#level").val() + "&status=" + status;
         dtable.ajax.url( url ).load();
         dtableReload();
@@ -92,6 +96,8 @@ Users
 
     $(document).on('click', '#activated', function(){
         status = 1
+        content_title = 'Users Aktif';
+        $(".content-title").text(content_title);
         url = "/users?level=" + $("#level").val() + "&status=" + status;
         dtable.ajax.url( url ).load();
         dtableReload();

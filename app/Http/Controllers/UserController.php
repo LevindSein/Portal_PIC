@@ -31,12 +31,19 @@ class UserController extends Controller
             $level = $request->level;
             $status = $request->status;
 
+            if(is_numeric($level)){
+                $level = ['level', $level];
+            } else {
+                $level = ['level', '<', 6];
+            }
+
             $data = User::select('id', 'username', 'name', 'level', 'status')
             ->where([
-                ['level', $level],
+                $level,
                 ['status', $status],
                 ['id', '!=', Auth::id()]
             ]);
+
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '';
