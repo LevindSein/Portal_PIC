@@ -8,11 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use Spatie\Activitylog\Traits\LogsActivity;
+
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, AuthenticationLoggable;
+    use HasApiTokens, HasFactory, Notifiable, AuthenticationLoggable, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -22,6 +24,11 @@ class User extends Authenticatable
     protected $fillable = [
         'username',
         'name',
+        'phone',
+        'member',
+        'ktp',
+        'npwp',
+        'address',
         'email',
         'password',
         'level',
@@ -47,6 +54,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static $logName = 'users';
+    protected static $logFillable = true;
 
     public static function level($val) {
         switch ($val) {

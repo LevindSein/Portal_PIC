@@ -79,13 +79,13 @@
                         <!-- Nav items -->
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('dashboard*')) ? 'active' : '' }}" href="{{url('dashboard')}}">
+                                <a class="nav-link {{ (request()->is('dashboard*')) ? 'active font-weight-bold' : '' }}" href="{{url('dashboard')}}">
                                     <i class="fas fa-fw fa-tachometer-alt text-primary mr-2"></i>
                                     <span class="nav-link-text">Dashboard</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('services*')) ? 'active' : '' }}" href="#navbar-layanan" data-toggle="collapse" role="button" aria-expanded="{{ (request()->is('services*')) ? 'true' : 'false' }}" aria-controls="navbar-layanan">
+                                <a class="nav-link {{ (request()->is('services*')) ? 'active font-weight-bold' : '' }}" href="#navbar-layanan" data-toggle="collapse" role="button" aria-expanded="{{ (request()->is('services*')) ? 'true' : 'false' }}" aria-controls="navbar-layanan">
                                     <i class="fas fa-fw fa-user-headset text-primary mr-2"></i>
                                     <span class="nav-link-text">Layanan</span>
                                 </a>
@@ -98,7 +98,7 @@
                                             <a href="javascript:void(0)" class="nav-link ml-3">Pedagang</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{url('services/place')}}" class="nav-link ml-3 {{ (request()->is('services/place*') || request()->is('services/group*')) ? 'active' : '' }}">Tempat Usaha</a>
+                                            <a href="{{url('services/place')}}" class="nav-link ml-3 {{ (request()->is('services/place*') || request()->is('services/group*')) ? 'text-primary font-weight-bold' : '' }}">Tempat Usaha</a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="javascript:void(0)" class="nav-link ml-3">Pembongkaran</a>
@@ -110,13 +110,13 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('tagihan*')) ? 'active' : '' }}" href="javascript:void(0)">
+                                <a class="nav-link {{ (request()->is('tagihan*')) ? 'active font-weight-bold' : '' }}" href="javascript:void(0)">
                                     <i class="fad fa-fw fa-coins text-primary mr-2"></i>
                                     <span class="nav-link-text">Tagihan</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('laporan*')) ? 'active' : '' }}" href="#navbar-laporan" data-toggle="collapse" role="button" aria-expanded="{{ (request()->is('laporan*')) ? 'true' : 'false' }}" aria-controls="navbar-laporan">
+                                <a class="nav-link {{ (request()->is('laporan*')) ? 'active font-weight-bold' : '' }}" href="#navbar-laporan" data-toggle="collapse" role="button" aria-expanded="{{ (request()->is('laporan*')) ? 'true' : 'false' }}" aria-controls="navbar-laporan">
                                     <i class="fas fa-fw fa-book text-primary mr-2"></i>
                                     <span class="nav-link-text">Laporan</span>
                                 </a>
@@ -138,7 +138,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('utilities*')) ? 'active' : '' }}" href="#navbar-utilities" data-toggle="collapse" role="button" aria-expanded="{{ (request()->is('utilities*')) ? 'true' : 'false' }}" aria-controls="navbar-utilities">
+                                <a class="nav-link {{ (request()->is('utilities*')) ? 'active font-weight-bold' : '' }}" href="#navbar-utilities" data-toggle="collapse" role="button" aria-expanded="{{ (request()->is('utilities*')) ? 'true' : 'false' }}" aria-controls="navbar-utilities">
                                     <i class="fad fa-fw fa-tools text-primary mr-2"></i>
                                     <span class="nav-link-text">Utilities</span>
                                 </a>
@@ -160,25 +160,25 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('potensi*')) ? 'active' : '' }}" href="javascript:void(0)">
+                                <a class="nav-link {{ (request()->is('potensi*')) ? 'active font-weight-bold' : '' }}" href="javascript:void(0)">
                                     <i class="fas fa-fw fa-rocket text-primary mr-2"></i>
                                     <span class="nav-link-text">Potensi</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}" href="{{url('users')}}">
+                                <a class="nav-link {{ (request()->is('users*')) ? 'active font-weight-bold' : '' }}" href="{{url('users')}}">
                                     <i class="fad fa-fw fa-users text-primary mr-2"></i>
                                     <span class="nav-link-text">Users</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('riwayat*')) ? 'active' : '' }}" href="javascript:void(0)">
+                                <a class="nav-link {{ (request()->is('riwayat*')) ? 'active font-weight-bold' : '' }}" href="javascript:void(0)">
                                     <i class="fas fa-fw fa-history text-primary mr-2"></i>
                                     <span class="nav-link-text">Activities</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('changelogs*')) ? 'active' : '' }}" href="javascript:void(0)">
+                                <a class="nav-link {{ (request()->is('changelogs*')) ? 'active font-weight-bold' : '' }}" href="javascript:void(0)">
                                     <i class="fad fa-fw fa-cogs text-primary mr-2"></i>
                                     <span class="nav-link-text">Changelogs</span>
                                 </a>

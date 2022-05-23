@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
-
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\User;
 use App\Exports\UserExport;
@@ -47,7 +46,7 @@ class UserController extends Controller
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '';
-                if(Auth::user()->level == 1){
+                if(Session::get('level') == 1){
                     if($data->status == 1){
                         $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
                         $button .= '<a type="button" data-toggle="tooltip" title="Hapus" status="1" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
@@ -143,7 +142,7 @@ class UserController extends Controller
                 ]);
             }
 
-            User::insert([
+            User::create([
                 'username' => $input['username'],
                 'name'     => $input['nama'],
                 'password' => Hash::make(sha1(md5(hash('gost', '123456')))),
@@ -171,11 +170,7 @@ class UserController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            try {
-                $data = User::findOrFail($decrypted);
-            } catch(ModelNotFoundException $err) {
-                return response()->json(['error' => "Data lost."]);
-            }
+            $data = User::findOrFail($decrypted);
 
             $data['level'] = User::level($data->level);
 
@@ -198,11 +193,7 @@ class UserController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            try {
-                $data = User::findOrFail($decrypted);
-            } catch(ModelNotFoundException $err) {
-                return response()->json(['error' => "Data lost."]);
-            }
+            $data = User::findOrFail($decrypted);
 
             if($data->otoritas){
                 $data['otoritas'] = json_decode($data->otoritas);
@@ -289,11 +280,7 @@ class UserController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            try {
-                $data = User::findOrFail($decrypted);
-            } catch(ModelNotFoundException $err) {
-                return response()->json(['error' => "Data lost."]);
-            }
+            $data = User::findOrFail($decrypted);
 
             if($data->status == 1){
                 $data->status = 0;
@@ -315,11 +302,7 @@ class UserController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            try {
-                $data = User::findOrFail($decrypted);
-            } catch(ModelNotFoundException $err) {
-                return response()->json(['error' => "Data lost."]);
-            }
+            $data = User::findOrFail($decrypted);
 
             $data->password = Hash::make(sha1(md5(hash('gost', '123456'))));
 

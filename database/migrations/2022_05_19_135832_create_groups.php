@@ -17,7 +17,7 @@ class CreateGroups extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('nicename')->unique();
-            $table->json('data');
+            $table->json('data')->nullable();
             $table->datetime('updated_at')->useCurrent();
             $table->datetime('created_at')->useCurrent();
         });
