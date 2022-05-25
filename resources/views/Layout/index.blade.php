@@ -172,7 +172,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('riwayat*')) ? 'active font-weight-bold' : '' }}" href="javascript:void(0)">
+                                <a class="nav-link {{ (request()->is('activities*')) ? 'active font-weight-bold' : '' }}" href="{{url('activities')}}">
                                     <i class="fas fa-fw fa-history text-primary mr-2"></i>
                                     <span class="nav-link-text">Activities</span>
                                 </a>

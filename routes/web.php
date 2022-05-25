@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\ActivityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,8 @@ Route::middleware('auth')->group(function(){
         });
         Route::resource('group', GroupController::class);
     });
+
+    Route::get('activities', [ActivityController::class, 'index']);
 });
 
 Route::get('check', [AuthController::class, 'check']);
