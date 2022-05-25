@@ -7,9 +7,15 @@
             </div>
             <form id="edit-form">
                 <div class="modal-body" style="height: 60vh;">
-                    <div class="form-group">
-                        <small class="form-control-label">Nama Grup Tempat <span class="text-danger">*</span></small>
-                        <input required type="text" id="edit-name" name="edit_name" autocomplete="off" maxlength="10" class="group form-control" placeholder="Contoh : A-1" style="text-transform: uppercase;" />
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <small class="form-control-label">Blok <span class="text-danger">*</span></small>
+                            <input required type="text" id="edit-blok" name="edit_blok" autocomplete="off" maxlength="10" class="blok form-control" placeholder="Contoh : A / B / C" style="text-transform: uppercase;" />
+                        </div>
+                        <div class="form-group col-6">
+                            <small class="form-control-label">Nomor <span class="text-danger">*</span></small>
+                            <input required type="text" id="edit-nomor" name="edit_nomor" autocomplete="off" maxlength="10" class="nomor form-control" placeholder="Contoh : 1 / 2E / D" style="text-transform: uppercase;" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <small class="form-control-label">Alamat Los</small>
@@ -33,7 +39,8 @@
 <script>
     function edit_init(){
         $("#edit-form")[0].reset();
-        $("#edit-name").val('');
+        $("#edit-blok").val('');
+        $("#edit-nomor").val('');
         $("#edit-los").val('');
     }
 
@@ -68,7 +75,8 @@
             success:function(data)
             {
                 if(data.success){
-                    $("#edit-name").val(data.success.name);
+                    $("#edit-blok").val(data.success.blok);
+                    $("#edit-nomor").val(data.success.nomor);
                     $("#edit-los").val(data.success.los);
                 }
 
@@ -104,7 +112,7 @@
         });
 
         $('#edit-modal').on('shown.bs.modal', function() {
-            $("#edit-name").focus();
+            $("#edit-blok").focus();
         });
     });
 

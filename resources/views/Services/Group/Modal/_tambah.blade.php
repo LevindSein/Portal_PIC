@@ -7,9 +7,15 @@
             </div>
             <form id="tambah-form">
                 <div class="modal-body" style="height: 60vh;">
-                    <div class="form-group">
-                        <small class="form-control-label">Nama Grup Tempat <span class="text-danger">*</span></small>
-                        <input required type="text" id="tambah-name" name="tambah_name" autocomplete="off" maxlength="10" class="group form-control" placeholder="Contoh : A-1" style="text-transform: uppercase;" />
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <small class="form-control-label">Blok <span class="text-danger">*</span></small>
+                            <input required type="text" id="tambah-blok" name="tambah_blok" autocomplete="off" maxlength="10" class="blok form-control" placeholder="Contoh : A / B / C" style="text-transform: uppercase;" />
+                        </div>
+                        <div class="form-group col-6">
+                            <small class="form-control-label">Nomor <span class="text-danger">*</span></small>
+                            <input required type="text" id="tambah-nomor" name="tambah_nomor" autocomplete="off" maxlength="10" class="nomor form-control" placeholder="Contoh : 1 / 2E / D" style="text-transform: uppercase;" />
+                        </div>
                     </div>
                     <div class="form-group">
                         <small class="form-control-label">Alamat Los</small>
@@ -42,7 +48,7 @@
         tambah_init();
 
         $('#tambah-modal').on('shown.bs.modal', function() {
-            $("#tambah-name").focus();
+            $("#tambah-blok").focus();
         });
     });
 

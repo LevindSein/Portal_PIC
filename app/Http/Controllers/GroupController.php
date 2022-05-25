@@ -27,7 +27,7 @@ class GroupController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            $data = Group::select('id', 'name', 'nicename', 'data');
+            $data = Group::orderBy('blok', 'asc')->orderByRaw('LENGTH(nicename), nicename')->orderBy('nomor', 'asc');
 
             if(Session::get('level') != 1){
                 $json = json_decode(Auth::user()->otoritas);
@@ -79,13 +79,17 @@ class GroupController extends Controller
     {
         if($request->ajax()){
             //Validator
-            $input['nama_grup']  = strtoupper($request->tambah_name);
+            $input['blok']       = strtoupper($request->tambah_blok);
+            $input['nomor']      = strtoupper($request->tambah_nomor);
+            $input['nama_grup']  = $input['blok'] . '-' . $input['nomor'];
             $input['nicename']   = str_replace('-', '', $input['nama_grup']);
             $input['alamat_los'] = $request->tambah_los;
 
             Validator::make($input, [
+                'blok'       => 'required|max:10|alpha',
+                'nomor'      => 'required|max:10|alpha_num',
                 'nama_grup'  => 'required|string|max:10|unique:groups,name',
-                'alamat_los' => 'nullable|string',
+                'alamat_los' => 'nullable|string|regex:/^[a-zA-Z0-9\,]+$/',
             ])->validate();
             //End Validator
 
@@ -104,6 +108,8 @@ class GroupController extends Controller
             Group::create([
                 'name'     => $input['nama_grup'],
                 'nicename' => $input['nicename'],
+                'blok'     => $input['blok'],
+                'nomor'    => $input['nomor'],
                 'data'     => $los
             ]);
 
@@ -185,13 +191,17 @@ class GroupController extends Controller
     {
         if($request->ajax()){
             //Validator
-            $input['nama_grup']  = strtoupper($request->edit_name);
+            $input['blok']       = strtoupper($request->edit_blok);
+            $input['nomor']      = strtoupper($request->edit_nomor);
+            $input['nama_grup']  = $input['blok'] . '-' . $input['nomor'];
             $input['nicename']   = str_replace('-', '', $input['nama_grup']);
             $input['alamat_los'] = $request->edit_los;
 
             Validator::make($input, [
-                'nama_grup'  => 'required|string|max:10|unique:groups,name,'.$id,
-                'alamat_los' => 'nullable|string',
+                'blok'       => 'required|max:10|alpha',
+                'nomor'      => 'required|max:10|alpha_num',
+                'nama_grup'  => 'required|string|max:10|unique:groups,name',
+                'alamat_los' => 'nullable|string|regex:/^[a-zA-Z0-9\,]+$/',
             ])->validate();
             //End Validator
 
@@ -218,7 +228,9 @@ class GroupController extends Controller
             $data->update([
                 'name'     => $input['nama_grup'],
                 'nicename' => $input['nicename'],
-                'data'     => $los,
+                'blok'     => $input['blok'],
+                'nomor'    => $input['nomor'],
+                'data'     => $los
             ]);
 
             return response()->json(['success' => 'Data berhasil disimpan.']);
@@ -246,5 +258,17 @@ class GroupController extends Controller
 
             return response()->json(['success' => "Data berhasil dihapus."]);
         }
+    }
+
+    public function print(){
+        $data = Group::orderBy('blok', 'asc')->orderByRaw('LENGTH(nicename), nicename')->orderBy('nomor', 'asc')->get();
+
+        return view('Services.Group.Pages._print', [
+            'data' => $data
+        ]);
+    }
+
+    public function excel(){
+        return Excel::download(new GroupExport, 'Data_Grup_Tempat_' . Carbon::now() . '.xlsx');
     }
 }

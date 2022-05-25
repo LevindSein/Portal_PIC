@@ -50,9 +50,8 @@ Grup Tempat
         deferRender : true,
         pageLength : 5,
         aLengthMenu : [[5,10,25,50,100], [5,10,25,50,100]],
-        order : [[ 0, "asc" ]],
+        ordering : false,
         aoColumnDefs: [
-            { "bSortable": false, "aTargets": [1,2] },
             { "bSearchable": false, "aTargets": [1,2] }
         ],
         scrollY : "50vh",

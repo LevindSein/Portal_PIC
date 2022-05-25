@@ -22,7 +22,7 @@ $(document).on('keydown', '.phone', function(e) {
 });
 
 $(document).on('input change keydown', ".number", function (e) {
-    if(e.which >= 37 && e.which <= 40 || e.which == 188|| e.which == 190) e.preventDefault();
+    if(e.which >= 37 && e.which <= 40 || e.which == 188 || e.which == 190) e.preventDefault();
 
     if (/^[0-9\.]+$/.test($(this).val())) {
         $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
@@ -41,7 +41,7 @@ $(document).on('input change keydown', '.hour', function (e) {
 });
 
 $(document).on('input change keydown', ".float", function (e) {
-    if((e.which >= 37 && e.which <= 40) || (e.which >= 65 && e.which <= 90)) e.preventDefault();
+    if((e.which >= 37 && e.which <= 40) || (e.which >= 65 && e.which <= 90) || (e.keyCode >= 96 && e.keyCode <= 105)) e.preventDefault();
 
     if (/^[0-9\.]+$/.test($(this).val())) {
         $(this).val(parseFloat($(this).val().replace(/\./g, '')).toLocaleString('id-ID'));
@@ -60,7 +60,7 @@ $(document).on('input change keydown', ".float", function (e) {
 });
 
 $(document).on('input change keydown', ".name", function(e) {
-    if (!((e.keyCode >= 16 && e.keyCode <= 18) || (e.keyCode == 8) || (e.keyCode == 9) || (e.keyCode == 13) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57)) && !this.value.length){
+    if (!((e.keyCode >= 16 && e.keyCode <= 18) || (e.keyCode == 8) || (e.keyCode == 9) || (e.keyCode == 13) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) && !this.value.length){
         e.preventDefault();
     }
     else {
@@ -69,18 +69,26 @@ $(document).on('input change keydown', ".name", function(e) {
     }
 });
 
-$(document).on("input change keydown", ".group", function(e){
-    if (!((e.keyCode >= 16 && e.keyCode <= 18) || (e.keyCode == 8) || (e.keyCode == 9)|| (e.keyCode == 13) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57)) && !this.value.length){
+$(document).on("input change keydown", ".blok", function(e){
+    if (!((e.keyCode >= 16 && e.keyCode <= 18) || (e.keyCode == 8) || (e.keyCode == 9)|| (e.keyCode == 13) || (e.keyCode >= 65 && e.keyCode <= 90)) && !this.value.length){
         e.preventDefault();
     } else {
         $(this).val($(this).val().replace(/\s/g, ''));
-        $(this).val($(this).val().replace(/[^0-9a-zA-Z/\-]+$/g, ''));
-        $(this).val($(this).val().replace(/\-\-+/g, '-'));
+        $(this).val($(this).val().replace(/[^a-zA-Z/]+$/g, ''));
+    }
+});
+
+$(document).on("input change keydown", ".nomor", function(e){
+    if (!((e.keyCode >= 16 && e.keyCode <= 18) || (e.keyCode == 8) || (e.keyCode == 9)|| (e.keyCode == 13) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) && !this.value.length){
+        e.preventDefault();
+    } else {
+        $(this).val($(this).val().replace(/\s/g, ''));
+        $(this).val($(this).val().replace(/[^0-9a-zA-Z/]+$/g, ''));
     }
 });
 
 $(document).on("input change keydown", ".los", function(e){
-    if (!((e.keyCode >= 16 && e.keyCode <= 18) || (e.keyCode == 8) || (e.keyCode == 9)|| (e.keyCode == 13) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57)) && !this.value.length){
+    if (!((e.keyCode >= 16 && e.keyCode <= 18) || (e.keyCode == 8) || (e.keyCode == 9)|| (e.keyCode == 13) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) && !this.value.length){
         e.preventDefault();
     } else {
         $(this).val($(this).val().replace(/[^0-9a-zA-Z/\,]+$/g, ''));

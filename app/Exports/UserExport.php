@@ -22,7 +22,7 @@ class UserExport implements FromView, WithEvents
     public function registerEvents(): array
     {
         return [
-            AfterSheet::class    => function(AfterSheet $event) {
+            AfterSheet::class => function(AfterSheet $event) {
                 $event->sheet->getDelegate()->getColumnDimension('A')->setAutoSize(true);
                 $event->sheet->getDelegate()->getColumnDimension('B')->setAutoSize(true);
                 $event->sheet->getDelegate()->getColumnDimension('C')->setAutoSize(true);
@@ -36,22 +36,22 @@ class UserExport implements FromView, WithEvents
     public function view(): View
     {
         if(is_numeric($this->level) && is_numeric($this->status)){
-            $dataset = User::where([['level', $this->level], ['status', $this->status]])->get();
+            $data = User::where([['level', $this->level], ['status', $this->status]])->get();
         }
         else if(is_numeric($this->level)){
-            $dataset = User::where('level', $this->level)->get();
+            $data = User::where('level', $this->level)->get();
         }
         else if(is_numeric($this->status)){
-            $dataset = User::where('status', $this->status)->get();
+            $data = User::where('status', $this->status)->get();
         }
         else {
-            $dataset = User::get();
+            $data = User::get();
         }
 
         return view('Users.Pages._excel', [
-            'level'   => User::level($this->level),
-            'status'  => User::status($this->status),
-            'dataset' => $dataset
+            'level'  => User::level($this->level),
+            'status' => User::status($this->status),
+            'data'   => $data
         ]);
     }
 }

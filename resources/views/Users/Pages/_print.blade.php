@@ -61,34 +61,6 @@
                 margin: 0 0 20px 0;
             }
 
-            #project {
-                float: left;
-            }
-
-            #project span {
-                color: #000;
-                text-align: right;
-                width: 52px;
-                margin-right: 60px;
-                display: inline-block;
-
-            }
-
-            #company {
-                float: right;
-                text-align: right;
-            }
-
-            #ttd {
-                float: right;
-                text-align: center;
-            }
-
-            #project div,
-            #company div {
-                white-space: nowrap;
-            }
-
             table {
                 width: 100%;
                 border-collapse: collapse;
@@ -99,28 +71,8 @@
             .tg  {border-collapse:collapse;border-spacing:0;}
             .tg td{font-family:Arial, sans-serif;font-size:14px;padding:5px 15px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
             .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:5px 15px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-            .tg .tg-vbo4{font-weight:bold;font-family:Arial, Helvetica, sans-serif !important;;color:#000000;text-align:right;vertical-align:middle}
-            .tg .tg-ccvv{font-weight:bold;font-family:Arial, Helvetica, sans-serif !important;;color:#000000;text-align:center;vertical-align:top}
-            .tg .tg-rtqe{font-family:Arial, Helvetica, sans-serif !important;;color:#000000;text-align:left;vertical-align:middle}
-            .tg .tg-8m6k{font-weight:bold;font-family:Arial, Helvetica, sans-serif !important;;color:#000000;text-align:right;vertical-align:top}
-            .tg .tg-r8fv{font-weight:bold;font-family:Arial, Helvetica, sans-serif !important;;color:#000000;text-align:center;vertical-align:middle}
-            .tg .tg-cegc{font-family:Arial, Helvetica, sans-serif !important;;color:#000000;text-align:center;vertical-align:middle}
-            .tg .tg-g25h{font-family:Arial, Helvetica, sans-serif !important;;color:#000000;text-align:right;vertical-align:center}
-
-            #notices .notice {
-                color: #5D6975;
-            }
-
-            footer {
-                color: #5D6975;
-                width: 100%;
-                height: 30px;
-                position: absolute;
-                bottom: 0;
-                border-top: 1px solid #000;
-                padding: 8px 0;
-                text-align: center;
-            }
+            .tg .tg-r8fv{font-family:Arial, Helvetica, sans-serif !important;font-weight:bold;color:#000000;text-align:center;vertical-align:middle}
+            .tg .tg-g25h{font-family:Arial, Helvetica, sans-serif !important;color:#000000;vertical-align:middle}
         </style>
 
         @laravelPWA
@@ -147,20 +99,20 @@
                         <th class="tg-r8fv">status</th>
                     </tr>
                 </thead>
-                @if($dataset->count() > 0)
+                @if($data->count() > 0)
                 <tbody>
                     <tr style="height: 10px">
                     </tr>
                     @php
                         $i = 1;
                     @endphp
-                    @foreach ($dataset as $d)
+                    @foreach ($data as $d)
                     <tr>
-                        <td class="tg-g25h">{{$i}}</td>
-                        <td class="tg-g25h" style="white-space: normal;">{{$d->username}}</td>
-                        <td class="tg-g25h" style="white-space: normal;">{{$d->name}}</td>
-                        <td class="tg-g25h">{{\App\Models\User::level($d->level)}}</td>
-                        <td class="tg-g25h">{{\App\Models\User::status($d->status)}}</td>
+                        <td class="tg-g25h" style="text-align: center;">{{$i}}</td>
+                        <td class="tg-g25h" style="text-align: left; white-space: normal;">{{$d->username}}</td>
+                        <td class="tg-g25h" style="text-align: left; white-space: normal;">{{$d->name}}</td>
+                        <td class="tg-g25h" style="text-align: center;">{{\App\Models\User::level($d->level)}}</td>
+                        <td class="tg-g25h" style="text-align: center;">{{\App\Models\User::status($d->status)}}</td>
                     </tr>
                     @php
                         $i++;

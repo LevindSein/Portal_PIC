@@ -39,6 +39,11 @@ Route::middleware('auth')->group(function(){
 
     Route::prefix('services')->group(function () {
         Route::resource('place', PlaceController::class);
+
+        Route::prefix('group')->group(function () {
+            Route::get('excel', [GroupController::class, 'excel']);
+            Route::get('print', [GroupController::class, 'print']);
+        });
         Route::resource('group', GroupController::class);
     });
 });

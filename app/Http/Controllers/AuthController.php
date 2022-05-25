@@ -146,7 +146,7 @@ class AuthController extends Controller
 
     public function get_settings(){
         if(request()->ajax()){
-            $data = User::findOrFail(Auth::user()->id);
+            $data = Auth::user();
 
             return response()->json(['success' => $data]);
         }
@@ -168,7 +168,8 @@ class AuthController extends Controller
             ])->validate();
             //End Validator
 
-            $data = User::findOrFail(Auth::user()->id);
+            /** @var User $data */
+            $data = Auth::user();
 
             $data->name = $input['nama'];
             $data->username = $input['username'];

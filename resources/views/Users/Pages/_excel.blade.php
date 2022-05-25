@@ -15,7 +15,7 @@
     @php
         $i = 1;
     @endphp
-    @foreach ($dataset as $d)
+    @foreach ($data as $d)
     <tr>
         <td style="border: 1px solid #000000;">{{$i}}</td>
         <td style="border: 1px solid #000000;">{{$d->username}}</td>

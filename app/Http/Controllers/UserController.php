@@ -324,22 +324,22 @@ class UserController extends Controller
         //End Validator
 
         if(is_numeric($input['level']) && is_numeric($input['status'])){
-            $dataset = User::where([['level', $input['level']], ['status', $input['status']]])->get();
+            $data = User::where([['level', $input['level']], ['status', $input['status']]])->get();
         }
         else if(is_numeric($input['level'])){
-            $dataset = User::where('level', $input['level'])->get();
+            $data = User::where('level', $input['level'])->get();
         }
         else if(is_numeric($input['status'])){
-            $dataset = User::where('status', $input['status'])->get();
+            $data = User::where('status', $input['status'])->get();
         }
         else {
-            $dataset = User::get();
+            $data = User::get();
         }
 
         return view('Users.Pages._print', [
-            'level'   => User::level($input['level']),
-            'status'  => User::status($input['status']),
-            'dataset' => $dataset
+            'level'  => User::level($input['level']),
+            'status' => User::status($input['status']),
+            'data'   => $data
         ]);
     }
 
