@@ -13,9 +13,10 @@ Aktifitas Pengguna
         <tr>
             <th class="all">Username</th>
             <th class="min-tablet">Nama</th>
-            <th class="min-tablet">Level</th>
+            <th class="min-desktop">Level</th>
             <th class="min-tablet">Login</th>
-            <th class="min-tablet">Times</th>
+            <th class="min-desktop">Times</th>
+            <th class="min-tablet">Jml.Act</th>
             <th class="all">Action</th>
         </tr>
     </thead>
@@ -34,7 +35,8 @@ Aktifitas Pengguna
             paginate: {
                 previous: "<i class='fas fa-angle-left'>",
                 next: "<i class='fas fa-angle-right'>"
-            }
+            },
+            searchPlaceholder: "username/name"
         },
         serverSide : true,
         ajax : "/activities",
@@ -44,6 +46,7 @@ Aktifitas Pengguna
             { data: 'user.level', name: 'user.level', class : 'text-center align-middle' },
             { data: 'login_successful', name: 'login_successful', class : 'text-center align-middle' },
             { data: 'login_at', name: 'login_at', class : 'text-center align-middle' },
+            { data: 'jml', name: 'jml', class : 'text-center align-middle' },
             { data: 'action', name: 'action', class : 'text-center align-middle' },
         ],
         stateSave : true,
@@ -52,8 +55,8 @@ Aktifitas Pengguna
         aLengthMenu : [[5,10,25,50,100], [5,10,25,50,100]],
         order : [[ 4, "desc" ]],
         aoColumnDefs: [
-            { "bSortable": false, "aTargets": [5] },
-            { "bSearchable": false, "aTargets": [2,3,4,5] }
+            { "bSortable": false, "aTargets": [6] },
+            { "bSearchable": false, "aTargets": [2,3,4,5,6] }
         ],
         scrollY : "50vh",
         scrollX : true,

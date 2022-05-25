@@ -58,6 +58,17 @@ class ActivityController extends Controller
                 }
                 return $button;
             })
+            ->addColumn('jml', function($data){
+                $start = $data->login_at;
+                $end = Carbon::now();
+                if($data->logout_at){
+                    $end = $data->logout_at;
+                }
+
+                return ActivityLog::where('causer_id', $data->user->id)
+                ->whereBetween('updated_at', [$start, $end])
+                ->count();
+            })
             ->addColumn('action', function($data){
                 $button = '';
                 if($data->login_successful){
