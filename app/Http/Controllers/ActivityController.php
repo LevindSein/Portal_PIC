@@ -23,7 +23,7 @@ class ActivityController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $data = AuthenticationLog::with('user');
+            $data = AuthenticationLog::with('user:id,username,name,level')->get();
 
             return DataTables::of($data)
             ->editColumn('user.username', function($data){
@@ -59,7 +59,9 @@ class ActivityController extends Controller
             })
             ->addColumn('action', function($data){
                 $button = '';
-                $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" class="detail btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-info"></i></a>';
+                if($data->login_successful){
+                    $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" class="detail btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-info"></i></a>';
+                }
                 return $button;
             })
             ->rawColumns(['user.username', 'user.name', 'user.level', 'login_successful', 'action'])
@@ -67,5 +69,22 @@ class ActivityController extends Controller
         }
 
         return view('Activity.index');
+    }
+
+    public function show($id)
+    {
+        if(request()->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            $data = AuthenticationLog::with('user')->findOrFail($decrypted);
+
+            $data['level'] = User::level($data->user->level);
+
+            return response()->json(['success' => $data]);
+        }
     }
 }

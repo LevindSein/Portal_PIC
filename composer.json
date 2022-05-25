@@ -19,7 +19,7 @@
         "spatie/laravel-activitylog": "^3.17",
         "spatie/laravel-backup": "^6.16",
         "torann/geoip": "^3.0",
-        "yajra/laravel-datatables-oracle": "~9.0"
+        "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

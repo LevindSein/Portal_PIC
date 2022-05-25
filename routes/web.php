@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function(){
     });
 
     Route::get('activities', [ActivityController::class, 'index']);
+    Route::get('activities/{id}', [ActivityController::class, 'show']);
 });
 
 Route::get('check', [AuthController::class, 'check']);

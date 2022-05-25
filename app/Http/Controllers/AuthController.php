@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
+use App\Models\AuthenticationLog;
+
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -129,6 +132,14 @@ class AuthController extends Controller
 
     public function logout()
     {
+        $auth = AuthenticationLog::orderBy('id', 'desc')->where([
+            ['authenticatable_id', Auth::user()->id],
+            ['login_successful', 1]
+        ])->first();
+        if($auth){
+            $auth->logout_at = Carbon::now();
+            $auth->save();
+        }
         $temp = Session::get("_token");
         Session::flush();
         Session::put('_token', $temp);

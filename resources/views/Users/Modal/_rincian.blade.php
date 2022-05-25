@@ -1,11 +1,11 @@
 <!--begin::Modal-->
 <div class="modal fade" id="detail-modal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="detail-modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Rincian</h5>
             </div>
-            <div class="modal-body text-center">
+            <div class="modal-body text-center" style="height: 60vh;">
                 <small class="text-muted pt-4 db">Nama</small>
                 <h3 id="showNama"></h3>
                 <small class="text-muted pt-4 db">Username (untuk Login)</small>

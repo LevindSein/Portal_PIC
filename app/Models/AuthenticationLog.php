@@ -22,6 +22,8 @@ class AuthenticationLog extends Model
         'location'
     ];
 
+    public $timestamps = false;
+
     public function user()
     {
         return $this->belongsTo(User::class, 'authenticatable_id');

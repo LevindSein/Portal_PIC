@@ -23,6 +23,7 @@ Aktifitas Pengguna
 @endsection
 
 @section('content-modal')
+@include('Activity.Modal._rincian')
 @endsection
 
 @section('content-js')
@@ -49,7 +50,7 @@ Aktifitas Pengguna
         deferRender : true,
         pageLength : 5,
         aLengthMenu : [[5,10,25,50,100], [5,10,25,50,100]],
-        order : [[ 0, "asc" ]],
+        order : [[ 4, "desc" ]],
         aoColumnDefs: [
             { "bSortable": false, "aTargets": [5] },
             { "bSearchable": false, "aTargets": [2,3,4,5] }
