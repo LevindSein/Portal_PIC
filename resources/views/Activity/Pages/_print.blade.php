@@ -120,7 +120,9 @@
                         <td class="tg-g25h" style="text-align: center;">
                             @if(isset($json->old))
                             @foreach ($json->old as $key => $value)
+                            @if($value)
                                 {{$key}} : <span style="white-space: normal;">{{$value}}</span><br>
+                            @endif
                             @endforeach
                             @else
                             &nbsp;
@@ -129,7 +131,9 @@
                         <td class="tg-g25h" style="text-align: center; width: 50px">
                             @if(isset($json->attributes))
                             @foreach ($json->attributes as $key => $value)
+                            @if($value)
                                 {{$key}} : <span style="white-space: normal;">{{$value}}</span><br>
+                            @endif
                             @endforeach
                             @else
                             &nbsp;
