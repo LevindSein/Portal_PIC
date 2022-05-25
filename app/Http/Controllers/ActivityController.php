@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -46,7 +47,7 @@ class ActivityController extends Controller
             })
             ->editColumn('user.level', function($data){
                 $badge = User::badgeLevel($data->user->level);
-                $button = '<span class="badge badge-md '. $badge . '">' . User::level($data->level) . '</span>';
+                $button = '<span class="badge badge-md '. $badge . '">' . User::level($data->user->level) . '</span>';
                 return $button;
             })
             ->editColumn('login_successful', function($data){
@@ -84,7 +85,50 @@ class ActivityController extends Controller
 
             $data['level'] = User::level($data->user->level);
 
+            $start = $data->login_at;
+            $end = Carbon::now();
+            if($data->logout_at){
+                $end = $data->logout_at;
+            }
+
+            $data['activity'] = ActivityLog::where('causer_id', $data->user->id)
+            ->whereBetween('updated_at', [$start, $end])
+            ->count();
+
             return response()->json(['success' => $data]);
         }
+    }
+
+    public function print($id){
+        try {
+            $decrypted = Crypt::decrypt($id);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return response()->json(['error' => "Data tidak valid."]);
+        }
+
+        $data = AuthenticationLog::with('user')->findOrFail($decrypted);
+
+        $start = $data->login_at;
+        $end = Carbon::now();
+        if($data->logout_at){
+            $end = $data->logout_at;
+        }
+
+        $username = $data->user->username;
+        $name     = $data->user->name;
+        $level    = User::level($data->user->level);
+
+        $activities = ActivityLog::where('causer_id', $data->user->id)
+        ->whereBetween('updated_at', [$start, $end])
+        ->get();
+
+        return view('Activity.Pages._print', [
+            'start'    => $start,
+            'end'      => $end,
+            'username' => $username,
+            'name'     => $name,
+            'level'    => $level,
+            'data'     => $activities
+        ]);
     }
 }

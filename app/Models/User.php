@@ -12,6 +12,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
+use function PHPSTORM_META\map;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, AuthenticationLoggable, LogsActivity;
@@ -55,8 +57,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected static $ignoreChangedAttributes = ['password', 'otoritas', 'updated_at'];
     protected static $logName = 'users';
-    protected static $logFillable = true;
+    protected static $logAttributes = [
+        'username',
+        'name',
+        'phone',
+        'member',
+        'ktp',
+        'npwp',
+        'address',
+        'email',
+        'level',
+        'status'
+    ];
 
     public static function level($val) {
         switch ($val) {

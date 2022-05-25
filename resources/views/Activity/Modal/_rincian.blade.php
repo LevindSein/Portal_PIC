@@ -20,6 +20,11 @@
                 <h3 id="showLoginAt"></h3>
                 <small class="text-muted pt-4 db">Logout</small>
                 <h3 id="showLogoutAt"></h3>
+                <hr>
+                <small class="text-muted pt-4 db">Aktifitas</small>
+                <div id="divActivities">
+                    <h3 id="showActivities"></h3>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
@@ -68,6 +73,10 @@
                     $("#showAgent").text(data.success.user_agent);
                     $("#showLoginAt").text(data.success.login_at);
                     $("#showLogoutAt").text((data.success.logout_at) ? data.success.logout_at : '-');
+                    (data.success.activity > 0) ?
+                        $("#showActivities").html(data.success.activity + ' Aktifitas, Lihat <a id="print-activities" href="javascript:void(0);" class="text-primary">disini</a>.') :
+                        $("#showActivities").html(data.success.activity + ' Aktifitas');
+
                 }
 
                 if(data.info){
@@ -101,5 +110,10 @@
             }
         });
     });
+
+    $(document).on('click', '#print-activities', function (e) {
+        $(this).attr("href", "/activities/print/" + id);
+        $(this).attr("target", "_blank");
+    })
 </script>
 <!--end::Javascript-->
