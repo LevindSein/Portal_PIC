@@ -13,7 +13,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold">HApus</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Hapus</button>
                 </div>
             </form>
         </div>

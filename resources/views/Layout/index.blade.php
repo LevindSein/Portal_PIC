@@ -153,17 +153,24 @@
                                         <li class="nav-item">
                                             <a href="javascript:void(0)" class="nav-link ml-3">Jatuh Tempo</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a href="javascript:void(0)" class="nav-link ml-3">Simulasi Tagihan</a>
-                                        </li>
                                     </ul>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('potensi*')) ? 'active font-weight-bold' : '' }}" href="javascript:void(0)">
-                                    <i class="fas fa-fw fa-rocket text-primary mr-2"></i>
-                                    <span class="nav-link-text">Potensi</span>
+                                <a class="nav-link {{ (request()->is('analytics*')) ? 'active font-weight-bold' : '' }}" href="#navbar-analytics" data-toggle="collapse" role="button" aria-expanded="{{ (request()->is('analytics*')) ? 'true' : 'false' }}" aria-controls="navbar-analytics">
+                                    <i class="fad fa-fw fa-rocket text-primary mr-2"></i>
+                                    <span class="nav-link-text">Analitis</span>
                                 </a>
+                                <div class="collapse {{ (request()->is('analytics*')) ? 'show' : '' }}" id="navbar-analytics">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="{{url('analytics/potention')}}" class="nav-link ml-3 {{ (request()->is('analytics/potention*')) ? 'text-primary font-weight-bold' : '' }}">Potensi</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{url('analytics/simulation')}}" class="nav-link ml-3 {{ (request()->is('analytics/simulation*')) ? 'text-primary font-weight-bold' : '' }}">Simulasi Tagihan</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ (request()->is('users*')) ? 'active font-weight-bold' : '' }}" href="{{url('users')}}">
@@ -194,20 +201,6 @@
             <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- Search form -->
-                        <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-                            <div class="form-group mb-0">
-                                <div class="input-group input-group-alternative input-group-merge">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                    </div>
-                                    <input class="form-control" placeholder="Search" type="text">
-                                </div>
-                            </div>
-                            <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </form>
                         <!-- Navbar links -->
                         <ul class="navbar-nav align-items-center ml-md-auto">
                             <li class="nav-item d-xl-none">
@@ -219,11 +212,6 @@
                                         <i class="sidenav-toggler-line"></i>
                                     </div>
                                 </div>
-                            </li>
-                            <li class="nav-item d-sm-none">
-                                <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
-                                    <i class="ni ni-zoom-split-in"></i>
-                                </a>
                             </li>
                         </ul>
                         <ul class="navbar-nav align-items-center ml-auto ml-md-0">
