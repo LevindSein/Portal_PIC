@@ -1,19 +1,19 @@
 @extends('Layout.index')
 
 @section('content-title')
-Grup Tempat
+Changelogs
 @endsection
 
 @section('content-button')
-@include('Services.Group.Partial._button')
+@include('Changelogs.Partial._button')
 @endsection
 
 @section('content-body')
 <table class="table table-striped table-hover" width="100%" id="dtable">
     <thead>
         <tr>
-            <th class="all">Nama</th>
-            <th class="min-tablet">Jml.Los</th>
+            <th class="all">Times</th>
+            <th class="min-tablet">Title</th>
             <th class="all">Action</th>
         </tr>
     </thead>
@@ -21,12 +21,10 @@ Grup Tempat
 @endsection
 
 @section('content-modal')
-@include('Services.Group.Modal._tambah')
-@include('Services.Group.Modal._edit')
-@include('Services.Group.Modal._hapus')
-@include('Services.Group.Modal._rincian')
-@include('Services.Group.Modal._print')
-@include('Services.Group.Modal._excel')
+@include('Changelogs.Modal._tambah')
+@include('Changelogs.Modal._edit')
+@include('Changelogs.Modal._hapus')
+@include('Changelogs.Modal._rincian')
 @endsection
 
 @section('content-js')
@@ -38,21 +36,22 @@ Grup Tempat
                 previous: "<i class='fas fa-angle-left'>",
                 next: "<i class='fas fa-angle-right'>"
             },
-            searchPlaceholder: "Nama"
+            searchPlaceholder: "Times"
         },
         serverSide : true,
-        ajax : "/services/group",
+        ajax : "/changelogs",
         columns : [
-            { data: 'name', name: 'name', class : 'text-center align-middle' },
-            { data: 'jum_los', name: 'jum_los', class : 'text-center align-middle' },
+            { data: 'times', name: 'times', class : 'text-center align-middle' },
+            { data: 'title', name: 'title', class : 'text-center align-middle' },
             { data: 'action', name: 'action', class : 'text-center align-middle' },
         ],
         stateSave : true,
         deferRender : true,
         pageLength : 5,
         aLengthMenu : [[5,10,25,50,100], [5,10,25,50,100]],
-        ordering : false,
+        order : [[ 0, "asc" ]],
         aoColumnDefs: [
+            { "bSortable": false, "aTargets": [2] },
             { "bSearchable": false, "aTargets": [1,2] }
         ],
         scrollY : "50vh",

@@ -12,8 +12,8 @@ Users
 <table class="table table-striped table-hover" width="100%" id="dtable">
     <thead>
         <tr>
-            <th class="all">Nama</th>
             <th class="min-tablet">Username</th>
+            <th class="all">Nama</th>
             <th class="min-tablet">Level</th>
             <th class="all">Action</th>
         </tr>
@@ -44,13 +44,14 @@ Users
             paginate: {
                 previous: "<i class='fas fa-angle-left'>",
                 next: "<i class='fas fa-angle-right'>"
-            }
+            },
+            searchPlaceholder: "Username/Nama"
         },
         serverSide : true,
         ajax : url,
         columns : [
-            { data: 'name', name: 'name', class : 'text-center align-middle' },
             { data: 'username', name: 'username', class : 'text-center align-middle' },
+            { data: 'name', name: 'name', class : 'text-center align-middle' },
             { data: 'level', name: 'level', class : 'text-center align-middle' },
             { data: 'action', name: 'action', class : 'text-center align-middle' },
         ],

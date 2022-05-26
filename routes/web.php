@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ChangeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,11 @@ Route::middleware('auth')->group(function(){
     Route::get('activities', [ActivityController::class, 'index']);
     Route::get('activities/{id}', [ActivityController::class, 'show']);
     Route::get('activities/print/{id}', [ActivityController::class, 'print']);
+
+    Route::prefix('changelogs')->group(function () {
+        Route::get('excel/{id}', [ChangeController::class, 'excel']);
+    });
+    Route::resource('changelogs', ChangeController::class);
 });
 
 Route::get('check', [AuthController::class, 'check']);

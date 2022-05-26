@@ -36,7 +36,7 @@ Aktifitas Pengguna
                 previous: "<i class='fas fa-angle-left'>",
                 next: "<i class='fas fa-angle-right'>"
             },
-            searchPlaceholder: "username/name"
+            searchPlaceholder: "Username/Nama"
         },
         serverSide : true,
         ajax : "/activities",

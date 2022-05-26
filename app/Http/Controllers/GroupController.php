@@ -24,9 +24,9 @@ class GroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        if($request->ajax()){
+        if(request()->ajax()){
             $data = Group::orderBy('blok', 'asc')->orderByRaw('LENGTH(nicename), nicename')->orderBy('nomor', 'asc');
 
             if(Session::get('level') != 1){
@@ -113,7 +113,7 @@ class GroupController extends Controller
                 'data'     => $los
             ]);
 
-            return response()->json(['success' => 'Data berhasil disimpan.', 'debug' => $los]);
+            return response()->json(['success' => 'Data berhasil disimpan.']);
         }
     }
 

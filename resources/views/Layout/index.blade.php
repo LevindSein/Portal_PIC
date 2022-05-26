@@ -178,7 +178,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ (request()->is('changelogs*')) ? 'active font-weight-bold' : '' }}" href="javascript:void(0)">
+                                <a class="nav-link {{ (request()->is('changelogs*')) ? 'active font-weight-bold' : '' }}" href="{{url('changelogs')}}">
                                     <i class="fad fa-fw fa-cogs text-primary mr-2"></i>
                                     <span class="nav-link-text">Changelogs</span>
                                 </a>
