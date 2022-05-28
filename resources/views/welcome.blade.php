@@ -14,8 +14,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login @include('Layout.Partial._title')</title>
-
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
 
@@ -25,6 +23,8 @@
         @endforeach
 
         @laravelPWA
+
+        <title>Login @include('Layout.Partial._title')</title>
     </head>
 
     <body class="bg-default">

@@ -25,11 +25,6 @@ class Changelogs extends Model
     }
 
     public static function code(){
-        $data = mt_rand(000000000000001, 999999999999999);
-
-        if(self::where('code', $data)->exists())
-            return self::code();
-        else
-            return $data;
+        return hexdec(uniqid("111")); //111 = Changelogs
     }
 }

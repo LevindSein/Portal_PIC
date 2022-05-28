@@ -9,6 +9,7 @@ use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ChangeController;
+use App\Http\Controllers\TarifController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,10 @@ Route::middleware('auth')->group(function(){
             Route::get('print', [GroupController::class, 'print']);
         });
         Route::resource('group', GroupController::class);
+    });
+
+    Route::prefix('utilities')->group(function () {
+        Route::resource('tarif', TarifController::class);
     });
 
     Route::get('activities', [ActivityController::class, 'index']);

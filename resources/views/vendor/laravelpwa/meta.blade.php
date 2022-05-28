@@ -4,10 +4,10 @@
 <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=5">
 <meta name="keyword" content="Pasar Induk, Bandung, Caringin, PIC, Pasar Induk Caringin Bandung"/>
 <meta name="author" content="Levind Sein"/>
-<meta name="description" content="Silakan Login ke Portal Pasar Induk Caringin Kota Bandung" />
-<meta property="og:site_name" content="Portal Pasar Induk Caringin Kota Bandung">
-<meta property="og:title" content="Portal Pasar Induk Caringin Kota Bandung" />
-<meta property="og:description" content="Silakan Login ke Portal Pasar Induk Caringin Kota Bandung" />
+<meta name="description" content="Login ke Pasar Induk Caringin Kota Bandung" />
+<meta property="og:site_name" content="Pasar Induk Caringin Kota Bandung">
+<meta property="og:title" content="Pasar Induk Caringin Kota Bandung" />
+<meta property="og:description" content="Login ke Pasar Induk Caringin Kota Bandung" />
 <meta property="og:image" itemprop="image" content="{{asset('images/icons/icon-72x72.png')}}">
 <meta property="og:type" content="website" />
 

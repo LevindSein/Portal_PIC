@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        if(request()->ajax()){
+        if($request->ajax()){
             $level = $request->level;
             $status = $request->status;
 

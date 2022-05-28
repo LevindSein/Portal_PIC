@@ -30,6 +30,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        view()->composer('*', function ($view)
+        {
+            if(Auth::check()){
+                View::share('level', Auth::user()->level);
+            }
+        });
+
         if(Schema::hasTable('groups')){
             View::share('groups', Group::orderBy('nicename', 'asc')->get());
         }
