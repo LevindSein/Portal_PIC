@@ -135,4 +135,8 @@ class User extends Authenticatable
             return 'Semua';
         }
     }
+
+    public static function code(){
+        return hexdec(uniqid("333")); //333 = Pedagang
+    }
 }

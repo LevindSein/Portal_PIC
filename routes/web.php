@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PedagangController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\GroupController;
@@ -42,6 +43,9 @@ Route::middleware('auth')->group(function(){
     Route::resource('users', UserController::class);
 
     Route::prefix('services')->group(function () {
+        Route::post('reset/{id}', [PedagangController::class, 'reset']);
+        Route::resource('pedagang', PedagangController::class);
+
         Route::resource('place', PlaceController::class);
 
         Route::prefix('group')->group(function () {

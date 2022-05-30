@@ -15,7 +15,7 @@
                 <a href="javascript:void(0)" class="nav-link ml-3">Registrasi</a>
             </li>
             <li class="nav-item">
-                <a href="javascript:void(0)" class="nav-link ml-3">Pedagang</a>
+                <a href="{{url('services/pedagang')}}" class="nav-link ml-3 {{ (request()->is('services/pedagang*')) ? 'text-primary font-weight-bold' : '' }}">Pedagang</a>
             </li>
             <li class="nav-item">
                 <a href="{{url('services/place')}}" class="nav-link ml-3 {{ (request()->is('services/place*') || request()->is('services/group*')) ? 'text-primary font-weight-bold' : '' }}">Tempat Usaha</a>
