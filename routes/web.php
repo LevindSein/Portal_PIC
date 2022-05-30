@@ -10,6 +10,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ChangeController;
 use App\Http\Controllers\TarifController;
+use App\Http\Controllers\AlatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,8 @@ Route::middleware('auth')->group(function(){
 
     Route::prefix('utilities')->group(function () {
         Route::resource('tarif', TarifController::class);
+
+        Route::resource('alat', AlatController::class);
     });
 
     Route::get('activities', [ActivityController::class, 'index']);
