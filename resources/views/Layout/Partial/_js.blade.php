@@ -80,7 +80,7 @@
         });
     });
 
-    setTimeout(() => {
+    function checkAuth(){
         $.ajax({
             url: '/check',
             cache: false,
@@ -96,7 +96,15 @@
                 console.log(data);
             }
         });
+    }
+
+    setTimeout(() => {
+        checkAuth();
     }, 0);
+
+    setInterval(() => {
+        checkAuth();
+    }, 6000);
 
     $("#content-button").show();
 

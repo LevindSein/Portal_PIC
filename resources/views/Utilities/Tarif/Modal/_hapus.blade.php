@@ -1,19 +1,19 @@
 <!--begin::Modal-->
-<div class="modal fade" id="reset-modal" tabindex="-1" role="dialog" aria-labelledby="reset-modal" aria-hidden="true">
+<div class="modal fade" id="hapus-modal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="hapus-modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title title"></h5>
             </div>
-            <form id="reset-form">
+            <form id="hapus-form">
                 <div class="modal-body">
                     <p>
-                        Tekan tombol <span class="text-danger">Reset</span>, jika anda yakin untuk mengatur ulang password.
+                        Tekan tombol <span class="text-danger">Hapus</span>, jika anda yakin untuk menghapus tarif.
                     </p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold">Reset</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Hapus</button>
                 </div>
             </form>
         </div>
@@ -25,15 +25,15 @@
 <script>
 var id;
 
-$(document).on('click', '.reset', function(e){
+$(document).on('click', '.delete', function(e){
     e.preventDefault();
     id = $(this).attr("id");
+    $(".title").text("Hapus : " + $(this).attr("nama"));
 
-    $("#reset-modal").modal("show");
-    $(".title").text("Reset Password : " + $(this).attr("nama"));
-});
+    $("#hapus-modal").modal("show");
+})
 
-$('#reset-form').on('submit', function(e){
+$('#hapus-form').on('submit', function(e){
     e.preventDefault();
 
     $.ajaxSetup({
@@ -43,9 +43,9 @@ $('#reset-form').on('submit', function(e){
     });
 
     $.ajax({
-        url: "/users/reset/" + id,
+        url: "/utilities/tarif/" + id,
         cache: false,
-        method: "POST",
+        method: "DELETE",
         data: $(this).serialize(),
         dataType: "json",
         beforeSend:function(){
@@ -92,7 +92,7 @@ $('#reset-form').on('submit', function(e){
         },
         complete:function(data){
             if(JSON.parse(data.responseText).success){
-                $('#reset-modal').modal('hide');
+                $('#hapus-modal').modal('hide');
                 dtableReload();
             }
             setTimeout(() => {

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Group;
 use App\Exports\GroupExport;
@@ -105,13 +106,15 @@ class GroupController extends Controller
                 $los = json_encode($los);
             }
 
-            Group::create([
-                'name'     => $input['nama_grup'],
-                'nicename' => $input['nicename'],
-                'blok'     => $input['blok'],
-                'nomor'    => $input['nomor'],
-                'data'     => $los
-            ]);
+            DB::transaction(function() use ($input, $los){
+                Group::create([
+                    'name'     => $input['nama_grup'],
+                    'nicename' => $input['nicename'],
+                    'blok'     => $input['blok'],
+                    'nomor'    => $input['nomor'],
+                    'data'     => $los
+                ]);
+            });
 
             return response()->json(['success' => 'Data berhasil disimpan.']);
         }
@@ -197,41 +200,43 @@ class GroupController extends Controller
             $input['nicename']   = str_replace('-', '', $input['nama_grup']);
             $input['alamat_los'] = $request->edit_los;
 
-            Validator::make($input, [
-                'blok'       => 'required|max:10|alpha',
-                'nomor'      => 'required|max:10|alpha_num',
-                'nama_grup'  => 'required|string|max:10|unique:groups,name',
-                'alamat_los' => 'nullable|string|regex:/^[a-zA-Z0-9\,]+$/',
-            ])->validate();
-            //End Validator
-
             try {
                 $decrypted = Crypt::decrypt($id);
             } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            $data = Group::findOrFail($decrypted);
+            Validator::make($input, [
+                'blok'       => 'required|max:10|alpha',
+                'nomor'      => 'required|max:10|alpha_num',
+                'nama_grup'  => 'required|string|max:10|unique:groups,name,'.$decrypted,
+                'alamat_los' => 'nullable|string|regex:/^[a-zA-Z0-9\,]+$/',
+            ])->validate();
+            //End Validator
 
-            $los = $input['alamat_los'];
+            DB::transaction(function() use ($input, $decrypted){
+                $data = Group::lockForUpdate()->findOrFail($decrypted);
 
-            if($los){
-                $los = $los;
-                $los = rtrim($input['alamat_los'], ',');
-                $los = ltrim($los, ',');
-                $los = explode(',', strtoupper($los));
-                $los = array_unique($los);
-                sort($los);
-                $los = json_encode($los);
-            }
+                $los = $input['alamat_los'];
 
-            $data->update([
-                'name'     => $input['nama_grup'],
-                'nicename' => $input['nicename'],
-                'blok'     => $input['blok'],
-                'nomor'    => $input['nomor'],
-                'data'     => $los
-            ]);
+                if($los){
+                    $los = $los;
+                    $los = rtrim($input['alamat_los'], ',');
+                    $los = ltrim($los, ',');
+                    $los = explode(',', strtoupper($los));
+                    $los = array_unique($los);
+                    sort($los);
+                    $los = json_encode($los);
+                }
+
+                $data->update([
+                    'name'     => $input['nama_grup'],
+                    'nicename' => $input['nicename'],
+                    'blok'     => $input['blok'],
+                    'nomor'    => $input['nomor'],
+                    'data'     => $los
+                ]);
+            });
 
             return response()->json(['success' => 'Data berhasil disimpan.']);
         }
@@ -252,9 +257,11 @@ class GroupController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            $data = Group::findOrFail($decrypted);
+            DB::transaction(function() use ($decrypted){
+                $data = Group::lockForUpdate()->findOrFail($decrypted);
 
-            $data->delete();
+                $data->delete();
+            });
 
             return response()->json(['success' => "Data berhasil dihapus."]);
         }

@@ -24,7 +24,7 @@ use App\Http\Controllers\TarifController;
 
 Route::get('/', function () {
     return redirect('login');
-});
+})->name('login');
 
 //Login Authenticated
 Route::middleware('auth')->group(function(){

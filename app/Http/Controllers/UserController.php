@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
 use App\Exports\UserExport;
@@ -142,14 +143,16 @@ class UserController extends Controller
                 ]);
             }
 
-            User::create([
-                'username' => $input['username'],
-                'name'     => $input['nama'],
-                'password' => Hash::make(sha1(md5(hash('gost', '123456')))),
-                'level'    => $input['level'],
-                'otoritas' => $otoritas,
-                'status'   => 1
-            ]);
+            DB::transaction(function() use ($input, $otoritas){
+                User::create([
+                    'username' => $input['username'],
+                    'name'     => $input['nama'],
+                    'password' => Hash::make(sha1(md5(hash('gost', '123456')))),
+                    'level'    => $input['level'],
+                    'otoritas' => $otoritas,
+                    'status'   => 1
+                ]);
+            });
 
             return response()->json(['success' => 'Data berhasil ditambah.', 'debug' => $input['level']]);
         }
@@ -229,8 +232,6 @@ class UserController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            $data = User::findOrFail($decrypted);
-
             $otoritas = NULL;
 
             if($input['level'] == 2){
@@ -255,11 +256,15 @@ class UserController extends Controller
                 ]);
             }
 
-            $data->update([
-                'name'     => $input['nama'],
-                'level'    => $input['level'],
-                'otoritas' => $otoritas
-            ]);
+            DB::transaction(function() use ($input, $otoritas, $decrypted){
+                $data = User::lockForUpdate()->findOrFail($decrypted);
+
+                $data->update([
+                    'name'     => $input['nama'],
+                    'level'    => $input['level'],
+                    'otoritas' => $otoritas
+                ]);
+            });
 
             return response()->json(['success' => "Data berhasil disimpan."]);
         }
@@ -280,15 +285,17 @@ class UserController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            $data = User::findOrFail($decrypted);
+            DB::transaction(function() use ($decrypted){
+                $data = User::lockForUpdate()->findOrFail($decrypted);
 
-            if($data->status == 1){
-                $data->status = 0;
-            } else {
-                $data->status = 1;
-            }
+                if($data->status == 1){
+                    $data->status = 0;
+                } else {
+                    $data->status = 1;
+                }
 
-            $data->save();
+                $data->save();
+            });
 
             return response()->json(['success' => "Status pengguna berhasil diubah."]);
         }
@@ -302,11 +309,13 @@ class UserController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            $data = User::findOrFail($decrypted);
+            DB::transaction(function() use ($decrypted){
+                $data = User::lockForUpdate()->findOrFail($decrypted);
 
-            $data->password = Hash::make(sha1(md5(hash('gost', '123456'))));
+                $data->password = Hash::make(sha1(md5(hash('gost', '123456'))));
 
-            $data->save();
+                $data->save();
+            });
 
             return response()->json(['success' => 'Password direset = <b>123456</b>.']);
         }

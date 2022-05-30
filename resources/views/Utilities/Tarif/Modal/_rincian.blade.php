@@ -1,21 +1,18 @@
 <!--begin::Modal-->
-<div class="modal fade" id="reset-modal" tabindex="-1" role="dialog" aria-labelledby="reset-modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="detail-modal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="detail-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title title"></h5>
+                <h5 class="modal-title">Rincian</h5>
             </div>
-            <form id="reset-form">
-                <div class="modal-body">
-                    <p>
-                        Tekan tombol <span class="text-danger">Reset</span>, jika anda yakin untuk mengatur ulang password.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold">Reset</button>
-                </div>
-            </form>
+            <div class="modal-body text-center" style="height: 60vh;">
+                <small class="text-muted pt-4 db">Nama Tarif</small>
+                <h3 id="showNama"></h3>
+                <div id="divData"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
+            </div>
         </div>
     </div>
 </div>
@@ -25,28 +22,14 @@
 <script>
 var id;
 
-$(document).on('click', '.reset', function(e){
+$(document).on('click', '.detail', function(e){
     e.preventDefault();
     id = $(this).attr("id");
 
-    $("#reset-modal").modal("show");
-    $(".title").text("Reset Password : " + $(this).attr("nama"));
-});
-
-$('#reset-form').on('submit', function(e){
-    e.preventDefault();
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
     $.ajax({
-        url: "/users/reset/" + id,
+        url: "/utilities/tarif/" + id,
         cache: false,
-        method: "POST",
-        data: $(this).serialize(),
+        method: "GET",
         dataType: "json",
         beforeSend:function(){
             $.blockUI({
@@ -67,7 +50,14 @@ $('#reset-form').on('submit', function(e){
         success:function(data)
         {
             if(data.success){
-                toastr.success(data.success);
+                $("#showNama").text(data.success.name);
+
+                var html = '';
+                $.each(data.success.data, function(index, value){
+                    html += '<small class="text-muted pt-4 db">' + index.replaceAll("_", " ") + '</small>';
+                    html += '<h3>' + Number(value).toLocaleString('id-ID') + '</h3>';
+                });
+                $("#divData").html(html);
             }
 
             if(data.info){
@@ -92,12 +82,12 @@ $('#reset-form').on('submit', function(e){
         },
         complete:function(data){
             if(JSON.parse(data.responseText).success){
-                $('#reset-modal').modal('hide');
-                dtableReload();
+                $("#detail-modal").modal("show");
             }
-            setTimeout(() => {
-                $.unblockUI();
-            }, 100);
+            else{
+                toastr.error("Gagal mengambil data.");
+            }
+            $.unblockUI();
         }
     });
 });

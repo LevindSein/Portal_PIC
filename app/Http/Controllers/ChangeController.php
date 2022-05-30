@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Changelogs;
 
@@ -85,13 +86,15 @@ class ChangeController extends Controller
             ])->validate();
             // End Validator
 
-            Changelogs::create([
-                'code'      => Changelogs::code(),
-                'times'     => $input['times'],
-                'title'     => $input['title'],
-                'data'      => $input['data'],
-                'causer_id' => Auth::user()->id
-            ]);
+            DB::transaction(function() use ($input){
+                Changelogs::create([
+                    'code'      => Changelogs::code(),
+                    'times'     => $input['times'],
+                    'title'     => $input['title'],
+                    'data'      => $input['data'],
+                    'causer_id' => Auth::user()->id
+                ]);
+            });
 
             return response()->json(['success' => 'Data berhasil disimpan.']);
         }
@@ -171,14 +174,16 @@ class ChangeController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            $data = Changelogs::findOrFail($decrypted);
+            DB::transaction(function() use ($input, $decrypted){
+                $data = Changelogs::lockForUpdate()->findOrFail($decrypted);
 
-            $data->update([
-                'times'     => $input['times'],
-                'title'     => $input['title'],
-                'data'      => $input['data'],
-                'causer_id' => Auth::user()->id
-            ]);
+                $data->update([
+                    'times'     => $input['times'],
+                    'title'     => $input['title'],
+                    'data'      => $input['data'],
+                    'causer_id' => Auth::user()->id
+                ]);
+            });
 
             return response()->json(['success' => 'Data berhasil disimpan.']);
         }
@@ -199,9 +204,11 @@ class ChangeController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            $data = Changelogs::findOrFail($decrypted);
+            DB::transaction(function() use ($decrypted){
+                $data = Changelogs::lockForUpdate()->findOrFail($decrypted);
 
-            $data->delete();
+                $data->delete();
+            });
 
             return response()->json(['success' => "Data berhasil dihapus."]);
         }

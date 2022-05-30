@@ -22,7 +22,7 @@
                         <small class="form-control-label">Nama Tarif <span class="text-danger">*</span></small>
                         <input required type="text" id="tambah-name" name="tambah_name" autocomplete="off" maxlength="50" class="name form-control" placeholder="Masukkan Nama Tarif" />
                     </div>
-                    <div id="listrik">
+                    <div class="listrik">
                         <div class="form-group">
                             <small class="form-control-label">Beban Daya <span class="text-danger">*</span></small>
                             <div class="input-group">
@@ -96,7 +96,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="airbersih">
+                    <div class="airbersih">
                         <div class="form-group">
                             <small class="form-control-label">Tarif 1 <span class="text-danger">*</span></small>
                             <div class="input-group">
@@ -161,7 +161,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="keamananipk">
+                    <div class="keamananipk">
                         <div class="form-group">
                             <small class="form-control-label">Tarif <span class="text-danger">*</span></small>
                             <div class="input-group">
@@ -190,7 +190,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="kebersihan" class="kebersihan">
+                    <div class="kebersihan">
                         <div class="form-group">
                             <small class="form-control-label">Tarif <span class="text-danger">*</span></small>
                             <div class="input-group">
@@ -201,7 +201,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="airkotor">
+                    <div class="airkotor">
                         <div class="form-group">
                             <small class="form-control-label">Tarif <span class="text-danger">*</span></small>
                             <div class="input-group">
@@ -212,7 +212,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="lainnya">
+                    <div class="lainnya">
                         <div class="form-group">
                             <small class="form-control-label">Tarif <span class="text-danger">*</span></small>
                             <div class="input-group">
@@ -243,7 +243,7 @@
         $("#tambah-form")[0].reset();
         $("#tambah-name").val('');
 
-        tambah_hide();
+        hide();
 
         $("#tambah-level").val($("#level").val()).change();
     }
@@ -254,21 +254,10 @@
         tambah_init();
     });
 
-    function tambah_hide(){
-        $("#tambah-name").val('');
-
-        nonListrik();
-        nonAirbersih();
-        nonKeamananipk();
-        nonKebersihan();
-        nonAirkotor();
-        nonLainnya();
-    }
-
     $(document).on("change", "#tambah-level", function(){
         var level = $(this).val();
 
-        tambah_hide();
+        hide();
 
         if(level == 1){
             listrik();
@@ -384,7 +373,7 @@
                 }
                 setTimeout(() => {
                     $.unblockUI();
-                }, 750);
+                }, 100);
             }
         });
     });

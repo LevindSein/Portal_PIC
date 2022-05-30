@@ -21,6 +21,9 @@ Tarif Fasilitas
 
 @section('content-modal')
 @include('Utilities.Tarif.Modal._tambah')
+@include('Utilities.Tarif.Modal._edit')
+@include('Utilities.Tarif.Modal._hapus')
+@include('Utilities.Tarif.Modal._rincian')
 @endsection
 
 @section('content-js')
@@ -110,8 +113,17 @@ Tarif Fasilitas
         $(".popover").popover("hide");
     }
 
+    function hide(){
+        nonListrik();
+        nonAirbersih();
+        nonKeamananipk();
+        nonKebersihan();
+        nonAirkotor();
+        nonLainnya();
+    }
+
     function nonListrik(){
-        $("#listrik").hide();
+        $(".listrik").fadeOut(200);
 
         $("#tambah-beban").prop("required", false);
         $("#tambah-blok1").prop("required", false);
@@ -133,7 +145,7 @@ Tarif Fasilitas
     }
 
     function nonAirbersih(){
-        $("#airbersih").hide();
+        $(".airbersih").fadeOut(200);
 
         $("#tambah-tarif1").prop("required", false);
         $("#tambah-tarif2").prop("required", false);
@@ -153,7 +165,7 @@ Tarif Fasilitas
     }
 
     function nonKeamananipk(){
-        $("#keamananipk").hide();
+        $(".keamananipk").fadeOut(200);
 
         $("#tambah-keamananipk").prop("required", false);
         $("#tambah-keamanan").prop("required", false);
@@ -165,7 +177,7 @@ Tarif Fasilitas
     }
 
     function nonKebersihan(){
-        $("#kebersihan").hide();
+        $(".kebersihan").fadeOut(200);
 
         $("#tambah-kebersihan").prop("required", false);
 
@@ -173,7 +185,7 @@ Tarif Fasilitas
     }
 
     function nonAirkotor(){
-        $("#airkotor").hide();
+        $(".airkotor").fadeOut(200);
 
         $("#tambah-airkotor").prop("required", false);
 
@@ -181,7 +193,7 @@ Tarif Fasilitas
     }
 
     function nonLainnya(){
-        $("#lainnya").hide();
+        $(".lainnya").fadeOut(200);
 
         $("#tambah-lainnya").prop("required", false);
 
@@ -189,7 +201,7 @@ Tarif Fasilitas
     }
 
     function listrik(){
-        $("#listrik").show();
+        $(".listrik").fadeIn(200);
 
         $("#tambah-beban").prop("required", true);
         $("#tambah-blok1").prop("required", true);
@@ -211,7 +223,7 @@ Tarif Fasilitas
     }
 
     function airbersih(){
-        $("#airbersih").show();
+        $(".airbersih").fadeIn(200);
 
         $("#tambah-tarif1").prop("required", true);
         $("#tambah-tarif2").prop("required", true);
@@ -231,7 +243,7 @@ Tarif Fasilitas
     }
 
     function keamananipk(){
-        $("#keamananipk").show();
+        $(".keamananipk").fadeIn(200);
 
         $("#tambah-keamananipk").prop("required", true);
         $("#tambah-keamanan").prop("required", true);
@@ -243,7 +255,7 @@ Tarif Fasilitas
     }
 
     function kebersihan(){
-        $("#kebersihan").show();
+        $(".kebersihan").fadeIn(200);
 
         $("#tambah-kebersihan").prop("required", true);
 
@@ -251,7 +263,7 @@ Tarif Fasilitas
     }
 
     function airkotor(){
-        $("#airkotor").show();
+        $(".airkotor").fadeIn(200);
 
         $("#tambah-airkotor").prop("required", true);
 
@@ -259,7 +271,7 @@ Tarif Fasilitas
     }
 
     function lainnya(){
-        $("#lainnya").show();
+        $(".lainnya").fadeIn(200);
 
         $("#tambah-lainnya").prop("required", true);
 

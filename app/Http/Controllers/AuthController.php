@@ -65,6 +65,7 @@ class AuthController extends Controller
             if(Auth::attempt($credentials)) {
                 $user = Auth::user();
                 if (($user->level == (1 || 2 || 3 || 4 || 5))){
+                    Auth::logoutOtherDevices($credentials['password']);
                     return response()->json(['success' => "Akses Sukses."]);
                 }
 

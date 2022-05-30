@@ -97,7 +97,7 @@ $('#hapus-form').on('submit', function(e){
             }
             setTimeout(() => {
                 $.unblockUI();
-            }, 750);
+            }, 100);
         }
     });
 });
