@@ -12,6 +12,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ChangeController;
 use App\Http\Controllers\TarifController;
 use App\Http\Controllers\AlatController;
+use App\Http\Controllers\PeriodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,8 @@ Route::middleware('auth')->group(function(){
             Route::get('print', [AlatController::class, 'print']);
         });
         Route::resource('alat', AlatController::class);
+
+        Route::resource('periode', PeriodeController::class);
     });
 
     Route::get('activities/{id}', [ActivityController::class, 'show']);
