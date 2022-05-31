@@ -9,7 +9,8 @@
     <div class="dropdown-menu dropdown-menu-right">
         <a class="dropdown-item" id="add" href="javascript:void(0)"><i class="fas fa-fw fa-plus"></i>Tambah Alat</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" id="excel" href="javascript:void(0)"><i class="fas fa-fw fa-file-excel"></i>Excel Data Alat</a>
+        {{-- <a class="dropdown-item" id="excel" href="javascript:void(0)"><i class="fas fa-fw fa-file-excel"></i>Excel Data Alat</a> --}}
+        <a class="dropdown-item" id="print" href="javascript:void(0)"><i class="fas fa-fw fa-print"></i>Print Data Alat</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" id="available" href="javascript:void(0)"><i class="fas fa-fw fa-check"></i>Alat Tersedia</a>
         <a class="dropdown-item" id="activated" href="javascript:void(0)"><i class="fas fa-fw fa-ban"></i>Alat Aktif / Digunakan</a>

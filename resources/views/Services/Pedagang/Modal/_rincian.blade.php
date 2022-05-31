@@ -12,6 +12,18 @@
                 <h3 id="showUsername"></h3>
                 <small class="text-muted pt-4 db">Status</small>
                 <h3 id="showStatus"></h3>
+                <small class="text-muted pt-4 db">Member</small>
+                <h3 id="showMember"></h3>
+                <small class="text-muted pt-4 db">KTP</small>
+                <h3 id="showKTP"></h3>
+                <small class="text-muted pt-4 db">Email</small>
+                <h3 id="showEmail"></h3>
+                <small class="text-muted pt-4 db">Whatsapp</small>
+                <h3 id="showWhatsapp"></h3>
+                <small class="text-muted pt-4 db">NPWP</small>
+                <h3 id="showNPWP"></h3>
+                <small class="text-muted pt-4 db">Alamat</small>
+                <h3 id="showAlamat"></h3>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
@@ -56,6 +68,12 @@ $(document).on('click', '.detail', function(e){
                 $("#showUsername").text(data.success.username);
                 $("#showNama").text(data.success.name);
                 $("#showStatus").html((data.success.status == 1) ? "<span class='text-success'>Aktif</span>" : "<span class='text-danger'>Nonaktif</span>");
+                $("#showMember").text(data.success.member);
+                $("#showKTP").text((data.success.ktp) ? data.success.ktp : "-");
+                $("#showEmail").text((data.success.email) ? data.success.email : "-");
+                $("#showWhatsapp").text((data.success.phone) ? "62" + data.success.phone : "-");
+                $("#showNPWP").text((data.success.npwp) ? data.success.npwp : "-");
+                $("#showAlamat").text((data.success.address) ? data.success.address : "-");
             }
 
             if(data.info){

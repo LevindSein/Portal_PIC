@@ -25,6 +25,7 @@ Pedagang
 @include('Services.Pedagang.Modal._hapus')
 @include('Services.Pedagang.Modal._rincian')
 @include('Services.Pedagang.Modal._reset')
+@include('Services.Pedagang.Modal._excel')
 @endsection
 
 @section('content-js')

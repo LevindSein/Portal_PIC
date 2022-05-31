@@ -89,10 +89,10 @@ $(document).on('click', '.edit', function(e){
         {
             if(data.success){
                 $("#edit-name").val(data.success.name);
-                $("#edit-ktp").val(Number(data.success.ktp).toLocaleString('id-ID'));
+                $("#edit-ktp").val((data.success.ktp) ? Number(data.success.ktp).toLocaleString('id-ID') : '');
                 $("#edit-email").val(data.success.email);
-                $("#edit-phone").val(Number(data.success.phone).toLocaleString('id-ID'));
-                $("#edit-npwp").val(Number(data.success.npwp).toLocaleString('id-ID'));
+                $("#edit-phone").val((data.success.phone) ? Number(data.success.phone).toLocaleString('id-ID') : '');
+                $("#edit-npwp").val((data.success.npwp) ? Number(data.success.npwp).toLocaleString('id-ID') : '');
                 $("#edit-alamat").val(data.success.address);
             }
 

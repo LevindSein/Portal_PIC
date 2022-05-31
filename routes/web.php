@@ -36,20 +36,23 @@ Route::middleware('auth')->group(function(){
     Route::resource('dashboard', DashboardController::class);
 
     Route::prefix('users')->group(function () {
-        Route::get('excel', [UserController::class, 'excel']);
+        // Route::get('excel', [UserController::class, 'excel']);
         Route::get('print', [UserController::class, 'print']);
         Route::post('reset/{id}', [UserController::class, 'reset']);
     });
     Route::resource('users', UserController::class);
 
     Route::prefix('services')->group(function () {
-        Route::post('reset/{id}', [PedagangController::class, 'reset']);
+        Route::prefix('pedagang')->group(function () {
+            Route::get('excel', [PedagangController::class, 'excel']);
+            Route::post('reset/{id}', [PedagangController::class, 'reset']);
+        });
         Route::resource('pedagang', PedagangController::class);
 
         Route::resource('place', PlaceController::class);
 
         Route::prefix('group')->group(function () {
-            Route::get('excel', [GroupController::class, 'excel']);
+            // Route::get('excel', [GroupController::class, 'excel']);
             Route::get('print', [GroupController::class, 'print']);
         });
         Route::resource('group', GroupController::class);

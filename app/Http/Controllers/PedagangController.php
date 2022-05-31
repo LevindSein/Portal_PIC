@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
-use App\Exports\UserExport;
+use App\Exports\PedagangExport;
 
 use Carbon\Carbon;
 
@@ -259,5 +259,19 @@ class PedagangController extends Controller
 
             return response()->json(['success' => 'Password direset = <b>123456</b>.']);
         }
+    }
+
+    public function excel(Request $request){
+        //Validator
+        $input['status']  = $request->status;
+
+        Validator::make($input, [
+            'status' => 'required|in:0,1,all',
+        ])->validate();
+        //End Validator
+
+        $status = User::status($input['status']);
+
+        return Excel::download(new PedagangExport($input['status']), 'Data_Pedagang_(' . $status . ')_' . Carbon::now() . '.xlsx');
     }
 }

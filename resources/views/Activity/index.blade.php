@@ -5,6 +5,7 @@ Aktifitas Pengguna
 @endsection
 
 @section('content-button')
+@include('Activity.Partial._button')
 @endsection
 
 @section('content-body')
