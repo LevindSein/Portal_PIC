@@ -21,6 +21,12 @@ class Group extends Model
         'data'
     ];
 
+    protected static $ignoreChangedAttributes = ['data', 'updated_at'];
     protected static $logName = 'groups';
-    protected static $logFillable = true;
+    protected static $logAttributes = [
+        'name',
+        'nicename',
+        'blok',
+        'nomor'
+    ];
 }

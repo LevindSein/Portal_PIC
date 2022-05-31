@@ -89,8 +89,9 @@
                         <th colspan="4" style="border-style:none;">
                             <img style="max-width: 100%;" src="{{asset('images/logo.png')}}" />
                         </th>
-                        <th colspan="3" style="border-style:none;">
-                            <h4>Data Aktifitas {{$dari}} s.d {{$ke}}</h4>
+                        <th colspan="2" style="border-style:none;">
+                            <h4>Data Aktifitas {{$start}} s.d {{$end}}</h4>
+                            <h4>us:{{substr($username, 0, 20)}} | nm:{{substr($name, 0, 20)}} | lv:{{$level}}</h4>
                         </th>
                     </tr>
                     <tr>
@@ -99,8 +100,7 @@
                         <th class="tg-r8fv">Desc</th>
                         <th class="tg-r8fv">Old</th>
                         <th class="tg-r8fv">New</th>
-                        <th class="tg-r8fv">On</th>
-                        <th class="tg-r8fv">By</th>
+                        <th class="tg-r8fv">Times</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -140,7 +140,6 @@
                             @endif
                         </td>
                         <td class="tg-g25h" style="text-align: center;">{{$d->updated_at}}</td>
-                        <td class="tg-g25h" style="text-align: center;">{{$d->user->name}}</td>
                     </tr>
                     @php
                         $i++;
@@ -149,7 +148,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="7" style="border-style:none;">
+                        <th colspan="6" style="border-style:none;">
                             <br><br>
                             <div style="text-align:right;">
                                 <b>Bandung, {{\Carbon\Carbon::now()}}</b>

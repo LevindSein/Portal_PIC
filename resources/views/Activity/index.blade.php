@@ -26,6 +26,7 @@ Aktifitas Pengguna
 
 @section('content-modal')
 @include('Activity.Modal._rincian')
+@include('Activity.Modal._print')
 @endsection
 
 @section('content-js')

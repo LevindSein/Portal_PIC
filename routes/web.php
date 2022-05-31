@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function(){
     Route::resource('dashboard', DashboardController::class);
 
     Route::prefix('users')->group(function () {
-        // Route::get('excel', [UserController::class, 'excel']);
+        Route::get('excel', [UserController::class, 'excel']);
         Route::get('print', [UserController::class, 'print']);
         Route::post('reset/{id}', [UserController::class, 'reset']);
     });
@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function(){
         Route::resource('place', PlaceController::class);
 
         Route::prefix('group')->group(function () {
-            // Route::get('excel', [GroupController::class, 'excel']);
+            Route::get('excel', [GroupController::class, 'excel']);
             Route::get('print', [GroupController::class, 'print']);
         });
         Route::resource('group', GroupController::class);
@@ -70,9 +70,10 @@ Route::middleware('auth')->group(function(){
         Route::resource('alat', AlatController::class);
     });
 
-    Route::get('activities', [ActivityController::class, 'index']);
     Route::get('activities/{id}', [ActivityController::class, 'show']);
-    Route::get('activities/print/{id}', [ActivityController::class, 'print']);
+    Route::get('activities/print/dari/ke', [ActivityController::class, 'print']);
+    Route::get('activities/print1/{id}', [ActivityController::class, 'print1']);
+    Route::get('activities', [ActivityController::class, 'index']);
 
     Route::prefix('changelogs')->group(function () {
         Route::get('excel/{id}', [ChangeController::class, 'excel']);

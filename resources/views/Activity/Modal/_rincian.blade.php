@@ -112,7 +112,7 @@
     });
 
     $(document).on('click', '#print-activities', function (e) {
-        $(this).attr("href", "/activities/print/" + id);
+        $(this).attr("href", "/activities/print1/" + id);
         $(this).attr("target", "_blank");
     })
 </script>

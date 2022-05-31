@@ -19,8 +19,12 @@ class Tarif extends Model
         'data'
     ];
 
+    protected static $ignoreChangedAttributes = ['data', 'updated_at'];
     protected static $logName = 'tarif';
-    protected static $logFillable = true;
+    protected static $logAttributes = [
+        'name',
+        'level'
+    ];
 
     public static function level($val) {
         switch ($val) {

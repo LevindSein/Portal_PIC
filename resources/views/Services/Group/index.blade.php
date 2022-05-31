@@ -25,7 +25,6 @@ Grup Tempat
 @include('Services.Group.Modal._edit')
 @include('Services.Group.Modal._hapus')
 @include('Services.Group.Modal._rincian')
-@include('Services.Group.Modal._print')
 @include('Services.Group.Modal._excel')
 @endsection
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +10,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 
 use App\Models\AuthenticationLog;
+use App\Models\ActivityLog;
 use App\Models\User;
 
 use Carbon\Carbon;
@@ -110,7 +110,33 @@ class ActivityController extends Controller
         }
     }
 
-    public function print($id){
+    public function print(Request $request){
+        //Validator
+        $input['dari'] = Carbon::parse($request->dari_times)->format('Y-m-d H:i:s');
+        $input['ke']   = Carbon::parse($request->ke_times)->format('Y-m-d H:i:s');
+
+        if($input['dari'] > $input['ke']){
+            $c = $input['ke'];
+            $input['ke']   = $input['dari'];
+            $input['dari'] = $c;
+        }
+
+        Validator::make($input, [
+            'dari' => 'required|date_format:Y-m-d H:i:s',
+            'ke'   => 'required|date_format:Y-m-d H:i:s',
+        ])->validate();
+        //End Validator
+
+        $data = ActivityLog::with('user')->whereBetween('updated_at', [$input['dari'], $input['ke']])->get();
+
+        return view('Activity.Pages._print', [
+            'dari'  => $input['dari'],
+            'ke'    => $input['ke'],
+            'data'  => $data
+        ]);
+    }
+
+    public function print1($id){
         try {
             $decrypted = Crypt::decrypt($id);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
@@ -133,7 +159,7 @@ class ActivityController extends Controller
         ->whereBetween('updated_at', [$start, $end])
         ->get();
 
-        return view('Activity.Pages._print', [
+        return view('Activity.Pages._print1', [
             'start'    => $start,
             'end'      => $end,
             'username' => $username,
