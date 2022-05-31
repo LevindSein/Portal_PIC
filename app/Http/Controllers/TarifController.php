@@ -378,4 +378,21 @@ class TarifController extends Controller
             return response()->json(['success' => "Data berhasil dihapus."]);
         }
     }
+
+    public function print(Request $request){
+        //Validator
+        $input['level']  = $request->level;
+
+        Validator::make($input, [
+            'level'    => 'required|in:1,2,3,4,5,6',
+        ])->validate();
+        //End Validator
+
+        $data = Tarif::where('level', $input['level'])->get();
+
+        return view('Utilities.Tarif.Pages._print', [
+            'level'  => Tarif::level($input['level']),
+            'data'   => $data
+        ]);
+    }
 }

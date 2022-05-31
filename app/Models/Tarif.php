@@ -21,4 +21,27 @@ class Tarif extends Model
 
     protected static $logName = 'tarif';
     protected static $logFillable = true;
+
+    public static function level($val) {
+        switch ($val) {
+            case 1:
+                return 'Listrik';
+                break;
+            case 2:
+                return 'Air Bersih';
+                break;
+            case 3:
+                return 'Keamanan & IPK';
+                break;
+            case 4:
+                return 'Kebersihan';
+                break;
+            case 5:
+                return 'Air Kotor';
+                break;
+            default:
+                return 'Lainnya';
+                break;
+        }
+    }
 }

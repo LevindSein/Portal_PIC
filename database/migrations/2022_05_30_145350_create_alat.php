@@ -17,10 +17,10 @@ class CreateAlat extends Migration
             $table->id();
             $table->string('code', 50)->unique();
             $table->string('name', 50)->unique();
-            $table->tinyInteger('level');
+            $table->tinyInteger('level'); // 1 = Listrik, 2 = Air Bersih
             $table->integer('stand');
             $table->integer('daya')->nullable();
-            $table->boolean('status')->default(1);
+            $table->boolean('status')->default(1); // 1 = Tersedia, 0 = Digunakan
             $table->datetime('updated_at')->useCurrent();
             $table->datetime('created_at')->useCurrent();
         });

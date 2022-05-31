@@ -26,6 +26,7 @@ Alat Meter
 @include('Utilities.Alat.Modal._edit')
 @include('Utilities.Alat.Modal._hapus')
 @include('Utilities.Alat.Modal._rincian')
+@include('Utilities.Alat.Modal._print')
 @endsection
 
 @section('content-js')
@@ -85,7 +86,7 @@ Alat Meter
 
     $(document).on('click', '#activated', function(){
         status = 0;
-        content_title = 'Alat Aktif';
+        content_title = 'Alat Terpakai';
         $(".content-title").text(content_title);
         url = "/utilities/alat?level=" + $("#level").val() + "&status=" + status;
         dtable.ajax.url( url ).load();

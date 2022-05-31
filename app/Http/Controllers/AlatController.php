@@ -311,4 +311,29 @@ class AlatController extends Controller
             return response()->json(['success' => "Data berhasil dihapus."]);
         }
     }
+
+    public function print(Request $request){
+        //Validator
+        $input['level']  = $request->level;
+        $input['status'] = $request->status;
+
+        Validator::make($input, [
+            'level'    => 'required|in:1,2',
+            'status'   => 'required|in:0,1,all',
+        ])->validate();
+        //End Validator
+
+        if(is_numeric($input['status'])){
+            $data = Alat::where([['level', $input['level']], ['status', $input['status']]])->get();
+        }
+        else {
+            $data = Alat::where('level', $input['level'])->get();
+        }
+
+        return view('Utilities.Alat.Pages._print', [
+            'level'     => Alat::level($input['level']),
+            'levelAlat' => $input['level'],
+            'data'      => $data
+        ]);
+    }
 }

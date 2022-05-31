@@ -28,4 +28,26 @@ class Alat extends Model
     public static function code(){
         return hexdec(uniqid("222")); //222 = Alat
     }
+
+    public static function level($val) {
+        switch ($val) {
+            case 1:
+                return 'Listrik';
+                break;
+            default:
+                return 'Air Bersih';
+                break;
+        }
+    }
+
+    public static function status($val) {
+        switch ($val) {
+            case 1:
+                return 'Tersedia';
+                break;
+            default:
+                return 'Digunakan';
+                break;
+        }
+    }
 }

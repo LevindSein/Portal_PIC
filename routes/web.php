@@ -59,8 +59,14 @@ Route::middleware('auth')->group(function(){
     });
 
     Route::prefix('utilities')->group(function () {
+        Route::prefix('tarif')->group(function () {
+            Route::get('print', [TarifController::class, 'print']);
+        });
         Route::resource('tarif', TarifController::class);
 
+        Route::prefix('alat')->group(function () {
+            Route::get('print', [AlatController::class, 'print']);
+        });
         Route::resource('alat', AlatController::class);
     });
 
