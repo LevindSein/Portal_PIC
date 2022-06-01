@@ -15,7 +15,7 @@ Tempat Usaha
             <th class="all">Kontrol</th>
             <th class="min-tablet">Pengguna</th>
             <th class="min-tablet">Jml.Los</th>
-            <th class="min-tablet">Ket</th>
+            <th class="min-tablet">Fasilitas</th>
             <th class="all">Action</th>
         </tr>
     </thead>
@@ -33,63 +33,64 @@ Tempat Usaha
 
 @section('content-js')
 <script>
-    // var dtable = $('#dtable').DataTable({
-    //     responsive : true,
-    //     language : {
-    //         paginate: {
-    //             previous: "<i class='fas fa-angle-left'>",
-    //             next: "<i class='fas fa-angle-right'>"
-    //         }
-    //     },
-    //     serverSide : true,
-    //     ajax : "services/place",
-    //     columns : [
-    //         { data: 'kontrol', name: 'kontrol', class : 'text-center align-middle' },
-    //         { data: 'pengguna', name: 'pengguna', class : 'text-center align-middle' },
-    //         { data: 'jum_los', name: 'jum_los', class : 'text-center align-middle' },
-    //         { data: 'action', name: 'action', class : 'text-center align-middle' },
-    //     ],
-    //     stateSave : true,
-    //     deferRender : true,
-    //     pageLength : 5,
-    //     aLengthMenu : [[5,10,25,50,100], [5,10,25,50,100]],
-    //     order : [[ 0, "asc" ]],
-    //     aoColumnDefs: [
-    //         { "bSortable": false, "aTargets": [3] },
-    //         { "bSearchable": false, "aTargets": [2, 3] }
-    //     ],
-    //     scrollY : "50vh",
-    //     scrollX : true,
-    //     preDrawCallback : function( settings ) {
-    //         scrollPosition = $(".dataTables_scrollBody").scrollTop();
-    //     },
-    //     drawCallback : function( settings ) {
-    //         $(".dataTables_scrollBody").scrollTop(scrollPosition);
-    //         if(typeof rowIndex != 'undefined') {
-    //             dtable.row(rowIndex).nodes().to$().addClass('row_selected');
-    //         }
-    //         setTimeout( function () {
-    //             $("[data-toggle='tooltip']").tooltip();
-    //         }, 10)
-    //     },
-    // });
+    var dtable = $('#dtable').DataTable({
+        responsive : true,
+        language : {
+            paginate: {
+                previous: "<i class='fas fa-angle-left'>",
+                next: "<i class='fas fa-angle-right'>"
+            }
+        },
+        serverSide : true,
+        ajax : "/services/place",
+        columns : [
+            { data: 'name', name: 'name', class : 'text-center align-middle' },
+            { data: 'pengguna.name', name: 'pengguna.name', class : 'text-center align-middle' },
+            { data: 'jml_los', name: 'jml_los', class : 'text-center align-middle' },
+            { data: 'fasilitas', name: 'fasilitas', class : 'text-center align-middle' },
+            { data: 'action', name: 'action', class : 'text-center align-middle' },
+        ],
+        stateSave : true,
+        deferRender : true,
+        pageLength : 5,
+        aLengthMenu : [[5,10,25,50,100], [5,10,25,50,100]],
+        order : [[ 0, "asc" ]],
+        aoColumnDefs: [
+            { "bSortable": false, "aTargets": [3,4] },
+            { "bSearchable": false, "aTargets": [3, 4] }
+        ],
+        scrollY : "50vh",
+        scrollX : true,
+        preDrawCallback : function( settings ) {
+            scrollPosition = $(".dataTables_scrollBody").scrollTop();
+        },
+        drawCallback : function( settings ) {
+            $(".dataTables_scrollBody").scrollTop(scrollPosition);
+            if(typeof rowIndex != 'undefined') {
+                dtable.row(rowIndex).nodes().to$().addClass('row_selected');
+            }
+            setTimeout( function () {
+                $("[data-toggle='tooltip']").tooltip();
+            }, 10)
+        },
+    });
 
-    // setInterval(function(){
-    //     dtableReload();
-    // }, 60000);
+    setInterval(function(){
+        dtableReload();
+    }, 60000);
 
-    // function dtableReload(searchKey = null){
-    //     if(searchKey){
-    //         dtable.search(searchKey).draw();
-    //     }
+    function dtableReload(searchKey = null){
+        if(searchKey){
+            dtable.search(searchKey).draw();
+        }
 
-    //     dtable.ajax.reload(function(){
-    //         console.log("Refresh Automatic")
-    //     }, false);
+        dtable.ajax.reload(function(){
+            console.log("Refresh Automatic")
+        }, false);
 
-    //     $(".tooltip").tooltip("hide");
+        $(".tooltip").tooltip("hide");
 
-    //     $(".popover").popover("hide");
-    // }
+        $(".popover").popover("hide");
+    }
 </script>
 @endsection

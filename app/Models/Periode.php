@@ -24,6 +24,6 @@ class Periode extends Model
         'status'
     ];
 
-    protected static $logName = 'groups';
+    protected static $logName = 'periode';
     protected static $logFillable = true;
 }

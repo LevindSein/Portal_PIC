@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PedagangController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\TempatController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ChangeController;
@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function(){
         });
         Route::resource('pedagang', PedagangController::class);
 
-        Route::resource('place', PlaceController::class);
+        Route::resource('place', TempatController::class);
 
         Route::prefix('group')->group(function () {
             Route::get('excel', [GroupController::class, 'excel']);
