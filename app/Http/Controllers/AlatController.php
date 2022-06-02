@@ -33,10 +33,10 @@ class AlatController extends Controller
             ->addColumn('action', function($data){
                 $button = '';
                 if(Session::get('level') == 1){
-                    $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
-                    $button .= '<a type="button" data-toggle="tooltip" title="Hapus" status="1" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
+                    $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->code.'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
+                    $button .= '<a type="button" data-toggle="tooltip" title="Hapus" status="1" id="'.Crypt::encrypt($data->id).'" nama="'.$data->code.'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
                 }
-                $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="detail btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-info"></i></a>';
+                $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" nama="'.$data->code.'" class="detail btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-info"></i></a>';
                 return $button;
             })
             ->editColumn('name', function($data){
@@ -155,8 +155,6 @@ class AlatController extends Controller
 
             $data = Alat::findOrFail($decrypted);
 
-            $data['data'] = json_decode($data->data);
-
             return response()->json(['success' => $data]);
         }
     }
@@ -177,113 +175,36 @@ class AlatController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            DB::transaction(function() use ($decrypted, $request){
-                $input['nama']  = $request->edit_name;
+            $input['stand'] = str_replace('.', '', $request->edit_stand);
 
-                $tarif = Alat::lockForUpdate()->findOrFail($decrypted);
+            //Validator
+            Validator::make($input, [
+                'stand' => 'required|numeric|lte:999999999999'
+            ])->validate();
+            //End Validator
 
-                $input['level'] = $tarif->level;
+            DB::transaction(function() use ($input, $decrypted, $request){
+                $data = Alat::lockForUpdate()->findOrFail($decrypted);
 
-                //Validator
-                Validator::make($input, [
-                    'nama'  => 'required|string|max:50|unique:tarif,name,' . $decrypted,
-                ])->validate();
-                //End Validator
+                $dataset = [
+                    'stand' => $input['stand']
+                ];
 
-                if($input['level'] == 1){
+                if ($data->level == 1){
                     //Listrik
 
-                    $data['Tarif_Beban']         = str_replace('.', '', $request->edit_beban);
-                    $data['Tarif_Blok_1']        = str_replace('.', '', $request->edit_blok1);
-                    $data['Tarif_Blok_2']        = str_replace('.', '', $request->edit_blok2);
-                    $data['Standar_Operasional'] = $request->edit_standar;
-                    $data['PJU']                 = $request->edit_pju;
-                    $data['Denda_1']             = str_replace('.', '', $request->edit_denda1);
-                    $data['Denda_2']             = $request->edit_denda2;
-                    $data['PPN']                 = $request->edit_ppnlistrik;
+                    $dataset['daya'] = str_replace('.', '', $request->edit_daya);
                     //Validator
-                    Validator::make($data, [
-                        'Tarif_Beban'         => 'required|numeric|lte:999999999999',
-                        'Tarif_Blok_1'        => 'required|numeric|lte:999999999999',
-                        'Tarif_Blok_2'        => 'required|numeric|lte:999999999999',
-                        'Standar_Operasional' => 'required|numeric|lte:24',
-                        'PJU'                 => 'required|numeric|lte:100',
-                        'Denda_1'             => 'required|numeric|lte:999999999999',
-                        'Denda_2'             => 'required|numeric|lte:100',
-                        'PPN'                 => 'required|numeric|lte:100'
-                    ])->validate();
-                    //End Validator
-                } else if ($input['level'] == 2){
-                    //Air Bersih
-
-                    $data['Tarif_1']            = str_replace('.', '', $request->edit_tarif1);
-                    $data['Tarif_2']            = str_replace('.', '', $request->edit_tarif2);
-                    $data['Tarif_Pemeliharaan'] = str_replace('.', '', $request->edit_pemeliharaan);
-                    $data['Tarif_Beban']        = str_replace('.', '', $request->edit_bbn);
-                    $data['Tarif_Air_Kotor']    = $request->edit_arkot;
-                    $data['Denda']              = str_replace('.', '', $request->edit_denda);
-                    $data['PPN']                = $request->edit_ppnair;
-                    //Validator
-                    Validator::make($data, [
-                        'Tarif_1'            => 'required|numeric|lte:999999999999',
-                        'Tarif_2'            => 'required|numeric|lte:999999999999',
-                        'Tarif_Pemeliharaan' => 'required|numeric|lte:999999999999',
-                        'Tarif_Beban'        => 'required|numeric|lte:999999999999',
-                        'Tarif_Air_Kotor'    => 'required|numeric|lte:100',
-                        'Denda'              => 'required|numeric|lte:999999999999',
-                        'PPN'                => 'required|numeric|lte:100',
-                    ])->validate();
-                    //End Validator
-                } else if ($input['level'] == 3){
-                    //Keamanan IPK
-
-                    $data['Tarif']           = str_replace('.', '', $request->edit_keamananipk);
-                    $data['Persen_Keamanan'] = $request->edit_keamanan;
-                    $data['Persen_IPK']      = $request->edit_ipk;
-                    //Validator
-                    Validator::make($data, [
-                        'Tarif'           => 'required|numeric|lte:999999999999',
-                        'Persen_Keamanan' => 'required|numeric|lte:100',
-                        'Persen_IPK'      => 'required|numeric|lte:100',
-                    ])->validate();
-                    //End Validator
-                } else if ($input['level'] == 4){
-                    //Kebersihan
-
-                    $data['Tarif']       = str_replace('.', '', $request->edit_kebersihan);
-                    //Validator
-                    Validator::make($data, [
-                        'Tarif'          => 'required|numeric|lte:999999999999'
-                    ])->validate();
-                    //End Validator
-                } else if ($input['level'] == 5){
-                    //Air Kotor
-
-                    $data['Tarif']       = str_replace('.', '', $request->edit_airkotor);
-                    //Validator
-                    Validator::make($data, [
-                        'Tarif'          => 'required|numeric|lte:999999999999'
-                    ])->validate();
-                    //End Validator
-                } else {
-                    //Lainnya
-
-                    $data['Tarif']       = str_replace('.', '', $request->edit_lainnya);
-                    //Validator
-                    Validator::make($data, [
-                        'Tarif'          => 'required|numeric|lte:999999999999'
+                    Validator::make($dataset, [
+                        'daya'   => 'required|numeric|lte:999999999999'
                     ])->validate();
                     //End Validator
                 }
 
-                $tarif->update([
-                    'name'  => $input['nama'],
-                    'level' => $input['level'],
-                    'data'  => json_encode($data)
-                ]);
+                $data->update($dataset);
             });
 
-            return response()->json(['success' => 'Data berhasil ditambah.']);
+            return response()->json(['success' => 'Data berhasil disimpan.']);
         }
     }
 
