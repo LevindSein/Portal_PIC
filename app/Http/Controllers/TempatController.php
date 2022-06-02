@@ -151,6 +151,22 @@ class TempatController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(request()->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            DB::transaction(function() use ($decrypted){
+                $data = Tempat::lockForUpdate()->findOrFail($decrypted);
+
+                //Ganti Status Alat
+
+                $data->delete();
+            });
+
+            return response()->json(['success' => "Data berhasil dihapus."]);
+        }
     }
 }

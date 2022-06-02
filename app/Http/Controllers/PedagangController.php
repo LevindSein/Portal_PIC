@@ -78,22 +78,28 @@ class PedagangController extends Controller
     {
         if($request->ajax()){
             //Validator
-            $input['username'] = strtolower($request->tambah_username);
-            $input['nama']     = $request->tambah_name;
-            $input['ktp']      = str_replace('.', '', $request->tambah_ktp);
-            $input['email']    = $request->tambah_email;
-            $input['whatsapp'] = str_replace('.', '', $request->tambah_phone);
-            $input['npwp']     = str_replace('.', '', $request->tambah_npwp);
-            $input['alamat']   = $request->tambah_alamat;
+            $input['username']     = strtolower($request->tambah_username);
+            $input['nama']         = $request->tambah_name;
+            $input['ktp']          = str_replace('.', '', $request->tambah_ktp);
+            $input['email']        = $request->tambah_email;
+            if($request->tambah_phone)
+                $input['whatsapp'] = str_replace('.', '', $request->tambah_phone);
+            else
+                $input['whatsapp'] = NULL;
+            if($request->tambah_npwp)
+                $input['npwp']     = str_replace('.', '', $request->tambah_npwp);
+            else
+                $input['npwp']     = NULL;
+            $input['alamat']       = $request->tambah_alamat;
 
             Validator::make($input, [
                 'username' => 'required|string|max:100|unique:users,username',
                 'nama'     => 'required|string|max:100',
-                'ktp'      => 'nullable|numeric|lte:99999999999999999',
-                'email'    => 'nullable|email|max:255',
-                'whatsapp' => 'nullable|numeric|lte:999999999999',
-                'npwp'     => 'nullable|numeric|lte:99999999999999999',
-                'alamat'   => 'nullable|string',
+                'ktp'      => 'required|numeric|lte:99999999999999999|unique:users,ktp',
+                'email'    => 'nullable|email|max:255|unique:users,email',
+                'whatsapp' => 'nullable|numeric|lte:999999999999|unique:users,phone',
+                'npwp'     => 'nullable|numeric|lte:99999999999999999|unique:users,npwp',
+                'alamat'   => 'nullable|string|max:255',
             ])->validate();
             //End Validator
 
@@ -169,29 +175,34 @@ class PedagangController extends Controller
     public function update(Request $request, $id)
     {
         if($request->ajax()){
-            //Validator
-            $input['nama']     = $request->edit_name;
-            $input['ktp']      = str_replace('.', '', $request->edit_ktp);
-            $input['email']    = $request->edit_email;
-            $input['whatsapp'] = str_replace('.', '', $request->edit_phone);
-            $input['npwp']     = str_replace('.', '', $request->edit_npwp);
-            $input['alamat']   = $request->edit_alamat;
-
-            Validator::make($input, [
-                'nama'     => 'required|string|max:100',
-                'ktp'      => 'nullable|numeric|lte:99999999999999999',
-                'email'    => 'nullable|email|max:255',
-                'whatsapp' => 'nullable|numeric|lte:999999999999',
-                'npwp'     => 'nullable|numeric|lte:99999999999999999',
-                'alamat'   => 'nullable|string',
-            ])->validate();
-            //End Validator
-
             try {
                 $decrypted = Crypt::decrypt($id);
             } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
                 return response()->json(['error' => "Data tidak valid."]);
             }
+
+            $input['nama']         = $request->edit_name;
+            $input['ktp']          = str_replace('.', '', $request->edit_ktp);
+            $input['email']        = $request->edit_email;
+            if($request->edit_phone)
+                $input['whatsapp'] = str_replace('.', '', $request->edit_phone);
+            else
+                $input['whatsapp'] = NULL;
+            if($request->edit_npwp)
+                $input['npwp']     = str_replace('.', '', $request->edit_npwp);
+            else
+                $input['npwp']     = NULL;
+            $input['alamat']       = $request->edit_alamat;
+
+            Validator::make($input, [
+                'nama'     => 'required|string|max:100',
+                'ktp'      => 'required|numeric|lte:99999999999999999|unique:users,ktp,' . $decrypted,
+                'email'    => 'nullable|email|max:255|unique:users,email,' . $decrypted,
+                'whatsapp' => 'nullable|numeric|lte:999999999999|unique:users,phone,' . $decrypted,
+                'npwp'     => 'nullable|numeric|lte:99999999999999999|unique:users,npwp,' . $decrypted,
+                'alamat'   => 'nullable|string|max:255',
+            ])->validate();
+            //End Validator
 
             DB::transaction(function() use ($input, $decrypted){
                 $data = User::lockForUpdate()->findOrFail($decrypted);

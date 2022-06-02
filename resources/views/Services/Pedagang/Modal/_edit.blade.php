@@ -12,8 +12,8 @@
                         <input required type="text" id="edit-name" name="edit_name" autocomplete="off" maxlength="100" class="name form-control" placeholder="Masukkan Nama Pedagang" />
                     </div>
                     <div class="form-group">
-                        <small class="form-control-label">KTP</small>
-                        <input type="text" id="edit-ktp" name="edit_ktp" autocomplete="off" maxlength="25" class="number form-control" placeholder="123xxxxxxxxx"/>
+                        <small class="form-control-label">KTP <span class="text-danger">*</span></small>
+                        <input required type="text" id="edit-ktp" name="edit_ktp" autocomplete="off" maxlength="25" class="number form-control" placeholder="123xxxxxxxxx"/>
                     </div>
                     <div class="form-group">
                         <small class="form-control-label">Email</small>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <small class="form-control-label">Alamat</small>
-                        <textarea rows="8" id="edit-alamat" name="edit_alamat" autocomplete="off" placeholder="Masukkan alamat KTP" class="form-control"></textarea>
+                        <textarea rows="8" id="edit-alamat" name="edit_alamat" autocomplete="off" placeholder="Masukkan alamat KTP" class="form-control" maxlength="255"></textarea>
                     </div>
                     <div class="form-group">
                         <label><sup><span class="text-danger">*) Wajib diisi.</span></sup></label>
@@ -89,8 +89,8 @@ $(document).on('click', '.edit', function(e){
         {
             if(data.success){
                 $("#edit-name").val(data.success.name);
-                $("#edit-ktp").val((data.success.ktp) ? Number(data.success.ktp).toLocaleString('id-ID') : '');
-                $("#edit-email").val(data.success.email);
+                $("#edit-ktp").val(Number(data.success.ktp).toLocaleString('id-ID'));
+                $("#edit-email").val((data.success.email) ? data.success.email : '');
                 $("#edit-phone").val((data.success.phone) ? Number(data.success.phone).toLocaleString('id-ID') : '');
                 $("#edit-npwp").val((data.success.npwp) ? Number(data.success.npwp).toLocaleString('id-ID') : '');
                 $("#edit-alamat").val(data.success.address);

@@ -16,8 +16,8 @@
                         <input required type="text" id="tambah-username" name="tambah_username" autocomplete="off" maxlength="100" class="name form-control" placeholder="Masukkan Nama Pedagang" style="text-transform: lowercase;"/>
                     </div>
                     <div class="form-group">
-                        <small class="form-control-label">KTP</small>
-                        <input type="text" id="tambah-ktp" name="tambah_ktp" autocomplete="off" maxlength="25" class="number form-control" placeholder="123xxxxxxxxx"/>
+                        <small class="form-control-label">KTP <span class="text-danger">*</span></small>
+                        <input required type="text" id="tambah-ktp" name="tambah_ktp" autocomplete="off" maxlength="25" class="number form-control" placeholder="123xxxxxxxxx"/>
                     </div>
                     <div class="form-group">
                         <small class="form-control-label">Email</small>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         <small class="form-control-label">Alamat</small>
-                        <textarea rows="8" id="tambah-alamat" name="tambah_alamat" autocomplete="off" placeholder="Masukkan alamat KTP" class="form-control"></textarea>
+                        <textarea rows="8" id="tambah-alamat" name="tambah_alamat" autocomplete="off" placeholder="Masukkan alamat KTP" class="form-control" maxlength="255"></textarea>
                     </div>
                     <div class="form-group">
                         <label><sup><span class="text-danger">*) Wajib diisi.</span></sup></label>

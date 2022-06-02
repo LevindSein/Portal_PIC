@@ -13,6 +13,7 @@ use App\Http\Controllers\ChangeController;
 use App\Http\Controllers\TarifController;
 use App\Http\Controllers\AlatController;
 use App\Http\Controllers\PeriodeController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +88,12 @@ Route::middleware('auth')->group(function(){
 Route::get('check', [AuthController::class, 'check']);
 Route::post('logout', [AuthController::class, 'logout']);
 Route::resource('login', AuthController::class);
+
+Route::prefix('search')->group(function () {
+    Route::get('users',[SearchController::class, 'users']);
+    Route::get('groups',[SearchController::class, 'groups']);
+    Route::get('{group}/los',[SearchController::class, 'los']);
+});
 
 Route::get('optimize', function(){
     \Artisan::call('cache:clear');

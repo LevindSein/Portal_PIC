@@ -175,9 +175,8 @@ class GroupController extends Controller
 
             if($data->data){
                 $los = json_decode($data->data);
+                $data['los'] = implode(',', $los);
             }
-
-            $data['los'] = implode(',', $los);
 
             return response()->json(['success' => $data]);
         }

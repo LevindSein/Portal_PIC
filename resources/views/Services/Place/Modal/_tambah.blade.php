@@ -1,15 +1,79 @@
 <!--begin::Modal-->
 <div class="modal fade" id="tambah-modal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="tambah-modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Tambah</h5>
             </div>
             <form id="tambah-form">
                 <div class="modal-body" style="height: 60vh;">
-                    <div class="form-group">
-                        <small class="form-control-label">Nama <span class="text-danger">*</span></small>
-                        <input required type="text" id="tambah-name" name="tambah_name" autocomplete="off" maxlength="100" class="name form-control" placeholder="Masukkan Nama Pengguna" />
+                    <div class="row">
+                        <div class="col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                <small class="form-control-label">Grup / Blok <span class="text-danger">*</span></small>
+                                <select required class="form-control form-control-sm select2" id="tambah-group" name="tambah_group"></select>
+                            </div>
+                            <div class="form-group tambah-los">
+                                <small class="form-control-label">Nomor Los <span class="text-danger">*</span></small>
+                                <select required id="tambah-los" name="tambah_los[]" class="select2 form-control form-control-sm" multiple></select>
+                            </div>
+                            <div class="form-group">
+                                <small class="form-control-label">Kode Kontrol <span class="text-danger">*</span></small>
+                                <input required type="text" id="tambah-name" name="tambah_name" autocomplete="off" maxlength="25" class="name form-control form-control-sm" placeholder="Otomatis setelah Grup dan Los terisi" />
+                            </div>
+                            <div class="form-group">
+                                <small class="form-control-label">Pengguna</small>
+                                <select class="form-control form-control-sm select2" id="tambah-pengguna" name="tambah_pengguna"></select>
+                            </div>
+                            <div class="form-group">
+                                <small class="form-control-label">Pemilik <span class="text-danger">*</span></small>
+                                <select class="form-control form-control-sm select2" id="tambah-pemilik" name="tambah_pemilik"></select>
+                            </div>
+                            <div class="form-group">
+                                <small class="form-control-label">Status <span class="text-danger">*</span></small>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="tambah-status"
+                                        id="tambah-status1"
+                                        value="1"
+                                        checked>
+                                    <label class="form-control-label" for="tambah-status1">
+                                        Aktif
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="tambah-status"
+                                        id="tambah-status0"
+                                        value="0">
+                                    <label class="form-control-label" for="tambah-status0">
+                                        Nonaktif
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="tambah-status"
+                                        id="tambah-status2"
+                                        value="2">
+                                    <label class="form-control-label" for="tambah-status2">
+                                        Bebas Bayar
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <small class="form-control-label">Keterangan</small>
+                                <textarea rows="3" id="tambah-ket" name="tambah_ket" autocomplete="off" placeholder="Ketikkan Keterangan . . ." class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-xl-6">
+                            <h4 class="text-center">FASILITAS</h4>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label><sup><span class="text-danger">*) Wajib diisi.</span></sup></label>
@@ -29,17 +93,34 @@
 <script>
     function tambah_init(){
         $("#tambah-form")[0].reset();
-        $("#tambah-name").val('');
+        $("#tambah-name").val('').prop('disabled', true);
+
+        $("#tambah-group").val('').html('').on('select2:open', () => {
+            $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+        });
+        select2group("#tambah-group", "/search/groups", "-- Cari Grup / Blok --");
+
+        $("#tambah-los").val('').html('');
+        select2los("#tambah-los", "/search/1/los", "-- Pilih Nomor Los --");
+
+        $("#tambah-pengguna").val('').html('');
+        select2user("#tambah-pengguna", "/search/users", "-- Cari Pengguna --");
+
+        $("#tambah-pemilik").val('').html('');
+        select2user("#tambah-pemilik", "/search/users", "-- Cari Pemilik --");
     }
 
     $("#add").click(function(){
         $("#tambah-modal").modal("show");
 
         tambah_init();
+    });
 
-        $('#tambah-modal').on('shown.bs.modal', function() {
-            $("#tambah-name").focus();
-        });
+    $(document).on("change", '#tambah-group', function(e) {
+        var group = $('#tambah-group').val();
+        $("#tambah-los").prop("disabled", false);
+        $("#tambah-los").val("").html("");
+        select2los("#tambah-los", "/search/" + group + "/los", "-- Pilih Nomor Los --");
     });
 
     $("#tambah-form").keypress(function(e) {
@@ -124,5 +205,71 @@
             }
         });
     });
+
+    function select2group(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.id,
+                                text: d.name
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2los(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.name,
+                                text: d.name
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2user(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.id,
+                                text: d.name + ' (' + d.ktp + ')'
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
 </script>
 <!--end::Javascript-->
