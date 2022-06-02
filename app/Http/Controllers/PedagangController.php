@@ -93,7 +93,7 @@ class PedagangController extends Controller
             $input['alamat']       = $request->tambah_alamat;
 
             Validator::make($input, [
-                'username' => 'required|string|max:100|unique:users,username',
+                'username' => 'required|string|max:100|unique:users,username|alpha_dash',
                 'nama'     => 'required|string|max:100',
                 'ktp'      => 'required|numeric|lte:99999999999999999|unique:users,ktp',
                 'email'    => 'nullable|email|max:255|unique:users,email',

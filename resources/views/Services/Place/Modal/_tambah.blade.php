@@ -100,8 +100,7 @@
         });
         select2group("#tambah-group", "/search/groups", "-- Cari Grup / Blok --");
 
-        $("#tambah-los").val('').html('');
-        select2los("#tambah-los", "/search/1/los", "-- Pilih Nomor Los --");
+        $("#tambah-los").val('').html('').prop("disabled",true).select2({placeholder: "Grup perlu diisi terlebih dahulu"});
 
         $("#tambah-pengguna").val('').html('');
         select2user("#tambah-pengguna", "/search/users", "-- Cari Pengguna --");
@@ -121,6 +120,37 @@
         $("#tambah-los").prop("disabled", false);
         $("#tambah-los").val("").html("");
         select2los("#tambah-los", "/search/" + group + "/los", "-- Pilih Nomor Los --");
+    });
+
+    $(document).on("change", '#tambah-group, #tambah-los', function(e) {
+        if($("#tambah-los").val() == ''){
+            $("#tambah-name").val('').prop("disabled", true);
+        } else {
+            $("#tambah-name").prop("disabled", false);
+
+            var dataset = {
+                'group' : $("#tambah-group").val(),
+                'los' : $("#tambah-los").val(),
+            };
+            $.ajax({
+                url: "/services/place/generate/kontrol",
+                type: "GET",
+                cache: false,
+                data: dataset,
+                success:function(data)
+                {
+                    $("#tambah-name").val(data.success);
+                },
+                error:function(data){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("System error.");
+                    console.log(data);
+                }
+            });
+        }
     });
 
     $("#tambah-form").keypress(function(e) {
@@ -218,7 +248,7 @@
                     return {
                         results:  $.map(data, function (d) {
                             return {
-                                id: d.id,
+                                id: d.name,
                                 text: d.name
                             }
                         })
@@ -240,8 +270,8 @@
                     return {
                         results:  $.map(data, function (d) {
                             return {
-                                id: d.name,
-                                text: d.name
+                                id: d,
+                                text: d
                             }
                         })
                     };

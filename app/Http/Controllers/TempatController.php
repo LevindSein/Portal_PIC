@@ -169,4 +169,22 @@ class TempatController extends Controller
             return response()->json(['success' => "Data berhasil dihapus."]);
         }
     }
+
+    public function generate(Request $request){
+        $group = $request->group;
+        $los = $this->multipleSelect($request->los);
+        sort($los, SORT_NATURAL);
+
+        $los = $los[0];
+        $data = Tempat::generate($group,$los);
+        return response()->json(['success' => $data]);
+    }
+
+    public function multipleSelect($data){
+        $temp = array();
+        for($i = 0; $i < count($data); $i++){
+            $temp[$i] = $data[$i];
+        }
+        return $temp;
+    }
 }

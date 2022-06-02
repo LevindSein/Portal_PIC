@@ -84,7 +84,7 @@ $("#tambah-name").on('input change', function() {
 });
 
 $("#tambah-username").on('input change', function() {
-    $(this).val($(this).val().replace(/\s/g, '')).toLowerCase().substring(0,10);
+    $(this).val($(this).val().replace(/\s/g, '')).toLowerCase();
 });
 
 $("#tambah-form").keypress(function(e) {

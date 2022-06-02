@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function(){
         });
         Route::resource('pedagang', PedagangController::class);
 
+        Route::get('place/generate/kontrol', [TempatController::class, 'generate']);
         Route::resource('place', TempatController::class);
 
         Route::prefix('group')->group(function () {
@@ -92,7 +93,7 @@ Route::resource('login', AuthController::class);
 Route::prefix('search')->group(function () {
     Route::get('users',[SearchController::class, 'users']);
     Route::get('groups',[SearchController::class, 'groups']);
-    Route::get('{group}/los',[SearchController::class, 'los']);
+    Route::get('{nameGroup}/los',[SearchController::class, 'los']);
 });
 
 Route::get('optimize', function(){

@@ -41,4 +41,43 @@ class Tempat extends Model
             'name' => '-'
         ]);
     }
+
+    public static function generate($group, $los){
+        $kontrol = "";
+        if(is_numeric($los) == TRUE){
+            if($los < 10){
+                $kontrol = $group."-"."00".$los;
+            }
+            else if($los < 100){
+                $kontrol = $group."-"."0".$los;
+            }
+            else{
+                $kontrol = $group."-".$los;
+            }
+        }
+        else{
+            $num = 0;
+            $strnum = 0;
+            for($i=0; $i < strlen($los); $i++){
+                if (is_numeric($los[$i]) == TRUE){
+                    $num++;
+                }
+                else{
+                    $strnum = 1;
+                    break;
+                }
+            }
+
+            if($num == 1){
+                $kontrol = $group."-"."00".$los;
+            }
+            else if($num == 2){
+                $kontrol = $group."-"."0".$los;
+            }
+            else if($num >= 3 || $strnum == 1){
+                $kontrol = $group."-".$los;
+            }
+        }
+        return $kontrol;
+    }
 }

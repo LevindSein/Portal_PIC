@@ -113,7 +113,7 @@ class UserController extends Controller
             $input['level']    = $request->tambah_level;
 
             Validator::make($input, [
-                'username' => 'required|string|max:100|unique:users,username',
+                'username' => 'required|string|max:100|unique:users,username|alpha_dash',
                 'nama'     => 'required|string|max:100',
                 'level'    => 'required|numeric|digits_between:1,5',
             ])->validate();

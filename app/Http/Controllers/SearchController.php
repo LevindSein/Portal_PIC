@@ -46,15 +46,20 @@ class SearchController extends Controller
         return response()->json($data);
     }
 
-    public function los(Request $request, $group){
+    public function los(Request $request, $name){
         $data = [];
-        $group = Group::find($group);
         if($request->ajax()) {
+            $group = Group::where('name', $name)->first();
             if($group->data){
-                $data = json_decode($group->data);
-                foreach($data as $d){
-                    $data[]['id'] = $d;
-                    $data[]['name'] = $d;
+                $los = json_decode($group->data);
+                foreach($los as $key){
+                    if($request->q){
+                        if(stripos($key, $request->q)){
+                            $data[] = $key;
+                        }
+                    } else {
+                        $data[] = $key;
+                    }
                 }
             }
         }

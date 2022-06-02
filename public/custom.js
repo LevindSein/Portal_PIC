@@ -66,6 +66,10 @@ $(document).on('input change keydown', ".name", function(e) {
     else {
         $(this).val($(this).val().replace(/[^a-zA-Z0-9/\s\-_.,]+$/g, ''));
         $(this).val($(this).val().replace(/\s\s+/g, ' '));
+        $(this).val($(this).val().replace(/\-\-+/g, '-'));
+        $(this).val($(this).val().replace(/\_\_+/g, '_'));
+        $(this).val($(this).val().replace(/\.\.+/g, '.'));
+        $(this).val($(this).val().replace(/\,\,+/g, ','));
     }
 });
 

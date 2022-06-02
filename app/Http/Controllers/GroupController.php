@@ -102,7 +102,7 @@ class GroupController extends Controller
                 $los = ltrim($los, ',');
                 $los = explode(',', strtoupper($los));
                 $los = array_unique($los);
-                sort($los);
+                sort($los, SORT_NATURAL);
                 $los = json_encode($los);
             }
 
@@ -224,7 +224,7 @@ class GroupController extends Controller
                     $los = ltrim($los, ',');
                     $los = explode(',', strtoupper($los));
                     $los = array_unique($los);
-                    sort($los);
+                    sort($los, SORT_NATURAL);
                     $los = json_encode($los);
                 }
 
