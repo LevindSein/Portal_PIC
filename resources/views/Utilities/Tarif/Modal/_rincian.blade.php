@@ -9,6 +9,8 @@
                 <small class="text-muted pt-4 db">Nama Tarif</small>
                 <h3 id="showNama"></h3>
                 <div id="divData"></div>
+                <small class="text-muted pt-4 db">status</small>
+                <h3 id="showStatus"></h3>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
@@ -51,6 +53,7 @@ $(document).on('click', '.detail', function(e){
         {
             if(data.success){
                 $("#showNama").text(data.success.name);
+                $("#showStatus").text(data.success.status);
 
                 var html = '';
                 $.each(data.success.data, function(index, value){

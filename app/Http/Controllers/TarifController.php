@@ -141,6 +141,8 @@ class TarifController extends Controller
                     'Persen_IPK'      => 'required|numeric|lte:100',
                 ])->validate();
                 //End Validator
+
+                $input['status'] = 2;
             } else if ($input['level'] == 4){
                 //Kebersihan
 
@@ -150,6 +152,8 @@ class TarifController extends Controller
                     'Tarif'          => 'required|numeric|lte:999999999999'
                 ])->validate();
                 //End Validator
+
+                $input['status'] = 2;
             } else if ($input['level'] == 5){
                 //Air Kotor
 
