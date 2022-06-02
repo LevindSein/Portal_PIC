@@ -12,8 +12,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
-use function PHPSTORM_META\map;
-
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, AuthenticationLoggable, LogsActivity;
@@ -56,6 +54,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getOtoritasAttribute($value) {
+        return json_decode($value);
+    }
 
     protected static $ignoreChangedAttributes = ['password', 'otoritas', 'updated_at'];
     protected static $logName = 'users';

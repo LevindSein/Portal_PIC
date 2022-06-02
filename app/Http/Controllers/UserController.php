@@ -198,10 +198,6 @@ class UserController extends Controller
 
             $data = User::findOrFail($decrypted);
 
-            if($data->otoritas){
-                $data['otoritas'] = json_decode($data->otoritas);
-            }
-
             return response()->json(['success' => $data]);
         }
     }
