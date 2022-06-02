@@ -16,8 +16,20 @@ class Tarif extends Model
     protected $fillable = [
         'name',
         'level',
-        'data'
+        'data',
+        'status'
     ];
+
+    public function getDataAttribute($value) {
+        return json_decode($value);
+    }
+
+    public function getStatusAttribute($value) {
+        if($value == 1)
+            return 'per-Kontrol';
+        else
+            return 'per-Los';
+    }
 
     protected static $ignoreChangedAttributes = ['data', 'updated_at'];
     protected static $logName = 'tarif';

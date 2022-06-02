@@ -18,6 +18,7 @@ class CreateTarif extends Migration
             $table->string('name', 50)->unique();
             $table->tinyInteger('level'); //1 = Listrik, 2 = Air Bersih, 3 = Keamanan IPK, 4 = Kebersihan, 5 = Air Kotor, 6 = Lainnya
             $table->json('data');
+            $table->tinyInteger('status')->default(1); //1 = per-Kontrol, 2 = per-Los
             $table->datetime('updated_at')->useCurrent();
             $table->datetime('created_at')->useCurrent();
         });

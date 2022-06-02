@@ -72,13 +72,15 @@ class TarifController extends Controller
     public function store(Request $request)
     {
         if($request->ajax()){
-            $input['nama']  = $request->tambah_name;
-            $input['level'] = $request->tambah_level;
+            $input['nama']   = $request->tambah_name;
+            $input['level']  = $request->tambah_level;
+            $input['status'] = $request->tambah_status;
 
             //Validator
             Validator::make($input, [
-                'nama'  => 'required|string|max:50|unique:tarif,name',
-                'level' => 'required|numeric|digits_between:1,6',
+                'nama'   => 'required|string|max:50|unique:tarif,name',
+                'level'  => 'required|numeric|digits_between:1,6',
+                'status' => 'required|numeric|in:1,2'
             ])->validate();
             //End Validator
 
@@ -170,9 +172,10 @@ class TarifController extends Controller
 
             DB::transaction(function() use ($input, $data){
                 Tarif::create([
-                    'name'  => $input['nama'],
-                    'level' => $input['level'],
-                    'data'  => json_encode($data)
+                    'name'   => $input['nama'],
+                    'level'  => $input['level'],
+                    'data'   => json_encode($data),
+                    'status' => $input['status']
                 ]);
             });
 
@@ -197,8 +200,6 @@ class TarifController extends Controller
 
             $data = Tarif::findOrFail($decrypted);
 
-            $data['data'] = json_decode($data->data);
-
             return response()->json(['success' => $data]);
         }
     }
@@ -219,8 +220,6 @@ class TarifController extends Controller
             }
 
             $data = Tarif::findOrFail($decrypted);
-
-            $data['data'] = json_decode($data->data);
 
             return response()->json(['success' => $data]);
         }
@@ -248,10 +247,12 @@ class TarifController extends Controller
                 $tarif = Tarif::lockForUpdate()->findOrFail($decrypted);
 
                 $input['level'] = $tarif->level;
+                $input['status'] = $request->edit_status;
 
                 //Validator
                 Validator::make($input, [
-                    'nama'  => 'required|string|max:50|unique:tarif,name,' . $decrypted,
+                    'nama'   => 'required|string|max:50|unique:tarif,name,' . $decrypted,
+                    'status' => 'required|numeric|in:1,2'
                 ])->validate();
                 //End Validator
 
@@ -342,13 +343,14 @@ class TarifController extends Controller
                 }
 
                 $tarif->update([
-                    'name'  => $input['nama'],
-                    'level' => $input['level'],
-                    'data'  => json_encode($data)
+                    'name'   => $input['nama'],
+                    'level'  => $input['level'],
+                    'data'   => json_encode($data),
+                    'status' => $input['status']
                 ]);
             });
 
-            return response()->json(['success' => 'Data berhasil ditambah.']);
+            return response()->json(['success' => 'Data berhasil disimpan.']);
         }
     }
 

@@ -152,7 +152,7 @@
                     </div>
                     <div class="keamananipk">
                         <div class="form-group">
-                            <small class="form-control-label">Tarif <span class="text-danger">*</span></small>
+                            <small class="form-control-label">Tarif per-Los<span class="text-danger">*</span></small>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp.</span>
@@ -181,7 +181,7 @@
                     </div>
                     <div class="kebersihan">
                         <div class="form-group">
-                            <small class="form-control-label">Tarif <span class="text-danger">*</span></small>
+                            <small class="form-control-label">Tarif per-Los<span class="text-danger">*</span></small>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp.</span>
@@ -210,6 +210,30 @@
                                 </div>
                                 <input maxlength="15" type="text" id="edit-lainnya" name="edit_lainnya" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control">
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group status-tarif">
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="edit_status"
+                                id="edit-status1"
+                                value="1">
+                            <label class="form-control-label" for="edit-status1">
+                                per-Kontrol
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="edit_status"
+                                id="edit-status2"
+                                value="2">
+                            <label class="form-control-label" for="edit-status2">
+                                per-Los
+                            </label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -266,6 +290,13 @@
             {
                 if(data.success){
                     $("#edit-name").val(data.success.name);
+                    if(data.success.status == 'per-Los'){
+                        $("#edit-status1").prop('checked', false);
+                        $("#edit-status2").prop('checked', true);
+                    } else {
+                        $("#edit-status1").prop('checked', true);
+                        $("#edit-status2").prop('checked', false);
+                    }
 
                     if(data.success.level == 1){
                         listrik();

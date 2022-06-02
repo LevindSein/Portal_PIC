@@ -136,6 +136,11 @@
                                 </div>
                             </div>
                             <div class="airkotor"></div>
+                            <div id="div-lain"></div>
+
+                            <div class="form-group">
+                                <button type="button" id="tambah-lain-add" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-plus mr-1"></i>Fasilitas Lainnya</button>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -167,12 +172,12 @@
 
         $("#tambah-pengguna").val('').html('').on('select2:open', () => {
             $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
-        });;
+        });
         select2user("#tambah-pengguna", "/search/users", "-- Cari Pengguna --");
 
         $("#tambah-pemilik").val('').html('').on('select2:open', () => {
             $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
-        });;
+        });
         select2user("#tambah-pemilik", "/search/users", "-- Cari Pemilik --");
 
         $(".listrik").html('');
@@ -226,7 +231,7 @@
         }
     });
 
-    $('#tambah-listrik').click(checkFasListrik);
+    $('#tambah-listrik').click(checkFasListrik).each(checkFasListrik);
     function checkFasListrik(){
         if($("#tambah-listrik").is(":checked")){
             var html = '';
@@ -242,22 +247,177 @@
             html += '<small class="form-control-label">Diskon (% Tagihan)</small>';
             html += '<input maxlength="3" type="text" id="tambah-dis-listrik" name="tambah_dis_listrik" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-sm">';
             html += '</div>';
-            $(".listrik").html(html);
+
+            $(".listrik").html(html).hide();
 
             $("#tambah-alat-listrik").val('').html('').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
-            });;
+            });
             select2alat("#tambah-alat-listrik", "/search/alat", 1, "-- Cari Alat --");
 
             $("#tambah-trf-listrik").val('').html('').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
-            });;
-            select2tarif("#tambah-trf-listrik", "/search/tarif", 1, "-- Cari Tarif --");
+            });
+            select2tarif1("#tambah-trf-listrik", "/search/tarif", 1, "-- Cari Tarif --");
+
+            $(".listrik").fadeIn();
         }
         else{
             $(".listrik").html('');
         }
     }
+
+    $('#tambah-airbersih').click(checkFasAirbersih).each(checkFasAirbersih);
+    function checkFasAirbersih(){
+        if($("#tambah-airbersih").is(":checked")){
+            var html = '';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Alat Meter <span class="text-danger">*</span></small>';
+            html += '<select required id="tambah-alat-airbersih" name="tambah_alat_airbersih" class="select2 form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
+            html += '<select required id="tambah-trf-airbersih" name="tambah_trf_airbersih" class="select2 form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Diskon (% Tagihan)</small>';
+            html += '<input maxlength="3" type="text" id="tambah-dis-airbersih" name="tambah_dis_airbersih" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-sm">';
+            html += '</div>';
+
+            $(".airbersih").html(html).hide();
+
+            $("#tambah-alat-airbersih").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+            select2alat("#tambah-alat-airbersih", "/search/alat", 2, "-- Cari Alat --");
+
+            $("#tambah-trf-airbersih").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+            select2tarif1("#tambah-trf-airbersih", "/search/tarif", 2, "-- Cari Tarif --");
+
+            $(".airbersih").fadeIn();
+        }
+        else{
+            $(".airbersih").html('');
+        }
+    }
+
+    $('#tambah-keamananipk').click(checkFasKeamananipk).each(checkFasKeamananipk);
+    function checkFasKeamananipk(){
+        if($("#tambah-keamananipk").is(":checked")){
+            var html = '';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
+            html += '<select required id="tambah-trf-keamananipk" name="tambah_trf_keamananipk" class="select2 form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
+            html += '<input maxlength="15" type="text" id="tambah-dis-keamananipk" name="tambah_dis_keamananipk" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
+            html += '</div>';
+
+            $(".keamananipk").html(html).hide();
+
+            $("#tambah-trf-keamananipk").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+            select2tarif2("#tambah-trf-keamananipk", "/search/tarif", 3, "-- Cari Tarif --");
+
+            $(".keamananipk").fadeIn();
+        }
+        else{
+            $(".keamananipk").html('');
+        }
+    }
+
+    $('#tambah-kebersihan').click(checkFasKebersihan).each(checkFasKebersihan);
+    function checkFasKebersihan(){
+        if($("#tambah-kebersihan").is(":checked")){
+            var html = '';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
+            html += '<select required id="tambah-trf-kebersihan" name="tambah_trf_kebersihan" class="select2 form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
+            html += '<input maxlength="15" type="text" id="tambah-dis-kebersihan" name="tambah_dis_kebersihan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
+            html += '</div>';
+
+            $(".kebersihan").html(html).hide();
+
+            $("#tambah-trf-kebersihan").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+            select2tarif2("#tambah-trf-kebersihan", "/search/tarif", 4, "-- Cari Tarif --");
+
+            $(".kebersihan").fadeIn();
+        }
+        else{
+            $(".kebersihan").html('');
+        }
+    }
+
+    $('#tambah-airkotor').click(checkFasAirkotor).each(checkFasAirkotor);
+    function checkFasAirkotor(){
+        if($("#tambah-airkotor").is(":checked")){
+            var html = '';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
+            html += '<select required id="tambah-trf-airkotor" name="tambah_trf_airkotor" class="select2 form-control form-control-sm"></select>';
+            html += '</div>';
+
+            $(".airkotor").html(html).hide();
+
+            $("#tambah-trf-airkotor").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+            select2tarif2("#tambah-trf-airkotor", "/search/tarif", 5, "-- Cari Tarif --");
+
+            $(".airkotor").fadeIn();
+        }
+        else{
+            $(".airkotor").html('');
+        }
+    }
+
+    var lain = 0, index = 1;
+    $("#tambah-lain-add").on('click', function () {
+        var html = '';
+        html += '<div name="div_lain" class="form-group">';
+        html += '<div class="d-flex justify-content-between">';
+        html += '<small class="form-control-label">Tarif Lainnya</small>';
+        html += '<a type="button" href="javascript:void(0)" id="tambah-lain-rmv">';
+        html += '<small class="form-control-label text-danger"><i class="fas fa-fw fa-times"></i></small>';
+        html += '</a>';
+        html += '</div>';
+        html += '<select required id="tambah-lain-'+ index + '" name="tambah_lain[]" class="select2 form-control form-control-sm"></select>';
+        html += '</div>';
+
+        if(lain < 10){
+            $('#div-lain').append(html).hide();
+            select2tarif2("#tambah-lain-" + index, "/search/tarif", 6,"-- Cari Tarif --");
+
+            $("#tambah-lain-" + index).val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+
+            $('#div-lain').fadeIn()
+
+            index++;
+            lain++;
+        }
+        else{
+            toastr.options = {
+                "closeButton": true,
+                "preventDuplicates": true,
+            };
+            toastr.error("Telah mencapai maksimal.");
+        }
+    });
+    $(document).on('click', '#tambah-lain-rmv', function () {
+        lain--;
+        $(this).closest("[name='div_lain']").remove();
+    });
 
     $("#tambah-form").keypress(function(e) {
         if(e.which == 13) {
@@ -453,7 +613,7 @@
         }
     }
 
-    function select2tarif(select2id, url, level, placeholder){
+    function select2tarif1(select2id, url, level, placeholder){
         url = url + "?level=" + level;
         $(select2id).select2({
             placeholder: placeholder,
@@ -467,7 +627,30 @@
                         results:  $.map(data, function (d) {
                             return {
                                 id: d.id,
-                                text: d.name
+                                text: d.name + ' - ' + d.status
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2tarif2(select2id, url, level, placeholder){
+        url = url + "?level=" + level;
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.id,
+                                text: d.name + ' - Rp ' + Number(d.data.Tarif).toLocaleString('id-ID') + ' ' + d.status
                             }
                         })
                     };

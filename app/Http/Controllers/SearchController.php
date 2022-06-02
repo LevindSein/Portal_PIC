@@ -72,8 +72,7 @@ class SearchController extends Controller
         $data = [];
         if($request->ajax()) {
             $level = $request->level;
-            $data = Alat::select('id', 'name', 'level', 'stand', 'daya')
-            ->where('level', $level)
+            $data = Alat::where('level', $level)
             ->where(function ($query) use ($request, $level) {
                 $key = $request->q;
                 if($level == 1){
@@ -98,8 +97,7 @@ class SearchController extends Controller
         $data = [];
         if($request->ajax()) {
             $level = $request->level;
-            $data = Tarif::select('id', 'name', 'level')
-            ->where('level', $level)
+            $data = Tarif::where('level', $level)
             ->where(function ($query) use ($request) {
                 $key = $request->q;
                 $query->where('name', 'LIKE', '%'.$key.'%');

@@ -121,6 +121,8 @@ Tarif Fasilitas
         nonKebersihan();
         nonAirkotor();
         nonLainnya();
+
+        $(".status-tarif").hide();
     }
 
     function nonListrik(){
@@ -269,6 +271,8 @@ Tarif Fasilitas
         $("#tambah-airkotor").prop("required", true);
 
         $("#edit-airkotor").prop("required", true);
+
+        $(".status-tarif").show();
     }
 
     function lainnya(){
@@ -277,6 +281,8 @@ Tarif Fasilitas
         $("#tambah-lainnya").prop("required", true);
 
         $("#edit-lainnya").prop("required", true);
+
+        $(".status-tarif").show();
     }
 </script>
 @endsection

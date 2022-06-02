@@ -163,7 +163,7 @@
                     </div>
                     <div class="keamananipk">
                         <div class="form-group">
-                            <small class="form-control-label">Tarif <span class="text-danger">*</span></small>
+                            <small class="form-control-label">Tarif per-Los<span class="text-danger">*</span></small>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp.</span>
@@ -192,7 +192,7 @@
                     </div>
                     <div class="kebersihan">
                         <div class="form-group">
-                            <small class="form-control-label">Tarif <span class="text-danger">*</span></small>
+                            <small class="form-control-label">Tarif per-Los<span class="text-danger">*</span></small>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp.</span>
@@ -221,6 +221,31 @@
                                 </div>
                                 <input maxlength="15" type="text" id="tambah-lainnya" name="tambah_lainnya" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control">
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group status-tarif">
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="tambah_status"
+                                id="tambah-status1"
+                                value="1"
+                                checked>
+                            <label class="form-control-label" for="tambah-status1">
+                                per-Kontrol
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="tambah_status"
+                                id="tambah-status2"
+                                value="2">
+                            <label class="form-control-label" for="tambah-status2">
+                                per-Los
+                            </label>
                         </div>
                     </div>
                     <div class="form-group">
