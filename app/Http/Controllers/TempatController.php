@@ -104,6 +104,45 @@ class TempatController extends Controller
     public function store(Request $request)
     {
         if($request->ajax()){
+            $input['grup']         = $request->tambah_group;
+            $input['kode_kontrol'] = strtoupper($request->tambah_name);
+            $input['pengguna']     = $request->tambah_pengguna;
+            $input['pemilik']      = $request->tambah_pemilik;
+            $input['status']       = $request->tambah_status;
+            $input['keterangan']   = $request->tambah_ket;
+
+            Validator::make($input, [
+                'grup'         => 'required|exists:groups,name',
+                'kode_kontrol' => 'required|max:25|unique:tempat,name',
+                'pengguna'     => 'nullable|numeric|exists:users,id',
+                'pemiik'       => 'nullable|numeric|exists:users,id',
+                'status'       => 'required|numeric|in:2,1,0',
+                'keterangan'   => 'nullable|string|max:255',
+            ])->validate();
+
+            $los = $this->multipleSelect($request->tambah_los);
+            sort($los, SORT_NATURAL);
+
+            $no_los = Group::where('name', $request->tambah_group)->first()->data;
+            foreach($los as $l){
+                $valid['nomor_los'] = $l;
+                Validator::make($valid, [
+                    'nomor_los' => 'required|in:'.$no_los,
+                ])->validate();
+            }
+
+            DB::transaction(function() use ($input, $los){
+                Tempat::create([
+                    'name'        => $input['kode_kontrol'],
+                    'nicename'    => str_replace('-', '', $input['kode_kontrol']),
+                    'group_id'    => Group::where('name',$input['grup'])->first()->id,
+                    'los'         => implode(',', $los),
+                    'jml_los'     => count($los),
+                    'pengguna_id' => $input['pengguna'],
+                    'pemilik_id'  => $input['pemilik'],
+                    'status'      => $input['status'],
+                ]);
+            });
 
             return response()->json(['success' => 'Data berhasil disimpan.']);
         }

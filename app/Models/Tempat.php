@@ -16,11 +16,21 @@ class Tempat extends Model
     protected $fillable = [
         'name',
         'nicename',
-        'new',
-        'due',
-        'year',
-        'faktur',
-        'surat',
+        'group_id',
+        'los',
+        'jml_los',
+        'pengguna_id',
+        'pemilik_id',
+        'alat_listrik_id',
+        'alat_airbersih_id',
+        'trf_listrik_id',
+        'trf_airbersih_id',
+        'trf_keamananipk_id',
+        'trf_kebersihan_id',
+        'trf_airkotor_id',
+        'trf_lainnya_id',
+        'diskon',
+        'ket',
         'status'
     ];
 

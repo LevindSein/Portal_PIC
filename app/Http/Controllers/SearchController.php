@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\Group;
+use App\Models\Alat;
+use App\Models\Tarif;
 
 class SearchController extends Controller
 {
@@ -62,6 +64,49 @@ class SearchController extends Controller
                     }
                 }
             }
+        }
+        return response()->json($data);
+    }
+
+    public function alat(Request $request){
+        $data = [];
+        if($request->ajax()) {
+            $level = $request->level;
+            $data = Alat::select('id', 'name', 'level', 'stand', 'daya')
+            ->where('level', $level)
+            ->where(function ($query) use ($request, $level) {
+                $key = $request->q;
+                if($level == 1){
+                    $query
+                    ->where('name', 'LIKE', '%'.$key.'%')
+                    ->orWhere('stand', 'LIKE', '%'.$key.'%')
+                    ->orWhere('daya', 'LIKE', '%'.$key.'%');
+                } else {
+                    $query
+                    ->where('name', 'LIKE', '%'.$key.'%')
+                    ->orWhere('stand', 'LIKE', '%'.$key.'%');
+                }
+            })
+            ->orderBy('id','desc')
+            ->limit(5)
+            ->get();
+        }
+        return response()->json($data);
+    }
+
+    public function tarif(Request $request){
+        $data = [];
+        if($request->ajax()) {
+            $level = $request->level;
+            $data = Tarif::select('id', 'name', 'level')
+            ->where('level', $level)
+            ->where(function ($query) use ($request) {
+                $key = $request->q;
+                $query->where('name', 'LIKE', '%'.$key.'%');
+            })
+            ->orderBy('id','desc')
+            ->limit(5)
+            ->get();
         }
         return response()->json($data);
     }

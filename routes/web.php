@@ -94,6 +94,8 @@ Route::prefix('search')->group(function () {
     Route::get('users',[SearchController::class, 'users']);
     Route::get('groups',[SearchController::class, 'groups']);
     Route::get('{nameGroup}/los',[SearchController::class, 'los']);
+    Route::get('alat',[SearchController::class, 'alat']);
+    Route::get('tarif',[SearchController::class, 'tarif']);
 });
 
 Route::get('optimize', function(){

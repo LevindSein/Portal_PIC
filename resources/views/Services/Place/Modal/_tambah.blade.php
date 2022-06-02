@@ -1,6 +1,6 @@
 <!--begin::Modal-->
 <div class="modal fade" id="tambah-modal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="tambah-modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Tambah</h5>
@@ -19,7 +19,7 @@
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Kode Kontrol <span class="text-danger">*</span></small>
-                                <input required type="text" id="tambah-name" name="tambah_name" autocomplete="off" maxlength="25" class="name form-control form-control-sm" placeholder="Otomatis setelah Grup dan Los terisi" />
+                                <input required type="text" id="tambah-name" name="tambah_name" autocomplete="off" maxlength="25" class="name form-control form-control-sm" placeholder="Otomatis setelah Grup dan Los terisi" style="text-transform: uppercase;"/>
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Pengguna</small>
@@ -35,7 +35,7 @@
                                     <input
                                         class="form-check-input"
                                         type="radio"
-                                        name="tambah-status"
+                                        name="tambah_status"
                                         id="tambah-status1"
                                         value="1"
                                         checked>
@@ -47,7 +47,7 @@
                                     <input
                                         class="form-check-input"
                                         type="radio"
-                                        name="tambah-status"
+                                        name="tambah_status"
                                         id="tambah-status0"
                                         value="0">
                                     <label class="form-control-label" for="tambah-status0">
@@ -58,7 +58,7 @@
                                     <input
                                         class="form-check-input"
                                         type="radio"
-                                        name="tambah-status"
+                                        name="tambah_status"
                                         id="tambah-status2"
                                         value="2">
                                     <label class="form-control-label" for="tambah-status2">
@@ -68,11 +68,74 @@
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Keterangan</small>
-                                <textarea rows="3" id="tambah-ket" name="tambah_ket" autocomplete="off" placeholder="Ketikkan Keterangan . . ." class="form-control"></textarea>
+                                <textarea rows="3" id="tambah-ket" name="tambah_ket" autocomplete="off" placeholder="Ketikkan Keterangan . . ." class="form-control" maxlength="255"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 col-xl-6">
                             <h4 class="text-center">FASILITAS</h4>
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    name="tambah_listrik"
+                                    id="tambah-listrik">
+                                <label class="form-control-label" for="tambah-listrik">
+                                    Listrik
+                                </label>
+                            </div>
+                            <div class="listrik"></div>
+                            <div>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="tambah_airbersih"
+                                        id="tambah-airbersih">
+                                    <label class="form-control-label" for="tambah-airbersih">
+                                        Air Bersih
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="airbersih"></div>
+                            <div>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="tambah_keamananipk"
+                                        id="tambah-keamananipk">
+                                    <label class="form-control-label" for="tambah-keamananipk">
+                                        Keamanan IPK
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="keamananipk"></div>
+                            <div>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="tambah_kebersihan"
+                                        id="tambah-kebersihan">
+                                    <label class="form-control-label" for="tambah-kebersihan">
+                                        Kebersihan
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="kebersihan"></div>
+                            <div>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="tambah_airkotor"
+                                        id="tambah-airkotor">
+                                    <label class="form-control-label" for="tambah-airkotor">
+                                        Air Kotor
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="airkotor"></div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -102,11 +165,21 @@
 
         $("#tambah-los").val('').html('').prop("disabled",true).select2({placeholder: "Grup perlu diisi terlebih dahulu"});
 
-        $("#tambah-pengguna").val('').html('');
+        $("#tambah-pengguna").val('').html('').on('select2:open', () => {
+            $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+        });;
         select2user("#tambah-pengguna", "/search/users", "-- Cari Pengguna --");
 
-        $("#tambah-pemilik").val('').html('');
+        $("#tambah-pemilik").val('').html('').on('select2:open', () => {
+            $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+        });;
         select2user("#tambah-pemilik", "/search/users", "-- Cari Pemilik --");
+
+        $(".listrik").html('');
+        $(".airbersih").html('');
+        $(".keamananipk").html('');
+        $(".kebersihan").html('');
+        $(".airkotor").html('');
     }
 
     $("#add").click(function(){
@@ -152,6 +225,39 @@
             });
         }
     });
+
+    $('#tambah-listrik').click(checkFasListrik);
+    function checkFasListrik(){
+        if($("#tambah-listrik").is(":checked")){
+            var html = '';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Alat Meter <span class="text-danger">*</span></small>';
+            html += '<select required id="tambah-alat-listrik" name="tambah_alat_listrik" class="select2 form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
+            html += '<select required id="tambah-trf-listrik" name="tambah_trf_listrik" class="select2 form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Diskon (% Tagihan)</small>';
+            html += '<input maxlength="3" type="text" id="tambah-dis-listrik" name="tambah_dis_listrik" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-sm">';
+            html += '</div>';
+            $(".listrik").html(html);
+
+            $("#tambah-alat-listrik").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });;
+            select2alat("#tambah-alat-listrik", "/search/alat", 1, "-- Cari Alat --");
+
+            $("#tambah-trf-listrik").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });;
+            select2tarif("#tambah-trf-listrik", "/search/tarif", 1, "-- Cari Tarif --");
+        }
+        else{
+            $(".listrik").html('');
+        }
+    }
 
     $("#tambah-form").keypress(function(e) {
         if(e.which == 13) {
@@ -294,6 +400,74 @@
                             return {
                                 id: d.id,
                                 text: d.name + ' (' + d.ktp + ')'
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2alat(select2id, url, level, placeholder){
+        url = url + "?level=" + level;
+        if(level == 1){
+            $(select2id).select2({
+                placeholder: placeholder,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    processResults: function (data, $level) {
+                        return {
+                            results:  $.map(data, function (d) {
+                                return {
+                                    id: d.id,
+                                    text: d.name + ' (' + d.stand + ' - ' + d.daya + 'W)'
+                                }
+                            })
+                        };
+                    },
+                }
+            });
+        } else {
+            $(select2id).select2({
+                placeholder: placeholder,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    processResults: function (data) {
+                        return {
+                            results:  $.map(data, function (d) {
+                                return {
+                                    id: d.id,
+                                    text: d.name + ' (' + d.stand + ')'
+                                }
+                            })
+                        };
+                    },
+                }
+            });
+        }
+    }
+
+    function select2tarif(select2id, url, level, placeholder){
+        url = url + "?level=" + level;
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.id,
+                                text: d.name
                             }
                         })
                     };

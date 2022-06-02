@@ -16,7 +16,7 @@ class CreateTarif extends Migration
         Schema::create('tarif', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50)->unique();
-            $table->tinyInteger('level');
+            $table->tinyInteger('level'); //1 = Listrik, 2 = Air Bersih, 3 = Keamanan IPK, 4 = Kebersihan, 5 = Air Kotor, 6 = Lainnya
             $table->json('data');
             $table->datetime('updated_at')->useCurrent();
             $table->datetime('created_at')->useCurrent();
