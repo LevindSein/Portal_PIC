@@ -95,10 +95,10 @@ class PedagangController extends Controller
             Validator::make($input, [
                 'username' => 'required|string|max:100|unique:users,username|alpha_dash',
                 'nama'     => 'required|string|max:100',
-                'ktp'      => 'required|numeric|lte:99999999999999999|unique:users,ktp',
+                'ktp'      => 'required|numeric|gte:0|lte:99999999999999999|unique:users,ktp',
                 'email'    => 'nullable|email|max:255|unique:users,email',
                 'whatsapp' => 'nullable|numeric|lte:999999999999|unique:users,phone',
-                'npwp'     => 'nullable|numeric|lte:99999999999999999|unique:users,npwp',
+                'npwp'     => 'nullable|numeric|gte:0|lte:99999999999999999|unique:users,npwp',
                 'alamat'   => 'nullable|string|max:255',
             ])->validate();
             //End Validator
@@ -196,10 +196,10 @@ class PedagangController extends Controller
 
             Validator::make($input, [
                 'nama'     => 'required|string|max:100',
-                'ktp'      => 'required|numeric|lte:99999999999999999|unique:users,ktp,' . $decrypted,
+                'ktp'      => 'required|numeric|gte:0|lte:99999999999999999|unique:users,ktp,' . $decrypted,
                 'email'    => 'nullable|email|max:255|unique:users,email,' . $decrypted,
                 'whatsapp' => 'nullable|numeric|lte:999999999999|unique:users,phone,' . $decrypted,
-                'npwp'     => 'nullable|numeric|lte:99999999999999999|unique:users,npwp,' . $decrypted,
+                'npwp'     => 'nullable|numeric|gte:0|lte:99999999999999999|unique:users,npwp,' . $decrypted,
                 'alamat'   => 'nullable|string|max:255',
             ])->validate();
             //End Validator

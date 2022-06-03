@@ -73,17 +73,19 @@
                         </div>
                         <div class="col-lg-6 col-xl-6">
                             <h4 class="text-center">FASILITAS</h4>
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    name="tambah_listrik"
-                                    id="tambah-listrik">
-                                <label class="form-control-label" for="tambah-listrik">
-                                    Listrik
-                                </label>
+                            <div>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="tambah_listrik"
+                                        id="tambah-listrik">
+                                    <label class="form-control-label" for="tambah-listrik">
+                                        Listrik
+                                    </label>
+                                </div>
+                                <div class="listrik"></div>
                             </div>
-                            <div class="listrik"></div>
                             <div>
                                 <div class="form-check">
                                     <input
@@ -95,8 +97,8 @@
                                         Air Bersih
                                     </label>
                                 </div>
+                                <div class="airbersih"></div>
                             </div>
-                            <div class="airbersih"></div>
                             <div>
                                 <div class="form-check">
                                     <input
@@ -108,8 +110,8 @@
                                         Keamanan IPK
                                     </label>
                                 </div>
+                                <div class="keamananipk"></div>
                             </div>
-                            <div class="keamananipk"></div>
                             <div>
                                 <div class="form-check">
                                     <input
@@ -121,8 +123,8 @@
                                         Kebersihan
                                     </label>
                                 </div>
+                                <div class="kebersihan"></div>
                             </div>
-                            <div class="kebersihan"></div>
                             <div>
                                 <div class="form-check">
                                     <input
@@ -134,9 +136,10 @@
                                         Air Kotor
                                     </label>
                                 </div>
+                                <div class="airkotor"></div>
                             </div>
-                            <div class="airkotor"></div>
-                            <div id="div-lain"></div>
+
+                            <div class="div-lain"></div>
 
                             <div class="form-group">
                                 <button type="button" id="tambah-lain-add" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-plus mr-1"></i>Fasilitas Lainnya</button>
@@ -185,6 +188,7 @@
         $(".keamananipk").html('');
         $(".kebersihan").html('');
         $(".airkotor").html('');
+        $(".div-lain").html('');
     }
 
     $("#add").click(function(){
@@ -394,14 +398,14 @@
         html += '</div>';
 
         if(lain < 10){
-            $('#div-lain').append(html).hide();
+            $('.div-lain').append(html).hide();
             select2tarif2("#tambah-lain-" + index, "/search/tarif", 6,"-- Cari Tarif --");
 
             $("#tambah-lain-" + index).val('').html('').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
             });
 
-            $('#div-lain').fadeIn()
+            $('.div-lain').fadeIn();
 
             index++;
             lain++;

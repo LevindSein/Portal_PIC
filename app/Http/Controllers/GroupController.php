@@ -108,11 +108,12 @@ class GroupController extends Controller
 
             DB::transaction(function() use ($input, $los){
                 Group::create([
-                    'name'     => $input['nama_grup'],
-                    'nicename' => $input['nicename'],
-                    'blok'     => $input['blok'],
-                    'nomor'    => $input['nomor'],
-                    'data'     => $los
+                    'name'      => $input['nama_grup'],
+                    'nicename'  => $input['nicename'],
+                    'blok'      => $input['blok'],
+                    'nomor'     => $input['nomor'],
+                    'data'      => $los,
+                    'available' => $los,
                 ]);
             });
 

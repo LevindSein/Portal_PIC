@@ -19,7 +19,7 @@ class CreateTempat extends Migration
             $table->string('nicename', 25);
             $table->unsignedBigInteger('group_id');
             $table->foreign('group_id')->references('id')->on('groups');
-            $table->text('los');
+            $table->json('los');
             $table->integer('jml_los');
             $table->unsignedBigInteger('pengguna_id')->nullable();
             $table->foreign('pengguna_id')->references('id')->on('users');

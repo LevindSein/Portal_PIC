@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Validation\Rule;
+
 use App\Models\User;
 use App\Models\Tempat;
 use App\Models\Group;
@@ -110,6 +112,7 @@ class TempatController extends Controller
             $input['pemilik']      = $request->tambah_pemilik;
             $input['status']       = $request->tambah_status;
             $input['keterangan']   = $request->tambah_ket;
+            $diskon                = [];
 
             Validator::make($input, [
                 'grup'         => 'required|exists:groups,name',
@@ -120,28 +123,124 @@ class TempatController extends Controller
                 'keterangan'   => 'nullable|string|max:255',
             ])->validate();
 
+            if($request->tambah_listrik){
+                $input['alat_listrik']   = $request->tambah_alat_listrik;
+                $input['tarif_listrik']  = $request->tambah_trf_listrik;
+                $input['diskon_listrik'] = $request->tambah_dis_listrik;
+
+                Validator::make($input, [
+                    'alat_listrik'   => ['required','numeric',
+                                            Rule::exists('alat', 'id')
+                                            ->where('level', 1)
+                                            ->where('status', 1)
+                                        ],
+                    'tarif_listrik'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 1)
+                                        ],
+                    'diskon_listrik' => 'nullable|numeric|gte:0|lte:100',
+                ])->validate();
+
+                $data['alat_listrik_id'] = $input['alat_listrik'];
+                $data['trf_listrik_id']  = $input['tarif_listrik'];
+                $diskon['listrik']       = $input['diskon_listrik'];
+            }
+
+            if($request->tambah_airbersih){
+                $input['alat_airbersih']   = $request->tambah_alat_airbersih;
+                $input['tarif_airbersih']  = $request->tambah_trf_airbersih;
+                $input['diskon_airbersih'] = $request->tambah_dis_airbersih;
+
+                Validator::make($input, [
+                    'alat_airbersih'   => ['required','numeric',
+                                            Rule::exists('alat', 'id')
+                                            ->where('level', 2)
+                                            ->where('status', 1)
+                                        ],
+                    'tarif_airbersih'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 2)
+                                        ],
+                    'diskon_airbersih' => 'nullable|numeric|gte:0|lte:100',
+                ])->validate();
+
+                $data['alat_airbersih_id'] = $input['alat_airbersih'];
+                $data['trf_airbersih_id']  = $input['tarif_airbersih'];
+                $diskon['airbersih']       = $input['diskon_airbersih'];
+            }
+
+            if($request->tambah_keamananipk){
+                $input['tarif_keamananipk']  = $request->tambah_trf_keamananipk;
+                $input['diskon_keamananipk'] = $request->tambah_dis_keamananipk;
+
+                Validator::make($input, [
+                    'tarif_keamananipk'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 3)
+                                        ],
+                    'diskon_keamananipk' => 'nullable|numeric|gte:0|lte:999999999999',
+                ])->validate();
+
+                $data['trf_keamananipk_id']  = $input['tarif_keamananipk'];
+                $diskon['keamananipk']       = $input['diskon_keamananipk'];
+            }
+
+            if($request->tambah_kebersihan){
+                $input['tarif_kebersihan']  = $request->tambah_trf_kebersihan;
+                $input['diskon_kebersihan'] = $request->tambah_dis_kebersihan;
+
+                Validator::make($input, [
+                    'tarif_kebersihan'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 4)
+                                        ],
+                    'diskon_kebersihan' => 'nullable|numeric|gte:0|lte:999999999999',
+                ])->validate();
+
+                $data['trf_kebersihan_id']  = $input['tarif_kebersihan'];
+                $diskon['kebersihan']       = $input['diskon_kebersihan'];
+            }
+
+            if($request->tambah_airkotor){
+                $input['tarif_airkotor']  = $request->tambah_trf_airkotor;
+                $input['diskon_airkotor'] = $request->tambah_dis_airkotor;
+
+                Validator::make($input, [
+                    'tarif_airkotor'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 5)
+                                        ],
+                    'diskon_airkotor' => 'nullable|numeric|gte:0|lte:999999999999',
+                ])->validate();
+
+                $data['trf_airkotor_id']  = $input['tarif_airkotor'];
+                $diskon['airkotor']       = $input['diskon_airkotor'];
+            }
+
             $los = $this->multipleSelect($request->tambah_los);
             sort($los, SORT_NATURAL);
 
             $no_los = Group::where('name', $request->tambah_group)->first()->data;
             foreach($los as $l){
-                $valid['nomor_los'] = $l;
-                Validator::make($valid, [
+                $input['nomor_los'] = $l;
+                Validator::make($input, [
                     'nomor_los' => 'required|in:'.$no_los,
                 ])->validate();
             }
 
-            DB::transaction(function() use ($input, $los){
-                Tempat::create([
-                    'name'        => $input['kode_kontrol'],
-                    'nicename'    => str_replace('-', '', $input['kode_kontrol']),
-                    'group_id'    => Group::where('name',$input['grup'])->first()->id,
-                    'los'         => implode(',', $los),
-                    'jml_los'     => count($los),
-                    'pengguna_id' => $input['pengguna'],
-                    'pemilik_id'  => $input['pemilik'],
-                    'status'      => $input['status'],
-                ]);
+            $data['name']        = $input['kode_kontrol'];
+            $data['nicename']    = str_replace('-', '', $input['kode_kontrol']);
+            $data['group_id']    = Group::where('name',$input['grup'])->first()->id;
+            $data['los']         = json_encode($los);
+            $data['jml_los']     = count($los);
+            $data['pengguna_id'] = $input['pengguna'];
+            $data['pemilik_id']  = $input['pemilik'];
+            $data['status']      = $input['status'];
+            $data['ket']         = $input['keterangan'];
+            $data['diskon']      = json_encode($diskon);
+
+            DB::transaction(function() use ($data){
+                Tempat::create($data);
             });
 
             return response()->json(['success' => 'Data berhasil disimpan.']);
@@ -220,7 +319,7 @@ class TempatController extends Controller
     }
 
     public function multipleSelect($data){
-        $temp = array();
+        $temp = [];
         for($i = 0; $i < count($data); $i++){
             $temp[$i] = $data[$i];
         }

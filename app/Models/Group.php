@@ -18,10 +18,12 @@ class Group extends Model
         'nicename',
         'blok',
         'nomor',
-        'data'
+        'data',
+        'terpakai',
+        'available'
     ];
 
-    protected static $ignoreChangedAttributes = ['data', 'updated_at'];
+    protected static $ignoreChangedAttributes = ['data', 'terpakai', 'available', 'updated_at'];
     protected static $logName = 'groups';
     protected static $logAttributes = [
         'name',

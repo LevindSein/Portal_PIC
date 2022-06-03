@@ -52,14 +52,16 @@ class SearchController extends Controller
         $data = [];
         if($request->ajax()) {
             $group = Group::where('name', $name)->first();
-            if($group->data){
-                $los = json_decode($group->data);
+            if($group->available){
+                $los = json_decode($group->available);
+                $keyword = $request->q;
                 foreach($los as $key){
-                    if($request->q){
-                        if(stripos($key, $request->q)){
+                    if($keyword){
+                        if(stripos($key, $keyword) !== false){
                             $data[] = $key;
                         }
-                    } else {
+                    }
+                    else {
                         $data[] = $key;
                     }
                 }
@@ -72,7 +74,7 @@ class SearchController extends Controller
         $data = [];
         if($request->ajax()) {
             $level = $request->level;
-            $data = Alat::where('level', $level)
+            $data = Alat::where([['level', $level], ['status', 1]])
             ->where(function ($query) use ($request, $level) {
                 $key = $request->q;
                 if($level == 1){

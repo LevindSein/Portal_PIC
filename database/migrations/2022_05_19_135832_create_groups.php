@@ -20,6 +20,8 @@ class CreateGroups extends Migration
             $table->string('blok');
             $table->string('nomor');
             $table->json('data')->nullable();
+            $table->json('terpakai')->nullable();
+            $table->json('available')->nullable();
             $table->datetime('updated_at')->useCurrent();
             $table->datetime('created_at')->useCurrent();
         });

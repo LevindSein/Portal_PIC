@@ -97,14 +97,14 @@ class TarifController extends Controller
                 $data['PPN']                 = $request->tambah_ppnlistrik;
                 //Validator
                 Validator::make($data, [
-                    'Tarif_Beban'         => 'required|numeric|lte:999999999999',
-                    'Tarif_Blok_1'        => 'required|numeric|lte:999999999999',
-                    'Tarif_Blok_2'        => 'required|numeric|lte:999999999999',
-                    'Standar_Operasional' => 'required|numeric|lte:24',
-                    'PJU'                 => 'required|numeric|lte:100',
-                    'Denda_1'             => 'required|numeric|lte:999999999999',
-                    'Denda_2'             => 'required|numeric|lte:100',
-                    'PPN'                 => 'required|numeric|lte:100'
+                    'Tarif_Beban'         => 'required|numeric|gte:0|lte:999999999999',
+                    'Tarif_Blok_1'        => 'required|numeric|gte:0|lte:999999999999',
+                    'Tarif_Blok_2'        => 'required|numeric|gte:0|lte:999999999999',
+                    'Standar_Operasional' => 'required|numeric|gte:0|lte:24',
+                    'PJU'                 => 'required|numeric|gte:0|lte:100',
+                    'Denda_1'             => 'required|numeric|gte:0|lte:999999999999',
+                    'Denda_2'             => 'required|numeric|gte:0|lte:100',
+                    'PPN'                 => 'required|numeric|gte:0|lte:100'
                 ])->validate();
                 //End Validator
             } else if ($input['level'] == 2){
@@ -119,13 +119,13 @@ class TarifController extends Controller
                 $data['PPN']                = $request->tambah_ppnair;
                 //Validator
                 Validator::make($data, [
-                    'Tarif_1'            => 'required|numeric|lte:999999999999',
-                    'Tarif_2'            => 'required|numeric|lte:999999999999',
-                    'Tarif_Pemeliharaan' => 'required|numeric|lte:999999999999',
-                    'Tarif_Beban'        => 'required|numeric|lte:999999999999',
-                    'Tarif_Air_Kotor'    => 'required|numeric|lte:100',
-                    'Denda'              => 'required|numeric|lte:999999999999',
-                    'PPN'                => 'required|numeric|lte:100',
+                    'Tarif_1'            => 'required|numeric|gte:0|lte:999999999999',
+                    'Tarif_2'            => 'required|numeric|gte:0|lte:999999999999',
+                    'Tarif_Pemeliharaan' => 'required|numeric|gte:0|lte:999999999999',
+                    'Tarif_Beban'        => 'required|numeric|gte:0|lte:999999999999',
+                    'Tarif_Air_Kotor'    => 'required|numeric|gte:0|lte:100',
+                    'Denda'              => 'required|numeric|gte:0|lte:999999999999',
+                    'PPN'                => 'required|numeric|gte:0|lte:100',
                 ])->validate();
                 //End Validator
             } else if ($input['level'] == 3){
@@ -136,9 +136,9 @@ class TarifController extends Controller
                 $data['Persen_IPK']      = $request->tambah_ipk;
                 //Validator
                 Validator::make($data, [
-                    'Tarif'           => 'required|numeric|lte:999999999999',
-                    'Persen_Keamanan' => 'required|numeric|lte:100',
-                    'Persen_IPK'      => 'required|numeric|lte:100',
+                    'Tarif'           => 'required|numeric|gte:0|lte:999999999999',
+                    'Persen_Keamanan' => 'required|numeric|gte:0|lte:100',
+                    'Persen_IPK'      => 'required|numeric|gte:0|lte:100',
                 ])->validate();
                 //End Validator
 
@@ -149,7 +149,7 @@ class TarifController extends Controller
                 $data['Tarif']       = str_replace('.', '', $request->tambah_kebersihan);
                 //Validator
                 Validator::make($data, [
-                    'Tarif'          => 'required|numeric|lte:999999999999'
+                    'Tarif'          => 'required|numeric|gte:0|lte:999999999999'
                 ])->validate();
                 //End Validator
 
@@ -160,7 +160,7 @@ class TarifController extends Controller
                 $data['Tarif']       = str_replace('.', '', $request->tambah_airkotor);
                 //Validator
                 Validator::make($data, [
-                    'Tarif'          => 'required|numeric|lte:999999999999'
+                    'Tarif'          => 'required|numeric|gte:0|lte:999999999999'
                 ])->validate();
                 //End Validator
             } else {
@@ -169,7 +169,7 @@ class TarifController extends Controller
                 $data['Tarif']       = str_replace('.', '', $request->tambah_lainnya);
                 //Validator
                 Validator::make($data, [
-                    'Tarif'          => 'required|numeric|lte:999999999999'
+                    'Tarif'          => 'required|numeric|gte:0|lte:999999999999'
                 ])->validate();
                 //End Validator
             }
@@ -273,14 +273,14 @@ class TarifController extends Controller
                     $data['PPN']                 = $request->edit_ppnlistrik;
                     //Validator
                     Validator::make($data, [
-                        'Tarif_Beban'         => 'required|numeric|lte:999999999999',
-                        'Tarif_Blok_1'        => 'required|numeric|lte:999999999999',
-                        'Tarif_Blok_2'        => 'required|numeric|lte:999999999999',
-                        'Standar_Operasional' => 'required|numeric|lte:24',
-                        'PJU'                 => 'required|numeric|lte:100',
-                        'Denda_1'             => 'required|numeric|lte:999999999999',
-                        'Denda_2'             => 'required|numeric|lte:100',
-                        'PPN'                 => 'required|numeric|lte:100'
+                        'Tarif_Beban'         => 'required|numeric|gte:0|lte:999999999999',
+                        'Tarif_Blok_1'        => 'required|numeric|gte:0|lte:999999999999',
+                        'Tarif_Blok_2'        => 'required|numeric|gte:0|lte:999999999999',
+                        'Standar_Operasional' => 'required|numeric|gte:0|lte:24',
+                        'PJU'                 => 'required|numeric|gte:0|lte:100',
+                        'Denda_1'             => 'required|numeric|gte:0|lte:999999999999',
+                        'Denda_2'             => 'required|numeric|gte:0|lte:100',
+                        'PPN'                 => 'required|numeric|gte:0|lte:100'
                     ])->validate();
                     //End Validator
                 } else if ($input['level'] == 2){
@@ -295,13 +295,13 @@ class TarifController extends Controller
                     $data['PPN']                = $request->edit_ppnair;
                     //Validator
                     Validator::make($data, [
-                        'Tarif_1'            => 'required|numeric|lte:999999999999',
-                        'Tarif_2'            => 'required|numeric|lte:999999999999',
-                        'Tarif_Pemeliharaan' => 'required|numeric|lte:999999999999',
-                        'Tarif_Beban'        => 'required|numeric|lte:999999999999',
-                        'Tarif_Air_Kotor'    => 'required|numeric|lte:100',
-                        'Denda'              => 'required|numeric|lte:999999999999',
-                        'PPN'                => 'required|numeric|lte:100',
+                        'Tarif_1'            => 'required|numeric|gte:0|lte:999999999999',
+                        'Tarif_2'            => 'required|numeric|gte:0|lte:999999999999',
+                        'Tarif_Pemeliharaan' => 'required|numeric|gte:0|lte:999999999999',
+                        'Tarif_Beban'        => 'required|numeric|gte:0|lte:999999999999',
+                        'Tarif_Air_Kotor'    => 'required|numeric|gte:0|lte:100',
+                        'Denda'              => 'required|numeric|gte:0|lte:999999999999',
+                        'PPN'                => 'required|numeric|gte:0|lte:100',
                     ])->validate();
                     //End Validator
                 } else if ($input['level'] == 3){
@@ -312,9 +312,9 @@ class TarifController extends Controller
                     $data['Persen_IPK']      = $request->edit_ipk;
                     //Validator
                     Validator::make($data, [
-                        'Tarif'           => 'required|numeric|lte:999999999999',
-                        'Persen_Keamanan' => 'required|numeric|lte:100',
-                        'Persen_IPK'      => 'required|numeric|lte:100',
+                        'Tarif'           => 'required|numeric|gte:0|lte:999999999999',
+                        'Persen_Keamanan' => 'required|numeric|gte:0|lte:100',
+                        'Persen_IPK'      => 'required|numeric|gte:0|lte:100',
                     ])->validate();
                     //End Validator
                 } else if ($input['level'] == 4){
@@ -323,7 +323,7 @@ class TarifController extends Controller
                     $data['Tarif']       = str_replace('.', '', $request->edit_kebersihan);
                     //Validator
                     Validator::make($data, [
-                        'Tarif'          => 'required|numeric|lte:999999999999'
+                        'Tarif'          => 'required|numeric|gte:0|lte:999999999999'
                     ])->validate();
                     //End Validator
                 } else if ($input['level'] == 5){
@@ -332,7 +332,7 @@ class TarifController extends Controller
                     $data['Tarif']       = str_replace('.', '', $request->edit_airkotor);
                     //Validator
                     Validator::make($data, [
-                        'Tarif'          => 'required|numeric|lte:999999999999'
+                        'Tarif'          => 'required|numeric|gte:0|lte:999999999999'
                     ])->validate();
                     //End Validator
                 } else {
@@ -341,7 +341,7 @@ class TarifController extends Controller
                     $data['Tarif']       = str_replace('.', '', $request->edit_lainnya);
                     //Validator
                     Validator::make($data, [
-                        'Tarif'          => 'required|numeric|lte:999999999999'
+                        'Tarif'          => 'required|numeric|gte:0|lte:999999999999'
                     ])->validate();
                     //End Validator
                 }

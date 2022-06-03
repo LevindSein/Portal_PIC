@@ -85,7 +85,7 @@ class AlatController extends Controller
             Validator::make($input, [
                 'nama'  => 'required|string|max:50|unique:tarif,name',
                 'level' => 'required|numeric|digits_between:1,2',
-                'stand' => 'required|numeric|lte:999999999999'
+                'stand' => 'required|numeric|gte:0|lte:999999999999'
             ])->validate();
             //End Validator
 
@@ -102,7 +102,7 @@ class AlatController extends Controller
                 $data['daya'] = str_replace('.', '', $request->tambah_daya);
                 //Validator
                 Validator::make($data, [
-                    'daya'   => 'required|numeric|lte:999999999999'
+                    'daya'   => 'required|numeric|gte:0|lte:999999999999'
                 ])->validate();
                 //End Validator
 
@@ -179,7 +179,7 @@ class AlatController extends Controller
 
             //Validator
             Validator::make($input, [
-                'stand' => 'required|numeric|lte:999999999999'
+                'stand' => 'required|numeric|gte:0|lte:999999999999'
             ])->validate();
             //End Validator
 
@@ -196,7 +196,7 @@ class AlatController extends Controller
                     $dataset['daya'] = str_replace('.', '', $request->edit_daya);
                     //Validator
                     Validator::make($dataset, [
-                        'daya'   => 'required|numeric|lte:999999999999'
+                        'daya'   => 'required|numeric|gte:0|lte:999999999999'
                     ])->validate();
                     //End Validator
                 }
