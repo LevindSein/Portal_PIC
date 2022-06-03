@@ -117,7 +117,7 @@
                         @if($levelAlat == 1)
                         <td class="tg-g25h" style="text-align: left; white-space: normal;">{{$d->daya}}</td>
                         @endif
-                        <td class="tg-g25h" style="text-align: left; white-space: normal;">{{\App\Models\Alat::status($d->status)}}</td>
+                        <td class="tg-g25h" style="text-align: left; white-space: normal;">{{$d->status}}</td>
                     </tr>
                     @php
                         $i++;

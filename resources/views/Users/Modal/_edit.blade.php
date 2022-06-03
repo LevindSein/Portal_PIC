@@ -193,188 +193,188 @@
 
 <!--begin::Javascript-->
 <script>
-function edit_init(){
-    $("#edit-form")[0].reset();
-    $("#edit-name").val('');
-    $("#edit-level").prop("selectedIndex", 0).val();
-    $("#edit-kelola").show();
-}
-
-var id;
-
-$(document).on('click', '.edit', function(e){
-    e.preventDefault();
-    id = $(this).attr("id");
-    edit_init();
-
-    $.ajax({
-        url: "/users/" + id + "/edit",
-        cache: false,
-        method: "GET",
-        dataType: "json",
-        beforeSend:function(){
-            $.blockUI({
-                message: '<i class="fad fa-spin fa-spinner text-white"></i>',
-                baseZ: 9999,
-                overlayCSS: {
-                    backgroundColor: '#000',
-                    opacity: 0.5,
-                    cursor: 'wait'
-                },
-                css: {
-                    border: 0,
-                    padding: 0,
-                    backgroundColor: 'transparent'
-                }
-            });
-        },
-        success:function(data)
-        {
-            if(data.success){
-                $("#edit-name").val(data.success.name);
-                $("#edit-level").val(data.success.level).change();
-
-                if(data.success.otoritas){
-                    if(data.success.otoritas.groups){
-                        $.each(data.success.otoritas.groups, function (index, value){
-                            $("#edit-" + value).prop("checked", true);
-                        });
-                    }
-
-                    if(data.success.otoritas.choosed){
-                        $.each(data.success.otoritas.choosed, function (index, value){
-                            $("#edit-" + value).prop("checked", true);
-                        });
-                    }
-                }
-            }
-
-            if(data.info){
-                toastr.info(data.info);
-            }
-
-            if(data.warning){
-                toastr.warning(data.warning);
-            }
-
-            if(data.error){
-                toastr.error(data.error);
-            }
-
-            if(data.debug){
-                console.log(data.debug);
-            }
-        },
-        error:function(data){
-            toastr.error("System error.");
-            console.log(data);
-        },
-        complete:function(data){
-            if(JSON.parse(data.responseText).success){
-                $("#edit-modal").modal("show");
-            }
-            else{
-                toastr.error("Gagal mengambil data.");
-            }
-            $.unblockUI();
-        }
-    });
-
-    $('#edit-modal').on('shown.bs.modal', function() {
-        $("#edit-name").focus();
-    });
-});
-
-$("#edit-level").on('change', function() {
-    if($("#edit-level").val() == 2){
+    function edit_init(){
+        $("#edit-form")[0].reset();
+        $("#edit-name").val('');
+        $("#edit-level").prop("selectedIndex", 0).val();
         $("#edit-kelola").show();
     }
-    else{
-        $("#edit-kelola").hide();
-    }
-});
 
-$("#edit-form").keypress(function(e) {
-    if(e.which == 13) {
-        $('#edit-form').submit();
-        return false;
-    }
-});
+    var id;
 
-$('#edit-form').on('submit', function(e){
-    e.preventDefault();
+    $(document).on('click', '.edit', function(e){
+        e.preventDefault();
+        id = $(this).attr("id");
+        edit_init();
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $.ajax({
-        url: "/users/" + id,
-        cache: false,
-        method: "PUT",
-        data: $(this).serialize(),
-        dataType: "json",
-        beforeSend:function(){
-            $.blockUI({
-                message: '<i class="fad fa-spin fa-spinner text-white"></i>',
-                baseZ: 9999,
-                overlayCSS: {
-                    backgroundColor: '#000',
-                    opacity: 0.5,
-                    cursor: 'wait'
-                },
-                css: {
-                    border: 0,
-                    padding: 0,
-                    backgroundColor: 'transparent'
-                }
-            });
-        },
-        success:function(data)
-        {
-            if(data.success){
-                toastr.success(data.success);
-            }
-
-            if(data.info){
-                toastr.info(data.info);
-            }
-
-            if(data.warning){
-                toastr.warning(data.warning);
-            }
-
-            if(data.error){
-                toastr.error(data.error);
-            }
-
-            if(data.debug){
-                console.log(data.debug);
-            }
-        },
-        error:function(data){
-            if (data.status == 422) {
-                $.each(data.responseJSON.errors, function (i, error) {
-                    toastr.error(error[0]);
+        $.ajax({
+            url: "/users/" + id + "/edit",
+            cache: false,
+            method: "GET",
+            dataType: "json",
+            beforeSend:function(){
+                $.blockUI({
+                    message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                    baseZ: 9999,
+                    overlayCSS: {
+                        backgroundColor: '#000',
+                        opacity: 0.5,
+                        cursor: 'wait'
+                    },
+                    css: {
+                        border: 0,
+                        padding: 0,
+                        backgroundColor: 'transparent'
+                    }
                 });
-            }
-            else{
+            },
+            success:function(data)
+            {
+                if(data.success){
+                    $("#edit-name").val(data.success.name);
+                    $("#edit-level").val(data.success.level).change();
+
+                    if(data.success.otoritas){
+                        if(data.success.otoritas.groups){
+                            $.each(data.success.otoritas.groups, function (index, value){
+                                $("#edit-" + value).prop("checked", true);
+                            });
+                        }
+
+                        if(data.success.otoritas.choosed){
+                            $.each(data.success.otoritas.choosed, function (index, value){
+                                $("#edit-" + value).prop("checked", true);
+                            });
+                        }
+                    }
+                }
+
+                if(data.info){
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.error(data.error);
+                }
+
+                if(data.debug){
+                    console.log(data.debug);
+                }
+            },
+            error:function(data){
                 toastr.error("System error.");
                 console.log(data);
-            }
-        },
-        complete:function(data){
-            if(JSON.parse(data.responseText).success){
-                $('#edit-modal').modal('hide');
-                dtableReload();
-            }
-            setTimeout(() => {
+            },
+            complete:function(data){
+                if(JSON.parse(data.responseText).success){
+                    $("#edit-modal").modal("show");
+                }
+                else{
+                    toastr.error("Gagal mengambil data.");
+                }
                 $.unblockUI();
-            }, 100);
+            }
+        });
+
+        $('#edit-modal').on('shown.bs.modal', function() {
+            $("#edit-name").focus();
+        });
+    });
+
+    $("#edit-level").on('change', function() {
+        if($("#edit-level").val() == 2){
+            $("#edit-kelola").show();
+        }
+        else{
+            $("#edit-kelola").hide();
         }
     });
-});
+
+    $("#edit-form").keypress(function(e) {
+        if(e.which == 13) {
+            $('#edit-form').submit();
+            return false;
+        }
+    });
+
+    $('#edit-form').on('submit', function(e){
+        e.preventDefault();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: "/users/" + id,
+            cache: false,
+            method: "PUT",
+            data: $(this).serialize(),
+            dataType: "json",
+            beforeSend:function(){
+                $.blockUI({
+                    message: '<i class="fad fa-spin fa-spinner text-white"></i>',
+                    baseZ: 9999,
+                    overlayCSS: {
+                        backgroundColor: '#000',
+                        opacity: 0.5,
+                        cursor: 'wait'
+                    },
+                    css: {
+                        border: 0,
+                        padding: 0,
+                        backgroundColor: 'transparent'
+                    }
+                });
+            },
+            success:function(data)
+            {
+                if(data.success){
+                    toastr.success(data.success);
+                }
+
+                if(data.info){
+                    toastr.info(data.info);
+                }
+
+                if(data.warning){
+                    toastr.warning(data.warning);
+                }
+
+                if(data.error){
+                    toastr.error(data.error);
+                }
+
+                if(data.debug){
+                    console.log(data.debug);
+                }
+            },
+            error:function(data){
+                if (data.status == 422) {
+                    $.each(data.responseJSON.errors, function (i, error) {
+                        toastr.error(error[0]);
+                    });
+                }
+                else{
+                    toastr.error("System error.");
+                    console.log(data);
+                }
+            },
+            complete:function(data){
+                if(JSON.parse(data.responseText).success){
+                    $('#edit-modal').modal('hide');
+                    dtableReload();
+                }
+                setTimeout(() => {
+                    $.unblockUI();
+                }, 100);
+            }
+        });
+    });
 </script>
 <!--end::Javascript-->

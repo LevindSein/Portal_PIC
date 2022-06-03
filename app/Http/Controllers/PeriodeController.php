@@ -68,19 +68,21 @@ class PeriodeController extends Controller
     {
         if($request->ajax()){
             //Validator
-            $input['bulan'] = $request->tambah_bulan;
-            $input['tahun'] = $request->tambah_tahun;
-            $input['due']   = Carbon::parse($request->tambah_due)->format('Y-m-d');
+            $input['bulan']        = $request->tambah_bulan;
+            $input['tahun']        = $request->tambah_tahun;
+            $input['jatuh_tempo']  = Carbon::parse($input['tahun'] . '-' . $input['bulan'] . '-' . $request->tambah_due)->format('Y-m-d');
+            $input['periode_baru'] = Carbon::parse($input['tahun'] . '-' . $input['bulan'] . '-' . $request->tambah_new)->format('Y-m-d');
 
             $input['periode'] = $input['tahun'] . '-' . $input['bulan'];
 
             $now = Carbon::now();
 
             Validator::make($input, [
-                'bulan'   => 'required|string|in:01,02,03,04,05,06,07,08,09,10,11,12',
-                'tahun'   => 'required|numeric|digits:4|min:2018|max:' . $now->year,
-                'periode' => 'required|string|max:8|unique:periode,name',
-                'due'     => 'required|date|date_format:Y-m-d',
+                'bulan'        => 'required|string|in:01,02,03,04,05,06,07,08,09,10,11,12',
+                'tahun'        => 'required|numeric|digits:4|min:2018|max:' . $now->year,
+                'periode'      => 'required|string|max:8|unique:periode,name',
+                'jatuh_tempo'  => 'required|date|date_format:Y-m-d',
+                'periode_baru' => 'required|date|date_format:Y-m-d',
             ])->validate();
             //End Validator
 
@@ -88,8 +90,8 @@ class PeriodeController extends Controller
                 Periode::create([
                     'name'     => $input['periode'],
                     'nicename' => IndoDate::bulan($input['periode'], ' '),
-                    'new'      => $input['periode'] . "-23",
-                    'due'      => $input['due'],
+                    'new'      => $input['periode_baru'],
+                    'due'      => $input['jatuh_tempo'],
                     'year'     => $input['tahun'],
                 ]);
             });
@@ -164,19 +166,21 @@ class PeriodeController extends Controller
             $data = Periode::lockForUpdate()->findOrFail($decrypted);
 
             //Validator
-            $input['bulan'] = $request->edit_bulan;
-            $input['tahun'] = $request->edit_tahun;
-            $input['due']   = Carbon::parse($request->edit_due)->format('Y-m-d');
+            $input['bulan']        = $request->edit_bulan;
+            $input['tahun']        = $request->edit_tahun;
+            $input['jatuh_tempo']  = Carbon::parse($input['tahun'] . '-' . $input['bulan'] . '-' . $request->edit_due)->format('Y-m-d');
+            $input['periode_baru'] = Carbon::parse($input['tahun'] . '-' . $input['bulan'] . '-' . $request->edit_new)->format('Y-m-d');
 
             $input['periode'] = $input['tahun'] . '-' . $input['bulan'];
 
             $now = Carbon::now();
 
             Validator::make($input, [
-                'bulan'   => 'required|string|in:01,02,03,04,05,06,07,08,09,10,11,12',
-                'tahun'   => 'required|numeric|digits:4|min:2018|max:' . $now->year,
-                'periode' => 'required|string|max:8|unique:periode,name,' . $decrypted,
-                'due'     => 'required|date|date_format:Y-m-d',
+                'bulan'        => 'required|string|in:01,02,03,04,05,06,07,08,09,10,11,12',
+                'tahun'        => 'required|numeric|digits:4|min:2018|max:' . $now->year,
+                'periode'      => 'required|string|max:8|unique:periode,name,' . $decrypted,
+                'jatuh_tempo'  => 'required|date|date_format:Y-m-d',
+                'periode_baru' => 'required|date|date_format:Y-m-d',
             ])->validate();
             //End Validator
 
@@ -184,8 +188,8 @@ class PeriodeController extends Controller
                 $data->update([
                     'name'     => $input['periode'],
                     'nicename' => IndoDate::bulan($input['periode'], ' '),
-                    'new'      => $input['periode'] . "-23",
-                    'due'      => $input['due'],
+                    'new'      => $input['periode_baru'],
+                    'due'      => $input['jatuh_tempo'],
                     'year'     => $input['tahun'],
                 ]);
             });

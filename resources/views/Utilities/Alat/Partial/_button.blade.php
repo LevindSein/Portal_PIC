@@ -13,7 +13,7 @@
         <a class="dropdown-item" id="print" href="javascript:void(0)"><i class="fas fa-fw fa-print"></i>Print Data Alat</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" id="available" href="javascript:void(0)"><i class="fas fa-fw fa-check"></i>Alat Tersedia</a>
-        <a class="dropdown-item" id="activated" href="javascript:void(0)"><i class="fas fa-fw fa-ban"></i>Alat Aktif / Digunakan</a>
+        <a class="dropdown-item" id="activated" href="javascript:void(0)"><i class="fas fa-fw fa-ban"></i>Alat Terpakai</a>
     </div>
     <a class="dropdown-toggle btn btn-sm btn-neutral" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options</a>
     <!-- End Button -->

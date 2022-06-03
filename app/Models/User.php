@@ -55,10 +55,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getOtoritasAttribute($value) {
-        return json_decode($value);
-    }
-
     protected static $ignoreChangedAttributes = ['password', 'otoritas', 'updated_at'];
     protected static $logName = 'users';
     protected static $logAttributes = [
@@ -73,6 +69,10 @@ class User extends Authenticatable
         'level',
         'status'
     ];
+
+    public function getOtoritasAttribute($value) {
+        return json_decode($value);
+    }
 
     public static function level($val) {
         switch ($val) {

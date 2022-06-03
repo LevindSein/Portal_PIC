@@ -35,8 +35,33 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <small class="form-control-label">Jatuh Tempo Tagihan <span class="text-danger">*</span></small>
-                        <input required type="date" id="tambah-due" name="tambah_due" autocomplete="off" class="form-control form-control-sm" />
+                        <small class="form-control-label">Jatuh Tempo Tagihan <span class="text-danger">*</span></small><div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <select required class="form-control form-control-sm" id="tambah-due" name="tambah_due"></select>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label class="show-due form-control-label"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <small class="form-control-label">Periode Tagihan Baru<span class="text-danger">*</span></small>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <select required class="form-control form-control-sm" id="tambah-new" name="tambah_new"></select>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label class="show-new form-control-label"></label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label><sup><span class="text-danger">*) Wajib diisi.</span></sup></label>
@@ -54,9 +79,12 @@
 
 <!--begin::Javascript-->
 <script>
+    var choosed, show_new, show_due, get_due;
+
     function tambah_init(){
         $("#tambah-form")[0].reset();
         tambah_due();
+        tambah_new();
     }
 
     $("#add").click(function(){
@@ -67,12 +95,51 @@
 
     $(document).on('change', '#tambah-bulan, #tambah-tahun', function(){
         tambah_due();
+        tambah_new();
+    });
+
+    $(document).on('change', '#tambah-due', function(){
+        tambah_new();
     });
 
     function tambah_due(){
-        var due = $("#tambah-tahun").val() + "-" + $("#tambah-bulan").val() + "-15";
+        choosed = $("#tambah-bulan option:selected").text() + " " + $("#tambah-tahun option:selected").text();
+        $(".show-due").text(choosed);
 
-        $('#tambah-due').val(due);
+        $('#tambah-due').html("");
+        for (let index = 0; index < 15; index++) {
+            $('#tambah-due').append('<option value="' + pad((index + 1), 2) + '">' + (index + 1)  + '</option>');
+        }
+        $("#tambah-due").val(15).change();
+    }
+
+    function tambah_new(){
+        get_due = $('#tambah-due').val();
+
+        choosed = $("#tambah-bulan option:selected").text() + " " + $("#tambah-tahun option:selected").text();
+        $(".show-new").text(choosed);
+
+        show_new = getDaysInMonth($("#tambah-bulan").val(), $("#tambah-tahun").val());
+        $('#tambah-new').html("");
+        $.each(show_new, function (index, value){
+            var new_date = new Date(value).getDate();
+            if(new_date > get_due){
+                $('#tambah-new').append('<option value="' + pad(new_date, 2) + '">' + new_date  + '</option>');
+            }
+        });
+        $("#tambah-new").val(23).change();
+    }
+
+    function getDaysInMonth (month, year) {
+        return new Array(31)
+        .fill('')
+        .map((v,i)=>new Date(year,month-1,i+1))
+        .filter(v=>v.getMonth()===month-1);
+    }
+
+    function pad (str, max) {
+        str = str.toString();
+        return str.length < max ? pad("0" + str, max) : str;
     }
 
     $("#tambah-form").keypress(function(e) {

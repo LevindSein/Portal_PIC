@@ -35,8 +35,33 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <small class="form-control-label">Jatuh Tempo Tagihan <span class="text-danger">*</span></small>
-                        <input required type="date" id="edit-due" name="edit_due" autocomplete="off" class="form-control form-control-sm" />
+                        <small class="form-control-label">Jatuh Tempo Tagihan <span class="text-danger">*</span></small><div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <select required class="form-control form-control-sm" id="edit-due" name="edit_due"></select>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label class="show-due form-control-label"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <small class="form-control-label">Periode Tagihan Baru<span class="text-danger">*</span></small>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <select required class="form-control form-control-sm" id="edit-new" name="edit_new"></select>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label class="show-new form-control-label"></label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label><sup><span class="text-danger">*) Wajib diisi.</span></sup></label>
@@ -54,9 +79,10 @@
 
 <!--begin::Javascript-->
 <script>
+    var choosed, show_new, show_due, get_due;
+
     function edit_init(){
         $("#edit-form")[0].reset();
-        edit_due();
     }
 
     var id;
@@ -90,9 +116,10 @@
             success:function(data)
             {
                 if(data.success){
-                    $("#edit-bulan").val(data.success.bulan);
-                    $("#edit-tahun").val(data.success.year);
-                    $("#edit-due").val(data.success.due);
+                    $("#edit-bulan").val(data.success.bulan).change();
+                    $("#edit-tahun").val(data.success.year).change();
+                    $("#edit-due").val(pad(new Date(data.success.due).getDate(), 2));
+                    $("#edit-new").val(pad(new Date(data.success.new).getDate(), 2));
                 }
 
                 if(data.info){
@@ -129,12 +156,49 @@
 
     $(document).on('change', '#edit-bulan, #edit-tahun', function(){
         edit_due();
+        edit_new();
+    });
+
+    $(document).on('change', '#edit-due', function(){
+        edit_new();
     });
 
     function edit_due(){
-        var due = $("#edit-tahun").val() + "-" + $("#edit-bulan").val() + "-15";
+        choosed = $("#edit-bulan option:selected").text() + " " + $("#edit-tahun option:selected").text();
+        $(".show-due").text(choosed);
 
-        $('#edit-due').val(due);
+        $('#edit-due').html("");
+        for (let index = 0; index < 15; index++) {
+            $('#edit-due').append('<option value="' + pad((index + 1), 2) + '">' + (index + 1)  + '</option>');
+        }
+    }
+
+    function edit_new(){
+        get_due = $('#edit-due').val();
+
+        choosed = $("#edit-bulan option:selected").text() + " " + $("#edit-tahun option:selected").text();
+        $(".show-new").text(choosed);
+
+        show_new = getDaysInMonth($("#edit-bulan").val(), $("#edit-tahun").val());
+        $('#edit-new').html("");
+        $.each(show_new, function (index, value){
+            var new_date = new Date(value).getDate();
+            if(new_date > get_due){
+                $('#edit-new').append('<option value="' + pad(new_date, 2) + '">' + new_date  + '</option>');
+            }
+        });
+    }
+
+    function getDaysInMonth (month, year) {
+        return new Array(31)
+        .fill('')
+        .map((v,i)=>new Date(year,month-1,i+1))
+        .filter(v=>v.getMonth()===month-1);
+    }
+
+    function pad (str, max) {
+        str = str.toString();
+        return str.length < max ? pad("0" + str, max) : str;
     }
 
     $("#edit-form").keypress(function(e) {

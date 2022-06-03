@@ -29,6 +29,17 @@ class Alat extends Model
         return hexdec(uniqid("222")); //222 = Alat
     }
 
+    public function getStatusAttribute($value) {
+        switch ($value) {
+            case 1:
+                return 'Tersedia';
+                break;
+            default:
+                return 'Digunakan';
+                break;
+        }
+    }
+
     public static function level($val) {
         switch ($val) {
             case 1:
@@ -36,17 +47,6 @@ class Alat extends Model
                 break;
             default:
                 return 'Air Bersih';
-                break;
-        }
-    }
-
-    public static function status($val) {
-        switch ($val) {
-            case 1:
-                return 'Tersedia';
-                break;
-            default:
-                return 'Digunakan';
                 break;
         }
     }
