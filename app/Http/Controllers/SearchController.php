@@ -52,8 +52,8 @@ class SearchController extends Controller
         $data = [];
         if($request->ajax()) {
             $group = Group::where('name', $name)->first();
-            if($group->available){
-                $los = json_decode($group->available);
+            if($group->data){
+                $los = json_decode($group->data);
                 $keyword = $request->q;
                 foreach($los as $key){
                     if($keyword){
@@ -104,7 +104,7 @@ class SearchController extends Controller
                 $key = $request->q;
                 $query->where('name', 'LIKE', '%'.$key.'%');
             })
-            ->orderBy('id','desc')
+            ->orderBy('name','asc')
             ->limit(5)
             ->get();
         }

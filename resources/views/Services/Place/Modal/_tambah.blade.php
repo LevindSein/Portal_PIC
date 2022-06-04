@@ -22,14 +22,6 @@
                                 <input required type="text" id="tambah-name" name="tambah_name" autocomplete="off" maxlength="25" class="name form-control form-control-sm" placeholder="Otomatis setelah Grup dan Los terisi" style="text-transform: uppercase;"/>
                             </div>
                             <div class="form-group">
-                                <small class="form-control-label">Pengguna</small>
-                                <select class="form-control form-control-sm select2" id="tambah-pengguna" name="tambah_pengguna"></select>
-                            </div>
-                            <div class="form-group">
-                                <small class="form-control-label">Pemilik <span class="text-danger">*</span></small>
-                                <select class="form-control form-control-sm select2" id="tambah-pemilik" name="tambah_pemilik"></select>
-                            </div>
-                            <div class="form-group">
                                 <small class="form-control-label">Status <span class="text-danger">*</span></small>
                                 <div class="form-check">
                                     <input
@@ -65,6 +57,14 @@
                                         Bebas Bayar
                                     </label>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <small class="form-control-label">Pengguna</small>
+                                <select class="form-control form-control-sm select2" id="tambah-pengguna" name="tambah_pengguna"></select>
+                            </div>
+                            <div class="form-group">
+                                <small class="form-control-label">Pemilik</small>
+                                <select class="form-control form-control-sm select2" id="tambah-pemilik" name="tambah_pemilik"></select>
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Keterangan</small>
@@ -142,7 +142,7 @@
                             <div class="div-lain"></div>
 
                             <div class="form-group">
-                                <button type="button" id="tambah-lain-add" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-plus mr-1"></i>Fasilitas Lainnya</button>
+                                <button type="button" id="tambah-lainnya-add" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-plus mr-1"></i>Fasilitas Lainnya</button>
                             </div>
                         </div>
                     </div>
@@ -385,23 +385,23 @@
     }
 
     var lain = 0, index = 1;
-    $("#tambah-lain-add").on('click', function () {
+    $("#tambah-lainnya-add").on('click', function () {
         var html = '';
         html += '<div name="div_lain" class="form-group">';
         html += '<div class="d-flex justify-content-between">';
         html += '<small class="form-control-label">Tarif Lainnya</small>';
-        html += '<a type="button" href="javascript:void(0)" id="tambah-lain-rmv">';
+        html += '<a type="button" href="javascript:void(0)" id="tambah-lainnya-rmv">';
         html += '<small class="form-control-label text-danger"><i class="fas fa-fw fa-times"></i></small>';
         html += '</a>';
         html += '</div>';
-        html += '<select required id="tambah-lain-'+ index + '" name="tambah_lain[]" class="select2 form-control form-control-sm"></select>';
+        html += '<select required id="tambah-lainnya-'+ index + '" name="tambah_lainnya[]" class="select2 form-control form-control-sm"></select>';
         html += '</div>';
 
         if(lain < 10){
             $('.div-lain').append(html).hide();
-            select2tarif2("#tambah-lain-" + index, "/search/tarif", 6,"-- Cari Tarif --");
+            select2tarif2("#tambah-lainnya-" + index, "/search/tarif", 6,"-- Cari Tarif --");
 
-            $("#tambah-lain-" + index).val('').html('').on('select2:open', () => {
+            $("#tambah-lainnya-" + index).val('').html('').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
             });
 
@@ -418,7 +418,7 @@
             toastr.error("Telah mencapai maksimal.");
         }
     });
-    $(document).on('click', '#tambah-lain-rmv', function () {
+    $(document).on('click', '#tambah-lainnya-rmv', function () {
         lain--;
         $(this).closest("[name='div_lain']").remove();
     });

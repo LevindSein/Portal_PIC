@@ -24,6 +24,15 @@
                     </div>
                     <div class="listrik">
                         <div class="form-group">
+                            <small class="form-control-label">Tarif Rekmin <span class="text-danger">*</span></small>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Rp</span>
+                                </div>
+                                <input maxlength="15" type="text" id="tambah-rekmin" name="tambah_rekmin" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <small class="form-control-label">Beban Daya <span class="text-danger">*</span></small>
                             <div class="input-group">
                                 <input maxlength="15" type="text" id="tambah-beban" name="tambah_beban" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control">
@@ -95,6 +104,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <small class="form-control-label">Tarif Pasang Baru <span class="text-danger">*</span></small>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Rp</span>
+                                </div>
+                                <input maxlength="15" type="text" id="tambah-barulistrik" name="tambah_barulistrik" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">per-kWh</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="airbersih">
                         <div class="form-group">
@@ -158,6 +179,15 @@
                                 <div class="input-group-append">
                                     <span class="input-group-text">%</span>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <small class="form-control-label">Tarif Pasang Baru <span class="text-danger">*</span></small>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Rp</span>
+                                </div>
+                                <input maxlength="15" type="text" id="tambah-baruairbersih" name="tambah_baruairbersih" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control">
                             </div>
                         </div>
                     </div>

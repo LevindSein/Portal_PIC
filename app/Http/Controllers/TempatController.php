@@ -217,14 +217,32 @@ class TempatController extends Controller
                 $diskon['airkotor']       = $input['diskon_airkotor'];
             }
 
+            if($request->tambah_lainnya){
+                $lainnya = [];
+                foreach ($request->tambah_lainnya as $key) {
+                    $input['tarif_lainnya']  = $key;
+                    Validator::make($input, [
+                        'tarif_lainnya'
+                        => ['required','numeric',
+                            Rule::exists('tarif', 'id')
+                            ->where('level', 6)
+                        ]
+                    ])->validate();
+
+                    $lainnya[] = $key;
+                }
+
+                $data['trf_lainnya_id'] = json_encode($lainnya);
+            }
+
             $los = $this->multipleSelect($request->tambah_los);
             sort($los, SORT_NATURAL);
 
-            $no_los = Group::where('name', $request->tambah_group)->first()->data;
+            $no_los = Group::where('name', $request->tambah_group)->first();
             foreach($los as $l){
                 $input['nomor_los'] = $l;
                 Validator::make($input, [
-                    'nomor_los' => 'required|in:'.$no_los,
+                    'nomor_los' => 'required|in:' . implode(',', json_decode($no_los->data)),
                 ])->validate();
             }
 

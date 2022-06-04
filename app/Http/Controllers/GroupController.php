@@ -113,7 +113,6 @@ class GroupController extends Controller
                     'blok'      => $input['blok'],
                     'nomor'     => $input['nomor'],
                     'data'      => $los,
-                    'available' => $los,
                 ]);
             });
 
