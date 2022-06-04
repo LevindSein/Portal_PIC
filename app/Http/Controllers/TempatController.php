@@ -77,7 +77,7 @@ class TempatController extends Controller
 
                 return "<span data-toggle='tooltip' title='" . $data->pengguna->name . "'>$name</span>";
             })
-            ->filterColumn('nicename', function ($query, $keyword) {
+            ->filterColumn('name', function ($query, $keyword) {
                 $keywords = trim($keyword);
                 $query->whereRaw("CONCAT(name, nicename) like ?", ["%{$keywords}%"]);
             })
@@ -284,7 +284,17 @@ class TempatController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(request()->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            $data = Tempat::findOrFail($decrypted);
+
+            return response()->json(['success' => $data]);
+        }
     }
 
     /**

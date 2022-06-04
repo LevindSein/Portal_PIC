@@ -15,7 +15,7 @@
                             </div>
                             <div class="form-group tambah-los">
                                 <small class="form-control-label">Nomor Los <span class="text-danger">*</span></small>
-                                <select required id="tambah-los" name="tambah_los[]" class="select2 form-control form-control-sm" multiple></select>
+                                <select required id="tambah-los" name="tambah_los[]" class="form-control form-control-sm" multiple></select>
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Kode Kontrol <span class="text-danger">*</span></small>
@@ -191,10 +191,12 @@
         $(".div-lain").html('');
     }
 
+    var lain = 0, index = 1;
     $("#add").click(function(){
         $("#tambah-modal").modal("show");
 
         tambah_init();
+        lain = 0, index = 1;
     });
 
     $(document).on("change", '#tambah-group', function(e) {
@@ -235,17 +237,17 @@
         }
     });
 
-    $('#tambah-listrik').click(checkFasListrik).each(checkFasListrik);
-    function checkFasListrik(){
+    $('#tambah-listrik').click(tambahFasListrik).each(tambahFasListrik);
+    function tambahFasListrik(){
         if($("#tambah-listrik").is(":checked")){
             var html = '';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Alat Meter <span class="text-danger">*</span></small>';
-            html += '<select required id="tambah-alat-listrik" name="tambah_alat_listrik" class="select2 form-control form-control-sm"></select>';
+            html += '<select required id="tambah-alat-listrik" name="tambah_alat_listrik" class="form-control form-control-sm"></select>';
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
-            html += '<select required id="tambah-trf-listrik" name="tambah_trf_listrik" class="select2 form-control form-control-sm"></select>';
+            html += '<select required id="tambah-trf-listrik" name="tambah_trf_listrik" class="form-control form-control-sm"></select>';
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Diskon (% Tagihan)</small>';
@@ -271,17 +273,17 @@
         }
     }
 
-    $('#tambah-airbersih').click(checkFasAirbersih).each(checkFasAirbersih);
-    function checkFasAirbersih(){
+    $('#tambah-airbersih').click(tambahFasAirbersih).each(tambahFasAirbersih);
+    function tambahFasAirbersih(){
         if($("#tambah-airbersih").is(":checked")){
             var html = '';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Alat Meter <span class="text-danger">*</span></small>';
-            html += '<select required id="tambah-alat-airbersih" name="tambah_alat_airbersih" class="select2 form-control form-control-sm"></select>';
+            html += '<select required id="tambah-alat-airbersih" name="tambah_alat_airbersih" class="form-control form-control-sm"></select>';
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
-            html += '<select required id="tambah-trf-airbersih" name="tambah_trf_airbersih" class="select2 form-control form-control-sm"></select>';
+            html += '<select required id="tambah-trf-airbersih" name="tambah_trf_airbersih" class="form-control form-control-sm"></select>';
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Diskon (% Tagihan)</small>';
@@ -307,13 +309,13 @@
         }
     }
 
-    $('#tambah-keamananipk').click(checkFasKeamananipk).each(checkFasKeamananipk);
-    function checkFasKeamananipk(){
+    $('#tambah-keamananipk').click(tambahFasKeamananipk).each(tambahFasKeamananipk);
+    function tambahFasKeamananipk(){
         if($("#tambah-keamananipk").is(":checked")){
             var html = '';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
-            html += '<select required id="tambah-trf-keamananipk" name="tambah_trf_keamananipk" class="select2 form-control form-control-sm"></select>';
+            html += '<select required id="tambah-trf-keamananipk" name="tambah_trf_keamananipk" class="form-control form-control-sm"></select>';
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
@@ -334,13 +336,13 @@
         }
     }
 
-    $('#tambah-kebersihan').click(checkFasKebersihan).each(checkFasKebersihan);
-    function checkFasKebersihan(){
+    $('#tambah-kebersihan').click(tambahFasKebersihan).each(tambahFasKebersihan);
+    function tambahFasKebersihan(){
         if($("#tambah-kebersihan").is(":checked")){
             var html = '';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
-            html += '<select required id="tambah-trf-kebersihan" name="tambah_trf_kebersihan" class="select2 form-control form-control-sm"></select>';
+            html += '<select required id="tambah-trf-kebersihan" name="tambah_trf_kebersihan" class="form-control form-control-sm"></select>';
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
@@ -361,13 +363,13 @@
         }
     }
 
-    $('#tambah-airkotor').click(checkFasAirkotor).each(checkFasAirkotor);
-    function checkFasAirkotor(){
+    $('#tambah-airkotor').click(tambahFasAirkotor).each(tambahFasAirkotor);
+    function tambahFasAirkotor(){
         if($("#tambah-airkotor").is(":checked")){
             var html = '';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
-            html += '<select required id="tambah-trf-airkotor" name="tambah_trf_airkotor" class="select2 form-control form-control-sm"></select>';
+            html += '<select required id="tambah-trf-airkotor" name="tambah_trf_airkotor" class="form-control form-control-sm"></select>';
             html += '</div>';
 
             $(".airkotor").html(html).hide();
@@ -384,7 +386,6 @@
         }
     }
 
-    var lain = 0, index = 1;
     $("#tambah-lainnya-add").on('click', function () {
         var html = '';
         html += '<div name="div_lain" class="form-group">';
@@ -394,7 +395,7 @@
         html += '<small class="form-control-label text-danger"><i class="fas fa-fw fa-times"></i></small>';
         html += '</a>';
         html += '</div>';
-        html += '<select required id="tambah-lainnya-'+ index + '" name="tambah_lainnya[]" class="select2 form-control form-control-sm"></select>';
+        html += '<select required id="tambah-lainnya-'+ index + '" name="tambah_lainnya[]" class="form-control form-control-sm"></select>';
         html += '</div>';
 
         if(lain < 10){
@@ -505,162 +506,5 @@
             }
         });
     });
-
-    function select2group(select2id, url, placeholder){
-        $(select2id).select2({
-            placeholder: placeholder,
-            ajax: {
-                url: url,
-                dataType: 'json',
-                delay: 250,
-                cache: true,
-                processResults: function (data) {
-                    return {
-                        results:  $.map(data, function (d) {
-                            return {
-                                id: d.name,
-                                text: d.name
-                            }
-                        })
-                    };
-                },
-            }
-        });
-    }
-
-    function select2los(select2id, url, placeholder){
-        $(select2id).select2({
-            placeholder: placeholder,
-            ajax: {
-                url: url,
-                dataType: 'json',
-                delay: 250,
-                cache: true,
-                processResults: function (data) {
-                    return {
-                        results:  $.map(data, function (d) {
-                            return {
-                                id: d,
-                                text: d
-                            }
-                        })
-                    };
-                },
-            }
-        });
-    }
-
-    function select2user(select2id, url, placeholder){
-        $(select2id).select2({
-            placeholder: placeholder,
-            ajax: {
-                url: url,
-                dataType: 'json',
-                delay: 250,
-                cache: true,
-                processResults: function (data) {
-                    return {
-                        results:  $.map(data, function (d) {
-                            return {
-                                id: d.id,
-                                text: d.name + ' (' + d.ktp + ')'
-                            }
-                        })
-                    };
-                },
-            }
-        });
-    }
-
-    function select2alat(select2id, url, level, placeholder){
-        url = url + "?level=" + level;
-        if(level == 1){
-            $(select2id).select2({
-                placeholder: placeholder,
-                ajax: {
-                    url: url,
-                    dataType: 'json',
-                    delay: 250,
-                    cache: true,
-                    processResults: function (data, $level) {
-                        return {
-                            results:  $.map(data, function (d) {
-                                return {
-                                    id: d.id,
-                                    text: d.name + ' (' + d.stand + ' - ' + d.daya + 'W)'
-                                }
-                            })
-                        };
-                    },
-                }
-            });
-        } else {
-            $(select2id).select2({
-                placeholder: placeholder,
-                ajax: {
-                    url: url,
-                    dataType: 'json',
-                    delay: 250,
-                    cache: true,
-                    processResults: function (data) {
-                        return {
-                            results:  $.map(data, function (d) {
-                                return {
-                                    id: d.id,
-                                    text: d.name + ' (' + d.stand + ')'
-                                }
-                            })
-                        };
-                    },
-                }
-            });
-        }
-    }
-
-    function select2tarif1(select2id, url, level, placeholder){
-        url = url + "?level=" + level;
-        $(select2id).select2({
-            placeholder: placeholder,
-            ajax: {
-                url: url,
-                dataType: 'json',
-                delay: 250,
-                cache: true,
-                processResults: function (data) {
-                    return {
-                        results:  $.map(data, function (d) {
-                            return {
-                                id: d.id,
-                                text: d.name + ' - ' + d.status
-                            }
-                        })
-                    };
-                },
-            }
-        });
-    }
-
-    function select2tarif2(select2id, url, level, placeholder){
-        url = url + "?level=" + level;
-        $(select2id).select2({
-            placeholder: placeholder,
-            ajax: {
-                url: url,
-                dataType: 'json',
-                delay: 250,
-                cache: true,
-                processResults: function (data) {
-                    return {
-                        results:  $.map(data, function (d) {
-                            return {
-                                id: d.id,
-                                text: d.name + ' - Rp ' + Number(d.data.Tarif).toLocaleString('id-ID') + ' ' + d.status
-                            }
-                        })
-                    };
-                },
-            }
-        });
-    }
 </script>
 <!--end::Javascript-->

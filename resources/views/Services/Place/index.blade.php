@@ -92,5 +92,162 @@ Tempat Usaha
 
         $(".popover").popover("hide");
     }
+
+    function select2group(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.name,
+                                text: d.name
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2los(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d,
+                                text: d
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2user(select2id, url, placeholder){
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.id,
+                                text: d.name + ' (' + d.ktp + ')'
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2alat(select2id, url, level, placeholder){
+        url = url + "?level=" + level;
+        if(level == 1){
+            $(select2id).select2({
+                placeholder: placeholder,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    processResults: function (data, $level) {
+                        return {
+                            results:  $.map(data, function (d) {
+                                return {
+                                    id: d.id,
+                                    text: d.name + ' (' + d.stand + ' - ' + d.daya + 'W)'
+                                }
+                            })
+                        };
+                    },
+                }
+            });
+        } else {
+            $(select2id).select2({
+                placeholder: placeholder,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    delay: 250,
+                    cache: true,
+                    processResults: function (data) {
+                        return {
+                            results:  $.map(data, function (d) {
+                                return {
+                                    id: d.id,
+                                    text: d.name + ' (' + d.stand + ')'
+                                }
+                            })
+                        };
+                    },
+                }
+            });
+        }
+    }
+
+    function select2tarif1(select2id, url, level, placeholder){
+        url = url + "?level=" + level;
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.id,
+                                text: d.name + ' - ' + d.status
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
+
+    function select2tarif2(select2id, url, level, placeholder){
+        url = url + "?level=" + level;
+        $(select2id).select2({
+            placeholder: placeholder,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                cache: true,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (d) {
+                            return {
+                                id: d.id,
+                                text: d.name + ' - Rp ' + Number(d.data.Tarif).toLocaleString('id-ID') + ' ' + d.status
+                            }
+                        })
+                    };
+                },
+            }
+        });
+    }
 </script>
 @endsection
