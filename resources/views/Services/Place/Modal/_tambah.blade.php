@@ -84,7 +84,7 @@
                                         Listrik
                                     </label>
                                 </div>
-                                <div class="listrik"></div>
+                                <div id="div-tambah-listrik"></div>
                             </div>
                             <div>
                                 <div class="form-check">
@@ -97,7 +97,7 @@
                                         Air Bersih
                                     </label>
                                 </div>
-                                <div class="airbersih"></div>
+                                <div id="div-tambah-airbersih"></div>
                             </div>
                             <div>
                                 <div class="form-check">
@@ -110,7 +110,7 @@
                                         Keamanan IPK
                                     </label>
                                 </div>
-                                <div class="keamananipk"></div>
+                                <div id="div-tambah-keamananipk"></div>
                             </div>
                             <div>
                                 <div class="form-check">
@@ -123,7 +123,7 @@
                                         Kebersihan
                                     </label>
                                 </div>
-                                <div class="kebersihan"></div>
+                                <div id="div-tambah-kebersihan"></div>
                             </div>
                             <div>
                                 <div class="form-check">
@@ -136,10 +136,10 @@
                                         Air Kotor
                                     </label>
                                 </div>
-                                <div class="airkotor"></div>
+                                <div id="div-tambah-airkotor"></div>
                             </div>
 
-                            <div class="div-lain"></div>
+                            <div id="div-tambah-lainnya"></div>
 
                             <div class="form-group">
                                 <button type="button" id="tambah-lainnya-add" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-plus mr-1"></i>Fasilitas Lainnya</button>
@@ -183,12 +183,12 @@
         });
         select2user("#tambah-pemilik", "/search/users", "-- Cari Pemilik --");
 
-        $(".listrik").html('');
-        $(".airbersih").html('');
-        $(".keamananipk").html('');
-        $(".kebersihan").html('');
-        $(".airkotor").html('');
-        $(".div-lain").html('');
+        $("#div-tambah-listrik").html('');
+        $("#div-tambah-airbersih").html('');
+        $("#div-tambah-keamananipk").html('');
+        $("#div-tambah-kebersihan").html('');
+        $("#div-tambah-airkotor").html('');
+        $("#div-tambah-lainnya").html('');
     }
 
     var lain = 0, index = 1;
@@ -254,7 +254,7 @@
             html += '<input maxlength="3" type="text" id="tambah-dis-listrik" name="tambah_dis_listrik" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-sm">';
             html += '</div>';
 
-            $(".listrik").html(html).hide();
+            $("#div-tambah-listrik").html(html).hide();
 
             $("#tambah-alat-listrik").val('').html('').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
@@ -266,10 +266,10 @@
             });
             select2tarif1("#tambah-trf-listrik", "/search/tarif", 1, "-- Cari Tarif --");
 
-            $(".listrik").fadeIn();
+            $("#div-tambah-listrik").fadeIn();
         }
         else{
-            $(".listrik").html('');
+            $("#div-tambah-listrik").html('');
         }
     }
 
@@ -290,7 +290,7 @@
             html += '<input maxlength="3" type="text" id="tambah-dis-airbersih" name="tambah_dis_airbersih" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-sm">';
             html += '</div>';
 
-            $(".airbersih").html(html).hide();
+            $("#div-tambah-airbersih").html(html).hide();
 
             $("#tambah-alat-airbersih").val('').html('').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
@@ -302,10 +302,10 @@
             });
             select2tarif1("#tambah-trf-airbersih", "/search/tarif", 2, "-- Cari Tarif --");
 
-            $(".airbersih").fadeIn();
+            $("#div-tambah-airbersih").fadeIn();
         }
         else{
-            $(".airbersih").html('');
+            $("#div-tambah-airbersih").html('');
         }
     }
 
@@ -322,17 +322,17 @@
             html += '<input maxlength="15" type="text" id="tambah-dis-keamananipk" name="tambah_dis_keamananipk" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
             html += '</div>';
 
-            $(".keamananipk").html(html).hide();
+            $("#div-tambah-keamananipk").html(html).hide();
 
             $("#tambah-trf-keamananipk").val('').html('').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
             });
             select2tarif2("#tambah-trf-keamananipk", "/search/tarif", 3, "-- Cari Tarif --");
 
-            $(".keamananipk").fadeIn();
+            $("#div-tambah-keamananipk").fadeIn();
         }
         else{
-            $(".keamananipk").html('');
+            $("#div-tambah-keamananipk").html('');
         }
     }
 
@@ -349,17 +349,17 @@
             html += '<input maxlength="15" type="text" id="tambah-dis-kebersihan" name="tambah_dis_kebersihan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
             html += '</div>';
 
-            $(".kebersihan").html(html).hide();
+            $("#div-tambah-kebersihan").html(html).hide();
 
             $("#tambah-trf-kebersihan").val('').html('').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
             });
             select2tarif2("#tambah-trf-kebersihan", "/search/tarif", 4, "-- Cari Tarif --");
 
-            $(".kebersihan").fadeIn();
+            $("#div-tambah-kebersihan").fadeIn();
         }
         else{
-            $(".kebersihan").html('');
+            $("#div-tambah-kebersihan").html('');
         }
     }
 
@@ -372,17 +372,17 @@
             html += '<select required id="tambah-trf-airkotor" name="tambah_trf_airkotor" class="form-control form-control-sm"></select>';
             html += '</div>';
 
-            $(".airkotor").html(html).hide();
+            $("#div-tambah-airkotor").html(html).hide();
 
             $("#tambah-trf-airkotor").val('').html('').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
             });
             select2tarif2("#tambah-trf-airkotor", "/search/tarif", 5, "-- Cari Tarif --");
 
-            $(".airkotor").fadeIn();
+            $("#div-tambah-airkotor").fadeIn();
         }
         else{
-            $(".airkotor").html('');
+            $("#div-tambah-airkotor").html('');
         }
     }
 
@@ -399,14 +399,14 @@
         html += '</div>';
 
         if(lain < 10){
-            $('.div-lain').append(html).hide();
+            $('#div-tambah-lainnya').append(html).hide();
             select2tarif2("#tambah-lainnya-" + index, "/search/tarif", 6,"-- Cari Tarif --");
 
             $("#tambah-lainnya-" + index).val('').html('').on('select2:open', () => {
                 $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
             });
 
-            $('.div-lain').fadeIn();
+            $('#div-tambah-lainnya').fadeIn();
 
             index++;
             lain++;
