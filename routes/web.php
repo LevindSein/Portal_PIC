@@ -51,7 +51,10 @@ Route::middleware('auth')->group(function(){
         });
         Route::resource('pedagang', PedagangController::class);
 
-        Route::get('place/generate/kontrol', [TempatController::class, 'generate']);
+        Route::prefix('place')->group(function () {
+            Route::get('print', [TempatController::class, 'print']);
+            Route::get('generate/kontrol', [TempatController::class, 'generate']);
+        });
         Route::resource('place', TempatController::class);
 
         Route::prefix('group')->group(function () {

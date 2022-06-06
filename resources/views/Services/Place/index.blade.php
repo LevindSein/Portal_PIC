@@ -28,7 +28,6 @@ Tempat Usaha
 @include('Services.Place.Modal._hapus')
 @include('Services.Place.Modal._rincian')
 @include('Services.Place.Modal._print')
-@include('Services.Place.Modal._excel')
 @endsection
 
 @section('content-js')

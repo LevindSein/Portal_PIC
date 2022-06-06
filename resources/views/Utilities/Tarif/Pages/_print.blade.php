@@ -104,14 +104,11 @@
                         $i = 1;
                     @endphp
                     @foreach ($data as $d)
-                    @php
-                        $json = json_decode($d->data);
-                    @endphp
                     <tr>
                         <td class="tg-g25h" style="text-align: center;">{{$i}}</td>
                         <td class="tg-g25h" style="text-align: left; white-space: normal;">{{$d->name}}</td>
                         <td class="tg-g25h" style="text-align: left; white-space: normal;">
-                            @foreach ($json as $key => $val)
+                            @foreach ($d->data as $key => $val)
                                 {{str_replace('_', ' ', $key)}} : {{number_format($val, 0, ',', '.')}} <br>
                             @endforeach
                         </td>

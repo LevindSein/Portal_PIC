@@ -106,4 +106,18 @@ class Tempat extends Model
         }
         return $kontrol;
     }
+
+    public static function status($value){
+        switch($value){
+            case 2:
+                return 'Bebas Bayar';
+                break;
+            case 1:
+                return 'Aktif';
+                break;
+            default:
+                return 'Nonaktif';
+                break;
+        }
+    }
 }

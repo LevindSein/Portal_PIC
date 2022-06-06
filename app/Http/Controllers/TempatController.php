@@ -597,4 +597,20 @@ class TempatController extends Controller
         }
         return $temp;
     }
+
+    public function print(Request $request){
+        //Validator
+        $input['status']  = $request->status;
+
+        Validator::make($input, [
+            'status'    => 'required|in:all,1,2,3,4,5,6',
+        ])->validate();
+        //End Validator
+
+        $data = Tempat::with('group', 'pengguna')->get();
+
+        return view('Services.Place.Pages._print', [
+            'data'   => $data
+        ]);
+    }
 }
