@@ -278,7 +278,39 @@ class TempatController extends Controller
      */
     public function show($id)
     {
-        //
+        if(request()->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            $data = Tempat::with('group', 'pengguna', 'pemilik')->findOrFail($decrypted);
+
+            if($data->trf_listrik_id){
+                $data['trf_listrik_id']  = Tarif::findOrFail($data->trf_listrik_id);
+                $data['alat_listrik_id'] = Alat::findOrFail($data->alat_listrik_id);
+            }
+
+            if($data->trf_airbersih_id){
+                $data['trf_airbersih_id']  = Tarif::findOrFail($data->trf_airbersih_id);
+                $data['alat_airbersih_id'] = Alat::findOrFail($data->alat_airbersih_id);
+            }
+
+            if($data->trf_keamananipk_id){
+                $data['trf_keamananipk_id']  = Tarif::findOrFail($data->trf_keamananipk_id);
+            }
+
+            if($data->trf_kebersihan_id){
+                $data['trf_kebersihan_id']  = Tarif::findOrFail($data->trf_kebersihan_id);
+            }
+
+            if($data->trf_airkotor_id){
+                $data['trf_airkotor_id']  = Tarif::findOrFail($data->trf_airkotor_id);
+            }
+
+            return response()->json(['success' => $data]);
+        }
     }
 
     /**
