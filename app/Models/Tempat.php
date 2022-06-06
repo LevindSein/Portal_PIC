@@ -64,6 +64,10 @@ class Tempat extends Model
         return json_decode($value);
     }
 
+    public function getTrfLainnyaIdAttribute($value){
+        return json_decode($value);
+    }
+
     public static function generate($group, $los){
         $kontrol = "";
         if(is_numeric($los) == TRUE){

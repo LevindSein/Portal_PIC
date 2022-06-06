@@ -175,7 +175,7 @@ class TempatController extends Controller
 
             if($request->tambah_keamananipk){
                 $input['tarif_keamananipk']  = $request->tambah_trf_keamananipk;
-                $input['diskon_keamananipk'] = $request->tambah_dis_keamananipk;
+                $input['diskon_keamananipk'] = str_replace('.', '', $request->tambah_dis_keamananipk);
 
                 Validator::make($input, [
                     'tarif_keamananipk'  => ['required','numeric',
@@ -193,7 +193,7 @@ class TempatController extends Controller
 
             if($request->tambah_kebersihan){
                 $input['tarif_kebersihan']  = $request->tambah_trf_kebersihan;
-                $input['diskon_kebersihan'] = $request->tambah_dis_kebersihan;
+                $input['diskon_kebersihan'] = str_replace('.', '', $request->tambah_dis_kebersihan);
 
                 Validator::make($input, [
                     'tarif_kebersihan'  => ['required','numeric',
@@ -298,15 +298,15 @@ class TempatController extends Controller
             }
 
             if($data->trf_keamananipk_id){
-                $data['trf_keamananipk_id']  = Tarif::findOrFail($data->trf_keamananipk_id);
+                $data['trf_keamananipk_id'] = Tarif::findOrFail($data->trf_keamananipk_id);
             }
 
             if($data->trf_kebersihan_id){
-                $data['trf_kebersihan_id']  = Tarif::findOrFail($data->trf_kebersihan_id);
+                $data['trf_kebersihan_id'] = Tarif::findOrFail($data->trf_kebersihan_id);
             }
 
             if($data->trf_airkotor_id){
-                $data['trf_airkotor_id']  = Tarif::findOrFail($data->trf_airkotor_id);
+                $data['trf_airkotor_id'] = Tarif::findOrFail($data->trf_airkotor_id);
             }
 
             return response()->json(['success' => $data]);
@@ -341,15 +341,23 @@ class TempatController extends Controller
             }
 
             if($data->trf_keamananipk_id){
-                $data['trf_keamananipk_id']  = Tarif::findOrFail($data->trf_keamananipk_id);
+                $data['trf_keamananipk_id'] = Tarif::findOrFail($data->trf_keamananipk_id);
             }
 
             if($data->trf_kebersihan_id){
-                $data['trf_kebersihan_id']  = Tarif::findOrFail($data->trf_kebersihan_id);
+                $data['trf_kebersihan_id'] = Tarif::findOrFail($data->trf_kebersihan_id);
             }
 
             if($data->trf_airkotor_id){
-                $data['trf_airkotor_id']  = Tarif::findOrFail($data->trf_airkotor_id);
+                $data['trf_airkotor_id'] = Tarif::findOrFail($data->trf_airkotor_id);
+            }
+
+            if($data->trf_lainnya_id){
+                $lainnya = [];
+                foreach ($data->trf_lainnya_id as $key) {
+                    $lainnya[] = Tarif::findOrFail($key);
+                }
+                $data['trf_lainnya'] = $lainnya;
             }
 
             return response()->json(['success' => $data]);
@@ -446,7 +454,7 @@ class TempatController extends Controller
             $data['trf_keamananipk_id'] = NULL;
             if($request->edit_keamananipk){
                 $input['tarif_keamananipk']  = $request->edit_trf_keamananipk;
-                $input['diskon_keamananipk'] = $request->edit_dis_keamananipk;
+                $input['diskon_keamananipk'] = str_replace('.', '', $request->edit_dis_keamananipk);
 
                 Validator::make($input, [
                     'tarif_keamananipk'  => ['required','numeric',
@@ -465,7 +473,7 @@ class TempatController extends Controller
             $data['trf_kebersihan_id'] = NULL;
             if($request->edit_kebersihan){
                 $input['tarif_kebersihan']  = $request->edit_trf_kebersihan;
-                $input['diskon_kebersihan'] = $request->edit_dis_kebersihan;
+                $input['diskon_kebersihan'] = str_replace('.', '', $request->edit_dis_kebersihan);
 
                 Validator::make($input, [
                     'tarif_kebersihan'  => ['required','numeric',
@@ -537,7 +545,7 @@ class TempatController extends Controller
             $data['diskon']      = json_encode($diskon);
 
             DB::transaction(function() use ($data, $decrypted){
-                $dataset = Tempat::findOrFail($decrypted);
+                $dataset = Tempat::lockForUpdate()->findOrFail($decrypted);
                 $dataset->update($data);
             });
 

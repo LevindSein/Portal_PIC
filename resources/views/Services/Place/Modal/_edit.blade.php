@@ -316,10 +316,20 @@
                         $("#edit-trf-airkotor").val("").html("");
                         var tarif = new Option(data.success.trf_airkotor_id.name + " - Rp " + Number(data.success.trf_airkotor_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_airkotor_id.status, data.success.trf_airkotor_id.id, false, false);
                         $("#edit-trf-airkotor").append(tarif).trigger("change");
+                    }
 
-                        if(data.success.diskon.airkotor){
-                            $("#edit-dis-airkotor").val(Number(data.success.diskon.airkotor).toLocaleString("id-ID"));
-                        }
+                    if(data.success.trf_lainnya_id){
+                        $.each( data.success.trf_lainnya, function( i, val ) {
+                            $("#edit-lainnya-add").trigger("click");
+                            $("#edit-lainnya-" + index).val("").html("");
+                            var lainnya = new Option(
+                                val.name + " - Rp " + Number(val.data.Tarif).toLocaleString('id-ID') + " " + val.status,
+                                val.id,
+                                false,
+                                false
+                            );
+                            $("#edit-lainnya-" + (i+1)).append(lainnya).trigger("change");
+                        });
                     }
                 }
 
