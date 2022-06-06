@@ -52,6 +52,18 @@ class Tempat extends Model
         ]);
     }
 
+    public function group(){
+        return $this->belongsTo(Group::class, 'group_id');
+    }
+
+    public function getLosAttribute($value){
+        return json_decode($value);
+    }
+
+    public function getDiskonAttribute($value){
+        return json_decode($value);
+    }
+
     public static function generate($group, $los){
         $kontrol = "";
         if(is_numeric($los) == TRUE){

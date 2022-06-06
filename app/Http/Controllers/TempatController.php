@@ -143,7 +143,9 @@ class TempatController extends Controller
 
                 $data['alat_listrik_id'] = $input['alat_listrik'];
                 $data['trf_listrik_id']  = $input['tarif_listrik'];
-                $diskon['listrik']       = $input['diskon_listrik'];
+                if($input['diskon_listrik']){
+                    $diskon['listrik']   = $input['diskon_listrik'];
+                }
             }
 
             if($request->tambah_airbersih){
@@ -166,7 +168,9 @@ class TempatController extends Controller
 
                 $data['alat_airbersih_id'] = $input['alat_airbersih'];
                 $data['trf_airbersih_id']  = $input['tarif_airbersih'];
-                $diskon['airbersih']       = $input['diskon_airbersih'];
+                if($input['diskon_airbersih']){
+                    $diskon['airbersih']   = $input['diskon_airbersih'];
+                }
             }
 
             if($request->tambah_keamananipk){
@@ -182,7 +186,9 @@ class TempatController extends Controller
                 ])->validate();
 
                 $data['trf_keamananipk_id']  = $input['tarif_keamananipk'];
-                $diskon['keamananipk']       = $input['diskon_keamananipk'];
+                if($input['diskon_keamananipk']){
+                    $diskon['keamananipk']   = $input['diskon_keamananipk'];
+                }
             }
 
             if($request->tambah_kebersihan){
@@ -198,23 +204,22 @@ class TempatController extends Controller
                 ])->validate();
 
                 $data['trf_kebersihan_id']  = $input['tarif_kebersihan'];
-                $diskon['kebersihan']       = $input['diskon_kebersihan'];
+                if($input['diskon_kebersihan']){
+                    $diskon['kebersihan']   = $input['diskon_kebersihan'];
+                }
             }
 
             if($request->tambah_airkotor){
                 $input['tarif_airkotor']  = $request->tambah_trf_airkotor;
-                $input['diskon_airkotor'] = $request->tambah_dis_airkotor;
 
                 Validator::make($input, [
                     'tarif_airkotor'  => ['required','numeric',
                                             Rule::exists('tarif', 'id')
                                             ->where('level', 5)
-                                        ],
-                    'diskon_airkotor' => 'nullable|numeric|gte:0|lte:999999999999',
+                                        ]
                 ])->validate();
 
                 $data['trf_airkotor_id']  = $input['tarif_airkotor'];
-                $diskon['airkotor']       = $input['diskon_airkotor'];
             }
 
             if($request->tambah_lainnya){
@@ -291,7 +296,29 @@ class TempatController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            $data = Tempat::findOrFail($decrypted);
+            $data = Tempat::with('group', 'pengguna', 'pemilik')->findOrFail($decrypted);
+
+            if($data->trf_listrik_id){
+                $data['trf_listrik_id']  = Tarif::findOrFail($data->trf_listrik_id);
+                $data['alat_listrik_id'] = Alat::findOrFail($data->alat_listrik_id);
+            }
+
+            if($data->trf_airbersih_id){
+                $data['trf_airbersih_id']  = Tarif::findOrFail($data->trf_airbersih_id);
+                $data['alat_airbersih_id'] = Alat::findOrFail($data->alat_airbersih_id);
+            }
+
+            if($data->trf_keamananipk_id){
+                $data['trf_keamananipk_id']  = Tarif::findOrFail($data->trf_keamananipk_id);
+            }
+
+            if($data->trf_kebersihan_id){
+                $data['trf_kebersihan_id']  = Tarif::findOrFail($data->trf_kebersihan_id);
+            }
+
+            if($data->trf_airkotor_id){
+                $data['trf_airkotor_id']  = Tarif::findOrFail($data->trf_airkotor_id);
+            }
 
             return response()->json(['success' => $data]);
         }
@@ -306,7 +333,184 @@ class TempatController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            $input['grup']         = $request->edit_group;
+            $input['kode_kontrol'] = strtoupper($request->edit_name);
+            $input['pengguna']     = $request->edit_pengguna;
+            $input['pemilik']      = $request->edit_pemilik;
+            $input['status']       = $request->edit_status;
+            $input['keterangan']   = $request->edit_ket;
+            $diskon                = [];
+
+            Validator::make($input, [
+                'grup'         => 'required|exists:groups,name',
+                'kode_kontrol' => 'required|max:25|unique:tempat,name,' . $decrypted,
+                'pengguna'     => 'nullable|numeric|exists:users,id',
+                'pemiik'       => 'nullable|numeric|exists:users,id',
+                'status'       => 'required|numeric|in:2,1,0',
+                'keterangan'   => 'nullable|string|max:255',
+            ])->validate();
+
+            $data['trf_listrik_id'] = NULL;
+            $data['alat_listrik_id'] = NULL;
+            if($request->edit_listrik){
+                $input['alat_listrik']   = $request->edit_alat_listrik;
+                $input['tarif_listrik']  = $request->edit_trf_listrik;
+                $input['diskon_listrik'] = $request->edit_dis_listrik;
+
+                Validator::make($input, [
+                    'alat_listrik'   => ['required','numeric',
+                                            Rule::exists('alat', 'id')
+                                            ->where('level', 1)
+                                            ->where('status', 1)
+                                        ],
+                    'tarif_listrik'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 1)
+                                        ],
+                    'diskon_listrik' => 'nullable|numeric|gte:0|lte:100',
+                ])->validate();
+
+                $data['alat_listrik_id'] = $input['alat_listrik'];
+                $data['trf_listrik_id']  = $input['tarif_listrik'];
+                if($input['diskon_listrik']){
+                    $diskon['listrik']   = $input['diskon_listrik'];
+                }
+            }
+
+            $data['trf_airbersih_id'] = NULL;
+            $data['alat_airbersih_id'] = NULL;
+            if($request->edit_airbersih){
+                $input['alat_airbersih']   = $request->edit_alat_airbersih;
+                $input['tarif_airbersih']  = $request->edit_trf_airbersih;
+                $input['diskon_airbersih'] = $request->edit_dis_airbersih;
+
+                Validator::make($input, [
+                    'alat_airbersih'   => ['required','numeric',
+                                            Rule::exists('alat', 'id')
+                                            ->where('level', 2)
+                                            ->where('status', 1)
+                                        ],
+                    'tarif_airbersih'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 2)
+                                        ],
+                    'diskon_airbersih' => 'nullable|numeric|gte:0|lte:100',
+                ])->validate();
+
+                $data['alat_airbersih_id'] = $input['alat_airbersih'];
+                $data['trf_airbersih_id']  = $input['tarif_airbersih'];
+                if($input['diskon_airbersih']){
+                    $diskon['airbersih']   = $input['diskon_airbersih'];
+                }
+            }
+
+            $data['trf_keamananipk_id'] = NULL;
+            if($request->edit_keamananipk){
+                $input['tarif_keamananipk']  = $request->edit_trf_keamananipk;
+                $input['diskon_keamananipk'] = $request->edit_dis_keamananipk;
+
+                Validator::make($input, [
+                    'tarif_keamananipk'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 3)
+                                        ],
+                    'diskon_keamananipk' => 'nullable|numeric|gte:0|lte:999999999999',
+                ])->validate();
+
+                $data['trf_keamananipk_id']  = $input['tarif_keamananipk'];
+                if($input['diskon_keamananipk']){
+                    $diskon['keamananipk']   = $input['diskon_keamananipk'];
+                }
+            }
+
+            $data['trf_kebersihan_id'] = NULL;
+            if($request->edit_kebersihan){
+                $input['tarif_kebersihan']  = $request->edit_trf_kebersihan;
+                $input['diskon_kebersihan'] = $request->edit_dis_kebersihan;
+
+                Validator::make($input, [
+                    'tarif_kebersihan'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 4)
+                                        ],
+                    'diskon_kebersihan' => 'nullable|numeric|gte:0|lte:999999999999',
+                ])->validate();
+
+                $data['trf_kebersihan_id']  = $input['tarif_kebersihan'];
+                if($input['diskon_kebersihan']){
+                    $diskon['kebersihan']   = $input['diskon_kebersihan'];
+                }
+            }
+
+            $data['trf_airkotor_id'] = NULL;
+            if($request->edit_airkotor){
+                $input['tarif_airkotor']  = $request->edit_trf_airkotor;
+
+                Validator::make($input, [
+                    'tarif_airkotor'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 5)
+                                        ]
+                ])->validate();
+
+                $data['trf_airkotor_id']  = $input['tarif_airkotor'];
+            }
+
+            $data['trf_lainnya_id'] = NULL;
+            if($request->edit_lainnya){
+                $lainnya = [];
+                foreach ($request->edit_lainnya as $key) {
+                    $input['tarif_lainnya']  = $key;
+                    Validator::make($input, [
+                        'tarif_lainnya'
+                        => ['required','numeric',
+                            Rule::exists('tarif', 'id')
+                            ->where('level', 6)
+                        ]
+                    ])->validate();
+
+                    $lainnya[] = $key;
+                }
+
+                $data['trf_lainnya_id'] = json_encode($lainnya);
+            }
+
+            $los = $this->multipleSelect($request->edit_los);
+            sort($los, SORT_NATURAL);
+
+            $no_los = Group::where('name', $request->edit_group)->first();
+            foreach($los as $l){
+                $input['nomor_los'] = $l;
+                Validator::make($input, [
+                    'nomor_los' => 'required|in:' . implode(',', json_decode($no_los->data)),
+                ])->validate();
+            }
+
+            $data['name']        = $input['kode_kontrol'];
+            $data['nicename']    = str_replace('-', '', $input['kode_kontrol']);
+            $data['group_id']    = Group::where('name',$input['grup'])->first()->id;
+            $data['los']         = json_encode($los);
+            $data['jml_los']     = count($los);
+            $data['pengguna_id'] = $input['pengguna'];
+            $data['pemilik_id']  = $input['pemilik'];
+            $data['status']      = $input['status'];
+            $data['ket']         = $input['keterangan'];
+            $data['diskon']      = json_encode($diskon);
+
+            DB::transaction(function() use ($data, $decrypted){
+                $dataset = Tempat::findOrFail($decrypted);
+                $dataset->update($data);
+            });
+
+            return response()->json(['success' => 'Data berhasil disimpan.']);
+        }
     }
 
     /**

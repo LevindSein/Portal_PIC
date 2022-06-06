@@ -140,6 +140,7 @@ Tempat Usaha
     function select2user(select2id, url, placeholder){
         $(select2id).select2({
             placeholder: placeholder,
+            allowClear: true,
             ajax: {
                 url: url,
                 dataType: 'json',

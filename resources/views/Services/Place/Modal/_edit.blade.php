@@ -29,8 +29,7 @@
                                         type="radio"
                                         name="edit_status"
                                         id="edit-status1"
-                                        value="1"
-                                        checked>
+                                        value="1">
                                     <label class="form-control-label" for="edit-status1">
                                         Aktif
                                     </label>
@@ -222,7 +221,106 @@
             success:function(data)
             {
                 if(data.success){
+                    $('#edit-group').val("").html("");
+                    var group = new Option(data.success.group.name, data.success.group.name, false, false);
+                    $('#edit-group').append(group).trigger('change');
 
+                    $('#edit-los').val("").html("");
+                    var los = data.success.los;
+                    $.each( los, function( i, val ) {
+                        var option = $('<option></option>').attr('value', val).text(val).prop('selected', true);
+                        $('#edit-los').append(option).trigger('change');
+                    });
+
+                    if(data.success.pengguna.id){
+                        $('#edit-pengguna').val("").html("");
+                        var pengguna = new Option(data.success.pengguna.name + " (" + data.success.pengguna.ktp + ")", data.success.pengguna.id, false, false);
+                        $('#edit-pengguna').append(pengguna).trigger('change');
+                    }
+
+                    if(data.success.pemilik.id){
+                        $('#edit-pemilik').val("").html("");
+                        var pemilik = new Option(data.success.pemilik.name + " (" + data.success.pemilik.ktp + ")", data.success.pemilik.id, false, false);
+                        $('#edit-pemilik').append(pemilik).trigger('change');
+                    }
+
+                    $("#edit-name").val(data.success.name);
+
+                    $("#edit-status" + data.success.status).prop("checked", true);
+                    $("#edit-ket").val(data.success.ket);
+
+                    if(data.success.trf_listrik_id){
+                        $("#edit-listrik").prop("checked", true);
+                        editFasListrik();
+
+                        $("#edit-alat-listrik").val("").html("");
+                        var alat  = new Option(data.success.alat_listrik_id.name + " (" + data.success.alat_listrik_id.stand + " - " + data.success.alat_listrik_id.daya + "W)", data.success.alat_listrik_id.id, false, false);
+                        $("#edit-alat-listrik").append(alat).trigger("change");
+
+                        $("#edit-trf-listrik").val("").html("");
+                        var tarif = new Option(data.success.trf_listrik_id.name + " - " + data.success.trf_listrik_id.status, data.success.trf_listrik_id.id, false, false);
+                        $("#edit-trf-listrik").append(tarif).trigger("change");
+
+                        if(data.success.diskon.listrik){
+                            $("#edit-dis-listrik").val(data.success.diskon.listrik)
+                        }
+                    }
+
+                    if(data.success.trf_airbersih_id){
+                        $("#edit-airbersih").prop("checked", true);
+                        editFasAirbersih();
+
+                        $("#edit-alat-airbersih").val("").html("");
+                        var alat  = new Option(data.success.alat_airbersih_id.name + " (" + data.success.alat_airbersih_id.stand + ")", data.success.alat_airbersih_id.id, false, false);
+                        $("#edit-alat-airbersih").append(alat).trigger("change");
+
+                        $("#edit-trf-airbersih").val("").html("");
+                        var tarif = new Option(data.success.trf_airbersih_id.name + " - " + data.success.trf_airbersih_id.status, data.success.trf_airbersih_id.id, false, false);
+                        $("#edit-trf-airbersih").append(tarif).trigger("change");
+
+                        if(data.success.diskon.airbersih){
+                            $("#edit-dis-airbersih").val(data.success.diskon.airbersih)
+                        }
+                    }
+
+                    if(data.success.trf_keamananipk_id){
+                        $("#edit-keamananipk").prop("checked", true);
+                        editFasKeamananipk();
+
+                        $("#edit-trf-keamananipk").val("").html("");
+                        var tarif = new Option(data.success.trf_keamananipk_id.name + " - Rp " + Number(data.success.trf_keamananipk_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_keamananipk_id.status, data.success.trf_keamananipk_id.id, false, false);
+                        $("#edit-trf-keamananipk").append(tarif).trigger("change");
+
+                        if(data.success.diskon.keamananipk){
+                            $("#edit-dis-keamananipk").val(Number(data.success.diskon.keamananipk).toLocaleString("id-ID"));
+                        }
+                    }
+
+                    if(data.success.trf_kebersihan_id){
+                        $("#edit-kebersihan").prop("checked", true);
+                        editFasKebersihan();
+
+                        $("#edit-trf-kebersihan").val("").html("");
+                        var tarif = new Option(data.success.trf_kebersihan_id.name + " - Rp " + Number(data.success.trf_kebersihan_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_kebersihan_id.status, data.success.trf_kebersihan_id.id, false, false);
+                        $("#edit-trf-kebersihan").append(tarif).trigger("change");
+
+                        if(data.success.diskon.kebersihan){
+                            $("#edit-dis-kebersihan").val(Number(data.success.diskon.kebersihan).toLocaleString("id-ID"));
+                        }
+                    }
+
+                    if(data.success.trf_airkotor_id){
+                        $("#edit-airkotor").prop("checked", true);
+                        editFasAirkotor();
+
+                        $("#edit-trf-airkotor").val("").html("");
+                        var tarif = new Option(data.success.trf_airkotor_id.name + " - Rp " + Number(data.success.trf_airkotor_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_airkotor_id.status, data.success.trf_airkotor_id.id, false, false);
+                        $("#edit-trf-airkotor").append(tarif).trigger("change");
+
+                        if(data.success.diskon.airkotor){
+                            $("#edit-dis-airkotor").val(Number(data.success.diskon.airkotor).toLocaleString("id-ID"));
+                        }
+                    }
                 }
 
                 if(data.info){
@@ -257,41 +355,18 @@
         });
     });
 
-    $(document).on("change", '#edit-group', function(e) {
-        var group = $('#edit-group').val();
+    $(document).on("change", "#edit-group", function(e) {
+        var group = $("#edit-group").val();
         $("#edit-los").prop("disabled", false);
         $("#edit-los").val("").html("");
         select2los("#edit-los", "/search/" + group + "/los", "-- Pilih Nomor Los --");
     });
 
-    $(document).on("change", '#edit-group, #edit-los', function(e) {
+    $(document).on("change", "#edit-group, #edit-los", function(e) {
         if($("#edit-los").val() == ''){
             $("#edit-name").val('').prop("disabled", true);
         } else {
             $("#edit-name").prop("disabled", false);
-
-            var dataset = {
-                'group' : $("#edit-group").val(),
-                'los' : $("#edit-los").val(),
-            };
-            $.ajax({
-                url: "/services/place/generate/kontrol",
-                type: "GET",
-                cache: false,
-                data: dataset,
-                success:function(data)
-                {
-                    $("#edit-name").val(data.success);
-                },
-                error:function(data){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
-                    toastr.error("System error.");
-                    console.log(data);
-                }
-            });
         }
     });
 
