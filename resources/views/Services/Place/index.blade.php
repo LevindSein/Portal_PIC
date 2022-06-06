@@ -175,7 +175,7 @@ Tempat Usaha
                             results:  $.map(data, function (d) {
                                 return {
                                     id: d.id,
-                                    text: d.name + ' (' + d.stand + ' - ' + d.daya + 'W)'
+                                    text: d.name + ' (' + Number(d.stand).toLocaleString('id-ID') + ' - ' + Number(d.daya).toLocaleString('id-ID') + 'W)'
                                 }
                             })
                         };
@@ -195,7 +195,7 @@ Tempat Usaha
                             results:  $.map(data, function (d) {
                                 return {
                                     id: d.id,
-                                    text: d.name + ' (' + d.stand + ')'
+                                    text: d.name + ' (' + Number(d.stand).toLocaleString('id-ID') + ')'
                                 }
                             })
                         };
