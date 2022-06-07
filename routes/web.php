@@ -8,6 +8,7 @@ use App\Http\Controllers\PedagangController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TempatController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ChangeController;
 use App\Http\Controllers\TarifController;
@@ -63,6 +64,8 @@ Route::middleware('auth')->group(function(){
         });
         Route::resource('group', GroupController::class);
     });
+
+    Route::resource('tagihan', TagihanController::class);
 
     Route::prefix('utilities')->group(function () {
         Route::prefix('tarif')->group(function () {

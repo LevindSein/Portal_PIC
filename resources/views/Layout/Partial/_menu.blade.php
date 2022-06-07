@@ -30,7 +30,7 @@
     </div>
 </li>
 <li class="nav-item">
-    <a class="nav-link {{ (request()->is('tagihan*')) ? 'active font-weight-bold' : '' }}" href="javascript:void(0)">
+    <a class="nav-link {{ (request()->is('tagihan*')) ? 'active font-weight-bold' : '' }}" href="{{url('tagihan')}}">
         <i class="fad fa-fw fa-coins text-primary mr-2"></i>
         <span class="nav-link-text">Tagihan</span>
     </a>
