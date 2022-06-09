@@ -11,7 +11,7 @@
                         <div class="col-lg-6 col-xl-6">
                             <div class="form-group">
                                 <small class="form-control-label">Grup / Blok <span class="text-danger">*</span></small>
-                                <select required class="form-control form-control-sm select2" id="tambah-group" name="tambah_group"></select>
+                                <select required class="form-control form-control-sm" id="tambah-group" name="tambah_group"></select>
                             </div>
                             <div class="form-group tambah-los">
                                 <small class="form-control-label">Nomor Los <span class="text-danger">*</span></small>
@@ -60,11 +60,11 @@
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Pengguna</small>
-                                <select class="form-control form-control-sm select2" id="tambah-pengguna" name="tambah_pengguna"></select>
+                                <select class="form-control form-control-sm" id="tambah-pengguna" name="tambah_pengguna"></select>
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Pemilik</small>
-                                <select class="form-control form-control-sm select2" id="tambah-pemilik" name="tambah_pemilik"></select>
+                                <select class="form-control form-control-sm" id="tambah-pemilik" name="tambah_pemilik"></select>
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Keterangan</small>

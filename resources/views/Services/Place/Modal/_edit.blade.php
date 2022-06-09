@@ -11,7 +11,7 @@
                         <div class="col-lg-6 col-xl-6">
                             <div class="form-group">
                                 <small class="form-control-label">Grup / Blok <span class="text-danger">*</span></small>
-                                <select required class="form-control form-control-sm select2" id="edit-group" name="edit_group"></select>
+                                <select required class="form-control form-control-sm" id="edit-group" name="edit_group"></select>
                             </div>
                             <div class="form-group edit-los">
                                 <small class="form-control-label">Nomor Los <span class="text-danger">*</span></small>
@@ -59,11 +59,11 @@
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Pengguna</small>
-                                <select class="form-control form-control-sm select2" id="edit-pengguna" name="edit_pengguna"></select>
+                                <select class="form-control form-control-sm" id="edit-pengguna" name="edit_pengguna"></select>
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Pemilik</small>
-                                <select class="form-control form-control-sm select2" id="edit-pemilik" name="edit_pemilik"></select>
+                                <select class="form-control form-control-sm" id="edit-pemilik" name="edit_pemilik"></select>
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Keterangan</small>

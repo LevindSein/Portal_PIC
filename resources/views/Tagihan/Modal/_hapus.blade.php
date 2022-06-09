@@ -8,12 +8,12 @@
             <form id="hapus-form">
                 <div class="modal-body">
                     <p>
-                        Tekan tombol <span class="text-danger status"></span>, jika anda yakin untuk mengubah status pengguna.
+                        Tekan tombol <span class="text-danger">Hapus</span>, jika anda yakin untuk menghapus Tagihan.
                     </p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold status"></button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Hapus</button>
                 </div>
             </form>
         </div>
@@ -28,17 +28,10 @@
     $(document).on('click', '.delete', function(e){
         e.preventDefault();
         id = $(this).attr("id");
-        stt = $(this).attr("status");
 
         $("#hapus-modal").modal("show");
 
-        if(stt == 1){
-            $(".title").text("Hapus : " + $(this).attr("nama"));
-            $(".status").text("Hapus");
-        } else {
-            $(".title").text("Aktifkan : " + $(this).attr("nama"));
-            $(".status").text("Aktifkan");
-        }
+        $(".title").text("Hapus : " + $(this).attr("nama"));
     })
 
     $('#hapus-form').on('submit', function(e){
@@ -51,7 +44,7 @@
         });
 
         $.ajax({
-            url: "/users/" + id,
+            url: "/tagihan/" + id,
             cache: false,
             method: "DELETE",
             data: $(this).serialize(),

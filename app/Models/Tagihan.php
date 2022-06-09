@@ -59,6 +59,15 @@ class Tagihan extends Model
         return json_decode($value);
     }
 
+    public function getTagihanAttribute($value){
+        return json_decode($value);
+    }
+
     protected static $logName = 'tagihan';
     protected static $logFillable = true;
+
+    public function pengguna()
+    {
+        return $this->belongsTo(User::class, 'pengguna_id');
+    }
 }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 use App\Models\Group;
+use App\Models\Periode;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,6 +40,10 @@ class AppServiceProvider extends ServiceProvider
 
         if(Schema::hasTable('groups')){
             View::share('groups', Group::orderBy('nicename', 'asc')->get());
+        }
+
+        if(Schema::hasTable('periode')){
+            View::share('periode', Periode::orderBy('name', 'desc')->get());
         }
     }
 }

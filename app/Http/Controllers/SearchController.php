@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Group;
 use App\Models\Alat;
 use App\Models\Tarif;
+use App\Models\Tempat;
 
 class SearchController extends Controller
 {
@@ -103,6 +104,23 @@ class SearchController extends Controller
             ->where(function ($query) use ($request) {
                 $key = $request->q;
                 $query->where('name', 'LIKE', '%'.$key.'%');
+            })
+            ->orderBy('name','asc')
+            ->limit(5)
+            ->get();
+        }
+        return response()->json($data);
+    }
+
+    public function tempat(Request $request){
+        $data = [];
+        if($request->ajax()) {
+            $data = Tempat::select('id', 'name', 'nicename')
+            ->where(function ($query) use ($request) {
+                $key = $request->q;
+                $query
+                ->where('name', 'LIKE', '%'.$key.'%')
+                ->orWhere('nicename', 'LIKE', '%'.$key.'%');
             })
             ->orderBy('name','asc')
             ->limit(5)

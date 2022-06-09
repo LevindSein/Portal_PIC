@@ -65,6 +65,9 @@ Route::middleware('auth')->group(function(){
         Route::resource('group', GroupController::class);
     });
 
+    Route::prefix('tagihan')->group(function () {
+        Route::get('tempat/{id}', [TagihanController::class, 'tempat']);
+    });
     Route::resource('tagihan', TagihanController::class);
 
     Route::prefix('utilities')->group(function () {
@@ -102,6 +105,7 @@ Route::prefix('search')->group(function () {
     Route::get('{nameGroup}/los',[SearchController::class, 'los']);
     Route::get('alat',[SearchController::class, 'alat']);
     Route::get('tarif',[SearchController::class, 'tarif']);
+    Route::get('tempat',[SearchController::class, 'tempat']);
 });
 
 Route::get('optimize', function(){

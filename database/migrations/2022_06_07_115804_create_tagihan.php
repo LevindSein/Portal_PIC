@@ -20,9 +20,10 @@ class CreateTagihan extends Migration
             $table->foreign('periode_id')->references('id')->on('periode');
             $table->tinyInteger('stt_publish')->default(0); //0 = Belum Dipublish, 1 = Sudah Dipublish
             $table->tinyInteger('stt_lunas')->default(0); //0 = Belum Dilunaskan, 1 = Sudah Lunas
-            $table->string('name');
-            $table->string('kontrol', 25);
+            $table->string('name', 25);
             $table->string('nicename', 25);
+            $table->unsignedBigInteger('pengguna_id');
+            $table->foreign('pengguna_id')->references('id')->on('users');
             $table->unsignedBigInteger('group_id');
             $table->foreign('group_id')->references('id')->on('groups');
             $table->json('los');
