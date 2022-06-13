@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Validation\Rule;
@@ -165,7 +162,37 @@ class TagihanController extends Controller
     public function tempat($id)
     {
         if(request()->ajax()){
-            $data = Tempat::findOrFail($id);
+            $data = Tempat::with('pengguna')->findOrFail($id);
+
+            if($data->trf_listrik_id){
+                $data['trf_listrik_id']  = Tarif::findOrFail($data->trf_listrik_id);
+                $data['alat_listrik_id'] = Alat::findOrFail($data->alat_listrik_id);
+            }
+
+            if($data->trf_airbersih_id){
+                $data['trf_airbersih_id']  = Tarif::findOrFail($data->trf_airbersih_id);
+                $data['alat_airbersih_id'] = Alat::findOrFail($data->alat_airbersih_id);
+            }
+
+            if($data->trf_keamananipk_id){
+                $data['trf_keamananipk_id'] = Tarif::findOrFail($data->trf_keamananipk_id);
+            }
+
+            if($data->trf_kebersihan_id){
+                $data['trf_kebersihan_id'] = Tarif::findOrFail($data->trf_kebersihan_id);
+            }
+
+            if($data->trf_airkotor_id){
+                $data['trf_airkotor_id'] = Tarif::findOrFail($data->trf_airkotor_id);
+            }
+
+            if($data->trf_lainnya_id){
+                $lainnya = [];
+                foreach ($data->trf_lainnya_id as $key) {
+                    $lainnya[] = Tarif::findOrFail($key);
+                }
+                $data['trf_lainnya'] = $lainnya;
+            }
 
             return response()->json(['success' => $data]);
         }

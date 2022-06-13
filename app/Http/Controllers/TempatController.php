@@ -3,20 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Validation\Rule;
 
-use App\Models\User;
 use App\Models\Tempat;
 use App\Models\Group;
 use App\Models\Tarif;
-use App\Models\Periode;
 use App\Models\Alat;
 
 use Carbon\Carbon;

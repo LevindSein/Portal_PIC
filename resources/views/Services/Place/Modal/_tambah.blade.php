@@ -139,6 +139,7 @@
                                 <div id="div-tambah-airkotor"></div>
                             </div>
 
+                            <hr>
                             <div id="div-tambah-lainnya"></div>
 
                             <div class="form-group">

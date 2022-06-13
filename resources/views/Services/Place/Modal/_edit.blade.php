@@ -138,6 +138,7 @@
                                 <div id="div-edit-airkotor"></div>
                             </div>
 
+                            <hr>
                             <div id="div-edit-lainnya"></div>
 
                             <div class="form-group">
@@ -254,7 +255,7 @@
                         editFasListrik();
 
                         $("#edit-alat-listrik").val("").html("");
-                        var alat  = new Option(data.success.alat_listrik_id.name + " (" + data.success.alat_listrik_id.stand + " - " + data.success.alat_listrik_id.daya + "W)", data.success.alat_listrik_id.id, false, false);
+                        var alat  = new Option(data.success.alat_listrik_id.name + " (" + Number(data.success.alat_listrik_id.stand).toLocaleString('id-ID') + " - " + Number(data.success.alat_listrik_id.daya).toLocaleString('id-ID') + "W)", data.success.alat_listrik_id.id, false, false);
                         $("#edit-alat-listrik").append(alat).trigger("change");
 
                         $("#edit-trf-listrik").val("").html("");
@@ -271,7 +272,7 @@
                         editFasAirbersih();
 
                         $("#edit-alat-airbersih").val("").html("");
-                        var alat  = new Option(data.success.alat_airbersih_id.name + " (" + data.success.alat_airbersih_id.stand + ")", data.success.alat_airbersih_id.id, false, false);
+                        var alat  = new Option(data.success.alat_airbersih_id.name + " (" + Number(data.success.alat_airbersih_id.stand).toLocaleString('id-ID') + ")", data.success.alat_airbersih_id.id, false, false);
                         $("#edit-alat-airbersih").append(alat).trigger("change");
 
                         $("#edit-trf-airbersih").val("").html("");
