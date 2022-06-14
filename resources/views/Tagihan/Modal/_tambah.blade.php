@@ -18,7 +18,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <small class="form-control-label">Tempat Usaha <span class="text-danger">*</span></small>
+                                <small class="form-control-label">Tempat Usaha Aktif <span class="text-danger">*</span></small>
                                 <select required class="form-control form-control-sm" id="tambah-tempat" name="tambah_tempat"></select>
                             </div>
                             <div class="form-group tambah-los">
@@ -136,7 +136,7 @@
         });
         select2user("#tambah-pengguna", "/search/users", "-- Cari Pengguna --");
 
-        $("#tambah-los").val('').html('').select2({placeholder: "Nomor Los"});
+        $("#tambah-los").val('').html('').select2({placeholder: "-- Pilih Nomor Los --"});
 
         $(".tambah-los").hide();
         $(".tambah-pengguna").hide();
@@ -172,6 +172,7 @@
             {
                 if(data.success){
                     $('#tambah-los').val("").html("");
+                    select2los("#tambah-los", "/search/" + data.success.group.name + "/los", "-- Pilih Nomor Los --");
                     var los = data.success.los;
                     $.each( los, function( i, val ) {
                         var option = $('<option></option>').attr('value', val).text(val).prop('selected', true);
@@ -338,6 +339,7 @@
             html += '<small class="form-control-label">Akhir Stand <span class="text-danger">*</span></small>';
             html += '<input required id="tambah-akhir-listrik" name="tambah_akhir_listrik" class="number form-control form-control-sm" placeholder="Masukkan Nilai Akhir Stand" />';
             html += '</div>';
+            html += '<hr>';
 
             $("#div-tambah-listrik").html(html).hide();
 
@@ -382,6 +384,7 @@
             html += '<small class="form-control-label">Akhir Stand <span class="text-danger">*</span></small>';
             html += '<input required id="tambah-akhir-airbersih" name="tambah_akhir_airbersih" class="number form-control form-control-sm" placeholder="Masukkan Nilai Akhir Stand" />';
             html += '</div>';
+            html += '<hr>';
 
             $("#div-tambah-airbersih").html(html).hide();
 
@@ -414,6 +417,7 @@
             html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
             html += '<input maxlength="15" type="text" id="tambah-dis-keamananipk" name="tambah_dis_keamananipk" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
             html += '</div>';
+            html += '<hr>';
 
             $("#div-tambah-keamananipk").html(html).hide();
 
@@ -441,6 +445,7 @@
             html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
             html += '<input maxlength="15" type="text" id="tambah-dis-kebersihan" name="tambah_dis_kebersihan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
             html += '</div>';
+            html += '<hr>';
 
             $("#div-tambah-kebersihan").html(html).hide();
 
@@ -516,6 +521,34 @@
         lain--;
         $(this).closest("[name='div_lain']").remove();
     });
+
+    $(document).on('change', "#tambah-alat-listrik, #tambah-alat-airbersih", function() {
+        $.ajax({
+            url: "/search/stand/" + $(this).val(),
+            cache: false,
+            method: "GET",
+            dataType: "json",
+            success:function(data)
+            {
+                if(data.level == 2){
+                    $("#tambah-awal-airbersih").val(Number(data.stand).toLocaleString('id-ID'));
+                } else {
+                    $("#tambah-awal-listrik").val(Number(data.stand).toLocaleString('id-ID'));
+                }
+            },
+            error:function(data){
+                if (data.status == 422) {
+                    $.each(data.responseJSON.errors, function (i, error) {
+                        toastr.error(error[0]);
+                    });
+                }
+                else{
+                    toastr.error("System error.");
+                    console.log(data);
+                }
+            }
+        });
+    })
 
     $("#tambah-form").keypress(function(e) {
         if(e.which == 13) {

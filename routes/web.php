@@ -106,6 +106,7 @@ Route::prefix('search')->group(function () {
     Route::get('alat',[SearchController::class, 'alat']);
     Route::get('tarif',[SearchController::class, 'tarif']);
     Route::get('tempat',[SearchController::class, 'tempat']);
+    Route::get('stand/{id}',[SearchController::class, 'stand']);
 });
 
 Route::get('optimize', function(){

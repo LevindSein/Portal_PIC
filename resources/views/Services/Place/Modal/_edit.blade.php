@@ -378,6 +378,29 @@
             $("#edit-name").val('').prop("disabled", true);
         } else {
             $("#edit-name").prop("disabled", false);
+
+            var dataset = {
+                'group' : $("#edit-group").val(),
+                'los' : $("#edit-los").val(),
+            };
+            $.ajax({
+                url: "/services/place/generate/kontrol",
+                type: "GET",
+                cache: false,
+                data: dataset,
+                success:function(data)
+                {
+                    $("#edit-name").val(data.success);
+                },
+                error:function(data){
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                    };
+                    toastr.error("System error.");
+                    console.log(data);
+                }
+            });
         }
     });
 
@@ -397,6 +420,7 @@
             html += '<small class="form-control-label">Diskon (% Tagihan)</small>';
             html += '<input maxlength="3" type="text" id="edit-dis-listrik" name="edit_dis_listrik" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-sm">';
             html += '</div>';
+            html += '<hr>';
 
             $("#div-edit-listrik").html(html).hide();
 
@@ -433,6 +457,7 @@
             html += '<small class="form-control-label">Diskon (% Tagihan)</small>';
             html += '<input maxlength="3" type="text" id="edit-dis-airbersih" name="edit_dis_airbersih" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-sm">';
             html += '</div>';
+            html += '<hr>';
 
             $("#div-edit-airbersih").html(html).hide();
 
@@ -465,6 +490,7 @@
             html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
             html += '<input maxlength="15" type="text" id="edit-dis-keamananipk" name="edit_dis_keamananipk" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
             html += '</div>';
+            html += '<hr>';
 
             $("#div-edit-keamananipk").html(html).hide();
 
@@ -492,6 +518,7 @@
             html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
             html += '<input maxlength="15" type="text" id="edit-dis-kebersihan" name="edit_dis_kebersihan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
             html += '</div>';
+            html += '<hr>';
 
             $("#div-edit-kebersihan").html(html).hide();
 

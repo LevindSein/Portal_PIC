@@ -96,6 +96,13 @@ class TagihanController extends Controller
     public function store(Request $request)
     {
         if($request->ajax()){
+            $input['periode'] = $request->tambah_periode;
+            $input['tempat_usaha'] = $request->tambah_tempat;
+
+            $los = $this->multipleSelect($request->tambah_los);
+            sort($los, SORT_NATURAL);
+            $input['nomor_los'] = $los;
+
             return response()->json(['success' => 'Data berhasil disimpan.']);
         }
     }
@@ -162,7 +169,7 @@ class TagihanController extends Controller
     public function tempat($id)
     {
         if(request()->ajax()){
-            $data = Tempat::with('pengguna')->findOrFail($id);
+            $data = Tempat::with('group', 'pengguna')->findOrFail($id);
 
             if($data->trf_listrik_id){
                 $data['trf_listrik_id']  = Tarif::findOrFail($data->trf_listrik_id);
@@ -196,5 +203,13 @@ class TagihanController extends Controller
 
             return response()->json(['success' => $data]);
         }
+    }
+
+    public function multipleSelect($data){
+        $temp = [];
+        for($i = 0; $i < count($data); $i++){
+            $temp[$i] = $data[$i];
+        }
+        return $temp;
     }
 }

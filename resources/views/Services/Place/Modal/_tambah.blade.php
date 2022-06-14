@@ -254,6 +254,7 @@
             html += '<small class="form-control-label">Diskon (% Tagihan)</small>';
             html += '<input maxlength="3" type="text" id="tambah-dis-listrik" name="tambah_dis_listrik" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-sm">';
             html += '</div>';
+            html += '<hr>';
 
             $("#div-tambah-listrik").html(html).hide();
 
@@ -290,6 +291,7 @@
             html += '<small class="form-control-label">Diskon (% Tagihan)</small>';
             html += '<input maxlength="3" type="text" id="tambah-dis-airbersih" name="tambah_dis_airbersih" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-sm">';
             html += '</div>';
+            html += '<hr>';
 
             $("#div-tambah-airbersih").html(html).hide();
 
@@ -322,6 +324,7 @@
             html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
             html += '<input maxlength="15" type="text" id="tambah-dis-keamananipk" name="tambah_dis_keamananipk" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
             html += '</div>';
+            html += '<hr>';
 
             $("#div-tambah-keamananipk").html(html).hide();
 
@@ -349,6 +352,7 @@
             html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
             html += '<input maxlength="15" type="text" id="tambah-dis-kebersihan" name="tambah_dis_kebersihan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
             html += '</div>';
+            html += '<hr>';
 
             $("#div-tambah-kebersihan").html(html).hide();
 

@@ -115,7 +115,7 @@ class SearchController extends Controller
     public function tempat(Request $request){
         $data = [];
         if($request->ajax()) {
-            $data = Tempat::select('id', 'name', 'nicename')
+            $data = Tempat::where('status', 1)->select('id', 'name', 'nicename')
             ->where(function ($query) use ($request) {
                 $key = $request->q;
                 $query
@@ -125,6 +125,14 @@ class SearchController extends Controller
             ->orderBy('name','asc')
             ->limit(5)
             ->get();
+        }
+        return response()->json($data);
+    }
+
+    public function stand($id){
+        $data = [];
+        if(request()->ajax()) {
+            $data = Alat::findOrFail($id);
         }
         return response()->json($data);
     }
