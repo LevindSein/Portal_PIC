@@ -91,6 +91,8 @@
         e.preventDefault();
         id = $(this).attr("id");
         edit_init();
+        edit_due();
+        edit_new();
 
         $.ajax({
             url: "/utilities/periode/" + id + "/edit",
@@ -167,10 +169,12 @@
         choosed = $("#edit-bulan option:selected").text() + " " + $("#edit-tahun option:selected").text();
         $(".show-due").text(choosed);
 
+        show_due = getDaysInMonth($("#edit-bulan").val(), $("#edit-tahun").val());
         $('#edit-due').html("");
-        for (let index = 0; index < 15; index++) {
-            $('#edit-due').append('<option value="' + pad((index + 1), 2) + '">' + (index + 1)  + '</option>');
-        }
+        $.each(show_due, function (index, value){
+            var new_date = new Date(value).getDate();
+            $('#edit-due').append('<option value="' + pad(new_date, 2) + '">' + new_date  + '</option>');
+        });
     }
 
     function edit_new(){
@@ -183,9 +187,7 @@
         $('#edit-new').html("");
         $.each(show_new, function (index, value){
             var new_date = new Date(value).getDate();
-            if(new_date > get_due){
-                $('#edit-new').append('<option value="' + pad(new_date, 2) + '">' + new_date  + '</option>');
-            }
+            $('#edit-new').append('<option value="' + pad(new_date, 2) + '">' + new_date  + '</option>');
         });
     }
 

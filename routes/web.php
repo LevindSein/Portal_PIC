@@ -67,6 +67,7 @@ Route::middleware('auth')->group(function(){
 
     Route::prefix('tagihan')->group(function () {
         Route::get('tempat/{id}', [TagihanController::class, 'tempat']);
+        Route::post('publish/{id}', [TagihanController::class, 'publish']);
     });
     Route::resource('tagihan', TagihanController::class);
 

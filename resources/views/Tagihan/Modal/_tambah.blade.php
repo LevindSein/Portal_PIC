@@ -26,8 +26,8 @@
                                 <select required id="tambah-los" name="tambah_los[]" class="form-control form-control-sm" multiple></select>
                             </div>
                             <div class="form-group tambah-pengguna">
-                                <small class="form-control-label">Pengguna</small>
-                                <select class="form-control form-control-sm" id="tambah-pengguna" name="tambah_pengguna"></select>
+                                <small class="form-control-label">Pengguna <span class="text-danger">*</span></small>
+                                <select required class="form-control form-control-sm" id="tambah-pengguna" name="tambah_pengguna"></select>
                             </div>
                         </div>
                         <div name="col">
@@ -299,6 +299,7 @@
 
                 if(data.debug){
                     console.log(data.debug);
+                    $("#periode").val(data.debug).change();
                 }
             },
             error:function(data){
@@ -608,6 +609,7 @@
 
                 if(data.debug){
                     console.log(data.debug);
+                    $("#periode").val(data.debug).change();
                 }
             },
             error:function(data){

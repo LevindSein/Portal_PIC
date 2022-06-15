@@ -106,10 +106,13 @@
         choosed = $("#tambah-bulan option:selected").text() + " " + $("#tambah-tahun option:selected").text();
         $(".show-due").text(choosed);
 
+        show_due = getDaysInMonth($("#tambah-bulan").val(), $("#tambah-tahun").val());
         $('#tambah-due').html("");
-        for (let index = 0; index < 15; index++) {
-            $('#tambah-due').append('<option value="' + pad((index + 1), 2) + '">' + (index + 1)  + '</option>');
-        }
+        $.each(show_due, function (index, value){
+            var new_date = new Date(value).getDate();
+            $('#tambah-due').append('<option value="' + pad(new_date, 2) + '">' + new_date  + '</option>');
+        });
+
         $("#tambah-due").val(15).change();
     }
 
@@ -123,10 +126,9 @@
         $('#tambah-new').html("");
         $.each(show_new, function (index, value){
             var new_date = new Date(value).getDate();
-            if(new_date > get_due){
-                $('#tambah-new').append('<option value="' + pad(new_date, 2) + '">' + new_date  + '</option>');
-            }
+            $('#tambah-new').append('<option value="' + pad(new_date, 2) + '">' + new_date  + '</option>');
         });
+
         $("#tambah-new").val(23).change();
     }
 

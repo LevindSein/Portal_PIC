@@ -82,6 +82,10 @@ class PeriodeController extends Controller
             ])->validate();
             //End Validator
 
+            if($input['periode_baru'] <= $input['jatuh_tempo']){
+                return response()->json(['error' => 'Tanggal Periode Tagihan Baru invalid.']);
+            }
+
             DB::transaction(function() use ($input){
                 Periode::create([
                     'name'     => $input['periode'],
@@ -179,6 +183,10 @@ class PeriodeController extends Controller
                 'periode_baru' => 'required|date|date_format:Y-m-d',
             ])->validate();
             //End Validator
+
+            if($input['periode_baru'] <= $input['jatuh_tempo']){
+                return response()->json(['error' => 'Tanggal Periode Tagihan Baru invalid.']);
+            }
 
             DB::transaction(function() use ($input, $data){
                 $data->update([

@@ -7,13 +7,17 @@
             </div>
             <form id="hapus-form">
                 <div class="modal-body">
-                    <p>
-                        Tekan tombol <span class="text-danger">Hapus</span>, jika anda yakin untuk menghapus Tagihan.
-                    </p>
+                    <div class="form-group">
+                        <small class="form-control-label">Pilih Aksi <span class="text-danger">*</span></small>
+                        <select required class="form-control form-control-sm" id="del-status" name="del_status">
+                            <option value="0">Hapus Tagihan</option>
+                            <option value="2">Simpan Tagihan (Draft)</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold">Hapus</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Submit</button>
                 </div>
             </form>
         </div>
@@ -31,7 +35,7 @@
 
         $("#hapus-modal").modal("show");
 
-        $(".title").text("Hapus : " + $(this).attr("nama"));
+        $(".title").text("Hapus / Simpan : " + $(this).attr("nama"));
     })
 
     $('#hapus-form').on('submit', function(e){

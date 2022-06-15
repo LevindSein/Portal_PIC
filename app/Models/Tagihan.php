@@ -18,8 +18,8 @@ class Tagihan extends Model
         'stt_publish',
         'stt_lunas',
         'name',
-        'kontrol',
         'nicename',
+        'pengguna_id',
         'group_id',
         'los',
         'jml_los',
@@ -69,5 +69,9 @@ class Tagihan extends Model
     public function pengguna()
     {
         return $this->belongsTo(User::class, 'pengguna_id');
+    }
+
+    public static function code(){
+        return hexdec(uniqid("333")); //333 = Tagihan
     }
 }

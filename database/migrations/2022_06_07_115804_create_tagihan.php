@@ -28,8 +28,6 @@ class CreateTagihan extends Migration
             $table->foreign('group_id')->references('id')->on('groups');
             $table->json('los');
             $table->integer('jml_los');
-            $table->string('code_listrik', 50)->nullable();
-            $table->string('code_airbersih', 50)->nullable();
             $table->json('listrik')->nullable();
             $table->json('airbersih')->nullable();
             $table->json('keamananipk')->nullable();
