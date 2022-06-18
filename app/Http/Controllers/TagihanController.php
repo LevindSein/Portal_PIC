@@ -43,10 +43,18 @@ class TagihanController extends Controller
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '';
-                $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
-                $button .= '<a type="button" data-toggle="tooltip" title="Hapus" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
+                if($data->status === 1){
+                    if($data->stt_publish){
+                        $button .= '<a type="button" data-toggle="tooltip" title="Publish" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="publish btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-undo"></i></a>';
+                    } else {
+                        $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
+                        $button .= '<a type="button" data-toggle="tooltip" title="Hapus" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
+                        $button .= '<a type="button" data-toggle="tooltip" title="Publish" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="publish btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-paper-plane"></i></a>';
+                    }
+                } else {
+                    $button .= '<a type="button" data-toggle="tooltip" title="Aktifkan" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="aktif btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-lightbulb-on"></i></a>';
+                }
                 $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="detail btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-info"></i></a>';
-                $button .= '<a type="button" data-toggle="tooltip" title="Publish" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="publlish btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-paper-plane"></i></a>';
                 return $button;
             })
             ->addColumn('fasilitas', function($data){
@@ -288,8 +296,50 @@ class TagihanController extends Controller
     public function publish($id)
     {
         if(request()->ajax()){
-            $message = '';
-            return response()->json(['success' => "Data berhasil " . $message]);
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            $message = DB::transaction(function() use ($decrypted){
+                $data = Tagihan::lockForUpdate()->findOrFail($decrypted);
+
+                if($data->stt_publish){
+                    $publish = 0;
+                    $message = 'Data Tagihan dibatalkan.';
+                } else {
+                    $publish = 1;
+                    $message = 'Data Tagihan dipublish.';
+                }
+
+                $data->update([
+                    'stt_publish' => $publish
+                ]);
+
+                return $message;
+            });
+            return response()->json(['success' => $message]);
+        }
+    }
+
+    public function aktif($id)
+    {
+        if(request()->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            $message = DB::transaction(function() use ($decrypted){
+                $data = Tagihan::lockForUpdate()->findOrFail($decrypted);
+
+                $data->update([
+                    'status' => 1
+                ]);
+            });
+            return response()->json(['success' => 'Data berhasil diaktifkan.']);
         }
     }
 

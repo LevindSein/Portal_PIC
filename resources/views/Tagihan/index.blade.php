@@ -37,7 +37,9 @@ Tagihan
 @include('Tagihan.Modal._tambah')
 @include('Tagihan.Modal._edit')
 @include('Tagihan.Modal._hapus')
+@include('Tagihan.Modal._publish')
 @include('Tagihan.Modal._rincian')
+@include('Tagihan.Modal._aktif')
 @endsection
 
 @section('content-js')
