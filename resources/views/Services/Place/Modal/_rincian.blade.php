@@ -60,20 +60,20 @@ $(document).on('click', '.detail', function(e){
 
                 //Group
                 html += '<small class="text-muted pt-4 db">Grup</small>';
-                html += '<h3 class="text-primary">' + data.success.group.name + '</h3>';
+                html += '<h3>' + data.success.group.name + '</h3>';
                 //End Group
 
                 //Nomor Los
                 html += '<small class="text-muted pt-4 db">Nomor Los</small>';
-                html += '<h3 class="text-primary">' + data.success.los + '</h3>';
+                html += '<h3>' + data.success.los + '</h3>';
                 //End Nomor Los
 
                 //Jumlah Los
                 html += '<small class="text-muted pt-4 db">Jumlah Los</small>';
-                html += '<h3 class="text-primary">' + data.success.jml_los + '</h3>';
+                html += '<h3>' + data.success.jml_los + '</h3>';
                 //End Jumlah Los
 
-                //Jumlah Los
+                //Status Tempat
                 html += '<small class="text-muted pt-4 db">Status</small>';
                 if(data.success.status == 2)
                     html += '<h3 class="text-info">Bebas Bayar</h3>';
@@ -81,17 +81,17 @@ $(document).on('click', '.detail', function(e){
                     html += '<h3 class="text-success">Aktif</h3>';
                 else
                     html += '<h3 class="text-danger">Nonaktif</h3>';
-                //End Jumlah Los
+                //End Status Tempat
 
                 if(data.success.pengguna_id){
                     //Pengguna
                     html += '<small class="text-muted pt-4 db">Pengguna</small>';
-                    html += '<h3 class="text-primary">' + data.success.pengguna.name + '</h3>';
+                    html += '<h3>' + data.success.pengguna.name + '</h3>';
                     if(data.success.pengguna.ktp){
-                        html += '<h3 class="text-primary">(KTP) ' + data.success.pengguna.ktp + '</h3>';
+                        html += '<h3>(KTP) ' + data.success.pengguna.ktp + '</h3>';
                     }
                     if(data.success.pengguna.phone){
-                        html += '<h3 class="text-primary">(WA) +62' + data.success.pengguna.phone + '</h3>';
+                        html += '<h3>(WA) +62' + data.success.pengguna.phone + '</h3>';
                     }
                     //End Pengguna
                 }
@@ -99,12 +99,12 @@ $(document).on('click', '.detail', function(e){
                 if(data.success.pemilik_id){
                     //Pemilik
                     html += '<small class="text-muted pt-4 db">Pemilik</small>';
-                    html += '<h3 class="text-primary">' + data.success.pemilik.name + '</h3>';
+                    html += '<h3>' + data.success.pemilik.name + '</h3>';
                     if(data.success.pemilik.ktp){
-                        html += '<h3 class="text-primary">(KTP) ' + data.success.pemilik.ktp + '</h3>';
+                        html += '<h3>(KTP) ' + data.success.pemilik.ktp + '</h3>';
                     }
                     if(data.success.pemilik.phone){
-                        html += '<h3 class="text-primary">(WA) +62' + data.success.pemilik.phone + '</h3>';
+                        html += '<h3>(WA) +62' + data.success.pemilik.phone + '</h3>';
                     }
                     //End Pemilik
                 }
@@ -112,7 +112,7 @@ $(document).on('click', '.detail', function(e){
                 if(data.success.ket){
                     //Keterangan
                     html += '<small class="text-muted pt-4 db">Keterangan Tempat</small>';
-                    html += '<h3 class="text-primary">' + data.success.ket + '</h3>';
+                    html += '<h3>' + data.success.ket + '</h3>';
                     //End Keterangan
                 }
 
@@ -123,16 +123,16 @@ $(document).on('click', '.detail', function(e){
                 if(data.success.trf_listrik_id){
                     //Listrik
                     html += '<div class="form-group">';
-                    html += '<h4 class="text-center">LISTRIK</h4>';
+                    html += '<h4 class="text-center text-primary">LISTRIK</h4>';
                     html += '<small class="text-muted pt-4 db">Alat Meter</small>';
-                    html += '<h3 class="text-primary">' + data.success.alat_listrik_id.name + '</h3>';
-                    html += '<h3 class="text-primary">(Stand) ' + Number(data.success.alat_listrik_id.stand).toLocaleString('id-ID') + '</h3>';
-                    html += '<h3 class="text-primary">(Daya) ' + Number(data.success.alat_listrik_id.daya).toLocaleString('id-ID') + '</h3>';
+                    html += '<h3>' + data.success.alat_listrik_id.name + '</h3>';
+                    html += '<h3>(Stand) ' + Number(data.success.alat_listrik_id.stand).toLocaleString('id-ID') + '</h3>';
+                    html += '<h3>(Daya) ' + Number(data.success.alat_listrik_id.daya).toLocaleString('id-ID') + '</h3>';
                     html += '<small class="text-muted pt-4 db">Tarif</small>';
-                    html += '<h3 class="text-primary">' + data.success.trf_listrik_id.name + '</h3>';
+                    html += '<h3>' + data.success.trf_listrik_id.name + '</h3>';
                     if(data.success.diskon.listrik){
                         html += '<small class="text-muted pt-4 db">Diskon</small>';
-                        html += '<h3 class="text-primary">' + data.success.diskon.listrik + '% dari Tagihan</h3>';
+                        html += '<h3>' + data.success.diskon.listrik + '% dari Tagihan</h3>';
                     }
                     html += '</div>';
                     html += '<hr>';
@@ -142,15 +142,15 @@ $(document).on('click', '.detail', function(e){
                 if(data.success.trf_airbersih_id){
                     //Air Bersih
                     html += '<div class="form-group">';
-                    html += '<h4 class="text-center">AIR BERSIH</h4>';
+                    html += '<h4 class="text-center text-primary">AIR BERSIH</h4>';
                     html += '<small class="text-muted pt-4 db">Alat Meter</small>';
-                    html += '<h3 class="text-primary">' + data.success.alat_airbersih_id.name + '</h3>';
-                    html += '<h3 class="text-primary">(Stand) ' + Number(data.success.alat_airbersih_id.stand).toLocaleString('id-ID') + '</h3>';
+                    html += '<h3>' + data.success.alat_airbersih_id.name + '</h3>';
+                    html += '<h3>(Stand) ' + Number(data.success.alat_airbersih_id.stand).toLocaleString('id-ID') + '</h3>';
                     html += '<small class="text-muted pt-4 db">Tarif</small>';
-                    html += '<h3 class="text-primary">' + data.success.trf_airbersih_id.name + '</h3>';
+                    html += '<h3>' + data.success.trf_airbersih_id.name + '</h3>';
                     if(data.success.diskon.airbersih){
                         html += '<small class="text-muted pt-4 db">Diskon</small>';
-                        html += '<h3 class="text-primary">' + data.success.diskon.airbersih + '% dari Tagihan</h3>';
+                        html += '<h3>' + data.success.diskon.airbersih + '% dari Tagihan</h3>';
                     }
                     html += '</div>';
                     html += '<hr>';
@@ -160,13 +160,13 @@ $(document).on('click', '.detail', function(e){
                 if(data.success.trf_keamananipk_id){
                     //Keamanan IPK
                     html += '<div class="form-group">';
-                    html += '<h4 class="text-center">AIR BERSIH</h4>';
+                    html += '<h4 class="text-center text-primary">AIR BERSIH</h4>';
                     html += '<small class="text-muted pt-4 db">Tarif</small>';
-                    html += '<h3 class="text-primary">' + data.success.trf_keamananipk_id.name + '</h3>';
-                    html += '<h3 class="text-primary">Rp ' + Number(data.success.trf_keamananipk_id.data.Tarif).toLocaleString('id-ID') + ' per-Los</h3>';
+                    html += '<h3>' + data.success.trf_keamananipk_id.name + '</h3>';
+                    html += '<h3>Rp ' + Number(data.success.trf_keamananipk_id.data.Tarif).toLocaleString('id-ID') + ' per-Los</h3>';
                     if(data.success.diskon.keamananipk){
                         html += '<small class="text-muted pt-4 db">Diskon</small>';
-                        html += '<h3 class="text-primary">Rp ' + Number(data.success.diskon.keamananipk).toLocaleString('id-ID') + ' per-Kontrol</h3>';
+                        html += '<h3>Rp ' + Number(data.success.diskon.keamananipk).toLocaleString('id-ID') + ' per-Kontrol</h3>';
                     }
                     html += '</div>';
                     html += '<hr>';
@@ -176,13 +176,13 @@ $(document).on('click', '.detail', function(e){
                 if(data.success.trf_kebersihan_id){
                     //Kebersihan
                     html += '<div class="form-group">';
-                    html += '<h4 class="text-center">KEBERSIHAN</h4>';
+                    html += '<h4 class="text-center text-primary">KEBERSIHAN</h4>';
                     html += '<small class="text-muted pt-4 db">Tarif</small>';
-                    html += '<h3 class="text-primary">' + data.success.trf_kebersihan_id.name + '</h3>';
-                    html += '<h3 class="text-primary">Rp ' + Number(data.success.trf_kebersihan_id.data.Tarif).toLocaleString('id-ID') + ' per-Los</h3>';
+                    html += '<h3>' + data.success.trf_kebersihan_id.name + '</h3>';
+                    html += '<h3>Rp ' + Number(data.success.trf_kebersihan_id.data.Tarif).toLocaleString('id-ID') + ' per-Los</h3>';
                     if(data.success.diskon.kebersihan){
                         html += '<small class="text-muted pt-4 db">Diskon</small>';
-                        html += '<h3 class="text-primary">Rp ' + Number(data.success.diskon.kebersihan).toLocaleString('id-ID') + ' per-Kontrol</h3>';
+                        html += '<h3>Rp ' + Number(data.success.diskon.kebersihan).toLocaleString('id-ID') + ' per-Kontrol</h3>';
                     }
                     html += '</div>';
                     html += '<hr>';
@@ -192,13 +192,27 @@ $(document).on('click', '.detail', function(e){
                 if(data.success.trf_airkotor_id){
                     //Air Kotor
                     html += '<div class="form-group">';
-                    html += '<h4 class="text-center">AIR KOTOR</h4>';
+                    html += '<h4 class="text-center text-primary">AIR KOTOR</h4>';
                     html += '<small class="text-muted pt-4 db">Tarif</small>';
-                    html += '<h3 class="text-primary">' + data.success.trf_airkotor_id.name + '</h3>';
-                    html += '<h3 class="text-primary">Rp ' + Number(data.success.trf_airkotor_id.data.Tarif).toLocaleString('id-ID') + ' ' + data.success.trf_airkotor_id.status + '</h3>';
+                    html += '<h3>' + data.success.trf_airkotor_id.name + '</h3>';
+                    html += '<h3>Rp ' + Number(data.success.trf_airkotor_id.data.Tarif).toLocaleString('id-ID') + ' ' + data.success.trf_airkotor_id.status + '</h3>';
                     html += '</div>';
                     html += '<hr>';
                     //End Air Kotor
+                }
+
+                if(data.success.trf_lainnya_id){
+                    //Lainnya
+                    html += '<div class="form-group">';
+                    html += '<h4 class="text-center text-primary">Lainnya</h4>';
+                    $.each( data.success.trf_lainnya, function( i, val ) {
+                        html += '<small class="text-muted pt-4 db">Tarif</small>';
+                        html += '<h3>' + val.name + '</h3>';
+                        html += '<h3>Rp ' + Number(val.data.Tarif).toLocaleString('id-ID') + ' ' + val.status + '</h3>';
+                    });
+                    html += '</div>';
+                    html += '<hr>';
+                    //End Lainnya
                 }
 
                 html += '</div>';

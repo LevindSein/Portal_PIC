@@ -35,6 +35,10 @@ class Tagihan extends Model
         'status'
     ];
 
+    public function getLosAttribute($value){
+        return json_decode($value);
+    }
+
     public function getListrikAttribute($value){
         return json_decode($value);
     }
@@ -69,6 +73,11 @@ class Tagihan extends Model
     public function pengguna()
     {
         return $this->belongsTo(User::class, 'pengguna_id');
+    }
+
+    public function periode()
+    {
+        return $this->belongsTo(Periode::class, 'periode_id');
     }
 
     public static function code(){

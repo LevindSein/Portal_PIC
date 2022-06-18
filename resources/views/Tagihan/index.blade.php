@@ -55,7 +55,8 @@ Tagihan
             paginate: {
                 previous: "<i class='fas fa-angle-left'>",
                 next: "<i class='fas fa-angle-right'>"
-            }
+            },
+            searchPlaceholder: "Kontrol/Nama"
         },
         serverSide : true,
         ajax : url,

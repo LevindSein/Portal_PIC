@@ -38,7 +38,8 @@ Tempat Usaha
             paginate: {
                 previous: "<i class='fas fa-angle-left'>",
                 next: "<i class='fas fa-angle-right'>"
-            }
+            },
+            searchPlaceholder: "Kontrol/Pengguna"
         },
         serverSide : true,
         ajax : "/services/place",

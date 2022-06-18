@@ -141,6 +141,13 @@
         $(".tambah-los").hide();
         $(".tambah-pengguna").hide();
         $("#tambah-fasilitas").hide();
+
+        $("#div-tambah-listrik").html('');
+        $("#div-tambah-airbersih").html('');
+        $("#div-tambah-keamananipk").html('');
+        $("#div-tambah-kebersihan").html('');
+        $("#div-tambah-airkotor").html('');
+        $("#div-tambah-lainnya").html('');
     }
 
     var lain = 0, index = 1;
@@ -152,6 +159,7 @@
         $("div[name=col]").removeClass('col-lg-6');
 
         tambah_init();
+        lain = 0, index = 1;
     });
 
     $(document).on('change', '#tambah-tempat', function(){
@@ -268,6 +276,10 @@
                         $("#tambah-trf-airkotor").val("").html("");
                         var tarif = new Option(data.success.trf_airkotor_id.name + " - Rp " + Number(data.success.trf_airkotor_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_airkotor_id.status, data.success.trf_airkotor_id.id, false, false);
                         $("#tambah-trf-airkotor").append(tarif).trigger("change");
+
+                        if(data.success.diskon.airkotor){
+                            $("#tambah-dis-airkotor").val(Number(data.success.diskon.airkotor).toLocaleString("id-ID"));
+                        }
                     } else {
                         $("#tambah-airkotor").prop("checked", false);
                         tambahFasAirkotor();

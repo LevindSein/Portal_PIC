@@ -376,6 +376,10 @@
             html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
             html += '<select required id="tambah-trf-airkotor" name="tambah_trf_airkotor" class="form-control form-control-sm"></select>';
             html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
+            html += '<input maxlength="15" type="text" id="tambah-dis-airkotor" name="tambah_dis_airkotor" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
+            html += '</div>';
 
             $("#div-tambah-airkotor").html(html).hide();
 

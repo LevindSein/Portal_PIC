@@ -240,7 +240,10 @@ class TagihanController extends Controller
 
             if($request->tambah_keamananipk){
                 $input['tarif_keamananipk'] = $request->tambah_trf_keamananipk;
-                $input['diskon_keamananipk'] = str_replace('.', '', $request->tambah_dis_keamananipk);
+                $input['diskon_keamananipk'] = 0;
+                if($request->tambah_dis_keamananipk){
+                    $input['diskon_keamananipk'] = str_replace('.', '', $request->tambah_dis_keamananipk);
+                }
 
                 $tarif = Tarif::findOrFail($input['tarif_keamananipk']);
 
@@ -267,7 +270,10 @@ class TagihanController extends Controller
 
             if($request->tambah_kebersihan){
                 $input['tarif_kebersihan'] = $request->tambah_trf_kebersihan;
-                $input['diskon_kebersihan'] = str_replace('.', '', $request->tambah_dis_kebersihan);
+                $input['diskon_kebersihan'] = 0;
+                if($request->tambah_dis_kebersihan){
+                    $input['diskon_kebersihan'] = str_replace('.', '', $request->tambah_dis_kebersihan);
+                }
 
                 $tarif = Tarif::findOrFail($input['tarif_kebersihan']);
 
@@ -292,7 +298,10 @@ class TagihanController extends Controller
 
             if($request->tambah_airkotor){
                 $input['tarif_airkotor'] = $request->tambah_trf_airkotor;
-                $input['diskon_airkotor'] = str_replace('.', '', $request->tambah_dis_airkotor);
+                $input['diskon_airkotor'] = 0;
+                if($request->tambah_dis_kairkotor){
+                    $input['diskon_airkotor'] = str_replace('.', '', $request->tambah_dis_airkotor);
+                }
 
                 $tarif = Tarif::findOrFail($input['tarif_airkotor']);
 
@@ -383,7 +392,17 @@ class TagihanController extends Controller
      */
     public function show($id)
     {
-        //
+        if(request()->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            $data = Tagihan::with('periode', 'pengguna')->findOrFail($decrypted);
+
+            return response()->json(['success' => $data]);
+        }
     }
 
     /**

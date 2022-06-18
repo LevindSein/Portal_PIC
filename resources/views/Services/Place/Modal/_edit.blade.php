@@ -317,6 +317,10 @@
                         $("#edit-trf-airkotor").val("").html("");
                         var tarif = new Option(data.success.trf_airkotor_id.name + " - Rp " + Number(data.success.trf_airkotor_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_airkotor_id.status, data.success.trf_airkotor_id.id, false, false);
                         $("#edit-trf-airkotor").append(tarif).trigger("change");
+
+                        if(data.success.diskon.airkotor){
+                            $("#edit-dis-airkotor").val(Number(data.success.diskon.airkotor).toLocaleString("id-ID"));
+                        }
                     }
 
                     if(data.success.trf_lainnya_id){
@@ -379,28 +383,28 @@
         } else {
             $("#edit-name").prop("disabled", false);
 
-            var dataset = {
-                'group' : $("#edit-group").val(),
-                'los' : $("#edit-los").val(),
-            };
-            $.ajax({
-                url: "/services/place/generate/kontrol",
-                type: "GET",
-                cache: false,
-                data: dataset,
-                success:function(data)
-                {
-                    $("#edit-name").val(data.success);
-                },
-                error:function(data){
-                    toastr.options = {
-                        "closeButton": true,
-                        "preventDuplicates": true,
-                    };
-                    toastr.error("System error.");
-                    console.log(data);
-                }
-            });
+            // var dataset = {
+            //     'group' : $("#edit-group").val(),
+            //     'los' : $("#edit-los").val(),
+            // };
+            // $.ajax({
+            //     url: "/services/place/generate/kontrol",
+            //     type: "GET",
+            //     cache: false,
+            //     data: dataset,
+            //     success:function(data)
+            //     {
+            //         $("#edit-name").val(data.success);
+            //     },
+            //     error:function(data){
+            //         toastr.options = {
+            //             "closeButton": true,
+            //             "preventDuplicates": true,
+            //         };
+            //         toastr.error("System error.");
+            //         console.log(data);
+            //     }
+            // });
         }
     });
 
@@ -541,6 +545,10 @@
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
             html += '<select required id="edit-trf-airkotor" name="edit_trf_airkotor" class="form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
+            html += '<input maxlength="15" type="text" id="edit-dis-airkotor" name="edit_dis_airkotor" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
             html += '</div>';
 
             $("#div-edit-airkotor").html(html).hide();

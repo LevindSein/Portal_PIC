@@ -206,15 +206,20 @@ class TempatController extends Controller
 
             if($request->tambah_airkotor){
                 $input['tarif_airkotor']  = $request->tambah_trf_airkotor;
+                $input['diskon_airkotor'] = str_replace('.', '', $request->tambah_dis_airkotor);
 
                 Validator::make($input, [
                     'tarif_airkotor'  => ['required','numeric',
                                             Rule::exists('tarif', 'id')
                                             ->where('level', 5)
-                                        ]
+                                        ],
+                    'diskon_airkotor' => 'nullable|numeric|gte:0|lte:999999999999',
                 ])->validate();
 
                 $data['trf_airkotor_id']  = $input['tarif_airkotor'];
+                if($input['diskon_airkotor']){
+                    $diskon['airkotor']   = $input['diskon_airkotor'];
+                }
             }
 
             if($request->tambah_lainnya){
@@ -302,6 +307,14 @@ class TempatController extends Controller
 
             if($data->trf_airkotor_id){
                 $data['trf_airkotor_id'] = Tarif::findOrFail($data->trf_airkotor_id);
+            }
+
+            if($data->trf_lainnya_id){
+                $lainnya = [];
+                foreach ($data->trf_lainnya_id as $key) {
+                    $lainnya[] = Tarif::findOrFail($key);
+                }
+                $data['trf_lainnya'] = $lainnya;
             }
 
             return response()->json(['success' => $data]);
@@ -487,15 +500,20 @@ class TempatController extends Controller
             $data['trf_airkotor_id'] = NULL;
             if($request->edit_airkotor){
                 $input['tarif_airkotor']  = $request->edit_trf_airkotor;
+                $input['diskon_airkotor'] = str_replace('.', '', $request->edit_dis_airkotor);
 
                 Validator::make($input, [
                     'tarif_airkotor'  => ['required','numeric',
                                             Rule::exists('tarif', 'id')
                                             ->where('level', 5)
-                                        ]
+                                        ],
+                    'diskon_airkotor' => 'nullable|numeric|gte:0|lte:999999999999',
                 ])->validate();
 
                 $data['trf_airkotor_id']  = $input['tarif_airkotor'];
+                if($input['diskon_airkotor']){
+                    $diskon['airkotor']   = $input['diskon_airkotor'];
+                }
             }
 
             $data['trf_lainnya_id'] = NULL;
