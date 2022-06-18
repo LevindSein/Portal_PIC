@@ -79,7 +79,7 @@
 
 <!--begin::Javascript-->
 <script>
-    var choosed, show_new, show_due, get_due;
+    var choosed, show_new, show_due, get_due, period_new;
 
     function edit_init(){
         $("#edit-form")[0].reset();
@@ -93,6 +93,8 @@
         edit_init();
         edit_due();
         edit_new();
+
+        period_new = '';
 
         $.ajax({
             url: "/utilities/periode/" + id + "/edit",
@@ -122,6 +124,8 @@
                     $("#edit-tahun").val(data.success.year).change();
                     $("#edit-due").val(pad(new Date(data.success.due).getDate(), 2));
                     $("#edit-new").val(pad(new Date(data.success.new).getDate(), 2));
+
+                    period_new = pad(new Date(data.success.new).getDate(), 2);
                 }
 
                 if(data.info){
@@ -163,6 +167,7 @@
 
     $(document).on('change', '#edit-due', function(){
         edit_new();
+        $("#edit-new").val(period_new);
     });
 
     function edit_due(){

@@ -97,7 +97,7 @@ class Tarif extends Model
 
         $total = $subtotal + $ppn;
 
-        $diskon = ($diskon / 100) * $total;
+        $diskon = round(($diskon / 100) * $total);
 
         if($daya > 4400){
             $denda = round(($diff * ($tarif->Denda_2 / 100)) * $total);

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use Spatie\Activitylog\Traits\LogsActivity;
 
+use Carbon\Carbon;
+
 class Periode extends Model
 {
     use HasFactory, LogsActivity;
@@ -26,4 +28,17 @@ class Periode extends Model
 
     protected static $logName = 'periode';
     protected static $logFillable = true;
+
+    public static function diffInMonth($periode)
+    {
+        $diff = 0;
+        $now = Carbon::now()->format('Y-m-d');
+        foreach (Periode::where('due', '>=', $periode->due)->get() as $key) {
+            if($now >= new Carbon($key->due)){
+                $diff++;
+            }
+        }
+
+        return $diff;
+    }
 }

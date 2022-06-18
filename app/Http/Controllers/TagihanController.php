@@ -102,18 +102,7 @@ class TagihanController extends Controller
             $input['periode'] = $request->tambah_periode;
             $periode = Periode::findOrFail($input['periode']);
 
-            // PR MENCARI DIFF
-            $due = new Carbon($periode->due);
-            $now = Carbon::now()->format('Y-m-d');
-            $diff_month = 0;
-            if($now > $due){
-                $diff_month = $due->diffInMonths($now);
-                $diff_day   = $due->diffInDays($now);
-                if($diff_day >= 1){
-                    $diff_month++;
-                }
-            }
-            // END DIFF
+            $diff_month = Periode::diffInMonth($periode);
 
             $input['tempat_usaha'] = $request->tambah_tempat;
 
