@@ -35,7 +35,7 @@ class CreateTagihan extends Migration
             $table->json('airkotor')->nullable();
             $table->json('lainnya')->nullable();
             $table->json('tagihan');
-            $table->tinyInteger('status')->default(1); //1 = Aktif, 2 = Draft, 0 = Deleted
+            $table->tinyInteger('status')->default(1); //1 = Aktif, 0 = Deleted
             $table->datetime('updated_at')->useCurrent();
             $table->datetime('created_at')->useCurrent();
         });

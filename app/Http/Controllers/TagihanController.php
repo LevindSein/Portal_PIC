@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Validation\Rule;
 
@@ -43,15 +44,16 @@ class TagihanController extends Controller
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '';
-                if($data->status === 1){
+                if($data->status){
                     if($data->stt_publish){
                         $button .= '<a type="button" data-toggle="tooltip" title="Publish" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="publish btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-undo"></i></a>';
                     } else {
                         $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
-                        $button .= '<a type="button" data-toggle="tooltip" title="Hapus" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
+                        $button .= '<a type="button" data-toggle="tooltip" title="Hapus" id="'.Crypt::encrypt($data->id).'" status="" nama="'.$data->name.'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
                         $button .= '<a type="button" data-toggle="tooltip" title="Publish" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="publish btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-paper-plane"></i></a>';
                     }
                 } else {
+                    $button .= '<a type="button" data-toggle="tooltip" title="Hapus Permanen" id="'.Crypt::encrypt($data->id).'" status="Permanen " nama="'.$data->name.'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash-alt"></i></a>';
                     $button .= '<a type="button" data-toggle="tooltip" title="Aktifkan" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="aktif btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-lightbulb-on"></i></a>';
                 }
                 $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="detail btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-info"></i></a>';
@@ -117,6 +119,7 @@ class TagihanController extends Controller
             $los = $this->multipleSelect($request->tambah_los);
             sort($los, SORT_NATURAL);
             $input['nomor_los'] = $los;
+            $jml_los = count($input['nomor_los']);
 
             $input['pengguna'] = $request->tambah_pengguna;
 
@@ -147,59 +150,204 @@ class TagihanController extends Controller
                     $reset = 1;
                 }
 
-                $tagihan = Tarif::tagihanL($tarif->data, $pakai, $daya, $diff_month, $input['diskon_listrik']);
+                $tagihan = Tarif::listrik($tarif->data, $pakai, $daya, $diff_month, $input['diskon_listrik']);
 
                 $data['listrik'] = json_encode([
                     'lunas'         => 0,
                     'kasir'         => null,
                     'alat'          => $input['alat_listrik'],
                     'tarif'         => $input['tarif_listrik'],
-                    'daya'          => $daya,
-                    'awal'          => $awal,
-                    'akhir'         => $akhir,
-                    'reset'         => $reset,
-                    'pakai'         => $pakai,
-                    'rekmin'        => $tagihan['rekmin'],
-                    'blok1'         => $tagihan['blok1'],
-                    'blok2'         => $tagihan['blok2'],
-                    'beban'         => $tagihan['beban'],
-                    'pju'           => $tagihan['pju'],
-                    'subtotal'      => $tagihan['subtotal'],
-                    'ppn'           => $tagihan['ppn'],
-                    'denda'         => $tagihan['denda'],
-                    'denda_bulan'   => $diff_month,
-                    'diskon'        => $tagihan['diskon'],
-                    'diskon_persen' => $input['diskon_listrik'],
-                    'total'         => $tagihan['total'],
+                    'daya'          => (int)$daya,
+                    'awal'          => (int)$awal,
+                    'akhir'         => (int)$akhir,
+                    'reset'         => (int)$reset,
+                    'pakai'         => (int)$pakai,
+                    'rekmin'        => (int)$tagihan['rekmin'],
+                    'blok1'         => (int)$tagihan['blok1'],
+                    'blok2'         => (int)$tagihan['blok2'],
+                    'beban'         => (int)$tagihan['beban'],
+                    'pju'           => (int)$tagihan['pju'],
+                    'subtotal'      => (int)$tagihan['subtotal'],
+                    'ppn'           => (int)$tagihan['ppn'],
+                    'denda'         => (int)$tagihan['denda'],
+                    'denda_bulan'   => (int)$diff_month,
+                    'diskon'        => (int)$tagihan['diskon'],
+                    'diskon_persen' => (int)$input['diskon_listrik'],
+                    'total'         => (int)$tagihan['total'],
                     'realisasi'     => 0,
-                    'selisih'       => $tagihan['total'],
+                    'selisih'       => (int)$tagihan['total'],
                 ]);
 
                 $subtotal += $tagihan['subtotal'];
                 $ppn += $tagihan['ppn'];
-                $denda += 0;
-                $diskon += 0;
+                $denda += $tagihan['denda'];
+                $diskon += $tagihan['diskon'];
                 $total += $tagihan['total'];
             }
 
             if($request->tambah_airbersih){
+                $input['alat_airbersih'] = $request->tambah_alat_airbersih;
+                $input['tarif_airbersih'] = $request->tambah_trf_airbersih;
+                $input['diskon_airbersih'] = $request->tambah_dis_airbersih;
+                $input['awal_stand_airbersih'] = str_replace('.', '', $request->tambah_awal_airbersih);
+                $input['akhir_stand_airbersih'] = str_replace('.', '', $request->tambah_akhir_airbersih);
 
+                $tarif = Tarif::findOrFail($input['tarif_airbersih']);
+                $alat = Alat::findOrFail($input['alat_airbersih']);
+
+                $awal = $input['awal_stand_airbersih'];
+                $akhir = $input['akhir_stand_airbersih'];
+
+                $pakai = $akhir - $awal;
+                $reset = 0;
+                if($awal > $akhir){
+                    $pakai = ($akhir + (str_repeat(9, strlen($awal)))) - $awal;
+                    $reset = 1;
+                }
+
+                $tagihan = Tarif::airbersih($tarif->data, $pakai, $diff_month, $input['diskon_airbersih']);
+
+                $data['airbersih'] = json_encode([
+                    'lunas'         => 0,
+                    'kasir'         => null,
+                    'alat'          => $input['alat_airbersih'],
+                    'tarif'         => $input['tarif_airbersih'],
+                    'awal'          => (int)$awal,
+                    'akhir'         => (int)$akhir,
+                    'reset'         => (int)$reset,
+                    'pakai'         => (int)$pakai,
+                    'bayar'         => (int)$tagihan['bayar'],
+                    'pemeliharaan'  => (int)$tagihan['pemeliharaan'],
+                    'beban'         => (int)$tagihan['beban'],
+                    'airkotor'      => (int)$tagihan['airkotor'],
+                    'subtotal'      => (int)$tagihan['subtotal'],
+                    'ppn'           => (int)$tagihan['ppn'],
+                    'denda'         => (int)$tagihan['denda'],
+                    'denda_bulan'   => (int)$diff_month,
+                    'diskon'        => (int)$tagihan['diskon'],
+                    'diskon_persen' => (int)$input['diskon_airbersih'],
+                    'total'         => (int)$tagihan['total'],
+                    'realisasi'     => 0,
+                    'selisih'       => (int)$tagihan['total'],
+                ]);
+
+                $subtotal += $tagihan['subtotal'];
+                $ppn += $tagihan['ppn'];
+                $denda += $tagihan['denda'];
+                $diskon += $tagihan['diskon'];
+                $total += $tagihan['total'];
             }
 
             if($request->tambah_keamananipk){
+                $input['tarif_keamananipk'] = $request->tambah_trf_keamananipk;
+                $input['diskon_keamananipk'] = str_replace('.', '', $request->tambah_dis_keamananipk);
 
+                $tarif = Tarif::findOrFail($input['tarif_keamananipk']);
+
+                $tagihan = Tarif::keamananipk($tarif->data, $jml_los, $input['diskon_keamananipk']);
+
+                $data['keamananipk'] = json_encode([
+                    'lunas'         => 0,
+                    'kasir'         => null,
+                    'tarif'         => $input['tarif_keamananipk'],
+                    'jml_los'       => (int)$jml_los,
+                    'keamanan'      => (int)$tagihan['keamanan'],
+                    'ipk'           => (int)$tagihan['ipk'],
+                    'subtotal'      => (int)$tagihan['subtotal'],
+                    'diskon'        => (int)$tagihan['diskon'],
+                    'total'         => (int)$tagihan['total'],
+                    'realisasi'     => 0,
+                    'selisih'       => (int)$tagihan['total'],
+                ]);
+
+                $subtotal += $tagihan['subtotal'];
+                $diskon += $tagihan['diskon'];
+                $total += $tagihan['total'];
             }
 
             if($request->tambah_kebersihan){
+                $input['tarif_kebersihan'] = $request->tambah_trf_kebersihan;
+                $input['diskon_kebersihan'] = str_replace('.', '', $request->tambah_dis_kebersihan);
 
+                $tarif = Tarif::findOrFail($input['tarif_kebersihan']);
+
+                $tagihan = Tarif::kebersihan($tarif->data, $jml_los, $input['diskon_kebersihan']);
+
+                $data['kebersihan'] = json_encode([
+                    'lunas'         => 0,
+                    'kasir'         => null,
+                    'tarif'         => $input['tarif_kebersihan'],
+                    'jml_los'       => (int)$jml_los,
+                    'subtotal'      => (int)$tagihan['subtotal'],
+                    'diskon'        => (int)$tagihan['diskon'],
+                    'total'         => (int)$tagihan['total'],
+                    'realisasi'     => 0,
+                    'selisih'       => (int)$tagihan['total'],
+                ]);
+
+                $subtotal += $tagihan['subtotal'];
+                $diskon += $tagihan['diskon'];
+                $total += $tagihan['total'];
             }
 
             if($request->tambah_airkotor){
+                $input['tarif_airkotor'] = $request->tambah_trf_airkotor;
+                $input['diskon_airkotor'] = str_replace('.', '', $request->tambah_dis_airkotor);
 
+                $tarif = Tarif::findOrFail($input['tarif_airkotor']);
+
+                $tagihan = Tarif::airkotor($tarif->data, $jml_los, $tarif->status, $input['diskon_airkotor']);
+
+                $data['airkotor'] = json_encode([
+                    'lunas'         => 0,
+                    'kasir'         => null,
+                    'tarif'         => $input['tarif_airkotor'],
+                    'jml_los'       => (int)$jml_los,
+                    'subtotal'      => (int)$tagihan['subtotal'],
+                    'diskon'        => (int)$tagihan['diskon'],
+                    'total'         => (int)$tagihan['total'],
+                    'realisasi'     => 0,
+                    'selisih'       => (int)$tagihan['total'],
+                ]);
+
+                $subtotal += $tagihan['subtotal'];
+                $diskon += $tagihan['diskon'];
+                $total += $tagihan['total'];
             }
 
             if($request->tambah_lainnya){
+                $lainnya = [];
+                $subtotal_lainnya = 0;
+                $total_lainnya = 0;
+                foreach ($request->tambah_lainnya as $key) {
+                    $input['tarif_lainnya']  = $key;
+                    $tarif = Tarif::findOrFail($input['tarif_lainnya']);
 
+                    $tagihan = Tarif::lainnya($tarif->data, $jml_los, $tarif->status);
+
+                    $lainnya[] = [
+                        'tarif'     => $input['tarif_lainnya'],
+                        'subtotal'  => (int)$tagihan['subtotal'],
+                        'total'     => (int)$tagihan['total']
+                    ];
+
+                    $subtotal_lainnya += $tagihan['subtotal'];
+                    $total_lainnya += $tagihan['total'];
+                }
+
+                $data['lainnya'] = json_encode([
+                    'lunas'         => 0,
+                    'kasir'         => null,
+                    'data'          => $lainnya,
+                    'jml_los'       => $jml_los,
+                    'subtotal'      => (int)$subtotal_lainnya,
+                    'total'         => (int)$total_lainnya,
+                    'realisasi'     => 0,
+                    'selisih'       => (int)$total_lainnya,
+                ]);
+
+                $subtotal += $subtotal_lainnya;
+                $total += $total_lainnya;
             }
 
             $tempat = Tempat::findOrFail($input['tempat_usaha']);
@@ -210,7 +358,7 @@ class TagihanController extends Controller
             $data['pengguna_id'] = $input['pengguna'];
             $data['group_id'] = $tempat->group_id;
             $data['los'] = json_encode($input['nomor_los']);
-            $data['jml_los'] = count($input['nomor_los']);
+            $data['jml_los'] = $jml_los;
             $data['tagihan'] = json_encode([
                 'subtotal'  => $subtotal,
                 'ppn'       => $ppn,
@@ -267,7 +415,7 @@ class TagihanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
         if(request()->ajax()){
             try {
@@ -276,17 +424,16 @@ class TagihanController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            $input['status'] = $request->del_status;
-            Validator::make($input, [
-                'status' => 'required|numeric|in:2,0'
-            ])->validate();
-
-            DB::transaction(function() use ($decrypted, $input){
+            DB::transaction(function() use ($decrypted){
                 $data = Tagihan::lockForUpdate()->findOrFail($decrypted);
 
-                $data->update([
-                    'status' => $input['status']
-                ]);
+                if($data->status){
+                    $data->update([
+                        'status' => 0
+                    ]);
+                } else {
+                    $data->delete();
+                }
             });
 
             return response()->json(['success' => "Data berhasil dihapus."]);

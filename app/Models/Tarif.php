@@ -61,7 +61,8 @@ class Tarif extends Model
         }
     }
 
-    public static function tagihanL($tarif, $pakai, $daya, $diff, $diskon){
+    //BEGIN Listrik
+    public static function listrik($tarif, $pakai, $daya, $diff, $diskon){
         $standar = self::standarL($tarif->Standar_Operasional, $daya);
 
         $blok1 = self::blok1L($tarif->Tarif_Blok_1, $standar);
@@ -93,7 +94,7 @@ class Tarif extends Model
 
         $subtotal = $pju + $blok1 + $blok2 + $beban + $rekmin;
 
-        $ppn = self::ppnL($tarif->PPN, $subtotal);
+        $ppn = self::ppn($tarif->PPN, $subtotal);
 
         $total = $subtotal + $ppn;
 
@@ -105,26 +106,22 @@ class Tarif extends Model
             $denda = $diff * $tarif->Denda_1;
         }
 
-        $total = round($total + $denda - $diskon);
+        $total = $total + $denda - $diskon;
 
         return [
-            'pakai'     => $pakai,
-            'standar'   => $standar,
-            'blok1'     => $blok1,
-            'blok2'     => $blok2,
-            'rekmin'    => $rekmin,
-            'beban'     => $beban,
-            'pju'       => $pju,
-            'subtotal'  => $subtotal,
-            'ppn'       => $ppn,
-            'denda'     => $denda,
-            'diskon'    => $diskon,
-            'total'     => $total
+            'pakai'     => (int)$pakai,
+            'standar'   => (int)$standar,
+            'blok1'     => (int)$blok1,
+            'blok2'     => (int)$blok2,
+            'rekmin'    => (int)$rekmin,
+            'beban'     => (int)$beban,
+            'pju'       => (int)$pju,
+            'subtotal'  => (int)$subtotal,
+            'ppn'       => (int)$ppn,
+            'denda'     => (int)$denda,
+            'diskon'    => (int)$diskon,
+            'total'     => (int)$total
         ];
-    }
-
-    public static function pakaiL($awal, $akhir){
-        return $akhir - $awal;
     }
 
     public static function standarL($standar, $daya){
@@ -150,8 +147,153 @@ class Tarif extends Model
     public static function pjuL($pju, $sub){
         return round(($pju / 100) * $sub);
     }
+    //END Listrik
 
-    public static function ppnL($ppn, $total){
+    //BEGIN Air Bersih
+    public static function airbersih($tarif, $pakai, $diff, $diskon){
+        $bayar = self::bayar($pakai, $tarif->Tarif_1, $tarif->Tarif_2);
+
+        $pemeliharaan = self::pemeliharaan($tarif->Tarif_Pemeliharaan);
+
+        $beban = self::bebanAB($tarif->Tarif_Beban);
+
+        $airkotor = self::arkot($tarif->Tarif_Air_Kotor, $bayar);
+
+        $subtotal = $bayar + $pemeliharaan + $beban + $airkotor;
+
+        $ppn = self::ppn($tarif->PPN, $subtotal);
+
+        $total = $subtotal + $ppn;
+
+        $diskon = round(($diskon / 100) * $total);
+
+        $denda = $diff * $tarif->Denda;
+
+        $total = $total + $denda - $diskon;
+
+        return [
+            'pakai'         => (int)$pakai,
+            'bayar'         => (int)$bayar,
+            'pemeliharaan'  => (int)$pemeliharaan,
+            'beban'         => (int)$beban,
+            'airkotor'      => (int)$airkotor,
+            'subtotal'      => (int)$subtotal,
+            'ppn'           => (int)$ppn,
+            'denda'         => (int)$denda,
+            'diskon'        => (int)$diskon,
+            'total'         => (int)$total
+        ];
+    }
+
+    public static function bayar($pakai, $tarif1, $tarif2){
+        if($pakai > 10){
+            $tarif1 = 10 * $tarif1;
+            $tarif2 = ($pakai - 10) * $tarif2;
+            $bayar = $tarif1 + $tarif2;
+        }
+        else{
+            $bayar = $pakai * $tarif1;
+        }
+        return $bayar;
+    }
+
+    public static function pemeliharaan($pemeliharaan){
+        return $pemeliharaan;
+    }
+
+    public static function bebanAB($beban){
+        return $beban;
+    }
+
+    public static function arkot($arkot, $bayar){
+        return round(($arkot / 100) * $bayar);
+    }
+    //END Air Bersih
+
+    public static function pakai($awal, $akhir){
+        return $akhir - $awal;
+    }
+
+    public static function ppn($ppn, $total){
         return round(($ppn / 100) * $total);
     }
+
+    //BEGIN Keamanan IPK
+    public static function keamananipk($tarif, $jml_los, $diskon){
+        $persen = self::persenKI($tarif->Tarif, $tarif->Persen_Keamanan);
+
+        $keamanan = $persen['keamanan'] * $jml_los;
+        $ipk = $persen['ipk'] * $jml_los;
+
+        $subtotal = ($keamanan + $ipk);
+
+        $total = $subtotal - $diskon;
+
+        return [
+            'keamanan'      => (int)$keamanan,
+            'ipk'           => (int)$ipk,
+            'subtotal'      => (int)$subtotal,
+            'diskon'        => (int)$diskon,
+            'total'         => (int)$total
+        ];
+    }
+
+    public static function persenKI($tarif, $persen){
+        $keamanan = ($tarif * ($persen / 100));
+        $ipk = $tarif - $keamanan;
+        return [
+            'keamanan'  => $keamanan,
+            'ipk'       => $ipk
+        ];
+    }
+    //END Keamanan IPK
+
+    //BEGIN Kebersihan
+    public static function kebersihan($tarif, $jml_los, $diskon){
+        $subtotal = $tarif->Tarif * $jml_los;
+
+        $total = $subtotal - $diskon;
+
+        return [
+            'subtotal'      => (int)$subtotal,
+            'diskon'        => (int)$diskon,
+            'total'         => (int)$total
+        ];
+    }
+    //END Kebersihan
+
+    //BEGIN Air Kotor
+    public static function airkotor($tarif, $jml_los, $status, $diskon){
+        if($status == 'per-Los'){
+            $subtotal = $tarif->Tarif * $jml_los;
+        } else {
+            $subtotal = $tarif->Tarif;
+        }
+
+        $total = $subtotal - $diskon;
+
+        return [
+            'subtotal'      => (int)$subtotal,
+            'diskon'        => (int)$diskon,
+            'total'         => (int)$total
+        ];
+    }
+    //END Air Kotor
+
+    //BEGIN Lainnya
+    public static function lainnya($tarif, $jml_los, $status){
+        if($status == 'per-Los'){
+            $subtotal = $tarif->Tarif * $jml_los;
+        } else {
+            $subtotal = $tarif->Tarif;
+        }
+
+        $total = $subtotal;
+
+        return [
+            'subtotal'      => (int)$subtotal,
+            'total'         => (int)$total
+        ];
+    }
+    //END Lainnya
 }

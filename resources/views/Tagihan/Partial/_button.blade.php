@@ -2,7 +2,6 @@
     <!--begin::Actions-->
     <select class="form-control form-control-sm mr-2" id="status" name="status">
         <option value="1">Aktif</option>
-        <option value="2">Draft</option>
         <option value="0">Dihapus</option>
     </select>
     <!--end::Actions-->
