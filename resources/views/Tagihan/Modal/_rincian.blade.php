@@ -54,39 +54,54 @@
 
                     //Kode
                     html += '<small class="text-muted pt-4 db">Kode Tagihan</small>';
-                    html += '<h3 class="text-primary">' + data.success.code + '</h3>';
+                    html += '<h4 class="text-primary">' + data.success.code + '</h4>';
                     //End Kode
 
                     //Kontrol
                     html += '<small class="text-muted pt-4 db">Kode Kontrol</small>';
-                    html += '<h3 class="text-primary">' + data.success.name + '</h3>';
+                    html += '<h4 class="text-primary">' + data.success.name + '</h4>';
                     //End Kontrol
 
                     //Nomor Los
                     html += '<small class="text-muted pt-4 db">Nomor Los</small>';
-                    html += '<h3>' + data.success.los + '</h3>';
+                    html += '<h4>' + data.success.los + '</h4>';
                     //End Nomor Los
 
                     //Jumlah Los
                     html += '<small class="text-muted pt-4 db">Jumlah Los</small>';
-                    html += '<h3>' + data.success.jml_los + '</h3>';
+                    html += '<h4>' + data.success.jml_los + '</h4>';
                     //End Jumlah Los
 
                     //Status Tagihan
                     html += '<small class="text-muted pt-4 db">Status Lunas</small>';
-                    html += '<h3>' + ((data.success.stt_lunas) ? '<span class="text-success">Lunas</span>' : '<span class="text-danger">Belum Lunas</span>')  + '</h3>';
+                    html += '<h4>' + ((data.success.stt_lunas) ? '<span class="text-success">Lunas</span>' : '<span class="text-danger">Belum Lunas</span>')  + '</h4>';
                     //End Status Tagihan
 
                     //Pengguna
                     html += '<small class="text-muted pt-4 db">Pengguna</small>';
-                    html += '<h3>' + data.success.pengguna.name + '</h3>';
+                    html += '<h4>' + data.success.pengguna.name + '</h4>';
                     if(data.success.pengguna.ktp){
-                        html += '<h3>(KTP) ' + data.success.pengguna.ktp + '</h3>';
+                        html += '<h4>(KTP) ' + data.success.pengguna.ktp + '</h4>';
                     }
                     if(data.success.pengguna.phone){
-                        html += '<h3>(WA) +62' + data.success.pengguna.phone + '</h3>';
+                        html += '<h4>(WA) +62' + data.success.pengguna.phone + '</h4>';
                     }
                     //End Pengguna
+
+                    //Tagihan
+                    html += '<h4 class="text-center text-primary">TAGIHAN</h4>';
+                    $.each( data.success.data_tagihan, function( i, val ) {
+                        html += '<div class="row text-left">';
+                        html += '<div class="col-4">';
+                        html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
+                        html += '</div>';
+                        html += '<div class="col-8">';
+                        html += '<small class="pt-4">: ' + val + '</small>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    html += '<hr>';
+                    //End Tagihan
 
                     html += '<hr class="d-md-none">';
                     html += '</div>';
@@ -94,37 +109,103 @@
 
                     if(data.success.listrik){
                         //Listrik
-
+                        html += '<h4 class="text-center text-primary">LISTRIK</h4>';
+                        $.each( data.success.data_listrik, function( i, val ) {
+                            html += '<div class="row text-left">';
+                            html += '<div class="col-4">';
+                            html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
+                            html += '</div>';
+                            html += '<div class="col-8">';
+                            html += '<small class="pt-4">: ' + val + '</small>';
+                            html += '</div>';
+                            html += '</div>';
+                        });
+                        html += '<hr>';
                         //End Listrik
                     }
 
                     if(data.success.airbersih){
                         //Air Bersih
-
+                        html += '<h4 class="text-center text-primary">AIR BERSIH</h4>';
+                        $.each( data.success.data_airbersih, function( i, val ) {
+                            html += '<div class="row text-left">';
+                            html += '<div class="col-4">';
+                            html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
+                            html += '</div>';
+                            html += '<div class="col-8">';
+                            html += '<small class="pt-4">: ' + val + '</small>';
+                            html += '</div>';
+                            html += '</div>';
+                        });
+                        html += '<hr>';
                         //End Air Bersih
                     }
 
                     if(data.success.keamananipk){
                         //Keamanan IPK
-
+                        html += '<h4 class="text-center text-primary">KEAMANAN IPK</h4>';
+                        $.each( data.success.data_keamananipk, function( i, val ) {
+                            html += '<div class="row text-left">';
+                            html += '<div class="col-4">';
+                            html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
+                            html += '</div>';
+                            html += '<div class="col-8">';
+                            html += '<small class="pt-4">: ' + val + '</small>';
+                            html += '</div>';
+                            html += '</div>';
+                        });
+                        html += '<hr>';
                         //End Keamanan IPK
                     }
 
                     if(data.success.kebersihan){
                         //Kebersihan
-
+                        html += '<h4 class="text-center text-primary">KEBERSIHAN</h4>';
+                        $.each( data.success.data_kebersihan, function( i, val ) {
+                            html += '<div class="row text-left">';
+                            html += '<div class="col-4">';
+                            html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
+                            html += '</div>';
+                            html += '<div class="col-8">';
+                            html += '<small class="pt-4">: ' + val + '</small>';
+                            html += '</div>';
+                            html += '</div>';
+                        });
+                        html += '<hr>';
                         //End Kebersihan
                     }
 
                     if(data.success.airkotor){
                         //Air Kotor
-
+                        html += '<h4 class="text-center text-primary">AIR KOTOR</h4>';
+                        $.each( data.success.data_airkotor, function( i, val ) {
+                            html += '<div class="row text-left">';
+                            html += '<div class="col-4">';
+                            html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
+                            html += '</div>';
+                            html += '<div class="col-8">';
+                            html += '<small class="pt-4">: ' + val + '</small>';
+                            html += '</div>';
+                            html += '</div>';
+                        });
+                        html += '<hr>';
                         //End Air Kotor
                     }
 
                     if(data.success.lainnya){
                         //Lainnya
-
+                        html += '<h4 class="text-center text-primary">LAINNYA</h4>';
+                        $.each( data.success.data_lainnya, function( i, val ) {
+                            html += '<div class="row text-left">';
+                            html += '<div class="col-4">';
+                            html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
+                            html += '</div>';
+                            html += '<div class="col-8">';
+                            html += '<small class="pt-4">: ' + val + '</small>';
+                            html += '</div>';
+                            html += '</div>';
+                        });
+                        html += '<hr>';
                         //End Lainnya
                     }
 

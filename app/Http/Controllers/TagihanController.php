@@ -401,6 +401,138 @@ class TagihanController extends Controller
 
             $data = Tagihan::with('periode', 'pengguna')->findOrFail($decrypted);
 
+            if($data->listrik){
+                $listrik = [];
+                $dataset = $data->listrik;
+                $listrik['Status_Lunas'] = ($dataset->lunas) ? 'Lunas' : 'Belum Lunas';
+                $listrik['Kasir'] = $dataset->kasir;
+                $listrik['Tarif'] = Tarif::findOrFail($data->listrik->tarif)->name;
+                $alat = Alat::findOrFail($data->listrik->alat);
+                $listrik['Alat_Meter'] = $alat->name;
+                $listrik['Daya'] = number_format($dataset->daya, 0, ',', '.') . ' Watt';
+                $listrik['Stand_Awal'] = number_format($dataset->awal, 0, ',', '.');
+                $listrik['Stand_Akhir'] = number_format($dataset->akhir, 0, ',', '.');
+                $listrik['Status_Reset'] = ($dataset->reset) ? 'Ya' : 'Tidak';
+                $listrik['Pemakaian'] = number_format($dataset->pakai, 0, ',', '.');
+                $listrik['Rekmin'] = 'Rp ' . number_format($dataset->rekmin, 0, ',', '.') . ',-';
+                $listrik['Blok_1'] = 'Rp ' . number_format($dataset->blok1, 0, ',', '.') . ',-';
+                $listrik['Blok_2'] = 'Rp ' . number_format($dataset->blok2, 0, ',', '.') . ',-';
+                $listrik['Beban'] = 'Rp ' . number_format($dataset->beban, 0, ',', '.') . ',-';
+                $listrik['PJU'] = 'Rp ' . number_format($dataset->pju, 0, ',', '.') . ',-';
+                $listrik['Subtotal'] = 'Rp ' . number_format($dataset->subtotal, 0, ',', '.') . ',-';
+                $listrik['PPN'] = 'Rp ' . number_format($dataset->ppn, 0, ',', '.') . ',-';
+                $listrik['Denda'] = 'Rp ' . number_format($dataset->denda, 0, ',', '.') . ',-';
+                $listrik['Diskon'] = 'Rp ' . number_format($dataset->diskon, 0, ',', '.') . ',-';
+                $listrik['Total'] = 'Rp ' . number_format($dataset->total, 0, ',', '.') . ',-';
+                $listrik['Realisasi'] = 'Rp ' . number_format($dataset->realisasi, 0, ',', '.') . ',-';
+                $listrik['Selisih'] = 'Rp ' . number_format($dataset->selisih, 0, ',', '.') . ',-';
+                $data['data_listrik'] = $listrik;
+            }
+
+            if($data->airbersih){
+                $airbersih = [];
+                $dataset = $data->airbersih;
+                $airbersih['Status_Lunas'] = ($dataset->lunas) ? 'Lunas' : 'Belum Lunas';
+                $airbersih['Kasir'] = $dataset->kasir;
+                $airbersih['Tarif'] = Tarif::findOrFail($data->airbersih->tarif)->name;
+                $alat = Alat::findOrFail($data->airbersih->alat);
+                $airbersih['Alat_Meter'] = $alat->name;
+                $airbersih['Stand_Awal'] = number_format($dataset->awal, 0, ',', '.');
+                $airbersih['Stand_Akhir'] = number_format($dataset->akhir, 0, ',', '.');
+                $airbersih['Status_Reset'] = ($dataset->reset) ? 'Ya' : 'Tidak';
+                $airbersih['Pemakaian'] = number_format($dataset->pakai, 0, ',', '.');
+                $airbersih['Standar'] = 'Rp ' . number_format($dataset->bayar, 0, ',', '.') . ',-';
+                $airbersih['Pemeliharaan'] = 'Rp ' . number_format($dataset->pemeliharaan, 0, ',', '.') . ',-';
+                $airbersih['Beban'] = 'Rp ' . number_format($dataset->beban, 0, ',', '.') . ',-';
+                $airbersih['Air_Kotor'] = 'Rp ' . number_format($dataset->airkotor, 0, ',', '.') . ',-';
+                $airbersih['Subtotal'] = 'Rp ' . number_format($dataset->subtotal, 0, ',', '.') . ',-';
+                $airbersih['PPN'] = 'Rp ' . number_format($dataset->ppn, 0, ',', '.') . ',-';
+                $airbersih['Denda'] = 'Rp ' . number_format($dataset->denda, 0, ',', '.') . ',-';
+                $airbersih['Diskon'] = 'Rp ' . number_format($dataset->diskon, 0, ',', '.') . ',-';
+                $airbersih['Total'] = 'Rp ' . number_format($dataset->total, 0, ',', '.') . ',-';
+                $airbersih['Realisasi'] = 'Rp ' . number_format($dataset->realisasi, 0, ',', '.') . ',-';
+                $airbersih['Selisih'] = 'Rp ' . number_format($dataset->selisih, 0, ',', '.') . ',-';
+                $data['data_airbersih'] = $airbersih;
+            }
+
+            if($data->keamananipk){
+                $keamananipk = [];
+                $dataset = $data->keamananipk;
+                $keamananipk['Status_Lunas'] = ($dataset->lunas) ? 'Lunas' : 'Belum Lunas';
+                $keamananipk['Kasir'] = $dataset->kasir;
+                $tarif = Tarif::findOrFail($data->keamananipk->tarif);
+                $keamananipk['Nama_Tarif'] = $tarif->name;
+                $keamananipk['Tarif'] = 'Rp ' . number_format($tarif->data->Tarif, 0, ',', '.') . ',-' . " " . $tarif->status;
+                $keamananipk['Keamanan'] = 'Rp ' . number_format($dataset->keamanan, 0, ',', '.') . ',-';
+                $keamananipk['IPK'] = 'Rp ' . number_format($dataset->ipk, 0, ',', '.') . ',-';
+                $keamananipk['Subtotal'] = 'Rp ' . number_format($dataset->subtotal, 0, ',', '.') . ',-';
+                $keamananipk['Diskon'] = 'Rp ' . number_format($dataset->diskon, 0, ',', '.') . ',-';
+                $keamananipk['Total'] = 'Rp ' . number_format($dataset->total, 0, ',', '.') . ',-';
+                $keamananipk['Realisasi'] = 'Rp ' . number_format($dataset->realisasi, 0, ',', '.') . ',-';
+                $keamananipk['Selisih'] = 'Rp ' . number_format($dataset->selisih, 0, ',', '.') . ',-';
+                $data['data_keamananipk'] = $keamananipk;
+            }
+
+            if($data->kebersihan){
+                $kebersihan = [];
+                $dataset = $data->kebersihan;
+                $kebersihan['Status_Lunas'] = ($dataset->lunas) ? 'Lunas' : 'Belum Lunas';
+                $kebersihan['Kasir'] = $dataset->kasir;
+                $tarif = Tarif::findOrFail($data->kebersihan->tarif);
+                $kebersihan['Nama_Tarif'] = $tarif->name;
+                $kebersihan['Tarif'] = 'Rp ' . number_format($tarif->data->Tarif, 0, ',', '.') . ',-' . " " . $tarif->status;
+                $kebersihan['Subtotal'] = 'Rp ' . number_format($dataset->subtotal, 0, ',', '.') . ',-';
+                $kebersihan['Diskon'] = 'Rp ' . number_format($dataset->diskon, 0, ',', '.') . ',-';
+                $kebersihan['Total'] = 'Rp ' . number_format($dataset->total, 0, ',', '.') . ',-';
+                $kebersihan['Realisasi'] = 'Rp ' . number_format($dataset->realisasi, 0, ',', '.') . ',-';
+                $kebersihan['Selisih'] = 'Rp ' . number_format($dataset->selisih, 0, ',', '.') . ',-';
+                $data['data_kebersihan'] = $kebersihan;
+            }
+
+            if($data->airkotor){
+                $airkotor = [];
+                $dataset = $data->airkotor;
+                $airkotor['Status_Lunas'] = ($dataset->lunas) ? 'Lunas' : 'Belum Lunas';
+                $airkotor['Kasir'] = $dataset->kasir;
+                $tarif = Tarif::findOrFail($data->airkotor->tarif);
+                $airkotor['Nama_Tarif'] = $tarif->name;
+                $airkotor['Tarif'] = 'Rp ' . number_format($tarif->data->Tarif, 0, ',', '.') . ',-' . " " . $tarif->status;
+                $airkotor['Subtotal'] = 'Rp ' . number_format($dataset->subtotal, 0, ',', '.') . ',-';
+                $airkotor['Diskon'] = 'Rp ' . number_format($dataset->diskon, 0, ',', '.') . ',-';
+                $airkotor['Total'] = 'Rp ' . number_format($dataset->total, 0, ',', '.') . ',-';
+                $airkotor['Realisasi'] = 'Rp ' . number_format($dataset->realisasi, 0, ',', '.') . ',-';
+                $airkotor['Selisih'] = 'Rp ' . number_format($dataset->selisih, 0, ',', '.') . ',-';
+                $data['data_airkotor'] = $airkotor;
+            }
+
+            if($data->lainnya){
+                $lainnya = [];
+                $dataset = $data->lainnya;
+                $lainnya['Status_Lunas'] = ($dataset->lunas) ? 'Lunas' : 'Belum Lunas';
+                $lainnya['Kasir'] = $dataset->kasir;
+                foreach ($dataset->data as $key) {
+                    $tarif = Tarif::findOrFail($key->tarif);
+                    $lainnya['Tarif_'.$tarif->name] = 'Rp ' . number_format($tarif->data->Tarif, 0, ',', '.') . ',-' . " " . $tarif->status;
+                    $lainnya['Total_'.$tarif->name] = 'Rp ' . number_format($key->total, 0, ',', '.') . ',-';
+                }
+                $lainnya['Subtotal'] = 'Rp ' . number_format($dataset->subtotal, 0, ',', '.') . ',-';
+                $lainnya['Total'] = 'Rp ' . number_format($dataset->total, 0, ',', '.') . ',-';
+                $lainnya['Realisasi'] = 'Rp ' . number_format($dataset->realisasi, 0, ',', '.') . ',-';
+                $lainnya['Selisih'] = 'Rp ' . number_format($dataset->selisih, 0, ',', '.') . ',-';
+                $data['data_lainnya'] = $lainnya;
+            }
+
+            $tagihan = [];
+            $dataset = $data->tagihan;
+            $tagihan['Subtotal'] = 'Rp ' . number_format($dataset->subtotal, 0, ',', '.') . ',-';
+            $tagihan['PPN'] = 'Rp ' . number_format($dataset->ppn, 0, ',', '.') . ',-';
+            $tagihan['Denda'] = 'Rp ' . number_format($dataset->denda, 0, ',', '.') . ',-';
+            $tagihan['Diskon'] = 'Rp ' . number_format($dataset->diskon, 0, ',', '.') . ',-';
+            $tagihan['Total'] = 'Rp ' . number_format($dataset->total, 0, ',', '.') . ',-';
+            $tagihan['Realisasi'] = 'Rp ' . number_format($dataset->realisasi, 0, ',', '.') . ',-';
+            $tagihan['Selisih'] = 'Rp ' . number_format($dataset->selisih, 0, ',', '.') . ',-';
+            $data['data_tagihan'] = $tagihan;
+
             return response()->json(['success' => $data]);
         }
     }
