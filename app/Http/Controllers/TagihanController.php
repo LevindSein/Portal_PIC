@@ -545,7 +545,17 @@ class TagihanController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(request()->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            $data = Tagihan::with('periode', 'pengguna', 'group')->findOrFail($decrypted);
+
+            return response()->json(['success' => $data]);
+        }
     }
 
     /**
@@ -557,7 +567,9 @@ class TagihanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->ajax()){
+            return response()->json(['success' => 'Data berhasil disimpan.']);
+        }
     }
 
     /**

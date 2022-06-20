@@ -80,6 +80,11 @@ class Tagihan extends Model
         return $this->belongsTo(Periode::class, 'periode_id');
     }
 
+    public function group()
+    {
+        return $this->belongsTo(Group::class, 'group_id');
+    }
+
     public static function code(){
         return hexdec(uniqid("333")); //333 = Tagihan
     }

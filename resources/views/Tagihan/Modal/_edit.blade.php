@@ -1,179 +1,95 @@
 <!--begin::Modal-->
 <div class="modal fade" id="edit-modal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="edit-modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit</h5>
+                <h5 class="modal-title title">Edit</h5>
             </div>
             <form id="edit-form">
                 <div class="modal-body" style="height: 60vh;">
-                    <div class="form-group">
-                        <small class="form-control-label">Nama Pengguna <span class="text-danger">*</span></small>
-                        <input required type="text" id="edit-name" name="edit_name" autocomplete="off" maxlength="100" class="name form-control" placeholder="Masukkan Nama Pengguna" />
-                    </div>
-                    <div class="form-group">
-                        <small class="form-control-label">Level <span class="text-danger">*</span></small>
-                        <select required class="form-control" id="edit-level" name="edit_level">
-                            <option value="2">Admin</option>
-                            <option value="1">Super</option>
-                            <option value="3">Kasir</option>
-                            <option value="4">Keuangan</option>
-                            <option value="5">Manajer</option>
-                        </select>
-                    </div>
-                    <div id="edit-kelola">
-                        <div class="text-center form-group">
-                            <strong>Pilih Pengelolaan :</strong>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-6">
-                                @foreach($groups as $g)
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        name="groups[]"
-                                        id="edit-{{$g->name}}"
-                                        value="{{Crypt::encrypt($g->name)}}">
-                                    <label class="form-control-label" for="edit-{{$g->name}}">
-                                        {{$g->name}}
-                                    </label>
-                                </div>
-                                @endforeach
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group edit-los">
+                                <small class="form-control-label">Nomor Los <span class="text-danger">*</span></small>
+                                <select required id="edit-los" name="edit_los[]" class="form-control form-control-sm" multiple></select>
                             </div>
-                            <div class="col-6">
+                            <div class="form-group edit-pengguna">
+                                <small class="form-control-label">Pengguna <span class="text-danger">*</span></small>
+                                <select required class="form-control form-control-sm" id="edit-pengguna" name="edit_pengguna"></select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div>
                                 <div class="form-check">
                                     <input
                                         class="form-check-input"
                                         type="checkbox"
-                                        name="choosed[]"
-                                        id="edit-registrasi"
-                                        value="{{Crypt::encrypt('registrasi')}}">
-                                    <label class="form-control-label" for="edit-registrasi">
-                                        Registrasi
+                                        name="edit_listrik"
+                                        id="edit-listrik">
+                                    <label class="form-control-label" for="edit-listrik">
+                                        Listrik
                                     </label>
                                 </div>
+                                <div id="div-edit-listrik"></div>
+                            </div>
+                            <div>
                                 <div class="form-check">
                                     <input
                                         class="form-check-input"
                                         type="checkbox"
-                                        name="choosed[]"
-                                        id="edit-pedagang"
-                                        value="{{Crypt::encrypt('pedagang')}}">
-                                    <label class="form-control-label" for="edit-pedagang">
-                                        Pedagang
+                                        name="edit_airbersih"
+                                        id="edit-airbersih">
+                                    <label class="form-control-label" for="edit-airbersih">
+                                        Air Bersih
                                     </label>
                                 </div>
+                                <div id="div-edit-airbersih"></div>
+                            </div>
+                            <div>
                                 <div class="form-check">
                                     <input
                                         class="form-check-input"
                                         type="checkbox"
-                                        name="choosed[]"
-                                        id="edit-tempatusaha"
-                                        value="{{Crypt::encrypt('tempatusaha')}}">
-                                    <label class="form-control-label" for="edit-tempatusaha">
-                                        Tempat Usaha
+                                        name="edit_keamananipk"
+                                        id="edit-keamananipk">
+                                    <label class="form-control-label" for="edit-keamananipk">
+                                        Keamanan IPK
                                     </label>
                                 </div>
+                                <div id="div-edit-keamananipk"></div>
+                            </div>
+                            <div>
                                 <div class="form-check">
                                     <input
                                         class="form-check-input"
                                         type="checkbox"
-                                        name="choosed[]"
-                                        id="edit-pembongkaran"
-                                        value="{{Crypt::encrypt('pembongkaran')}}">
-                                    <label class="form-control-label" for="edit-pembongkaran">
-                                        Pembongkaran
+                                        name="edit_kebersihan"
+                                        id="edit-kebersihan">
+                                    <label class="form-control-label" for="edit-kebersihan">
+                                        Kebersihan
                                     </label>
                                 </div>
+                                <div id="div-edit-kebersihan"></div>
+                            </div>
+                            <div>
                                 <div class="form-check">
                                     <input
                                         class="form-check-input"
                                         type="checkbox"
-                                        name="choosed[]"
-                                        id="edit-pembayaran"
-                                        value="{{Crypt::encrypt('pembayaran')}}">
-                                    <label class="form-control-label" for="edit-pembayaran">
-                                        Kasir / Pembayaran
+                                        name="edit_airkotor"
+                                        id="edit-airkotor">
+                                    <label class="form-control-label" for="edit-airkotor">
+                                        Air Kotor
                                     </label>
                                 </div>
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        name="choosed[]"
-                                        id="edit-tagihan"
-                                        value="{{Crypt::encrypt('tagihan')}}">
-                                    <label class="form-control-label" for="edit-tagihan">
-                                        Tagihan
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        name="choosed[]"
-                                        id="edit-publishing"
-                                        value="{{Crypt::encrypt('publishing')}}">
-                                    <label class="form-control-label" for="edit-publishing">
-                                        Publishing
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        name="choosed[]"
-                                        id="edit-laporan"
-                                        value="{{Crypt::encrypt('laporan')}}">
-                                    <label class="form-control-label" for="edit-laporan">
-                                        Laporan
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        name="choosed[]"
-                                        id="edit-tarif"
-                                        value="{{Crypt::encrypt('tarif')}}">
-                                    <label class="form-control-label" for="edit-tarif">
-                                        Tarif
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        name="choosed[]"
-                                        id="edit-alatmeter"
-                                        value="{{Crypt::encrypt('alatmeter')}}">
-                                    <label class="form-control-label" for="edit-alatmeter">
-                                        Alat Meter
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        name="choosed[]"
-                                        id="edit-simulasi"
-                                        value="{{Crypt::encrypt('simulasi')}}">
-                                    <label class="form-control-label" for="edit-simulasi">
-                                        Simulasi Tagihan
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        name="choosed[]"
-                                        id="edit-potensi"
-                                        value="{{Crypt::encrypt('potensi')}}">
-                                    <label class="form-control-label" for="edit-potensi">
-                                        Potensi
-                                    </label>
-                                </div>
+                                <div id="div-edit-airkotor"></div>
+                            </div>
+
+                            <hr>
+                            <div id="div-edit-lainnya"></div>
+
+                            <div class="form-group">
+                                <button type="button" id="edit-lainnya-add" class="btn btn-sm btn-primary"><i class="fas fa-fw fa-plus mr-1"></i>Fasilitas Lainnya</button>
                             </div>
                         </div>
                     </div>
@@ -195,20 +111,32 @@
 <script>
     function edit_init(){
         $("#edit-form")[0].reset();
-        $("#edit-name").val('');
-        $("#edit-level").prop("selectedIndex", 0).val();
-        $("#edit-kelola").show();
+
+        $("#edit-pengguna").val('').html('').on('select2:open', () => {
+            $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+        });
+        select2user("#edit-pengguna", "/search/users", "-- Cari Pengguna --");
+
+        $("#edit-los").val('').html('').select2({placeholder: "-- Pilih Nomor Los --"});
+
+        $("#div-edit-listrik").html('');
+        $("#div-edit-airbersih").html('');
+        $("#div-edit-keamananipk").html('');
+        $("#div-edit-kebersihan").html('');
+        $("#div-edit-airkotor").html('');
+        $("#div-edit-lainnya").html('');
     }
 
-    var id;
+    var id, lain = 0, index = 1;;
 
     $(document).on('click', '.edit', function(e){
         e.preventDefault();
         id = $(this).attr("id");
         edit_init();
+        lain = 0, index = 1;
 
         $.ajax({
-            url: "/users/" + id + "/edit",
+            url: "/tagihan/" + id + "/edit",
             cache: false,
             method: "GET",
             dataType: "json",
@@ -231,21 +159,26 @@
             success:function(data)
             {
                 if(data.success){
-                    $("#edit-name").val(data.success.name);
-                    $("#edit-level").val(data.success.level).change();
+                    $(".title").text('Edit : Periode ' + data.success.periode.nicename + ' - ' + data.success.name);
 
-                    if(data.success.otoritas){
-                        if(data.success.otoritas.groups){
-                            $.each(data.success.otoritas.groups, function (index, value){
-                                $("#edit-" + value).prop("checked", true);
-                            });
-                        }
+                    $('#edit-los').val("").html("");
+                    select2los("#edit-los", "/search/" + data.success.group.name + "/los", "-- Pilih Nomor Los --");
+                    var los = data.success.los;
+                    $.each( los, function( i, val ) {
+                        var option = $('<option></option>').attr('value', val).text(val).prop('selected', true);
+                        $('#edit-los').append(option).trigger('change');
+                    });
 
-                        if(data.success.otoritas.choosed){
-                            $.each(data.success.otoritas.choosed, function (index, value){
-                                $("#edit-" + value).prop("checked", true);
-                            });
-                        }
+                    $('#edit-pengguna').val("").html("");
+                    var pengguna = new Option(data.success.pengguna.name + " (" + data.success.pengguna.ktp + ")", data.success.pengguna.id, false, false);
+                    $('#edit-pengguna').append(pengguna).trigger('change');
+
+                    if(data.success.listrik){
+                        $("#edit-listrik").prop("checked", true);
+                        editFasListrik();
+                    } else {
+                        $("#edit-listrik").prop("checked", false);
+                        editFasListrik();
                     }
                 }
 
@@ -279,19 +212,217 @@
                 $.unblockUI();
             }
         });
-
-        $('#edit-modal').on('shown.bs.modal', function() {
-            $("#edit-name").focus();
-        });
     });
 
-    $("#edit-level").on('change', function() {
-        if($("#edit-level").val() == 2){
-            $("#edit-kelola").show();
+    $('#edit-listrik').click(editFasListrik).each(editFasListrik);
+    function editFasListrik(){
+        if($("#edit-listrik").is(":checked")){
+            var html = '';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Alat Meter <span class="text-danger">*</span></small>';
+            html += '<select required id="edit-alat-listrik" name="edit_alat_listrik" class="form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
+            html += '<select required id="edit-trf-listrik" name="edit_trf_listrik" class="form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Diskon (% Tagihan)</small>';
+            html += '<input maxlength="3" type="text" id="edit-dis-listrik" name="edit_dis_listrik" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-sm">';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Awal Stand <span class="text-danger">*</span></small>';
+            html += '<input required id="edit-awal-listrik" name="edit_awal_listrik" class="number form-control form-control-sm" placeholder="Masukkan Nilai Awal Stand" />';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Akhir Stand <span class="text-danger">*</span></small>';
+            html += '<input required id="edit-akhir-listrik" name="edit_akhir_listrik" class="number form-control form-control-sm" placeholder="Masukkan Nilai Akhir Stand" />';
+            html += '</div>';
+            html += '<hr>';
+
+            $("#div-edit-listrik").html(html).hide();
+
+            $("#edit-alat-listrik").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+            select2alat("#edit-alat-listrik", "/search/alat", 1, "-- Cari Alat --");
+
+            $("#edit-trf-listrik").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+            select2tarif1("#edit-trf-listrik", "/search/tarif", 1, "-- Cari Tarif --");
+
+            $("#div-edit-listrik").fadeIn();
         }
         else{
-            $("#edit-kelola").hide();
+            $("#div-edit-listrik").html('');
         }
+    }
+
+    $('#edit-airbersih').click(editFasAirbersih).each(editFasAirbersih);
+    function editFasAirbersih(){
+        if($("#edit-airbersih").is(":checked")){
+            var html = '';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Alat Meter <span class="text-danger">*</span></small>';
+            html += '<select required id="edit-alat-airbersih" name="edit_alat_airbersih" class="form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
+            html += '<select required id="edit-trf-airbersih" name="edit_trf_airbersih" class="form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Diskon (% Tagihan)</small>';
+            html += '<input maxlength="3" type="text" id="edit-dis-airbersih" name="edit_dis_airbersih" autocomplete="off" placeholder="Ketikkan dalam angka" class="number percent form-control form-control-sm">';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Awal Stand <span class="text-danger">*</span></small>';
+            html += '<input required id="edit-awal-airbersih" name="edit_awal_airbersih" class="number form-control form-control-sm" placeholder="Masukkan Nilai Awal Stand" />';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Akhir Stand <span class="text-danger">*</span></small>';
+            html += '<input required id="edit-akhir-airbersih" name="edit_akhir_airbersih" class="number form-control form-control-sm" placeholder="Masukkan Nilai Akhir Stand" />';
+            html += '</div>';
+            html += '<hr>';
+
+            $("#div-edit-airbersih").html(html).hide();
+
+            $("#edit-alat-airbersih").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+            select2alat("#edit-alat-airbersih", "/search/alat", 2, "-- Cari Alat --");
+
+            $("#edit-trf-airbersih").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+            select2tarif1("#edit-trf-airbersih", "/search/tarif", 2, "-- Cari Tarif --");
+
+            $("#div-edit-airbersih").fadeIn();
+        }
+        else{
+            $("#div-edit-airbersih").html('');
+        }
+    }
+
+    $('#edit-keamananipk').click(editFasKeamananipk).each(editFasKeamananipk);
+    function editFasKeamananipk(){
+        if($("#edit-keamananipk").is(":checked")){
+            var html = '';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
+            html += '<select required id="edit-trf-keamananipk" name="edit_trf_keamananipk" class="form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
+            html += '<input maxlength="15" type="text" id="edit-dis-keamananipk" name="edit_dis_keamananipk" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
+            html += '</div>';
+            html += '<hr>';
+
+            $("#div-edit-keamananipk").html(html).hide();
+
+            $("#edit-trf-keamananipk").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+            select2tarif2("#edit-trf-keamananipk", "/search/tarif", 3, "-- Cari Tarif --");
+
+            $("#div-edit-keamananipk").fadeIn();
+        }
+        else{
+            $("#div-edit-keamananipk").html('');
+        }
+    }
+
+    $('#edit-kebersihan').click(editFasKebersihan).each(editFasKebersihan);
+    function editFasKebersihan(){
+        if($("#edit-kebersihan").is(":checked")){
+            var html = '';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
+            html += '<select required id="edit-trf-kebersihan" name="edit_trf_kebersihan" class="form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
+            html += '<input maxlength="15" type="text" id="edit-dis-kebersihan" name="edit_dis_kebersihan" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
+            html += '</div>';
+            html += '<hr>';
+
+            $("#div-edit-kebersihan").html(html).hide();
+
+            $("#edit-trf-kebersihan").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+            select2tarif2("#edit-trf-kebersihan", "/search/tarif", 4, "-- Cari Tarif --");
+
+            $("#div-edit-kebersihan").fadeIn();
+        }
+        else{
+            $("#div-edit-kebersihan").html('');
+        }
+    }
+
+    $('#edit-airkotor').click(editFasAirkotor).each(editFasAirkotor);
+    function editFasAirkotor(){
+        if($("#edit-airkotor").is(":checked")){
+            var html = '';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Tarif <span class="text-danger">*</span></small>';
+            html += '<select required id="edit-trf-airkotor" name="edit_trf_airkotor" class="form-control form-control-sm"></select>';
+            html += '</div>';
+            html += '<div class="form-group">';
+            html += '<small class="form-control-label">Diskon (per-Kontrol)</small>';
+            html += '<input maxlength="15" type="text" id="edit-dis-airkotor" name="edit_dis_airkotor" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control form-control-sm">';
+            html += '</div>';
+
+            $("#div-edit-airkotor").html(html).hide();
+
+            $("#edit-trf-airkotor").val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+            select2tarif2("#edit-trf-airkotor", "/search/tarif", 5, "-- Cari Tarif --");
+
+            $("#div-edit-airkotor").fadeIn();
+        }
+        else{
+            $("#div-edit-airkotor").html('');
+        }
+    }
+
+    $("#edit-lainnya-add").on('click', function () {
+        var html = '';
+        html += '<div name="div_lain" class="form-group">';
+        html += '<div class="d-flex justify-content-between">';
+        html += '<small class="form-control-label">Tarif Lainnya</small>';
+        html += '<a type="button" href="javascript:void(0)" id="edit-lainnya-rmv">';
+        html += '<small class="form-control-label text-danger"><i class="fas fa-fw fa-times"></i></small>';
+        html += '</a>';
+        html += '</div>';
+        html += '<select required id="edit-lainnya-'+ index + '" name="edit_lainnya[]" class="form-control form-control-sm"></select>';
+        html += '</div>';
+
+        if(lain < 10){
+            $('#div-edit-lainnya').append(html).hide();
+            select2tarif2("#edit-lainnya-" + index, "/search/tarif", 6,"-- Cari Tarif --");
+
+            $("#edit-lainnya-" + index).val('').html('').on('select2:open', () => {
+                $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
+            });
+
+            $('#div-edit-lainnya').fadeIn();
+
+            index++;
+            lain++;
+        }
+        else{
+            toastr.options = {
+                "closeButton": true,
+                "preventDuplicates": true,
+            };
+            toastr.error("Telah mencapai maksimal.");
+        }
+    });
+    $(document).on('click', '#edit-lainnya-rmv', function () {
+        lain--;
+        $(this).closest("[name='div_lain']").remove();
     });
 
     $("#edit-form").keypress(function(e) {
@@ -311,7 +442,7 @@
         });
 
         $.ajax({
-            url: "/users/" + id,
+            url: "/tagihan/" + id,
             cache: false,
             method: "PUT",
             data: $(this).serialize(),
