@@ -460,7 +460,7 @@ class TagihanController extends Controller
             $data['nicename'] = $tempat->nicename;
             $data['pengguna_id'] = $input['pengguna'];
             $data['group_id'] = $tempat->group_id;
-            $data['los'] = json_encode($input['nomor_los']);
+            $data['los'] = json_encode($los);
             $data['jml_los'] = $jml_los;
             $data['tagihan'] = json_encode([
                 'subtotal'  => $subtotal,
