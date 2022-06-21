@@ -116,12 +116,26 @@ class TagihanController extends Controller
 
             $input['tempat_usaha'] = $request->tambah_tempat;
 
+            $input['pengguna'] = $request->tambah_pengguna;
+
+            Validator::make($input, [
+                'periode'      => 'required|exists:periode,id',
+                'tempat_usaha' => 'required|exists:tempat,id',
+                'pengguna'     => 'required|exists:users,id',
+            ])->validate();
+
             $los = $this->multipleSelect($request->tambah_los);
             sort($los, SORT_NATURAL);
             $input['nomor_los'] = $los;
             $jml_los = count($input['nomor_los']);
 
-            $input['pengguna'] = $request->tambah_pengguna;
+            $no_los = Group::findOrFail(Tempat::findOrFail($input['tempat_usaha'])->group_id);
+            foreach($los as $l){
+                $input['nomor_los'] = $l;
+                Validator::make($input, [
+                    'nomor_los' => 'required|in:' . implode(',', json_decode($no_los->data)),
+                ])->validate();
+            }
 
             $subtotal = 0;
             $denda = 0;
@@ -135,6 +149,21 @@ class TagihanController extends Controller
                 $input['diskon_listrik'] = $request->tambah_dis_listrik;
                 $input['awal_stand_listrik'] = str_replace('.', '', $request->tambah_awal_listrik);
                 $input['akhir_stand_listrik'] = str_replace('.', '', $request->tambah_akhir_listrik);
+
+                Validator::make($input, [
+                    'alat_listrik'   => ['required','numeric',
+                                            Rule::exists('alat', 'id')
+                                            ->where('level', 1)
+                                            ->where('status', 1)
+                                        ],
+                    'tarif_listrik'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 1)
+                                        ],
+                    'diskon_listrik' => 'nullable|numeric|gte:0|lte:100',
+                    'awal_stand_listrik' => 'required|numeric|gte:0|lte:999999999999',
+                    'akhir_stand_listrik' => 'required|numeric|gte:0|lte:999999999999'
+                ])->validate();
 
                 $tarif = Tarif::findOrFail($input['tarif_listrik']);
                 $alat = Alat::findOrFail($input['alat_listrik']);
@@ -186,17 +215,32 @@ class TagihanController extends Controller
             }
 
             if($request->tambah_airbersih){
-                $input['alat_airbersih'] = $request->tambah_alat_airbersih;
-                $input['tarif_airbersih'] = $request->tambah_trf_airbersih;
-                $input['diskon_airbersih'] = $request->tambah_dis_airbersih;
-                $input['awal_stand_airbersih'] = str_replace('.', '', $request->tambah_awal_airbersih);
-                $input['akhir_stand_airbersih'] = str_replace('.', '', $request->tambah_akhir_airbersih);
+                $input['alat_air_bersih'] = $request->tambah_alat_airbersih;
+                $input['tarif_air_bersih'] = $request->tambah_trf_airbersih;
+                $input['diskon_air_bersih'] = $request->tambah_dis_airbersih;
+                $input['awal_stand_air_bersih'] = str_replace('.', '', $request->tambah_awal_airbersih);
+                $input['akhir_stand_air_bersih'] = str_replace('.', '', $request->tambah_akhir_airbersih);
 
-                $tarif = Tarif::findOrFail($input['tarif_airbersih']);
-                $alat = Alat::findOrFail($input['alat_airbersih']);
+                Validator::make($input, [
+                    'alat_air_bersih'   => ['required','numeric',
+                                            Rule::exists('alat', 'id')
+                                            ->where('level', 2)
+                                            ->where('status', 1)
+                                        ],
+                    'tarif_air_bersih'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 2)
+                                        ],
+                    'diskon_air_bersih' => 'nullable|numeric|gte:0|lte:100',
+                    'awal_stand_air_bersih' => 'required|numeric|gte:0|lte:999999999999',
+                    'akhir_stand_air_bersih' => 'required|numeric|gte:0|lte:999999999999'
+                ])->validate();
 
-                $awal = $input['awal_stand_airbersih'];
-                $akhir = $input['akhir_stand_airbersih'];
+                $tarif = Tarif::findOrFail($input['tarif_air_bersih']);
+                $alat = Alat::findOrFail($input['alat_air_bersih']);
+
+                $awal = $input['awal_stand_air_bersih'];
+                $akhir = $input['akhir_stand_air_bersih'];
 
                 $pakai = $akhir - $awal;
                 $reset = 0;
@@ -205,13 +249,13 @@ class TagihanController extends Controller
                     $reset = 1;
                 }
 
-                $tagihan = Tarif::airbersih($tarif->data, $pakai, $diff_month, $input['diskon_airbersih']);
+                $tagihan = Tarif::airbersih($tarif->data, $pakai, $diff_month, $input['diskon_air_bersih']);
 
                 $data['airbersih'] = json_encode([
                     'lunas'         => 0,
                     'kasir'         => null,
-                    'alat'          => $input['alat_airbersih'],
-                    'tarif'         => $input['tarif_airbersih'],
+                    'alat'          => $input['alat_air_bersih'],
+                    'tarif'         => $input['tarif_air_bersih'],
                     'awal'          => (int)$awal,
                     'akhir'         => (int)$akhir,
                     'reset'         => (int)$reset,
@@ -225,7 +269,7 @@ class TagihanController extends Controller
                     'denda'         => (int)$tagihan['denda'],
                     'denda_bulan'   => (int)$diff_month,
                     'diskon'        => (int)$tagihan['diskon'],
-                    'diskon_persen' => (int)$input['diskon_airbersih'],
+                    'diskon_persen' => (int)$input['diskon_air_bersih'],
                     'total'         => (int)$tagihan['total'],
                     'realisasi'     => 0,
                     'selisih'       => (int)$tagihan['total'],
@@ -239,20 +283,32 @@ class TagihanController extends Controller
             }
 
             if($request->tambah_keamananipk){
-                $input['tarif_keamananipk'] = $request->tambah_trf_keamananipk;
-                $input['diskon_keamananipk'] = 0;
+                $input['tarif_keamanan_ipk'] = $request->tambah_trf_keamananipk;
+                $input['diskon_keamanan_ipk'] = 0;
                 if($request->tambah_dis_keamananipk){
-                    $input['diskon_keamananipk'] = str_replace('.', '', $request->tambah_dis_keamananipk);
+                    $input['diskon_keamanan_ipk'] = str_replace('.', '', $request->tambah_dis_keamananipk);
                 }
 
-                $tarif = Tarif::findOrFail($input['tarif_keamananipk']);
+                Validator::make($input, [
+                    'tarif_keamanan_ipk'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 3)
+                                        ]
+                ])->validate();
 
-                $tagihan = Tarif::keamananipk($tarif->data, $jml_los, $input['diskon_keamananipk']);
+                $tarif = Tarif::findOrFail($input['tarif_keamanan_ipk']);
+                $max = count($los) * $tarif->data->Tarif;
+
+                Validator::make($input, [
+                    'diskon_keamanan_ipk' => 'nullable|numeric|gte:0|lte:' . $max,
+                ])->validate();
+
+                $tagihan = Tarif::keamananipk($tarif->data, $jml_los, $input['diskon_keamanan_ipk']);
 
                 $data['keamananipk'] = json_encode([
                     'lunas'         => 0,
                     'kasir'         => null,
-                    'tarif'         => $input['tarif_keamananipk'],
+                    'tarif'         => $input['tarif_keamanan_ipk'],
                     'jml_los'       => (int)$jml_los,
                     'keamanan'      => (int)$tagihan['keamanan'],
                     'ipk'           => (int)$tagihan['ipk'],
@@ -275,7 +331,19 @@ class TagihanController extends Controller
                     $input['diskon_kebersihan'] = str_replace('.', '', $request->tambah_dis_kebersihan);
                 }
 
+                Validator::make($input, [
+                    'tarif_kebersihan'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 4)
+                                        ]
+                ])->validate();
+
                 $tarif = Tarif::findOrFail($input['tarif_kebersihan']);
+                $max = count($los) * $tarif->data->Tarif;
+
+                Validator::make($input, [
+                    'diskon_kebersihan' => 'nullable|numeric|gte:0|lte:' . $max,
+                ])->validate();
 
                 $tagihan = Tarif::kebersihan($tarif->data, $jml_los, $input['diskon_kebersihan']);
 
@@ -297,20 +365,37 @@ class TagihanController extends Controller
             }
 
             if($request->tambah_airkotor){
-                $input['tarif_airkotor'] = $request->tambah_trf_airkotor;
-                $input['diskon_airkotor'] = 0;
-                if($request->tambah_dis_kairkotor){
-                    $input['diskon_airkotor'] = str_replace('.', '', $request->tambah_dis_airkotor);
+                $input['tarif_air_kotor'] = $request->tambah_trf_airkotor;
+                $input['diskon_air_kotor'] = 0;
+                if($request->tambah_dis_airkotor){
+                    $input['diskon_air_kotor'] = str_replace('.', '', $request->tambah_dis_airkotor);
                 }
 
-                $tarif = Tarif::findOrFail($input['tarif_airkotor']);
+                Validator::make($input, [
+                    'tarif_air_kotor'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 5)
+                                        ]
+                ])->validate();
 
-                $tagihan = Tarif::airkotor($tarif->data, $jml_los, $tarif->status, $input['diskon_airkotor']);
+                $tarif = Tarif::findOrFail($input['tarif_air_kotor']);
+
+                if($tarif->status == 'per-Los'){
+                    $max = count($los) * $tarif->data->Tarif;
+                } else {
+                    $max = $tarif->data->Tarif;
+                }
+
+                Validator::make($input, [
+                    'diskon_air_kotor' => 'nullable|numeric|gte:0|lte:' . $max,
+                ])->validate();
+
+                $tagihan = Tarif::airkotor($tarif->data, $jml_los, $tarif->status, $input['diskon_air_kotor']);
 
                 $data['airkotor'] = json_encode([
                     'lunas'         => 0,
                     'kasir'         => null,
-                    'tarif'         => $input['tarif_airkotor'],
+                    'tarif'         => $input['tarif_air_kotor'],
                     'jml_los'       => (int)$jml_los,
                     'subtotal'      => (int)$tagihan['subtotal'],
                     'diskon'        => (int)$tagihan['diskon'],
@@ -330,6 +415,15 @@ class TagihanController extends Controller
                 $total_lainnya = 0;
                 foreach ($request->tambah_lainnya as $key) {
                     $input['tarif_lainnya']  = $key;
+
+                    Validator::make($input, [
+                        'tarif_lainnya'
+                        => ['required','numeric',
+                            Rule::exists('tarif', 'id')
+                            ->where('level', 6)
+                        ]
+                    ])->validate();
+
                     $tarif = Tarif::findOrFail($input['tarif_lainnya']);
 
                     $tagihan = Tarif::lainnya($tarif->data, $jml_los, $tarif->status);
@@ -553,6 +647,36 @@ class TagihanController extends Controller
             }
 
             $data = Tagihan::with('periode', 'pengguna', 'group')->findOrFail($decrypted);
+
+            if($data->listrik){
+                $data['trf_listrik_id']  = Tarif::findOrFail($data->listrik->tarif);
+                $data['alat_listrik_id'] = Alat::findOrFail($data->listrik->alat);
+            }
+
+            if($data->airbersih){
+                $data['trf_airbersih_id']  = Tarif::findOrFail($data->airbersih->tarif);
+                $data['alat_airbersih_id'] = Alat::findOrFail($data->airbersih->alat);
+            }
+
+            if($data->keamananipk){
+                $data['trf_keamananipk_id']  = Tarif::findOrFail($data->keamananipk->tarif);
+            }
+
+            if($data->kebersihan){
+                $data['trf_kebersihan_id']  = Tarif::findOrFail($data->kebersihan->tarif);
+            }
+
+            if($data->airkotor){
+                $data['trf_airkotor_id']  = Tarif::findOrFail($data->airkotor->tarif);
+            }
+
+            if($data->lainnya){
+                $lainnya = [];
+                foreach ($data->lainnya->data as $key) {
+                    $lainnya[] = Tarif::findOrFail($key->tarif);
+                }
+                $data['trf_lainnya'] = $lainnya;
+            }
 
             return response()->json(['success' => $data]);
         }

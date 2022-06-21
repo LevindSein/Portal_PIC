@@ -346,11 +346,11 @@
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Awal Stand <span class="text-danger">*</span></small>';
-            html += '<input required id="tambah-awal-listrik" name="tambah_awal_listrik" class="number form-control form-control-sm" placeholder="Masukkan Nilai Awal Stand" />';
+            html += '<input required maxlength="15" id="tambah-awal-listrik" name="tambah_awal_listrik" class="number form-control form-control-sm" placeholder="Masukkan Nilai Awal Stand" />';
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Akhir Stand <span class="text-danger">*</span></small>';
-            html += '<input required id="tambah-akhir-listrik" name="tambah_akhir_listrik" class="number form-control form-control-sm" placeholder="Masukkan Nilai Akhir Stand" />';
+            html += '<input required maxlength="15" id="tambah-akhir-listrik" name="tambah_akhir_listrik" class="number form-control form-control-sm" placeholder="Masukkan Nilai Akhir Stand" />';
             html += '</div>';
             html += '<hr>';
 
@@ -391,11 +391,11 @@
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Awal Stand <span class="text-danger">*</span></small>';
-            html += '<input required id="tambah-awal-airbersih" name="tambah_awal_airbersih" class="number form-control form-control-sm" placeholder="Masukkan Nilai Awal Stand" />';
+            html += '<input required maxlength="15" id="tambah-awal-airbersih" name="tambah_awal_airbersih" class="number form-control form-control-sm" placeholder="Masukkan Nilai Awal Stand" />';
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Akhir Stand <span class="text-danger">*</span></small>';
-            html += '<input required id="tambah-akhir-airbersih" name="tambah_akhir_airbersih" class="number form-control form-control-sm" placeholder="Masukkan Nilai Akhir Stand" />';
+            html += '<input required maxlength="15" id="tambah-akhir-airbersih" name="tambah_akhir_airbersih" class="number form-control form-control-sm" placeholder="Masukkan Nilai Akhir Stand" />';
             html += '</div>';
             html += '<hr>';
 

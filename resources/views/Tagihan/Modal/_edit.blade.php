@@ -176,9 +176,94 @@
                     if(data.success.listrik){
                         $("#edit-listrik").prop("checked", true);
                         editFasListrik();
-                    } else {
-                        $("#edit-listrik").prop("checked", false);
-                        editFasListrik();
+
+                        $("#edit-alat-listrik").val("").html("");
+                        var alat  = new Option(data.success.alat_listrik_id.name + " (" + Number(data.success.alat_listrik_id.stand).toLocaleString('id-ID') + " - " + Number(data.success.alat_listrik_id.daya).toLocaleString('id-ID') + "W)", data.success.alat_listrik_id.id, false, false);
+                        $("#edit-alat-listrik").append(alat).trigger("change");
+
+                        $("#edit-trf-listrik").val("").html("");
+                        var tarif = new Option(data.success.trf_listrik_id.name + " - " + data.success.trf_listrik_id.status, data.success.trf_listrik_id.id, false, false);
+                        $("#edit-trf-listrik").append(tarif).trigger("change");
+
+                        if(data.success.listrik.diskon_persen){
+                            $("#edit-dis-listrik").val(data.success.listrik.diskon_persen);
+                        }
+
+                        $("#edit-awal-listrik").val(Number(data.success.listrik.awal).toLocaleString('id-ID'));
+                        $("#edit-akhir-listrik").val(Number(data.success.listrik.akhir).toLocaleString('id-ID'));
+                    }
+
+                    if(data.success.airbersih){
+                        $("#edit-airbersih").prop("checked", true);
+                        editFasAirbersih();
+
+                        $("#edit-alat-airbersih").val("").html("");
+                        var alat  = new Option(data.success.alat_airbersih_id.name + " (" + Number(data.success.alat_airbersih_id.stand).toLocaleString('id-ID') + ")", data.success.alat_airbersih_id.id, false, false);
+                        $("#edit-alat-airbersih").append(alat).trigger("change");
+
+                        $("#edit-trf-airbersih").val("").html("");
+                        var tarif = new Option(data.success.trf_airbersih_id.name + " - " + data.success.trf_airbersih_id.status, data.success.trf_airbersih_id.id, false, false);
+                        $("#edit-trf-airbersih").append(tarif).trigger("change");
+
+                        if(data.success.airbersih.diskon_persen){
+                            $("#edit-dis-airbersih").val(data.success.airbersih.diskon_persen);
+                        }
+
+                        $("#edit-awal-airbersih").val(Number(data.success.airbersih.awal).toLocaleString('id-ID'));
+                        $("#edit-akhir-airbersih").val(Number(data.success.airbersih.akhir).toLocaleString('id-ID'));
+                    }
+
+                    if(data.success.keamananipk){
+                        $("#edit-keamananipk").prop("checked", true);
+                        editFasKeamananipk();
+
+                        $("#edit-trf-keamananipk").val("").html("");
+                        var tarif = new Option(data.success.trf_keamananipk_id.name + " - Rp " + Number(data.success.trf_keamananipk_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_keamananipk_id.status, data.success.trf_keamananipk_id.id, false, false);
+                        $("#edit-trf-keamananipk").append(tarif).trigger("change");
+
+                        if(data.success.keamananipk.diskon){
+                            $("#edit-dis-keamananipk").val(Number(data.success.keamananipk.diskon).toLocaleString("id-ID"));
+                        }
+                    }
+
+                    if(data.success.kebersihan){
+                        $("#edit-kebersihan").prop("checked", true);
+                        editFasKebersihan();
+
+                        $("#edit-trf-kebersihan").val("").html("");
+                        var tarif = new Option(data.success.trf_kebersihan_id.name + " - Rp " + Number(data.success.trf_kebersihan_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_kebersihan_id.status, data.success.trf_kebersihan_id.id, false, false);
+                        $("#edit-trf-kebersihan").append(tarif).trigger("change");
+
+                        if(data.success.kebersihan.diskon){
+                            $("#edit-dis-kebersihan").val(Number(data.success.kebersihan.diskon).toLocaleString("id-ID"));
+                        }
+                    }
+
+                    if(data.success.airkotor){
+                        $("#edit-airkotor").prop("checked", true);
+                        editFasAirkotor();
+
+                        $("#edit-trf-airkotor").val("").html("");
+                        var tarif = new Option(data.success.trf_airkotor_id.name + " - Rp " + Number(data.success.trf_airkotor_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_airkotor_id.status, data.success.trf_airkotor_id.id, false, false);
+                        $("#edit-trf-airkotor").append(tarif).trigger("change");
+
+                        if(data.success.airkotor.diskon){
+                            $("#edit-dis-airkotor").val(Number(data.success.airkotor.diskon).toLocaleString("id-ID"));
+                        }
+                    }
+
+                    if(data.success.lainnya){
+                        $.each( data.success.trf_lainnya, function( i, val ) {
+                            $("#edit-lainnya-add").trigger("click");
+                            $("#edit-lainnya-" + index).val("").html("");
+                            var lainnya = new Option(
+                                val.name + " - Rp " + Number(val.data.Tarif).toLocaleString('id-ID') + " " + val.status,
+                                val.id,
+                                false,
+                                false
+                            );
+                            $("#edit-lainnya-" + (i+1)).append(lainnya).trigger("change");
+                        });
                     }
                 }
 
@@ -232,11 +317,11 @@
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Awal Stand <span class="text-danger">*</span></small>';
-            html += '<input required id="edit-awal-listrik" name="edit_awal_listrik" class="number form-control form-control-sm" placeholder="Masukkan Nilai Awal Stand" />';
+            html += '<input required maxlength="15" id="edit-awal-listrik" name="edit_awal_listrik" class="number form-control form-control-sm" placeholder="Masukkan Nilai Awal Stand" />';
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Akhir Stand <span class="text-danger">*</span></small>';
-            html += '<input required id="edit-akhir-listrik" name="edit_akhir_listrik" class="number form-control form-control-sm" placeholder="Masukkan Nilai Akhir Stand" />';
+            html += '<input required maxlength="15" id="edit-akhir-listrik" name="edit_akhir_listrik" class="number form-control form-control-sm" placeholder="Masukkan Nilai Akhir Stand" />';
             html += '</div>';
             html += '<hr>';
 
@@ -277,11 +362,11 @@
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Awal Stand <span class="text-danger">*</span></small>';
-            html += '<input required id="edit-awal-airbersih" name="edit_awal_airbersih" class="number form-control form-control-sm" placeholder="Masukkan Nilai Awal Stand" />';
+            html += '<input required maxlength="15" id="edit-awal-airbersih" name="edit_awal_airbersih" class="number form-control form-control-sm" placeholder="Masukkan Nilai Awal Stand" />';
             html += '</div>';
             html += '<div class="form-group">';
             html += '<small class="form-control-label">Akhir Stand <span class="text-danger">*</span></small>';
-            html += '<input required id="edit-akhir-airbersih" name="edit_akhir_airbersih" class="number form-control form-control-sm" placeholder="Masukkan Nilai Akhir Stand" />';
+            html += '<input required maxlength="15" id="edit-akhir-airbersih" name="edit_akhir_airbersih" class="number form-control form-control-sm" placeholder="Masukkan Nilai Akhir Stand" />';
             html += '</div>';
             html += '<hr>';
 

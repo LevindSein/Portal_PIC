@@ -118,6 +118,17 @@ class TempatController extends Controller
                 'keterangan'   => 'nullable|string|max:255',
             ])->validate();
 
+            $los = $this->multipleSelect($request->tambah_los);
+            sort($los, SORT_NATURAL);
+
+            $no_los = Group::where('name', $request->tambah_group)->first();
+            foreach($los as $l){
+                $input['nomor_los'] = $l;
+                Validator::make($input, [
+                    'nomor_los' => 'required|in:' . implode(',', json_decode($no_los->data)),
+                ])->validate();
+            }
+
             if($request->tambah_listrik){
                 $input['alat_listrik']   = $request->tambah_alat_listrik;
                 $input['tarif_listrik']  = $request->tambah_trf_listrik;
@@ -144,45 +155,51 @@ class TempatController extends Controller
             }
 
             if($request->tambah_airbersih){
-                $input['alat_airbersih']   = $request->tambah_alat_airbersih;
-                $input['tarif_airbersih']  = $request->tambah_trf_airbersih;
-                $input['diskon_airbersih'] = $request->tambah_dis_airbersih;
+                $input['alat_air_bersih']   = $request->tambah_alat_airbersih;
+                $input['tarif_air_bersih']  = $request->tambah_trf_airbersih;
+                $input['diskon_air_bersih'] = $request->tambah_dis_airbersih;
 
                 Validator::make($input, [
-                    'alat_airbersih'   => ['required','numeric',
+                    'alat_air_bersih'   => ['required','numeric',
                                             Rule::exists('alat', 'id')
                                             ->where('level', 2)
                                             ->where('status', 1)
                                         ],
-                    'tarif_airbersih'  => ['required','numeric',
+                    'tarif_air_bersih'  => ['required','numeric',
                                             Rule::exists('tarif', 'id')
                                             ->where('level', 2)
                                         ],
-                    'diskon_airbersih' => 'nullable|numeric|gte:0|lte:100',
+                    'diskon_air_bersih' => 'nullable|numeric|gte:0|lte:100',
                 ])->validate();
 
-                $data['alat_airbersih_id'] = $input['alat_airbersih'];
-                $data['trf_airbersih_id']  = $input['tarif_airbersih'];
-                if($input['diskon_airbersih']){
-                    $diskon['airbersih']   = $input['diskon_airbersih'];
+                $data['alat_airbersih_id'] = $input['alat_air_bersih'];
+                $data['trf_airbersih_id']  = $input['tarif_air_bersih'];
+                if($input['diskon_air_bersih']){
+                    $diskon['airbersih']   = $input['diskon_air_bersih'];
                 }
             }
 
             if($request->tambah_keamananipk){
-                $input['tarif_keamananipk']  = $request->tambah_trf_keamananipk;
-                $input['diskon_keamananipk'] = str_replace('.', '', $request->tambah_dis_keamananipk);
+                $input['tarif_keamanan_ipk']  = $request->tambah_trf_keamananipk;
+                $input['diskon_keamanan_ipk'] = str_replace('.', '', $request->tambah_dis_keamananipk);
 
                 Validator::make($input, [
-                    'tarif_keamananipk'  => ['required','numeric',
+                    'tarif_keamanan_ipk'  => ['required','numeric',
                                             Rule::exists('tarif', 'id')
                                             ->where('level', 3)
-                                        ],
-                    'diskon_keamananipk' => 'nullable|numeric|gte:0|lte:999999999999',
+                                        ]
                 ])->validate();
 
-                $data['trf_keamananipk_id']  = $input['tarif_keamananipk'];
-                if($input['diskon_keamananipk']){
-                    $diskon['keamananipk']   = $input['diskon_keamananipk'];
+                $tarif = Tarif::findOrFail($input['tarif_keamanan_ipk']);
+                $max = count($los) * $tarif->data->Tarif;
+
+                Validator::make($input, [
+                    'diskon_keamanan_ipk' => 'nullable|numeric|gte:0|lte:' . $max,
+                ])->validate();
+
+                $data['trf_keamananipk_id']  = $input['tarif_keamanan_ipk'];
+                if($input['diskon_keamanan_ipk']){
+                    $diskon['keamananipk']   = $input['diskon_keamanan_ipk'];
                 }
             }
 
@@ -194,8 +211,14 @@ class TempatController extends Controller
                     'tarif_kebersihan'  => ['required','numeric',
                                             Rule::exists('tarif', 'id')
                                             ->where('level', 4)
-                                        ],
-                    'diskon_kebersihan' => 'nullable|numeric|gte:0|lte:999999999999',
+                                        ]
+                ])->validate();
+
+                $tarif = Tarif::findOrFail($input['tarif_kebersihan']);
+                $max = count($los) * $tarif->data->Tarif;
+
+                Validator::make($input, [
+                    'diskon_kebersihan' => 'nullable|numeric|gte:0|lte:' . $max,
                 ])->validate();
 
                 $data['trf_kebersihan_id']  = $input['tarif_kebersihan'];
@@ -205,20 +228,31 @@ class TempatController extends Controller
             }
 
             if($request->tambah_airkotor){
-                $input['tarif_airkotor']  = $request->tambah_trf_airkotor;
-                $input['diskon_airkotor'] = str_replace('.', '', $request->tambah_dis_airkotor);
+                $input['tarif_air_kotor']  = $request->tambah_trf_airkotor;
+                $input['diskon_air_kotor'] = str_replace('.', '', $request->tambah_dis_airkotor);
 
                 Validator::make($input, [
-                    'tarif_airkotor'  => ['required','numeric',
+                    'tarif_air_kotor'  => ['required','numeric',
                                             Rule::exists('tarif', 'id')
                                             ->where('level', 5)
-                                        ],
-                    'diskon_airkotor' => 'nullable|numeric|gte:0|lte:999999999999',
+                                        ]
                 ])->validate();
 
-                $data['trf_airkotor_id']  = $input['tarif_airkotor'];
-                if($input['diskon_airkotor']){
-                    $diskon['airkotor']   = $input['diskon_airkotor'];
+                $tarif = Tarif::findOrFail($input['tarif_air_kotor']);
+
+                if($tarif->status == 'per-Los'){
+                    $max = count($los) * $tarif->data->Tarif;
+                } else {
+                    $max = $tarif->data->Tarif;
+                }
+
+                Validator::make($input, [
+                    'diskon_air_kotor' => 'nullable|numeric|gte:0|lte:' . $max,
+                ])->validate();
+
+                $data['trf_airkotor_id']  = $input['tarif_air_kotor'];
+                if($input['diskon_air_kotor']){
+                    $diskon['airkotor']   = $input['diskon_air_kotor'];
                 }
             }
 
@@ -238,17 +272,6 @@ class TempatController extends Controller
                 }
 
                 $data['trf_lainnya_id'] = json_encode($lainnya);
-            }
-
-            $los = $this->multipleSelect($request->tambah_los);
-            sort($los, SORT_NATURAL);
-
-            $no_los = Group::where('name', $request->tambah_group)->first();
-            foreach($los as $l){
-                $input['nomor_los'] = $l;
-                Validator::make($input, [
-                    'nomor_los' => 'required|in:' . implode(',', json_decode($no_los->data)),
-                ])->validate();
             }
 
             $data['name']        = $input['kode_kontrol'];
@@ -405,6 +428,17 @@ class TempatController extends Controller
                 'keterangan'   => 'nullable|string|max:255',
             ])->validate();
 
+            $los = $this->multipleSelect($request->edit_los);
+            sort($los, SORT_NATURAL);
+
+            $no_los = Group::where('name', $request->edit_group)->first();
+            foreach($los as $l){
+                $input['nomor_los'] = $l;
+                Validator::make($input, [
+                    'nomor_los' => 'required|in:' . implode(',', json_decode($no_los->data)),
+                ])->validate();
+            }
+
             $data['trf_listrik_id'] = NULL;
             $data['alat_listrik_id'] = NULL;
             if($request->edit_listrik){
@@ -435,46 +469,52 @@ class TempatController extends Controller
             $data['trf_airbersih_id'] = NULL;
             $data['alat_airbersih_id'] = NULL;
             if($request->edit_airbersih){
-                $input['alat_airbersih']   = $request->edit_alat_airbersih;
-                $input['tarif_airbersih']  = $request->edit_trf_airbersih;
-                $input['diskon_airbersih'] = $request->edit_dis_airbersih;
+                $input['alat_air_bersih']   = $request->edit_alat_airbersih;
+                $input['tarif_air_bersih']  = $request->edit_trf_airbersih;
+                $input['diskon_air_bersih'] = $request->edit_dis_airbersih;
 
                 Validator::make($input, [
-                    'alat_airbersih'   => ['required','numeric',
+                    'alat_air_bersih'   => ['required','numeric',
                                             Rule::exists('alat', 'id')
                                             ->where('level', 2)
                                             ->where('status', 1)
                                         ],
-                    'tarif_airbersih'  => ['required','numeric',
+                    'tarif_air_bersih'  => ['required','numeric',
                                             Rule::exists('tarif', 'id')
                                             ->where('level', 2)
                                         ],
-                    'diskon_airbersih' => 'nullable|numeric|gte:0|lte:100',
+                    'diskon_air_bersih' => 'nullable|numeric|gte:0|lte:100',
                 ])->validate();
 
-                $data['alat_airbersih_id'] = $input['alat_airbersih'];
-                $data['trf_airbersih_id']  = $input['tarif_airbersih'];
-                if($input['diskon_airbersih']){
-                    $diskon['airbersih']   = $input['diskon_airbersih'];
+                $data['alat_airbersih_id'] = $input['alat_air_bersih'];
+                $data['trf_airbersih_id']  = $input['tarif_air_bersih'];
+                if($input['diskon_air_bersih']){
+                    $diskon['airbersih']   = $input['diskon_air_bersih'];
                 }
             }
 
             $data['trf_keamananipk_id'] = NULL;
             if($request->edit_keamananipk){
-                $input['tarif_keamananipk']  = $request->edit_trf_keamananipk;
-                $input['diskon_keamananipk'] = str_replace('.', '', $request->edit_dis_keamananipk);
+                $input['tarif_keamanan_ipk']  = $request->edit_trf_keamananipk;
+                $input['diskon_keamanan_ipk'] = str_replace('.', '', $request->edit_dis_keamananipk);
 
                 Validator::make($input, [
-                    'tarif_keamananipk'  => ['required','numeric',
+                    'tarif_keamanan_ipk'  => ['required','numeric',
                                             Rule::exists('tarif', 'id')
                                             ->where('level', 3)
-                                        ],
-                    'diskon_keamananipk' => 'nullable|numeric|gte:0|lte:999999999999',
+                                        ]
                 ])->validate();
 
-                $data['trf_keamananipk_id']  = $input['tarif_keamananipk'];
-                if($input['diskon_keamananipk']){
-                    $diskon['keamananipk']   = $input['diskon_keamananipk'];
+                $tarif = Tarif::findOrFail($input['tarif_keamanan_ipk']);
+                $max = count($los) * $tarif->data->Tarif;
+
+                Validator::make($input, [
+                    'diskon_keamanan_ipk' => 'nullable|numeric|gte:0|lte:' . $max,
+                ])->validate();
+
+                $data['trf_keamananipk_id']  = $input['tarif_keamanan_ipk'];
+                if($input['diskon_keamanan_ipk']){
+                    $diskon['keamananipk']   = $input['diskon_keamanan_ipk'];
                 }
             }
 
@@ -487,8 +527,14 @@ class TempatController extends Controller
                     'tarif_kebersihan'  => ['required','numeric',
                                             Rule::exists('tarif', 'id')
                                             ->where('level', 4)
-                                        ],
-                    'diskon_kebersihan' => 'nullable|numeric|gte:0|lte:999999999999',
+                                        ]
+                ])->validate();
+
+                $tarif = Tarif::findOrFail($input['tarif_kebersihan']);
+                $max = count($los) * $tarif->data->Tarif;
+
+                Validator::make($input, [
+                    'diskon_kebersihan' => 'nullable|numeric|gte:0|lte:' . $max,
                 ])->validate();
 
                 $data['trf_kebersihan_id']  = $input['tarif_kebersihan'];
@@ -499,20 +545,31 @@ class TempatController extends Controller
 
             $data['trf_airkotor_id'] = NULL;
             if($request->edit_airkotor){
-                $input['tarif_airkotor']  = $request->edit_trf_airkotor;
-                $input['diskon_airkotor'] = str_replace('.', '', $request->edit_dis_airkotor);
+                $input['tarif_air_kotor']  = $request->edit_trf_airkotor;
+                $input['diskon_air_kotor'] = str_replace('.', '', $request->edit_dis_airkotor);
 
                 Validator::make($input, [
-                    'tarif_airkotor'  => ['required','numeric',
+                    'tarif_air_kotor'  => ['required','numeric',
                                             Rule::exists('tarif', 'id')
                                             ->where('level', 5)
-                                        ],
-                    'diskon_airkotor' => 'nullable|numeric|gte:0|lte:999999999999',
+                                        ]
                 ])->validate();
 
-                $data['trf_airkotor_id']  = $input['tarif_airkotor'];
-                if($input['diskon_airkotor']){
-                    $diskon['airkotor']   = $input['diskon_airkotor'];
+                $tarif = Tarif::findOrFail($input['tarif_air_kotor']);
+
+                if($tarif->status == 'per-Los'){
+                    $max = count($los) * $tarif->data->Tarif;
+                } else {
+                    $max = $tarif->data->Tarif;
+                }
+
+                Validator::make($input, [
+                    'diskon_air_kotor' => 'nullable|numeric|gte:0|lte:' . $max,
+                ])->validate();
+
+                $data['trf_airkotor_id']  = $input['tarif_air_kotor'];
+                if($input['diskon_air_kotor']){
+                    $diskon['airkotor']   = $input['diskon_air_kotor'];
                 }
             }
 
@@ -533,17 +590,6 @@ class TempatController extends Controller
                 }
 
                 $data['trf_lainnya_id'] = json_encode($lainnya);
-            }
-
-            $los = $this->multipleSelect($request->edit_los);
-            sort($los, SORT_NATURAL);
-
-            $no_los = Group::where('name', $request->edit_group)->first();
-            foreach($los as $l){
-                $input['nomor_los'] = $l;
-                Validator::make($input, [
-                    'nomor_los' => 'required|in:' . implode(',', json_decode($no_los->data)),
-                ])->validate();
             }
 
             $data['name']        = $input['kode_kontrol'];
