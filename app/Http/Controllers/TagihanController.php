@@ -472,7 +472,9 @@ class TagihanController extends Controller
                 'selisih'   => $total
             ]);
 
-            Tagihan::create($data);
+            DB::transaction(function() use ($data){
+                Tagihan::create($data);
+            });
 
             return response()->json(['success' => 'Data berhasil disimpan.', 'debug' => $input['periode']]);
         }
@@ -692,6 +694,147 @@ class TagihanController extends Controller
     public function update(Request $request, $id)
     {
         if($request->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            DB::transaction(function() use ($request, $decrypted){
+                $dataset = Tagihan::lockForUpdate()->findOrFail($decrypted);
+
+                $periode = Periode::findOrFail($dataset->periode_id);
+
+                $diff_month = Periode::diffInMonth($periode);
+
+                $input['pengguna'] = $request->edit_pengguna;
+
+                Validator::make($input, [
+                    'pengguna'     => 'required|exists:users,id',
+                ])->validate();
+
+                $los = $this->multipleSelect($request->edit_los);
+                sort($los, SORT_NATURAL);
+                $input['nomor_los'] = $los;
+                $jml_los = count($input['nomor_los']);
+
+                $no_los = Group::findOrFail($dataset->group_id);
+                foreach($los as $l){
+                    $input['nomor_los'] = $l;
+                    Validator::make($input, [
+                        'nomor_los' => 'required|in:' . implode(',', json_decode($no_los->data)),
+                    ])->validate();
+                }
+
+                $subtotal = 0;
+                $denda = 0;
+                $diskon = 0;
+                $ppn = 0;
+                $total = 0;
+                $realisasi = 0;
+                $selisih = 0;
+
+                if($request->edit_listrik){
+                    if($dataset->listrik && $dataset->listrik->lunas){
+                        $subtotal += $dataset->listrik->subtotal;
+                        $ppn += $dataset->listrik->ppn;
+                        $denda += $dataset->listrik->denda;
+                        $diskon += $dataset->listrik->diskon;
+                        $total += $dataset->listrik->total;
+                        $realisasi += $dataset->listrik->realisasi;
+                        $selisih += $dataset->listrik->selisih;
+                    } else {
+                        $input['alat_listrik'] = $request->edit_alat_listrik;
+                        $input['tarif_listrik'] = $request->edit_trf_listrik;
+                        $input['diskon_listrik'] = $request->edit_dis_listrik;
+                        $input['awal_stand_listrik'] = str_replace('.', '', $request->edit_awal_listrik);
+                        $input['akhir_stand_listrik'] = str_replace('.', '', $request->edit_akhir_listrik);
+
+                        Validator::make($input, [
+                            'alat_listrik'   => ['required','numeric',
+                                                    Rule::exists('alat', 'id')
+                                                    ->where('level', 1)
+                                                    ->where('status', 1)
+                                                ],
+                            'tarif_listrik'  => ['required','numeric',
+                                                    Rule::exists('tarif', 'id')
+                                                    ->where('level', 1)
+                                                ],
+                            'diskon_listrik' => 'nullable|numeric|gte:0|lte:100',
+                            'awal_stand_listrik' => 'required|numeric|gte:0|lte:999999999999',
+                            'akhir_stand_listrik' => 'required|numeric|gte:0|lte:999999999999'
+                        ])->validate();
+
+                        $tarif = Tarif::findOrFail($input['tarif_listrik']);
+                        $alat = Alat::findOrFail($input['alat_listrik']);
+
+                        $daya = $alat->daya;
+                        $awal = $input['awal_stand_listrik'];
+                        $akhir = $input['akhir_stand_listrik'];
+
+                        $pakai = $akhir - $awal;
+                        $reset = 0;
+                        if($awal > $akhir){
+                            $pakai = ($akhir + (str_repeat(9, strlen($awal)))) - $awal;
+                            $reset = 1;
+                        }
+
+                        $tagihan = Tarif::listrik($tarif->data, $pakai, $daya, $diff_month, $input['diskon_listrik']);
+
+                        $data['listrik'] = json_encode([
+                            'lunas'         => 0,
+                            'kasir'         => null,
+                            'alat'          => $input['alat_listrik'],
+                            'tarif'         => $input['tarif_listrik'],
+                            'daya'          => (int)$daya,
+                            'awal'          => (int)$awal,
+                            'akhir'         => (int)$akhir,
+                            'reset'         => (int)$reset,
+                            'pakai'         => (int)$pakai,
+                            'rekmin'        => (int)$tagihan['rekmin'],
+                            'blok1'         => (int)$tagihan['blok1'],
+                            'blok2'         => (int)$tagihan['blok2'],
+                            'beban'         => (int)$tagihan['beban'],
+                            'pju'           => (int)$tagihan['pju'],
+                            'subtotal'      => (int)$tagihan['subtotal'],
+                            'ppn'           => (int)$tagihan['ppn'],
+                            'denda'         => (int)$tagihan['denda'],
+                            'denda_bulan'   => (int)$diff_month,
+                            'diskon'        => (int)$tagihan['diskon'],
+                            'diskon_persen' => (int)$input['diskon_listrik'],
+                            'total'         => (int)$tagihan['total'],
+                            'realisasi'     => 0,
+                            'selisih'       => (int)$tagihan['total'],
+                        ]);
+
+                        $subtotal += $tagihan['subtotal'];
+                        $ppn += $tagihan['ppn'];
+                        $denda += $tagihan['denda'];
+                        $diskon += $tagihan['diskon'];
+                        $total += $tagihan['total'];
+                        $realisasi += 0;
+                        $selisih += $tagihan['total'];
+                    }
+                } else {
+                    $data['listrik'] = NULL;
+                }
+
+                $data['pengguna_id'] = $input['pengguna'];
+                $data['los'] = json_encode($los);
+                $data['jml_los'] = $jml_los;
+                $data['tagihan'] = json_encode([
+                    'subtotal'  => $subtotal,
+                    'ppn'       => $ppn,
+                    'denda'     => $denda,
+                    'diskon'    => $diskon,
+                    'total'     => $total,
+                    'realisasi' => $realisasi,
+                    'selisih'   => $selisih
+                ]);
+
+                $dataset->update($data);
+            });
+
             return response()->json(['success' => 'Data berhasil disimpan.']);
         }
     }

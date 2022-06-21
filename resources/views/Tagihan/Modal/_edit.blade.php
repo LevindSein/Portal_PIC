@@ -174,23 +174,27 @@
                     $('#edit-pengguna').append(pengguna).trigger('change');
 
                     if(data.success.listrik){
-                        $("#edit-listrik").prop("checked", true);
-                        editFasListrik();
+                        if(data.success.listrik.lunas){
+                            $("#edit-listrik").prop("checked", false).prop("disabled", true);
+                        } else {
+                            $("#edit-listrik").prop("checked", true).prop("disabled", false);
+                            editFasListrik();
 
-                        $("#edit-alat-listrik").val("").html("");
-                        var alat  = new Option(data.success.alat_listrik_id.name + " (" + Number(data.success.alat_listrik_id.stand).toLocaleString('id-ID') + " - " + Number(data.success.alat_listrik_id.daya).toLocaleString('id-ID') + "W)", data.success.alat_listrik_id.id, false, false);
-                        $("#edit-alat-listrik").append(alat).trigger("change");
+                            $("#edit-alat-listrik").val("").html("");
+                            var alat  = new Option(data.success.alat_listrik_id.name + " (" + Number(data.success.alat_listrik_id.stand).toLocaleString('id-ID') + " - " + Number(data.success.alat_listrik_id.daya).toLocaleString('id-ID') + "W)", data.success.alat_listrik_id.id, false, false);
+                            $("#edit-alat-listrik").append(alat).trigger("change");
 
-                        $("#edit-trf-listrik").val("").html("");
-                        var tarif = new Option(data.success.trf_listrik_id.name + " - " + data.success.trf_listrik_id.status, data.success.trf_listrik_id.id, false, false);
-                        $("#edit-trf-listrik").append(tarif).trigger("change");
+                            $("#edit-trf-listrik").val("").html("");
+                            var tarif = new Option(data.success.trf_listrik_id.name + " - " + data.success.trf_listrik_id.status, data.success.trf_listrik_id.id, false, false);
+                            $("#edit-trf-listrik").append(tarif).trigger("change");
 
-                        if(data.success.listrik.diskon_persen){
-                            $("#edit-dis-listrik").val(data.success.listrik.diskon_persen);
+                            if(data.success.listrik.diskon_persen){
+                                $("#edit-dis-listrik").val(data.success.listrik.diskon_persen);
+                            }
+
+                            $("#edit-awal-listrik").val(Number(data.success.listrik.awal).toLocaleString('id-ID'));
+                            $("#edit-akhir-listrik").val(Number(data.success.listrik.akhir).toLocaleString('id-ID'));
                         }
-
-                        $("#edit-awal-listrik").val(Number(data.success.listrik.awal).toLocaleString('id-ID'));
-                        $("#edit-akhir-listrik").val(Number(data.success.listrik.akhir).toLocaleString('id-ID'));
                     }
 
                     if(data.success.airbersih){
@@ -509,6 +513,34 @@
         lain--;
         $(this).closest("[name='div_lain']").remove();
     });
+
+    $(document).on('change', "#edit-alat-listrik, #edit-alat-airbersih", function() {
+        $.ajax({
+            url: "/search/stand/" + $(this).val(),
+            cache: false,
+            method: "GET",
+            dataType: "json",
+            success:function(data)
+            {
+                if(data.level == 2){
+                    $("#edit-awal-airbersih").val(Number(data.stand).toLocaleString('id-ID'));
+                } else {
+                    $("#edit-awal-listrik").val(Number(data.stand).toLocaleString('id-ID'));
+                }
+            },
+            error:function(data){
+                if (data.status == 422) {
+                    $.each(data.responseJSON.errors, function (i, error) {
+                        toastr.error(error[0]);
+                    });
+                }
+                else{
+                    toastr.error("System error.");
+                    console.log(data);
+                }
+            }
+        });
+    })
 
     $("#edit-form").keypress(function(e) {
         if(e.which == 13) {
