@@ -816,7 +816,356 @@ class TagihanController extends Controller
                         $selisih += $tagihan['total'];
                     }
                 } else {
-                    $data['listrik'] = NULL;
+                    if($dataset->listrik && $dataset->listrik->lunas){
+                        $subtotal += $dataset->listrik->subtotal;
+                        $ppn += $dataset->listrik->ppn;
+                        $denda += $dataset->listrik->denda;
+                        $diskon += $dataset->listrik->diskon;
+                        $total += $dataset->listrik->total;
+                        $realisasi += $dataset->listrik->realisasi;
+                        $selisih += $dataset->listrik->selisih;
+                    } else {
+                        $data['listrik'] = NULL;
+                    }
+                }
+
+                if($request->edit_airbersih){
+                    if($dataset->airbersih && $dataset->airbersih->lunas){
+                        $subtotal += $dataset->airbersih->subtotal;
+                        $ppn += $dataset->airbersih->ppn;
+                        $denda += $dataset->airbersih->denda;
+                        $diskon += $dataset->airbersih->diskon;
+                        $total += $dataset->airbersih->total;
+                        $realisasi += $dataset->airbersih->realisasi;
+                        $selisih += $dataset->airbersih->selisih;
+                    } else {
+                        $input['alat_air_bersih'] = $request->edit_alat_airbersih;
+                        $input['tarif_air_bersih'] = $request->edit_trf_airbersih;
+                        $input['diskon_air_bersih'] = $request->edit_dis_airbersih;
+                        $input['awal_stand_air_bersih'] = str_replace('.', '', $request->edit_awal_airbersih);
+                        $input['akhir_stand_air_bersih'] = str_replace('.', '', $request->edit_akhir_airbersih);
+
+                        Validator::make($input, [
+                            'alat_air_bersih'   => ['required','numeric',
+                                                    Rule::exists('alat', 'id')
+                                                    ->where('level', 2)
+                                                    ->where('status', 1)
+                                                ],
+                            'tarif_air_bersih'  => ['required','numeric',
+                                                    Rule::exists('tarif', 'id')
+                                                    ->where('level', 2)
+                                                ],
+                            'diskon_air_bersih' => 'nullable|numeric|gte:0|lte:100',
+                            'awal_stand_air_bersih' => 'required|numeric|gte:0|lte:999999999999',
+                            'akhir_stand_air_bersih' => 'required|numeric|gte:0|lte:999999999999'
+                        ])->validate();
+
+                        $tarif = Tarif::findOrFail($input['tarif_air_bersih']);
+                        $alat = Alat::findOrFail($input['alat_air_bersih']);
+
+                        $awal = $input['awal_stand_air_bersih'];
+                        $akhir = $input['akhir_stand_air_bersih'];
+
+                        $pakai = $akhir - $awal;
+                        $reset = 0;
+                        if($awal > $akhir){
+                            $pakai = ($akhir + (str_repeat(9, strlen($awal)))) - $awal;
+                            $reset = 1;
+                        }
+
+                        $tagihan = Tarif::airbersih($tarif->data, $pakai, $diff_month, $input['diskon_air_bersih']);
+
+                        $data['airbersih'] = json_encode([
+                            'lunas'         => 0,
+                            'kasir'         => null,
+                            'alat'          => $input['alat_air_bersih'],
+                            'tarif'         => $input['tarif_air_bersih'],
+                            'awal'          => (int)$awal,
+                            'akhir'         => (int)$akhir,
+                            'reset'         => (int)$reset,
+                            'pakai'         => (int)$pakai,
+                            'bayar'         => (int)$tagihan['bayar'],
+                            'pemeliharaan'  => (int)$tagihan['pemeliharaan'],
+                            'beban'         => (int)$tagihan['beban'],
+                            'airkotor'      => (int)$tagihan['airkotor'],
+                            'subtotal'      => (int)$tagihan['subtotal'],
+                            'ppn'           => (int)$tagihan['ppn'],
+                            'denda'         => (int)$tagihan['denda'],
+                            'denda_bulan'   => (int)$diff_month,
+                            'diskon'        => (int)$tagihan['diskon'],
+                            'diskon_persen' => (int)$input['diskon_air_bersih'],
+                            'total'         => (int)$tagihan['total'],
+                            'realisasi'     => 0,
+                            'selisih'       => (int)$tagihan['total'],
+                        ]);
+
+                        $subtotal += $tagihan['subtotal'];
+                        $ppn += $tagihan['ppn'];
+                        $denda += $tagihan['denda'];
+                        $diskon += $tagihan['diskon'];
+                        $total += $tagihan['total'];
+                        $realisasi += 0;
+                        $selisih += $tagihan['total'];
+                    }
+                } else {
+                    if($dataset->airbersih && $dataset->airbersih->lunas){
+                        $subtotal += $dataset->airbersih->subtotal;
+                        $ppn += $dataset->airbersih->ppn;
+                        $denda += $dataset->airbersih->denda;
+                        $diskon += $dataset->airbersih->diskon;
+                        $total += $dataset->airbersih->total;
+                        $realisasi += $dataset->airbersih->realisasi;
+                        $selisih += $dataset->airbersih->selisih;
+                    } else {
+                        $data['airbersih'] = NULL;
+                    }
+                }
+
+                if($request->edit_keamananipk){
+                    if($dataset->keamananipk && $dataset->keamananipk->lunas){
+                        $subtotal += $dataset->keamananipk->subtotal;
+                        $diskon += $dataset->keamananipk->diskon;
+                        $total += $dataset->keamananipk->total;
+                        $realisasi += $dataset->keamananipk->realisasi;
+                        $selisih += $dataset->keamananipk->selisih;
+                    } else {
+                        $input['tarif_keamanan_ipk'] = $request->edit_trf_keamananipk;
+                        $input['diskon_keamanan_ipk'] = 0;
+                        if($request->edit_dis_keamananipk){
+                            $input['diskon_keamanan_ipk'] = str_replace('.', '', $request->edit_dis_keamananipk);
+                        }
+
+                        Validator::make($input, [
+                            'tarif_keamanan_ipk'  => ['required','numeric',
+                                                    Rule::exists('tarif', 'id')
+                                                    ->where('level', 3)
+                                                ]
+                        ])->validate();
+
+                        $tarif = Tarif::findOrFail($input['tarif_keamanan_ipk']);
+                        $max = count($los) * $tarif->data->Tarif;
+
+                        Validator::make($input, [
+                            'diskon_keamanan_ipk' => 'nullable|numeric|gte:0|lte:' . $max,
+                        ])->validate();
+
+                        $tagihan = Tarif::keamananipk($tarif->data, $jml_los, $input['diskon_keamanan_ipk']);
+
+                        $data['keamananipk'] = json_encode([
+                            'lunas'         => 0,
+                            'kasir'         => null,
+                            'tarif'         => $input['tarif_keamanan_ipk'],
+                            'jml_los'       => (int)$jml_los,
+                            'keamanan'      => (int)$tagihan['keamanan'],
+                            'ipk'           => (int)$tagihan['ipk'],
+                            'subtotal'      => (int)$tagihan['subtotal'],
+                            'diskon'        => (int)$tagihan['diskon'],
+                            'total'         => (int)$tagihan['total'],
+                            'realisasi'     => 0,
+                            'selisih'       => (int)$tagihan['total'],
+                        ]);
+
+                        $subtotal += $tagihan['subtotal'];
+                        $diskon += $tagihan['diskon'];
+                        $total += $tagihan['total'];
+                        $realisasi += 0;
+                        $selisih += $tagihan['total'];
+                    }
+                } else {
+                    if($dataset->keamananipk && $dataset->keamananipk->lunas){
+                        $subtotal += $dataset->keamananipk->subtotal;
+                        $diskon += $dataset->keamananipk->diskon;
+                        $total += $dataset->keamananipk->total;
+                        $realisasi += $dataset->keamananipk->realisasi;
+                        $selisih += $dataset->keamananipk->selisih;
+                    } else {
+                        $data['keamananipk'] = NULL;
+                    }
+                }
+
+                if($request->edit_kebersihan){
+                    if($dataset->kebersihan && $dataset->kebersihan->lunas){
+                        $subtotal += $dataset->kebersihan->subtotal;
+                        $diskon += $dataset->kebersihan->diskon;
+                        $total += $dataset->kebersihan->total;
+                        $realisasi += $dataset->kebersihan->realisasi;
+                        $selisih += $dataset->kebersihan->selisih;
+                    } else {
+                        $input['tarif_kebersihan'] = $request->edit_trf_kebersihan;
+                        $input['diskon_kebersihan'] = 0;
+                        if($request->edit_dis_kebersihan){
+                            $input['diskon_kebersihan'] = str_replace('.', '', $request->edit_dis_kebersihan);
+                        }
+
+                        Validator::make($input, [
+                            'tarif_kebersihan'  => ['required','numeric',
+                                                    Rule::exists('tarif', 'id')
+                                                    ->where('level', 4)
+                                                ]
+                        ])->validate();
+
+                        $tarif = Tarif::findOrFail($input['tarif_kebersihan']);
+                        $max = count($los) * $tarif->data->Tarif;
+
+                        Validator::make($input, [
+                            'diskon_kebersihan' => 'nullable|numeric|gte:0|lte:' . $max,
+                        ])->validate();
+
+                        $tagihan = Tarif::kebersihan($tarif->data, $jml_los, $input['diskon_kebersihan']);
+
+                        $data['kebersihan'] = json_encode([
+                            'lunas'         => 0,
+                            'kasir'         => null,
+                            'tarif'         => $input['tarif_kebersihan'],
+                            'jml_los'       => (int)$jml_los,
+                            'subtotal'      => (int)$tagihan['subtotal'],
+                            'diskon'        => (int)$tagihan['diskon'],
+                            'total'         => (int)$tagihan['total'],
+                            'realisasi'     => 0,
+                            'selisih'       => (int)$tagihan['total'],
+                        ]);
+
+                        $subtotal += $tagihan['subtotal'];
+                        $diskon += $tagihan['diskon'];
+                        $total += $tagihan['total'];
+                        $realisasi += 0;
+                        $selisih += $tagihan['total'];
+                    }
+                } else {
+                    if($dataset->kebersihan && $dataset->kebersihan->lunas){
+                        $subtotal += $dataset->kebersihan->subtotal;
+                        $diskon += $dataset->kebersihan->diskon;
+                        $total += $dataset->kebersihan->total;
+                        $realisasi += $dataset->kebersihan->realisasi;
+                        $selisih += $dataset->kebersihan->selisih;
+                    } else {
+                        $data['kebersihan'] = NULL;
+                    }
+                }
+
+                if($request->edit_airkotor){
+                    if($dataset->airkotor && $dataset->airkotor->lunas){
+                        $subtotal += $dataset->airkotor->subtotal;
+                        $diskon += $dataset->airkotor->diskon;
+                        $total += $dataset->airkotor->total;
+                        $realisasi += $dataset->airkotor->realisasi;
+                        $selisih += $dataset->airkotor->selisih;
+                    } else {
+                        $input['tarif_air_kotor'] = $request->edit_trf_airkotor;
+                        $input['diskon_air_kotor'] = 0;
+                        if($request->edit_dis_airkotor){
+                            $input['diskon_air_kotor'] = str_replace('.', '', $request->edit_dis_airkotor);
+                        }
+
+                        Validator::make($input, [
+                            'tarif_air_kotor'  => ['required','numeric',
+                                                    Rule::exists('tarif', 'id')
+                                                    ->where('level', 5)
+                                                ]
+                        ])->validate();
+
+                        $tarif = Tarif::findOrFail($input['tarif_air_kotor']);
+
+                        if($tarif->status == 'per-Los'){
+                            $max = count($los) * $tarif->data->Tarif;
+                        } else {
+                            $max = $tarif->data->Tarif;
+                        }
+
+                        Validator::make($input, [
+                            'diskon_air_kotor' => 'nullable|numeric|gte:0|lte:' . $max,
+                        ])->validate();
+
+                        $tagihan = Tarif::airkotor($tarif->data, $jml_los, $tarif->status, $input['diskon_air_kotor']);
+
+                        $data['airkotor'] = json_encode([
+                            'lunas'         => 0,
+                            'kasir'         => null,
+                            'tarif'         => $input['tarif_air_kotor'],
+                            'jml_los'       => (int)$jml_los,
+                            'subtotal'      => (int)$tagihan['subtotal'],
+                            'diskon'        => (int)$tagihan['diskon'],
+                            'total'         => (int)$tagihan['total'],
+                            'realisasi'     => 0,
+                            'selisih'       => (int)$tagihan['total'],
+                        ]);
+
+                        $subtotal += $tagihan['subtotal'];
+                        $diskon += $tagihan['diskon'];
+                        $total += $tagihan['total'];
+                        $realisasi += 0;
+                        $selisih += $tagihan['total'];
+                    }
+                } else {
+                    if($dataset->airkotor && $dataset->airkotor->lunas){
+                        $subtotal += $dataset->airkotor->subtotal;
+                        $diskon += $dataset->airkotor->diskon;
+                        $total += $dataset->airkotor->total;
+                        $realisasi += $dataset->airkotor->realisasi;
+                        $selisih += $dataset->airkotor->selisih;
+                    } else {
+                        $data['airkotor'] = NULL;
+                    }
+                }
+
+                if($request->edit_lainnya){
+                    if($dataset->lainnya && $dataset->lainnya->lunas){
+                        $subtotal += $dataset->lainnya->subtotal;
+                        $total += $dataset->lainnya->total;
+                        $realisasi += $dataset->lainnya->realisasi;
+                        $selisih += $dataset->lainnya->selisih;
+                    } else {
+                        $lainnya = [];
+                        $subtotal_lainnya = 0;
+                        $total_lainnya = 0;
+                        foreach ($request->edit_lainnya as $key) {
+                            $input['tarif_lainnya']  = $key;
+
+                            Validator::make($input, [
+                                'tarif_lainnya'
+                                => ['required','numeric',
+                                    Rule::exists('tarif', 'id')
+                                    ->where('level', 6)
+                                ]
+                            ])->validate();
+
+                            $tarif = Tarif::findOrFail($input['tarif_lainnya']);
+
+                            $tagihan = Tarif::lainnya($tarif->data, $jml_los, $tarif->status);
+
+                            $lainnya[] = [
+                                'tarif'     => $input['tarif_lainnya'],
+                                'subtotal'  => (int)$tagihan['subtotal'],
+                                'total'     => (int)$tagihan['total']
+                            ];
+
+                            $subtotal_lainnya += $tagihan['subtotal'];
+                            $total_lainnya += $tagihan['total'];
+                        }
+
+                        $data['lainnya'] = json_encode([
+                            'lunas'         => 0,
+                            'kasir'         => null,
+                            'data'          => $lainnya,
+                            'jml_los'       => $jml_los,
+                            'subtotal'      => (int)$subtotal_lainnya,
+                            'total'         => (int)$total_lainnya,
+                            'realisasi'     => 0,
+                            'selisih'       => (int)$total_lainnya,
+                        ]);
+
+                        $subtotal += $subtotal_lainnya;
+                        $total += $total_lainnya;
+                    }
+                } else {
+                    if($dataset->lainnya && $dataset->lainnya->lunas){
+                        $subtotal += $dataset->lainnya->subtotal;
+                        $total += $dataset->lainnya->total;
+                        $realisasi += $dataset->lainnya->realisasi;
+                        $selisih += $dataset->lainnya->selisih;
+                    } else {
+                        $data['lainnya'] = NULL;
+                    }
                 }
 
                 $data['pengguna_id'] = $input['pengguna'];

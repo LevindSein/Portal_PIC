@@ -198,76 +198,97 @@
                     }
 
                     if(data.success.airbersih){
-                        $("#edit-airbersih").prop("checked", true);
-                        editFasAirbersih();
+                        if(data.success.airbersih.lunas){
+                            $("#edit-airbersih").prop("checked", false).prop("disabled", true);
+                        } else {
+                            $("#edit-airbersih").prop("checked", true).prop("disabled", false);
+                            editFasAirbersih();
 
-                        $("#edit-alat-airbersih").val("").html("");
-                        var alat  = new Option(data.success.alat_airbersih_id.name + " (" + Number(data.success.alat_airbersih_id.stand).toLocaleString('id-ID') + ")", data.success.alat_airbersih_id.id, false, false);
-                        $("#edit-alat-airbersih").append(alat).trigger("change");
+                            $("#edit-alat-airbersih").val("").html("");
+                            var alat  = new Option(data.success.alat_airbersih_id.name + " (" + Number(data.success.alat_airbersih_id.stand).toLocaleString('id-ID') + ")", data.success.alat_airbersih_id.id, false, false);
+                            $("#edit-alat-airbersih").append(alat).trigger("change");
 
-                        $("#edit-trf-airbersih").val("").html("");
-                        var tarif = new Option(data.success.trf_airbersih_id.name + " - " + data.success.trf_airbersih_id.status, data.success.trf_airbersih_id.id, false, false);
-                        $("#edit-trf-airbersih").append(tarif).trigger("change");
+                            $("#edit-trf-airbersih").val("").html("");
+                            var tarif = new Option(data.success.trf_airbersih_id.name + " - " + data.success.trf_airbersih_id.status, data.success.trf_airbersih_id.id, false, false);
+                            $("#edit-trf-airbersih").append(tarif).trigger("change");
 
-                        if(data.success.airbersih.diskon_persen){
-                            $("#edit-dis-airbersih").val(data.success.airbersih.diskon_persen);
+                            if(data.success.airbersih.diskon_persen){
+                                $("#edit-dis-airbersih").val(data.success.airbersih.diskon_persen);
+                            }
+
+                            $("#edit-awal-airbersih").val(Number(data.success.airbersih.awal).toLocaleString('id-ID'));
+                            $("#edit-akhir-airbersih").val(Number(data.success.airbersih.akhir).toLocaleString('id-ID'));
                         }
-
-                        $("#edit-awal-airbersih").val(Number(data.success.airbersih.awal).toLocaleString('id-ID'));
-                        $("#edit-akhir-airbersih").val(Number(data.success.airbersih.akhir).toLocaleString('id-ID'));
                     }
 
                     if(data.success.keamananipk){
-                        $("#edit-keamananipk").prop("checked", true);
-                        editFasKeamananipk();
+                        if(data.success.keamananipk.lunas){
+                            $("#edit-keamananipk").prop("checked", false).prop("disabled", true);
+                        } else {
+                            $("#edit-keamananipk").prop("checked", true).prop("disabled", false);
+                            editFasKeamananipk();
 
-                        $("#edit-trf-keamananipk").val("").html("");
-                        var tarif = new Option(data.success.trf_keamananipk_id.name + " - Rp " + Number(data.success.trf_keamananipk_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_keamananipk_id.status, data.success.trf_keamananipk_id.id, false, false);
-                        $("#edit-trf-keamananipk").append(tarif).trigger("change");
+                            $("#edit-trf-keamananipk").val("").html("");
+                            var tarif = new Option(data.success.trf_keamananipk_id.name + " - Rp " + Number(data.success.trf_keamananipk_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_keamananipk_id.status, data.success.trf_keamananipk_id.id, false, false);
+                            $("#edit-trf-keamananipk").append(tarif).trigger("change");
 
-                        if(data.success.keamananipk.diskon){
-                            $("#edit-dis-keamananipk").val(Number(data.success.keamananipk.diskon).toLocaleString("id-ID"));
+                            if(data.success.keamananipk.diskon){
+                                $("#edit-dis-keamananipk").val(Number(data.success.keamananipk.diskon).toLocaleString("id-ID"));
+                            }
                         }
                     }
 
                     if(data.success.kebersihan){
-                        $("#edit-kebersihan").prop("checked", true);
-                        editFasKebersihan();
+                        if(data.success.kebersihan.lunas){
+                            $("#edit-kebersihan").prop("checked", false).prop("disabled", true);
+                        } else {
+                            $("#edit-kebersihan").prop("checked", true).prop("disabled", false);
+                            editFasKebersihan();
 
-                        $("#edit-trf-kebersihan").val("").html("");
-                        var tarif = new Option(data.success.trf_kebersihan_id.name + " - Rp " + Number(data.success.trf_kebersihan_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_kebersihan_id.status, data.success.trf_kebersihan_id.id, false, false);
-                        $("#edit-trf-kebersihan").append(tarif).trigger("change");
+                            $("#edit-trf-kebersihan").val("").html("");
+                            var tarif = new Option(data.success.trf_kebersihan_id.name + " - Rp " + Number(data.success.trf_kebersihan_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_kebersihan_id.status, data.success.trf_kebersihan_id.id, false, false);
+                            $("#edit-trf-kebersihan").append(tarif).trigger("change");
 
-                        if(data.success.kebersihan.diskon){
-                            $("#edit-dis-kebersihan").val(Number(data.success.kebersihan.diskon).toLocaleString("id-ID"));
+                            if(data.success.kebersihan.diskon){
+                                $("#edit-dis-kebersihan").val(Number(data.success.kebersihan.diskon).toLocaleString("id-ID"));
+                            }
                         }
                     }
 
                     if(data.success.airkotor){
-                        $("#edit-airkotor").prop("checked", true);
-                        editFasAirkotor();
+                        if(data.success.airkotor.lunas){
+                            $("#edit-airkotor").prop("checked", false).prop("disabled", true);
+                        } else {
+                            $("#edit-airkotor").prop("checked", true).prop("disabled", false);
+                            editFasAirkotor();
 
-                        $("#edit-trf-airkotor").val("").html("");
-                        var tarif = new Option(data.success.trf_airkotor_id.name + " - Rp " + Number(data.success.trf_airkotor_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_airkotor_id.status, data.success.trf_airkotor_id.id, false, false);
-                        $("#edit-trf-airkotor").append(tarif).trigger("change");
+                            $("#edit-trf-airkotor").val("").html("");
+                            var tarif = new Option(data.success.trf_airkotor_id.name + " - Rp " + Number(data.success.trf_airkotor_id.data.Tarif).toLocaleString("id-ID") + " " + data.success.trf_airkotor_id.status, data.success.trf_airkotor_id.id, false, false);
+                            $("#edit-trf-airkotor").append(tarif).trigger("change");
 
-                        if(data.success.airkotor.diskon){
-                            $("#edit-dis-airkotor").val(Number(data.success.airkotor.diskon).toLocaleString("id-ID"));
+                            if(data.success.airkotor.diskon){
+                                $("#edit-dis-airkotor").val(Number(data.success.airkotor.diskon).toLocaleString("id-ID"));
+                            }
                         }
                     }
 
                     if(data.success.lainnya){
-                        $.each( data.success.trf_lainnya, function( i, val ) {
-                            $("#edit-lainnya-add").trigger("click");
-                            $("#edit-lainnya-" + index).val("").html("");
-                            var lainnya = new Option(
-                                val.name + " - Rp " + Number(val.data.Tarif).toLocaleString('id-ID') + " " + val.status,
-                                val.id,
-                                false,
-                                false
-                            );
-                            $("#edit-lainnya-" + (i+1)).append(lainnya).trigger("change");
-                        });
+                        if(data.success.lainnya.lunas){
+                            $("#edit-lainnya-add").prop("disabled", true);
+                        } else {
+                            $("#edit-lainnya-add").prop("disabled", false);
+                            $.each( data.success.trf_lainnya, function( i, val ) {
+                                $("#edit-lainnya-add").trigger("click");
+                                $("#edit-lainnya-" + index).val("").html("");
+                                var lainnya = new Option(
+                                    val.name + " - Rp " + Number(val.data.Tarif).toLocaleString('id-ID') + " " + val.status,
+                                    val.id,
+                                    false,
+                                    false
+                                );
+                                $("#edit-lainnya-" + (i+1)).append(lainnya).trigger("change");
+                            });
+                        }
                     }
                 }
 

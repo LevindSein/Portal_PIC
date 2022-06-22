@@ -55,7 +55,7 @@ class Tagihan extends Model
         return json_decode($value);
     }
 
-    public function getAirKotorAttribute($value){
+    public function getAirkotorAttribute($value){
         return json_decode($value);
     }
 
