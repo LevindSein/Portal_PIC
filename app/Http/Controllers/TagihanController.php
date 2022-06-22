@@ -22,6 +22,7 @@ use Carbon\Carbon;
 
 use Excel;
 use DataTables;
+use PDO;
 
 class TagihanController extends Controller
 {
@@ -46,9 +47,15 @@ class TagihanController extends Controller
                 $button = '';
                 if($data->status){
                     if($data->stt_publish){
-                        $button .= '<a type="button" data-toggle="tooltip" title="Publish" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="publish btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-undo"></i></a>';
+                        if(($data->listrik && $data->listrik->lunas) && ($data->airbersih && $data->airbersih->lunas) && ($data->keamananipk && $data->keamananipk->lunas) && ($data->kebersihan && $data->kebersihan->lunas) && ($data->airkotor && $data->airkotor->lunas) && ($data->lainnya && $data->lainnya->lunas)){
+                            $button .= '<a type="button" data-toggle="tooltip" title="Semua Lunas" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-check"></i></a>';
+                        } else {
+                            $button .= '<a type="button" data-toggle="tooltip" title="Batalkan Publish" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="publish btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-undo"></i></a>';
+                        }
                     } else {
-                        $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
+                        if(!(($data->listrik && $data->listrik->lunas) && ($data->airbersih && $data->airbersih->lunas) && ($data->keamananipk && $data->keamananipk->lunas) && ($data->kebersihan && $data->kebersihan->lunas) && ($data->airkotor && $data->airkotor->lunas) && ($data->lainnya && $data->lainnya->lunas))){
+                            $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
+                        }
                         $button .= '<a type="button" data-toggle="tooltip" title="Hapus" id="'.Crypt::encrypt($data->id).'" status="" nama="'.$data->name.'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
                         $button .= '<a type="button" data-toggle="tooltip" title="Publish" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="publish btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-paper-plane"></i></a>';
                     }
@@ -60,13 +67,49 @@ class TagihanController extends Controller
                 return $button;
             })
             ->addColumn('fasilitas', function($data){
-                $listrik = ($data->listrik) ? '<a type="button" data-toggle="tooltip" title="Listrik"><i class="fas fa-bolt" style="color:#fd7e14;"></i></a>' : '<a type="button" data-html="true" data-toggle="tooltip"><i class="fas fa-bolt" style="color:#d7d8cc;"></i></a>';
-                $airbersih = ($data->airbersih) ? '<a type="button" data-toggle="tooltip" title="Air Bersih"><i class="fas fa-tint" style="color:#36b9cc"></i></a>' : '<a type="button" data-html="true" data-toggle="tooltip"><i class="fas fa-tint" style="color:#d7d8cc;"></i></a>';;
-                $keamananipk = ($data->keamananipk) ? '<a type="button" data-toggle="tooltip" title="Keamanan IPK"><i class="fas fa-lock" style="color:#e74a3b;"></i></a>' : '<a type="button" data-html="true" data-toggle="tooltip"><i class="fas fa-lock" style="color:#d7d8cc;"></i></a>';
-                $kebersihan = ($data->kebersihan) ? '<a type="button" data-toggle="tooltip" title="Kebersihan"><i class="fas fa-leaf" style="color:#1cc88a;"></i></a>' : '<a type="button" data-html="true" data-toggle="tooltip"><i class="fas fa-leaf" style="color:#d7d8cc;"></i></a>';
-                $airkotor = ($data->airkotor) ? '<a type="button" data-toggle="tooltip" title="Air Kotor"><i class="fad fa-burn" style="color:#000000;"></i></a>' : '<a type="button" data-html="true" data-toggle="tooltip"><i class="fas fa-burn" style="color:#d7d8cc;"></i></a>';
-                $lainnya = ($data->lainnya) ? '<a type="button" data-toggle="tooltip" title="Lainnya"><i class="fas fa-chart-pie" style="color:#c5793a;"></i></a>' : '<a type="button" data-html="true" data-toggle="tooltip"><i class="fas fa-chart-pie" style="color:#d7d8cc;"></i></a>';
-                return $listrik."&nbsp;&nbsp;".$airbersih."&nbsp;&nbsp;".$keamananipk."&nbsp;&nbsp;".$kebersihan."&nbsp;&nbsp;".$airkotor."&nbsp;&nbsp;".$lainnya;
+                $listrik = '';
+                if($data->listrik){
+                    if($data->listrik->lunas)
+                        $listrik = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Listrik"><i class="fas fa-bolt" style="color:#1cc88a;"></i></a>';
+                    else
+                        $listrik = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Listrik"><i class="fas fa-bolt" style="color:#d7d8cc;"></i></a>';
+                }
+                $airbersih = '';
+                if($data->airbersih){
+                    if($data->airbersih->lunas)
+                        $airbersih = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Air Bersih"><i class="fas fa-tint" style="color:#1cc88a;"></i></a>';
+                    else
+                        $airbersih = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Air Bersih"><i class="fas fa-tint" style="color:#d7d8cc;"></i></a>';
+                }
+                $keamananipk = '';
+                if($data->keamananipk){
+                    if($data->keamananipk->lunas)
+                        $keamananipk = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Keamanan IPK"><i class="fas fa-lock" style="color:#1cc88a;"></i></a>';
+                    else
+                        $keamananipk = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Keamanan IPK"><i class="fas fa-lock" style="color:#d7d8cc;"></i></a>';
+                }
+                $kebersihan = '';
+                if($data->kebersihan){
+                    if($data->kebersihan->lunas)
+                        $kebersihan = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Kebersihan"><i class="fas fa-leaf" style="color:#1cc88a;"></i></a>';
+                    else
+                        $kebersihan = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Kebersihan"><i class="fas fa-leaf" style="color:#d7d8cc;"></i></a>';
+                }
+                $airkotor = '';
+                if($data->airkotor){
+                    if($data->airkotor->lunas)
+                        $airkotor = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Air Kotor"><i class="fas fa-burn" style="color:#1cc88a;"></i></a>';
+                    else
+                        $airkotor = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Air Kotor"><i class="fas fa-burn" style="color:#d7d8cc;"></i></a>';
+                }
+                $lainnya = '';
+                if($data->lainnya){
+                    if($data->lainnya->lunas)
+                        $lainnya = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Lainnya"><i class="fas fa-chart-pie" style="color:#1cc88a;"></i></a>';
+                    else
+                        $lainnya = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Lainnya"><i class="fas fa-chart-pie" style="color:#d7d8cc;"></i></a>';
+                }
+                return $listrik.$airbersih.$keamananipk.$kebersihan.$airkotor.$lainnya;
             })
             ->editColumn('pengguna.name', function($data){
                 $name = $data->pengguna->name;
