@@ -88,7 +88,10 @@ Tagihan
             }
             setTimeout( function () {
                 $("[data-toggle='tooltip']").tooltip();
-            }, 10)
+            }, 10);
+            setTimeout( function () {
+                $("[data-toggle='popover']").popover();
+            }, 10);
         },
     });
 

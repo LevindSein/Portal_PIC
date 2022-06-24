@@ -14,6 +14,7 @@ return [
         ],
         'js' => [
             'assets/vendor/jquery/dist/jquery.min.js',
+            'assets/vendor/popper/dist/popper.min.js',
             'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js',
             'assets/vendor/js-cookie/js.cookie.js',
             'assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js',

@@ -69,45 +69,68 @@ class TagihanController extends Controller
             ->addColumn('fasilitas', function($data){
                 $listrik = '';
                 if($data->listrik){
-                    if($data->listrik->lunas)
-                        $listrik = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Listrik"><i class="fas fa-bolt" style="color:#1cc88a;"></i></a>';
+                    $li = $data->listrik;
+                    $daya = number_format($li->daya, 0, '', '.');
+                    $awal = number_format($li->awal, 0, '', '.');
+                    $akhir = number_format($li->akhir, 0, '', '.');
+                    $pakai = number_format($li->pakai, 0, '', '.');
+                    $total = number_format($li->total, 0, '', '.');
+                    if($li->lunas)
+                        $listrik = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Listrik' data-content='Daya: $daya<br>Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br><b>Tagihan: $total</b>'><i class='fas fa-bolt' style='color:#1cc88a;'></i></a>";
                     else
-                        $listrik = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Listrik"><i class="fas fa-bolt" style="color:#d7d8cc;"></i></a>';
+                        $listrik = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Listrik' data-content='Daya: $daya<br>Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br><b>Tagihan: $total</b>'><i class='fas fa-bolt' style='color:#d7d8cc;'></i></a>";
                 }
                 $airbersih = '';
                 if($data->airbersih){
-                    if($data->airbersih->lunas)
-                        $airbersih = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Air Bersih"><i class="fas fa-tint" style="color:#1cc88a;"></i></a>';
+                    $ab = $data->airbersih;
+                    $awal = number_format($ab->awal, 0, '', '.');
+                    $akhir = number_format($ab->akhir, 0, '', '.');
+                    $pakai = number_format($ab->pakai, 0, '', '.');
+                    $total = number_format($ab->total, 0, '', '.');
+                    if($ab->lunas)
+                        $airbersih = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Air Bersih' data-content='Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br><b>Tagihan: $total</b>'><i class='fas fa-tint' style='color:#1cc88a;'></i></a>";
                     else
-                        $airbersih = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Air Bersih"><i class="fas fa-tint" style="color:#d7d8cc;"></i></a>';
+                        $airbersih = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Air Bersih' data-content='Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br><b>Tagihan: $total</b>'><i class='fas fa-tint' style='color:#d7d8cc;'></i></a>";
                 }
                 $keamananipk = '';
                 if($data->keamananipk){
-                    if($data->keamananipk->lunas)
-                        $keamananipk = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Keamanan IPK"><i class="fas fa-lock" style="color:#1cc88a;"></i></a>';
+                    $ki = $data->keamananipk;
+                    $jml_los = number_format($data->jml_los, 0, '', '.');
+                    $total = number_format($ki->total, 0, '', '.');
+                    if($ki->lunas)
+                        $keamananipk = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Keamanan IPK' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-lock' style='color:#1cc88a;'></i></a>";
                     else
-                        $keamananipk = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Keamanan IPK"><i class="fas fa-lock" style="color:#d7d8cc;"></i></a>';
+                        $keamananipk = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Keamanan IPK' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-lock' style='color:#d7d8cc;'></i></a>";
                 }
                 $kebersihan = '';
                 if($data->kebersihan){
-                    if($data->kebersihan->lunas)
-                        $kebersihan = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Kebersihan"><i class="fas fa-leaf" style="color:#1cc88a;"></i></a>';
+                    $kb = $data->kebersihan;
+                    $jml_los = number_format($data->jml_los, 0, '', '.');
+                    $total = number_format($kb->total, 0, '', '.');
+                    if($kb->lunas)
+                        $kebersihan = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Kebersihan' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-leaf' style='color:#1cc88a;'></i></a>";
                     else
-                        $kebersihan = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Kebersihan"><i class="fas fa-leaf" style="color:#d7d8cc;"></i></a>';
+                        $kebersihan = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Kebersihan' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-leaf' style='color:#d7d8cc;'></i></a>";
                 }
                 $airkotor = '';
                 if($data->airkotor){
-                    if($data->airkotor->lunas)
-                        $airkotor = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Air Kotor"><i class="fas fa-burn" style="color:#1cc88a;"></i></a>';
+                    $ak = $data->airkotor;
+                    $jml_los = number_format($data->jml_los, 0, '', '.');
+                    $total = number_format($ak->total, 0, '', '.');
+                    if($ak->lunas)
+                        $airkotor = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Air Kotor' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-burn' style='color:#1cc88a;'></i></a>";
                     else
-                        $airkotor = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Air Kotor"><i class="fas fa-burn" style="color:#d7d8cc;"></i></a>';
+                        $airkotor = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Air Kotor' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-burn' style='color:#d7d8cc;'></i></a>";
                 }
                 $lainnya = '';
                 if($data->lainnya){
-                    if($data->lainnya->lunas)
-                        $lainnya = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Lainnya"><i class="fas fa-chart-pie" style="color:#1cc88a;"></i></a>';
+                    $la = $data->lainnya;
+                    $jml_los = number_format($data->jml_los, 0, '', '.');
+                    $total = number_format($la->total, 0, '', '.');
+                    if($la->lunas)
+                        $lainnya = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Lainnya' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-chart-pie' style='color:#1cc88a;'></i></a>";
                     else
-                        $lainnya = '<a type="button" class="mr-1 ml-1" data-html="true" data-toggle="tooltip" title="Lainnya"><i class="fas fa-chart-pie" style="color:#d7d8cc;"></i></a>';
+                        $lainnya = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Lainnya' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-chart-pie' style='color:#d7d8cc;'></i></a>";
                 }
                 return $listrik.$airbersih.$keamananipk.$kebersihan.$airkotor.$lainnya;
             })

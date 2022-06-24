@@ -36,33 +36,33 @@ Route::middleware('auth')->group(function(){
     Route::post('settings', [AuthController::class, 'post_settings']);
     Route::get('settings', [AuthController::class, 'get_settings']);
 
-    Route::resource('dashboard', DashboardController::class);
-
     Route::prefix('users')->group(function () {
         Route::get('excel', [UserController::class, 'excel']);
         Route::get('print', [UserController::class, 'print']);
         Route::post('reset/{id}', [UserController::class, 'reset']);
     });
-    Route::resource('users', UserController::class);
 
     Route::prefix('services')->group(function () {
         Route::prefix('pedagang')->group(function () {
             Route::get('excel', [PedagangController::class, 'excel']);
             Route::post('reset/{id}', [PedagangController::class, 'reset']);
         });
-        Route::resource('pedagang', PedagangController::class);
 
         Route::prefix('place')->group(function () {
             Route::get('print', [TempatController::class, 'print']);
             Route::get('generate/kontrol', [TempatController::class, 'generate']);
         });
-        Route::resource('place', TempatController::class);
 
         Route::prefix('group')->group(function () {
             Route::get('excel', [GroupController::class, 'excel']);
             Route::get('print', [GroupController::class, 'print']);
         });
-        Route::resource('group', GroupController::class);
+
+        Route::resources([
+            'pedagang' => PedagangController::class,
+            'place'    => TempatController::class,
+            'group'    => GroupController::class
+        ]);
     });
 
     Route::prefix('tagihan')->group(function () {
@@ -70,20 +70,21 @@ Route::middleware('auth')->group(function(){
         Route::post('publish/{id}', [TagihanController::class, 'publish']);
         Route::post('aktif/{id}', [TagihanController::class, 'aktif']);
     });
-    Route::resource('tagihan', TagihanController::class);
 
     Route::prefix('utilities')->group(function () {
         Route::prefix('tarif')->group(function () {
             Route::get('print', [TarifController::class, 'print']);
         });
-        Route::resource('tarif', TarifController::class);
 
         Route::prefix('alat')->group(function () {
             Route::get('print', [AlatController::class, 'print']);
         });
-        Route::resource('alat', AlatController::class);
 
-        Route::resource('periode', PeriodeController::class);
+        Route::resources([
+            'tarif'   => TarifController::class,
+            'alat'    => AlatController::class,
+            'periode' => PeriodeController::class
+        ]);
     });
 
     Route::get('activities/{id}', [ActivityController::class, 'show']);
@@ -94,7 +95,13 @@ Route::middleware('auth')->group(function(){
     Route::prefix('changelogs')->group(function () {
         Route::get('excel/{id}', [ChangeController::class, 'excel']);
     });
-    Route::resource('changelogs', ChangeController::class);
+
+    Route::resources([
+        'dashboard'  => DashboardController::class,
+        'users'      => UserController::class,
+        'tagihan'    => TagihanController::class,
+        'changelogs' => ChangeController::class
+    ]);
 });
 
 Route::get('check', [AuthController::class, 'check']);
