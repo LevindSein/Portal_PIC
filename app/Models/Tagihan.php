@@ -35,6 +35,28 @@ class Tagihan extends Model
         'status'
     ];
 
+    protected static $logName = 'tagihan';
+    protected static $logAttributes = [
+        'name',
+        'pengguna.name',
+        'jml_los',
+        'listrik.awal',
+        'listrik.akhir',
+        'listrik.total',
+        'airbersih.awal',
+        'airbersih.akhir',
+        'airbersih.total',
+        'keamananipk.jml_los',
+        'keamananipk.total',
+        'kebersihan.jml_los',
+        'kebersihan.total',
+        'airkotor.jml_los',
+        'airkotor.total',
+        'lainnya.jml_los',
+        'lainnya.total',
+        'tagihan.total'
+    ];
+
     public function getLosAttribute($value){
         return json_decode($value);
     }
@@ -66,9 +88,6 @@ class Tagihan extends Model
     public function getTagihanAttribute($value){
         return json_decode($value);
     }
-
-    protected static $logName = 'tagihan';
-    protected static $logFillable = true;
 
     public function pengguna()
     {

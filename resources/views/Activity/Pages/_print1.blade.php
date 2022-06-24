@@ -121,7 +121,7 @@
                             @if(isset($json->old))
                             @foreach ($json->old as $key => $value)
                             @if($value)
-                                {{$key}} : <span style="white-space: normal;">{{$value}}</span><br>
+                                {{$key}}<br>
                             @endif
                             @endforeach
                             @else
@@ -132,7 +132,7 @@
                             @if(isset($json->attributes))
                             @foreach ($json->attributes as $key => $value)
                             @if($value)
-                                {{$key}} : <span style="white-space: normal;">{{$value}}</span><br>
+                                {{$key}}<br>
                             @endif
                             @endforeach
                             @else

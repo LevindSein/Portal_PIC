@@ -15,8 +15,8 @@ Aktifitas Pengguna
             <th class="all">Username</th>
             <th class="min-tablet">Nama</th>
             <th class="min-desktop">Level</th>
-            <th class="min-tablet">Login</th>
-            <th class="min-desktop">Times</th>
+            <th class="min-tablet">Status</th>
+            <th class="min-desktop">Durasi</th>
             <th class="min-tablet">Jml.Act</th>
             <th class="all">Action</th>
         </tr>
@@ -43,11 +43,11 @@ Aktifitas Pengguna
         serverSide : true,
         ajax : "/activities",
         columns : [
-            { data: 'user.username', name: 'user.username', class : 'text-center align-middle' },
             { data: 'user.name', name: 'user.name', class : 'text-center align-middle' },
             { data: 'user.level', name: 'user.level', class : 'text-center align-middle' },
             { data: 'login_successful', name: 'login_successful', class : 'text-center align-middle' },
             { data: 'login_at', name: 'login_at', class : 'text-center align-middle' },
+            { data: 'longtime', name: 'longtime', class : 'text-center align-middle' },
             { data: 'jml', name: 'jml', class : 'text-center align-middle' },
             { data: 'action', name: 'action', class : 'text-center align-middle' },
         ],

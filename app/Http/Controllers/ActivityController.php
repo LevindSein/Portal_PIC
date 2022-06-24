@@ -23,15 +23,6 @@ class ActivityController extends Controller
             $data = AuthenticationLog::with('user:id,username,name,level')->get();
 
             return DataTables::of($data)
-            ->editColumn('user.username', function($data){
-                $name = $data->user->username;
-                if(strlen($name) > 15) {
-                    $name = substr($name, 0, 11);
-                    $name = str_pad($name,  15, ".");
-                }
-
-                return "<span data-toggle='tooltip' title='" . $data->user->username . "'>$name</span>";
-            })
             ->editColumn('user.name', function($data){
                 $name = $data->user->name;
                 if(strlen($name) > 15) {
@@ -54,6 +45,18 @@ class ActivityController extends Controller
                 }
                 return $button;
             })
+            ->addColumn('longtime', function($data){
+                $start = new Carbon($data->login_at);
+                if($data->logout_at){
+                    $end = new Carbon($data->logout_at);
+                } else {
+                    $end = Carbon::now();
+                }
+
+                $totalDuration = $end->diffInSeconds($start);
+
+                return gmdate('H:i:s', $totalDuration);
+            })
             ->addColumn('jml', function($data){
                 $start = $data->login_at;
                 $end = Carbon::now();
@@ -72,7 +75,7 @@ class ActivityController extends Controller
                 }
                 return $button;
             })
-            ->rawColumns(['user.username', 'user.name', 'user.level', 'login_successful', 'action'])
+            ->rawColumns(['user.name', 'user.level', 'login_successful', 'longtime', 'action'])
             ->make(true);
         }
 

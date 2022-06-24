@@ -111,14 +111,16 @@
                         //Listrik
                         html += '<h4 class="text-center text-primary">LISTRIK</h4>';
                         $.each( data.success.data_listrik, function( i, val ) {
-                            html += '<div class="row text-left">';
-                            html += '<div class="col-4">';
-                            html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
-                            html += '</div>';
-                            html += '<div class="col-8">';
-                            html += '<small class="pt-4">: ' + val + '</small>';
-                            html += '</div>';
-                            html += '</div>';
+                            if(val != null){
+                                html += '<div class="row text-left">';
+                                html += '<div class="col-4">';
+                                html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
+                                html += '</div>';
+                                html += '<div class="col-8">';
+                                html += '<small class="pt-4">: ' + val + '</small>';
+                                html += '</div>';
+                                html += '</div>';
+                            }
                         });
                         html += '<hr>';
                         //End Listrik
@@ -128,14 +130,16 @@
                         //Air Bersih
                         html += '<h4 class="text-center text-primary">AIR BERSIH</h4>';
                         $.each( data.success.data_airbersih, function( i, val ) {
-                            html += '<div class="row text-left">';
-                            html += '<div class="col-4">';
-                            html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
-                            html += '</div>';
-                            html += '<div class="col-8">';
-                            html += '<small class="pt-4">: ' + val + '</small>';
-                            html += '</div>';
-                            html += '</div>';
+                            if(val != null){
+                                html += '<div class="row text-left">';
+                                html += '<div class="col-4">';
+                                html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
+                                html += '</div>';
+                                html += '<div class="col-8">';
+                                html += '<small class="pt-4">: ' + val + '</small>';
+                                html += '</div>';
+                                html += '</div>';
+                            }
                         });
                         html += '<hr>';
                         //End Air Bersih
@@ -145,14 +149,16 @@
                         //Keamanan IPK
                         html += '<h4 class="text-center text-primary">KEAMANAN IPK</h4>';
                         $.each( data.success.data_keamananipk, function( i, val ) {
-                            html += '<div class="row text-left">';
-                            html += '<div class="col-4">';
-                            html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
-                            html += '</div>';
-                            html += '<div class="col-8">';
-                            html += '<small class="pt-4">: ' + val + '</small>';
-                            html += '</div>';
-                            html += '</div>';
+                            if(val != null){
+                                html += '<div class="row text-left">';
+                                html += '<div class="col-4">';
+                                html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
+                                html += '</div>';
+                                html += '<div class="col-8">';
+                                html += '<small class="pt-4">: ' + val + '</small>';
+                                html += '</div>';
+                                html += '</div>';
+                            }
                         });
                         html += '<hr>';
                         //End Keamanan IPK
@@ -162,14 +168,16 @@
                         //Kebersihan
                         html += '<h4 class="text-center text-primary">KEBERSIHAN</h4>';
                         $.each( data.success.data_kebersihan, function( i, val ) {
-                            html += '<div class="row text-left">';
-                            html += '<div class="col-4">';
-                            html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
-                            html += '</div>';
-                            html += '<div class="col-8">';
-                            html += '<small class="pt-4">: ' + val + '</small>';
-                            html += '</div>';
-                            html += '</div>';
+                            if(val != null){
+                                html += '<div class="row text-left">';
+                                html += '<div class="col-4">';
+                                html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
+                                html += '</div>';
+                                html += '<div class="col-8">';
+                                html += '<small class="pt-4">: ' + val + '</small>';
+                                html += '</div>';
+                                html += '</div>';
+                            }
                         });
                         html += '<hr>';
                         //End Kebersihan
@@ -179,14 +187,16 @@
                         //Air Kotor
                         html += '<h4 class="text-center text-primary">AIR KOTOR</h4>';
                         $.each( data.success.data_airkotor, function( i, val ) {
-                            html += '<div class="row text-left">';
-                            html += '<div class="col-4">';
-                            html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
-                            html += '</div>';
-                            html += '<div class="col-8">';
-                            html += '<small class="pt-4">: ' + val + '</small>';
-                            html += '</div>';
-                            html += '</div>';
+                            if(val != null){
+                                html += '<div class="row text-left">';
+                                html += '<div class="col-4">';
+                                html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
+                                html += '</div>';
+                                html += '<div class="col-8">';
+                                html += '<small class="pt-4">: ' + val + '</small>';
+                                html += '</div>';
+                                html += '</div>';
+                            }
                         });
                         html += '<hr>';
                         //End Air Kotor
@@ -196,14 +206,16 @@
                         //Lainnya
                         html += '<h4 class="text-center text-primary">LAINNYA</h4>';
                         $.each( data.success.data_lainnya, function( i, val ) {
-                            html += '<div class="row text-left">';
-                            html += '<div class="col-4">';
-                            html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
-                            html += '</div>';
-                            html += '<div class="col-8">';
-                            html += '<small class="pt-4">: ' + val + '</small>';
-                            html += '</div>';
-                            html += '</div>';
+                            if(val != null){
+                                html += '<div class="row text-left">';
+                                html += '<div class="col-4">';
+                                html += '<small class="text-muted pt-4 db">' + i.replaceAll("_", " ") + '</small>';
+                                html += '</div>';
+                                html += '<div class="col-8">';
+                                html += '<small class="pt-4">: ' + val + '</small>';
+                                html += '</div>';
+                                html += '</div>';
+                            }
                         });
                         html += '<hr>';
                         //End Lainnya
