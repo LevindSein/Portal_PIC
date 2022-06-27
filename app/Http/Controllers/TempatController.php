@@ -666,7 +666,28 @@ class TempatController extends Controller
         ])->validate();
         //End Validator
 
-        $data = Tempat::with('group', 'pengguna')->get();
+        $data = Tempat::with('group', 'pengguna', 'pemilik')
+        ->join('groups', 'tempat.group_id', '=', 'groups.id')
+        ->orderBy('groups.blok', 'asc')
+        ->orderByRaw('LENGTH(groups.nicename), groups.nicename')
+        ->orderBy('groups.nomor', 'asc')
+        ->orderByRaw('LENGTH(tempat.nicename), tempat.nicename')
+        ->orderBy('tempat.name', 'asc')
+        ->select(
+            'tempat.name as name',
+            'tempat.los as los',
+            'tempat.jml_los as jml_los',
+            'tempat.status as status',
+            'pengguna_id',
+            'pemilik_id',
+            'trf_listrik_id',
+            'trf_airbersih_id',
+            'trf_keamananipk_id',
+            'trf_kebersihan_id',
+            'trf_airkotor_id',
+            'trf_lainnya_id',
+        )
+        ->get();
 
         return view('Services.Place.Pages._print', [
             'data'   => $data

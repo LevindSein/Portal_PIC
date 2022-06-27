@@ -117,22 +117,22 @@
                         <td class="tg-g25h" style="text-align: center;">{{$i}}</td>
                         <td class="tg-g25h" style="text-align: center;">{{$d->log_name}}</td>
                         <td class="tg-g25h" style="text-align: center;">{{$d->description}}</td>
-                        <td class="tg-g25h" style="text-align: center;">
+                        <td class="tg-g25h" style="text-align: center; white-space: normal;" width="30%">
                             @if(isset($json->old))
                             @foreach ($json->old as $key => $value)
                             @if($value)
-                                {{$key}}<br>
+                                {{$key}} : {{$value}}<br>
                             @endif
                             @endforeach
                             @else
                             &nbsp;
                             @endif
                         </td>
-                        <td class="tg-g25h" style="text-align: center; width: 50px">
+                        <td class="tg-g25h" style="text-align: center; white-space: normal;" width="30%">
                             @if(isset($json->attributes))
                             @foreach ($json->attributes as $key => $value)
                             @if($value)
-                                {{$key}}<br>
+                                {{$key}} : {{$value}}<br>
                             @endif
                             @endforeach
                             @else

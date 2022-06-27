@@ -49,18 +49,6 @@
                 margin-bottom: 30px;
             }
 
-            h1 {
-                border-top: 1px solid  #000;
-                border-bottom: 1px solid  #000;
-                color: #000;
-                padding: 10px;
-                font-size: 2em;
-                line-height: 1.5em;
-                font-weight: normal;
-                text-align: center;
-                margin: 0 0 20px 0;
-            }
-
             table {
                 width: 100%;
                 border-collapse: collapse;
@@ -69,8 +57,8 @@
             }
 
             .tg  {border-collapse:collapse;border-spacing:0;}
-            .tg td{font-family:Arial, sans-serif;font-size:14px;padding:5px 15px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-            .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:5px 15px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+            .tg td{font-family:Arial, sans-serif;font-size:12px;padding:5px 15px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+            .tg th{font-family:Arial, sans-serif;font-size:12px;font-weight:normal;padding:5px 15px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
             .tg .tg-r8fv{font-family:Arial, Helvetica, sans-serif !important;font-weight:bold;color:#000000;text-align:center;vertical-align:middle}
             .tg .tg-g25h{font-family:Arial, Helvetica, sans-serif !important;color:#000000;vertical-align:middle}
         </style>
@@ -85,7 +73,7 @@
             <table class="tg">
                 <thead>
                     <tr>
-                        <th colspan="14" style="border-style:none;">
+                        <th colspan="13" style="border-style:none;">
                             <img style="max-width: 65%;" src="{{asset('images/logo.png')}}" />
                             <h2>Data Tempat</h2>
                         </th>
@@ -93,21 +81,20 @@
                     <tr>
                         <th class="tg-r8fv" rowspan="2">No.</th>
                         <th class="tg-r8fv" rowspan="2">Kontrol</th>
-                        <th class="tg-r8fv" rowspan="2">Blok</th>
                         <th class="tg-r8fv" rowspan="2">No. Los</th>
-                        <th class="tg-r8fv" rowspan="2">Jml. Los</th>
+                        <th class="tg-r8fv" rowspan="2">Jml Los</th>
                         <th class="tg-r8fv" rowspan="2">Pengguna</th>
-                        <th class="tg-r8fv" colspan="6">Fasilitas</th>
-                        <th class="tg-r8fv" rowspan="2">Ket</th>
+                        <th class="tg-r8fv" rowspan="2">Pemilik</th>
+                        <th class="tg-r8fv" colspan="6">Fasilitas yang digunakan</th>
                         <th class="tg-r8fv" rowspan="2">Status</th>
                     </tr>
                     <tr>
-                        <th class="tg-r8fv">Li</th>
+                        <th class="tg-r8fv">LI</th>
                         <th class="tg-r8fv">AB</th>
                         <th class="tg-r8fv">KI</th>
                         <th class="tg-r8fv">KB</th>
                         <th class="tg-r8fv">AK</th>
-                        <th class="tg-r8fv">La</th>
+                        <th class="tg-r8fv">LA</th>
                     </tr>
                 </thead>
                 @if($data->count() > 0)
@@ -121,10 +108,10 @@
                     <tr>
                         <td class="tg-g25h" style="text-align: center;">{{$i}}</td>
                         <td class="tg-g25h" style="text-align: center;">{{$d->name}}</td>
-                        <td class="tg-g25h" style="text-align: center;">{{$d->group->name}}</td>
                         <td class="tg-g25h" style="text-align: center; white-space: normal;">{{implode(', ', $d->los)}}</td>
                         <td class="tg-g25h" style="text-align: center;">{{$d->jml_los}}</td>
                         <td class="tg-g25h" style="text-align: center; white-space: normal;">{{$d->pengguna->name}}</td>
+                        <td class="tg-g25h" style="text-align: center; white-space: normal;">{{$d->pemilik->name}}</td>
                         @if($d->trf_listrik_id)
                         <td class="tg-g25h" style="text-align: center;">&#10004;</td>
                         @else
@@ -155,7 +142,6 @@
                         @else
                         <td class="tg-g25h" style="text-align: center;"></td>
                         @endif
-                        <td class="tg-g25h" style="text-align: left; white-space: normal;">{{$d->ket}}</td>
                         <td class="tg-g25h" style="text-align: center;">{{\App\Models\Tempat::status($d->status)}}</td>
                     </tr>
                     @php
@@ -168,13 +154,13 @@
                     <tr style="height: 10px">
                     </tr>
                     <tr>
-                        <td class="tg-g25h" style="text-align: center;" colspan="14">No Data Available.</td>
+                        <td class="tg-g25h" style="text-align: center;" colspan="13">No Data Available.</td>
                     </tr>
                 </tbody>
                 @endif
                 <tfoot>
                     <tr>
-                        <th colspan="14" style="border-style:none;">
+                        <th colspan="13" style="border-style:none;">
                             <br><br>
                             <div style="text-align:right;">
                                 <b>Bandung, {{\Carbon\Carbon::now()}}</b>

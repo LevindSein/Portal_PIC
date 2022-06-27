@@ -20,6 +20,14 @@ class Tarif extends Model
         'status'
     ];
 
+    protected static $logName = 'tarif';
+    protected static $logAttributes = [
+        'name',
+        'level',
+        'data.Tarif',
+        'status'
+    ];
+
     public function getDataAttribute($value) {
         return json_decode($value);
     }
@@ -30,13 +38,6 @@ class Tarif extends Model
         else
             return 'per-Los';
     }
-
-    protected static $ignoreChangedAttributes = ['data', 'updated_at'];
-    protected static $logName = 'tarif';
-    protected static $logAttributes = [
-        'name',
-        'level'
-    ];
 
     public static function level($val) {
         switch ($val) {

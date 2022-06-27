@@ -35,7 +35,50 @@ class Tempat extends Model
     ];
 
     protected static $logName = 'tempat';
-    protected static $logFillable = true;
+    protected static $logAttributes = [
+        'name',
+        'group.name',
+        'jml_los',
+        'pengguna.name',
+        'pemilik.name',
+        'listrik.name',
+        'airbersih.name',
+        'keamananipk.name',
+        'kebersihan.name',
+        'airkotor.name',
+        'diskon.listrik',
+        'diskon.airbersih',
+        'diskon.keamananipk',
+        'diskon.kebersihan',
+        'diskon.airkotor',
+        'ket',
+        'status',
+    ];
+
+    public function listrik()
+    {
+        return $this->belongsTo(Tarif::class, 'trf_listrik_id');
+    }
+
+    public function airbersih()
+    {
+        return $this->belongsTo(Tarif::class, 'trf_airbersih_id');
+    }
+
+    public function keamananipk()
+    {
+        return $this->belongsTo(Tarif::class, 'trf_keamananipk_id');
+    }
+
+    public function kebersihan()
+    {
+        return $this->belongsTo(Tarif::class, 'trf_kebersihan_id');
+    }
+
+    public function airkotor()
+    {
+        return $this->belongsTo(Tarif::class, 'trf_airkotor_id');
+    }
 
     public function pengguna()
     {
@@ -51,6 +94,7 @@ class Tempat extends Model
             'name' => '-'
         ]);
     }
+
 
     public function group(){
         return $this->belongsTo(Group::class, 'group_id');
