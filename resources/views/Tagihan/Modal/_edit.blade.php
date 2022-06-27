@@ -192,8 +192,10 @@
                                 $("#edit-dis-listrik").val(data.success.listrik.diskon_persen);
                             }
 
-                            $("#edit-awal-listrik").val(Number(data.success.listrik.awal).toLocaleString('id-ID'));
-                            $("#edit-akhir-listrik").val(Number(data.success.listrik.akhir).toLocaleString('id-ID'));
+                            setTimeout(() => {
+                                $("#edit-awal-listrik").val(Number(data.success.listrik.awal).toLocaleString('id-ID'));
+                                $("#edit-akhir-listrik").val(Number(data.success.listrik.akhir).toLocaleString('id-ID'));
+                            }, 1000);
                         }
                     }
 
@@ -216,8 +218,10 @@
                                 $("#edit-dis-airbersih").val(data.success.airbersih.diskon_persen);
                             }
 
-                            $("#edit-awal-airbersih").val(Number(data.success.airbersih.awal).toLocaleString('id-ID'));
-                            $("#edit-akhir-airbersih").val(Number(data.success.airbersih.akhir).toLocaleString('id-ID'));
+                            setTimeout(() => {
+                                $("#edit-awal-airbersih").val(Number(data.success.airbersih.awal).toLocaleString('id-ID'));
+                                $("#edit-akhir-airbersih").val(Number(data.success.airbersih.akhir).toLocaleString('id-ID'));
+                            }, 1000);
                         }
                     }
 
@@ -544,9 +548,11 @@
             success:function(data)
             {
                 if(data.level == 2){
-                    $("#edit-awal-airbersih").val(Number(data.stand).toLocaleString('id-ID'));
+                    $("#edit-awal-airbersih").val(Number(data.old).toLocaleString('id-ID'));
+                    $("#edit-akhir-airbersih").val(Number(data.stand).toLocaleString('id-ID'));
                 } else {
-                    $("#edit-awal-listrik").val(Number(data.stand).toLocaleString('id-ID'));
+                    $("#edit-awal-listrik").val(Number(data.old).toLocaleString('id-ID'));
+                    $("#edit-akhir-listrik").val(Number(data.stand).toLocaleString('id-ID'));
                 }
             },
             error:function(data){

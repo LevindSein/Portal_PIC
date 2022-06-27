@@ -129,6 +129,7 @@ class TempatController extends Controller
                 ])->validate();
             }
 
+            $input['alat_listrik'] = NULL;
             if($request->tambah_listrik){
                 $input['alat_listrik']   = $request->tambah_alat_listrik;
                 $input['tarif_listrik']  = $request->tambah_trf_listrik;
@@ -154,6 +155,7 @@ class TempatController extends Controller
                 }
             }
 
+            $input['alat_air_bersih'] = NULL;
             if($request->tambah_airbersih){
                 $input['alat_air_bersih']   = $request->tambah_alat_airbersih;
                 $input['tarif_air_bersih']  = $request->tambah_trf_airbersih;

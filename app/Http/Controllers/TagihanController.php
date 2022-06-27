@@ -209,6 +209,7 @@ class TagihanController extends Controller
             $ppn = 0;
             $total = 0;
 
+            $input['alat_listrik'] = NULL;
             if($request->tambah_listrik){
                 $input['alat_listrik'] = $request->tambah_alat_listrik;
                 $input['tarif_listrik'] = $request->tambah_trf_listrik;
@@ -280,6 +281,7 @@ class TagihanController extends Controller
                 $total += $tagihan['total'];
             }
 
+            $input['alat_air_bersih'] = NULL;
             if($request->tambah_airbersih){
                 $input['alat_air_bersih'] = $request->tambah_alat_airbersih;
                 $input['tarif_air_bersih'] = $request->tambah_trf_airbersih;
@@ -538,7 +540,21 @@ class TagihanController extends Controller
                 'selisih'   => $total
             ]);
 
-            DB::transaction(function() use ($data){
+            DB::transaction(function() use ($data, $input){
+                if($input['alat_listrik']){
+                    $alat = Alat::findOrFail($input['alat_listrik']);
+                    $alat->old = $input['awal_stand_listrik'];
+                    $alat->stand = $input['akhir_stand_listrik'];
+                    $alat->save();
+                }
+
+                if($input['alat_air_bersih']){
+                    $alat = Alat::findOrFail($input['alat_air_bersih']);
+                    $alat->old = $input['awal_stand_air_bersih'];
+                    $alat->stand = $input['akhir_stand_air_bersih'];
+                    $alat->save();
+                }
+
                 Tagihan::create($data);
             });
 
@@ -838,6 +854,10 @@ class TagihanController extends Controller
                         $awal = $input['awal_stand_listrik'];
                         $akhir = $input['akhir_stand_listrik'];
 
+                        $alat->old = $awal;
+                        $alat->stand = $akhir;
+                        $alat->save();
+
                         $pakai = $akhir - $awal;
                         $reset = 0;
                         if($awal > $akhir){
@@ -931,6 +951,10 @@ class TagihanController extends Controller
 
                         $awal = $input['awal_stand_air_bersih'];
                         $akhir = $input['akhir_stand_air_bersih'];
+
+                        $alat->old = $awal;
+                        $alat->stand = $akhir;
+                        $alat->save();
 
                         $pakai = $akhir - $awal;
                         $reset = 0;
