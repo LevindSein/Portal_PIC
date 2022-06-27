@@ -285,7 +285,19 @@ class TempatController extends Controller
             $data['ket']         = $input['keterangan'];
             $data['diskon']      = json_encode($diskon);
 
-            DB::transaction(function() use ($data){
+            DB::transaction(function() use ($data, $input){
+                if($input['alat_listrik']){
+                    $alat = Alat::findOrFail($input['alat_listrik']);
+                    $alat->status = 0;
+                    $alat->save();
+                }
+
+                if($input['alat_air_bersih']){
+                    $alat = Alat::findOrFail($input['alat_air_bersih']);
+                    $alat->status = 0;
+                    $alat->save();
+                }
+
                 Tempat::create($data);
             });
 
@@ -450,7 +462,6 @@ class TempatController extends Controller
                     'alat_listrik'   => ['required','numeric',
                                             Rule::exists('alat', 'id')
                                             ->where('level', 1)
-                                            ->where('status', 1)
                                         ],
                     'tarif_listrik'  => ['required','numeric',
                                             Rule::exists('tarif', 'id')
@@ -477,7 +488,6 @@ class TempatController extends Controller
                     'alat_air_bersih'   => ['required','numeric',
                                             Rule::exists('alat', 'id')
                                             ->where('level', 2)
-                                            ->where('status', 1)
                                         ],
                     'tarif_air_bersih'  => ['required','numeric',
                                             Rule::exists('tarif', 'id')
@@ -605,6 +615,31 @@ class TempatController extends Controller
 
             DB::transaction(function() use ($data, $decrypted){
                 $dataset = Tempat::lockForUpdate()->findOrFail($decrypted);
+
+                if($dataset->alat_listrik_id){
+                    $alat = Alat::findOrFail($dataset->alat_listrik_id);
+                    $alat->status = 1;
+                    $alat->save();
+                }
+
+                if($data['alat_listrik_id']){
+                    $alat = Alat::findOrFail($data['alat_listrik_id']);
+                    $alat->status = 0;
+                    $alat->save();
+                }
+
+                if($dataset->alat_airbersih_id){
+                    $alat = Alat::findOrFail($dataset->alat_airbersih_id);
+                    $alat->status = 1;
+                    $alat->save();
+                }
+
+                if($data['alat_airbersih_id']){
+                    $alat = Alat::findOrFail($data['alat_airbersih_id']);
+                    $alat->status = 0;
+                    $alat->save();
+                }
+
                 $dataset->update($data);
             });
 
@@ -630,7 +665,17 @@ class TempatController extends Controller
             DB::transaction(function() use ($decrypted){
                 $data = Tempat::lockForUpdate()->findOrFail($decrypted);
 
-                //Ganti Status Alat
+                if($data->alat_listrik_id){
+                    $alat = Alat::findOrFail($data->alat_listrik_id);
+                    $alat->status = 1;
+                    $alat->save();
+                }
+
+                if($data->alat_airbersih_id){
+                    $alat = Alat::findOrFail($data->alat_airbersih_id);
+                    $alat->status = 1;
+                    $alat->save();
+                }
 
                 $data->delete();
             });
