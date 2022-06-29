@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2022 at 09:37 AM
+-- Generation Time: Jun 29, 2022 at 10:54 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -40,6 +40,35 @@ CREATE TABLE `activity_log` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `activity_log`
+--
+
+INSERT INTO `activity_log` (`id`, `log_name`, `description`, `subject_type`, `subject_id`, `causer_type`, `causer_id`, `properties`, `created_at`, `updated_at`) VALUES
+(1, 'users', 'created', 'App\\Models\\User', 2, 'App\\Models\\User', 1, '{\"attributes\":{\"username\":\"dedisupria\",\"name\":\"Dedi Supriadi\",\"phone\":\"85233879827\",\"member\":\"3690185052267603991\",\"ktp\":\"3215130101990003\",\"npwp\":\"99120039948853\",\"address\":null,\"email\":\"fahniamsyari1999@gmail.com\",\"level\":6,\"status\":1}}', '2022-06-29 08:35:10', '2022-06-29 08:35:10'),
+(2, 'users', 'created', 'App\\Models\\User', 3, 'App\\Models\\User', 1, '{\"attributes\":{\"username\":\"ginanjarsu\",\"name\":\"Ginanjar Subaiki\",\"phone\":\"82188928832\",\"member\":\"3690185052324521458\",\"ktp\":\"3215130101990002\",\"npwp\":\"9821192883727712\",\"address\":null,\"email\":\"fahniamsyari1998@gmail.com\",\"level\":6,\"status\":1}}', '2022-06-29 08:36:04', '2022-06-29 08:36:04'),
+(3, 'tarif', 'created', 'App\\Models\\Tarif', 1, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"Listrik 1\",\"level\":1,\"data.Tarif\":null,\"status\":\"per-Kontrol\"}}', '2022-06-29 08:37:30', '2022-06-29 08:37:30'),
+(4, 'tarif', 'created', 'App\\Models\\Tarif', 2, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"Air Bersih\",\"level\":2,\"data.Tarif\":null,\"status\":\"per-Kontrol\"}}', '2022-06-29 08:38:19', '2022-06-29 08:38:19'),
+(5, 'tarif', 'created', 'App\\Models\\Tarif', 3, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"Keamanan IPK 1\",\"level\":3,\"data.Tarif\":\"120000\",\"status\":\"per-Los\"}}', '2022-06-29 08:38:39', '2022-06-29 08:38:39'),
+(6, 'tarif', 'created', 'App\\Models\\Tarif', 4, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"Keamanan IPK 2\",\"level\":3,\"data.Tarif\":\"220000\",\"status\":\"per-Los\"}}', '2022-06-29 08:38:54', '2022-06-29 08:38:54'),
+(7, 'tarif', 'created', 'App\\Models\\Tarif', 5, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"Kebersihan 1\",\"level\":4,\"data.Tarif\":\"145000\",\"status\":\"per-Los\"}}', '2022-06-29 08:39:15', '2022-06-29 08:39:15'),
+(8, 'tarif', 'created', 'App\\Models\\Tarif', 6, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"Kebersihan 2\",\"level\":4,\"data.Tarif\":\"195000\",\"status\":\"per-Los\"}}', '2022-06-29 08:39:35', '2022-06-29 08:39:35'),
+(9, 'tarif', 'created', 'App\\Models\\Tarif', 7, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"Air Kotor\",\"level\":5,\"data.Tarif\":\"3000000\",\"status\":\"per-Kontrol\"}}', '2022-06-29 08:40:15', '2022-06-29 08:40:15'),
+(10, 'tarif', 'updated', 'App\\Models\\Tarif', 7, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"Air Kotor 1\",\"level\":5,\"data.Tarif\":\"3000000\",\"status\":\"per-Kontrol\"},\"old\":{\"name\":\"Air Kotor\",\"level\":5,\"data.Tarif\":\"3000000\",\"status\":\"per-Kontrol\"}}', '2022-06-29 08:40:27', '2022-06-29 08:40:27'),
+(11, 'tarif', 'created', 'App\\Models\\Tarif', 8, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"Air Kotor 2\",\"level\":5,\"data.Tarif\":\"200000\",\"status\":\"per-Los\"}}', '2022-06-29 08:40:46', '2022-06-29 08:40:46'),
+(12, 'tarif', 'created', 'App\\Models\\Tarif', 9, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"Parkir\",\"level\":6,\"data.Tarif\":\"10000\",\"status\":\"per-Kontrol\"}}', '2022-06-29 08:41:17', '2022-06-29 08:41:17'),
+(13, 'tarif', 'created', 'App\\Models\\Tarif', 10, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"Parkir Los\",\"level\":6,\"data.Tarif\":\"2000\",\"status\":\"per-Los\"}}', '2022-06-29 08:41:34', '2022-06-29 08:41:34'),
+(14, 'periode', 'created', 'App\\Models\\Periode', 1, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"2022-06\",\"nicename\":\"Juni 2022\",\"new\":\"2022-06-23\",\"due\":\"2022-06-15\",\"year\":\"2022\",\"faktur\":1,\"surat\":1,\"status\":1}}', '2022-06-29 08:41:48', '2022-06-29 08:41:48'),
+(15, 'periode', 'created', 'App\\Models\\Periode', 2, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"2022-07\",\"nicename\":\"Juli 2022\",\"new\":\"2022-07-23\",\"due\":\"2022-07-15\",\"year\":\"2022\",\"faktur\":1,\"surat\":1,\"status\":1}}', '2022-06-29 08:41:55', '2022-06-29 08:41:55'),
+(16, 'periode', 'created', 'App\\Models\\Periode', 3, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"2022-05\",\"nicename\":\"Mei 2022\",\"new\":\"2022-05-23\",\"due\":\"2022-05-15\",\"year\":\"2022\",\"faktur\":1,\"surat\":1,\"status\":1}}', '2022-06-29 08:42:03', '2022-06-29 08:42:03'),
+(17, 'periode', 'created', 'App\\Models\\Periode', 4, 'App\\Models\\User', 1, '{\"attributes\":{\"name\":\"2022-04\",\"nicename\":\"April 2022\",\"new\":\"2022-04-23\",\"due\":\"2022-04-15\",\"year\":\"2022\",\"faktur\":1,\"surat\":1,\"status\":1}}', '2022-06-29 08:42:09', '2022-06-29 08:42:09'),
+(18, 'alat', 'created', 'App\\Models\\Alat', 1, 'App\\Models\\User', 1, '{\"attributes\":{\"code\":\"2460702354459521195\",\"name\":\"007826612\",\"level\":1,\"stand\":432,\"daya\":450,\"status\":\"Tersedia\"}}', '2022-06-29 08:42:32', '2022-06-29 08:42:32'),
+(19, 'alat', 'created', 'App\\Models\\Alat', 2, 'App\\Models\\User', 1, '{\"attributes\":{\"code\":\"2460702354481682073\",\"name\":\"998217736\",\"level\":1,\"stand\":9987,\"daya\":900,\"status\":\"Tersedia\"}}', '2022-06-29 08:42:53', '2022-06-29 08:42:53'),
+(20, 'alat', 'created', 'App\\Models\\Alat', 3, 'App\\Models\\User', 1, '{\"attributes\":{\"code\":\"2460702354495590108\",\"name\":\"002718842\",\"level\":1,\"stand\":789,\"daya\":10500,\"status\":\"Tersedia\"}}', '2022-06-29 08:43:06', '2022-06-29 08:43:06'),
+(21, 'alat', 'created', 'App\\Models\\Alat', 4, 'App\\Models\\User', 1, '{\"attributes\":{\"code\":\"2460702354522362649\",\"name\":\"H1277SJAY2\",\"level\":2,\"stand\":112,\"daya\":null,\"status\":\"Tersedia\"}}', '2022-06-29 08:43:32', '2022-06-29 08:43:32'),
+(22, 'alat', 'created', 'App\\Models\\Alat', 5, 'App\\Models\\User', 1, '{\"attributes\":{\"code\":\"2460702354533657913\",\"name\":\"H26155255A55\",\"level\":2,\"stand\":653,\"daya\":null,\"status\":\"Tersedia\"}}', '2022-06-29 08:43:43', '2022-06-29 08:43:43'),
+(23, 'alat', 'created', 'App\\Models\\Alat', 6, 'App\\Models\\User', 1, '{\"attributes\":{\"code\":\"2460702354548065838\",\"name\":\"H123YY4162553\",\"level\":2,\"stand\":899,\"daya\":null,\"status\":\"Tersedia\"}}', '2022-06-29 08:43:56', '2022-06-29 08:43:56');
+
 -- --------------------------------------------------------
 
 --
@@ -52,6 +81,7 @@ CREATE TABLE `alat` (
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level` tinyint(4) NOT NULL,
   `stand` int(11) NOT NULL,
+  `old` int(11) DEFAULT NULL,
   `daya` int(11) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 1,
   `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
@@ -62,13 +92,13 @@ CREATE TABLE `alat` (
 -- Dumping data for table `alat`
 --
 
-INSERT INTO `alat` (`id`, `code`, `name`, `level`, `stand`, `daya`, `status`, `updated_at`, `created_at`) VALUES
-(1, '2460700084482461220', 'H109288127462', 1, 325, 900, 1, '2022-06-04 14:22:13', '2022-06-04 14:22:13'),
-(2, '2460700084519605760', 'H2H1JAD6241216', 1, 99984, 10500, 1, '2022-06-04 14:22:49', '2022-06-04 14:22:49'),
-(3, '2460700084540422230', 'H2736DA88271', 1, 230, 450, 1, '2022-06-04 14:23:08', '2022-06-04 14:23:08'),
-(4, '2460700084562725459', 'KV273618827', 2, 284, NULL, 1, '2022-06-04 14:23:30', '2022-06-04 14:23:30'),
-(5, '2460700084582895588', 'YWTQ26645261', 2, 99993, NULL, 1, '2022-06-04 14:23:49', '2022-06-04 14:23:49'),
-(6, '2460700084594172807', '64281KVDSAADJHG', 2, 2538, NULL, 1, '2022-06-04 14:24:00', '2022-06-04 14:24:00');
+INSERT INTO `alat` (`id`, `code`, `name`, `level`, `stand`, `old`, `daya`, `status`, `updated_at`, `created_at`) VALUES
+(1, '2460702354459521195', '007826612', 1, 432, NULL, 450, 1, '2022-06-29 15:42:32', '2022-06-29 15:42:32'),
+(2, '2460702354481682073', '998217736', 1, 9987, NULL, 900, 1, '2022-06-29 15:42:53', '2022-06-29 15:42:53'),
+(3, '2460702354495590108', '002718842', 1, 789, NULL, 10500, 1, '2022-06-29 15:43:06', '2022-06-29 15:43:06'),
+(4, '2460702354522362649', 'H1277SJAY2', 2, 112, NULL, NULL, 1, '2022-06-29 15:43:32', '2022-06-29 15:43:32'),
+(5, '2460702354533657913', 'H26155255A55', 2, 653, NULL, NULL, 1, '2022-06-29 15:43:43', '2022-06-29 15:43:43'),
+(6, '2460702354548065838', 'H123YY4162553', 2, 899, NULL, NULL, 1, '2022-06-29 15:43:56', '2022-06-29 15:43:56');
 
 -- --------------------------------------------------------
 
@@ -88,6 +118,13 @@ CREATE TABLE `authentication_log` (
   `cleared_by_user` tinyint(1) NOT NULL DEFAULT 0,
   `location` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`location`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `authentication_log`
+--
+
+INSERT INTO `authentication_log` (`id`, `authenticatable_type`, `authenticatable_id`, `ip_address`, `user_agent`, `login_at`, `login_successful`, `logout_at`, `cleared_by_user`, `location`) VALUES
+(1, 'App\\Models\\User', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36', '2022-06-29 08:33:22', 1, NULL, 0, '{\"ip\":\"127.0.0.0\",\"iso_code\":\"US\",\"country\":\"United States\",\"city\":\"New Haven\",\"state\":\"CT\",\"state_name\":\"Connecticut\",\"postal_code\":\"06510\",\"lat\":41.31,\"lon\":-72.92,\"timezone\":\"America\\/New_York\",\"continent\":\"NA\",\"currency\":\"USD\",\"default\":true,\"cached\":false}');
 
 -- --------------------------------------------------------
 
@@ -144,8 +181,9 @@ CREATE TABLE `groups` (
 --
 
 INSERT INTO `groups` (`id`, `name`, `nicename`, `blok`, `nomor`, `data`, `updated_at`, `created_at`) VALUES
-(1, 'A-1', 'A1', 'A', '1', '[\"1\",\"2\",\"2A\",\"2B\",\"3\",\"4\",\"5\",\"6\",\"7\"]', '2022-06-04 14:36:13', '2022-06-04 14:36:13'),
-(2, 'A-2', 'A2', 'A', '2', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"21\",\"24\",\"31\",\"32\",\"42\",\"124\",\"324\",\"432\",\"SD\"]', '2022-06-04 14:36:35', '2022-06-04 14:36:27');
+(1, 'A-1', 'A1', 'A', '1', '[\"1\",\"2\",\"2A\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\",\"15\",\"16\",\"17\",\"18\",\"19\",\"20\",\"21\",\"22\",\"23\",\"24\"]', '2022-06-29 15:51:50', '2022-06-29 15:51:50'),
+(2, 'E-10', 'E10', 'E', '10', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\"]', '2022-06-29 15:52:11', '2022-06-29 15:52:11'),
+(3, 'E-8', 'E8', 'E', '8', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\",\"15\",\"16\",\"17\",\"18\",\"19\",\"20\"]', '2022-06-29 15:52:38', '2022-06-29 15:52:38');
 
 -- --------------------------------------------------------
 
@@ -175,7 +213,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (9, '2022_05_28_161953_create_tarif', 1),
 (10, '2022_05_30_145350_create_alat', 1),
 (11, '2022_05_31_131542_create_periode', 1),
-(12, '2022_06_01_081536_create_tempat', 1);
+(12, '2022_06_01_081536_create_tempat', 1),
+(13, '2022_06_07_115804_create_tagihan', 1),
+(14, '2022_06_28_140134_create_payments', 1);
 
 -- --------------------------------------------------------
 
@@ -187,6 +227,26 @@ CREATE TABLE `password_resets` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+CREATE TABLE `payments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nicename` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `los` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`los`)),
+  `jml_los` int(11) NOT NULL,
+  `pengguna_id` bigint(20) UNSIGNED NOT NULL,
+  `ket` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tagihan_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`tagihan_ids`)),
+  `tagihan` int(11) NOT NULL,
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -214,9 +274,10 @@ CREATE TABLE `periode` (
 --
 
 INSERT INTO `periode` (`id`, `name`, `nicename`, `new`, `due`, `year`, `faktur`, `surat`, `status`, `updated_at`, `created_at`) VALUES
-(1, '2022-06', 'Juni 2022', '2022-06-23', '2022-06-15', '2022', 1, 1, 1, '2022-06-04 14:20:17', '2022-06-04 14:20:17'),
-(2, '2022-05', 'Mei 2022', '2022-05-23', '2022-05-15', '2022', 1, 1, 1, '2022-06-04 14:20:26', '2022-06-04 14:20:26'),
-(3, '2022-07', 'Juli 2022', '2022-07-23', '2022-07-15', '2022', 1, 1, 1, '2022-06-04 14:20:34', '2022-06-04 14:20:34');
+(1, '2022-06', 'Juni 2022', '2022-06-23', '2022-06-15', '2022', 1, 1, 1, '2022-06-29 15:41:48', '2022-06-29 15:41:48'),
+(2, '2022-07', 'Juli 2022', '2022-07-23', '2022-07-15', '2022', 1, 1, 1, '2022-06-29 15:41:55', '2022-06-29 15:41:55'),
+(3, '2022-05', 'Mei 2022', '2022-05-23', '2022-05-15', '2022', 1, 1, 1, '2022-06-29 15:42:03', '2022-06-29 15:42:03'),
+(4, '2022-04', 'April 2022', '2022-04-23', '2022-04-15', '2022', 1, 1, 1, '2022-06-29 15:42:09', '2022-06-29 15:42:09');
 
 -- --------------------------------------------------------
 
@@ -234,6 +295,35 @@ CREATE TABLE `personal_access_tokens` (
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tagihan`
+--
+
+CREATE TABLE `tagihan` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `periode_id` bigint(20) UNSIGNED NOT NULL,
+  `stt_publish` tinyint(4) NOT NULL DEFAULT 0,
+  `stt_lunas` tinyint(4) NOT NULL DEFAULT 0,
+  `tempat_id` bigint(20) UNSIGNED NOT NULL,
+  `pengguna_id` bigint(20) UNSIGNED NOT NULL,
+  `group_id` bigint(20) UNSIGNED NOT NULL,
+  `los` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`los`)),
+  `jml_los` int(11) NOT NULL,
+  `listrik` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`listrik`)),
+  `airbersih` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`airbersih`)),
+  `keamananipk` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`keamananipk`)),
+  `kebersihan` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`kebersihan`)),
+  `airkotor` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`airkotor`)),
+  `lainnya` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`lainnya`)),
+  `tagihan` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`tagihan`)),
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -257,16 +347,16 @@ CREATE TABLE `tarif` (
 --
 
 INSERT INTO `tarif` (`id`, `name`, `level`, `data`, `status`, `updated_at`, `created_at`) VALUES
-(1, 'Listrik 1', 1, '{\"Tarif_Rekmin\":\"0\",\"Tarif_Beban\":\"50\",\"Tarif_Blok_1\":\"0\",\"Tarif_Blok_2\":\"2404\",\"Standar_Operasional\":\"0\",\"PJU\":\"18\",\"Denda_1\":\"50000\",\"Denda_2\":\"3\",\"PPN\":\"11\",\"Tarif_Pasang\":\"3000\"}', 1, '2022-06-04 14:24:29', '2022-06-04 14:24:29'),
-(2, 'Air Bersih 1', 2, '{\"Tarif_1\":\"6000\",\"Tarif_2\":\"7500\",\"Tarif_Pemeliharaan\":\"25000\",\"Tarif_Beban\":\"15000\",\"Tarif_Air_Kotor\":\"30\",\"Denda\":\"50000\",\"PPN\":\"11\",\"Tarif_Pasang\":\"1000000\"}', 1, '2022-06-04 14:25:38', '2022-06-04 14:25:38'),
-(3, 'Keamanan IPK 1', 3, '{\"Tarif\":\"120000\",\"Persen_Keamanan\":\"65\",\"Persen_IPK\":\"35\"}', 2, '2022-06-04 14:26:29', '2022-06-04 14:26:29'),
-(4, 'Keamanan IPK 2', 3, '{\"Tarif\":\"160000\",\"Persen_Keamanan\":\"75\",\"Persen_IPK\":\"25\"}', 2, '2022-06-04 14:30:03', '2022-06-04 14:30:03'),
-(5, 'Kebersihan 1', 4, '{\"Tarif\":\"200000\"}', 2, '2022-06-04 14:30:24', '2022-06-04 14:30:24'),
-(6, 'Kebersihan 2', 4, '{\"Tarif\":\"220000\"}', 2, '2022-06-04 14:30:36', '2022-06-04 14:30:36'),
-(7, 'Arkot 1', 5, '{\"Tarif\":\"300000\"}', 1, '2022-06-04 14:30:55', '2022-06-04 14:30:55'),
-(8, 'Arkot 2', 5, '{\"Tarif\":\"3000000\"}', 1, '2022-06-04 14:31:04', '2022-06-04 14:31:04'),
-(9, 'Parkir 1', 6, '{\"Tarif\":\"20000\"}', 1, '2022-06-04 14:31:39', '2022-06-04 14:31:21'),
-(10, 'Parkir 2', 6, '{\"Tarif\":\"2000\"}', 2, '2022-06-04 14:31:31', '2022-06-04 14:31:31');
+(1, 'Listrik 1', 1, '{\"Tarif_Rekmin\":\"0\",\"Tarif_Beban\":\"50\",\"Tarif_Blok_1\":\"0\",\"Tarif_Blok_2\":\"2404\",\"Standar_Operasional\":\"0\",\"PJU\":\"18\",\"Denda_1\":\"50000\",\"Denda_2\":\"3\",\"PPN\":\"11\",\"Tarif_Pasang\":\"30000\"}', 1, '2022-06-29 15:37:30', '2022-06-29 15:37:30'),
+(2, 'Air Bersih', 2, '{\"Tarif_1\":\"6000\",\"Tarif_2\":\"7500\",\"Tarif_Pemeliharaan\":\"25000\",\"Tarif_Beban\":\"15000\",\"Tarif_Air_Kotor\":\"30\",\"Denda\":\"50000\",\"PPN\":\"11\",\"Tarif_Pasang\":\"2000000\"}', 1, '2022-06-29 15:38:19', '2022-06-29 15:38:19'),
+(3, 'Keamanan IPK 1', 3, '{\"Tarif\":\"120000\",\"Persen_Keamanan\":\"65\",\"Persen_IPK\":\"35\"}', 2, '2022-06-29 15:38:39', '2022-06-29 15:38:39'),
+(4, 'Keamanan IPK 2', 3, '{\"Tarif\":\"220000\",\"Persen_Keamanan\":\"67\",\"Persen_IPK\":\"33\"}', 2, '2022-06-29 15:38:54', '2022-06-29 15:38:54'),
+(5, 'Kebersihan 1', 4, '{\"Tarif\":\"145000\"}', 2, '2022-06-29 15:39:15', '2022-06-29 15:39:15'),
+(6, 'Kebersihan 2', 4, '{\"Tarif\":\"195000\"}', 2, '2022-06-29 15:39:35', '2022-06-29 15:39:35'),
+(7, 'Air Kotor 1', 5, '{\"Tarif\":\"3000000\"}', 1, '2022-06-29 15:40:27', '2022-06-29 15:40:15'),
+(8, 'Air Kotor 2', 5, '{\"Tarif\":\"200000\"}', 2, '2022-06-29 15:40:46', '2022-06-29 15:40:46'),
+(9, 'Parkir', 6, '{\"Tarif\":\"10000\"}', 1, '2022-06-29 15:41:16', '2022-06-29 15:41:16'),
+(10, 'Parkir Los', 6, '{\"Tarif\":\"2000\"}', 2, '2022-06-29 15:41:34', '2022-06-29 15:41:34');
 
 -- --------------------------------------------------------
 
@@ -329,9 +419,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `name`, `phone`, `member`, `ktp`, `npwp`, `address`, `email`, `email_verified_at`, `password`, `remember_token`, `level`, `otoritas`, `status`, `updated_at`, `created_at`) VALUES
-(1, 'super_admin', 'Super Admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$argon2id$v=19$m=65536,t=4,p=1$U000aHVtdDMxZWppUjhtQQ$P34WAf8taIFyk1LsnyG9PCwnyFShD3R+2sf3KRejN88', NULL, 1, NULL, 1, '2022-06-04 14:19:41', '2022-06-04 14:19:29'),
-(2, 'ahmadjumha', 'Ahmad Jumhari', NULL, '3690182783373985958', '1111111111111111', NULL, NULL, NULL, NULL, '$argon2id$v=19$m=65536,t=4,p=1$TzczYWd3YlRLN1ZjOTh1MA$tHTE93Wu9mrXdQU3rQqEt29q3ISUcvkLLcDCox7WNis', NULL, 6, NULL, 1, '2022-06-04 14:32:04', '2022-06-04 14:32:04'),
-(3, 'ahmadsaefu', 'Ahmad Saeful', NULL, '3690182783385625862', '2222222222222222', NULL, NULL, NULL, NULL, '$argon2id$v=19$m=65536,t=4,p=1$eWhObnpCL3dQOXZuNkxITQ$GxKh3LrbyXvGNn4NbOQoQamkJEjX9ZoyphJKhWc6uhQ', NULL, 6, NULL, 1, '2022-06-04 14:32:15', '2022-06-04 14:32:15');
+(1, 'super_admin', 'Super Admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$argon2id$v=19$m=65536,t=4,p=1$dUh2bC56RDJWZkEwYmoueA$QpcOza8BLo9V8bRx2obh5Aa1TUUimJtOXoLw17eddT8', NULL, 1, NULL, 1, '2022-06-29 15:33:22', '2022-06-29 15:29:27'),
+(2, 'dedisupria', 'Dedi Supriadi', '85233879827', '3690185052267603991', '3215130101990003', '99120039948853', NULL, 'fahniamsyari1999@gmail.com', NULL, '$argon2id$v=19$m=65536,t=4,p=1$M2tBU280dmplSWozY25ySQ$/H8kpM+OSc6w1ZEWbwBllpI78zDtv4BrjgusypLcHv0', NULL, 6, NULL, 1, '2022-06-29 15:35:10', '2022-06-29 15:35:10'),
+(3, 'ginanjarsu', 'Ginanjar Subaiki', '82188928832', '3690185052324521458', '3215130101990002', '9821192883727712', NULL, 'fahniamsyari1998@gmail.com', NULL, '$argon2id$v=19$m=65536,t=4,p=1$QUNjMXpTRkk4WmRBaEdkeg$HDq24E46gDa5+y1zcsIRfhsoMDEaP280wtoy64UTKb4', NULL, 6, NULL, 1, '2022-06-29 15:36:04', '2022-06-29 15:36:04');
 
 --
 -- Indexes for dumped tables
@@ -397,6 +487,13 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `payments_pengguna_id_foreign` (`pengguna_id`);
+
+--
 -- Indexes for table `periode`
 --
 ALTER TABLE `periode`
@@ -410,6 +507,17 @@ ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Indexes for table `tagihan`
+--
+ALTER TABLE `tagihan`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tagihan_code_unique` (`code`),
+  ADD KEY `tagihan_periode_id_foreign` (`periode_id`),
+  ADD KEY `tagihan_tempat_id_foreign` (`tempat_id`),
+  ADD KEY `tagihan_pengguna_id_foreign` (`pengguna_id`),
+  ADD KEY `tagihan_group_id_foreign` (`group_id`);
 
 --
 -- Indexes for table `tarif`
@@ -453,7 +561,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `alat`
@@ -465,7 +573,7 @@ ALTER TABLE `alat`
 -- AUTO_INCREMENT for table `authentication_log`
 --
 ALTER TABLE `authentication_log`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `changelogs`
@@ -483,24 +591,36 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `periode`
 --
 ALTER TABLE `periode`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tagihan`
+--
+ALTER TABLE `tagihan`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -530,6 +650,21 @@ ALTER TABLE `users`
 --
 ALTER TABLE `changelogs`
   ADD CONSTRAINT `changelogs_causer_id_foreign` FOREIGN KEY (`causer_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `payments`
+--
+ALTER TABLE `payments`
+  ADD CONSTRAINT `payments_pengguna_id_foreign` FOREIGN KEY (`pengguna_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `tagihan`
+--
+ALTER TABLE `tagihan`
+  ADD CONSTRAINT `tagihan_group_id_foreign` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`),
+  ADD CONSTRAINT `tagihan_pengguna_id_foreign` FOREIGN KEY (`pengguna_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `tagihan_periode_id_foreign` FOREIGN KEY (`periode_id`) REFERENCES `periode` (`id`),
+  ADD CONSTRAINT `tagihan_tempat_id_foreign` FOREIGN KEY (`tempat_id`) REFERENCES `tempat` (`id`);
 
 --
 -- Constraints for table `tempat`

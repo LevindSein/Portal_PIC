@@ -15,6 +15,7 @@ use App\Http\Controllers\TarifController;
 use App\Http\Controllers\AlatController;
 use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\KasirController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,7 +62,8 @@ Route::middleware('auth')->group(function(){
         Route::resources([
             'pedagang' => PedagangController::class,
             'place'    => TempatController::class,
-            'group'    => GroupController::class
+            'group'    => GroupController::class,
+            'kasir'    => KasirController::class
         ]);
     });
 

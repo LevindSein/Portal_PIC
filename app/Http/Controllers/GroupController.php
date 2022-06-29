@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Tempat;
 use App\Models\Group;
 use App\Exports\GroupExport;
 
@@ -216,6 +217,7 @@ class GroupController extends Controller
                 $data = Group::lockForUpdate()->findOrFail($decrypted);
 
                 $los = $input['alamat_los'];
+                $groupOld = $data->name;
 
                 if($los){
                     $los = $los;
@@ -234,6 +236,15 @@ class GroupController extends Controller
                     'nomor'    => $input['nomor'],
                     'data'     => $los
                 ]);
+
+                if($groupOld != $input['nama_grup']){
+                    //Perubahan Nama Grup mempengaruhi Tempat
+                    foreach(Tempat::where('group_id', $decrypted)->get() as $d){
+                        $d->name = preg_replace('/'.$groupOld.'/i', $input['nama_grup'], $d->name);
+                        $d->nicename = str_replace('-', '', $d->name);
+                        $d->save();
+                    }
+                }
             });
 
             return response()->json(['success' => 'Data berhasil disimpan.']);

@@ -24,7 +24,7 @@
                 <a href="javascript:void(0)" class="nav-link ml-3">Pembongkaran</a>
             </li>
             <li class="nav-item">
-                <a href="javascript:void(0)" class="nav-link ml-3">Kasir / Pembayaran</a>
+                <a href="{{url('services/kasir')}}" class="nav-link ml-3 {{ (request()->is('services/kasir*')) ? 'text-primary font-weight-bold' : '' }}">Kasir / Pembayaran</a>
             </li>
         </ul>
     </div>

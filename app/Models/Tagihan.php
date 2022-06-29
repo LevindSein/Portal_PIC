@@ -75,19 +75,20 @@ class Tagihan extends Model
         return json_decode($value);
     }
 
-    public function pengguna()
-    {
+    public function pengguna(){
         return $this->belongsTo(User::class, 'pengguna_id');
     }
 
-    public function periode()
-    {
+    public function periode(){
         return $this->belongsTo(Periode::class, 'periode_id');
     }
 
-    public function group()
-    {
+    public function group(){
         return $this->belongsTo(Group::class, 'group_id');
+    }
+
+    public function tempat(){
+        return $this->belongsTo(Tempat::class, 'tempat_id');
     }
 
     public static function code(){

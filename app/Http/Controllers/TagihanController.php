@@ -22,7 +22,6 @@ use Carbon\Carbon;
 
 use Excel;
 use DataTables;
-use PDO;
 
 class TagihanController extends Controller
 {
@@ -37,7 +36,7 @@ class TagihanController extends Controller
             $status = $request->status;
             $periode = $request->periode;
 
-            $data = Tagihan::with('pengguna:id,name')->where([
+            $data = Tagihan::with('pengguna:id,name', 'tempat:id,name,nicename')->where([
                 ['status', $status],
                 ['periode_id', $periode]
             ]);
@@ -146,11 +145,11 @@ class TagihanController extends Controller
             ->editColumn('tagihan', function($data){
                 return number_format($data->tagihan->total, 0, ',', '.');
             })
-            ->filterColumn('name', function ($query, $keyword) {
+            ->filterColumn('tempat.name', function ($query, $keyword) {
                 $keywords = trim($keyword);
-                $query->whereRaw("CONCAT(name, nicename) like ?", ["%{$keywords}%"]);
+                $query->whereRaw("CONCAT(tempat.name, tempat.nicename) like ?", ["%{$keywords}%"]);
             })
-            ->rawColumns(['action', 'fasilitas', 'name', 'pengguna.name', 'tagihan'])
+            ->rawColumns(['action', 'fasilitas', 'tempat.name', 'pengguna.name', 'tagihan'])
             ->make(true);
         }
         return view('Tagihan.index');

@@ -24,7 +24,7 @@ Tagihan
     <thead>
         <tr>
             <th class="all">Kontrol</th>
-            <th class="min-tablet">Nama</th>
+            <th class="min-tablet">Pengguna</th>
             <th class="min-tablet">Fasilitas</th>
             <th class="all">Tagihan</th>
             <th class="all">Action</th>
@@ -56,12 +56,12 @@ Tagihan
                 previous: "<i class='fas fa-angle-left'>",
                 next: "<i class='fas fa-angle-right'>"
             },
-            searchPlaceholder: "Kontrol/Nama"
+            searchPlaceholder: "Kontrol/Pengguna"
         },
         serverSide : true,
         ajax : url,
         columns : [
-            { data: 'name', name: 'name', class : 'text-center align-middle' },
+            { data: 'tempat.name', name: 'tempat.name', class : 'text-center align-middle' },
             { data: 'pengguna.name', name: 'pengguna.name', class : 'text-center align-middle' },
             { data: 'fasilitas', name: 'fasilitas', class : 'text-center align-middle' },
             { data: 'tagihan', name: 'tagihan', class : 'text-center align-middle' },
