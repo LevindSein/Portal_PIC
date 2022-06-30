@@ -366,7 +366,7 @@
         });
 
         $.ajax({
-            url: "/utilities/tarif",
+            url: "/data/tarif",
             cache: false,
             method: "POST",
             data: $(this).serialize(),

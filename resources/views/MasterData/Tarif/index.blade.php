@@ -5,7 +5,7 @@ Tarif Fasilitas
 @endsection
 
 @section('content-button')
-@include('Utilities.Tarif.Partial._button')
+@include('MasterData.Tarif.Partial._button')
 @endsection
 
 @section('content-body')
@@ -20,11 +20,11 @@ Tarif Fasilitas
 @endsection
 
 @section('content-modal')
-@include('Utilities.Tarif.Modal._tambah')
-@include('Utilities.Tarif.Modal._edit')
-@include('Utilities.Tarif.Modal._hapus')
-@include('Utilities.Tarif.Modal._rincian')
-@include('Utilities.Tarif.Modal._print')
+@include('MasterData.Tarif.Modal._tambah')
+@include('MasterData.Tarif.Modal._edit')
+@include('MasterData.Tarif.Modal._hapus')
+@include('MasterData.Tarif.Modal._rincian')
+@include('MasterData.Tarif.Modal._print')
 @endsection
 
 @section('content-js')
@@ -32,7 +32,7 @@ Tarif Fasilitas
     var content_title = 'Tarif Listrik';
     $(".content-title").text(content_title);
 
-    var url = "/utilities/tarif?level=" + $("#level").prop("selectedIndex", 0).val();
+    var url = "/data/tarif?level=" + $("#level").prop("selectedIndex", 0).val();
 
     var dtable = $('#dtable').DataTable({
         responsive : true,
@@ -91,7 +91,7 @@ Tarif Fasilitas
         }
 
         $(".content-title").text(content_title);
-        url = "/utilities/tarif?level=" + $("#level").val();
+        url = "/data/tarif?level=" + $("#level").val();
         dtable.ajax.url( url ).load();
         dtableReload();
     });

@@ -45,7 +45,7 @@ class TarifController extends Controller
             ->make(true);
         }
 
-        return view('Utilities.Tarif.index');
+        return view('MasterData.Tarif.index');
     }
 
     /**
@@ -401,7 +401,7 @@ class TarifController extends Controller
 
         $data = Tarif::where('level', $input['level'])->get();
 
-        return view('Utilities.Tarif.Pages._print', [
+        return view('MasterData.Tarif.Pages._print', [
             'level'  => Tarif::level($input['level']),
             'data'   => $data
         ]);

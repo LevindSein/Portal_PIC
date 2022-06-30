@@ -43,7 +43,7 @@ $('#hapus-form').on('submit', function(e){
     });
 
     $.ajax({
-        url: "/utilities/tarif/" + id,
+        url: "/data/tarif/" + id,
         cache: false,
         method: "DELETE",
         data: $(this).serialize(),

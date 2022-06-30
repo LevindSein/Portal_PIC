@@ -296,7 +296,7 @@
         hide();
 
         $.ajax({
-            url: "/utilities/tarif/" + id + "/edit",
+            url: "/data/tarif/" + id + "/edit",
             cache: false,
             method: "GET",
             dataType: "json",
@@ -446,7 +446,7 @@
         });
 
         $.ajax({
-            url: "/utilities/tarif/" + id,
+            url: "/data/tarif/" + id,
             cache: false,
             method: "PUT",
             data: $(this).serialize(),

@@ -29,7 +29,7 @@ $(document).on('click', '.detail', function(e){
     id = $(this).attr("id");
 
     $.ajax({
-        url: "/utilities/tarif/" + id,
+        url: "/data/tarif/" + id,
         cache: false,
         method: "GET",
         dataType: "json",
