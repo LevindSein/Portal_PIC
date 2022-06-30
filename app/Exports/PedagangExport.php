@@ -46,7 +46,7 @@ class PedagangExport implements FromView, WithEvents
             $data = User::where('level', 6)->get();
         }
 
-        return view('Services.Pedagang.Pages._excel', [
+        return view('MasterData.Pedagang.Pages._excel', [
             'status' => User::status($this->status),
             'data'   => $data
         ]);

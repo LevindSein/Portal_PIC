@@ -28,7 +28,7 @@ class GroupExport implements FromView, WithEvents
     {
         $data = Group::orderBy('blok', 'asc')->orderByRaw('LENGTH(nicename), nicename')->orderBy('nomor', 'asc')->get();
 
-        return view('Services.Group.Pages._excel', [
+        return view('MasterData.Group.Pages._excel', [
             'data' => $data
         ]);
     }

@@ -43,7 +43,7 @@ $('#hapus-form').on('submit', function(e){
     });
 
     $.ajax({
-        url: "/services/group/" + id,
+        url: "/data/groups/" + id,
         cache: false,
         method: "DELETE",
         data: $(this).serialize(),

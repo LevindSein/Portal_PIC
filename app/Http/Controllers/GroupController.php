@@ -57,7 +57,7 @@ class GroupController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('Services.Group.index');
+        return view('MasterData.Group.index');
     }
 
     /**
@@ -279,7 +279,7 @@ class GroupController extends Controller
     public function print(){
         $data = Group::orderBy('blok', 'asc')->orderByRaw('LENGTH(nicename), nicename')->orderBy('nomor', 'asc')->get();
 
-        return view('Services.Group.Pages._print', [
+        return view('MasterData.Group.Pages._print', [
             'data' => $data
         ]);
     }

@@ -52,7 +52,7 @@
         edit_init();
 
         $.ajax({
-            url: "/services/group/" + id + "/edit",
+            url: "/data/groups/" + id + "/edit",
             cache: false,
             method: "GET",
             dataType: "json",
@@ -133,7 +133,7 @@
         });
 
         $.ajax({
-            url: "/services/group/" + id,
+            url: "/data/groups/" + id,
             cache: false,
             method: "PUT",
             data: $(this).serialize(),

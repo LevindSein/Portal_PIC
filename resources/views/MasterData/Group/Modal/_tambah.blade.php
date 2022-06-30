@@ -69,7 +69,7 @@
         });
 
         $.ajax({
-            url: "/services/group",
+            url: "/data/groups",
             cache: false,
             method: "POST",
             data: $(this).serialize(),

@@ -5,7 +5,7 @@ Grup Tempat
 @endsection
 
 @section('content-button')
-@include('Services.Group.Partial._button')
+@include('MasterData.Group.Partial._button')
 @endsection
 
 @section('content-body')
@@ -21,11 +21,10 @@ Grup Tempat
 @endsection
 
 @section('content-modal')
-@include('Services.Group.Modal._tambah')
-@include('Services.Group.Modal._edit')
-@include('Services.Group.Modal._hapus')
-@include('Services.Group.Modal._rincian')
-@include('Services.Group.Modal._excel')
+@include('MasterData.Group.Modal._tambah')
+@include('MasterData.Group.Modal._edit')
+@include('MasterData.Group.Modal._hapus')
+@include('MasterData.Group.Modal._rincian')
 @endsection
 
 @section('content-js')
@@ -40,7 +39,7 @@ Grup Tempat
             searchPlaceholder: "Nama"
         },
         serverSide : true,
-        ajax : "/services/group",
+        ajax : "/data/groups",
         columns : [
             { data: 'name', name: 'name', class : 'text-center align-middle' },
             { data: 'jum_los', name: 'jum_los', class : 'text-center align-middle' },

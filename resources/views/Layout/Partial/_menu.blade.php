@@ -43,7 +43,7 @@
                 <a href="{{url('data/pedagang')}}" class="nav-link ml-3 {{ (request()->is('data/pedagang*')) ? 'text-primary font-weight-bold' : '' }}">Pedagang</a>
             </li>
             <li class="nav-item">
-                <a href="{{url('data/group')}}" class="nav-link ml-3 {{ (request()->is('data/group*')) ? 'text-primary font-weight-bold' : '' }}">Grup Tempat</a>
+                <a href="{{url('data/groups')}}" class="nav-link ml-3 {{ (request()->is('data/groups*')) ? 'text-primary font-weight-bold' : '' }}">Grup Tempat</a>
             </li>
             <li class="nav-item">
                 <a href="{{url('data/tempat')}}" class="nav-link ml-3 {{ (request()->is('data/tempat*')) ? 'text-primary font-weight-bold' : '' }}">Tempat Usaha</a>

@@ -29,7 +29,7 @@ $(document).on('click', '.detail', function(e){
     id = $(this).attr("id");
 
     $.ajax({
-        url: "/services/group/" + id,
+        url: "/data/groups/" + id,
         cache: false,
         method: "GET",
         dataType: "json",
