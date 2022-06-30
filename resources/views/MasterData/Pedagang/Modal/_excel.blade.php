@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">Excel Data Pedagang</h5>
             </div>
-            <form action="{{url('services/pedagang/excel')}}" method="GET">
+            <form action="{{url('data/pedagang/excel')}}" method="GET">
                 <div class="modal-body">
                     <div class="form-group">
                         <small class="form-control-label">Status</small>

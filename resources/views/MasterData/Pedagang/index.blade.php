@@ -5,7 +5,7 @@ Pedagang
 @endsection
 
 @section('content-button')
-@include('Services.Pedagang.Partial._button')
+@include('MasterData.Pedagang.Partial._button')
 @endsection
 
 @section('content-body')
@@ -20,12 +20,12 @@ Pedagang
 @endsection
 
 @section('content-modal')
-@include('Services.Pedagang.Modal._tambah')
-@include('Services.Pedagang.Modal._edit')
-@include('Services.Pedagang.Modal._hapus')
-@include('Services.Pedagang.Modal._rincian')
-@include('Services.Pedagang.Modal._reset')
-@include('Services.Pedagang.Modal._excel')
+@include('MasterData.Pedagang.Modal._tambah')
+@include('MasterData.Pedagang.Modal._edit')
+@include('MasterData.Pedagang.Modal._hapus')
+@include('MasterData.Pedagang.Modal._rincian')
+@include('MasterData.Pedagang.Modal._reset')
+@include('MasterData.Pedagang.Modal._excel')
 @endsection
 
 @section('content-js')
@@ -33,7 +33,7 @@ Pedagang
     var status = 1, content_title = 'Pedagang Aktif';
     $(".content-title").text(content_title);
 
-    var url = "/services/pedagang?status=" + status;
+    var url = "/data/pedagang?status=" + status;
 
     var dtable = $('#dtable').DataTable({
         responsive : true,
@@ -79,7 +79,7 @@ Pedagang
         status = 0;
         content_title = 'Pedagang Nonaktif';
         $(".content-title").text(content_title);
-        url = "/services/pedagang?level=" + $("#level").val() + "&status=" + status;
+        url = "/data/pedagang?level=" + $("#level").val() + "&status=" + status;
         dtable.ajax.url( url ).load();
         dtableReload();
     });
@@ -88,7 +88,7 @@ Pedagang
         status = 1
         content_title = 'Pedagang Aktif';
         $(".content-title").text(content_title);
-        url = "/services/pedagang?level=" + $("#level").val() + "&status=" + status;
+        url = "/data/pedagang?level=" + $("#level").val() + "&status=" + status;
         dtable.ajax.url( url ).load();
         dtableReload();
     });

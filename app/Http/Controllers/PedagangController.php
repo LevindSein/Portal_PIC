@@ -53,7 +53,7 @@ class PedagangController extends Controller
             ->rawColumns(['action', 'username', 'name'])
             ->make(true);
         }
-        return view('Services.Pedagang.index');
+        return view('MasterData.Pedagang.index');
     }
 
     /**

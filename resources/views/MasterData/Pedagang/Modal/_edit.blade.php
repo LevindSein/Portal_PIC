@@ -65,7 +65,7 @@ $(document).on('click', '.edit', function(e){
     edit_init();
 
     $.ajax({
-        url: "/services/pedagang/" + id + "/edit",
+        url: "/data/pedagang/" + id + "/edit",
         cache: false,
         method: "GET",
         dataType: "json",
@@ -149,7 +149,7 @@ $('#edit-form').on('submit', function(e){
     });
 
     $.ajax({
-        url: "/services/pedagang/" + id,
+        url: "/data/pedagang/" + id,
         cache: false,
         method: "PUT",
         data: $(this).serialize(),

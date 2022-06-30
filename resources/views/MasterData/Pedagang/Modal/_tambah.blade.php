@@ -104,7 +104,7 @@ $('#tambah-form').on('submit', function(e){
     });
 
     $.ajax({
-        url: "/services/pedagang",
+        url: "/data/pedagang",
         cache: false,
         method: "POST",
         data: $(this).serialize(),

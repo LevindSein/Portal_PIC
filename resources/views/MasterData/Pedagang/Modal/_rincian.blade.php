@@ -42,7 +42,7 @@ $(document).on('click', '.detail', function(e){
     id = $(this).attr("id");
 
     $.ajax({
-        url: "/services/pedagang/" + id,
+        url: "/data/pedagang/" + id,
         cache: false,
         method: "GET",
         dataType: "json",

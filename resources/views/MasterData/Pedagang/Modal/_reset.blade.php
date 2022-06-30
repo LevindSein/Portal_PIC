@@ -43,7 +43,7 @@ $('#reset-form').on('submit', function(e){
     });
 
     $.ajax({
-        url: "/services/pedagang/reset/" + id,
+        url: "/data/pedagang/reset/" + id,
         cache: false,
         method: "POST",
         data: $(this).serialize(),

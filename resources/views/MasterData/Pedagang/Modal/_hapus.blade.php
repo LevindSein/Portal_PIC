@@ -51,7 +51,7 @@ $('#hapus-form').on('submit', function(e){
     });
 
     $.ajax({
-        url: "/users/" + id,
+        url: "/data/pedagang/" + id,
         cache: false,
         method: "DELETE",
         data: $(this).serialize(),
