@@ -218,7 +218,7 @@
                 'los' : $("#tambah-los").val(),
             };
             $.ajax({
-                url: "/services/place/generate/kontrol",
+                url: "/data/tempat/generate/kontrol",
                 type: "GET",
                 cache: false,
                 data: dataset,
@@ -450,7 +450,7 @@
         });
 
         $.ajax({
-            url: "/services/place",
+            url: "/data/tempat",
             cache: false,
             method: "POST",
             data: $(this).serialize(),

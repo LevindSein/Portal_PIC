@@ -43,7 +43,7 @@ $('#hapus-form').on('submit', function(e){
     });
 
     $.ajax({
-        url: "/services/place/" + id,
+        url: "/data/tempat/" + id,
         cache: false,
         method: "DELETE",
         data: $(this).serialize(),

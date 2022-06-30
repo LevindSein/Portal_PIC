@@ -79,7 +79,7 @@ class TempatController extends Controller
             ->rawColumns(['action', 'fasilitas', 'name', 'pengguna.name'])
             ->make(true);
         }
-        return view('Services.Place.index');
+        return view('MasterData.Tempat.index');
     }
 
     /**
@@ -736,7 +736,7 @@ class TempatController extends Controller
         )
         ->get();
 
-        return view('Services.Place.Pages._print', [
+        return view('MasterData.Tempat.Pages._print', [
             'data'   => $data
         ]);
     }

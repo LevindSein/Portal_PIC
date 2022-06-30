@@ -5,7 +5,7 @@ Tempat Usaha
 @endsection
 
 @section('content-button')
-@include('Services.Place.Partial._button')
+@include('MasterData.Tempat.Partial._button')
 @endsection
 
 @section('content-body')
@@ -23,11 +23,11 @@ Tempat Usaha
 @endsection
 
 @section('content-modal')
-@include('Services.Place.Modal._tambah')
-@include('Services.Place.Modal._edit')
-@include('Services.Place.Modal._hapus')
-@include('Services.Place.Modal._rincian')
-@include('Services.Place.Modal._print')
+@include('MasterData.Tempat.Modal._tambah')
+@include('MasterData.Tempat.Modal._edit')
+@include('MasterData.Tempat.Modal._hapus')
+@include('MasterData.Tempat.Modal._rincian')
+@include('MasterData.Tempat.Modal._print')
 @endsection
 
 @section('content-js')
@@ -42,7 +42,7 @@ Tempat Usaha
             searchPlaceholder: "Kontrol/Pengguna"
         },
         serverSide : true,
-        ajax : "/services/place",
+        ajax : "/data/tempat",
         columns : [
             { data: 'name', name: 'name', class : 'text-center align-middle' },
             { data: 'pengguna.name', name: 'pengguna.name', class : 'text-center align-middle' },

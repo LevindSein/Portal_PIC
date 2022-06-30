@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">Print Data Tempat</h5>
             </div>
-            <form action="{{url('services/place/print')}}" method="GET" target="_blank">
+            <form action="{{url('data/tempat/print')}}" method="GET" target="_blank">
                 <div class="modal-body">
                     <div class="form-group">
                         <small class="form-control-label">Status Tempat</small>

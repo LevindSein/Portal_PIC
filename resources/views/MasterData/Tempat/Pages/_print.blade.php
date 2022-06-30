@@ -97,13 +97,13 @@
                         <th class="tg-r8fv">LA</th>
                     </tr>
                 </thead>
-                @if($data->count() > 0)
                 <tbody>
                     <tr style="height: 10px">
                     </tr>
                     @php
                         $i = 1;
                     @endphp
+                    @if($data->isNotEmpty())
                     @foreach ($data as $d)
                     <tr>
                         <td class="tg-g25h" style="text-align: center;">{{$i}}</td>
@@ -148,16 +148,12 @@
                         $i++;
                     @endphp
                     @endforeach
-                </tbody>
-                @else
-                <tbody>
-                    <tr style="height: 10px">
-                    </tr>
+                    @else
                     <tr>
                         <td class="tg-g25h" style="text-align: center;" colspan="13">No Data Available.</td>
                     </tr>
+                    @endif
                 </tbody>
-                @endif
                 <tfoot>
                     <tr>
                         <th colspan="13" style="border-style:none;">

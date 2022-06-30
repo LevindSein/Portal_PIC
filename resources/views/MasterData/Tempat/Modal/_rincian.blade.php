@@ -25,7 +25,7 @@ $(document).on('click', '.detail', function(e){
     id = $(this).attr("id");
 
     $.ajax({
-        url: "/services/place/" + id,
+        url: "/data/tempat/" + id,
         cache: false,
         method: "GET",
         dataType: "json",

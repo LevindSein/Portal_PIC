@@ -199,7 +199,7 @@
         lain = 0, index = 1;
 
         $.ajax({
-            url: "/services/place/" + id + "/edit",
+            url: "/data/tempat/" + id + "/edit",
             cache: false,
             method: "GET",
             dataType: "json",
@@ -388,7 +388,7 @@
             //     'los' : $("#edit-los").val(),
             // };
             // $.ajax({
-            //     url: "/services/place/generate/kontrol",
+            //     url: "/data/tempat/generate/kontrol",
             //     type: "GET",
             //     cache: false,
             //     data: dataset,
@@ -620,7 +620,7 @@
         });
 
         $.ajax({
-            url: "/services/place/" + id,
+            url: "/data/tempat/" + id,
             cache: false,
             method: "PUT",
             data: $(this).serialize(),
