@@ -43,7 +43,7 @@
         id = $(this).attr("id");
 
         $.ajax({
-            url: "/activities/" + id,
+            url: "/aktivitas/" + id,
             cache: false,
             method: "GET",
             dataType: "json",
@@ -112,7 +112,7 @@
     });
 
     $(document).on('click', '#print-activities', function (e) {
-        $(this).attr("href", "/activities/print1/" + id);
+        $(this).attr("href", "/aktivitas/print1/" + id);
         $(this).attr("target", "_blank");
     })
 </script>

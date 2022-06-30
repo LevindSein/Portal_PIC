@@ -17,7 +17,7 @@ use Carbon\Carbon;
 use Excel;
 use DataTables;
 
-class ChangeController extends Controller
+class ChangelogController extends Controller
 {
     /**
      * Display a listing of the resource.

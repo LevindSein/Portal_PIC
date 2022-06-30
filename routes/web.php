@@ -9,8 +9,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TempatController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\TagihanController;
-use App\Http\Controllers\ActivityController;
-use App\Http\Controllers\ChangeController;
+use App\Http\Controllers\AktivitasController;
+use App\Http\Controllers\ChangelogController;
 use App\Http\Controllers\TarifController;
 use App\Http\Controllers\AlatController;
 use App\Http\Controllers\PeriodeController;
@@ -44,25 +44,7 @@ Route::middleware('auth')->group(function(){
     });
 
     Route::prefix('services')->group(function () {
-        Route::prefix('pedagang')->group(function () {
-            Route::get('excel', [PedagangController::class, 'excel']);
-            Route::post('reset/{id}', [PedagangController::class, 'reset']);
-        });
-
-        Route::prefix('place')->group(function () {
-            Route::get('print', [TempatController::class, 'print']);
-            Route::get('generate/kontrol', [TempatController::class, 'generate']);
-        });
-
-        Route::prefix('group')->group(function () {
-            Route::get('excel', [GroupController::class, 'excel']);
-            Route::get('print', [GroupController::class, 'print']);
-        });
-
         Route::resources([
-            'pedagang' => PedagangController::class,
-            'place'    => TempatController::class,
-            'group'    => GroupController::class,
             'kasir'    => KasirController::class
         ]);
     });
@@ -73,7 +55,7 @@ Route::middleware('auth')->group(function(){
         Route::post('aktif/{id}', [TagihanController::class, 'aktif']);
     });
 
-    Route::prefix('utilities')->group(function () {
+    Route::prefix('data')->group(function () {
         Route::prefix('tarif')->group(function () {
             Route::get('print', [TarifController::class, 'print']);
         });
@@ -82,27 +64,47 @@ Route::middleware('auth')->group(function(){
             Route::get('print', [AlatController::class, 'print']);
         });
 
+        Route::prefix('pedagang')->group(function () {
+            Route::get('excel', [PedagangController::class, 'excel']);
+            Route::post('reset/{id}', [PedagangController::class, 'reset']);
+        });
+
+        Route::prefix('groups')->group(function () {
+            Route::get('excel', [GroupController::class, 'excel']);
+            Route::get('print', [GroupController::class, 'print']);
+        });
+
+        Route::prefix('tempat')->group(function () {
+            Route::get('print', [TempatController::class, 'print']);
+            Route::get('generate/kontrol', [TempatController::class, 'generate']);
+        });
+
         Route::resources([
-            'tarif'   => TarifController::class,
-            'alat'    => AlatController::class,
-            'periode' => PeriodeController::class
+            'periode'  => PeriodeController::class,
+            'tarif'    => TarifController::class,
+            'alat'     => AlatController::class,
+            'pedagang' => PedagangController::class,
+            'groups'   => GroupController::class,
+            'tempat'   => TempatController::class,
         ]);
     });
 
-    Route::get('activities/{id}', [ActivityController::class, 'show']);
-    Route::get('activities/print/dari/ke', [ActivityController::class, 'print']);
-    Route::get('activities/print1/{id}', [ActivityController::class, 'print1']);
-    Route::get('activities', [ActivityController::class, 'index']);
+    Route::prefix('aktivitas')->group(function () {
+        Route::get('{id}', [AktivitasController::class, 'show']);
+        Route::get('print/dari/ke', [AktivitasController::class, 'print']);
+        Route::get('print1/{id}', [AktivitasController::class, 'print1']);
+    });
+    Route::get('aktivitas', [AktivitasController::class, 'index']);
 
     Route::prefix('changelogs')->group(function () {
-        Route::get('excel/{id}', [ChangeController::class, 'excel']);
+        Route::get('excel/{id}', [ChangelogController::class, 'excel']);
     });
 
     Route::resources([
         'dashboard'  => DashboardController::class,
         'users'      => UserController::class,
         'tagihan'    => TagihanController::class,
-        'changelogs' => ChangeController::class
+        'changelogs' => ChangelogController::class
     ]);
 });
 

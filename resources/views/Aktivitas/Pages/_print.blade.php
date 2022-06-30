@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Data Aktifitas User</title>
+        <title>Data Aktivitas User</title>
 
         <style type="text/css">
             @media print{
@@ -89,9 +89,8 @@
                         <th colspan="4" style="border-style:none;">
                             <img style="max-width: 100%;" src="{{asset('images/logo.png')}}" />
                         </th>
-                        <th colspan="2" style="border-style:none;">
-                            <h4>Data Aktifitas {{$start}} s.d {{$end}}</h4>
-                            <h4>us:{{substr($username, 0, 20)}} | nm:{{substr($name, 0, 20)}} | lv:{{$level}}</h4>
+                        <th colspan="3" style="border-style:none;">
+                            <h4>Data Aktivitas {{$dari}} s.d {{$ke}}</h4>
                         </th>
                     </tr>
                     <tr>
@@ -100,7 +99,8 @@
                         <th class="tg-r8fv">Desc</th>
                         <th class="tg-r8fv">Old</th>
                         <th class="tg-r8fv">New</th>
-                        <th class="tg-r8fv">Times</th>
+                        <th class="tg-r8fv">At</th>
+                        <th class="tg-r8fv">By</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,6 +109,7 @@
                     @php
                         $i = 1;
                     @endphp
+                    @if ($data->isNotEmpty())
                     @foreach ($data as $d)
                     @php
                         $json = json_decode($d->properties);
@@ -132,7 +133,7 @@
                             @if(isset($json->attributes))
                             @foreach ($json->attributes as $key => $value)
                             @if($value)
-                                {{$key}} : {{$value}}<br>
+                                {{$key}} : {{$value}}</span><br>
                             @endif
                             @endforeach
                             @else
@@ -140,15 +141,21 @@
                             @endif
                         </td>
                         <td class="tg-g25h" style="text-align: center;">{{$d->updated_at}}</td>
+                        <td class="tg-g25h" style="text-align: center;">{{$d->user->name}}</td>
                     </tr>
                     @php
                         $i++;
                     @endphp
                     @endforeach
+                    @else
+                    <tr>
+                        <td class="tg-g25h" style="text-align: center;" colspan="7">No Data Available.</td>
+                    </tr>
+                    @endif
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="6" style="border-style:none;">
+                        <th colspan="7" style="border-style:none;">
                             <br><br>
                             <div style="text-align:right;">
                                 <b>Bandung, {{\Carbon\Carbon::now()}}</b>

@@ -5,7 +5,7 @@ Aktifitas Pengguna
 @endsection
 
 @section('content-button')
-@include('Activity.Partial._button')
+@include('Aktivitas.Partial._button')
 @endsection
 
 @section('content-body')
@@ -25,8 +25,8 @@ Aktifitas Pengguna
 @endsection
 
 @section('content-modal')
-@include('Activity.Modal._rincian')
-@include('Activity.Modal._print')
+@include('Aktivitas.Modal._rincian')
+@include('Aktivitas.Modal._print')
 @endsection
 
 @section('content-js')
@@ -41,7 +41,7 @@ Aktifitas Pengguna
             searchPlaceholder: "Username/Nama"
         },
         serverSide : true,
-        ajax : "/activities",
+        ajax : "/aktivitas",
         columns : [
             { data: 'user.name', name: 'user.name', class : 'text-center align-middle' },
             { data: 'user.level', name: 'user.level', class : 'text-center align-middle' },

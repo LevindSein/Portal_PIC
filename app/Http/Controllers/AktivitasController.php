@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use DataTables;
 
 
-class ActivityController extends Controller
+class AktivitasController extends Controller
 {
     public function index()
     {
@@ -79,7 +79,7 @@ class ActivityController extends Controller
             ->make(true);
         }
 
-        return view('Activity.index');
+        return view('Aktivitas.index');
     }
 
     public function show($id)
@@ -128,7 +128,7 @@ class ActivityController extends Controller
 
         $data = ActivityLog::with('user')->whereBetween('updated_at', [$input['dari'], $input['ke']])->get();
 
-        return view('Activity.Pages._print', [
+        return view('Aktivitas.Pages._print', [
             'dari'  => $input['dari'],
             'ke'    => $input['ke'],
             'data'  => $data
@@ -158,7 +158,7 @@ class ActivityController extends Controller
         ->whereBetween('updated_at', [$start, $end])
         ->get();
 
-        return view('Activity.Pages._print1', [
+        return view('Aktivitas.Pages._print1', [
             'start'    => $start,
             'end'      => $end,
             'username' => $username,

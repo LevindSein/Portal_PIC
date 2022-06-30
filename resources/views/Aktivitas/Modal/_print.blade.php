@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">Print Data Aktifitas</h5>
             </div>
-            <form action="{{url('activities/print/dari/ke')}}" method="GET" target="_blank">
+            <form action="{{url('aktivitas/print/dari/ke')}}" method="GET" target="_blank">
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-6">
