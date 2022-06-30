@@ -50,7 +50,7 @@ class AlatController extends Controller
             ->make(true);
         }
 
-        return view('Utilities.Alat.index');
+        return view('MasterData.Alat.index');
     }
 
     /**
@@ -246,7 +246,7 @@ class AlatController extends Controller
             $data = Alat::where('level', $input['level'])->get();
         }
 
-        return view('Utilities.Alat.Pages._print', [
+        return view('MasterData.Alat.Pages._print', [
             'level'     => Alat::level($input['level']),
             'levelAlat' => $input['level'],
             'data'      => $data

@@ -54,7 +54,7 @@
         edit_init();
 
         $.ajax({
-            url: "/utilities/alat/" + id + "/edit",
+            url: "/data/alat/" + id + "/edit",
             cache: false,
             method: "GET",
             dataType: "json",
@@ -134,7 +134,7 @@
         });
 
         $.ajax({
-            url: "/utilities/alat/" + id,
+            url: "/data/alat/" + id,
             cache: false,
             method: "PUT",
             data: $(this).serialize(),

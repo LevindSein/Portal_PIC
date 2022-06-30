@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">Print Data Alat Mete</h5>
             </div>
-            <form action="{{url('utilities/alat/print')}}" method="GET" target="_blank">
+            <form action="{{url('data/alat/print')}}" method="GET" target="_blank">
                 <div class="modal-body">
                     <div class="form-group">
                         <small class="form-control-label">Pilih Alat</small>

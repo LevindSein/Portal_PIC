@@ -106,7 +106,7 @@
         });
 
         $.ajax({
-            url: "/utilities/alat",
+            url: "/data/alat",
             cache: false,
             method: "POST",
             data: $(this).serialize(),

@@ -43,7 +43,7 @@ $('#hapus-form').on('submit', function(e){
     });
 
     $.ajax({
-        url: "/utilities/alat/" + id,
+        url: "/data/alat/" + id,
         cache: false,
         method: "DELETE",
         data: $(this).serialize(),

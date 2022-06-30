@@ -32,7 +32,7 @@ $(document).on('click', '.detail', function(e){
     $("#showDaya").hide();
 
     $.ajax({
-        url: "/utilities/alat/" + id,
+        url: "/data/alat/" + id,
         cache: false,
         method: "GET",
         dataType: "json",

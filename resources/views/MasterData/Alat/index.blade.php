@@ -5,7 +5,7 @@ Alat Meter
 @endsection
 
 @section('content-button')
-@include('Utilities.Alat.Partial._button')
+@include('MasterData.Alat.Partial._button')
 @endsection
 
 @section('content-body')
@@ -22,11 +22,11 @@ Alat Meter
 @endsection
 
 @section('content-modal')
-@include('Utilities.Alat.Modal._tambah')
-@include('Utilities.Alat.Modal._edit')
-@include('Utilities.Alat.Modal._hapus')
-@include('Utilities.Alat.Modal._rincian')
-@include('Utilities.Alat.Modal._print')
+@include('MasterData.Alat.Modal._tambah')
+@include('MasterData.Alat.Modal._edit')
+@include('MasterData.Alat.Modal._hapus')
+@include('MasterData.Alat.Modal._rincian')
+@include('MasterData.Alat.Modal._print')
 @endsection
 
 @section('content-js')
@@ -34,7 +34,7 @@ Alat Meter
     var status = 1, content_title = 'Alat Tersedia';
     $(".content-title").text(content_title);
 
-    var url = "/utilities/alat?level=" + $("#level").prop("selectedIndex", 0).val() + "&status=" + status;
+    var url = "/data/alat?level=" + $("#level").prop("selectedIndex", 0).val() + "&status=" + status;
 
     var dtable = $('#dtable').DataTable({
         responsive : true,
@@ -79,7 +79,7 @@ Alat Meter
     });
 
     $(document).on('change', '#level', function(){
-        url = "/utilities/alat?level=" + $("#level").val() + "&status=" + status;
+        url = "/data/alat?level=" + $("#level").val() + "&status=" + status;
         dtable.ajax.url( url ).load();
         dtableReload();
     });
@@ -88,7 +88,7 @@ Alat Meter
         status = 0;
         content_title = 'Alat Terpakai';
         $(".content-title").text(content_title);
-        url = "/utilities/alat?level=" + $("#level").val() + "&status=" + status;
+        url = "/data/alat?level=" + $("#level").val() + "&status=" + status;
         dtable.ajax.url( url ).load();
         dtableReload();
     });
@@ -97,7 +97,7 @@ Alat Meter
         status = 1
         content_title = 'Alat Tersedia';
         $(".content-title").text(content_title);
-        url = "/utilities/alat?level=" + $("#level").val() + "&status=" + status;
+        url = "/data/alat?level=" + $("#level").val() + "&status=" + status;
         dtable.ajax.url( url ).load();
         dtableReload();
     });
