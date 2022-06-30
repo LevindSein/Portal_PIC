@@ -43,7 +43,7 @@ $('#hapus-form').on('submit', function(e){
     });
 
     $.ajax({
-        url: "/utilities/periode/" + id,
+        url: "/data/periode/" + id,
         cache: false,
         method: "DELETE",
         data: $(this).serialize(),

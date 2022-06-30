@@ -161,7 +161,7 @@
         });
 
         $.ajax({
-            url: "/utilities/periode",
+            url: "/data/periode",
             cache: false,
             method: "POST",
             data: $(this).serialize(),

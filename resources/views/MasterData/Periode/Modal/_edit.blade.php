@@ -97,7 +97,7 @@
         period_new = '';
 
         $.ajax({
-            url: "/utilities/periode/" + id + "/edit",
+            url: "/data/periode/" + id + "/edit",
             cache: false,
             method: "GET",
             dataType: "json",
@@ -225,7 +225,7 @@
         });
 
         $.ajax({
-            url: "/utilities/periode/" + id,
+            url: "/data/periode/" + id,
             cache: false,
             method: "PUT",
             data: $(this).serialize(),

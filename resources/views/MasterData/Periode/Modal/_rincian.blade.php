@@ -30,7 +30,7 @@ $(document).on('click', '.detail', function(e){
     id = $(this).attr("id");
 
     $.ajax({
-        url: "/utilities/periode/" + id,
+        url: "/data/periode/" + id,
         cache: false,
         method: "GET",
         dataType: "json",

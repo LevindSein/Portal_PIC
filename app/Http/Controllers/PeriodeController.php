@@ -26,10 +26,14 @@ class PeriodeController extends Controller
         if(request()->ajax()){
             $data = Periode::where('status', 1)->orderBy('name','desc');
 
+            $now = Carbon::now()->format('Y-m-d');
+
             return DataTables::of($data)
-            ->addColumn('action', function($data){
+            ->addColumn('action', function($data) use ($now){
                 $button = '';
-                $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->nicename.'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
+                if($data->due > $now){
+                    $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->nicename.'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
+                }
                 $button .= '<a type="button" data-toggle="tooltip" title="Hapus" id="'.Crypt::encrypt($data->id).'" nama="'.$data->nicename.'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
                 $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" nama="'.$data->nicename.'" class="detail btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-info"></i></a>';
                 return $button;
@@ -41,7 +45,7 @@ class PeriodeController extends Controller
             ->rawColumns(['action'])
             ->make(true);
         }
-        return view('Utilities.Periode.index');
+        return view('MasterData.Periode.index');
     }
 
     /**
@@ -174,6 +178,10 @@ class PeriodeController extends Controller
             $input['periode'] = $input['tahun'] . '-' . $input['bulan'];
 
             $now = Carbon::now();
+
+            if($now->format('Y-m-d') > $now){
+                return response()->json(['error' => 'Tidak dapat melakukan update.']);
+            }
 
             Validator::make($input, [
                 'bulan'        => 'required|string|in:01,02,03,04,05,06,07,08,09,10,11,12',

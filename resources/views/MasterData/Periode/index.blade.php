@@ -5,7 +5,7 @@ Periode
 @endsection
 
 @section('content-button')
-@include('Utilities.Periode.Partial._button')
+@include('MasterData.Periode.Partial._button')
 @endsection
 
 @section('content-body')
@@ -20,10 +20,10 @@ Periode
 @endsection
 
 @section('content-modal')
-@include('Utilities.Periode.Modal._tambah')
-@include('Utilities.Periode.Modal._edit')
-@include('Utilities.Periode.Modal._hapus')
-@include('Utilities.Periode.Modal._rincian')
+@include('MasterData.Periode.Modal._tambah')
+@include('MasterData.Periode.Modal._edit')
+@include('MasterData.Periode.Modal._hapus')
+@include('MasterData.Periode.Modal._rincian')
 @endsection
 
 @section('content-js')
@@ -38,7 +38,7 @@ Periode
             searchPlaceholder: "Nama Periode"
         },
         serverSide : true,
-        ajax : "/utilities/periode",
+        ajax : "/data/periode",
         columns : [
             { data: 'nicename', name: 'nicename', class : 'text-center align-middle' },
             { data: 'action', name: 'action', class : 'text-center align-middle' },
