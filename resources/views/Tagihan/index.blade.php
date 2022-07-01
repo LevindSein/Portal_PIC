@@ -61,7 +61,7 @@ Tagihan
         serverSide : true,
         ajax : url,
         columns : [
-            { data: 'tempat.name', name: 'tempat.name', class : 'text-center align-middle' },
+            { data: 'name', name: 'name', class : 'text-center align-middle' },
             { data: 'pengguna.name', name: 'pengguna.name', class : 'text-center align-middle' },
             { data: 'fasilitas', name: 'fasilitas', class : 'text-center align-middle' },
             { data: 'tagihan', name: 'tagihan', class : 'text-center align-middle' },

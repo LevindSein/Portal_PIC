@@ -120,6 +120,7 @@ class TempatController extends Controller
 
             $los = $this->multipleSelect($request->tambah_los);
             sort($los, SORT_NATURAL);
+            $jml_los = count($los);
 
             $no_los = Group::where('name', $request->tambah_group)->first();
             foreach($los as $l){
@@ -193,7 +194,7 @@ class TempatController extends Controller
                 ])->validate();
 
                 $tarif = Tarif::findOrFail($input['tarif_keamanan_ipk']);
-                $max = count($los) * $tarif->data->Tarif;
+                $max = $jml_los * $tarif->data->Tarif;
 
                 Validator::make($input, [
                     'diskon_keamanan_ipk' => 'nullable|numeric|gte:0|lte:' . $max,
@@ -217,7 +218,7 @@ class TempatController extends Controller
                 ])->validate();
 
                 $tarif = Tarif::findOrFail($input['tarif_kebersihan']);
-                $max = count($los) * $tarif->data->Tarif;
+                $max = $jml_los * $tarif->data->Tarif;
 
                 Validator::make($input, [
                     'diskon_kebersihan' => 'nullable|numeric|gte:0|lte:' . $max,
@@ -243,7 +244,7 @@ class TempatController extends Controller
                 $tarif = Tarif::findOrFail($input['tarif_air_kotor']);
 
                 if($tarif->status == 'per-Los'){
-                    $max = count($los) * $tarif->data->Tarif;
+                    $max = $jml_los * $tarif->data->Tarif;
                 } else {
                     $max = $tarif->data->Tarif;
                 }
@@ -280,7 +281,7 @@ class TempatController extends Controller
             $data['nicename']    = str_replace('-', '', $input['kode_kontrol']);
             $data['group_id']    = Group::where('name',$input['grup'])->first()->id;
             $data['los']         = json_encode($los);
-            $data['jml_los']     = count($los);
+            $data['jml_los']     = $jml_los;
             $data['pengguna_id'] = $input['pengguna'];
             $data['pemilik_id']  = $input['pemilik'];
             $data['status']      = $input['status'];
@@ -444,6 +445,7 @@ class TempatController extends Controller
 
             $los = $this->multipleSelect($request->edit_los);
             sort($los, SORT_NATURAL);
+            $jml_los = count($los);
 
             $no_los = Group::where('name', $request->edit_group)->first();
             foreach($los as $l){
@@ -518,7 +520,7 @@ class TempatController extends Controller
                 ])->validate();
 
                 $tarif = Tarif::findOrFail($input['tarif_keamanan_ipk']);
-                $max = count($los) * $tarif->data->Tarif;
+                $max = $jml_los * $tarif->data->Tarif;
 
                 Validator::make($input, [
                     'diskon_keamanan_ipk' => 'nullable|numeric|gte:0|lte:' . $max,
@@ -543,7 +545,7 @@ class TempatController extends Controller
                 ])->validate();
 
                 $tarif = Tarif::findOrFail($input['tarif_kebersihan']);
-                $max = count($los) * $tarif->data->Tarif;
+                $max = $jml_los * $tarif->data->Tarif;
 
                 Validator::make($input, [
                     'diskon_kebersihan' => 'nullable|numeric|gte:0|lte:' . $max,
@@ -570,7 +572,7 @@ class TempatController extends Controller
                 $tarif = Tarif::findOrFail($input['tarif_air_kotor']);
 
                 if($tarif->status == 'per-Los'){
-                    $max = count($los) * $tarif->data->Tarif;
+                    $max = $jml_los * $tarif->data->Tarif;
                 } else {
                     $max = $tarif->data->Tarif;
                 }
@@ -590,6 +592,7 @@ class TempatController extends Controller
                 $lainnya = [];
                 foreach ($request->edit_lainnya as $key) {
                     $input['tarif_lainnya']  = $key;
+
                     Validator::make($input, [
                         'tarif_lainnya'
                         => ['required','numeric',
@@ -608,7 +611,7 @@ class TempatController extends Controller
             $data['nicename']    = str_replace('-', '', $input['kode_kontrol']);
             $data['group_id']    = Group::where('name',$input['grup'])->first()->id;
             $data['los']         = json_encode($los);
-            $data['jml_los']     = count($los);
+            $data['jml_los']     = $jml_los;
             $data['pengguna_id'] = $input['pengguna'];
             $data['pemilik_id']  = $input['pemilik'];
             $data['status']      = $input['status'];
