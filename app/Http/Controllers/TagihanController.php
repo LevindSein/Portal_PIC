@@ -77,7 +77,7 @@ class TagihanController extends Controller
                     if($li->lunas)
                         $listrik = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Listrik' data-content='Daya: $daya<br>Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br><b>Tagihan: $total</b>'><i class='fas fa-bolt' style='color:#1cc88a;'></i></a>";
                     else
-                        $listrik = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Listrik' data-content='Daya: $daya<br>Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br><b>Tagihan: $total</b>'><i class='fas fa-bolt' style='color:#d7d8cc;'></i></a>";
+                        $listrik = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Listrik' data-content='Daya: $daya<br>Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br><b>Tagihan: $total</b>'><i class='fas fa-bolt' style='color:#636362;'></i></a>";
                 }
                 $airbersih = '';
                 if($data->airbersih){
@@ -89,47 +89,47 @@ class TagihanController extends Controller
                     if($ab->lunas)
                         $airbersih = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Air Bersih' data-content='Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br><b>Tagihan: $total</b>'><i class='fas fa-tint' style='color:#1cc88a;'></i></a>";
                     else
-                        $airbersih = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Air Bersih' data-content='Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br><b>Tagihan: $total</b>'><i class='fas fa-tint' style='color:#d7d8cc;'></i></a>";
+                        $airbersih = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Air Bersih' data-content='Awal: $awal<br>Akhir: $akhir<br>Pakai: $pakai<br><b>Tagihan: $total</b>'><i class='fas fa-tint' style='color:#636362;'></i></a>";
                 }
                 $keamananipk = '';
                 if($data->keamananipk){
                     $ki = $data->keamananipk;
-                    $jml_los = number_format($data->jml_los, 0, '', '.');
+                    $jml_los = number_format($ki->jml_los, 0, '', '.');
                     $total = number_format($ki->total, 0, '', '.');
                     if($ki->lunas)
                         $keamananipk = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Keamanan IPK' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-lock' style='color:#1cc88a;'></i></a>";
                     else
-                        $keamananipk = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Keamanan IPK' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-lock' style='color:#d7d8cc;'></i></a>";
+                        $keamananipk = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Keamanan IPK' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-lock' style='color:#636362;'></i></a>";
                 }
                 $kebersihan = '';
                 if($data->kebersihan){
                     $kb = $data->kebersihan;
-                    $jml_los = number_format($data->jml_los, 0, '', '.');
+                    $jml_los = number_format($kb->jml_los, 0, '', '.');
                     $total = number_format($kb->total, 0, '', '.');
                     if($kb->lunas)
                         $kebersihan = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Kebersihan' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-leaf' style='color:#1cc88a;'></i></a>";
                     else
-                        $kebersihan = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Kebersihan' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-leaf' style='color:#d7d8cc;'></i></a>";
+                        $kebersihan = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Kebersihan' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-leaf' style='color:#636362;'></i></a>";
                 }
                 $airkotor = '';
                 if($data->airkotor){
                     $ak = $data->airkotor;
-                    $jml_los = number_format($data->jml_los, 0, '', '.');
+                    $jml_los = number_format($ak->jml_los, 0, '', '.');
                     $total = number_format($ak->total, 0, '', '.');
                     if($ak->lunas)
                         $airkotor = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Air Kotor' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-burn' style='color:#1cc88a;'></i></a>";
                     else
-                        $airkotor = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Air Kotor' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-burn' style='color:#d7d8cc;'></i></a>";
+                        $airkotor = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Air Kotor' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-burn' style='color:#636362;'></i></a>";
                 }
                 $lainnya = '';
                 if($data->lainnya){
                     $la = $data->lainnya;
-                    $jml_los = number_format($data->jml_los, 0, '', '.');
+                    $jml_los = number_format($la->jml_los, 0, '', '.');
                     $total = number_format($la->total, 0, '', '.');
                     if($la->lunas)
                         $lainnya = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Lainnya' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-chart-pie' style='color:#1cc88a;'></i></a>";
                     else
-                        $lainnya = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Lainnya' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-chart-pie' style='color:#d7d8cc;'></i></a>";
+                        $lainnya = "<a type='button' class='mr-1 ml-1' data-container='body' data-trigger='hover' data-toggle='popover' data-html='true' title='Lainnya' data-content='Jml Los: $jml_los<br><b>Tagihan: $total</b>'><i class='fas fa-chart-pie' style='color:#636362;'></i></a>";
                 }
                 return $listrik.$airbersih.$keamananipk.$kebersihan.$airkotor.$lainnya;
             })
@@ -487,6 +487,7 @@ class TagihanController extends Controller
                 $tarif = Tarif::findOrFail($data->keamananipk->tarif);
                 $keamananipk['Nama_Tarif'] = $tarif->name;
                 $keamananipk['Tarif'] = 'Rp ' . number_format($tarif->data->Tarif, 0, ',', '.') . ',-' . " " . $tarif->status;
+                $keamananipk['Jumlah_Los'] = number_format($dataset->jml_los, 0, ',', '.') . ' Los';
                 $keamananipk['Keamanan'] = 'Rp ' . number_format($dataset->keamanan, 0, ',', '.') . ',-';
                 $keamananipk['IPK'] = 'Rp ' . number_format($dataset->ipk, 0, ',', '.') . ',-';
                 $keamananipk['Subtotal'] = 'Rp ' . number_format($dataset->subtotal, 0, ',', '.') . ',-';
@@ -505,6 +506,7 @@ class TagihanController extends Controller
                 $tarif = Tarif::findOrFail($data->kebersihan->tarif);
                 $kebersihan['Nama_Tarif'] = $tarif->name;
                 $kebersihan['Tarif'] = 'Rp ' . number_format($tarif->data->Tarif, 0, ',', '.') . ',-' . " " . $tarif->status;
+                $kebersihan['Jumlah_Los'] = number_format($dataset->jml_los, 0, ',', '.') . ' Los';
                 $kebersihan['Subtotal'] = 'Rp ' . number_format($dataset->subtotal, 0, ',', '.') . ',-';
                 $kebersihan['Diskon'] = 'Rp ' . number_format($dataset->diskon, 0, ',', '.') . ',-';
                 $kebersihan['Total'] = 'Rp ' . number_format($dataset->total, 0, ',', '.') . ',-';
@@ -521,6 +523,7 @@ class TagihanController extends Controller
                 $tarif = Tarif::findOrFail($data->airkotor->tarif);
                 $airkotor['Nama_Tarif'] = $tarif->name;
                 $airkotor['Tarif'] = 'Rp ' . number_format($tarif->data->Tarif, 0, ',', '.') . ',-' . " " . $tarif->status;
+                $airkotor['Jumlah_Los'] = number_format($dataset->jml_los, 0, ',', '.') . ' Los';
                 $airkotor['Subtotal'] = 'Rp ' . number_format($dataset->subtotal, 0, ',', '.') . ',-';
                 $airkotor['Diskon'] = 'Rp ' . number_format($dataset->diskon, 0, ',', '.') . ',-';
                 $airkotor['Total'] = 'Rp ' . number_format($dataset->total, 0, ',', '.') . ',-';
@@ -539,6 +542,7 @@ class TagihanController extends Controller
                     $lainnya['Tarif_'.$tarif->name] = 'Rp ' . number_format($tarif->data->Tarif, 0, ',', '.') . ',-' . " " . $tarif->status;
                     $lainnya['Total_'.$tarif->name] = 'Rp ' . number_format($key->total, 0, ',', '.') . ',-';
                 }
+                $lainnya['Jumlah_Los'] = number_format($dataset->jml_los, 0, ',', '.') . ' Los';
                 $lainnya['Subtotal'] = 'Rp ' . number_format($dataset->subtotal, 0, ',', '.') . ',-';
                 $lainnya['Total'] = 'Rp ' . number_format($dataset->total, 0, ',', '.') . ',-';
                 $lainnya['Realisasi'] = 'Rp ' . number_format($dataset->realisasi, 0, ',', '.') . ',-';
