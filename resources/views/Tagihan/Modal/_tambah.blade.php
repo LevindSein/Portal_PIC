@@ -311,7 +311,10 @@
 
                 if(data.debug){
                     console.log(data.debug);
-                    $("#periode").val(data.debug).change();
+                }
+
+                if(data.periode){
+                    $("#periode").val(data.periode).change();
                 }
             },
             error:function(data){
@@ -625,7 +628,10 @@
 
                 if(data.debug){
                     console.log(data.debug);
-                    $("#periode").val(data.debug).change();
+                }
+
+                if(data.periode){
+                    $("#periode").val(data.periode).change();
                 }
             },
             error:function(data){
@@ -642,6 +648,7 @@
             complete:function(data){
                 if(JSON.parse(data.responseText).success){
                     $('#tambah-modal').modal('hide');
+                    $('#status').val(1).change();
                     dtableReload();
                 }
                 setTimeout(() => {

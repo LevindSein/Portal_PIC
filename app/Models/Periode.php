@@ -31,6 +31,7 @@ class Periode extends Model
 
     public static function diffInMonth($periode)
     {
+        $periode = self::find($periode);
         $diff = 0;
         $now = Carbon::now()->format('Y-m-d');
         foreach (Periode::where('due', '>=', $periode->due)->get() as $key) {

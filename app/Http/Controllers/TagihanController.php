@@ -175,9 +175,6 @@ class TagihanController extends Controller
     {
         if($request->ajax()){
             $input['periode'] = $request->tambah_periode;
-            $periode = Periode::findOrFail($input['periode']);
-
-            $diff_month = Periode::diffInMonth($periode);
 
             $input['tempat_usaha'] = $request->tambah_tempat;
 
@@ -383,6 +380,8 @@ class TagihanController extends Controller
                 if($data['alat_listrik_id']){
                     $alat = Alat::findOrFail($data['alat_listrik_id']);
                     $alat->status = 0;
+                    $alat->stand  = $input['akhir_stand_listrik'];
+                    $alat->old    = $input['awal_stand_listrik'];
                     $alat->save();
                 }
 
@@ -395,13 +394,17 @@ class TagihanController extends Controller
                 if($data['alat_airbersih_id']){
                     $alat = Alat::findOrFail($data['alat_airbersih_id']);
                     $alat->status = 0;
+                    $alat->stand  = $input['akhir_stand_air_bersih'];
+                    $alat->old    = $input['awal_stand_air_bersih'];
                     $alat->save();
                 }
 
                 $dataset->update($data);
+
+                Tagihan::single($input['tempat_usaha'], $input['periode']);
             });
 
-            return response()->json(['success' => 'Data berhasil disimpan.', 'debug' => $input['periode']]);
+            return response()->json(['success' => 'Data berhasil disimpan.', 'periode' => $input['periode']]);
         }
     }
 
@@ -427,8 +430,8 @@ class TagihanController extends Controller
                 $dataset = $data->listrik;
                 $listrik['Status_Lunas'] = ($dataset->lunas) ? 'Lunas' : 'Belum Lunas';
                 $listrik['Kasir'] = $dataset->kasir;
-                $listrik['Tarif'] = Tarif::findOrFail($data->listrik->tarif)->name;
-                $alat = Alat::findOrFail($data->listrik->alat);
+                $listrik['Tarif'] = Tarif::findOrFail($dataset->tarif)->name;
+                $alat = Alat::findOrFail($dataset->alat);
                 $listrik['Alat_Meter'] = $alat->name;
                 $listrik['Daya'] = number_format($dataset->daya, 0, ',', '.') . ' Watt';
                 $listrik['Stand_Awal'] = number_format($dataset->awal, 0, ',', '.');

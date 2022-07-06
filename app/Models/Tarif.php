@@ -63,7 +63,9 @@ class Tarif extends Model
     }
 
     //BEGIN Listrik
-    public static function listrik($tarif, $pakai, $daya, $diff, $diskon){
+    public static function listrik($tarif_id, $pakai, $daya, $diff, $diskon){
+        $tarif = self::find($tarif_id)->data;
+
         $standar = self::standarL($tarif->Standar_Operasional, $daya);
 
         $blok1 = self::blok1L($tarif->Tarif_Blok_1, $standar);
@@ -109,7 +111,7 @@ class Tarif extends Model
 
         $total = $total + $denda - $diskon;
 
-        return [
+        return json_encode([
             'pakai'     => (int)$pakai,
             'standar'   => (int)$standar,
             'blok1'     => (int)$blok1,
@@ -121,8 +123,8 @@ class Tarif extends Model
             'ppn'       => (int)$ppn,
             'denda'     => (int)$denda,
             'diskon'    => (int)$diskon,
-            'total'     => (int)$total
-        ];
+            'total'     => (int)$total,
+        ]);
     }
 
     public static function standarL($standar, $daya){
@@ -151,7 +153,9 @@ class Tarif extends Model
     //END Listrik
 
     //BEGIN Air Bersih
-    public static function airbersih($tarif, $pakai, $diff, $diskon){
+    public static function airbersih($tarif_id, $pakai, $diff, $diskon){
+        $tarif = self::find($tarif_id)->data;
+
         $bayar = self::bayar($pakai, $tarif->Tarif_1, $tarif->Tarif_2);
 
         $pemeliharaan = self::pemeliharaan($tarif->Tarif_Pemeliharaan);
@@ -172,7 +176,7 @@ class Tarif extends Model
 
         $total = $total + $denda - $diskon;
 
-        return [
+        return json_encode([
             'pakai'         => (int)$pakai,
             'bayar'         => (int)$bayar,
             'pemeliharaan'  => (int)$pemeliharaan,
@@ -183,7 +187,7 @@ class Tarif extends Model
             'denda'         => (int)$denda,
             'diskon'        => (int)$diskon,
             'total'         => (int)$total
-        ];
+        ]);
     }
 
     public static function bayar($pakai, $tarif1, $tarif2){
@@ -215,12 +219,14 @@ class Tarif extends Model
         return $akhir - $awal;
     }
 
-    public static function ppn($ppn, $total){
-        return round(($ppn / 100) * $total);
+    public static function ppn($ppn, $subtotal){
+        return round(($ppn / 100) * $subtotal);
     }
 
     //BEGIN Keamanan IPK
-    public static function keamananipk($tarif, $jml_los, $diskon){
+    public static function keamananipk($tarif_id, $jml_los, $diskon){
+        $tarif = self::find($tarif_id)->data;
+
         $persen = self::persenKI($tarif->Tarif, $tarif->Persen_Keamanan);
 
         $keamanan = $persen['keamanan'] * $jml_los;
@@ -230,13 +236,13 @@ class Tarif extends Model
 
         $total = $subtotal - $diskon;
 
-        return [
+        return json_encode([
             'keamanan'      => (int)$keamanan,
             'ipk'           => (int)$ipk,
             'subtotal'      => (int)$subtotal,
             'diskon'        => (int)$diskon,
             'total'         => (int)$total
-        ];
+        ]);
     }
 
     public static function persenKI($tarif, $persen){
@@ -250,22 +256,26 @@ class Tarif extends Model
     //END Keamanan IPK
 
     //BEGIN Kebersihan
-    public static function kebersihan($tarif, $jml_los, $diskon){
+    public static function kebersihan($tarif_id, $jml_los, $diskon){
+        $tarif = self::find($tarif_id)->data;
+
         $subtotal = $tarif->Tarif * $jml_los;
 
         $total = $subtotal - $diskon;
 
-        return [
+        return json_encode([
             'subtotal'      => (int)$subtotal,
             'diskon'        => (int)$diskon,
             'total'         => (int)$total
-        ];
+        ]);
     }
     //END Kebersihan
 
     //BEGIN Air Kotor
-    public static function airkotor($tarif, $jml_los, $status, $diskon){
-        if($status == 'per-Los'){
+    public static function airkotor($tarif_id, $jml_los, $diskon){
+        $tarif = self::find($tarif_id)->data;
+
+        if($tarif->status == 'per-Los'){
             $subtotal = $tarif->Tarif * $jml_los;
         } else {
             $subtotal = $tarif->Tarif;
@@ -273,17 +283,19 @@ class Tarif extends Model
 
         $total = $subtotal - $diskon;
 
-        return [
+        return json_encode([
             'subtotal'      => (int)$subtotal,
             'diskon'        => (int)$diskon,
             'total'         => (int)$total
-        ];
+        ]);
     }
     //END Air Kotor
 
     //BEGIN Lainnya
-    public static function lainnya($tarif, $jml_los, $status){
-        if($status == 'per-Los'){
+    public static function lainnya($tarif_id, $jml_los){
+        $tarif = self::find($tarif_id)->data;
+
+        if($tarif->status == 'per-Los'){
             $subtotal = $tarif->Tarif * $jml_los;
         } else {
             $subtotal = $tarif->Tarif;
@@ -291,10 +303,10 @@ class Tarif extends Model
 
         $total = $subtotal;
 
-        return [
+        return json_encode([
             'subtotal'      => (int)$subtotal,
             'total'         => (int)$total
-        ];
+        ]);
     }
     //END Lainnya
 }

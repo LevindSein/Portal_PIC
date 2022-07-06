@@ -18,9 +18,9 @@ class CreateAlat extends Migration
             $table->string('code', 50)->unique();
             $table->string('name', 50)->unique();
             $table->tinyInteger('level'); // 1 = Listrik, 2 = Air Bersih
-            $table->integer('stand');
-            $table->integer('old')->nullable();
-            $table->integer('daya')->nullable();
+            $table->integer('stand')->default(0);
+            $table->integer('old')->default(0);
+            $table->integer('daya')->default(0);
             $table->boolean('status')->default(1); // 1 = Tersedia, 0 = Digunakan
             $table->datetime('updated_at')->useCurrent();
             $table->datetime('created_at')->useCurrent();

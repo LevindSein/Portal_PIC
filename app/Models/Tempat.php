@@ -55,6 +55,16 @@ class Tempat extends Model
         'status',
     ];
 
+    public function alatListrik()
+    {
+        return $this->belongsTo(Alat::class, 'alat_listrik_id');
+    }
+
+    public function alatAirBersih()
+    {
+        return $this->belongsTo(Alat::class, 'alat_airbersih_id');
+    }
+
     public function listrik()
     {
         return $this->belongsTo(Tarif::class, 'trf_listrik_id');
