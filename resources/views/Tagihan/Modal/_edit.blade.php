@@ -127,7 +127,7 @@
         $("#div-edit-lainnya").html('');
     }
 
-    var id, lain = 0, index = 1;;
+    var id, lain = 0, index = 1, tempat_name;
 
     $(document).on('click', '.edit', function(e){
         e.preventDefault();
@@ -159,6 +159,8 @@
             success:function(data)
             {
                 if(data.success){
+                    tempat_name = data.success.name;
+
                     $(".title").text('Edit : Periode ' + data.success.periode.nicename + ' - ' + data.success.name);
 
                     $('#edit-los').val("").html("");
@@ -586,7 +588,7 @@
         });
 
         $.ajax({
-            url: "/tagihan/" + id,
+            url: "/tagihan/" + id + "?tempat_name=" + tempat_name,
             cache: false,
             method: "PUT",
             data: $(this).serialize(),

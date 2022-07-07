@@ -625,7 +625,242 @@ class TagihanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return response()->json(['success' => 'Data berhasil disimpan.']);
+        if($request->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            $tempat = Tempat::where('name', $request->tempat_name)->first();
+
+            $input['tempat_usaha'] = $tempat->id;
+
+            $input['pengguna'] = $request->edit_pengguna;
+
+            Validator::make($input, [
+                'tempat_usaha' => 'required|exists:tempat,id',
+                'pengguna'     => 'required|exists:users,id',
+            ])->validate();
+
+            $los = $this->multipleSelect($request->edit_los);
+            sort($los, SORT_NATURAL);
+            $jml_los = count($los);
+
+            $no_los = Group::findOrFail($tempat->group_id);
+            foreach($los as $l){
+                $input['nomor_los'] = $l;
+                Validator::make($input, [
+                    'nomor_los' => 'required|in:' . implode(',', json_decode($no_los->data)),
+                ])->validate();
+            }
+
+            $diskon = [];
+
+            $data['trf_listrik_id'] = NULL;
+            $data['alat_listrik_id'] = NULL;
+            if($request->edit_listrik){
+                $input['alat_listrik'] = $request->edit_alat_listrik;
+                $input['tarif_listrik'] = $request->edit_trf_listrik;
+                $input['diskon_listrik'] = $request->edit_dis_listrik;
+                $input['awal_stand_listrik'] = str_replace('.', '', $request->edit_awal_listrik);
+                $input['akhir_stand_listrik'] = str_replace('.', '', $request->edit_akhir_listrik);
+
+                Validator::make($input, [
+                    'alat_listrik'   => ['required','numeric',
+                                            Rule::exists('alat', 'id')
+                                            ->where('level', 1)
+                                        ],
+                    'tarif_listrik'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 1)
+                                        ],
+                    'diskon_listrik' => 'nullable|numeric|gte:0|lte:100',
+                    'awal_stand_listrik' => 'required|numeric|gte:0|lte:999999999999',
+                    'akhir_stand_listrik' => 'required|numeric|gte:0|lte:999999999999'
+                ])->validate();
+
+                $data['alat_listrik_id'] = $input['alat_listrik'];
+                $data['trf_listrik_id']  = $input['tarif_listrik'];
+                if($input['diskon_listrik']){
+                    $diskon['listrik']   = $input['diskon_listrik'];
+                }
+            }
+
+            $data['trf_airbersih_id'] = NULL;
+            $data['alat_airbersih_id'] = NULL;
+            if($request->edit_airbersih){
+                $input['alat_air_bersih'] = $request->edit_alat_airbersih;
+                $input['tarif_air_bersih'] = $request->edit_trf_airbersih;
+                $input['diskon_air_bersih'] = $request->edit_dis_airbersih;
+                $input['awal_stand_air_bersih'] = str_replace('.', '', $request->edit_awal_airbersih);
+                $input['akhir_stand_air_bersih'] = str_replace('.', '', $request->edit_akhir_airbersih);
+
+                Validator::make($input, [
+                    'alat_air_bersih'   => ['required','numeric',
+                                            Rule::exists('alat', 'id')
+                                            ->where('level', 2)
+                                        ],
+                    'tarif_air_bersih'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 2)
+                                        ],
+                    'diskon_air_bersih' => 'nullable|numeric|gte:0|lte:100',
+                    'awal_stand_air_bersih' => 'required|numeric|gte:0|lte:999999999999',
+                    'akhir_stand_air_bersih' => 'required|numeric|gte:0|lte:999999999999'
+                ])->validate();
+
+                $data['alat_airbersih_id'] = $input['alat_air_bersih'];
+                $data['trf_airbersih_id']  = $input['tarif_air_bersih'];
+                if($input['diskon_air_bersih']){
+                    $diskon['airbersih']   = $input['diskon_air_bersih'];
+                }
+            }
+
+            $data['trf_keamananipk_id'] = NULL;
+            if($request->edit_keamananipk){
+                $input['tarif_keamanan_ipk'] = $request->edit_trf_keamananipk;
+                $input['diskon_keamanan_ipk'] = str_replace('.', '', $request->edit_dis_keamananipk);
+
+                Validator::make($input, [
+                    'tarif_keamanan_ipk'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 3)
+                                        ]
+                ])->validate();
+
+                $tarif = Tarif::findOrFail($input['tarif_keamanan_ipk']);
+                $max = count($los) * $tarif->data->Tarif;
+
+                Validator::make($input, [
+                    'diskon_keamanan_ipk' => 'nullable|numeric|gte:0|lte:' . $max,
+                ])->validate();
+
+                $data['trf_keamananipk_id']  = $input['tarif_keamanan_ipk'];
+                if($input['diskon_keamanan_ipk']){
+                    $diskon['keamananipk']   = $input['diskon_keamanan_ipk'];
+                }
+            }
+
+            $data['trf_kebersihan_id'] = NULL;
+            if($request->edit_kebersihan){
+                $input['tarif_kebersihan'] = $request->edit_trf_kebersihan;
+                $input['diskon_kebersihan'] = str_replace('.', '', $request->edit_dis_kebersihan);
+
+                Validator::make($input, [
+                    'tarif_kebersihan'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 4)
+                                        ]
+                ])->validate();
+
+                $tarif = Tarif::findOrFail($input['tarif_kebersihan']);
+                $max = count($los) * $tarif->data->Tarif;
+
+                Validator::make($input, [
+                    'diskon_kebersihan' => 'nullable|numeric|gte:0|lte:' . $max,
+                ])->validate();
+
+                $data['trf_kebersihan_id']  = $input['tarif_kebersihan'];
+                if($input['diskon_kebersihan']){
+                    $diskon['kebersihan']   = $input['diskon_kebersihan'];
+                }
+            }
+
+            $data['trf_airkotor_id'] = NULL;
+            if($request->edit_airkotor){
+                $input['tarif_air_kotor'] = $request->edit_trf_airkotor;
+                $input['diskon_air_kotor'] = 0;
+                if($request->edit_dis_airkotor){
+                    $input['diskon_air_kotor'] = str_replace('.', '', $request->edit_dis_airkotor);
+                }
+
+                Validator::make($input, [
+                    'tarif_air_kotor'  => ['required','numeric',
+                                            Rule::exists('tarif', 'id')
+                                            ->where('level', 5)
+                                        ]
+                ])->validate();
+
+                $tarif = Tarif::findOrFail($input['tarif_air_kotor']);
+
+                if($tarif->status == 'per-Los'){
+                    $max = count($los) * $tarif->data->Tarif;
+                } else {
+                    $max = $tarif->data->Tarif;
+                }
+
+                Validator::make($input, [
+                    'diskon_air_kotor' => 'nullable|numeric|gte:0|lte:' . $max,
+                ])->validate();
+
+                $data['trf_airkotor_id']  = $input['tarif_air_kotor'];
+                if($input['diskon_air_kotor']){
+                    $diskon['airkotor']   = $input['diskon_air_kotor'];
+                }
+            }
+
+            $data['trf_lainnya_id'] = NULL;
+            if($request->edit_lainnya){
+                $lainnya = [];
+                foreach ($request->edit_lainnya as $key) {
+                    $input['tarif_lainnya']  = $key;
+
+                    Validator::make($input, [
+                        'tarif_lainnya'
+                        => ['required','numeric',
+                            Rule::exists('tarif', 'id')
+                            ->where('level', 6)
+                        ]
+                    ])->validate();
+
+                    $lainnya[] = $key;
+                }
+
+                $data['trf_lainnya_id'] = json_encode($lainnya);
+            }
+
+            $data['los']         = json_encode($los);
+            $data['jml_los']     = $jml_los;
+            $data['pengguna_id'] = $input['pengguna'];
+            $data['diskon']      = json_encode($diskon);
+
+            DB::transaction(function() use ($data, $input, $request){
+                $dataset = Tempat::lockForUpdate()->where('name', $request->tempat_name)->first();
+
+                if($dataset->alat_listrik_id){
+                    $alat = Alat::findOrFail($dataset->alat_listrik_id);
+                    $alat->status = 1;
+                    $alat->save();
+                }
+
+                if($data['alat_listrik_id']){
+                    $alat = Alat::findOrFail($data['alat_listrik_id']);
+                    $alat->status = 0;
+                    $alat->stand  = $input['akhir_stand_listrik'];
+                    $alat->old    = $input['awal_stand_listrik'];
+                    $alat->save();
+                }
+
+                if($dataset->alat_airbersih_id){
+                    $alat = Alat::findOrFail($dataset->alat_airbersih_id);
+                    $alat->status = 1;
+                    $alat->save();
+                }
+
+                if($data['alat_airbersih_id']){
+                    $alat = Alat::findOrFail($data['alat_airbersih_id']);
+                    $alat->status = 0;
+                    $alat->stand  = $input['akhir_stand_air_bersih'];
+                    $alat->old    = $input['awal_stand_air_bersih'];
+                    $alat->save();
+                }
+
+                $dataset->update($data);
+            });
+
+            return response()->json(['success' => 'Data berhasil disimpan.', 'debug' => $request->tempat_name]);
+        }
     }
 
     /**
