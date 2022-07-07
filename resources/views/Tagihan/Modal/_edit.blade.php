@@ -65,7 +65,7 @@
                                         type="checkbox"
                                         name="edit_kebersihan"
                                         id="edit-kebersihan">
-                                    <label class="form-control-label" for="edit-kebersihan">
+                                    <label class="form-control-label" for="edit-kebersihan" id="label-edit-kebersihan">
                                         Kebersihan
                                     </label>
                                 </div>
@@ -127,7 +127,7 @@
         $("#div-edit-lainnya").html('');
     }
 
-    var id, lain = 0, index = 1, tempat_name;
+    var id, lain = 0, index = 1, tempat_name, periode_id;
 
     $(document).on('click', '.edit', function(e){
         e.preventDefault();
@@ -160,6 +160,7 @@
             {
                 if(data.success){
                     tempat_name = data.success.name;
+                    periode_id  = data.success.periode.id;
 
                     $(".title").text('Edit : Periode ' + data.success.periode.nicename + ' - ' + data.success.name);
 
@@ -247,8 +248,12 @@
                     if(data.success.kebersihan){
                         if(data.success.kebersihan.lunas){
                             $("#edit-kebersihan").prop("checked", false).prop("disabled", true);
+                            $("#edit-kebersihan").hide();
+                            $("#label-edit-kebersihan").hide();
                         } else {
                             $("#edit-kebersihan").prop("checked", true).prop("disabled", false);
+                            $("#edit-kebersihan").show();
+                            $("#label-edit-kebersihan").show();
                             editFasKebersihan();
 
                             $("#edit-trf-kebersihan").val("").html("");
@@ -588,7 +593,7 @@
         });
 
         $.ajax({
-            url: "/tagihan/" + id + "?tempat_name=" + tempat_name,
+            url: "/tagihan/" + id + "?tempat_name=" + tempat_name + "&periode_id=" + periode_id,
             cache: false,
             method: "PUT",
             data: $(this).serialize(),

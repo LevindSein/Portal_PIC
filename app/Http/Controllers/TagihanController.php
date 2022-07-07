@@ -825,7 +825,7 @@ class TagihanController extends Controller
             $data['pengguna_id'] = $input['pengguna'];
             $data['diskon']      = json_encode($diskon);
 
-            DB::transaction(function() use ($data, $input, $request){
+            DB::transaction(function() use ($data, $input, $request, $decrypted){
                 $dataset = Tempat::lockForUpdate()->where('name', $request->tempat_name)->first();
 
                 if($dataset->alat_listrik_id){
@@ -857,9 +857,11 @@ class TagihanController extends Controller
                 }
 
                 $dataset->update($data);
+
+                Tagihan::singleUpdate($decrypted, $request->periode_id);
             });
 
-            return response()->json(['success' => 'Data berhasil disimpan.', 'debug' => $request->tempat_name]);
+            return response()->json(['success' => 'Data berhasil disimpan.']);
         }
     }
 
