@@ -213,6 +213,8 @@ class Tagihan extends Model
         }
 
         if($data->keamananipk){
+            $disc  = 0;
+
             if(!empty($data->diskon->keamananipk)){
                 $disc = $data->diskon->keamananipk;
             }
@@ -241,6 +243,8 @@ class Tagihan extends Model
         }
 
         if($data->kebersihan){
+            $disc  = 0;
+
             if(!empty($data->diskon->kebersihan)){
                 $disc = $data->diskon->kebersihan;
             }
@@ -267,6 +271,8 @@ class Tagihan extends Model
         }
 
         if($data->airkotor){
+            $disc  = 0;
+
             if(!empty($data->diskon->airkotor)){
                 $disc = $data->diskon->airkotor;
             }
@@ -512,6 +518,8 @@ class Tagihan extends Model
                 $realisasi += $tagihan_data->keamananipk->realisasi;
                 $selisih   += $tagihan_data->keamananipk->selisih;
             } else {
+                $disc  = 0;
+
                 if(!empty($data->diskon->keamananipk)){
                     $disc = $data->diskon->keamananipk;
                 }
@@ -560,6 +568,8 @@ class Tagihan extends Model
                 $realisasi += $tagihan_data->kebersihan->realisasi;
                 $selisih   += $tagihan_data->kebersihan->selisih;
             } else {
+                $disc  = 0;
+
                 if(!empty($data->diskon->kebersihan)){
                     $disc = $data->diskon->kebersihan;
                 }
@@ -606,6 +616,8 @@ class Tagihan extends Model
                 $realisasi += $tagihan_data->airkotor->realisasi;
                 $selisih   += $tagihan_data->airkotor->selisih;
             } else {
+                $disc  = 0;
+
                 if(!empty($data->diskon->airkotor)){
                     $disc = $data->diskon->airkotor;
                 }

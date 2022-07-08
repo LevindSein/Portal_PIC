@@ -401,7 +401,7 @@ class TagihanController extends Controller
 
                 $dataset->update($data);
 
-                Tagihan::single($input['tempat_usaha'], $input['periode']);
+                Tagihan::singleCreate($input['tempat_usaha'], $input['periode']);
             });
 
             return response()->json(['success' => 'Data berhasil disimpan.', 'periode' => $input['periode']]);
@@ -634,6 +634,8 @@ class TagihanController extends Controller
 
             $tempat = Tempat::where('name', $request->tempat_name)->first();
 
+            $tagihan = Tagihan::findOrFail($decrypted);
+
             $input['tempat_usaha'] = $tempat->id;
 
             $input['pengguna'] = $request->edit_pengguna;
@@ -657,8 +659,6 @@ class TagihanController extends Controller
 
             $diskon = [];
 
-            $data['trf_listrik_id'] = NULL;
-            $data['alat_listrik_id'] = NULL;
             if($request->edit_listrik){
                 $input['alat_listrik'] = $request->edit_alat_listrik;
                 $input['tarif_listrik'] = $request->edit_trf_listrik;
@@ -685,10 +685,15 @@ class TagihanController extends Controller
                 if($input['diskon_listrik']){
                     $diskon['listrik']   = $input['diskon_listrik'];
                 }
+            } else {
+                if($tagihan->listrik && $tagihan->listrik->lunas){
+
+                } else {
+                    $data['trf_listrik_id'] = NULL;
+                    $data['alat_listrik_id'] = NULL;
+                }
             }
 
-            $data['trf_airbersih_id'] = NULL;
-            $data['alat_airbersih_id'] = NULL;
             if($request->edit_airbersih){
                 $input['alat_air_bersih'] = $request->edit_alat_airbersih;
                 $input['tarif_air_bersih'] = $request->edit_trf_airbersih;
@@ -715,9 +720,15 @@ class TagihanController extends Controller
                 if($input['diskon_air_bersih']){
                     $diskon['airbersih']   = $input['diskon_air_bersih'];
                 }
+            } else {
+                if($tagihan->airbersih && $tagihan->airbersih->lunas){
+
+                } else {
+                    $data['trf_airbersih_id'] = NULL;
+                    $data['alat_airbersih_id'] = NULL;
+                }
             }
 
-            $data['trf_keamananipk_id'] = NULL;
             if($request->edit_keamananipk){
                 $input['tarif_keamanan_ipk'] = $request->edit_trf_keamananipk;
                 $input['diskon_keamanan_ipk'] = str_replace('.', '', $request->edit_dis_keamananipk);
@@ -740,9 +751,14 @@ class TagihanController extends Controller
                 if($input['diskon_keamanan_ipk']){
                     $diskon['keamananipk']   = $input['diskon_keamanan_ipk'];
                 }
+            } else {
+                if($tagihan->keamananipk && $tagihan->keamananipk->lunas){
+
+                } else {
+                    $data['trf_keamananipk_id'] = NULL;
+                }
             }
 
-            $data['trf_kebersihan_id'] = NULL;
             if($request->edit_kebersihan){
                 $input['tarif_kebersihan'] = $request->edit_trf_kebersihan;
                 $input['diskon_kebersihan'] = str_replace('.', '', $request->edit_dis_kebersihan);
@@ -765,9 +781,14 @@ class TagihanController extends Controller
                 if($input['diskon_kebersihan']){
                     $diskon['kebersihan']   = $input['diskon_kebersihan'];
                 }
+            } else {
+                if($tagihan->kebersihan && $tagihan->kebersihan->lunas){
+
+                } else {
+                    $data['trf_kebersihan_id'] = NULL;
+                }
             }
 
-            $data['trf_airkotor_id'] = NULL;
             if($request->edit_airkotor){
                 $input['tarif_air_kotor'] = $request->edit_trf_airkotor;
                 $input['diskon_air_kotor'] = 0;
@@ -798,9 +819,14 @@ class TagihanController extends Controller
                 if($input['diskon_air_kotor']){
                     $diskon['airkotor']   = $input['diskon_air_kotor'];
                 }
+            } else {
+                if($tagihan->airkotor && $tagihan->airkotor->lunas){
+
+                } else {
+                    $data['trf_airkotor_id'] = NULL;
+                }
             }
 
-            $data['trf_lainnya_id'] = NULL;
             if($request->edit_lainnya){
                 $lainnya = [];
                 foreach ($request->edit_lainnya as $key) {
@@ -818,6 +844,12 @@ class TagihanController extends Controller
                 }
 
                 $data['trf_lainnya_id'] = json_encode($lainnya);
+            } else {
+                if($tagihan->lainnya && $tagihan->lainnya->lunas){
+
+                } else {
+                    $data['trf_lainnya_id'] = NULL;
+                }
             }
 
             $data['los']         = json_encode($los);
@@ -825,16 +857,16 @@ class TagihanController extends Controller
             $data['pengguna_id'] = $input['pengguna'];
             $data['diskon']      = json_encode($diskon);
 
-            DB::transaction(function() use ($data, $input, $request, $decrypted){
+            DB::transaction(function() use ($data, $input, $request, $decrypted, $tagihan){
                 $dataset = Tempat::lockForUpdate()->where('name', $request->tempat_name)->first();
 
-                if($dataset->alat_listrik_id){
+                if($dataset->alat_listrik_id && !$tagihan->listrik->lunas){
                     $alat = Alat::findOrFail($dataset->alat_listrik_id);
                     $alat->status = 1;
                     $alat->save();
                 }
 
-                if($data['alat_listrik_id']){
+                if(!empty($data['alat_listrik_id'])){
                     $alat = Alat::findOrFail($data['alat_listrik_id']);
                     $alat->status = 0;
                     $alat->stand  = $input['akhir_stand_listrik'];
@@ -842,13 +874,13 @@ class TagihanController extends Controller
                     $alat->save();
                 }
 
-                if($dataset->alat_airbersih_id){
+                if($dataset->alat_airbersih_id && !$tagihan->airbersih->lunas){
                     $alat = Alat::findOrFail($dataset->alat_airbersih_id);
                     $alat->status = 1;
                     $alat->save();
                 }
 
-                if($data['alat_airbersih_id']){
+                if(!empty($data['alat_airbersih_id'])){
                     $alat = Alat::findOrFail($data['alat_airbersih_id']);
                     $alat->status = 0;
                     $alat->stand  = $input['akhir_stand_air_bersih'];

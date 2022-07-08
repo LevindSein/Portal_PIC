@@ -26,7 +26,7 @@
                                         type="checkbox"
                                         name="edit_listrik"
                                         id="edit-listrik">
-                                    <label class="form-control-label" for="edit-listrik">
+                                    <label class="form-control-label" for="edit-listrik" id="label-edit-listrik">
                                         Listrik
                                     </label>
                                 </div>
@@ -39,7 +39,7 @@
                                         type="checkbox"
                                         name="edit_airbersih"
                                         id="edit-airbersih">
-                                    <label class="form-control-label" for="edit-airbersih">
+                                    <label class="form-control-label" for="edit-airbersih" id="label-edit-airbersih">
                                         Air Bersih
                                     </label>
                                 </div>
@@ -52,7 +52,7 @@
                                         type="checkbox"
                                         name="edit_keamananipk"
                                         id="edit-keamananipk">
-                                    <label class="form-control-label" for="edit-keamananipk">
+                                    <label class="form-control-label" for="edit-keamananipk" id="label-edit-keamananipk">
                                         Keamanan IPK
                                     </label>
                                 </div>
@@ -78,7 +78,7 @@
                                         type="checkbox"
                                         name="edit_airkotor"
                                         id="edit-airkotor">
-                                    <label class="form-control-label" for="edit-airkotor">
+                                    <label class="form-control-label" for="edit-airkotor" id="label-edit-airkotor">
                                         Air Kotor
                                     </label>
                                 </div>
@@ -179,8 +179,12 @@
                     if(data.success.listrik){
                         if(data.success.listrik.lunas){
                             $("#edit-listrik").prop("checked", false).prop("disabled", true);
+                            $("#edit-listrik").hide();
+                            $("#label-edit-listrik").hide();
                         } else {
                             $("#edit-listrik").prop("checked", true).prop("disabled", false);
+                            $("#edit-listrik").show();
+                            $("#label-edit-listrik").show();
                             editFasListrik();
 
                             $("#edit-alat-listrik").val("").html("");
@@ -205,8 +209,12 @@
                     if(data.success.airbersih){
                         if(data.success.airbersih.lunas){
                             $("#edit-airbersih").prop("checked", false).prop("disabled", true);
+                            $("#edit-airbersih").hide();
+                            $("#label-edit-airbersih").hide();
                         } else {
                             $("#edit-airbersih").prop("checked", true).prop("disabled", false);
+                            $("#edit-airbersih").show();
+                            $("#label-edit-airbersih").show();
                             editFasAirbersih();
 
                             $("#edit-alat-airbersih").val("").html("");
@@ -231,8 +239,12 @@
                     if(data.success.keamananipk){
                         if(data.success.keamananipk.lunas){
                             $("#edit-keamananipk").prop("checked", false).prop("disabled", true);
+                            $("#edit-keamananipk").hide();
+                            $("#label-edit-keamananipk").hide();
                         } else {
                             $("#edit-keamananipk").prop("checked", true).prop("disabled", false);
+                            $("#edit-keamananipk").show();
+                            $("#label-edit-keamananipk").show();
                             editFasKeamananipk();
 
                             $("#edit-trf-keamananipk").val("").html("");
@@ -269,8 +281,12 @@
                     if(data.success.airkotor){
                         if(data.success.airkotor.lunas){
                             $("#edit-airkotor").prop("checked", false).prop("disabled", true);
+                            $("#edit-airkotor").hide();
+                            $("#label-edit-airkotor").hide();
                         } else {
                             $("#edit-airkotor").prop("checked", true).prop("disabled", false);
+                            $("#edit-airkotor").show();
+                            $("#label-edit-airkotor").show();
                             editFasAirkotor();
 
                             $("#edit-trf-airkotor").val("").html("");
@@ -286,8 +302,10 @@
                     if(data.success.lainnya){
                         if(data.success.lainnya.lunas){
                             $("#edit-lainnya-add").prop("disabled", true);
+                            $("#edit-lainnya-add").hide();
                         } else {
                             $("#edit-lainnya-add").prop("disabled", false);
+                            $("#edit-lainnya-add").show();
                             $.each( data.success.trf_lainnya, function( i, val ) {
                                 $("#edit-lainnya-add").trigger("click");
                                 $("#edit-lainnya-" + index).val("").html("");
