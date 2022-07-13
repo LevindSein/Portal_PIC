@@ -87,7 +87,7 @@
         tambah_new();
     }
 
-    $("#add").click(function(){
+    $(".add").click(function(){
         $("#tambah-modal").modal("show");
 
         tambah_init();

@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function(){
         Route::post('reset/{id}', [UserController::class, 'reset']);
     });
 
-    Route::prefix('services')->group(function () {
+    Route::prefix('layanan')->group(function () {
         Route::resources([
             'kasir'    => KasirController::class
         ]);

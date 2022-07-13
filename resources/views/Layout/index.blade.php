@@ -135,12 +135,11 @@
             <div class="header bg-primary pb-6">
                 <div class="container-fluid">
                     <div class="header-body">
-                        <div class="row align-items-center py-4">
-                            <div class="col-lg-8 col-5">
-                                <!-- Judul -->
+                        <div class="align-items-center py-4 d-flex justify-content-between">
+                            <div>
                                 <h6 class="h2 text-white d-inline-block mb-0"><div class="content-title">@yield('content-title')</div></h6>
                             </div>
-                            <div class="col-lg-4 col-7 text-right" id="content-button">
+                            <div id="content-button">
                                 @yield('content-button')
                             </div>
                         </div>

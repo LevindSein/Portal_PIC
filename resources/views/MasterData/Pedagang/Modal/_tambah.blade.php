@@ -62,7 +62,7 @@ function tambah_init(){
     $("#tambah-username").prop("disabled", true).val('');
 }
 
-$("#add").click(function(){
+$(".add").click(function(){
     $("#tambah-modal").modal("show");
 
     tambah_init();

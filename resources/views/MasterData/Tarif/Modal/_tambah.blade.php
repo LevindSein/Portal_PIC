@@ -303,7 +303,7 @@
         $("#tambah-level").val($("#level").val()).change();
     }
 
-    $("#add").click(function(){
+    $(".add").click(function(){
         $("#tambah-modal").modal("show");
 
         tambah_init();

@@ -5,7 +5,7 @@ Kasir
 @endsection
 
 @section('content-button')
-@include('Services.Kasir.Partial._button')
+@include('Layanan.Kasir.Partial._button')
 @endsection
 
 @section('content-body')
@@ -36,7 +36,7 @@ Kasir
             searchPlaceholder: "Kontrol"
         },
         serverSide : true,
-        ajax : "/services/kasir",
+        ajax : "/layanan/kasir",
         columns : [
             { data: 'name', name: 'name', class : 'text-center align-middle' },
             { data: 'pengguna.name', name: 'pengguna.name', class : 'text-center align-middle' },

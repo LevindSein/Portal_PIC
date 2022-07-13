@@ -11,13 +11,18 @@ class Payment extends Model
 {
     use HasFactory;
 
+    private $kontrol;
+
+    public function __construct($kontrol = '')
+    {
+        $this->kontrol   = $kontrol;
+    }
+
     protected $table = 'payments';
 
     protected $fillable = [
         'name',
         'nicename',
-        'los',
-        'jml_los',
         'pengguna_id',
         'ket',
         'tagihan_ids',
@@ -32,12 +37,8 @@ class Payment extends Model
         return $this->belongsTo(User::class, 'pengguna_id');
     }
 
-    public static function sync($kontrol){
-        //Check kontrol sudah ada di payment atau belum
-        if(self::where('name', $kontrol)->exists()){
-            //Apabila sudah ada di Payment
-        } else {
-            //Apabila tidak ada di Payment
-        }
+    public function __toString()
+    {
+        return "Payment updated.";
     }
 }

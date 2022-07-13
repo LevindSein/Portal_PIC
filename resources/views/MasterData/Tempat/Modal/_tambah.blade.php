@@ -193,7 +193,7 @@
     }
 
     var lain = 0, index = 1;
-    $("#add").click(function(){
+    $(".add").click(function(){
         $("#tambah-modal").modal("show");
 
         tambah_init();

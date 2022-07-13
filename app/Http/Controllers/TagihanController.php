@@ -16,6 +16,7 @@ use App\Models\Group;
 use App\Models\Tarif;
 use App\Models\Periode;
 use App\Models\Alat;
+use App\Models\Payment;
 use App\Models\Tagihan;
 
 use Carbon\Carbon;
@@ -636,7 +637,9 @@ class TagihanController extends Controller
 
             $tagihan = Tagihan::findOrFail($decrypted);
 
+            //Bugs kalau Tempat Usaha namanya ganti
             $input['tempat_usaha'] = $tempat->id;
+            //end
 
             $input['pengguna'] = $request->edit_pengguna;
 
@@ -649,7 +652,9 @@ class TagihanController extends Controller
             sort($los, SORT_NATURAL);
             $jml_los = count($los);
 
+            //Bugs klo nama tempatnya ganti
             $no_los = Group::findOrFail($tempat->group_id);
+            //end
             foreach($los as $l){
                 $input['nomor_los'] = $l;
                 Validator::make($input, [
@@ -891,6 +896,8 @@ class TagihanController extends Controller
                 $dataset->update($data);
 
                 Tagihan::singleUpdate($decrypted, $request->periode_id);
+
+                new Payment($request->tempat_name);
             });
 
             return response()->json(['success' => 'Data berhasil disimpan.']);

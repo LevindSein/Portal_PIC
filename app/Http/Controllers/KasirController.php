@@ -34,7 +34,7 @@ class KasirController extends Controller
             return DataTables::of($data)
             ->addColumn('action', function($data){
                 $button = '';
-                $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="detail btn btn-sm btn-neutral btn-icon">Bayar</a>';
+                $button .= '<button type="button" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="bayar btn btn-sm btn-success">Bayar</button>';
                 return $button;
             })
             ->editColumn('pengguna.name', function($data){
@@ -56,7 +56,7 @@ class KasirController extends Controller
             ->rawColumns(['action', 'name', 'tagihan', 'pengguna.name'])
             ->make(true);
         }
-        return view('Services.Kasir.index');
+        return view('Layanan.Kasir.index');
     }
 
     /**

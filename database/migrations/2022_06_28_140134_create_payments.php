@@ -17,8 +17,6 @@ class CreatePayments extends Migration
             $table->id();
             $table->string('name', 25);
             $table->string('nicename', 25);
-            $table->json('los');
-            $table->integer('jml_los');
             $table->unsignedBigInteger('pengguna_id');
             $table->foreign('pengguna_id')->references('id')->on('users');
             $table->text('ket')->nullable();

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Tempat;
 use App\Models\Group;
 use App\Exports\GroupExport;
-
+use App\Models\Tagihan;
 use Carbon\Carbon;
 
 use Excel;
@@ -239,11 +239,22 @@ class GroupController extends Controller
 
                 if($groupOld != $input['nama_grup']){
                     //Perubahan Nama Grup mempengaruhi Tempat
-                    foreach(Tempat::where('group_id', $decrypted)->get() as $d){
-                        $d->name = preg_replace('/'.$groupOld.'/i', $input['nama_grup'], $d->name);
-                        $d->nicename = str_replace('-', '', $d->name);
-                        $d->save();
-                    }
+                    Tempat::where('group_id', $decrypted)->chunk(100, function ($tempat) use ($groupOld, $input) {
+                        foreach ($tempat as $d) {
+                            $d->name = preg_replace('/'.$groupOld.'/i', $input['nama_grup'], $d->name);
+                            $d->nicename = str_replace('-', '', $d->name);
+                            $d->save();
+                        }
+                    });
+
+                    //Perubahan Nama Grup mempengaruhi Tagihan
+                    Tagihan::where('group_id', $decrypted)->chunk(100, function ($tagihan) use ($groupOld, $input) {
+                        foreach ($tagihan as $d) {
+                            $d->name = preg_replace('/'.$groupOld.'/i', $input['nama_grup'], $d->name);
+                            $d->nicename = str_replace('-', '', $d->name);
+                            $d->save();
+                        }
+                    });
                 }
             });
 
