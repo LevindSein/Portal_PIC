@@ -49,28 +49,6 @@ class SearchController extends Controller
         return response()->json($data);
     }
 
-    public function los(Request $request, $name){
-        $data = [];
-        if($request->ajax()) {
-            $group = Group::where('name', $name)->first();
-            if($group->data){
-                $los = json_decode($group->data);
-                $keyword = $request->q;
-                foreach($los as $key){
-                    if($keyword){
-                        if(stripos($key, $keyword) !== false){
-                            $data[] = $key;
-                        }
-                    }
-                    else {
-                        $data[] = $key;
-                    }
-                }
-            }
-        }
-        return response()->json($data);
-    }
-
     public function alat(Request $request){
         $data = [];
         if($request->ajax()) {

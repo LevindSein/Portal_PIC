@@ -115,28 +115,6 @@ Tempat Usaha
         });
     }
 
-    function select2los(select2id, url, placeholder){
-        $(select2id).select2({
-            placeholder: placeholder,
-            ajax: {
-                url: url,
-                dataType: 'json',
-                delay: 250,
-                cache: true,
-                processResults: function (data) {
-                    return {
-                        results:  $.map(data, function (d) {
-                            return {
-                                id: d,
-                                text: d
-                            }
-                        })
-                    };
-                },
-            }
-        });
-    }
-
     function select2user(select2id, url, placeholder){
         $(select2id).select2({
             placeholder: placeholder,

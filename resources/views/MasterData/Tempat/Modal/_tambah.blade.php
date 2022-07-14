@@ -15,7 +15,7 @@
                             </div>
                             <div class="form-group tambah-los">
                                 <small class="form-control-label">Nomor Los <span class="text-danger">*</span></small>
-                                <select required id="tambah-los" name="tambah_los[]" class="form-control form-control-sm" multiple></select>
+                                <textarea rows="3" id="tambah-los" name="tambah_los" autocomplete="off" placeholder="Contoh: 1,2,3A,4,5,6" class="los form-control" style="text-transform: uppercase"></textarea>
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Kode Kontrol <span class="text-danger">*</span></small>
@@ -172,8 +172,6 @@
         });
         select2group("#tambah-group", "/search/groups", "-- Cari Grup / Blok --");
 
-        $("#tambah-los").val('').html('').prop("disabled",true).select2({placeholder: "Grup perlu diisi terlebih dahulu"});
-
         $("#tambah-pengguna").val('').html('').on('select2:open', () => {
             $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
         });
@@ -200,19 +198,11 @@
         lain = 0, index = 1;
     });
 
-    $(document).on("change", '#tambah-group', function(e) {
-        var group = $('#tambah-group').val();
-        $("#tambah-los").prop("disabled", false);
-        $("#tambah-los").val("").html("");
-        select2los("#tambah-los", "/search/" + group + "/los", "-- Pilih Nomor Los --");
-    });
-
-    $(document).on("change", '#tambah-group, #tambah-los', function(e) {
-        if($("#tambah-los").val() == ''){
-            $("#tambah-name").val('').prop("disabled", true);
+    $(document).on("input", '#tambah-group, #tambah-los', function(e) {
+        if($("#tambah-group").val() == '' && $("#tambah-los").val() == ''){
+            $("#tambah-name").val('').prop('disabled', true);
         } else {
-            $("#tambah-name").prop("disabled", false);
-
+            $("#tambah-name").prop('disabled', false);
             var dataset = {
                 'group' : $("#tambah-group").val(),
                 'los' : $("#tambah-los").val(),

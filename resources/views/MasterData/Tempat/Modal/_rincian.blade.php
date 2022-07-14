@@ -65,7 +65,7 @@ $(document).on('click', '.detail', function(e){
 
                 //Nomor Los
                 html += '<small class="text-muted pt-4 db">Nomor Los</small>';
-                html += '<h3>' + data.success.los + '</h3>';
+                html += '<h3>' + data.success.los.data + '</h3>';
                 //End Nomor Los
 
                 //Jumlah Los
