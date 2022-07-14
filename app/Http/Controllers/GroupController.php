@@ -44,12 +44,6 @@ class GroupController extends Controller
                 $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="detail btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-info"></i></a>';
                 return $button;
             })
-            ->addColumn('jum_los', function($data){
-                if($data->data){
-                    return count(json_decode($data->data));
-                }
-                return 0;
-            })
             ->filterColumn('name', function ($query, $keyword) {
                 $keywords = trim($keyword);
                 $query->whereRaw("CONCAT(name, nicename) like ?", ["%{$keywords}%"]);
@@ -84,35 +78,20 @@ class GroupController extends Controller
             $input['nomor']      = strtoupper($request->tambah_nomor);
             $input['nama_grup']  = $input['blok'] . '-' . $input['nomor'];
             $input['nicename']   = str_replace('-', '', $input['nama_grup']);
-            $input['alamat_los'] = $request->tambah_los;
 
             Validator::make($input, [
                 'blok'       => 'required|max:10|alpha',
                 'nomor'      => 'required|max:10|alpha_num',
-                'nama_grup'  => 'required|string|max:10|unique:groups,name',
-                'alamat_los' => 'nullable|string|regex:/^[a-zA-Z0-9\,]+$/',
+                'nama_grup'  => 'required|string|max:10|unique:groups,name'
             ])->validate();
             //End Validator
 
-            $los = $input['alamat_los'];
-
-            if($los){
-                $los = $los;
-                $los = rtrim($input['alamat_los'], ',');
-                $los = ltrim($los, ',');
-                $los = explode(',', strtoupper($los));
-                $los = array_unique($los);
-                sort($los, SORT_NATURAL);
-                $los = json_encode($los);
-            }
-
-            DB::transaction(function() use ($input, $los){
+            DB::transaction(function() use ($input){
                 Group::create([
                     'name'      => $input['nama_grup'],
                     'nicename'  => $input['nicename'],
                     'blok'      => $input['blok'],
-                    'nomor'     => $input['nomor'],
-                    'data'      => $los,
+                    'nomor'     => $input['nomor']
                 ]);
             });
 
@@ -137,19 +116,6 @@ class GroupController extends Controller
 
             $data = Group::findOrFail($decrypted);
 
-            $count = 0;
-            $los = '';
-
-            if($data->data){
-                $count = count(json_decode($data->data));
-                $los = json_decode($data->data);
-                $los = implode(', ', $los);
-                $los = rtrim($los, ', ');
-            }
-
-            $data['los'] = $los;
-            $data['count'] = $count;
-
             return response()->json(['success' => $data]);
         }
     }
@@ -171,13 +137,6 @@ class GroupController extends Controller
 
             $data = Group::findOrFail($decrypted);
 
-            $los = '';
-
-            if($data->data){
-                $los = json_decode($data->data);
-                $data['los'] = implode(',', $los);
-            }
-
             return response()->json(['success' => $data]);
         }
     }
@@ -197,7 +156,6 @@ class GroupController extends Controller
             $input['nomor']      = strtoupper($request->edit_nomor);
             $input['nama_grup']  = $input['blok'] . '-' . $input['nomor'];
             $input['nicename']   = str_replace('-', '', $input['nama_grup']);
-            $input['alamat_los'] = $request->edit_los;
 
             try {
                 $decrypted = Crypt::decrypt($id);
@@ -208,33 +166,20 @@ class GroupController extends Controller
             Validator::make($input, [
                 'blok'       => 'required|max:10|alpha',
                 'nomor'      => 'required|max:10|alpha_num',
-                'nama_grup'  => 'required|string|max:10|unique:groups,name,'.$decrypted,
-                'alamat_los' => 'nullable|string|regex:/^[a-zA-Z0-9\,]+$/',
+                'nama_grup'  => 'required|string|max:10|unique:groups,name,'.$decrypted
             ])->validate();
             //End Validator
 
             DB::transaction(function() use ($input, $decrypted){
                 $data = Group::lockForUpdate()->findOrFail($decrypted);
 
-                $los = $input['alamat_los'];
                 $groupOld = $data->name;
-
-                if($los){
-                    $los = $los;
-                    $los = rtrim($input['alamat_los'], ',');
-                    $los = ltrim($los, ',');
-                    $los = explode(',', strtoupper($los));
-                    $los = array_unique($los);
-                    sort($los, SORT_NATURAL);
-                    $los = json_encode($los);
-                }
 
                 $data->update([
                     'name'     => $input['nama_grup'],
                     'nicename' => $input['nicename'],
                     'blok'     => $input['blok'],
-                    'nomor'    => $input['nomor'],
-                    'data'     => $los
+                    'nomor'    => $input['nomor']
                 ]);
 
                 if($groupOld != $input['nama_grup']){

@@ -1,16 +1,13 @@
 <!--begin::Modal-->
 <div class="modal fade" id="detail-modal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="detail-modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Rincian</h5>
             </div>
-            <div class="modal-body text-center" style="height: 60vh;">
+            <div class="modal-body text-center">
                 <small class="text-muted pt-4 db">Nama Grup</small>
                 <h3 id="showNama"></h3>
-                <small class="text-muted pt-4 db">Alamat Los</small>
-                <h3 class="text-primary" id="showCount"></h3>
-                <h3 id="showLos"></h3>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
@@ -53,8 +50,6 @@ $(document).on('click', '.detail', function(e){
         {
             if(data.success){
                 $("#showNama").text(data.success.name);
-                $("#showCount").text(data.success.count + ' Alamat');
-                $("#showLos").text(data.success.los);
             }
 
             if(data.info){

@@ -1,12 +1,12 @@
 <!--begin::Modal-->
 <div class="modal fade" id="edit-modal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="edit-modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit</h5>
             </div>
             <form id="edit-form">
-                <div class="modal-body" style="height: 60vh;">
+                <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-6">
                             <small class="form-control-label">Blok <span class="text-danger">*</span></small>
@@ -16,10 +16,6 @@
                             <small class="form-control-label">Nomor <span class="text-danger">*</span></small>
                             <input required type="text" id="edit-nomor" name="edit_nomor" autocomplete="off" maxlength="10" class="nomor form-control" placeholder="Contoh : 1 / 2E / D" style="text-transform: uppercase;" />
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <small class="form-control-label">Alamat Los</small>
-                        <textarea rows="8" id="edit-los" name="edit_los" autocomplete="off" placeholder="Contoh: 1,2,3A,4,5,6" class="los form-control" style="text-transform: uppercase"></textarea>
                     </div>
                     <div class="form-group">
                         <label><sup><span class="text-danger">*) Wajib diisi.</span></sup></label>
@@ -41,7 +37,6 @@
         $("#edit-form")[0].reset();
         $("#edit-blok").val('');
         $("#edit-nomor").val('');
-        $("#edit-los").val('');
     }
 
     var id;
@@ -77,7 +72,6 @@
                 if(data.success){
                     $("#edit-blok").val(data.success.blok);
                     $("#edit-nomor").val(data.success.nomor);
-                    $("#edit-los").val(data.success.los);
                 }
 
                 if(data.info){

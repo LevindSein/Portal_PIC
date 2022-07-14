@@ -19,7 +19,6 @@ class CreateGroups extends Migration
             $table->string('nicename')->unique();
             $table->string('blok');
             $table->string('nomor');
-            $table->json('data')->nullable();
             $table->datetime('updated_at')->useCurrent();
             $table->datetime('created_at')->useCurrent();
         });

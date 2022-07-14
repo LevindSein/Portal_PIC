@@ -13,7 +13,6 @@ Grup Tempat
     <thead>
         <tr>
             <th class="all">Nama</th>
-            <th class="min-tablet">Jml.Los</th>
             <th class="all">Action</th>
         </tr>
     </thead>
@@ -42,7 +41,6 @@ Grup Tempat
         ajax : "/data/groups",
         columns : [
             { data: 'name', name: 'name', class : 'text-center align-middle' },
-            { data: 'jum_los', name: 'jum_los', class : 'text-center align-middle' },
             { data: 'action', name: 'action', class : 'text-center align-middle' },
         ],
         stateSave : true,
@@ -51,7 +49,7 @@ Grup Tempat
         aLengthMenu : [[5,10,25,50,100], [5,10,25,50,100]],
         ordering : false,
         aoColumnDefs: [
-            { "bSearchable": false, "aTargets": [1,2] }
+            { "bSearchable": false, "aTargets": [1] }
         ],
         scrollY : "50vh",
         scrollX : true,
