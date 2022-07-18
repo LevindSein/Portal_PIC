@@ -46,7 +46,7 @@
                         <div class="card bg-secondary border-0 mb-0">
                             <div class="card-header bg-transparent pb-5">
                                 <div class="text-muted text-center mt-2 mb-3">
-                                    <img src="{{asset('images/logo.png')}}" />
+                                    <img src="{{url('images/caringin')}}" />
                                 </div>
                             </div>
                             <div class="card-body px-lg-5 py-lg-3">

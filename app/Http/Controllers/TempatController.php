@@ -427,6 +427,7 @@ class TempatController extends Controller
             }
 
             $input['grup']         = $request->edit_group;
+            $input['nomor_los']    = $request->edit_los;
             $input['kode_kontrol'] = strtoupper($request->edit_name);
             $input['pengguna']     = $request->edit_pengguna;
             $input['pemilik']      = $request->edit_pemilik;
@@ -436,6 +437,7 @@ class TempatController extends Controller
 
             Validator::make($input, [
                 'grup'         => 'required|exists:groups,name',
+                'nomor_los'    => 'required|string|regex:/^[a-zA-Z0-9\,]+$/',
                 'kode_kontrol' => 'required|max:25|unique:tempat,name,' . $decrypted,
                 'pengguna'     => 'nullable|numeric|exists:users,id',
                 'pemiik'       => 'nullable|numeric|exists:users,id',
@@ -443,17 +445,15 @@ class TempatController extends Controller
                 'keterangan'   => 'nullable|string|max:255',
             ])->validate();
 
-            $los = $this->multipleSelect($request->edit_los);
+            $los = rtrim($input['nomor_los'], ',');
+            $los = ltrim($los, ',');
+            $los = explode(',', strtoupper($los));
+            $los = array_unique($los);
             sort($los, SORT_NATURAL);
             $jml_los = count($los);
-
-            $no_los = Group::where('name', $request->edit_group)->first();
-            foreach($los as $l){
-                $input['nomor_los'] = $l;
-                Validator::make($input, [
-                    'nomor_los' => 'required|in:' . implode(',', json_decode($no_los->data)),
-                ])->validate();
-            }
+            $input['nomor_los'] = json_encode([
+                'data' => $los
+            ]);
 
             $data['trf_listrik_id'] = NULL;
             $data['alat_listrik_id'] = NULL;
@@ -610,7 +610,7 @@ class TempatController extends Controller
             $data['name']        = $input['kode_kontrol'];
             $data['nicename']    = str_replace('-', '', $input['kode_kontrol']);
             $data['group_id']    = Group::where('name',$input['grup'])->first()->id;
-            $data['los']         = json_encode($los);
+            $data['los']         = $input['nomor_los'];
             $data['jml_los']     = $jml_los;
             $data['pengguna_id'] = $input['pengguna'];
             $data['pemilik_id']  = $input['pemilik'];
@@ -701,14 +701,6 @@ class TempatController extends Controller
         $los = $los[0];
         $data = Tempat::generate($group,$los);
         return response()->json(['success' => $data]);
-    }
-
-    public function multipleSelect($data){
-        $temp = [];
-        for($i = 0; $i < count($data); $i++){
-            $temp[$i] = $data[$i];
-        }
-        return $temp;
     }
 
     public function print(Request $request){

@@ -120,6 +120,7 @@ $(document).on('click', '.detail', function(e){
                 html += '</div>';
                 html += '<div class="col-lg-6">';
 
+                const fasilitas = 0;
                 if(data.success.trf_listrik_id){
                     //Listrik
                     html += '<div class="form-group">';
@@ -137,6 +138,7 @@ $(document).on('click', '.detail', function(e){
                     html += '</div>';
                     html += '<hr>';
                     //End Listrik
+                    fasilitas++;
                 }
 
                 if(data.success.trf_airbersih_id){
@@ -155,6 +157,7 @@ $(document).on('click', '.detail', function(e){
                     html += '</div>';
                     html += '<hr>';
                     //End Air Bersih
+                    fasilitas++;
                 }
 
                 if(data.success.trf_keamananipk_id){
@@ -171,6 +174,7 @@ $(document).on('click', '.detail', function(e){
                     html += '</div>';
                     html += '<hr>';
                     //End Keamanan IPk
+                    fasilitas++;
                 }
 
                 if(data.success.trf_kebersihan_id){
@@ -187,6 +191,7 @@ $(document).on('click', '.detail', function(e){
                     html += '</div>';
                     html += '<hr>';
                     //End Kebersihan
+                    fasilitas++;
                 }
 
                 if(data.success.trf_airkotor_id){
@@ -199,6 +204,7 @@ $(document).on('click', '.detail', function(e){
                     html += '</div>';
                     html += '<hr>';
                     //End Air Kotor
+                    fasilitas++;
                 }
 
                 if(data.success.trf_lainnya_id){
@@ -213,6 +219,13 @@ $(document).on('click', '.detail', function(e){
                     html += '</div>';
                     html += '<hr>';
                     //End Lainnya
+                    fasilitas++;
+                }
+
+                if(fasilitas == 0){
+                    html += '<div class="form-group">';
+                    html += '<i class="fas fa-exclamation-triangle"></i><h4 class="text-center">Tidak ada fasilitas</h4>';
+                    html += '</div>';
                 }
 
                 html += '</div>';

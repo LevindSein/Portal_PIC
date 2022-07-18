@@ -112,6 +112,11 @@ Route::get('check', [AuthController::class, 'check']);
 Route::post('logout', [AuthController::class, 'logout']);
 Route::resource('login', AuthController::class);
 
+Route::get('images/caringin', function(){
+    $filepath = 'images/logo.png';
+    return Response::download($filepath);
+});
+
 Route::prefix('search')->group(function () {
     Route::get('users',[SearchController::class, 'users']);
     Route::get('groups',[SearchController::class, 'groups']);

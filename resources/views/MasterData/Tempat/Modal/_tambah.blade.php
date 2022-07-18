@@ -172,6 +172,8 @@
         });
         select2group("#tambah-group", "/search/groups", "-- Cari Grup / Blok --");
 
+        $("#tambah-los").val('').html('');
+
         $("#tambah-pengguna").val('').html('').on('select2:open', () => {
             $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
         });
@@ -198,7 +200,7 @@
         lain = 0, index = 1;
     });
 
-    $(document).on("input", '#tambah-group, #tambah-los', function(e) {
+    $(document).on("input change", '#tambah-group, #tambah-los', function(e) {
         if($("#tambah-group").val() == '' && $("#tambah-los").val() == ''){
             $("#tambah-name").val('').prop('disabled', true);
         } else {

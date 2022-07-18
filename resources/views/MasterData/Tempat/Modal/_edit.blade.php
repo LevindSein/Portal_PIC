@@ -15,7 +15,7 @@
                             </div>
                             <div class="form-group edit-los">
                                 <small class="form-control-label">Nomor Los <span class="text-danger">*</span></small>
-                                <select required id="edit-los" name="edit_los[]" class="form-control form-control-sm" multiple></select>
+                                <textarea rows="3" id="edit-los" name="edit_los" autocomplete="off" placeholder="Contoh: 1,2,3A,4,5,6" class="los form-control" style="text-transform: uppercase"></textarea>
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Kode Kontrol <span class="text-danger">*</span></small>
@@ -171,7 +171,7 @@
         });
         select2group("#edit-group", "/search/groups", "-- Cari Grup / Blok --");
 
-        $("#edit-los").val('').html('').prop("disabled",true).select2({placeholder: "Grup perlu diisi terlebih dahulu"});
+        $("#edit-los").val('').html('');
 
         $("#edit-pengguna").val('').html('').on('select2:open', () => {
             $('input.select2-search__field').prop('placeholder', 'Ketik disini..');
@@ -226,12 +226,7 @@
                     var group = new Option(data.success.group.name, data.success.group.name, false, false);
                     $('#edit-group').append(group).trigger('change');
 
-                    $('#edit-los').val("").html("");
-                    var los = data.success.los;
-                    $.each( los, function( i, val ) {
-                        var option = $('<option></option>').attr('value', val).text(val).prop('selected', true);
-                        $('#edit-los').append(option).trigger('change');
-                    });
+                    $('#edit-los').val(data.success.los.data);
 
                     if(data.success.pengguna.id){
                         $('#edit-pengguna').val("").html("");
@@ -370,15 +365,8 @@
         });
     });
 
-    $(document).on("change", "#edit-group", function(e) {
-        var group = $("#edit-group").val();
-        $("#edit-los").prop("disabled", false);
-        $("#edit-los").val("").html("");
-        select2los("#edit-los", "/search/" + group + "/los", "-- Pilih Nomor Los --");
-    });
-
-    $(document).on("change", "#edit-group, #edit-los", function(e) {
-        if($("#edit-los").val() == ''){
+    $(document).on("input change", "#edit-group, #edit-los", function(e) {
+        if($("#edit-group").val() == '' && $("#edit-los").val() == ''){
             $("#edit-name").val('').prop("disabled", true);
         } else {
             $("#edit-name").prop("disabled", false);
