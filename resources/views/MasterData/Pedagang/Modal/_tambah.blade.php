@@ -161,7 +161,7 @@ $('#tambah-form').on('submit', function(e){
         complete:function(data){
             if(JSON.parse(data.responseText).success){
                 $('#tambah-modal').modal('hide');
-                dtableReload();
+                $("#status").val(1).change();
             }
             setTimeout(() => {
                 $.unblockUI();

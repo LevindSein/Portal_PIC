@@ -327,7 +327,7 @@
             complete:function(data){
                 if(JSON.parse(data.responseText).success){
                     $('#tambah-modal').modal('hide');
-                    dtableReload();
+                    $("#activated").click();
                 }
                 setTimeout(() => {
                     $.unblockUI();

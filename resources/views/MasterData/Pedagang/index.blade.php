@@ -83,7 +83,7 @@ Pedagang
             content_title = 'Pedagang Nonaktif';
         }
         $(".content-title").text(content_title);
-        url = "/data/pedagang?level=" + $("#level").val() + "&status=" + status;
+        url = "/data/pedagang?status=" + status;
         dtable.ajax.url( url ).load();
         dtableReload();
     });

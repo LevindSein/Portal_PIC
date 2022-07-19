@@ -643,7 +643,6 @@
                 if(JSON.parse(data.responseText).success){
                     $('#tambah-modal').modal('hide');
                     $('#status').val(1).change();
-                    dtableReload();
                 }
                 setTimeout(() => {
                     $.unblockUI();
