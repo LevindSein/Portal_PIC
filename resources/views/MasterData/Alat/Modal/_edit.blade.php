@@ -14,7 +14,7 @@
                     <div class="listrik">
                         <div class="form-group">
                             <small class="form-control-label">Daya <span class="text-danger">*</span></small>
-                            <input maxlength="15" type="text" id="edit-daya" name="edit_daya" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control">
+                            <input required maxlength="15" type="text" id="edit-daya" name="edit_daya" autocomplete="off" placeholder="Ketikkan dalam angka" class="number form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -42,6 +42,8 @@
     function edit_init(){
         $("#edit-form")[0].reset();
         $("#edit-name").val('');
+        $(".listrik").hide();
+        $("#edit-daya").prop('required', false);
     }
 
     var id;
@@ -81,6 +83,7 @@
                     if(data.success.level == 1){
                         $(".listrik").show();
                         $("#edit-daya").val(Number(data.success.daya).toLocaleString('id-ID'));
+                        $("#edit-daya").prop('required', true);
                     }
 
                 }

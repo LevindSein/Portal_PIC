@@ -120,7 +120,7 @@ $(document).on('click', '.detail', function(e){
                 html += '</div>';
                 html += '<div class="col-lg-6">';
 
-                const fasilitas = 0;
+                var fasilitas = 0;
                 if(data.success.trf_listrik_id){
                     //Listrik
                     html += '<div class="form-group">';

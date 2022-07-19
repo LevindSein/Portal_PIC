@@ -28,6 +28,7 @@ class TempatController extends Controller
      */
     public function index(Request $request)
     {
+        // return Tarif::find(7)->fasLainnya()->count();
         if($request->ajax()){
             $data = Tempat::with('pengguna:id,name');
 
@@ -274,7 +275,9 @@ class TempatController extends Controller
                     $lainnya[] = $key;
                 }
 
-                $data['trf_lainnya_id'] = json_encode($lainnya);
+                $data['trf_lainnya_id'] = json_encode([
+                    'lainnya_id' => $lainnya
+                ]);
             }
 
             $data['name']        = $input['kode_kontrol'];

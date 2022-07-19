@@ -28,7 +28,14 @@ class TarifController extends Controller
             ->addColumn('action', function($data){
                 $button = '';
                 $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
-                $button .= '<a type="button" data-toggle="tooltip" title="Hapus" status="1" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
+                if( ($data->level == 1 && !Tarif::find($data->id)->fasListrik()->exists()) ||
+                    ($data->level == 2 && !Tarif::find($data->id)->fasAirBersih()->exists()) ||
+                    ($data->level == 3 && !Tarif::find($data->id)->fasKeamananIpk()->exists()) ||
+                    ($data->level == 4 && !Tarif::find($data->id)->fasKebersihan()->exists()) ||
+                    ($data->level == 5 && !Tarif::find($data->id)->fasAirkotor()->exists()) ||
+                    ($data->level == 6 && !Tarif::fasLainnya($data->id))){
+                    $button .= '<a type="button" data-toggle="tooltip" title="Hapus" status="1" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash"></i></a>';
+                }
                 $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" nama="'.substr($data->name, 0, 15).'" class="detail btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-info"></i></a>';
                 return $button;
             })

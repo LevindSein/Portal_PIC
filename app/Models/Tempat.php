@@ -90,6 +90,11 @@ class Tempat extends Model
         return $this->belongsTo(Tarif::class, 'trf_airkotor_id');
     }
 
+    // public function lainnya()
+    // {
+    //     return $this->belongsTo(Tarif::class, 'trf_lainnya_id->lainnya_id');
+    // }
+
     public function pengguna()
     {
         return $this->belongsTo(User::class, 'pengguna_id')->withDefault([
@@ -105,7 +110,6 @@ class Tempat extends Model
         ]);
     }
 
-
     public function group(){
         return $this->belongsTo(Group::class, 'group_id');
     }
@@ -119,7 +123,7 @@ class Tempat extends Model
     }
 
     public function getTrfLainnyaIdAttribute($value){
-        return json_decode($value);
+        return json_decode($value)->lainnya_id;
     }
 
     public static function generate($group, $los){

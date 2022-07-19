@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Facades\DB;
+
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Tarif extends Model
@@ -27,6 +29,30 @@ class Tarif extends Model
         'data.Tarif',
         'status'
     ];
+
+    public function fasListrik() {
+        return $this->hasMany(Tempat::class, 'trf_listrik_id');
+    }
+
+    public function fasAirBersih() {
+        return $this->hasMany(Tempat::class, 'trf_airbersih_id');
+    }
+
+    public function fasKeamananIpk() {
+        return $this->hasMany(Tempat::class, 'trf_keamananipk_id');
+    }
+
+    public function fasKebersihan() {
+        return $this->hasMany(Tempat::class, 'trf_kebersihan_id');
+    }
+
+    public function fasAirKotor() {
+        return $this->hasMany(Tempat::class, 'trf_airkotor_id');
+    }
+
+    public static function fasLainnya($value){
+        return DB::table('tempat')->whereJsonContains('trf_lainnya_id->lainnya_id', ["$value"])->exists();
+    }
 
     public function getDataAttribute($value) {
         return json_decode($value);

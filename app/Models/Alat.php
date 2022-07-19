@@ -22,6 +22,14 @@ class Alat extends Model
         'status',
     ];
 
+    public function fasListrik() {
+        return $this->hasOne(Tempat::class, 'alat_listrik_id');
+    }
+
+    public function fasAirBersih() {
+        return $this->hasOne(Tempat::class, 'alat_airbersih_id');
+    }
+
     protected static $logName = 'alat';
     protected static $logFillable = true;
 
