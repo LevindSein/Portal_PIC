@@ -607,7 +607,9 @@ class TempatController extends Controller
                     $lainnya[] = $key;
                 }
 
-                $data['trf_lainnya_id'] = json_encode($lainnya);
+                $data['trf_lainnya_id'] = json_encode([
+                    'lainnya_id' => $lainnya
+                ]);
             }
 
             $data['name']        = $input['kode_kontrol'];

@@ -108,7 +108,7 @@
                     <tr>
                         <td class="tg-g25h" style="text-align: center;">{{$i}}</td>
                         <td class="tg-g25h" style="text-align: center;">{{$d->name}}</td>
-                        <td class="tg-g25h" style="text-align: center; white-space: normal;">{{implode(', ', $d->los)}}</td>
+                        <td class="tg-g25h" style="text-align: center; white-space: normal;">{{implode(', ', $d->los->data)}}</td>
                         <td class="tg-g25h" style="text-align: center;">{{$d->jml_los}}</td>
                         <td class="tg-g25h" style="text-align: center; white-space: normal;">{{$d->pengguna->name}}</td>
                         <td class="tg-g25h" style="text-align: center; white-space: normal;">{{$d->pemilik->name}}</td>
