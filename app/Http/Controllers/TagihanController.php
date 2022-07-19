@@ -175,29 +175,27 @@ class TagihanController extends Controller
     public function store(Request $request)
     {
         if($request->ajax()){
-            $input['periode'] = $request->tambah_periode;
-
+            $input['periode']      = $request->tambah_periode;
             $input['tempat_usaha'] = $request->tambah_tempat;
-
-            $input['pengguna'] = $request->tambah_pengguna;
+            $input['nomor_los']    = $request->tambah_los;
+            $input['pengguna']     = $request->tambah_pengguna;
 
             Validator::make($input, [
                 'periode'      => 'required|exists:periode,id',
                 'tempat_usaha' => 'required|exists:tempat,id',
+                'nomor_los'    => 'required|string|regex:/^[a-zA-Z0-9\,]+$/',
                 'pengguna'     => 'required|exists:users,id',
             ])->validate();
 
-            $los = $this->multipleSelect($request->tambah_los);
+            $los = rtrim($input['nomor_los'], ',');
+            $los = ltrim($los, ',');
+            $los = explode(',', strtoupper($los));
+            $los = array_unique($los);
             sort($los, SORT_NATURAL);
             $jml_los = count($los);
-
-            $no_los = Group::findOrFail(Tempat::findOrFail($input['tempat_usaha'])->group_id);
-            foreach($los as $l){
-                $input['nomor_los'] = $l;
-                Validator::make($input, [
-                    'nomor_los' => 'required|in:' . implode(',', json_decode($no_los->data)),
-                ])->validate();
-            }
+            $input['nomor_los'] = json_encode([
+                'data' => $los
+            ]);
 
             $diskon = [];
 
@@ -274,7 +272,7 @@ class TagihanController extends Controller
                 ])->validate();
 
                 $tarif = Tarif::findOrFail($input['tarif_keamanan_ipk']);
-                $max = count($los) * $tarif->data->Tarif;
+                $max = $jml_los * $tarif->data->Tarif;
 
                 Validator::make($input, [
                     'diskon_keamanan_ipk' => 'nullable|numeric|gte:0|lte:' . $max,
@@ -299,7 +297,7 @@ class TagihanController extends Controller
                 ])->validate();
 
                 $tarif = Tarif::findOrFail($input['tarif_kebersihan']);
-                $max = count($los) * $tarif->data->Tarif;
+                $max = $jml_los * $tarif->data->Tarif;
 
                 Validator::make($input, [
                     'diskon_kebersihan' => 'nullable|numeric|gte:0|lte:' . $max,
@@ -329,7 +327,7 @@ class TagihanController extends Controller
                 $tarif = Tarif::findOrFail($input['tarif_air_kotor']);
 
                 if($tarif->status == 'per-Los'){
-                    $max = count($los) * $tarif->data->Tarif;
+                    $max = $jml_los * $tarif->data->Tarif;
                 } else {
                     $max = $tarif->data->Tarif;
                 }
@@ -361,10 +359,12 @@ class TagihanController extends Controller
                     $lainnya[] = $key;
                 }
 
-                $data['trf_lainnya_id'] = json_encode($lainnya);
+                $data['trf_lainnya_id'] = json_encode([
+                    'lainnya_id' => $lainnya
+                ]);
             }
 
-            $data['los']         = json_encode($los);
+            $data['los']         = $input['nomor_los'];
             $data['jml_los']     = $jml_los;
             $data['pengguna_id'] = $input['pengguna'];
             $data['diskon']      = json_encode($diskon);
@@ -633,34 +633,25 @@ class TagihanController extends Controller
                 return response()->json(['error' => "Data tidak valid."]);
             }
 
-            $tempat = Tempat::where('name', $request->tempat_name)->first();
-
             $tagihan = Tagihan::findOrFail($decrypted);
 
-            //Bugs kalau Tempat Usaha namanya ganti
-            $input['tempat_usaha'] = $tempat->id;
-            //end
-
+            $input['nomor_los'] = $request->edit_los;
             $input['pengguna'] = $request->edit_pengguna;
 
             Validator::make($input, [
-                'tempat_usaha' => 'required|exists:tempat,id',
+                'nomor_los'    => 'required|string|regex:/^[a-zA-Z0-9\,]+$/',
                 'pengguna'     => 'required|exists:users,id',
             ])->validate();
 
-            $los = $this->multipleSelect($request->edit_los);
+            $los = rtrim($input['nomor_los'], ',');
+            $los = ltrim($los, ',');
+            $los = explode(',', strtoupper($los));
+            $los = array_unique($los);
             sort($los, SORT_NATURAL);
             $jml_los = count($los);
-
-            //Bugs klo nama tempatnya ganti
-            $no_los = Group::findOrFail($tempat->group_id);
-            //end
-            foreach($los as $l){
-                $input['nomor_los'] = $l;
-                Validator::make($input, [
-                    'nomor_los' => 'required|in:' . implode(',', json_decode($no_los->data)),
-                ])->validate();
-            }
+            $input['nomor_los'] = json_encode([
+                'data' => $los
+            ]);
 
             $diskon = [];
 
@@ -692,7 +683,7 @@ class TagihanController extends Controller
                 }
             } else {
                 if($tagihan->listrik && $tagihan->listrik->lunas){
-
+                    //
                 } else {
                     $data['trf_listrik_id'] = NULL;
                     $data['alat_listrik_id'] = NULL;
@@ -727,7 +718,7 @@ class TagihanController extends Controller
                 }
             } else {
                 if($tagihan->airbersih && $tagihan->airbersih->lunas){
-
+                    //
                 } else {
                     $data['trf_airbersih_id'] = NULL;
                     $data['alat_airbersih_id'] = NULL;
@@ -746,7 +737,7 @@ class TagihanController extends Controller
                 ])->validate();
 
                 $tarif = Tarif::findOrFail($input['tarif_keamanan_ipk']);
-                $max = count($los) * $tarif->data->Tarif;
+                $max = $jml_los * $tarif->data->Tarif;
 
                 Validator::make($input, [
                     'diskon_keamanan_ipk' => 'nullable|numeric|gte:0|lte:' . $max,
@@ -758,7 +749,7 @@ class TagihanController extends Controller
                 }
             } else {
                 if($tagihan->keamananipk && $tagihan->keamananipk->lunas){
-
+                    //
                 } else {
                     $data['trf_keamananipk_id'] = NULL;
                 }
@@ -776,7 +767,7 @@ class TagihanController extends Controller
                 ])->validate();
 
                 $tarif = Tarif::findOrFail($input['tarif_kebersihan']);
-                $max = count($los) * $tarif->data->Tarif;
+                $max = $jml_los * $tarif->data->Tarif;
 
                 Validator::make($input, [
                     'diskon_kebersihan' => 'nullable|numeric|gte:0|lte:' . $max,
@@ -788,7 +779,7 @@ class TagihanController extends Controller
                 }
             } else {
                 if($tagihan->kebersihan && $tagihan->kebersihan->lunas){
-
+                    //
                 } else {
                     $data['trf_kebersihan_id'] = NULL;
                 }
@@ -811,7 +802,7 @@ class TagihanController extends Controller
                 $tarif = Tarif::findOrFail($input['tarif_air_kotor']);
 
                 if($tarif->status == 'per-Los'){
-                    $max = count($los) * $tarif->data->Tarif;
+                    $max = $jml_los * $tarif->data->Tarif;
                 } else {
                     $max = $tarif->data->Tarif;
                 }
@@ -826,7 +817,7 @@ class TagihanController extends Controller
                 }
             } else {
                 if($tagihan->airkotor && $tagihan->airkotor->lunas){
-
+                    //
                 } else {
                     $data['trf_airkotor_id'] = NULL;
                 }
@@ -848,25 +839,33 @@ class TagihanController extends Controller
                     $lainnya[] = $key;
                 }
 
-                $data['trf_lainnya_id'] = json_encode($lainnya);
+                $data['trf_lainnya_id'] = json_encode([
+                    'lainnya_id' => $lainnya
+                ]);
             } else {
                 if($tagihan->lainnya && $tagihan->lainnya->lunas){
-
+                    //
                 } else {
                     $data['trf_lainnya_id'] = NULL;
                 }
             }
 
-            $data['los']         = json_encode($los);
+            $data['los']         = $input['nomor_los'];
             $data['jml_los']     = $jml_los;
             $data['pengguna_id'] = $input['pengguna'];
             $data['diskon']      = json_encode($diskon);
 
             DB::transaction(function() use ($data, $input, $request, $decrypted, $tagihan){
-                $dataset = Tempat::lockForUpdate()->where('name', $request->tempat_name)->first();
+                $tempat = Tempat::where('name', $request->tempat_name)->first();
+                if($tempat){
+                    $input['tempat_usaha'] = $tempat->id;
+                    Validator::make($input, [
+                        'tempat_usaha' => 'required|exists:tempat,id',
+                    ])->validate();
+                }
 
-                if($dataset->alat_listrik_id && !$tagihan->listrik->lunas){
-                    $alat = Alat::findOrFail($dataset->alat_listrik_id);
+                if($tempat && $tempat->alat_listrik_id && !$tagihan->listrik->lunas){
+                    $alat = Alat::findOrFail($tempat->alat_listrik_id);
                     $alat->status = 1;
                     $alat->save();
                 }
@@ -879,8 +878,8 @@ class TagihanController extends Controller
                     $alat->save();
                 }
 
-                if($dataset->alat_airbersih_id && !$tagihan->airbersih->lunas){
-                    $alat = Alat::findOrFail($dataset->alat_airbersih_id);
+                if($tempat && $tempat->alat_airbersih_id && !$tagihan->airbersih->lunas){
+                    $alat = Alat::findOrFail($tempat->alat_airbersih_id);
                     $alat->status = 1;
                     $alat->save();
                 }
@@ -893,11 +892,13 @@ class TagihanController extends Controller
                     $alat->save();
                 }
 
-                $dataset->update($data);
+                if($tempat){
+                    $tempat->update($data);
+                }
 
-                Tagihan::singleUpdate($decrypted, $request->periode_id);
+                // Tagihan::singleUpdate($decrypted, $request->periode_id);
 
-                new Payment($request->tempat_name);
+                // new Payment($request->tempat_name);
             });
 
             return response()->json(['success' => 'Data berhasil disimpan.']);

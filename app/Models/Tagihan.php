@@ -19,6 +19,7 @@ class Tagihan extends Model
         'stt_lunas',
         'name',
         'nicename',
+        'tempat_id',
         'pengguna_id',
         'group_id',
         'los',
@@ -98,6 +99,7 @@ class Tagihan extends Model
         $dataset['periode_id']  = $periode_id;
         $dataset['name']        = $data->name;
         $dataset['nicename']    = $data->nicename;
+        $dataset['tempat_id']   = $tempat_id;
         $dataset['group_id']    = $data->group_id;
         $dataset['pengguna_id'] = $data->pengguna_id;
         $dataset['los']         = json_encode($data->los);
@@ -345,6 +347,7 @@ class Tagihan extends Model
 
     public static function singleUpdate($tagihan_id, $periode_id){
         $tagihan_data = self::findOrFail($tagihan_id);
+
         $data = Tempat::where('name', $tagihan_data->name)->with('alatListrik', 'alatAirBersih', 'listrik', 'airbersih', 'keamananipk', 'kebersihan', 'airkotor')->first();
 
         $dataset['pengguna_id'] = $data->pengguna_id;

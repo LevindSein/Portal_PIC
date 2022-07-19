@@ -23,7 +23,7 @@
                             </div>
                             <div class="form-group tambah-los">
                                 <small class="form-control-label">Nomor Los <span class="text-danger">*</span></small>
-                                <select required id="tambah-los" name="tambah_los[]" class="form-control form-control-sm" multiple></select>
+                                <textarea required rows="3" id="tambah-los" name="tambah_los" autocomplete="off" placeholder="Contoh: 1,2,3A,4,5,6" class="los form-control" style="text-transform: uppercase"></textarea>
                             </div>
                             <div class="form-group tambah-pengguna">
                                 <small class="form-control-label">Pengguna <span class="text-danger">*</span></small>
@@ -136,7 +136,7 @@
         });
         select2user("#tambah-pengguna", "/search/users", "-- Cari Pengguna --");
 
-        $("#tambah-los").val('').html('').select2({placeholder: "-- Pilih Nomor Los --"});
+        $("#tambah-los").val('');
 
         $(".tambah-los").hide();
         $(".tambah-pengguna").hide();
@@ -151,7 +151,7 @@
     }
 
     var lain = 0, index = 1;
-    $("#add").click(function(){
+    $(".add").click(function(){
         $("#tambah-modal").modal("show");
 
         $("#div-tambah-modal").removeClass('modal-lg modal-dialog-scrollable');
@@ -179,13 +179,7 @@
             success:function(data)
             {
                 if(data.success){
-                    $('#tambah-los').val("").html("");
-                    select2los("#tambah-los", "/search/" + data.success.group.name + "/los", "-- Pilih Nomor Los --");
-                    var los = data.success.los;
-                    $.each( los, function( i, val ) {
-                        var option = $('<option></option>').attr('value', val).text(val).prop('selected', true);
-                        $('#tambah-los').append(option).trigger('change');
-                    });
+                    $('#tambah-los').val(data.success.los.data);
 
                     if(data.success.pengguna.id){
                         $('#tambah-pengguna').val("").html("");

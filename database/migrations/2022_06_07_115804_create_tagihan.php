@@ -22,6 +22,8 @@ class CreateTagihan extends Migration
             $table->tinyInteger('stt_lunas')->default(0); //0 = Belum Dilunaskan, 1 = Sudah Lunas
             $table->string('name', 25);
             $table->string('nicename', 25);
+            $table->unsignedBigInteger('tempat_id');
+            $table->foreign('tempat_id')->references('id')->on('tempat');
             $table->unsignedBigInteger('pengguna_id');
             $table->foreign('pengguna_id')->references('id')->on('users');
             $table->unsignedBigInteger('group_id');

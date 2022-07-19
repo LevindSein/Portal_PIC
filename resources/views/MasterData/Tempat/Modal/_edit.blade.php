@@ -15,7 +15,7 @@
                             </div>
                             <div class="form-group edit-los">
                                 <small class="form-control-label">Nomor Los <span class="text-danger">*</span></small>
-                                <textarea rows="3" id="edit-los" name="edit_los" autocomplete="off" placeholder="Contoh: 1,2,3A,4,5,6" class="los form-control" style="text-transform: uppercase"></textarea>
+                                <textarea required rows="3" id="edit-los" name="edit_los" autocomplete="off" placeholder="Contoh: 1,2,3A,4,5,6" class="los form-control" style="text-transform: uppercase"></textarea>
                             </div>
                             <div class="form-group">
                                 <small class="form-control-label">Kode Kontrol <span class="text-danger">*</span></small>
@@ -171,7 +171,7 @@
         });
         select2group("#edit-group", "/search/groups", "-- Cari Grup / Blok --");
 
-        $("#edit-los").val('').html('');
+        $("#edit-los").val('');
 
         $("#edit-pengguna").val('').html('').on('select2:open', () => {
             $('input.select2-search__field').prop('placeholder', 'Ketik disini..');

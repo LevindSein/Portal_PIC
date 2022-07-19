@@ -75,18 +75,13 @@ Pedagang
         },
     });
 
-    $(document).on('click', '#deleted', function(){
-        status = 0;
-        content_title = 'Pedagang Nonaktif';
-        $(".content-title").text(content_title);
-        url = "/data/pedagang?level=" + $("#level").val() + "&status=" + status;
-        dtable.ajax.url( url ).load();
-        dtableReload();
-    });
-
-    $(document).on('click', '#activated', function(){
-        status = 1
-        content_title = 'Pedagang Aktif';
+    $(document).on('change', '#status', function(){
+        status = $("#status").val();
+        if(status){
+            content_title = 'Pedagang Aktif';
+        } else {
+            content_title = 'Pedagang Nonaktif';
+        }
         $(".content-title").text(content_title);
         url = "/data/pedagang?level=" + $("#level").val() + "&status=" + status;
         dtable.ajax.url( url ).load();

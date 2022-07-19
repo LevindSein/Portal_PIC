@@ -116,12 +116,10 @@ Tagihan
     $(document).on('change', '#status, #periode', function(){
         status  = $("#status").val();
         periode = $("#periode").val();
-        if(status == 2){
-            content_title = 'Tagihan Draft';
-        } else if (status == 1){
+        if (status == 1){
             content_title = 'Tagihan Aktif';
         } else {
-            content_title = 'Tagihan Dihapus';
+            content_title = 'Tagihan Tersimpan';
         }
 
         $(".content-title").text(content_title);
@@ -144,28 +142,6 @@ Tagihan
                             return {
                                 id: d.id,
                                 text: d.name
-                            }
-                        })
-                    };
-                },
-            }
-        });
-    }
-
-    function select2los(select2id, url, placeholder){
-        $(select2id).select2({
-            placeholder: placeholder,
-            ajax: {
-                url: url,
-                dataType: 'json',
-                delay: 250,
-                cache: true,
-                processResults: function (data) {
-                    return {
-                        results:  $.map(data, function (d) {
-                            return {
-                                id: d,
-                                text: d
                             }
                         })
                     };

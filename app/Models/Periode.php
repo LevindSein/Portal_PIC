@@ -26,6 +26,10 @@ class Periode extends Model
         'status'
     ];
 
+    public function tagihan() {
+        return $this->hasMany(Tagihan::class, 'periode_id');
+    }
+
     protected static $logName = 'periode';
     protected static $logFillable = true;
 

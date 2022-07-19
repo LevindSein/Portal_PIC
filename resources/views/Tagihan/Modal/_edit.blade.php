@@ -11,7 +11,7 @@
                         <div class="col-lg-6">
                             <div class="form-group edit-los">
                                 <small class="form-control-label">Nomor Los <span class="text-danger">*</span></small>
-                                <select required id="edit-los" name="edit_los[]" class="form-control form-control-sm" multiple></select>
+                                <textarea required rows="3" id="edit-los" name="edit_los" autocomplete="off" placeholder="Contoh: 1,2,3A,4,5,6" class="los form-control" style="text-transform: uppercase"></textarea>
                             </div>
                             <div class="form-group edit-pengguna">
                                 <small class="form-control-label">Pengguna <span class="text-danger">*</span></small>
@@ -117,7 +117,7 @@
         });
         select2user("#edit-pengguna", "/search/users", "-- Cari Pengguna --");
 
-        $("#edit-los").val('').html('').select2({placeholder: "-- Pilih Nomor Los --"});
+        $("#edit-los").val('');
 
         $("#div-edit-listrik").html('');
         $("#div-edit-airbersih").html('');
@@ -164,13 +164,7 @@
 
                     $(".title").text('Edit : Periode ' + data.success.periode.nicename + ' - ' + data.success.name);
 
-                    $('#edit-los').val("").html("");
-                    select2los("#edit-los", "/search/" + data.success.group.name + "/los", "-- Pilih Nomor Los --");
-                    var los = data.success.los;
-                    $.each( los, function( i, val ) {
-                        var option = $('<option></option>').attr('value', val).text(val).prop('selected', true);
-                        $('#edit-los').append(option).trigger('change');
-                    });
+                    $('#edit-los').val(data.success.los.data);
 
                     $('#edit-pengguna').val("").html("");
                     var pengguna = new Option(data.success.pengguna.name + " (" + data.success.pengguna.ktp + ")", data.success.pengguna.id, false, false);

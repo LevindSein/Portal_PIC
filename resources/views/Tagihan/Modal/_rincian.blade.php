@@ -64,7 +64,7 @@
 
                     //Nomor Los
                     html += '<small class="text-muted pt-4 db">Nomor Los</small>';
-                    html += '<h4>' + data.success.los + '</h4>';
+                    html += '<h4>' + data.success.los.data + '</h4>';
                     //End Nomor Los
 
                     //Jumlah Los
