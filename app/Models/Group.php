@@ -18,4 +18,12 @@ class Group extends Model
         'nomor',
         'data'
     ];
+
+    public function tempat() {
+        return $this->hasMany(Tempat::class, 'group_id');
+    }
+
+    public function tagihan() {
+        return $this->hasMany(Tagihan::class, 'group_id');
+    }
 }

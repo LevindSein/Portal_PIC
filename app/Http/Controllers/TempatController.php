@@ -28,9 +28,8 @@ class TempatController extends Controller
      */
     public function index(Request $request)
     {
-        // return Tarif::find(7)->fasLainnya()->count();
         if($request->ajax()){
-            $data = Tempat::with('pengguna:id,name');
+            $data = Tempat::with('pengguna:id,name')->where('is_deleted', 0);
 
             return DataTables::of($data)
             ->addColumn('action', function($data){
@@ -114,7 +113,7 @@ class TempatController extends Controller
             Validator::make($input, [
                 'grup'         => 'required|exists:groups,name',
                 'nomor_los'    => 'required|string|regex:/^[a-zA-Z0-9\,]+$/',
-                'kode_kontrol' => 'required|max:25|unique:tempat,name',
+                'kode_kontrol' => 'required|max:25',
                 'pengguna'     => 'nullable|numeric|exists:users,id',
                 'pemiik'       => 'nullable|numeric|exists:users,id',
                 'status'       => 'required|numeric|in:2,1,0',
@@ -352,7 +351,7 @@ class TempatController extends Controller
 
             if($data->trf_lainnya_id){
                 $lainnya = [];
-                foreach ($data->trf_lainnya_id as $key) {
+                foreach ($data->trf_lainnya_id->lainnya_id as $key) {
                     $lainnya[] = Tarif::findOrFail($key);
                 }
                 $data['trf_lainnya'] = $lainnya;
@@ -403,7 +402,7 @@ class TempatController extends Controller
 
             if($data->trf_lainnya_id){
                 $lainnya = [];
-                foreach ($data->trf_lainnya_id as $key) {
+                foreach ($data->trf_lainnya_id->lainnya_id as $key) {
                     $lainnya[] = Tarif::findOrFail($key);
                 }
                 $data['trf_lainnya'] = $lainnya;
@@ -441,7 +440,7 @@ class TempatController extends Controller
             Validator::make($input, [
                 'grup'         => 'required|exists:groups,name',
                 'nomor_los'    => 'required|string|regex:/^[a-zA-Z0-9\,]+$/',
-                'kode_kontrol' => 'required|max:25|unique:tempat,name,' . $decrypted,
+                'kode_kontrol' => 'required|max:25',
                 'pengguna'     => 'nullable|numeric|exists:users,id',
                 'pemiik'       => 'nullable|numeric|exists:users,id',
                 'status'       => 'required|numeric|in:2,1,0',
@@ -687,7 +686,8 @@ class TempatController extends Controller
                     $alat->save();
                 }
 
-                $data->delete();
+                $data->is_deleted = 1;
+                $data->save();
             });
 
             return response()->json(['success' => "Data berhasil dihapus."]);

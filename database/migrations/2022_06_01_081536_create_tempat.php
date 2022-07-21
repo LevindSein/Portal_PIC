@@ -44,6 +44,7 @@ class CreateTempat extends Migration
             $table->json('diskon')->nullable();
             $table->text('ket')->nullable();
             $table->tinyInteger('status'); // 0 = Tidak Aktif, 1 = Aktif, 2 = Bebas Bayar
+            $table->boolean('is_deleted')->default(0); // 0 = show, 1 = deleted
             $table->datetime('updated_at')->useCurrent();
             $table->datetime('created_at')->useCurrent();
         });

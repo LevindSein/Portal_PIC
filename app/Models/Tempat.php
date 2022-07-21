@@ -123,7 +123,7 @@ class Tempat extends Model
     }
 
     public function getTrfLainnyaIdAttribute($value){
-        return json_decode($value)->lainnya_id;
+        return json_decode($value);
     }
 
     public static function generate($group, $los){

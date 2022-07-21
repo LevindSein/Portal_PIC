@@ -93,7 +93,7 @@ class SearchController extends Controller
     public function tempat(Request $request){
         $data = [];
         if($request->ajax()) {
-            $data = Tempat::where('status', 1)->select('id', 'name', 'nicename')
+            $data = Tempat::where([['status', 1], ['is_deleted', 0]])->select('id', 'name', 'nicename')
             ->where(function ($query) use ($request) {
                 $key = $request->q;
                 $query
