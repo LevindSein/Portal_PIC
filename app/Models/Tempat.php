@@ -55,6 +55,11 @@ class Tempat extends Model
         'status',
     ];
 
+    public function tagihan()
+    {
+        return $this->hasMany(Tagihan::class, 'tempat_id');
+    }
+
     public function alatListrik()
     {
         return $this->belongsTo(Alat::class, 'alat_listrik_id');

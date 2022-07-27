@@ -61,11 +61,11 @@ Tagihan
         serverSide : true,
         ajax : url,
         columns : [
-            { data: 'name', name: 'name', class : 'text-center align-middle' },
-            { data: 'pengguna.name', name: 'pengguna.name', class : 'text-center align-middle' },
-            { data: 'fasilitas', name: 'fasilitas', class : 'text-center align-middle' },
-            { data: 'tagihan', name: 'tagihan', class : 'text-center align-middle' },
-            { data: 'action', name: 'action', class : 'text-center align-middle' },
+            { data: 'name', class : 'text-center align-middle' },
+            { data: 'pengguna.name', class : 'text-center align-middle' },
+            { data: 'fasilitas', class : 'text-center align-middle' },
+            { data: 'tagihan', class : 'text-center align-middle' },
+            { data: 'action', class : 'text-center align-middle' },
         ],
         stateSave : true,
         deferRender : true,
@@ -73,8 +73,8 @@ Tagihan
         aLengthMenu : [[5,10,25,50,100], [5,10,25,50,100]],
         order : [[ 0, "asc" ]],
         aoColumnDefs: [
-            { "bSortable": false, "aTargets": [2,3,4] },
-            { "bSearchable": false, "aTargets": [2,3,4] }
+            { "bSortable": false, "aTargets": [2,4] },
+            { "bSearchable": false, "aTargets": [2,4] }
         ],
         scrollY : "50vh",
         scrollX : true,

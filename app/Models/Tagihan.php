@@ -312,7 +312,7 @@ class Tagihan extends Model
             $total_lainnya    = 0;
             $data_lainnya     = [];
 
-            $lains = $data->trf_lainnya_id;
+            $lains = $data->trf_lainnya_id->lainnya_id;
             foreach ($lains as $item) {
                 $d = json_decode(Tarif::lainnya($item, $data->jml_los));
                 $data_lainnya[] = [
@@ -352,7 +352,7 @@ class Tagihan extends Model
     public static function singleUpdate($tagihan_id, $periode_id){
         $tagihan_data = self::findOrFail($tagihan_id);
 
-        $data = Tempat::where('name', $tagihan_data->name)->with('alatListrik', 'alatAirBersih', 'listrik', 'airbersih', 'keamananipk', 'kebersihan', 'airkotor')->first();
+        $data = Tempat::with('alatListrik', 'alatAirBersih', 'listrik', 'airbersih', 'keamananipk', 'kebersihan', 'airkotor')->findOrFail($tagihan_data->tempat_id);
 
         $dataset['pengguna_id'] = $data->pengguna_id;
         $dataset['los']         = json_encode($data->los);
@@ -677,7 +677,7 @@ class Tagihan extends Model
                 $total_lainnya    = 0;
                 $data_lainnya     = [];
 
-                $lains = $data->trf_lainnya_id;
+                $lains = $data->trf_lainnya_id->lainnya_id;
                 foreach ($lains as $item) {
                     $d = json_decode(Tarif::lainnya($item, $data->jml_los));
                     $data_lainnya[] = [

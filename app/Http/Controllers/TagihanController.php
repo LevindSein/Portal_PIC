@@ -37,8 +37,9 @@ class TagihanController extends Controller
             $status = $request->status;
             $periode = $request->periode;
 
-            $data = Tagihan::with('pengguna:id,name')->where([
-                ['status', $status],
+            $data = Tagihan::with('pengguna:id,name')
+            ->where([
+                ['tagihan.status', $status],
                 ['periode_id', $periode]
             ]);
 
@@ -855,8 +856,8 @@ class TagihanController extends Controller
             $data['pengguna_id'] = $input['pengguna'];
             $data['diskon']      = json_encode($diskon);
 
-            DB::transaction(function() use ($data, $input, $request, $decrypted, $tagihan){
-                $tempat = Tempat::where('name', $request->tempat_name)->first();
+            DB::transaction(function() use ($data, $input, $tagihan, $request, $decrypted){
+                $tempat = Tempat::findOrFail($tagihan->tempat_id);
                 if($tempat){
                     $input['tempat_usaha'] = $tempat->id;
                     Validator::make($input, [
@@ -896,7 +897,7 @@ class TagihanController extends Controller
                     $tempat->update($data);
                 }
 
-                // Tagihan::singleUpdate($decrypted, $request->periode_id);
+                Tagihan::singleUpdate($decrypted, $request->periode_id);
 
                 // new Payment($request->tempat_name);
             });
@@ -1015,7 +1016,7 @@ class TagihanController extends Controller
 
             if($data->trf_lainnya_id){
                 $lainnya = [];
-                foreach ($data->trf_lainnya_id as $key) {
+                foreach ($data->trf_lainnya_id->lainnya_id as $key) {
                     $lainnya[] = Tarif::findOrFail($key);
                 }
                 $data['trf_lainnya'] = $lainnya;

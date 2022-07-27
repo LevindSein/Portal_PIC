@@ -13,6 +13,7 @@ use App\Models\Tempat;
 use App\Models\Group;
 use App\Models\Tarif;
 use App\Models\Alat;
+use App\Models\Tagihan;
 
 use Carbon\Carbon;
 
@@ -109,6 +110,10 @@ class TempatController extends Controller
             $input['status']       = $request->tambah_status;
             $input['keterangan']   = $request->tambah_ket;
             $diskon                = [];
+
+            if(Tempat::where([['name', $input['kode_kontrol']], ['is_deleted', 0]])->exists()){
+                return response()->json(['error' => 'Data sudah tersedia.']);
+            }
 
             Validator::make($input, [
                 'grup'         => 'required|exists:groups,name',
@@ -649,6 +654,14 @@ class TempatController extends Controller
                     $alat->save();
                 }
 
+                Tagihan::where('tempat_id', $decrypted)->chunk(100, function ($tagihan) use ($data) {
+                    foreach ($tagihan as $t) {
+                        $t->name = $data['name'];
+                        $t->nicename = $data['nicename'];
+                        $t->save();
+                    }
+                });
+
                 $dataset->update($data);
             });
 
@@ -738,6 +751,7 @@ class TempatController extends Controller
             'trf_airkotor_id',
             'trf_lainnya_id',
         )
+        ->where('is_deleted', 0)
         ->get();
 
         return view('MasterData.Tempat.Pages._print', [
