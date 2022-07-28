@@ -14,6 +14,7 @@ class Tagihan extends Model
     protected $table = 'tagihan';
     protected $fillable = [
         'code',
+        'ref',
         'periode_id',
         'stt_publish',
         'stt_lunas',
@@ -724,5 +725,80 @@ class Tagihan extends Model
         ]);
 
         $tagihan_data->update($dataset);
+    }
+
+    public static function adjust($id){
+        $data = self::findOrFail($id);
+
+        $subtotal  = 0;
+        $ppn       = 0;
+        $denda     = 0;
+        $diskon    = 0;
+        $total     = 0;
+        $realisasi = 0;
+        $selisih   = 0;
+
+        if($data->listrik){
+            $subtotal += $data->listrik->subtotal;
+            $ppn += $data->listrik->ppn;
+            $denda += $data->listrik->denda;
+            $diskon += $data->listrik->diskon;
+            $total += $data->listrik->total;
+            $realisasi += $data->listrik->realisasi;
+            $selisih += $data->listrik->selisih;
+        }
+
+        if($data->airbersih){
+            $subtotal += $data->airbersih->subtotal;
+            $ppn += $data->airbersih->ppn;
+            $denda += $data->airbersih->denda;
+            $diskon += $data->airbersih->diskon;
+            $total += $data->airbersih->total;
+            $realisasi += $data->airbersih->realisasi;
+            $selisih += $data->airbersih->selisih;
+        }
+
+        if($data->keamananipk){
+            $subtotal += $data->keamananipk->subtotal;
+            $diskon += $data->keamananipk->diskon;
+            $total += $data->keamananipk->total;
+            $realisasi += $data->keamananipk->realisasi;
+            $selisih += $data->keamananipk->selisih;
+        }
+
+        if($data->kebersihan){
+            $subtotal += $data->kebersihan->subtotal;
+            $diskon += $data->kebersihan->diskon;
+            $total += $data->kebersihan->total;
+            $realisasi += $data->kebersihan->realisasi;
+            $selisih += $data->kebersihan->selisih;
+        }
+
+        if($data->airkotor){
+            $subtotal += $data->airkotor->subtotal;
+            $diskon += $data->airkotor->diskon;
+            $total += $data->airkotor->total;
+            $realisasi += $data->airkotor->realisasi;
+            $selisih += $data->airkotor->selisih;
+        }
+
+        if($data->lainnya){
+            $subtotal += $data->lainnya->subtotal;
+            $total += $data->lainnya->total;
+            $realisasi += $data->lainnya->realisasi;
+            $selisih += $data->lainnya->selisih;
+        }
+
+        $data->tagihan = json_encode([
+            'subtotal'  => $subtotal,
+            'ppn'       => $ppn,
+            'denda'     => $denda,
+            'diskon'    => $diskon,
+            'total'     => $total,
+            'realisasi' => $realisasi,
+            'selisih'   => $selisih
+        ]);
+
+        $data->save();
     }
 }

@@ -15,7 +15,8 @@ class CreateTagihan extends Migration
     {
         Schema::create('tagihan', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 50)->unique();
+            $table->string('code', 50)->unique()->nullable();
+            $table->string('ref', 50)->nullable();
             $table->unsignedBigInteger('periode_id');
             $table->foreign('periode_id')->references('id')->on('periode');
             $table->tinyInteger('stt_publish')->default(0); //0 = Belum Dipublish, 1 = Sudah Dipublish

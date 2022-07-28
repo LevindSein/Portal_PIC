@@ -54,7 +54,7 @@
 
                     //Kode
                     html += '<small class="text-muted pt-4 db">Kode Tagihan</small>';
-                    html += '<h4 class="text-primary">' + data.success.code + '</h4>';
+                    html += '<h4 class="text-primary">' + ((data.success.code) ? data.success.code : data.success.ref) + '</h4>';
                     //End Kode
 
                     //Kontrol

@@ -10,7 +10,13 @@
         $(document).on('click', '[data-toggle="tooltip"]', function(){
             setTimeout(() => {
                 $(this).tooltip('hide');
-            }, 500);
+            }, 50);
+        });
+
+        $(document).on('click', '[data-toggle="popover"]', function(){
+            setTimeout(() => {
+                $(this).popover('hide');
+            }, 50);
         });
     });
 

@@ -8,12 +8,12 @@
             <form id="hapus-form">
                 <div class="modal-body">
                     <p>
-                        Tekan tombol <span class="text-danger text-delete"></span>, untuk konfirmasi sekali lagi.
+                        Tekan tombol <span class="text-danger">Hapus</span>, untuk menghapus data tagihan secara permanen.
                     </p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-light font-weight-bold" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger font-weight-bold text-delete"></button>
+                    <button type="submit" class="btn btn-danger font-weight-bold">Hapus</button>
                 </div>
             </form>
         </div>
@@ -32,8 +32,7 @@
 
         $("#hapus-modal").modal("show");
 
-        $(".title").text($(this).attr("status") + " Tagihan : " + $(this).attr("nama"));
-        $(".text-delete").text($(this).attr("status"));
+        $(".title").text("Hapus Tagihan : " + $(this).attr("nama"));
     })
 
     $('#hapus-form').on('submit', function(e){

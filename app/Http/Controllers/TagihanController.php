@@ -23,6 +23,7 @@ use Carbon\Carbon;
 
 use Excel;
 use DataTables;
+use PDO;
 
 class TagihanController extends Controller
 {
@@ -48,20 +49,20 @@ class TagihanController extends Controller
                 $button = '';
                 if($data->status){
                     if($data->stt_publish){
-                        if(($data->listrik && $data->listrik->lunas) && ($data->airbersih && $data->airbersih->lunas) && ($data->keamananipk && $data->keamananipk->lunas) && ($data->kebersihan && $data->kebersihan->lunas) && ($data->airkotor && $data->airkotor->lunas) && ($data->lainnya && $data->lainnya->lunas)){
+                        if($data->stt_lunas){
                             $button .= '<a type="button" data-toggle="tooltip" title="Semua Lunas" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-check"></i></a>';
                         } else {
                             $button .= '<a type="button" data-toggle="tooltip" title="Batalkan Publish" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="publish btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-undo"></i></a>';
                         }
                     } else {
-                        if(!(($data->listrik && $data->listrik->lunas) && ($data->airbersih && $data->airbersih->lunas) && ($data->keamananipk && $data->keamananipk->lunas) && ($data->kebersihan && $data->kebersihan->lunas) && ($data->airkotor && $data->airkotor->lunas) && ($data->lainnya && $data->lainnya->lunas))){
+                        if(!$data->stt_lunas){
                             $button .= '<a type="button" data-toggle="tooltip" title="Edit" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="edit btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-marker"></i></a>';
+                            $button .= '<a type="button" data-toggle="tooltip" title="Simpan" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="save btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-arrow-circle-down"></i></a>';
                         }
-                        $button .= '<a type="button" data-toggle="tooltip" title="Simpan" id="'.Crypt::encrypt($data->id).'" status="Simpan" nama="'.$data->name.'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-arrow-circle-down"></i></a>';
                         $button .= '<a type="button" data-toggle="tooltip" title="Publish" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="publish btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-paper-plane"></i></a>';
                     }
                 } else {
-                    $button .= '<a type="button" data-toggle="tooltip" title="Hapus Permanen" id="'.Crypt::encrypt($data->id).'" status="Hapus" nama="'.$data->name.'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash-alt"></i></a>';
+                    $button .= '<a type="button" data-toggle="tooltip" title="Hapus Permanen" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="delete btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-trash-alt"></i></a>';
                     $button .= '<a type="button" data-toggle="tooltip" title="Aktifkan" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="aktif btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-arrow-circle-up"></i></a>';
                 }
                 $button .= '<a type="button" data-toggle="tooltip" title="Rincian" id="'.Crypt::encrypt($data->id).'" nama="'.$data->name.'" class="detail btn btn-sm btn-neutral btn-icon"><i class="fas fa-fw fa-info"></i></a>';
@@ -865,7 +866,7 @@ class TagihanController extends Controller
                     ])->validate();
                 }
 
-                if($tempat && $tempat->alat_listrik_id && !$tagihan->listrik->lunas){
+                if($tempat && $tempat->alat_listrik_id && $tagihan->listrik && !$tagihan->listrik->lunas){
                     $alat = Alat::findOrFail($tempat->alat_listrik_id);
                     $alat->status = 1;
                     $alat->save();
@@ -879,7 +880,7 @@ class TagihanController extends Controller
                     $alat->save();
                 }
 
-                if($tempat && $tempat->alat_airbersih_id && !$tagihan->airbersih->lunas){
+                if($tempat && $tempat->alat_airbersih_id && $tagihan->airbersih && !$tagihan->airbersih->lunas){
                     $alat = Alat::findOrFail($tempat->alat_airbersih_id);
                     $alat->status = 1;
                     $alat->save();
@@ -934,6 +935,101 @@ class TagihanController extends Controller
             });
 
             return response()->json(['success' => "Data berhasil dihapus."]);
+        }
+    }
+
+    public function check($id)
+    {
+        if(request()->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            $data = Tagihan::findOrFail($decrypted);
+
+            return response()->json(['success' => $data]);
+        }
+    }
+
+    public function simpan(Request $request, $id)
+    {
+        if($request->ajax()){
+            try {
+                $decrypted = Crypt::decrypt($id);
+            } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+                return response()->json(['error' => "Data tidak valid."]);
+            }
+
+            DB::transaction(function() use ($decrypted, $request){
+                $data = Tagihan::lockForUpdate()->findOrFail($decrypted);
+
+                $fasilitas = $request->simpan_fasilitas;
+                if($fasilitas){
+                    $dataset = [];
+
+                    $subtotal  = 0;
+                    $ppn       = 0;
+                    $denda     = 0;
+                    $diskon    = 0;
+                    $total     = 0;
+                    $realisasi = 0;
+                    $selisih   = 0;
+
+                    foreach ($fasilitas as $fas) {
+                        $fass = $data->$fas;
+
+                        $subtotal += $fass->subtotal;
+                        $total += $fass->total;
+                        $realisasi += $fass->realisasi;
+                        $selisih += $fass->selisih;
+
+                        if(array_key_exists('ppn', $fass)){
+                            $ppn += $fass->ppn;
+                        }
+                        if(array_key_exists('denda', $fass)){
+                            $denda += $fass->denda;
+                        }
+                        if(array_key_exists('diskon', $fass)){
+                            $diskon += $fass->diskon;
+                        }
+
+                        $dataset[$fas] = json_encode($fass);
+
+                        $data->$fas = NULL;
+                    }
+
+                    $dataset['tagihan'] = json_encode([
+                        'subtotal'  => $subtotal,
+                        'ppn'       => $ppn,
+                        'denda'     => $denda,
+                        'diskon'    => $diskon,
+                        'total'     => $total,
+                        'realisasi' => $realisasi,
+                        'selisih'   => $selisih
+                    ]);
+
+                    $dataset['ref']         = $data->code;
+                    $dataset['periode_id']  = $data->periode_id;
+                    $dataset['name']        = $data->name;
+                    $dataset['nicename']    = $data->nicename;
+                    $dataset['tempat_id']   = $data->tempat_id;
+                    $dataset['group_id']    = $data->group_id;
+                    $dataset['pengguna_id'] = $data->pengguna_id;
+                    $dataset['los']         = json_encode($data->los);
+                    $dataset['jml_los']     = $data->jml_los;
+                    $dataset['status']      = 0;
+
+                    Tagihan::create($dataset);
+
+                    $data->save();
+
+                    Tagihan::adjust($decrypted);
+                }
+            });
+
+            return response()->json(['success' => 'Data berhasil disimpan.']);
         }
     }
 
